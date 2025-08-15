@@ -1,58 +1,26 @@
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// The main Zod schema for the pythagoreanProofDiagram function
-export const PythagoreanProofDiagramPropsSchema = z
-	.object({
-		type: z.literal("pythagoreanProofDiagram"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The total height of the output SVG container in pixels."),
-		// INLINED: The SideSquareSchema definition is now directly inside the squareA property.
-		squareA: z
-			.object({
-				area: z.number().describe("The area of the square, used for labeling."),
-				sideLabel: z
-					.string()
-					.nullable()
-					.describe('An optional label for the corresponding triangle side (e.g., "a", "b", "c").')
-			})
-			.strict()
-			.describe("Properties of the square on the first leg."),
-		// INLINED: The SideSquareSchema definition is now directly inside the squareB property.
-		squareB: z
-			.object({
-				area: z.number().describe("The area of the square, used for labeling."),
-				sideLabel: z
-					.string()
-					.nullable()
-					.describe('An optional label for the corresponding triangle side (e.g., "a", "b", "c").')
-			})
-			.strict()
-			.describe("Properties of the square on the second leg."),
-		// INLINED: The SideSquareSchema definition is now directly inside the squareC property.
-		squareC: z
-			.object({
-				area: z.number().describe("The area of the square, used for labeling."),
-				sideLabel: z
-					.string()
-					.nullable()
-					.describe('An optional label for the corresponding triangle side (e.g., "a", "b", "c").')
-			})
-			.strict()
-			.describe("Properties of the square on the hypotenuse.")
-	})
-	.strict()
-	.describe(
-		"Generates a classic visual proof of the Pythagorean theorem. This SVG diagram renders a central right-angled triangle. A square is constructed on each of the triangle's three sides (the two legs 'a' and 'b', and the hypotenuse 'c'). Each square is labeled with its area, allowing students to visually confirm the relationship a² + b² = c². This provides a powerful, intuitive illustration of the theorem beyond the formula itself."
-	)
+function createSideSquareSchema() {
+  return z.object({ 
+    area: z.number().describe("The area of this square in square units (e.g., 9, 16, 25, 12.5). Will be displayed inside the square. For Pythagorean theorem: a² + b² = c²."), 
+    sideLabel: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Label for the triangle side this square is attached to (e.g., 'a', 'b', 'c', '3', '4', null). Null means no side label. Typically lowercase letters."),
+    color: z.string().regex(
+      CSS_COLOR_PATTERN,
+      "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+    ).describe("Hex-only color for this square (e.g., '#FFE082', '#1E90FF', '#FFC864CC' for ~80% alpha). Should contrast with text and background.")
+  }).strict()
+}
+
+export const PythagoreanProofDiagramPropsSchema = z.object({
+  type: z.literal('pythagoreanProofDiagram').describe("Identifies this as a Pythagorean proof diagram showing the classic visual demonstration."),
+  width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 400, 500, 600). Must accommodate all three squares and labels."),
+  height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 400, 500, 600). Should be similar to width for proper proportions."),
+  squareA: createSideSquareSchema().describe("The square on the first leg of the right triangle. Its area represents a² in the theorem."),
+  squareB: createSideSquareSchema().describe("The square on the second leg of the right triangle. Its area represents b² in the theorem."),
+  squareC: createSideSquareSchema().describe("The square on the hypotenuse of the right triangle. Its area represents c². Should equal squareA.area + squareB.area."),
+}).strict().describe("Creates the classic visual proof of the Pythagorean theorem showing a right triangle with squares constructed on each side. The areas of the squares demonstrate that a² + b² = c². Essential for geometry education and visual understanding of the theorem.")
 
 export type PythagoreanProofDiagramProps = z.infer<typeof PythagoreanProofDiagramPropsSchema>
 
@@ -147,12 +115,11 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	}
 
 	// --- Square C (Hypotenuse) ---
-	const colorC = "#FFE082" // amber light
 	const hypVec = { x: v_b_end.x - v_a_end.x, y: v_b_end.y - v_a_end.y } // vector from a_end to b_end
 	const perpVec = { x: hypVec.y, y: -hypVec.x } // outward perpendicular vector (flipped to other side)
 	const v_c1 = { x: v_b_end.x + perpVec.x, y: v_b_end.y + perpVec.y }
 	const v_c2 = { x: v_a_end.x + perpVec.x, y: v_a_end.y + perpVec.y }
-	svg += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_b_end.x},${v_b_end.y} ${v_c1.x},${v_c1.y} ${v_c2.x},${v_c2.y}" fill="${colorC}" stroke="#333333" stroke-width="1"/>`
+	svg += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_b_end.x},${v_b_end.y} ${v_c1.x},${v_c1.y} ${v_c2.x},${v_c2.y}" fill="${squareC.color}" stroke="#333333" stroke-width="1"/>`
 
 	// Add grid lines for square C
 	svg += generateRotatedGrid(v_a_end, v_b_end, v_c2, c)
@@ -166,8 +133,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	}
 
 	// --- Square B (on leg 'b') ---
-	const colorB = "#90CAF9" // blue light
-	svg += `<rect x="${v_right.x}" y="${v_b_end.y}" width="${sb}" height="${sb}" fill="${colorB}" stroke="#333333" stroke-width="1"/>`
+	svg += `<rect x="${v_right.x}" y="${v_b_end.y}" width="${sb}" height="${sb}" fill="${squareB.color}" stroke="#333333" stroke-width="1"/>`
 
 	// Add grid lines for square B
 	svg += generateRectangularGrid(v_right.x, v_b_end.y, sb, sb, b)
@@ -180,8 +146,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	}
 
 	// --- Square A (on leg 'a') ---
-	const colorA = "#F48FB1" // pink light
-	svg += `<rect x="${v_a_end.x}" y="${v_a_end.y}" width="${sa}" height="${sa}" fill="${colorA}" stroke="#333333" stroke-width="1"/>`
+	svg += `<rect x="${v_a_end.x}" y="${v_a_end.y}" width="${sa}" height="${sa}" fill="${squareA.color}" stroke="#333333" stroke-width="1"/>`
 
 	// Add grid lines for square A
 	svg += generateRectangularGrid(v_a_end.x, v_a_end.y, sa, sa, a)

@@ -1,41 +1,40 @@
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Defines a dimension label for an edge or a face area
-const DimensionLabelSchema = z
-	.object({
-		text: z.string().describe('The text for the label (e.g., "10 cm", "Area = 9 units²").'),
-		target: z
-			.string()
-			.describe('The specific edge or face to label (e.g., "length", "width", "height", "top_face", "front_face").')
-	})
-	.strict()
+const DimensionLabel = z.object({
+  text: z.string().describe("The label text to display (e.g., '10 cm', 'h = 5', 'length', '8'). Can include units or variable names."),
+  target: z.string().describe("Which dimension to label: 'length', 'width', 'height', 'slantHeight', or face names like 'topFace', 'frontFace', 'baseFace'.")
+}).strict()
 
 // Defines the properties for a rectangular prism (including cubes)
 const RectangularPrismDataSchema = z
 	.object({
 		type: z.literal("rectangularPrism"),
-		length: z.number().describe("The length of the prism (depth)."),
-		width: z.number().describe("The width of the prism (front-facing dimension)."),
-		height: z.number().describe("The height of the prism.")
+		length: z.number().positive().describe("The length of the prism (depth)."),
+		width: z.number().positive().describe("The width of the prism (front-facing dimension)."),
+		height: z.number().positive().describe("The height of the prism.")
 	})
 	.strict()
 
-// Defines the triangular base dimensions
-const TriangularBaseSchema = z
-	.object({
-		b: z.number().describe("The base length of the triangular face."),
-		h: z.number().describe("The height of the triangular face."),
-		hypotenuse: z.number().nullable().describe("The hypotenuse for a right-triangle base. Calculated if omitted.")
-	})
-	.strict()
+// Factory: triangular base dimensions (avoid reusing schema instance to prevent $ref)
+function createTriangularBaseSchema() {
+	return z
+		.object({
+			b: z.number().positive().describe("The base length of the triangular face."),
+			h: z.number().positive().describe("The height of the triangular face."),
+			hypotenuse: z.number().positive().describe("The hypotenuse for a right-triangle base.")
+		})
+		.strict()
+}
 
 // Defines the properties for a triangular prism
 const TriangularPrismDataSchema = z
 	.object({
 		type: z.literal("triangularPrism"),
-		base: TriangularBaseSchema.describe("The dimensions of the triangular base."),
-		length: z.number().describe("The length (depth) of the prism, connecting the two triangular bases.")
+		base: createTriangularBaseSchema().describe("The dimensions of the triangular base."),
+		length: z.number().positive().describe("The length (depth) of the prism, connecting the two triangular bases.")
 	})
 	.strict()
 
@@ -43,9 +42,9 @@ const TriangularPrismDataSchema = z
 const RectangularPyramidDataSchema = z
 	.object({
 		type: z.literal("rectangularPyramid"),
-		baseLength: z.number().describe("The length of the rectangular base."),
-		baseWidth: z.number().describe("The width of the rectangular base."),
-		height: z.number().describe("The perpendicular height from the base to the apex.")
+		baseLength: z.number().positive().describe("The length of the rectangular base."),
+		baseWidth: z.number().positive().describe("The width of the rectangular base."),
+		height: z.number().positive().describe("The perpendicular height from the base to the apex.")
 	})
 	.strict()
 
@@ -53,74 +52,35 @@ const RectangularPyramidDataSchema = z
 const TriangularPyramidDataSchema = z
 	.object({
 		type: z.literal("triangularPyramid"),
-		base: z
-			.object({
-				b: z.number().describe("The base length of the triangular face."),
-				h: z.number().describe("The height of the triangular face."),
-				hypotenuse: z.number().nullable().describe("The hypotenuse for a right-triangle base. Calculated if omitted.")
-			})
-			.strict()
-			.describe("The dimensions of the triangular base."),
-		height: z.number().describe("The perpendicular height from the base to the apex.")
+		base: createTriangularBaseSchema().describe("The dimensions of the triangular base."),
+		height: z.number().positive().describe("The perpendicular height from the base to the apex.")
 	})
 	.strict()
 
 // Defines a diagonal line to be drawn between two vertices.
-const DiagonalLineSchema = z
-	.object({
-		fromVertexIndex: z.number().int().min(0).describe("The 0-based index of the starting vertex."),
-		toVertexIndex: z.number().int().min(0).describe("The 0-based index of the ending vertex."),
-		label: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("An optional text label for the diagonal's length."),
-		style: z
-			.enum(["solid", "dashed", "dotted"])
-			.nullable()
-			.transform((val) => val ?? "solid")
-			.describe("The visual style of the line.")
-	})
-	.strict()
+const Diagonal = z.object({
+  fromVertexIndex: z.number().int().describe("Starting vertex index (0-based) for the diagonal. Vertices are numbered systematically by the shape type."),
+  toVertexIndex: z.number().int().describe("Ending vertex index (0-based) for the diagonal. Must be different from fromVertexIndex."),
+  label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Text label for the diagonal's length (e.g., '12.7 cm', 'd = 15', '√50', null). Null means no label."),
+  style: z.enum(['solid','dashed','dotted']).describe("Visual style of the diagonal. 'solid' for main diagonals, 'dashed' for hidden parts, 'dotted' for construction lines.")
+}).strict()
 
 // The main Zod schema for the polyhedronDiagram function
-export const PolyhedronDiagramPropsSchema = z
-	.object({
-		type: z.literal("polyhedronDiagram"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 300)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 200)
-			.describe("The total height of the output SVG container in pixels."),
-		shape: z
-			.discriminatedUnion("type", [
-				RectangularPrismDataSchema,
-				TriangularPrismDataSchema,
-				RectangularPyramidDataSchema,
-				TriangularPyramidDataSchema // Added TriangularPyramidDataSchema
-			])
-			.describe("The geometric data defining the shape of the polyhedron."),
-		labels: z.array(DimensionLabelSchema).nullable().describe("An array of labels for edge lengths or face areas."),
-		diagonals: z
-			.array(DiagonalLineSchema)
-			.nullable()
-			.describe("An optional array of internal diagonals to draw between vertices."),
-		shadedFace: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe('The identifier of a face to shade (e.g., "top_face", "front_face").'),
-		showHiddenEdges: z.boolean().describe("If true, render edges hidden from the camera view as dashed lines.")
-	})
-	.strict()
-	.describe(
-		"This template is a versatile tool for generating SVG diagrams of three-dimensional polyhedra with flat faces, such as prisms and pyramids. It renders the polyhedron in a standard isometric or perspective view to provide depth perception. The generator supports several types of polyhedra, currently: Rectangular Prisms (including cubes): Defined by length, width, and height dimensions. Triangular Prisms: Defined by a triangular base (with base, height, and optionally hypotenuse) and a length. Rectangular Pyramids: Defined by a rectangular base (length and width) and a height. Triangular Pyramids (tetrahedrons): Defined by a triangular base (with base, height, and optionally hypotenuse) and a perpendicular height to the apex. The template provides: Accurate 3D Representation: The polyhedron is drawn with all visible edges as solid lines. Edges that would be hidden from the current viewpoint are drawn as dashed lines to aid in understanding the 3D structure. This dashed representation can be toggled on/off. Dimension Labeling: It can label the lengths of edges (like \"length,\" \"width,\" \"height\") with custom text or numerical values. Leader lines connect the labels to the appropriate edges for clarity. Face Highlighting: It supports shading or coloring specific faces (e.g., the 'top', 'bottom', 'front' base) to draw attention to them. This is particularly useful for problems where the area of a base is given. A label can also be placed on a face to denote its area directly. The final output is a clean, mathematically accurate, and easy-to-interpret SVG diagram, ready to be embedded in a QTI item body."
-	)
+export const PolyhedronDiagramPropsSchema = z.object({
+  type: z.literal('polyhedronDiagram').describe("Identifies this as a 3D polyhedron diagram widget."),
+  width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 400, 500, 350). Must accommodate the 3D projection and labels."),
+  height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 350, 400, 300). Should fit the isometric view comfortably."),
+  shape: z.discriminatedUnion('type', [
+    RectangularPrismDataSchema.describe("A box-shaped prism with rectangular faces."),
+    TriangularPrismDataSchema.describe("A prism with triangular bases and rectangular sides."),
+    RectangularPyramidDataSchema.describe("A pyramid with a rectangular base and triangular faces."),
+    TriangularPyramidDataSchema.describe("A pyramid with a triangular base (tetrahedron when regular).")
+  ]).describe("The specific 3D shape to render with its dimensions. Each type has different dimension requirements."),
+  labels: z.array(DimensionLabel).describe("Dimension labels to display on edges or faces. Empty array means no labels. Can label multiple dimensions and faces."),
+  diagonals: z.array(Diagonal).describe("Space diagonals or face diagonals to draw. Empty array means no diagonals. Useful for distance calculations and 3D geometry."),
+  shadedFace: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Face identifier to shade/highlight: 'topFace', 'bottomFace', 'frontFace', 'backFace', 'leftFace', 'rightFace', 'baseFace', or null. Null means no shading."),
+  showHiddenEdges: z.boolean().describe("Whether to show edges hidden behind the solid as dashed lines. True for mathematical clarity, false for realistic view."),
+}).strict().describe("Creates 3D diagrams of prisms and pyramids in isometric projection. Shows vertices, edges, faces with optional labels, diagonals, and face highlighting. Essential for teaching 3D geometry, volume, surface area, and spatial visualization. Supports both solid and wireframe views with hidden edge visibility control.")
 
 export type PolyhedronDiagramProps = z.infer<typeof PolyhedronDiagramPropsSchema>
 
@@ -187,41 +147,37 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			svg += getFaceSvg("side_face")
 
 			// --- Render Diagonals ---
-			if (diagonals) {
-				for (const d of diagonals) {
-					const from = p[d.fromVertexIndex]
-					const to = p[d.toVertexIndex]
-					if (!from || !to) continue
+			for (const d of diagonals) {
+				const from = p[d.fromVertexIndex]
+				const to = p[d.toVertexIndex]
+				if (!from || !to) continue
 
-					let lineStyle = 'stroke="black" stroke-width="1.5"'
-					if (d.style === "dashed") {
-						lineStyle += ' stroke-dasharray="4 2"'
-					} else if (d.style === "dotted") {
-						lineStyle += ' stroke-dasharray="2 3"'
-					}
+				let lineStyle = 'stroke="black" stroke-width="1.5"'
+				if (d.style === "dashed") {
+					lineStyle += ' stroke-dasharray="4 2"'
+				} else if (d.style === "dotted") {
+					lineStyle += ' stroke-dasharray="2 3"'
+				}
 
-					svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
+				svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
 
-					if (d.label) {
-						const midX = (from.x + to.x) / 2
-						const midY = (from.y + to.y) / 2
-						const angle = Math.atan2(to.y - from.y, to.x - from.x)
-						const offsetX = -Math.sin(angle) * 10
-						const offsetY = Math.cos(angle) * 10
-						svg += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
-					}
+				if (d.label) {
+					const midX = (from.x + to.x) / 2
+					const midY = (from.y + to.y) / 2
+					const angle = Math.atan2(to.y - from.y, to.x - from.x)
+					const offsetX = -Math.sin(angle) * 10
+					const offsetY = Math.cos(angle) * 10
+					svg += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
 				}
 			}
 
-			if (labels) {
-				for (const lab of labels) {
-					if (lab.target === "height" && p[0])
-						svg += `<text x="${p[0].x - 10}" y="${p[0].y - h / 2}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
-					if (lab.target === "width" && p[0])
-						svg += `<text x="${p[0].x + w / 2}" y="${p[0].y + 15}" text-anchor="middle">${lab.text}</text>`
-					if (lab.target === "length" && p[1])
-						svg += `<text x="${p[1].x + l / 2}" y="${p[1].y - l * 0.25 + 10}" text-anchor="middle" transform="skewX(-25)">${lab.text}</text>`
-				}
+			for (const lab of labels) {
+				if (lab.target === "height" && p[0])
+					svg += `<text x="${p[0].x - 10}" y="${p[0].y - h / 2}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
+				if (lab.target === "width" && p[0])
+					svg += `<text x="${p[0].x + w / 2}" y="${p[0].y + 15}" text-anchor="middle">${lab.text}</text>`
+				if (lab.target === "length" && p[1])
+					svg += `<text x="${p[1].x + l / 2}" y="${p[1].y - l * 0.25 + 10}" text-anchor="middle" transform="skewX(-25)">${lab.text}</text>`
 			}
 			break
 		}
@@ -283,42 +239,38 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			svg += drawFace("front_face")
 
 			// Draw diagonals if specified
-			if (diagonals) {
-				for (const d of diagonals) {
-					const from = p[d.fromVertexIndex]
-					const to = p[d.toVertexIndex]
-					if (!from || !to) continue
+			for (const d of diagonals) {
+				const from = p[d.fromVertexIndex]
+				const to = p[d.toVertexIndex]
+				if (!from || !to) continue
 
-					let lineStyle = 'stroke="black" stroke-width="1.5"'
-					if (d.style === "dashed") {
-						lineStyle += ' stroke-dasharray="4 2"'
-					} else if (d.style === "dotted") {
-						lineStyle += ' stroke-dasharray="2 3"'
-					}
+				let lineStyle = 'stroke="black" stroke-width="1.5"'
+				if (d.style === "dashed") {
+					lineStyle += ' stroke-dasharray="4 2"'
+				} else if (d.style === "dotted") {
+					lineStyle += ' stroke-dasharray="2 3"'
+				}
 
-					svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
+				svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
 
-					if (d.label) {
-						const midX = (from.x + to.x) / 2
-						const midY = (from.y + to.y) / 2
-						const angle = Math.atan2(to.y - from.y, to.x - from.x)
-						const offsetX = -Math.sin(angle) * 10
-						const offsetY = Math.cos(angle) * 10
-						svg += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
-					}
+				if (d.label) {
+					const midX = (from.x + to.x) / 2
+					const midY = (from.y + to.y) / 2
+					const angle = Math.atan2(to.y - from.y, to.x - from.x)
+					const offsetX = -Math.sin(angle) * 10
+					const offsetY = Math.cos(angle) * 10
+					svg += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
 				}
 			}
 
 			// Draw labels
-			if (labels) {
-				for (const lab of labels) {
-					if (lab.target === "base" && p[0] && p[1]) {
-						svg += `<text x="${(p[0].x + p[1].x) / 2}" y="${p[0].y + 15}" text-anchor="middle">${lab.text}</text>`
-					} else if (lab.target === "height" && p[0] && p[2]) {
-						svg += `<text x="${p[0].x - 10}" y="${(p[0].y + p[2].y) / 2}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
-					} else if (lab.target === "length" && p[1] && p[4]) {
-						svg += `<text x="${(p[1].x + p[4].x) / 2}" y="${(p[1].y + p[4].y) / 2 + 15}" text-anchor="middle">${lab.text}</text>`
-					}
+			for (const lab of labels) {
+				if (lab.target === "base" && p[0] && p[1]) {
+					svg += `<text x="${(p[0].x + p[1].x) / 2}" y="${p[0].y + 15}" text-anchor="middle">${lab.text}</text>`
+				} else if (lab.target === "height" && p[0] && p[2]) {
+					svg += `<text x="${p[0].x - 10}" y="${(p[0].y + p[2].y) / 2}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
+				} else if (lab.target === "length" && p[1] && p[4]) {
+					svg += `<text x="${(p[1].x + p[4].x) / 2}" y="${(p[1].y + p[4].y) / 2 + 15}" text-anchor="middle">${lab.text}</text>`
 				}
 			}
 			break
@@ -385,47 +337,43 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			if (p[2] && p[4]) svg += `<line x1="${p[2].x}" y1="${p[2].y}" x2="${p[4].x}" y2="${p[4].y}" ${solid} />`
 
 			// Draw diagonals if specified
-			if (diagonals) {
-				for (const d of diagonals) {
-					const from = p[d.fromVertexIndex]
-					const to = p[d.toVertexIndex]
-					if (!from || !to) continue
+			for (const d of diagonals) {
+				const from = p[d.fromVertexIndex]
+				const to = p[d.toVertexIndex]
+				if (!from || !to) continue
 
-					let lineStyle = 'stroke="black" stroke-width="1.5"'
-					if (d.style === "dashed") {
-						lineStyle += ' stroke-dasharray="4 2"'
-					} else if (d.style === "dotted") {
-						lineStyle += ' stroke-dasharray="2 3"'
-					}
+				let lineStyle = 'stroke="black" stroke-width="1.5"'
+				if (d.style === "dashed") {
+					lineStyle += ' stroke-dasharray="4 2"'
+				} else if (d.style === "dotted") {
+					lineStyle += ' stroke-dasharray="2 3"'
+				}
 
-					svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
+				svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
 
-					if (d.label) {
-						const midX = (from.x + to.x) / 2
-						const midY = (from.y + to.y) / 2
-						const angle = Math.atan2(to.y - from.y, to.x - from.x)
-						const offsetX = -Math.sin(angle) * 10
-						const offsetY = Math.cos(angle) * 10
-						svg += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
-					}
+				if (d.label) {
+					const midX = (from.x + to.x) / 2
+					const midY = (from.y + to.y) / 2
+					const angle = Math.atan2(to.y - from.y, to.x - from.x)
+					const offsetX = -Math.sin(angle) * 10
+					const offsetY = Math.cos(angle) * 10
+					svg += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
 				}
 			}
 
 			// Draw labels
-			if (labels) {
-				for (const lab of labels) {
-					if (lab.target === "baseWidth" && p[0] && p[1]) {
-						svg += `<text x="${(p[0].x + p[1].x) / 2}" y="${p[0].y + 15}" text-anchor="middle">${lab.text}</text>`
-					} else if (lab.target === "baseLength" && p[1] && p[2]) {
-						svg += `<text x="${(p[1].x + p[2].x) / 2}" y="${(p[1].y + p[2].y) / 2 + 15}" text-anchor="middle">${lab.text}</text>`
-					} else if (lab.target === "height" && p[4]) {
-						// Draw height line from base center to apex
-						if (p[0] && p[2]) {
-							const baseCenterX = (p[0].x + p[2].x) / 2
-							const baseCenterY = (p[0].y + p[2].y) / 2
-							svg += `<line x1="${baseCenterX}" y1="${baseCenterY}" x2="${p[4].x}" y2="${p[4].y}" stroke="gray" stroke-width="1" stroke-dasharray="2 2" />`
-							svg += `<text x="${baseCenterX - 10}" y="${(baseCenterY + p[4].y) / 2}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
-						}
+			for (const lab of labels) {
+				if (lab.target === "baseWidth" && p[0] && p[1]) {
+					svg += `<text x="${(p[0].x + p[1].x) / 2}" y="${p[0].y + 15}" text-anchor="middle">${lab.text}</text>`
+				} else if (lab.target === "baseLength" && p[1] && p[2]) {
+					svg += `<text x="${(p[1].x + p[2].x) / 2}" y="${(p[1].y + p[2].y) / 2 + 15}" text-anchor="middle">${lab.text}</text>`
+				} else if (lab.target === "height" && p[4]) {
+					// Draw height line from base center to apex
+					if (p[0] && p[2]) {
+						const baseCenterX = (p[0].x + p[2].x) / 2
+						const baseCenterY = (p[0].y + p[2].y) / 2
+						svg += `<line x1="${baseCenterX}" y1="${baseCenterY}" x2="${p[4].x}" y2="${p[4].y}" stroke="gray" stroke-width="1" stroke-dasharray="2 2" />`
+						svg += `<text x="${baseCenterX - 10}" y="${(baseCenterY + p[4].y) / 2}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
 					}
 				}
 			}
@@ -506,53 +454,49 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			if (p[1] && p[3]) svg += `<line x1="${p[1].x}" y1="${p[1].y}" x2="${p[3].x}" y2="${p[3].y}" ${solid} />` // Front-right edge to apex
 
 			// Draw diagonals if specified
-			if (diagonals) {
-				for (const d of diagonals) {
-					const from = p[d.fromVertexIndex]
-					const to = p[d.toVertexIndex]
-					if (!from || !to) continue
+			for (const d of diagonals) {
+				const from = p[d.fromVertexIndex]
+				const to = p[d.toVertexIndex]
+				if (!from || !to) continue
 
-					let lineStyle = 'stroke="black" stroke-width="1.5"'
-					if (d.style === "dashed") {
-						lineStyle += ' stroke-dasharray="4 2"'
-					} else if (d.style === "dotted") {
-						lineStyle += ' stroke-dasharray="2 3"'
-					}
+				let lineStyle = 'stroke="black" stroke-width="1.5"'
+				if (d.style === "dashed") {
+					lineStyle += ' stroke-dasharray="4 2"'
+				} else if (d.style === "dotted") {
+					lineStyle += ' stroke-dasharray="2 3"'
+				}
 
-					svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
+				svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
 
-					if (d.label) {
-						const midX = (from.x + to.x) / 2
-						const midY = (from.y + to.y) / 2
-						const angle = Math.atan2(to.y - from.y, to.x - from.x)
-						const offsetX = -Math.sin(angle) * 10
-						const offsetY = Math.cos(angle) * 10
-						svg += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
-					}
+				if (d.label) {
+					const midX = (from.x + to.x) / 2
+					const midY = (from.y + to.y) / 2
+					const angle = Math.atan2(to.y - from.y, to.x - from.x)
+					const offsetX = -Math.sin(angle) * 10
+					const offsetY = Math.cos(angle) * 10
+					svg += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
 				}
 			}
 
 			// Draw labels
-			if (labels) {
-				for (const lab of labels) {
-					if (lab.target === "baseLength" && p[0] && p[1]) {
-						// Label for the base triangle's 'b' (front edge)
-						svg += `<text x="${(p[0].x + p[1].x) / 2}" y="${p[0].y + 15}" text-anchor="middle">${lab.text}</text>`
-					} else if (lab.target === "baseHeight" && p[0] && p[1] && p[2]) {
-						// Label for the base triangle's 'h' (perpendicular height/depth)
-						// Draw a guide line from midpoint of front base to back vertex
-						const mid_p0_p1_x = (p[0].x + p[1].x) / 2
-						const mid_p0_p1_y = (p[0].y + p[1].y) / 2
-						svg += `<line x1="${mid_p0_p1_x}" y1="${mid_p0_p1_y}" x2="${p[2].x}" y2="${p[2].y}" stroke="gray" stroke-width="1" stroke-dasharray="2 2" />`
-						svg += `<text x="${(mid_p0_p1_x + p[2].x) / 2 + 10}" y="${(mid_p0_p1_y + p[2].y) / 2}" text-anchor="start" dominant-baseline="middle">${lab.text}</text>`
-					} else if (lab.target === "height" && p[0] && p[1] && p[2] && p[3]) {
-						// Label for pyramid height
-						// Draw height line from base centroid to apex
-						const base_centroid_x_for_label = (p[0].x + p[1].x + p[2].x) / 3
-						const base_centroid_y_for_label = (p[0].y + p[1].y + p[2].y) / 3
-						svg += `<line x1="${base_centroid_x_for_label}" y1="${base_centroid_y_for_label}" x2="${p[3].x}" y2="${p[3].y}" stroke="gray" stroke-width="1" stroke-dasharray="2 2" />`
-						svg += `<text x="${base_centroid_x_for_label - 10}" y="${(base_centroid_y_for_label + p[3].y) / 2}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
-					}
+			for (const lab of labels) {
+				if (lab.target === "baseLength" && p[0] && p[1]) {
+					// Label for the base triangle's 'b' (front edge)
+					svg += `<text x="${(p[0].x + p[1].x) / 2}" y="${p[0].y + 15}" text-anchor="middle">${lab.text}</text>`
+				} else if (lab.target === "baseHeight" && p[0] && p[1] && p[2]) {
+					// Label for the base triangle's 'h' (perpendicular height/depth)
+					// Draw a guide line from midpoint of front base to back vertex
+					const mid_p0_p1_x = (p[0].x + p[1].x) / 2
+					const mid_p0_p1_y = (p[0].y + p[1].y) / 2
+					svg += `<line x1="${mid_p0_p1_x}" y1="${mid_p0_p1_y}" x2="${p[2].x}" y2="${p[2].y}" stroke="gray" stroke-width="1" stroke-dasharray="2 2" />`
+					svg += `<text x="${(mid_p0_p1_x + p[2].x) / 2 + 10}" y="${(mid_p0_p1_y + p[2].y) / 2}" text-anchor="start" dominant-baseline="middle">${lab.text}</text>`
+				} else if (lab.target === "height" && p[0] && p[1] && p[2] && p[3]) {
+					// Label for pyramid height
+					// Draw height line from base centroid to apex
+					const base_centroid_x_for_label = (p[0].x + p[1].x + p[2].x) / 3
+					const base_centroid_y_for_label = (p[0].y + p[1].y + p[2].y) / 3
+					svg += `<line x1="${base_centroid_x_for_label}" y1="${base_centroid_y_for_label}" x2="${p[3].x}" y2="${p[3].y}" stroke="gray" stroke-width="1" stroke-dasharray="2 2" />`
+					svg += `<text x="${base_centroid_x_for_label - 10}" y="${(base_centroid_y_for_label + p[3].y) / 2}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
 				}
 			}
 			break

@@ -9,7 +9,7 @@ export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data
 // Defines the data and state for a single bar in the chart
 const BarDataSchema = z
 	.object({
-		label: z.string().describe("The category name displayed below this bar on the x-axis (e.g., 'January', 'Apples')."),
+		label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("The category name displayed below this bar on the x-axis (e.g., 'January', 'Apples', null). Null shows no label."),
 		value: z.number().describe("The numerical value determining the bar's height. Can be positive or negative."),
 		state: z
 			.enum(["normal", "unknown"])
@@ -22,7 +22,7 @@ const BarDataSchema = z
 // Define Y-axis schema separately
 const YAxisSchema = z
 	.object({
-		label: z.string().describe("The title for the vertical axis. Can be empty string if not needed."),
+		label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("The title for the vertical axis (e.g., 'Sales ($)', 'Count', null). Null shows no label."),
 		min: z.number().describe("The minimum value shown on the y-axis. Must be less than max."),
 		max: z.number().describe("The maximum value shown on the y-axis. Must be greater than min."),
 		tickInterval: z.number().describe("The spacing between tick marks on the y-axis. Should evenly divide (max - min).")
@@ -43,10 +43,12 @@ export const BarChartPropsSchema = z
 			.number()
 			.positive()
 			.describe("Total height of the chart in pixels including title and axis labels (e.g., 350)."),
-		title: z.string().describe("The main title displayed above the chart. Can be empty string for no title."),
+		title: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("The main title displayed above the chart (e.g., 'Monthly Sales', 'Student Scores', null). Null means no title."),
 		xAxisLabel: z
 			.string()
-			.describe("The label for the horizontal axis. Can be empty string if categories are self-explanatory."),
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe("The label for the horizontal axis (e.g., 'Months', 'Products', null). Null if categories are self-explanatory."),
 		yAxis: YAxisSchema.describe("Configuration for the vertical axis including scale, labels, and tick marks."),
 		data: z
 			.array(BarDataSchema)
@@ -57,9 +59,9 @@ export const BarChartPropsSchema = z
 			.string()
 			.regex(
 				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
 			)
-			.describe("CSS color for normal bars (e.g., '#4472C4', 'steelblue', 'rgba(68,114,196,0.8)').")
+			.describe("Hex-only color for normal bars (e.g., '#4472C4', '#1E90FF', '#00000080' for 50% alpha).")
 	})
 	.strict()
 	.describe(
@@ -100,15 +102,15 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 	svg +=
 		"<style>.axis-label { font-size: 14px; font-weight: bold; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
-	if (title) svg += `<text x="${width / 2}" y="${margin.top / 2}" class="title">${title}</text>`
+	if (title !== null) svg += `<text x="${width / 2}" y="${margin.top / 2}" class="title">${title}</text>`
 
 	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>` // Y-axis
 	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>` // X-axis
 
 	// Axis Labels
-	if (xAxisLabel)
+	if (xAxisLabel !== null)
 		svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 10}" class="axis-label">${xAxisLabel}</text>`
-	if (yAxis.label)
+	if (yAxis.label !== null)
 		svg += `<text x="${margin.left - 30}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 30}, ${margin.top + chartHeight / 2})">${yAxis.label}</text>`
 
 	// Y ticks and grid lines

@@ -1,78 +1,34 @@
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines one category of items in the diagram (e.g., "blue dots", "red dots")
-const RatioBoxItemSchema = z
-	.object({
-		count: z.number().int().min(0).describe("Number of items in this category."),
-		color: z.string().describe("CSS color for the items (e.g., '#0c7f99', '#bc2612')."),
-		style: z
-			.enum(["filled", "outline"])
-			.nullable()
-			.transform((val) => val ?? "filled")
-			.describe("The visual style of the item icon.")
-	})
-	.strict()
+const Item = z.object({ 
+  count: z.number().int().min(0).describe("Number of icons of this type to display (e.g., 12, 8, 0). Zero means this type is absent. Non-negative integer."), 
+  color: z.string().regex(
+    CSS_COLOR_PATTERN,
+    "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+  ).describe("Hex-only color for icons of this type (e.g., '#0C7F99' for teal, '#BC2612' for red, '#00000080' for 50% alpha). Each type should have distinct color for clarity."), 
+  style: z.enum(['filled','outline']).describe("Visual style of the icon. 'filled' creates solid circles, 'outline' creates hollow circles with border. Mix styles for emphasis.") 
+}).strict()
 
-// Defines a single box to be drawn as an overlay on the grid.
-// The box is defined by the rectangular group of grid cells it encloses.
-const BoxOverlaySchema = z
-	.object({
-		startRow: z.number().int().min(0).describe("The 0-based index of the top row the box encloses."),
-		endRow: z.number().int().min(0).describe("The 0-based index of the bottom row the box encloses."),
-		startCol: z.number().int().min(0).describe("The 0-based index of the leftmost column the box encloses."),
-		endCol: z.number().int().min(0).describe("The 0-based index of the rightmost column the box encloses."),
-		label: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("An optional text label for the box.")
-	})
-	.strict()
+const Box = z.object({ 
+  startRow: z.number().int().min(0).describe("Top row index (0-based) where this box begins. Row 0 is the first row. Must be >= 0 and <= endRow."), 
+  endRow: z.number().int().min(0).describe("Bottom row index (0-based) where this box ends, inclusive. To span 3 rows starting at row 1: startRow=1, endRow=3."), 
+  startCol: z.number().int().min(0).describe("Leftmost column index (0-based) where this box begins. Column 0 is first. Must be >= 0 and <= endCol."), 
+  endCol: z.number().int().min(0).describe("Rightmost column index (0-based) where this box ends, inclusive. To span 4 columns: startCol=0, endCol=3."), 
+  label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Text label for this box (e.g., '1/3', 'Group A', '25%', null). Null means no label. Positioned inside the box. Plaintext only; no markdown or HTML.") 
+}).strict()
 
-// The main Zod schema for the ratioBoxDiagram function
-export const RatioBoxDiagramPropsSchema = z
-	.object({
-		type: z.literal("ratioBoxDiagram"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 320)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 160)
-			.describe("The total height of the output SVG container in pixels."),
-		items: z
-			.array(RatioBoxItemSchema)
-			.min(1)
-			.describe("An array of item categories to be displayed sequentially in the grid."),
-		itemsPerRow: z.number().int().positive().describe("The number of item icons to display in each row."),
-		boxes: z
-			.array(BoxOverlaySchema)
-			.nullable()
-			.describe("An optional array of boxes to draw over the items to highlight groups."),
-		partitions: z
-			.number()
-			.int()
-			.positive()
-			.nullable()
-			.describe(
-				"If provided, visually divides the total set of items into this many equal groups using boxes to show equivalent ratios."
-			),
-		layout: z
-			.enum(["sequential", "grouped"])
-			.nullable()
-			.transform((val) => val ?? "sequential")
-			.describe(
-				"Layout style: 'sequential' places items in reading order, 'grouped' clusters each item type together with spatial separation."
-			)
-	})
-	.strict()
-	.describe(
-		"Generates a diagram of items in a grid with box overlays to illustrate ratios. Ideal for visualizing part-to-part and part-to-whole relationships and demonstrating equivalent ratios through partitioning."
-	)
+export const RatioBoxDiagramPropsSchema = z.object({
+  type: z.literal('ratioBoxDiagram').describe("Identifies this as a ratio box diagram for visualizing part-to-part and part-to-whole relationships."),
+  width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 500, 600, 400). Must accommodate the grid of items with reasonable spacing."),
+  height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 400, 300, 500). Adjusts based on total items and rows needed."),
+  items: z.array(Item).describe("Array of item types with counts and styles. Order matters: items are placed sequentially or grouped based on layout. Can be empty for blank grid."),
+  itemsPerRow: z.number().int().positive().describe("Number of item icons per row in the grid (e.g., 10, 12, 8). Determines grid width and total rows needed."),
+  boxes: z.array(Box).describe("Overlay boxes to highlight groups of items. Empty array means no boxes. Useful for showing fractions, ratios, or groupings. Can overlap."),
+  partitions: z.number().int().describe("Number of equal groups to divide all items into using boxes. 0 means no automatic partitioning. E.g., 3 creates thirds, 4 creates quarters."),
+  layout: z.enum(['sequential','grouped']).describe("Item arrangement. 'sequential' places items in reading order mixing types. 'grouped' clusters each type together with visual separation."),
+}).strict().describe("Creates a grid of colored circular icons to visualize ratios and proportions. Supports overlay boxes to highlight parts, automatic partitioning for fractions, and two layout modes. Perfect for teaching part-to-part ratios (red:blue), part-to-whole relationships (fraction of total), and equivalent ratios.")
 
 export type RatioBoxDiagramProps = z.infer<typeof RatioBoxDiagramPropsSchema>
 
@@ -151,7 +107,7 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 		}
 
 		// Draw boxes
-		if (boxes) {
+		if (boxes.length > 0) {
 			// Helper function to draw a box based on grid cell coordinates
 			const drawBox = (startRow: number, endRow: number, startCol: number, endCol: number, extraPadding = 0) => {
 				const boxPadding = cellWidth * 0.1 + extraPadding
@@ -217,7 +173,7 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 		}
 
 		// 2. Render Partition Boxes
-		if (partitions && partitions > 0 && totalItems % partitions === 0) {
+		if (partitions > 0 && totalItems % partitions === 0) {
 			const itemsPerPartition = totalItems / partitions
 			if (itemsPerPartition % itemsPerRow === 0) {
 				const rowsPerPartition = itemsPerPartition / itemsPerRow
@@ -237,7 +193,7 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 		}
 
 		// 3. Render Custom Boxes
-		if (boxes) {
+		if (boxes.length > 0) {
 			for (const box of boxes) {
 				const sr = Math.max(0, box.startRow)
 				const er = Math.min(numRows - 1, box.endRow)

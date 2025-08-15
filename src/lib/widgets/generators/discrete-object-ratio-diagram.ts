@@ -48,8 +48,10 @@ export const DiscreteObjectRatioDiagramPropsSchema = z
 			),
 		title: z
 			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"Title displayed above the diagram (e.g., 'Fruit Basket Contents', 'Pet Types in Class', ''). Empty string means no title. Keep concise."
+				"Title displayed above the diagram (e.g., 'Fruit Basket Contents', null). Null means no title. Plaintext only; no markdown/HTML."
 			)
 	})
 	.strict()
@@ -83,7 +85,7 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 
 	svg += `<rect x="${containerX}" y="${containerY}" width="${containerWidth}" height="${containerHeight}" fill="#fafafa" stroke="#e0e0e0" stroke-width="2" rx="8" ry="8"/>`
 
-	if (title !== "") {
+	if (title !== null) {
 		svg += `<text x="${width / 2}" y="${padding.top / 2}" fill="#333333" text-anchor="middle" font-weight="bold">${title}</text>`
 	}
 

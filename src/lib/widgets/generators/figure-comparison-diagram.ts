@@ -1,95 +1,40 @@
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines a 2D coordinate point for a vertex
-const PointSchema = z
-	.object({
-		x: z.number().describe("The horizontal coordinate of the vertex."),
-		y: z.number().describe("The vertical coordinate of the vertex.")
-	})
-	.strict()
+const Point = z.object({ 
+  x: z.number().describe("Horizontal coordinate relative to figure's local origin. Can be negative. Figure will be auto-positioned within the layout (e.g., -30, 0, 50, 25.5)."), 
+  y: z.number().describe("Vertical coordinate relative to figure's local origin. Can be negative. Positive y is downward (e.g., -20, 0, 40, 15.5).") 
+}).strict()
 
-// Defines an independent figure with its own properties
-const FigureSchema = z
-	.object({
-		vertices: z.array(PointSchema).min(3).describe("An array of {x, y} coordinates defining the figure's vertices."),
-		fillColor: z
-			.string()
-			.nullable()
-			.describe("The CSS fill color for the figure (e.g., 'rgba(116, 207, 112, 0.3)' or null for no fill)."),
-		strokeColor: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "black")
-			.describe("The CSS stroke color for the figure outline."),
-		strokeWidth: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 2)
-			.describe("The width of the figure outline."),
-		sideLabels: z
-			.array(
-				z
-					.string()
-					.nullable()
-					.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			)
-			.nullable()
-			.describe("An optional array of labels for each side of the figure. Use null for sides without labels."),
-		sideLabelOffset: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 15)
-			.describe("Distance from the edge to place side labels."),
-		figureLabel: z
-			.object({
-				text: z.string().describe('The figure label text (e.g., "Figure A", "Figure B").'),
-				position: z
-					.enum(["top", "bottom", "left", "right", "center"])
-					.nullable()
-					.transform((val) => val ?? "bottom")
-					.describe("Where to position the figure label relative to the shape."),
-				offset: z
-					.number()
-					.nullable()
-					.transform((val) => val ?? 20)
-					.describe("Distance from the shape to place the figure label.")
-			})
-			.nullable()
-			.describe("An optional label for the entire figure.")
-	})
-	.strict()
+const Figure = z.object({
+  vertices: z.array(Point).describe("Ordered array of vertices defining the polygon. Connect in order, closing back to first. Minimum 3 vertices for a valid polygon (e.g., triangle, square, pentagon)."),
+  fillColor: z.string().regex(
+    CSS_COLOR_PATTERN,
+    "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+  ).describe("Hex-only fill color for the polygon interior (e.g., '#E8F4FD', 'transparent' for outline only, '#FFC8004D' for ~30% alpha)."),
+  strokeColor: z.string().regex(
+    CSS_COLOR_PATTERN,
+    "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+  ).describe("Hex-only color for the polygon's border (e.g., '#000000', '#333333', '#00008B'). Set to 'transparent' to hide the outline."),
+  strokeWidth: z.number().min(0).describe("Width of the polygon's border in pixels (e.g., 2 for standard, 3 for bold, 1 for thin). Use 0 for no visible border."),
+  sideLabels: z.array(z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))).describe("Labels for each edge of the polygon. Array length should match vertex count. First label is for edge from vertex[0] to vertex[1]. Null for no label on that edge."),
+  sideLabelOffset: z.number().describe("Distance in pixels from edge to place side labels. Positive places outside, negative inside (e.g., 15, -10, 20). Applies to all side labels."),
+  figureLabel: z.object({ 
+    text: z.string().describe("Main label for the entire figure (e.g., 'Figure A', 'Original', 'Square', '64 cm²'). Can include math notation or symbols."), 
+    position: z.enum(['top','bottom','left','right','center']).describe("Where to place the label relative to the figure. 'center' places inside the polygon, others place outside."), 
+    offset: z.number().describe("Additional spacing in pixels from the figure's edge or center (e.g., 10, 20, 5). For 'center', this has no effect.") 
+  }).strict().describe("Configuration for the figure's main identifying label."),
+}).strict()
 
-// The main schema for figure comparison diagrams
-export const FigureComparisonDiagramPropsSchema = z
-	.object({
-		type: z.literal("figureComparisonDiagram"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 220)
-			.describe("The total height of the output SVG container in pixels."),
-		figures: z.array(FigureSchema).min(1).describe("An array of independent figures to be displayed for comparison."),
-		layout: z
-			.enum(["horizontal", "vertical"])
-			.nullable()
-			.transform((val) => val ?? "horizontal")
-			.describe("How to arrange the figures relative to each other."),
-		spacing: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 50)
-			.describe("The spacing between figures in pixels.")
-	})
-	.strict()
-	.describe(
-		"Generates diagrams for comparing multiple independent geometric figures side-by-side or vertically. Perfect for scale copies, similarity problems, and geometric comparisons. Supports labeled sides, figure labels (like 'Figure A', 'Figure B'), different colors for visual distinction, and automatic scaling to fit the container. Ideal for educational content involving proportional reasoning, similar figures, and geometric transformations."
-	)
+export const FigureComparisonDiagramPropsSchema = z.object({
+  type: z.literal('figureComparisonDiagram').describe("Identifies this as a figure comparison diagram for displaying multiple polygons side by side."),
+  width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 600, 800, 500). Must accommodate all figures with spacing and labels."),
+  height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 400, 300, 500). Must accommodate all figures with spacing and labels."),
+  figures: z.array(Figure).describe("Array of polygonal figures to display. Can show different shapes or same shape with different properties. Order determines left-to-right or top-to-bottom placement."),
+  layout: z.enum(['horizontal','vertical']).describe("Arrangement direction. 'horizontal' places figures left to right. 'vertical' stacks figures top to bottom. Choose based on figure count and aspect ratios."),
+  spacing: z.number().min(0).describe("Gap between figures in pixels (e.g., 50, 80, 30). Provides visual separation. Larger spacing prevents label overlap."),
+}).strict().describe("Creates a comparison view of multiple polygonal figures with comprehensive labeling options. Perfect for showing transformations, comparing shapes, demonstrating congruence/similarity, or analyzing different polygons. Each figure can have different styling and complete edge/vertex labeling.")
 
 export type FigureComparisonDiagramProps = z.infer<typeof FigureComparisonDiagramPropsSchema>
 
@@ -187,7 +132,7 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 /**
  * Draws a single figure with all its properties
  */
-function drawFigure(figure: z.infer<typeof FigureSchema>, offsetX: number, offsetY: number, scale: number): string {
+function drawFigure(figure: z.infer<typeof Figure>, offsetX: number, offsetY: number, scale: number): string {
 	let svg = ""
 
 	// Transform vertices
@@ -198,90 +143,85 @@ function drawFigure(figure: z.infer<typeof FigureSchema>, offsetX: number, offse
 
 	// Draw the figure shape
 	const points = transformedVertices.map((v) => `${v.x},${v.y}`).join(" ")
-	const fillAttr = figure.fillColor ? `fill="${figure.fillColor}"` : 'fill="none"'
-	const strokeColor = figure.strokeColor ?? "black"
-	const strokeWidth = (figure.strokeWidth ?? 2) * scale
+	const fillAttr = `fill="${figure.fillColor}"`
+	const strokeWidth = figure.strokeWidth * scale
 
-	svg += `<polygon points="${points}" ${fillAttr} stroke="${strokeColor}" stroke-width="${strokeWidth}"/>`
+	svg += `<polygon points="${points}" ${fillAttr} stroke="${figure.strokeColor}" stroke-width="${strokeWidth}"/>`
 
 	// Draw side labels
-	if (figure.sideLabels) {
-		for (let i = 0; i < Math.min(figure.sideLabels.length, transformedVertices.length); i++) {
-			const label = figure.sideLabels[i]
-			if (!label) continue
+	for (let i = 0; i < Math.min(figure.sideLabels.length, transformedVertices.length); i++) {
+		const label = figure.sideLabels[i]
+		if (!label) continue
 
-			const from = transformedVertices[i]
-			const to = transformedVertices[(i + 1) % transformedVertices.length]
-			if (!from || !to) continue
+		const from = transformedVertices[i]
+		const to = transformedVertices[(i + 1) % transformedVertices.length]
+		if (!from || !to) continue
 
-			// Calculate midpoint
-			const midX = (from.x + to.x) / 2
-			const midY = (from.y + to.y) / 2
+		// Calculate midpoint
+		const midX = (from.x + to.x) / 2
+		const midY = (from.y + to.y) / 2
 
-			// Calculate perpendicular offset for label placement
-			const dx = to.x - from.x
-			const dy = to.y - from.y
-			const length = Math.sqrt(dx * dx + dy * dy)
-			const normalX = -dy / length
-			const normalY = dx / length
+		// Calculate perpendicular offset for label placement
+		const dx = to.x - from.x
+		const dy = to.y - from.y
+		const length = Math.sqrt(dx * dx + dy * dy)
+		const normalX = -dy / length
+		const normalY = dx / length
 
-			// Determine outward direction
-			const centerX = transformedVertices.reduce((sum, v) => sum + v.x, 0) / transformedVertices.length
-			const centerY = transformedVertices.reduce((sum, v) => sum + v.y, 0) / transformedVertices.length
-			const toCenterX = centerX - midX
-			const toCenterY = centerY - midY
-			const dotProduct = normalX * toCenterX + normalY * toCenterY
+		// Determine outward direction
+		const centerX = transformedVertices.reduce((sum, v) => sum + v.x, 0) / transformedVertices.length
+		const centerY = transformedVertices.reduce((sum, v) => sum + v.y, 0) / transformedVertices.length
+		const toCenterX = centerX - midX
+		const toCenterY = centerY - midY
+		const dotProduct = normalX * toCenterX + normalY * toCenterY
 
-			// Flip normal if it points toward center
-			const outwardNormalX = dotProduct > 0 ? -normalX : normalX
-			const outwardNormalY = dotProduct > 0 ? -normalY : normalY
+		// Flip normal if it points toward center
+		const outwardNormalX = dotProduct > 0 ? -normalX : normalX
+		const outwardNormalY = dotProduct > 0 ? -normalY : normalY
 
-			const labelOffset = (figure.sideLabelOffset ?? 15) * scale
-			const labelX = midX + outwardNormalX * labelOffset
-			const labelY = midY + outwardNormalY * labelOffset
+		const labelOffset = figure.sideLabelOffset * scale
+		const labelX = midX + outwardNormalX * labelOffset
+		const labelY = midY + outwardNormalY * labelOffset
 
-			const fontSize = Math.max(10, 14 * scale)
-			svg += `<text x="${labelX}" y="${labelY}" fill="${strokeColor}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}" font-weight="bold">${label}</text>`
-		}
+		const fontSize = Math.max(10, 14 * scale)
+		svg += `<text x="${labelX}" y="${labelY}" fill="${figure.strokeColor}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}" font-weight="bold">${label}</text>`
 	}
 
 	// Draw figure label
-	if (figure.figureLabel) {
-		const bounds = {
-			minX: Math.min(...transformedVertices.map((v) => v.x)),
-			maxX: Math.max(...transformedVertices.map((v) => v.x)),
-			minY: Math.min(...transformedVertices.map((v) => v.y)),
-			maxY: Math.max(...transformedVertices.map((v) => v.y))
-		}
-
-		const centerX = (bounds.minX + bounds.maxX) / 2
-		const centerY = (bounds.minY + bounds.maxY) / 2
-		const labelOffset = (figure.figureLabel.offset ?? 20) * scale
-
-		let labelX = centerX
-		let labelY = centerY
-
-		switch (figure.figureLabel.position) {
-			case "top":
-				labelY = bounds.minY - labelOffset
-				break
-			case "bottom":
-				labelY = bounds.maxY + labelOffset
-				break
-			case "left":
-				labelX = bounds.minX - labelOffset
-				break
-			case "right":
-				labelX = bounds.maxX + labelOffset
-				break
-			default:
-				// Already set to center
-				break
-		}
-
-		const fontSize = Math.max(12, 16 * scale)
-		svg += `<text x="${labelX}" y="${labelY}" fill="${strokeColor}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}" font-weight="bold">${figure.figureLabel.text}</text>`
+	const bounds = {
+		minX: Math.min(...transformedVertices.map((v) => v.x)),
+		maxX: Math.max(...transformedVertices.map((v) => v.x)),
+		minY: Math.min(...transformedVertices.map((v) => v.y)),
+		maxY: Math.max(...transformedVertices.map((v) => v.y))
 	}
+
+	const centerX = (bounds.minX + bounds.maxX) / 2
+	const centerY = (bounds.minY + bounds.maxY) / 2
+	const labelOffset = figure.figureLabel.offset * scale
+
+	let labelX = centerX
+	let labelY = centerY
+
+	switch (figure.figureLabel.position) {
+		case "top":
+			labelY = bounds.minY - labelOffset
+			break
+		case "bottom":
+			labelY = bounds.maxY + labelOffset
+			break
+		case "left":
+			labelX = bounds.minX - labelOffset
+			break
+		case "right":
+			labelX = bounds.maxX + labelOffset
+			break
+		default:
+			// Already set to center
+			break
+	}
+
+	const fontSize = Math.max(12, 16 * scale)
+	svg += `<text x="${labelX}" y="${labelY}" fill="${figure.strokeColor}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}" font-weight="bold">${figure.figureLabel.text}</text>`
 
 	return svg
 }

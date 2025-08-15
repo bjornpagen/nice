@@ -1,74 +1,34 @@
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines a single point to be plotted on the number line
-const NumberLinePointSchema = z
-	.object({
-		value: z.number().describe("The numerical value where the point is located on the line."),
-		label: z
-			.string()
-			.nullable()
-			.describe('An optional text label to display next to the point (e.g., "A", "Minnesota").'),
-		color: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "#4285F4")
-			.describe("The CSS color of the point."),
-		labelPosition: z
-			.enum(["above", "below", "left", "right"])
-			.nullable()
-			.describe("Specifies the position of the label relative to the point.")
-	})
-	.strict()
+const Point = z.object({ 
+  value: z.number().describe("Position of this point on the number line (e.g., 3.5, -2, 0, 7). Must be within min/max range."), 
+  label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Text label for this point (e.g., 'A', 'Start', 'π', '√2', null). Null shows dot without label. Plaintext only; no markdown or HTML."), 
+  color: z.string().regex(
+    CSS_COLOR_PATTERN,
+    "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+  ).describe("Hex-only color for the point dot and its label (e.g., '#FF6B6B', '#1E90FF', '#00000080' for 50% alpha). Makes important points stand out."), 
+  labelPosition: z.enum(['above','below','left','right']).describe("Where to place the label relative to the point. For horizontal: use 'above'/'below'. For vertical: use 'left'/'right'.") 
+}).strict()
 
-// Defines a custom label for a specific tick mark (e.g., "sea level" at 0)
-const SpecialTickLabelSchema = z
-	.object({
-		value: z.number().describe("The value on the number line to label."),
-		label: z.string().describe("The custom text for the label.")
-	})
-	.strict()
+const SpecialTick = z.object({ 
+  value: z.number().describe("Position where this special tick appears (e.g., 3.14159, 1.414, 2.5). Overrides default tick label at this position."), 
+  label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Custom label for this tick position (e.g., 'π', '√2', '2½', 'e', null). Replaces the numeric label. Null uses default numeric label. Plaintext only; no markdown or HTML.") 
+}).strict()
 
-// The main Zod schema for the numberLine function
-export const NumberLinePropsSchema = z
-	.object({
-		type: z.literal("numberLine"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 460)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 100)
-			.describe("The total height of the output SVG container in pixels."),
-		orientation: z
-			.enum(["horizontal", "vertical"])
-			.nullable()
-			.transform((val) => val ?? "horizontal")
-			.describe("The orientation of the number line."),
-		min: z.number().describe("The minimum value displayed on the line."),
-		max: z.number().describe("The maximum value displayed on the line."),
-		majorTickInterval: z.number().describe("The numeric interval between labeled tick marks."),
-		minorTicksPerInterval: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 0)
-			.describe("The number of unlabeled minor ticks to draw between each major tick."),
-		points: z
-			.array(NumberLinePointSchema)
-			.nullable()
-			.describe("An optional array of point objects to be plotted on the line."),
-		specialTickLabels: z
-			.array(SpecialTickLabelSchema)
-			.nullable()
-			.describe('Optional custom labels for specific values on the line (e.g., labeling 0 as "sea level").')
-	})
-	.strict()
-	.describe(
-		'This is a highly versatile template designed to generate a precise and customizable number line as an SVG graphic. It can be rendered horizontally (for general number comparisons) or vertically (often used for temperature, elevation, or financial contexts). The generator will construct a line representing a specified numerical range (minimum and maximum values). The line will be marked with labeled major tick marks at a configurable interval. It also supports rendering smaller, unlabeled minor tick marks between the major ones to show finer gradations (e.g., quarters, tenths). This is crucial for questions involving fractions and decimals. A key feature is the ability to plot multiple points on the line. Each point is defined by its numerical value and can be styled with a specific color. An accompanying text label (e.g., a letter like "A", a name like "Minnesota", or a value like "−78 °C") can be positioned above, below, or next to each point. Special labels, such as "sea level" or "Zero balance," can be associated with specific values like 0. The final output is a clean, accurately scaled, and accessible SVG graphic ready for embedding in a QTI item, suitable for a wide range of questions from identifying points to comparing rational numbers.'
-	)
+export const NumberLinePropsSchema = z.object({
+  type: z.literal('numberLine').describe("Identifies this as a general-purpose number line widget."),
+  width: z.number().positive().describe("For horizontal: total width in pixels (e.g., 600, 700, 500). For vertical: the narrower dimension (e.g., 100, 150)."),
+  height: z.number().positive().describe("For horizontal: total height in pixels (e.g., 100, 150, 120). For vertical: the longer dimension (e.g., 400, 500)."),
+  orientation: z.enum(['horizontal','vertical']).describe("Direction of the number line. 'horizontal' goes left-to-right, 'vertical' goes bottom-to-top."),
+  min: z.number().describe("Minimum value shown on the number line (e.g., -10, 0, -5, -100). Left end for horizontal, bottom for vertical."),
+  max: z.number().describe("Maximum value shown on the number line (e.g., 10, 100, 20, 5). Right end for horizontal, top for vertical."),
+  majorTickInterval: z.number().positive().describe("Spacing between major (labeled) tick marks (e.g., 1, 5, 10, 0.5). Should evenly divide (max - min) for best appearance."),
+  minorTicksPerInterval: z.number().int().min(0).describe("Number of minor ticks between each pair of major ticks (e.g., 4 for fifths, 9 for tenths, 1 for halves, 0 for none)."),
+  points: z.array(Point).describe("Special points to highlight on the number line. Empty array means no highlighted points. Each can have custom color and optional label."),
+  specialTickLabels: z.array(SpecialTick).describe("Override default numeric labels at specific positions. Empty array uses all default labels. Perfect for π, e, √2, or fractions."),
+}).strict().describe("Creates a versatile number line with customizable orientation, tick marks, special points, and labels. Supports both horizontal and vertical layouts, minor tick subdivisions, and custom labeling for special values. Essential building block for teaching number concepts, ordering, and measurement.")
 
 export type NumberLineProps = z.infer<typeof NumberLinePropsSchema>
 
@@ -98,7 +58,7 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 		for (let t = min; t <= max; t += majorTickInterval) {
 			const x = toSvgX(t)
 			svg += `<line x1="${x}" y1="${yPos - 8}" x2="${x}" y2="${yPos + 8}" stroke="black"/>`
-			if (!specialTickLabels?.some((stl) => stl.value === t)) {
+			if (!specialTickLabels.some((stl) => stl.value === t)) {
 				svg += `<text x="${x}" y="${yPos + 25}" fill="black" text-anchor="middle">${t}</text>`
 			}
 			for (let m = 1; m <= minorTicksPerInterval; m++) {
@@ -108,39 +68,35 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 			}
 		}
 		// Special Labels
-		if (specialTickLabels) {
-			for (const s of specialTickLabels) {
-				svg += `<text x="${toSvgX(s.value)}" y="${yPos + 25}" fill="black" text-anchor="middle" font-weight="bold">${s.label}</text>`
-			}
+		for (const s of specialTickLabels) {
+			svg += `<text x="${toSvgX(s.value)}" y="${yPos + 25}" fill="black" text-anchor="middle" font-weight="bold">${s.label}</text>`
 		}
-		if (points) {
-			for (const p of points) {
-				const cx = toSvgX(p.value)
-				let labelX = cx
-				let labelY = yPos
-				let anchor = "middle"
-				switch (p.labelPosition) {
-					case "above":
-						labelY -= 15
-						break
-					case "below":
-						labelY += 15
-						break
-					case "left":
-						labelX -= 8
-						anchor = "end"
-						break
-					case "right":
-						labelX += 8
-						anchor = "start"
-						break
-					default:
-						labelY -= 15 // default to above
-				}
-				svg += `<circle cx="${cx}" cy="${yPos}" r="5" fill="${p.color}" stroke="black" stroke-width="1"/>`
-				if (p.label)
-					svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="${anchor}" dominant-baseline="middle">${p.label}</text>`
+		for (const p of points) {
+			const cx = toSvgX(p.value)
+			let labelX = cx
+			let labelY = yPos
+			let anchor = "middle"
+			switch (p.labelPosition) {
+				case "above":
+					labelY -= 15
+					break
+				case "below":
+					labelY += 15
+					break
+				case "left":
+					labelX -= 8
+					anchor = "end"
+					break
+				case "right":
+					labelX += 8
+					anchor = "start"
+					break
+				default:
+					labelY -= 15 // default to above
 			}
+			svg += `<circle cx="${cx}" cy="${yPos}" r="5" fill="${p.color}" stroke="black" stroke-width="1"/>`
+			if (p.label)
+				svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="${anchor}" dominant-baseline="middle">${p.label}</text>`
 		}
 	} else {
 		// Vertical
@@ -151,7 +107,7 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 		for (let t = min; t <= max; t += majorTickInterval) {
 			const y = toSvgY(t)
 			svg += `<line x1="${xPos - 8}" y1="${y}" x2="${xPos + 8}" y2="${y}" stroke="black"/>`
-			if (!specialTickLabels?.some((stl) => stl.value === t)) {
+			if (!specialTickLabels.some((stl) => stl.value === t)) {
 				svg += `<text x="${xPos - 15}" y="${y + 4}" fill="black" text-anchor="end">${t}</text>`
 			}
 			for (let m = 1; m <= minorTicksPerInterval; m++) {
@@ -160,34 +116,30 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 			}
 		}
 		// Special Labels
-		if (specialTickLabels) {
-			for (const s of specialTickLabels) {
-				svg += `<text x="${xPos - 15}" y="${toSvgY(s.value) + 4}" fill="black" text-anchor="end" font-weight="bold">${s.label}</text>`
-			}
+		for (const s of specialTickLabels) {
+			svg += `<text x="${xPos - 15}" y="${toSvgY(s.value) + 4}" fill="black" text-anchor="end" font-weight="bold">${s.label}</text>`
 		}
-		if (points) {
-			for (const p of points) {
-				const cy = toSvgY(p.value)
-				let labelX = xPos
-				let labelY = cy
-				let anchor = "middle"
-				switch (p.labelPosition) {
-					case "left":
-						labelX -= 15
-						anchor = "end"
-						break
-					case "right":
-						labelX += 15
-						anchor = "start"
-						break
-					default:
-						labelX += 15
-						anchor = "start" // default to right
-				}
-				svg += `<circle cx="${xPos}" cy="${cy}" r="5" fill="${p.color}" stroke="black" stroke-width="1"/>`
-				if (p.label)
-					svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="${anchor}" dominant-baseline="middle">${p.label}</text>`
+		for (const p of points) {
+			const cy = toSvgY(p.value)
+			let labelX = xPos
+			let labelY = cy
+			let anchor = "middle"
+			switch (p.labelPosition) {
+				case "left":
+					labelX -= 15
+					anchor = "end"
+					break
+				case "right":
+					labelX += 15
+					anchor = "start"
+					break
+				default:
+					labelX += 15
+					anchor = "start" // default to right
 			}
+			svg += `<circle cx="${xPos}" cy="${cy}" r="5" fill="${p.color}" stroke="black" stroke-width="1"/>`
+			if (p.label)
+				svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="${anchor}" dominant-baseline="middle">${p.label}</text>`
 		}
 	}
 	svg += "</svg>"

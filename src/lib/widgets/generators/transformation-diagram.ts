@@ -1,282 +1,150 @@
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines a 2D coordinate point for a vertex.
-const PointSchema = z
-	.object({
-		x: z.number().describe("The horizontal coordinate of the point."),
-		y: z.number().describe("The vertical coordinate of the point.")
-	})
-	.strict()
+const Vertex = z.object({ 
+  x: z.number().describe("X-coordinate of the vertex in diagram space (e.g., 100, 250, -50). Can be negative. Diagram auto-centers all content."), 
+  y: z.number().describe("Y-coordinate of the vertex in diagram space (e.g., 150, -100, 75). Positive y is downward. Diagram auto-centers all content.") 
+}).strict()
 
-// Defines a line segment, used for reflection lines or visual aids.
-const LineSchema = z
-	.object({
-		from: PointSchema.describe("The starting {x, y} coordinate of the line."),
-		to: PointSchema.describe("The ending {x, y} coordinate of the line."),
-		style: z
-			.enum(["solid", "dashed", "dotted"])
-			.nullable()
-			.transform((val) => val ?? "solid")
-			.describe("The visual style of the line."),
-		color: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "black")
-			.describe("The CSS color of the line.")
-	})
-	.strict()
+const AngleMark = z.object({ 
+  vertexIndex: z.number().describe("Zero-based index of the vertex where angle is marked. Must be valid index into vertices array (e.g., 0, 1, 2)."), 
+  radius: z.number().describe("Radius of the angle arc in pixels (e.g., 20, 30, 25). Larger values create wider arcs. Use consistent radius for similar angles."), 
+  label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Angle measurement or name (e.g., '90°', '45°', '∠ABC', 'θ', null). Null shows arc without label. Positioned near the arc."), 
+  labelDistance: z.number().describe("Distance from vertex to place the label in pixels (e.g., 40, 50, 35). Should be beyond the arc radius to avoid overlap.") 
+}).strict()
 
-// Defines properties for a Translation transformation.
-const TranslationSchema = z
-	.object({
-		type: z.literal("translation"),
-		showVectors: z.boolean().describe("If true, draws arrows from pre-image vertices to image vertices.")
-	})
-	.strict()
+const SideLength = z.object({ 
+  value: z.string().describe("Length label for this edge (e.g., '5 cm', '3.2', 'x', 'a + b'). Can include units or expressions."), 
+  position: z.enum(['inside','outside']).describe("Where to place the label relative to the shape. 'inside' for interior placement, 'outside' for exterior."), 
+  offset: z.number().describe("Distance from the edge in pixels (e.g., 10, 15, 8). Positive values move away from edge in the direction of position.") 
+}).strict()
 
-// Defines properties for a Reflection transformation.
-const ReflectionSchema = z
-	.object({
-		type: z.literal("reflection"),
-		lineOfReflection: z
-			.object({
-				from: z
-					.object({
-						x: z.number().describe("The horizontal coordinate of the point."),
-						y: z.number().describe("The vertical coordinate of the point.")
-					})
-					.strict()
-					.describe("The starting {x, y} coordinate of the line."),
-				to: z
-					.object({
-						x: z.number().describe("The horizontal coordinate of the point."),
-						y: z.number().describe("The vertical coordinate of the point.")
-					})
-					.strict()
-					.describe("The ending {x, y} coordinate of the line."),
-				style: z
-					.enum(["solid", "dashed", "dotted"])
-					.nullable()
-					.transform((val) => val ?? "solid")
-					.describe("The visual style of the line."),
-				color: z
-					.string()
-					.nullable()
-					.transform((val) => val ?? "black")
-					.describe("The CSS color of the line.")
-			})
-			.strict()
-			.describe("The line across which the shape is reflected.")
-	})
-	.strict()
+const Shape = z.object({ 
+  vertices: z.array(Vertex).describe("Ordered vertices defining the polygon. Connect in sequence, closing to first. Minimum 3 for valid shape. Order determines edge labeling."), 
+  label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Shape identifier (e.g., 'ABCD', 'Figure 1', 'P', 'P\\'', null). Null means no label. Positioned near shape's center."), 
+  fillColor: z.string().regex(
+    CSS_COLOR_PATTERN,
+    "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+  ).describe("CSS fill color (e.g., 'rgba(100,149,237,0.3)' for translucent blue, 'lightgreen', '#FFE5B4'). Use alpha for see-through shapes."), 
+  strokeColor: z.string().regex(
+    CSS_COLOR_PATTERN,
+    "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+  ).describe("CSS color for shape outline (e.g., 'black', '#0000FF', 'darkgreen'). Should contrast with fill and background."), 
+  vertexLabels: z.array(z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))).describe("Labels for each vertex in order (e.g., ['A','B','C','D', null]). Array length must match vertices length. Null skips that vertex label."), 
+  angleMarks: z.array(AngleMark).describe("Angle annotations to display. Empty array means no angle marks. Useful for showing congruent angles or measurements."), 
+  sideLengths: z.array(SideLength).describe("Edge length labels. First item labels edge from vertex[0] to vertex[1], etc. Array length should match number of edges.") 
+}).strict()
 
-// Defines properties for a Rotation transformation.
-const RotationSchema = z
-	.object({
-		type: z.literal("rotation"),
-		centerOfRotation: z
-			.object({
-				x: z.number().describe("The horizontal coordinate of the point."),
-				y: z.number().describe("The vertical coordinate of the point.")
-			})
-			.strict()
-			.describe("The point around which the shape is rotated."),
-		angle: z.number().describe("The angle of rotation in degrees (positive is counter-clockwise).")
-	})
-	.strict()
+const Transformation = z.discriminatedUnion('type', [
+  z.object({ type: z.literal('translation'), showVectors: z.boolean().describe("Whether to draw arrows from each pre-image vertex to its image. Visualizes the translation vector.") }).strict(),
+  z.object({ type: z.literal('reflection'), lineOfReflection: z.object({ from: Vertex, to: Vertex, style: z.enum(['solid','dashed','dotted']), color: z.string().regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)") }).strict().describe("The mirror line for reflection.") }).strict(),
+  z.object({ type: z.literal('rotation'), centerOfRotation: Vertex.describe("Fixed point around which rotation occurs."), angle: z.number().describe("Rotation angle in degrees. Positive is counter-clockwise (e.g., 90, -45, 180).") }).strict(),
+  z.object({ type: z.literal('dilation'), centerOfDilation: Vertex.describe("Fixed point from which scaling occurs."), showRays: z.boolean().describe("Whether to draw rays from center through corresponding vertices. Shows scaling direction.") }).strict(),
+]).describe("The transformation type and its specific parameters. The system calculates the image position automatically.")
 
-// Defines properties for a Dilation transformation.
-const DilationSchema = z
-	.object({
-		type: z.literal("dilation"),
-		centerOfDilation: z
-			.object({
-				x: z.number().describe("The horizontal coordinate of the point."),
-				y: z.number().describe("The vertical coordinate of the point.")
-			})
-			.strict()
-			.describe("The point from which the shape is scaled."),
-		showRays: z.boolean().describe("If true, draws rays from the center through corresponding vertices.")
-	})
-	.strict()
-
-// Factory function for angle mark schema to prevent $ref generation
-const createAngleMarkSchema = () =>
-	z
-		.object({
-			vertexIndex: z.number().describe("The index of the vertex where the angle mark should be drawn."),
-			radius: z
-				.number()
-				.nullable()
-				.transform((val) => val ?? 20)
-				.describe("The radius of the angle arc in pixels."),
-			label: z
-				.string()
-				.nullable()
-				.transform((val) => (val === "null" || val === "NULL" ? null : val))
-				.describe("The angle label (e.g., '90°', '∠ABC', '166°')."),
-			labelDistance: z
-				.number()
-				.nullable()
-				.transform((val) => val ?? 30)
-				.describe("Distance from vertex to place the label.")
-		})
-		.strict()
-
-// Defines an additional labeled point
-const AdditionalPointSchema = z
-	.object({
-		x: z.number().describe("The horizontal coordinate of the point."),
-		y: z.number().describe("The vertical coordinate of the point."),
-		label: z.string().describe("The label for the point (e.g., 'R', 'P')."),
-		style: z
-			.enum(["dot", "circle"])
-			.nullable()
-			.transform((val) => val ?? "dot")
-			.describe("The visual style of the point.")
-	})
-	.strict()
-
-// Factory function for side length schema to prevent $ref generation
-const createSideLengthSchema = () =>
-	z
-		.object({
-			value: z.string().describe("The length value to display (e.g., '5', '3.14', 'x')."),
-			position: z
-				.enum(["inside", "outside"])
-				.nullable()
-				.transform((val) => val ?? "outside")
-				.describe("Whether to place the label inside or outside the shape."),
-			offset: z
-				.number()
-				.nullable()
-				.transform((val) => val ?? 10)
-				.describe("Distance from the edge to place the label.")
-		})
-		.strict()
-
-// The main Zod schema for the transformationDiagram function.
-export const TransformationDiagramPropsSchema = z
-	.object({
-		type: z.literal("transformationDiagram"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The total height of the output SVG container in pixels."),
-		// INLINED: The ShapeSchema definition is now directly inside the preImage property.
-		preImage: z
-			.object({
-				vertices: z
-					.array(
-						z
-							.object({
-								x: z.number().describe("The horizontal coordinate of the point."),
-								y: z.number().describe("The vertical coordinate of the point.")
-							})
-							.strict()
-					)
-					.min(3)
-					.describe("An ordered list of vertices defining the polygon."),
-				label: z
-					.string()
-					.nullable()
-					.transform((val) => (val === "null" || val === "NULL" ? null : val))
-					.describe('An optional text label for the shape (e.g., "A", "B").'),
-				fillColor: z
-					.string()
-					.nullable()
-					.transform((val) => val ?? "rgba(120, 84, 171, 0.2)")
-					.describe("The fill color of the shape."),
-				strokeColor: z
-					.string()
-					.nullable()
-					.transform((val) => val ?? "#7854ab")
-					.describe("The stroke color of the shape's boundary."),
-				vertexLabels: z
-					.array(z.string())
-					.nullable()
-					.transform((val) => val ?? null)
-					.describe("Labels for each vertex (e.g., ['A', 'B', 'C', 'D']). Must match the number of vertices."),
-				angleMarks: z
-					.array(createAngleMarkSchema())
-					.nullable()
-					.transform((val) => val ?? null)
-					.describe("Angle marks to draw at specific vertices."),
-				sideLengths: z
-					.array(createSideLengthSchema())
-					.nullable()
-					.transform((val) => val ?? null)
-					.describe("Side length labels for each edge. The first label is for the edge from vertex 0 to vertex 1, etc.")
-			})
-			.strict()
-			.describe("The original shape before transformation."),
-		// INLINED: The ShapeSchema definition is now directly inside the image property.
-		image: z
-			.object({
-				vertices: z
-					.array(
-						z
-							.object({
-								x: z.number().describe("The horizontal coordinate of the point."),
-								y: z.number().describe("The vertical coordinate of the point.")
-							})
-							.strict()
-					)
-					.min(3)
-					.describe("An ordered list of vertices defining the polygon."),
-				label: z
-					.string()
-					.nullable()
-					.transform((val) => (val === "null" || val === "NULL" ? null : val))
-					.describe('An optional text label for the shape (e.g., "A", "B").'),
-				fillColor: z
-					.string()
-					.nullable()
-					.transform((val) => val ?? "rgba(120, 84, 171, 0.2)")
-					.describe("The fill color of the shape."),
-				strokeColor: z
-					.string()
-					.nullable()
-					.transform((val) => val ?? "#7854ab")
-					.describe("The stroke color of the shape's boundary."),
-				vertexLabels: z
-					.array(z.string())
-					.nullable()
-					.transform((val) => val ?? null)
-					.describe("Labels for each vertex (e.g., ['A'', 'B'', 'C'', 'D'']). Must match the number of vertices."),
-				angleMarks: z
-					.array(createAngleMarkSchema())
-					.nullable()
-					.transform((val) => val ?? null)
-					.describe("Angle marks to draw at specific vertices."),
-				sideLengths: z
-					.array(createSideLengthSchema())
-					.nullable()
-					.transform((val) => val ?? null)
-					.describe("Side length labels for each edge. The first label is for the edge from vertex 0 to vertex 1, etc.")
-			})
-			.strict()
-			.describe("The resulting shape after transformation."),
-		transformation: z
-			.discriminatedUnion("type", [TranslationSchema, ReflectionSchema, RotationSchema, DilationSchema])
-			.describe("The details of the transformation applied."),
-		additionalPoints: z
-			.array(AdditionalPointSchema)
-			.nullable()
-			.transform((val) => val ?? null)
-			.describe("Additional labeled points to display (e.g., reference points, centers).")
-	})
-	.strict()
-	.describe(
-		"Generates an SVG diagram illustrating a geometric transformation (translation, reflection, rotation, or dilation) of a polygon. This widget renders a 'pre-image' and an 'image' on a blank canvas and includes visual aids like vectors, reflection lines, or dilation rays to clarify the specific transformation, making it ideal for non-coordinate grid geometry problems. Supports vertex labeling, angle marks, and additional reference points."
-	)
+export const TransformationDiagramPropsSchema = z.object({
+  type: z.literal('transformationDiagram').describe("Identifies this as a transformation diagram showing geometric transformations with detailed annotations."),
+  width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 600, 700, 500). Must accommodate both shapes, labels, and transformation elements."),
+  height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 500, 600, 400). Should fit pre-image, image, and any transformation aids."),
+  preImage: (function createShapeSchema() {
+    return z.object({ 
+      vertices: z.array(z.object({ x: z.number(), y: z.number() }).strict()).describe("Ordered vertices defining the polygon. Connect in sequence, closing to first. Minimum 3 for valid shape. Order determines edge labeling."), 
+      label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Shape identifier (e.g., 'ABCD', 'Figure 1', 'P', 'P'\'', null). Null means no label. Positioned near shape's center."), 
+      fillColor: z.string().regex(
+        CSS_COLOR_PATTERN,
+        "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+      ).describe("CSS fill color (e.g., 'rgba(100,149,237,0.3)' for translucent blue, 'lightgreen', '#FFE5B4'). Use alpha for see-through shapes."), 
+      strokeColor: z.string().regex(
+        CSS_COLOR_PATTERN,
+        "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+      ).describe("CSS color for shape outline (e.g., 'black', '#0000FF', 'darkgreen'). Should contrast with fill and background."), 
+      vertexLabels: z.array(z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))).describe("Labels for each vertex in order (e.g., ['A','B','C','D', null]). Array length must match vertices length. Null skips that vertex label."), 
+      angleMarks: z.array(z.object({ vertexIndex: z.number(), radius: z.number(), label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)), labelDistance: z.number() }).strict()).describe("Angle annotations to display. Empty array means no angle marks. Useful for showing congruent angles or measurements."), 
+      sideLengths: z.array(z.object({ value: z.string(), position: z.enum(['inside','outside']), offset: z.number() }).strict()).describe("Edge length labels. First item labels edge from vertex[0] to vertex[1], etc. Array length should match number of edges.") 
+    }).strict()
+  })().describe("The original shape before transformation. All properties (vertices, labels, angles, sides) are preserved in the transformation."),
+  image: (function createShapeSchema() {
+    return z.object({ 
+      vertices: z.array(z.object({ x: z.number(), y: z.number() }).strict()).describe("Ordered vertices defining the polygon. Connect in sequence, closing to first. Minimum 3 for valid shape. Order determines edge labeling."), 
+      label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Shape identifier (e.g., 'ABCD', 'Figure 1', 'P', 'P'\'', null). Null means no label. Positioned near shape's center."), 
+      fillColor: z.string().regex(
+        CSS_COLOR_PATTERN,
+        "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+      ).describe("CSS fill color (e.g., 'rgba(100,149,237,0.3)' for translucent blue, 'lightgreen', '#FFE5B4'). Use alpha for see-through shapes."), 
+      strokeColor: z.string().regex(
+        CSS_COLOR_PATTERN,
+        "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+      ).describe("CSS color for shape outline (e.g., 'black', '#0000FF', 'darkgreen'). Should contrast with fill and background."), 
+      vertexLabels: z.array(z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))).describe("Labels for each vertex in order (e.g., ['A','B','C','D', null]). Array length must match vertices length. Null skips that vertex label."), 
+      angleMarks: z.array(z.object({ vertexIndex: z.number(), radius: z.number(), label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)), labelDistance: z.number() }).strict()).describe("Angle annotations to display. Empty array means no angle marks. Useful for showing congruent angles or measurements."), 
+      sideLengths: z.array(z.object({ value: z.string(), position: z.enum(['inside','outside']), offset: z.number() }).strict()).describe("Edge length labels. First item labels edge from vertex[0] to vertex[1], etc. Array length should match number of edges.") 
+    }).strict()
+  })().describe("The transformed shape. Must have same number of vertices as preImage. Properties show the result after transformation."),
+  transformation: (function createTransformationSchema() {
+    // Important: do NOT reuse the same object schema instance across fields to prevent $ref generation
+    const createPoint = () => z.object({ x: z.number(), y: z.number() }).strict()
+    return z.discriminatedUnion('type', [
+      z
+        .object({
+          type: z.literal('translation'),
+          showVectors: z
+            .boolean()
+            .describe(
+              "Whether to draw arrows from each pre-image vertex to its image. Visualizes the translation vector."
+            )
+        })
+        .strict(),
+      z
+        .object({
+          type: z.literal('reflection'),
+          lineOfReflection: z
+            .object({
+              from: createPoint(),
+              to: createPoint(),
+              style: z.enum(['solid', 'dashed', 'dotted']),
+              color: z
+                .string()
+                .regex(
+                  CSS_COLOR_PATTERN,
+                  "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+                )
+            })
+            .strict()
+            .describe("The mirror line for reflection.")
+        })
+        .strict(),
+      z
+        .object({
+          type: z.literal('rotation'),
+          centerOfRotation: createPoint().describe("Fixed point around which rotation occurs."),
+          angle: z
+            .number()
+            .describe("Rotation angle in degrees. Positive is counter-clockwise (e.g., 90, -45, 180).")
+        })
+        .strict(),
+      z
+        .object({
+          type: z.literal('dilation'),
+          centerOfDilation: createPoint().describe("Fixed point from which scaling occurs."),
+          showRays: z
+            .boolean()
+            .describe(
+              "Whether to draw rays from center through corresponding vertices. Shows scaling direction."
+            )
+        })
+        .strict()
+    ])
+  })().describe(
+    "Details of how preImage transforms to image. Include visual aids like vectors, reflection lines, or rotation centers."
+  ),
+  additionalPoints: z.array(z.object({ 
+    x: z.number(), 
+    y: z.number(), 
+    label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Point label (e.g., 'O', 'Center', 'C', null). Positioned near the point."), 
+    style: z.enum(['dot','circle']).describe("Visual style. 'dot' for filled point, 'circle' for hollow point.") 
+  }).strict()).describe("Extra labeled points (e.g., rotation center, reference points). Empty array means no additional points."),
+}).strict().describe("Creates detailed geometric transformation diagrams showing pre-image and image shapes with comprehensive annotations including vertex labels, angle marks, side lengths, and transformation-specific visual aids. Perfect for teaching reflections, rotations, translations, and dilations with full mathematical notation.")
 
 export type TransformationDiagramProps = z.infer<typeof TransformationDiagramPropsSchema>
 
@@ -285,6 +153,25 @@ export type TransformationDiagramProps = z.infer<typeof TransformationDiagramPro
  */
 export const generateTransformationDiagram: WidgetGenerator<typeof TransformationDiagramPropsSchema> = (props) => {
 	const { width, height, preImage, image, transformation, additionalPoints } = props
+
+	// Validation: vertices must have at least 3 points
+	if (preImage.vertices.length < 3) {
+		throw new Error(`preImage must have at least 3 vertices, got ${preImage.vertices.length}`)
+	}
+	if (image.vertices.length < 3) {
+		throw new Error(`image must have at least 3 vertices, got ${image.vertices.length}`)
+	}
+	if (preImage.vertices.length !== image.vertices.length) {
+		throw new Error(`preImage and image must have same number of vertices: ${preImage.vertices.length} vs ${image.vertices.length}`)
+	}
+
+	// Validation: vertex labels array length must match vertices length if provided
+	if (preImage.vertexLabels.length > 0 && preImage.vertexLabels.length !== preImage.vertices.length) {
+		throw new Error(`preImage vertexLabels length (${preImage.vertexLabels.length}) must match vertices length (${preImage.vertices.length})`)
+	}
+	if (image.vertexLabels.length > 0 && image.vertexLabels.length !== image.vertices.length) {
+		throw new Error(`image vertexLabels length (${image.vertexLabels.length}) must match vertices length (${image.vertices.length})`)
+	}
 
 	// 1. Use a fixed, predictable coordinate system
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
@@ -300,7 +187,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 
 	// 2. Calculate bounds for ALL points that need to be visible
 	let allPoints = [...preImage.vertices, ...image.vertices]
-	if (additionalPoints) {
+	if (additionalPoints.length > 0) {
 		allPoints.push(...additionalPoints)
 	}
 	if (transformation.type === "rotation") {
@@ -348,11 +235,18 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 
 		let polySvg = `<polygon points="${pointsStr}" fill="${shape.fillColor}" stroke="${shape.strokeColor}" stroke-width="${strokeWidth}"/>`
 
-		// Remove shape label at centroid - labels are now only shown via vertex labels
+		// Add shape label at centroid if provided
+		if (shape.label) {
+			const centroid = calculateCentroid(shape.vertices)
+			const svgCentroidX = toSvgX(centroid.x)
+			const svgCentroidY = toSvgY(centroid.y)
+			polySvg += `<text x="${svgCentroidX}" y="${svgCentroidY}" text-anchor="middle" dominant-baseline="middle" font-size="14px" font-weight="600" fill="#333">${shape.label}</text>`
+		}
+
 		return polySvg
 	}
 
-	const drawLine = (line: z.infer<typeof LineSchema>, hasArrow: boolean) => {
+	const drawLine = (line: { from: { x: number; y: number }; to: { x: number; y: number }; style: string; color: string }, hasArrow: boolean) => {
 		let strokeDash = ""
 		if (line.style === "dashed") {
 			strokeDash = 'stroke-dasharray="8 6"'
@@ -382,7 +276,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	}
 
 	const drawVertexLabels = (shape: TransformationDiagramProps["preImage"]) => {
-		if (!shape.vertexLabels || shape.vertexLabels.length !== shape.vertices.length) {
+		if (shape.vertexLabels.length === 0) {
 			return ""
 		}
 
@@ -423,7 +317,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 
 	const drawAngleMark = (
 		vertices: Array<{ x: number; y: number }>,
-		mark: z.infer<ReturnType<typeof createAngleMarkSchema>>,
+		mark: z.infer<typeof AngleMark>,
 		strokeColor: string
 	) => {
 		if (mark.vertexIndex < 0 || mark.vertexIndex >= vertices.length) {
@@ -485,7 +379,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		return markSvg
 	}
 
-	const drawAdditionalPoint = (point: z.infer<typeof AdditionalPointSchema>) => {
+	const drawAdditionalPoint = (point: { x: number; y: number; label: string | null; style: string }) => {
 		let pointSvg = ""
 		const radius = 4
 		const svgX = toSvgX(point.x)
@@ -499,14 +393,16 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		}
 
 		// Label offset to avoid overlapping with the point
-		const labelOffset = 12
-		pointSvg += `<text x="${svgX}" y="${svgY - labelOffset}" text-anchor="middle" dominant-baseline="bottom" font-size="13px" font-weight="600" fill="#333">${point.label}</text>`
+		if (point.label) {
+			const labelOffset = 12
+			pointSvg += `<text x="${svgX}" y="${svgY - labelOffset}" text-anchor="middle" dominant-baseline="bottom" font-size="13px" font-weight="600" fill="#333">${point.label}</text>`
+		}
 
 		return pointSvg
 	}
 
 	const drawSideLengths = (shape: TransformationDiagramProps["preImage"]) => {
-		if (!shape.sideLengths || shape.sideLengths.length === 0) {
+		if (shape.sideLengths.length === 0) {
 			return ""
 		}
 
@@ -640,15 +536,11 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	svg += drawPolygon(image, true)
 
 	// 5a. Draw angle marks for both shapes
-	if (preImage.angleMarks) {
-		for (const mark of preImage.angleMarks) {
-			svg += drawAngleMark(preImage.vertices, mark, preImage.strokeColor)
-		}
+	for (const mark of preImage.angleMarks) {
+		svg += drawAngleMark(preImage.vertices, mark, preImage.strokeColor)
 	}
-	if (image.angleMarks) {
-		for (const mark of image.angleMarks) {
-			svg += drawAngleMark(image.vertices, mark, image.strokeColor)
-		}
+	for (const mark of image.angleMarks) {
+		svg += drawAngleMark(image.vertices, mark, image.strokeColor)
 	}
 
 	// 5b. Draw vertex labels for both shapes
@@ -734,10 +626,8 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	}
 
 	// 7. Draw additional points (last so they appear on top)
-	if (additionalPoints) {
-		for (const point of additionalPoints) {
-			svg += drawAdditionalPoint(point)
-		}
+	for (const point of additionalPoints) {
+		svg += drawAdditionalPoint(point)
 	}
 
 	svg += "</svg>"

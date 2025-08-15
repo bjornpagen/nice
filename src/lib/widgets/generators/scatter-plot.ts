@@ -1,17 +1,18 @@
 import * as errors from "@superbuilders/errors"
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Defines a single data point on the scatter plot
 const ScatterPointSchema = z
 	.object({
-		x: z.number().describe("The value of the point on the horizontal (X) axis."),
-		y: z.number().describe("The value of the point on the vertical (Y) axis."),
+		x: z.number().describe("The x-coordinate value of the data point (e.g., 25, 42.5, -10, 0). Must be within xAxis min/max range."),
+		y: z.number().describe("The y-coordinate value of the data point (e.g., 180, 95.5, -5, 0). Must be within yAxis min/max range."),
 		label: z
 			.string()
 			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("An optional text label to display near the point.")
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe("Optional text label for this point (e.g., 'A', 'Outlier', '(3,4)', null). Null means no label. Positioned near the point.")
 	})
 	.strict()
 
@@ -19,47 +20,46 @@ const ScatterPointSchema = z
 const createBarePointSchema = () =>
 	z
 		.object({
-			x: z.number().describe("The value on the horizontal (X) axis for this coordinate."),
-			y: z.number().describe("The value on the vertical (Y) axis for this coordinate.")
+			x: z.number().describe("X-coordinate for line endpoint or reference point (e.g., 0, 50, -20). Used in line definitions."),
+			y: z.number().describe("Y-coordinate for line endpoint or reference point (e.g., 10, 100, -15). Used in line definitions.")
 		})
 		.strict()
 		.describe("A 2D coordinate used in line definitions.")
 
-// Factory function for optional styling settings applied to any rendered line
+// Factory function for styling settings applied to any rendered line
 const createLineStyleSchema = () =>
 	z
 		.object({
 			color: z
 				.string()
-				.nullable()
-				.describe(
-					"Optional CSS color (named color, hex, rgb[a], or hsl[a]) used as the stroke color for this line. Defaults to a distinct accent if omitted."
-				),
+				.regex(
+					CSS_COLOR_PATTERN,
+					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+				)
+				.describe("Hex-only color for the line stroke (e.g., '#FF6B6B', '#1E90FF', '#00000080' for 50% alpha). Should contrast with background and points."),
 			strokeWidth: z
 				.number()
 				.positive()
-				.nullable()
-				.describe("Optional stroke width in pixels. Defaults to 2 if omitted."),
+				.describe("Width of the line in pixels (e.g., 2 for standard, 3 for bold, 1 for thin). Typical range: 1-4."),
 			dash: z
 				.boolean()
-				.nullable()
-				.describe("If true, renders the line with a dashed pattern. If false or null, renders a solid line.")
+				.describe("Whether to render as dashed line. True for dashed pattern, false for solid. Useful for predictions or reference lines.")
 		})
 		.strict()
-		.describe("Optional per-line styling attributes.")
+		.describe("Visual styling for the line.")
 
 // A line defined by two distinct points. Rendered across the entire chart domain.
 const LineTwoPointsSchema = z
 	.object({
-		type: z.literal("twoPoints").describe("This line is defined by two points a and b."),
-		a: createBarePointSchema().describe("The first coordinate that lies on the line."),
-		b: createBarePointSchema().describe("The second coordinate that lies on the line. Must not be identical to 'a'."),
+		type: z.literal("twoPoints").describe("Line defined by two specific points. Extends infinitely in both directions through these points."),
+		a: createBarePointSchema().describe("First point the line passes through. Line extends beyond this point."),
+		b: createBarePointSchema().describe("Second point the line passes through. Must be different from point 'a'. Determines line's slope."),
 		label: z
 			.string()
 			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("Optional short label to render near the line (e.g., 'A', 'B', 'C')."),
-		style: createLineStyleSchema().nullable().describe("Optional styling overrides for this line.")
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe("Text label for the line (e.g., 'y = 2x + 1', 'Line A', 'Model', null). Null means no label. Positioned along the line."),
+		style: createLineStyleSchema().describe("Visual styling for this specific line. Overrides any default line appearance.")
 	})
 	.strict()
 	.describe(
@@ -69,18 +69,16 @@ const LineTwoPointsSchema = z
 // A line that is computed as the best fit for the provided scatter points
 const LineBestFitSchema = z
 	.object({
-		type: z.literal("bestFit").describe("This line is computed from the scatter plot points."),
+		type: z.literal("bestFit").describe("Line computed from the scatter plot data using regression analysis."),
 		method: z
-			.enum(["linear", "quadratic"]) // quadratic uses a polynomial curve
-			.describe(
-				"The best-fit method. 'linear' renders a straight line; 'quadratic' renders a second-degree polynomial curve."
-			),
+			.enum(["linear", "quadratic"])
+			.describe("Regression type. 'linear' fits a straight line (y = mx + b). 'quadratic' fits a parabola (y = ax² + bx + c)."),
 		label: z
 			.string()
 			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("Optional short label to render near the computed line."),
-		style: createLineStyleSchema().nullable().describe("Optional styling overrides for the computed line.")
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe("Text label for the regression line (e.g., 'Best Fit', 'Trend', 'y = 0.5x + 10', null). Null means no label."),
+		style: createLineStyleSchema().describe("Visual styling for the regression line. Often uses distinct color or dash pattern.")
 	})
 	.strict()
 	.describe("A computed best-fit line (linear) or curve (quadratic) derived from the data points.")
@@ -94,57 +92,47 @@ const LineSpecSchema = z
 // The main Zod schema for the scatterPlot function
 export const ScatterPlotPropsSchema = z
 	.object({
-		type: z.literal("scatterPlot"),
+		type: z.literal("scatterPlot").describe("Identifies this as a scatter plot widget for displaying bivariate data relationships."),
 		width: z
 			.number()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The total width of the output SVG container in pixels."),
+			.positive()
+			.describe("Total width of the plot in pixels including margins and labels (e.g., 600, 700, 500). Larger values show more detail."),
 		height: z
 			.number()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The total height of the output SVG container in pixels."),
+			.positive()
+			.describe("Total height of the plot in pixels including margins and labels (e.g., 400, 500, 350). Often 2/3 of width for good proportions."),
 		title: z
 			.string()
 			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("An optional title displayed above or below the plot."),
-		// INLINED: The AxisSchema definition is now directly inside the xAxis property.
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe("Title displayed above or below the plot (e.g., 'Age vs. Income', 'Temperature Over Time', null). Null means no title. Plaintext only; no markdown or HTML."),
 		xAxis: z
 			.object({
-				label: z.string().describe('The text title for the axis (e.g., "Driver Age").'),
-				min: z.number().describe("The minimum value displayed on the axis."),
-				max: z.number().describe("The maximum value displayed on the axis."),
-				tickInterval: z.number().describe("The numeric interval between tick marks on the axis."),
-				gridLines: z.boolean().describe("If true, display grid lines for this axis.")
+				label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Title for the horizontal axis describing the variable (e.g., 'Age (years)', 'Time (hours)', 'Temperature (°C)', null). Null means no label."),
+				min: z.number().describe("Minimum value shown on x-axis (e.g., 0, -10, 1990). Should be ≤ smallest x data value with some padding."),
+				max: z.number().describe("Maximum value shown on x-axis (e.g., 100, 50, 2025). Should be ≥ largest x data value with some padding."),
+				tickInterval: z.number().describe("Spacing between x-axis tick marks (e.g., 10, 5, 0.5). Should evenly divide the range for clean appearance."),
+				gridLines: z.boolean().describe("Whether to show vertical grid lines at each tick mark. True improves readability, false reduces clutter.")
 			})
 			.strict()
-			.describe("Configuration for the horizontal (X) axis."),
-		// INLINED: The AxisSchema definition is now directly inside the yAxis property.
+			.describe("Configuration for the horizontal axis including scale, labels, and optional grid."),
 		yAxis: z
 			.object({
-				label: z.string().describe('The text title for the axis (e.g., "Driver Age").'),
-				min: z.number().describe("The minimum value displayed on the axis."),
-				max: z.number().describe("The maximum value displayed on the axis."),
-				tickInterval: z.number().describe("The numeric interval between tick marks on the axis."),
-				gridLines: z.boolean().describe("If true, display grid lines for this axis.")
+				label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Title for the vertical axis describing the variable (e.g., 'Income ($1000s)', 'Score', 'Growth (cm)', null). Null means no label."),
+				min: z.number().describe("Minimum value shown on y-axis (e.g., 0, -20, 50). Should be ≤ smallest y data value with some padding."),
+				max: z.number().describe("Maximum value shown on y-axis (e.g., 200, 100, 10). Should be ≥ largest y data value with some padding."),
+				tickInterval: z.number().describe("Spacing between y-axis tick marks (e.g., 20, 10, 2.5). Should evenly divide the range for clean appearance."),
+				gridLines: z.boolean().describe("Whether to show horizontal grid lines at each tick mark. True helps estimate values, false keeps focus on points.")
 			})
 			.strict()
-			.describe("Configuration for the vertical (Y) axis."),
-		points: z.array(ScatterPointSchema).describe("An array of data points to be plotted."),
+			.describe("Configuration for the vertical axis including scale, labels, and optional grid."),
+		points: z.array(ScatterPointSchema).describe("Data points to plot. Each point can have an optional label. Empty array creates blank plot for exercises. Order doesn't affect display."),
 		lines: z
-			.array(LineSpecSchema)
-			.nullable()
-			.transform((val) => val ?? [])
-			.describe(
-				"Optional overlays to render on top of the scatter plot: computed best-fit lines/curves or user-specified lines defined by two points."
-			)
+			.array(z.discriminatedUnion("type", [LineBestFitSchema, LineTwoPointsSchema]))
+			.describe("Optional lines to overlay on the scatter plot. Can include regression lines, reference lines, or user-defined lines. Empty array means no lines.")
 	})
 	.strict()
-	.describe(
-		"Generate a two-dimensional scatter plot as an SVG graphic with optional line overlays. Lines can be computed best-fit (linear or quadratic) or explicit lines defined by two points."
-	)
+	.describe("Creates a scatter plot for exploring relationships between two numerical variables. Supports data points with labels, best-fit lines (linear or quadratic regression), and custom reference lines. Essential for statistics, correlation analysis, and data visualization. The gold standard widget design.")
 
 export type ScatterPlotProps = z.infer<typeof ScatterPlotPropsSchema>
 
@@ -265,18 +253,16 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		return value
 	}
 
-	const styleAttrs = (style: LineStyle | null): string => {
-		const color = style?.color ?? "#EA4335"
-		const strokeWidth = style?.strokeWidth ?? 2
-		const dash = style?.dash ? ` stroke-dasharray="5 5"` : ""
-		return ` stroke="${color}" stroke-width="${strokeWidth}"${dash}`
+	const styleAttrs = (style: LineStyle): string => {
+		const dash = style.dash ? ` stroke-dasharray="5 5"` : ""
+		return ` stroke="${style.color}" stroke-width="${style.strokeWidth}"${dash}`
 	}
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg +=
 		"<style>.axis-label { font-size: 14px; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
-	if (title) svg += `<text x="${width / 2}" y="${pad.top / 2}" class="title">${title}</text>`
+	if (title !== null) svg += `<text x="${width / 2}" y="${pad.top / 2}" class="title">${title}</text>`
 
 	// Grid lines, Axes, Ticks, Labels
 	if (xAxis.gridLines)
@@ -308,9 +294,9 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		svg += `<line x1="${pad.left}" y1="${toSvgY(t)}" x2="${pad.left - 5}" y2="${toSvgY(t)}" stroke="black"/><text x="${pad.left - 10}" y="${toSvgY(t) + 4}" text-anchor="end">${t}</text>`
 	}
-	if (xAxis.label)
+	if (xAxis.label !== null)
 		svg += `<text x="${pad.left + chartWidth / 2}" y="${height - 20}" class="axis-label">${xAxis.label}</text>`
-	if (yAxis.label)
+	if (yAxis.label !== null)
 		svg += `<text x="${pad.left - 35}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${pad.left - 35}, ${pad.top + chartHeight / 2})">${yAxis.label}</text>`
 
 	// Render line overlays (computed or explicit)
@@ -324,7 +310,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 					svg += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(y1)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(y2)}"${styleAttrs(
 						line.style
 					)} />`
-					if (line.label) {
+					if (line.label !== null) {
 						const labelX = toSvgX(xAxis.max) - 5
 						const labelY = toSvgY(y2)
 						svg += `<text x="${labelX}" y="${labelY - 6}" text-anchor="end" fill="black">${line.label}</text>`
@@ -344,7 +330,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 						path += `${i === 0 ? "M" : "L"} ${px} ${py} `
 					}
 					svg += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
-					if (line.label) {
+					if (line.label !== null) {
 						const yRight = coeff.a * xAxis.max ** 2 + coeff.b * xAxis.max + coeff.c
 						const labelX = toSvgX(xAxis.max) - 5
 						const labelY = toSvgY(clamp(yRight, yAxis.min, yAxis.max))
@@ -359,7 +345,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 				svg += `<line x1="${toSvgX(a.x)}" y1="${toSvgY(yAxis.min)}" x2="${toSvgX(a.x)}" y2="${toSvgY(yAxis.max)}"${styleAttrs(
 					line.style
 				)} />`
-				if (line.label) {
+				if (line.label !== null) {
 					const labelX = toSvgX(a.x) + 6
 					const labelY = toSvgY(yAxis.max) + 14
 					svg += `<text x="${labelX}" y="${labelY}" fill="black">${line.label}</text>`
@@ -372,7 +358,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 				svg += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(yAtMin)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(yAtMax)}"${styleAttrs(
 					line.style
 				)} />`
-				if (line.label) {
+				if (line.label !== null) {
 					const labelX = toSvgX(xAxis.max) - 5
 					const labelY = toSvgY(yAtMax)
 					svg += `<text x="${labelX}" y="${labelY - 6}" text-anchor="end" fill="black">${line.label}</text>`
@@ -385,7 +371,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		const px = toSvgX(p.x)
 		const py = toSvgY(p.y)
 		svg += `<circle cx="${px}" cy="${py}" r="3.5" fill="black" fill-opacity="0.7"/>`
-		if (p.label) {
+		if (p.label !== null) {
 			svg += `<text x="${px + 5}" y="${py - 5}" fill="black">${p.label}</text>`
 		}
 	}

@@ -1,44 +1,19 @@
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// The main Zod schema for the unitBlockDiagram function
-export const UnitBlockDiagramPropsSchema = z
-	.object({
-		type: z.literal("unitBlockDiagram"),
-		totalBlocks: z.number().int().positive().describe('The total number of 10x10 "hundreds blocks" to display.'),
-		shadedUnitsPerBlock: z
-			.number()
-			.int()
-			.min(0)
-			.max(100)
-			.describe("The number of small unit squares to shade within each block."),
-		blocksPerRow: z
-			.number()
-			.int()
-			.positive()
-			.nullable()
-			.transform((val) => val ?? 4)
-			.describe("The number of blocks to display in each row before wrapping."),
-		blockWidth: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 80)
-			.describe("The width of each individual 10x10 block in pixels."),
-		blockHeight: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 80)
-			.describe("The height of each individual 10x10 block in pixels."),
-		shadeColor: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "#6495ED")
-			.describe("A CSS color string for the shaded units.")
-	})
-	.strict()
-	.describe(
-		'This template generates an SVG diagram of "hundreds blocks" to visually model place value and percentages of large numbers that are multiples of 100. It is particularly effective for explaining concepts like "1% of 800" in a concrete, countable manner. The generator will render a specified number of "hundreds blocks," each of which is a distinct 10x10 grid. These blocks can be arranged in a grid layout (e.g., 2 rows of 4 blocks) for clear presentation. The core function is to shade a specific number of unit squares within each individual block. For example, to visualize "1% of 800," the template would render 8 separate 10x10 grids and shade exactly 1 square in each grid. This visual approach clearly demonstrates that the total number of shaded squares is 8, helping students arrive at the correct answer by reasoning about the meaning of "percent" (per hundred). The output is a self-contained SVG graphic that provides an intuitive and powerful model for understanding how percentages operate on multiples of 100.'
-	)
+export const UnitBlockDiagramPropsSchema = z.object({
+  type: z.literal('unitBlockDiagram').describe("Identifies this as a unit block diagram for visualizing place value and decimal concepts."),
+  totalBlocks: z.number().int().positive().describe("Number of 10×10 grid blocks to display (e.g., 3, 5, 1). Each block represents 100 units. Must be positive integer."),
+  shadedUnitsPerBlock: z.number().int().min(0).max(100).describe("Number of unit squares to shade in each block (e.g., 45, 100, 0). Range: 0-100. Same shading pattern applies to all blocks."),
+  blocksPerRow: z.number().int().positive().describe("Number of blocks to display horizontally before wrapping to next row (e.g., 3, 4, 5). Affects overall layout shape."),
+  blockWidth: z.number().positive().describe("Width of each 10×10 block in pixels (e.g., 100, 120, 80). Larger values show grid lines more clearly."),
+  blockHeight: z.number().positive().describe("Height of each 10×10 block in pixels (e.g., 100, 120, 80). Usually equal to blockWidth for square units."),
+  shadeColor: z.string().regex(
+    CSS_COLOR_PATTERN,
+    "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+  ).describe("CSS color for shaded unit squares (e.g., '#4472C4' for blue, 'lightcoral', 'rgba(255,0,0,0.5)'). Should contrast with white background."),
+}).strict().describe("Creates grids of 10×10 blocks (hundreds blocks) with partial shading to represent decimals, percentages, or fractions of 100. Each block contains 100 unit squares arranged in a 10×10 grid. Shading shows parts of the whole, making abstract concepts concrete. Essential for place value, decimals (0.45 = 45 shaded), and percentage (45%) understanding.")
 
 export type UnitBlockDiagramProps = z.infer<typeof UnitBlockDiagramPropsSchema>
 

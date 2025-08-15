@@ -1,54 +1,31 @@
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Defines a group of identical sectors on the spinner
 const ProbabilitySpinnerSectorGroupSchema = z
 	.object({
-		count: z.number().int().positive().describe("The number of sectors in this group."),
-		emoji: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("The emoji to display in this group's sectors. Can be null for color-only sectors."),
-		color: z
-			.string()
-			.describe("The CSS fill color for this group's sectors (e.g., '#90CAF9', 'rgba(255, 182, 193, 0.5)').")
+		count: z.number().int().positive().describe("Number of equal sectors in this group (e.g., 3, 5, 1). All sectors in a group share the same color and emoji. Must be positive integer."),
+		emoji: z.string().nullable().transform((val) => (val === "null" || val === "NULL" ? null : val)).describe("Emoji to display in each sector of this group (e.g., '⭐', '🎯', '❌', null). Null means no emoji, just colored sector. Single emoji recommended."),
+		color: z.string().regex(
+			CSS_COLOR_PATTERN,
+			"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+		).describe("Hex-only color for all sectors in this group (e.g., '#FF6B6B', '#1E90FF', '#000000', '#00000080' for 50% alpha). Each group should have distinct color.")
 	})
 	.strict()
 
 // The main Zod schema for the probabilitySpinner function
 export const ProbabilitySpinnerPropsSchema = z
 	.object({
-		type: z.literal("probabilitySpinner"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 300)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 300)
-			.describe("The total height of the output SVG container in pixels."),
-		groups: z
-			.array(ProbabilitySpinnerSectorGroupSchema)
-			.min(1)
-			.describe("An array of sector groups. The total number of sectors is the sum of all group counts."),
-		pointerAngle: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 45)
-			.describe("The angle in degrees where the spinner arrow should point (0 is horizontal to the right)."),
-		title: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("An optional title to display above the spinner diagram.")
+		type: z.literal("probabilitySpinner").describe("Identifies this as a probability spinner widget for demonstrating random events and likelihood."),
+		width: z.number().positive().describe("Total width of the spinner diagram in pixels (e.g., 400, 500, 350). Must accommodate the circle and pointer with padding."),
+		height: z.number().positive().describe("Total height of the spinner diagram in pixels (e.g., 400, 500, 350). Should include space for title if present. Often equal to width."),
+		groups: z.array(ProbabilitySpinnerSectorGroupSchema).describe("Array of sector groups defining the spinner. Total sectors = sum of all counts. Order affects color assignment. Empty array creates blank spinner."),
+		pointerAngle: z.number().describe("Angle in degrees where the arrow points (0 = right, 90 = up, 180 = left, 270 = down). Can be any value; wraps around 360. Determines 'current' sector."),
+		title: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Title displayed above the spinner (e.g., 'Spin the Wheel!', 'Color Spinner', null). Null means no title. Keep concise for space. Plaintext only; no markdown or HTML.")
 	})
 	.strict()
-	.describe(
-		"Generates an SVG diagram of a probability spinner with customizable sectors. This widget is ideal for visualizing problems involving theoretical probability, where outcomes are represented by different sectors of a spinner. It supports creating spinners with any number of equal-sized sectors, which can be styled with unique colors and labeled with emojis."
-	)
+	.describe("Creates a circular spinner divided into colored sectors for probability experiments. Each sector group can have multiple equal sectors with the same appearance. Perfect for teaching probability, likelihood, and random events. The pointer indicates the 'selected' outcome.")
 
 export type ProbabilitySpinnerProps = z.infer<typeof ProbabilitySpinnerPropsSchema>
 
@@ -61,7 +38,7 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 
 	const cx = width / 2
 	const cy = height / 2
-	const padding = title ? 35 : 15
+	const padding = title !== null ? 35 : 15
 	const radius = Math.min(width, height) / 2 - padding
 
 	const totalSectors = groups.reduce((sum, group) => sum + group.count, 0)
@@ -79,7 +56,7 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
 	svg += "<style>.title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
-	if (title) {
+	if (title !== null) {
 		svg += `<text x="${cx}" y="${padding - 10}" class="title">${title}</text>`
 	}
 
@@ -100,7 +77,7 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 			svg += `<path d="${pathData}" fill="${group.color}" stroke="black" stroke-width="1.5"/>`
 
 			// Add emoji if it exists
-			if (group.emoji) {
+			if (group.emoji !== null) {
 				const midAngle = startAngle + anglePerSector / 2
 				const emojiPos = pointOnCircle(midAngle, radius * 0.65)
 				const emojiSize = Math.min(radius / totalSectors, 30) * 1.5 // Scale emoji size

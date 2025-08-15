@@ -1,134 +1,85 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Helper function to create grid point schema inline
-const createGridPointSchema = () =>
-	z
-		.object({
-			row: z.number().int().describe("The 0-based row index."),
-			col: z.number().int().describe("The 0-based column index.")
-		})
-		.strict()
+export const ErrInvalidPartitionGeometry = errors.new("invalid partition geometry")
 
-// ENHANCED: The schema for a single shape in partition mode
-const PartitionShapeSchema = z
-	.object({
-		type: z.enum(["rectangle", "circle"]).describe("The type of geometric shape to render."),
-		totalParts: z
-			.number()
-			.int()
-			.positive()
-			.describe("Total number of equal parts (rows * columns for rectangle, segments for circle)."),
-		// MODIFIED: From `shadedParts: number` to `shadedCells: number[]` for flexibility
-		shadedCells: z.array(z.number().int().min(0)).nullable().describe("A list of 0-based cell indices to be shaded."),
-		hatchedCells: z
-			.array(z.number().int().min(0))
-			.nullable()
-			.describe("A list of 0-based cell indices to be given diagonal hatching pattern."),
-		rows: z
-			.number()
-			.int()
-			.positive()
-			.nullable()
-			.transform((val) => val ?? 1),
-		columns: z.number().int().positive().nullable(),
-		shadeColor: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "#6495ED"),
-		shadeOpacity: z
-			.number()
-			.min(0)
-			.max(1)
-			.nullable()
-			.transform((val) => val ?? 0.5)
-	})
-	.strict()
-	.refine(
-		(data) => {
-			if (data.type === "rectangle" && data.rows && data.columns) {
-				return data.rows * data.columns === data.totalParts
-			}
-			return true
-		},
-		{
-			message: "For a rectangle, rows * columns must equal totalParts"
-		}
-	)
+function createPartitionShapeSchema() {
+  return z.object({
+    type: z.enum(['rectangle','circle']).describe("Shape type. 'rectangle' creates a grid, 'circle' creates pie-like sectors."),
+    totalParts: z.number().int().describe("Total number of equal parts/cells in the shape (e.g., 12, 16, 8). For rectangles, must equal rows × columns."),
+    shadedCells: z.array(z.number().int()).describe("Zero-based indices of cells to shade with solid color (e.g., [0, 1, 2] shades first three). Empty array means no shading."),
+    hatchedCells: z.array(z.number().int()).describe("Zero-based indices of cells to fill with diagonal lines pattern (e.g., [3, 4]). Can overlap with shaded cells. Empty array means no hatching."),
+    rows: z.number().int().describe("Number of rows for rectangle partition (e.g., 3, 4, 2). Ignored for circles. Must be positive."),
+    columns: z.number().int().describe("Number of columns for rectangle partition (e.g., 4, 3, 6). Ignored for circles. rows × columns must equal totalParts."),
+    shadeColor: z.string().regex(
+      CSS_COLOR_PATTERN,
+      "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+    ).describe("Hex-only color for shaded cells (e.g., '#4472C4', '#1E90FF', '#FF000080' for 50% alpha). Applies to all shaded cells."),
+    shadeOpacity: z.number().describe("Opacity for shaded cells, 0-1 range (e.g., 0.3 for 30% opacity, 1 for solid). Allows seeing grid lines through shading."),
+  }).strict()
+}
 
-// Helper function to create line overlay schema inline
-const createLineOverlaySchema = () =>
-	z.object({
-		from: createGridPointSchema(),
-		to: createGridPointSchema(),
-		style: z.enum(["solid", "dashed", "dotted"]).nullable(),
-		color: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-	})
+function createLineOverlaySchema() {
+  return z.object({ 
+    from: z.object({ 
+      row: z.number().int().describe("Starting row index (0-based). For grid intersections, can equal grid rows for bottom edge."), 
+      col: z.number().int().describe("Starting column index (0-based). For grid intersections, can equal grid columns for right edge.") 
+    }).strict(), 
+    to: z.object({ 
+      row: z.number().int().describe("Ending row index (0-based). Creates line from 'from' to this point."), 
+      col: z.number().int().describe("Ending column index (0-based). Creates line from 'from' to this point.") 
+    }).strict(), 
+    style: z.enum(['solid','dashed','dotted']).describe("Line style. 'solid' for main divisions, 'dashed' for auxiliary lines, 'dotted' for guidelines."), 
+    color: z.string().regex(
+      CSS_COLOR_PATTERN,
+      "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+    ).describe("Hex-only color for the line (e.g., '#000000', '#FF0000', '#00000080' for 50% alpha). Should contrast with background.") 
+  }).strict()
+}
 
-const createFigureSchema = () =>
-	z.object({
-		vertices: z.array(createGridPointSchema()),
-		fillColor: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val)),
-		strokeColor: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-	})
+function createFigureSchema() {
+  return z.object({ 
+    vertices: z.array(z.object({ 
+      row: z.number().int().describe("Row coordinate of vertex (0-based). Can be fractional for positions between grid lines."), 
+      col: z.number().int().describe("Column coordinate of vertex (0-based). Can be fractional for positions between grid lines.") 
+    }).strict()).describe("Ordered vertices defining the polygon. Connect in sequence, closing back to first. Minimum 3 vertices."), 
+    fillColor: z.string().regex(
+      CSS_COLOR_PATTERN,
+      "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+    ).nullable().describe("Hex-only fill color for the polygon (e.g., '#FFC8004D' for ~30% alpha). Use transparency via 8-digit hex to show grid. null for no fill."), 
+    strokeColor: z.string().regex(
+      CSS_COLOR_PATTERN,
+      "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+    ).nullable().describe("Hex-only color for polygon outline (e.g., '#000000', '#00008B'). null for no outline.") 
+  }).strict()
+}
 
-const createGridSchema = () =>
-	z.object({
-		rows: z.number().int().positive(),
-		columns: z.number().int().positive(),
-		opacity: z
-			.number()
-			.min(0)
-			.max(1)
-			.nullable()
-			.transform((val) => val ?? 0.2)
-	})
-
-// NEW: Define schemas inline to avoid $ref generation
-export const PartitionedShapePropsSchema = z.discriminatedUnion("mode", [
-	z.object({
-		type: z.literal("partitionedShape"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 200),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 200),
-		mode: z.literal("partition"),
-		shapes: z.array(PartitionShapeSchema).min(1),
-		layout: z
-			.enum(["horizontal", "vertical"])
-			.nullable()
-			.transform((val) => val ?? "horizontal"),
-		overlays: z.array(createLineOverlaySchema()).nullable()
-	}),
-	z.object({
-		type: z.literal("partitionedShape"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 200),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 200),
-		mode: z.literal("geometry"),
-		grid: createGridSchema(),
-		figures: z.array(createFigureSchema()).nullable(),
-		lines: z.array(createLineOverlaySchema()).nullable()
-	})
-])
+export const PartitionedShapePropsSchema = z.discriminatedUnion('mode', [
+  z.object({ 
+    type: z.literal('partitionedShape').describe("Widget type identifier."), 
+    width: z.number().positive().describe("Total width in pixels (e.g., 400, 500, 300). Must fit all shapes with spacing."), 
+    height: z.number().positive().describe("Total height in pixels (e.g., 300, 400, 300). Must fit all shapes with spacing."), 
+    mode: z.literal('partition').describe("Partition mode: shows shapes divided into equal parts for fractions."), 
+    shapes: z.array(createPartitionShapeSchema()).describe("Shapes to display. Can mix rectangles and circles. Order determines left-to-right or top-to-bottom placement."), 
+    layout: z.enum(['horizontal','vertical']).describe("How to arrange multiple shapes. 'horizontal' places side-by-side, 'vertical' stacks top-to-bottom."), 
+    overlays: z.array(createLineOverlaySchema()).describe("Additional lines to draw over shapes (e.g., to show equivalent fractions). Empty array means no overlays.") 
+  }).strict(),
+  z.object({ 
+    type: z.literal('partitionedShape').describe("Widget type identifier."), 
+    width: z.number().positive().describe("Total width in pixels (e.g., 500, 600, 400). Must accommodate the grid."), 
+    height: z.number().positive().describe("Total height in pixels (e.g., 400, 500, 350). Must accommodate the grid."), 
+    mode: z.literal('geometry').describe("Geometry mode: shows a coordinate grid with polygons and lines."), 
+    grid: z.object({ 
+      rows: z.number().int().describe("Number of grid rows (e.g., 10, 8, 12). Creates horizontal lines."), 
+      columns: z.number().int().describe("Number of grid columns (e.g., 10, 12, 8). Creates vertical lines."), 
+      opacity: z.number().describe("Grid line opacity, 0-1 range (e.g., 0.2 for subtle, 0.5 for visible). Lower values emphasize figures.") 
+    }).strict().describe("Background grid configuration."), 
+    figures: z.array(createFigureSchema()).describe("Polygons to draw on the grid. Can represent geometric shapes, regions, or areas. Empty array means no figures."), 
+    lines: z.array(createLineOverlaySchema()).describe("Additional line segments on the grid. Useful for diagonals, measurements, or constructions. Empty array means no extra lines.") 
+  }).strict(),
+]).describe("Creates either fraction partition diagrams or geometric grid diagrams. Partition mode shows shapes divided into equal parts with shading for teaching fractions. Geometry mode provides a coordinate grid for drawing polygons and line segments. Both modes support various visual overlays.")
 
 export type PartitionedShapeProps = z.infer<typeof PartitionedShapePropsSchema>
 
@@ -136,9 +87,16 @@ export type PartitionedShapeProps = z.infer<typeof PartitionedShapePropsSchema>
 type PartitionModeProps = Extract<PartitionedShapeProps, { mode: "partition" }>
 type GeometryModeProps = Extract<PartitionedShapeProps, { mode: "geometry" }>
 
-// NEW: Rendering function for "partition" mode
 const generatePartitionView = (props: PartitionModeProps): string => {
 	const { shapes, width: shapeWidth, height: shapeHeight, layout, overlays } = props
+	
+	// Validate rectangle geometry
+	for (const shape of shapes) {
+		if (shape.type === "rectangle" && shape.rows * shape.columns !== shape.totalParts) {
+			throw errors.wrap(ErrInvalidPartitionGeometry, `rectangle with rows=${shape.rows}, columns=${shape.columns} must have totalParts=${shape.rows * shape.columns}, got ${shape.totalParts}`)
+		}
+	}
+	
 	const rad = (deg: number) => (deg * Math.PI) / 180
 	const gap = 20
 	const totalWidth = layout === "horizontal" ? shapes.length * shapeWidth + (shapes.length - 1) * gap : shapeWidth
@@ -152,13 +110,12 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 
 		if (s.type === "rectangle") {
 			const rows = s.rows
-			const cols = s.columns ?? s.totalParts
+			const cols = s.columns
 			const cellW = shapeWidth / cols
 			const cellH = shapeHeight / rows
 
-			// NEW LOGIC: Use shadedCells array instead of shadedParts count
-			const shadedSet = new Set(s.shadedCells ?? [])
-			const hatchedSet = new Set(s.hatchedCells ?? [])
+			const shadedSet = new Set(s.shadedCells)
+			const hatchedSet = new Set(s.hatchedCells)
 
 			for (let i = 0; i < s.totalParts; i++) {
 				const row = Math.floor(i / cols)
@@ -171,7 +128,6 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 
 				svg += `<rect x="${xOffset + col * cellW}" y="${yOffset + row * cellH}" width="${cellW}" height="${cellH}" fill="${fill}" fill-opacity="${opacity}" stroke="#545454" stroke-width="1"/>`
 
-				// Add diagonal hatching pattern if specified
 				if (isHatched) {
 					const cellId = `hatch-${idx}-${i}`
 					svg += `<defs><pattern id="${cellId}" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
@@ -186,12 +142,11 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 			const r = Math.min(shapeWidth, shapeHeight) / 2 - 5
 			const angleStep = 360 / s.totalParts
 
-			// NEW LOGIC: Use shadedCells array for circles too
-			const shadedSet = new Set(s.shadedCells ?? [])
-			const hatchedSet = new Set(s.hatchedCells ?? [])
+			const shadedSet = new Set(s.shadedCells)
+			const hatchedSet = new Set(s.hatchedCells)
 
 			for (let i = 0; i < s.totalParts; i++) {
-				const startAngle = i * angleStep - 90 // Start from top
+				const startAngle = i * angleStep - 90
 				const endAngle = (i + 1) * angleStep - 90
 				const startRad = rad(startAngle)
 				const endRad = rad(endAngle)
@@ -209,7 +164,6 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 
 				svg += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${fill}" fill-opacity="${opacity}" stroke="#545454" stroke-width="1"/>`
 
-				// Add diagonal hatching pattern if specified
 				if (isHatched) {
 					const cellId = `hatch-circle-${idx}-${i}`
 					svg += `<defs><pattern id="${cellId}" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
@@ -221,11 +175,11 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 		}
 	})
 
-	// ADDITION: Add logic to render overlays if they exist
-	if (overlays) {
+	// Render overlays
+	if (overlays.length > 0) {
 		const firstShape = shapes[0]
 		if (firstShape && firstShape.type === "rectangle") {
-			const cellWidth = shapeWidth / (firstShape.columns ?? firstShape.totalParts)
+			const cellWidth = shapeWidth / firstShape.columns
 			const cellHeight = shapeHeight / firstShape.rows
 
 			for (const line of overlays) {
@@ -240,9 +194,8 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 				} else if (line.style === "dotted") {
 					strokeDasharray = "2,2"
 				}
-				const strokeColor = line.color ?? "#000000"
 
-				svg += `<line x1="${fromX}" y1="${fromY}" x2="${toX}" y2="${toY}" stroke="${strokeColor}" stroke-width="2" stroke-dasharray="${strokeDasharray}"/>`
+				svg += `<line x1="${fromX}" y1="${fromY}" x2="${toX}" y2="${toY}" stroke="${line.color}" stroke-width="2" stroke-dasharray="${strokeDasharray}"/>`
 			}
 		}
 	}
@@ -251,14 +204,12 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 	return svg
 }
 
-// NEW: Rendering function for "geometry" mode
 const generateGeometryView = (props: GeometryModeProps): string => {
 	const { width, height, grid, figures, lines } = props
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">`
 
 	const cellWidth = width / grid.columns
 	const cellHeight = height / grid.rows
-	const gridOpacity = grid.opacity ?? 0.2
 
 	// Utility to convert grid coordinates to pixel coordinates
 	const gridToPixel = (pos: { row: number; col: number }) => {
@@ -272,43 +223,38 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 	// Vertical lines
 	for (let col = 0; col <= grid.columns; col++) {
 		const x = col * cellWidth
-		svg += `<line x1="${x}" y1="0" x2="${x}" y2="${height}" stroke="#000000" stroke-width="1" opacity="${gridOpacity}"/>`
+		svg += `<line x1="${x}" y1="0" x2="${x}" y2="${height}" stroke="#000000" stroke-width="1" opacity="${grid.opacity}"/>`
 	}
 	// Horizontal lines
 	for (let row = 0; row <= grid.rows; row++) {
 		const y = row * cellHeight
-		svg += `<line x1="0" y1="${y}" x2="${width}" y2="${y}" stroke="#000000" stroke-width="1" opacity="${gridOpacity}"/>`
+		svg += `<line x1="0" y1="${y}" x2="${width}" y2="${y}" stroke="#000000" stroke-width="1" opacity="${grid.opacity}"/>`
 	}
 
 	// 2. Draw figures
-	if (figures) {
-		for (const fig of figures) {
-			const pointsStr = fig.vertices
-				.map((p) => {
-					const pixel = gridToPixel(p)
-					return `${pixel.x},${pixel.y}`
-				})
-				.join(" ")
-			svg += `<polygon points="${pointsStr}" fill="${fig.fillColor ?? "none"}" stroke="${fig.strokeColor ?? "black"}" stroke-width="2"/>`
-		}
+	for (const fig of figures) {
+		const pointsStr = fig.vertices
+			.map((p) => {
+				const pixel = gridToPixel(p)
+				return `${pixel.x},${pixel.y}`
+			})
+			.join(" ")
+		svg += `<polygon points="${pointsStr}" fill="${fig.fillColor ?? "none"}" stroke="${fig.strokeColor ?? "black"}" stroke-width="2"/>`
 	}
 
 	// 3. Draw lines
-	if (lines) {
-		for (const line of lines) {
-			const fromPixel = gridToPixel(line.from)
-			const toPixel = gridToPixel(line.to)
+	for (const line of lines) {
+		const fromPixel = gridToPixel(line.from)
+		const toPixel = gridToPixel(line.to)
 
-			let strokeDasharray = ""
-			if (line.style === "dashed") {
-				strokeDasharray = "5,5"
-			} else if (line.style === "dotted") {
-				strokeDasharray = "2,2"
-			}
-			const strokeColor = line.color ?? "#000000"
-
-			svg += `<line x1="${fromPixel.x}" y1="${fromPixel.y}" x2="${toPixel.x}" y2="${toPixel.y}" stroke="${strokeColor}" stroke-width="2" stroke-dasharray="${strokeDasharray}"/>`
+		let strokeDasharray = ""
+		if (line.style === "dashed") {
+			strokeDasharray = "5,5"
+		} else if (line.style === "dotted") {
+			strokeDasharray = "2,2"
 		}
+
+		svg += `<line x1="${fromPixel.x}" y1="${fromPixel.y}" x2="${toPixel.x}" y2="${toPixel.y}" stroke="${line.color}" stroke-width="2" stroke-dasharray="${strokeDasharray}"/>`
 	}
 
 	svg += "</svg>"

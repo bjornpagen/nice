@@ -88,8 +88,9 @@ export const DataTablePropsSchema = z
 		title: z
 			.string()
 			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"Optional table caption/title displayed above the table (e.g., 'Monthly Sales Data', 'Conversion Factors'). Null means no title."
+				"Optional table caption/title displayed above the table (e.g., 'Monthly Sales Data', 'Conversion Factors', null). Null means no title."
 			),
 		columns: z
 			.array(
@@ -113,6 +114,7 @@ export const DataTablePropsSchema = z
 		rowHeaderKey: z
 			.string()
 			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
 				"Optional column key that identifies row headers. That column's cells will be styled as headers (bold, shaded). Null means no row headers."
 			),

@@ -4,45 +4,19 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 
 export const ErrMismatchedTickCounts = errors.new("top and bottom lines must have the same number of ticks")
 
-// The main Zod schema for the doubleNumberLine function
-export const DoubleNumberLinePropsSchema = z
-	.object({
-		type: z.literal("doubleNumberLine"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 150)
-			.describe("The total height of the output SVG container in pixels."),
-		// INLINED: The LineSchema definition is now directly inside the topLine property.
-		topLine: z
-			.object({
-				label: z.string().describe('The text label for this quantity (e.g., "Time (seconds)").'),
-				ticks: z
-					.array(z.union([z.string(), z.number()]))
-					.describe("An array of values to label the tick marks in order from left to right.")
-			})
-			.strict()
-			.describe("Configuration for the upper number line."),
-		// INLINED: The LineSchema definition is now directly inside the bottomLine property.
-		bottomLine: z
-			.object({
-				label: z.string().describe('The text label for this quantity (e.g., "Time (seconds)").'),
-				ticks: z
-					.array(z.union([z.string(), z.number()]))
-					.describe("An array of values to label the tick marks in order from left to right.")
-			})
-			.strict()
-			.describe("Configuration for the lower number line. Must have the same number of ticks as the top line.")
-	})
-	.strict()
-	.describe(
-		'This template generates a double number line diagram as a clear and accurate SVG graphic. This visualization tool is excellent for illustrating the relationship between two different quantities that share a constant ratio. The generator will render two parallel horizontal lines, one above the other. Each line represents a different quantity and will have a text label (e.g., "Time (minutes)", "Items"). Both lines are marked with a configurable number of equally spaced tick marks. The core of the template is the array of corresponding values for the tick marks on each line. For example, the top line might have values [0, 1, 2, 3, 4] while the bottom line has [0, 50, 100, 150, 200]. The generator will place these labels at the correct tick marks, visually aligning the proportional pairs. Some labels can be omitted to create "fill-in-the-blank" style questions where the student must deduce the missing value. The resulting SVG is a powerful visual aid for solving ratio problems.'
-	)
+export const DoubleNumberLinePropsSchema = z.object({
+  type: z.literal('doubleNumberLine').describe("Identifies this as a double number line widget for showing proportional relationships."),
+  width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 600, 700, 500). Must accommodate both labels and all tick values."),
+  height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 200, 250, 180). Includes space for both lines, labels, and vertical spacing."),
+  topLine: z.object({ 
+    label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Label for this number line shown on the left side (e.g., 'Cups of Flour', 'Cost ($)', 'Miles', 'Time (minutes)', null). Keep concise to fit. Null shows no label."), 
+    ticks: z.array(z.union([z.string(), z.number()])).describe("Tick mark values from left to right. Can be numbers (e.g., [0, 2, 4, 6]) or strings (e.g., ['0', '1/2', '1', '3/2']). Must have same count as other line for alignment.") 
+  }).strict().describe("Configuration for the upper number line. Represents one quantity in the proportional relationship."),
+  bottomLine: z.object({ 
+    label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Label for this number line shown on the left side (e.g., 'Cups of Flour', 'Cost ($)', 'Miles', 'Time (minutes)', null). Keep concise to fit. Null shows no label."), 
+    ticks: z.array(z.union([z.string(), z.number()])).describe("Tick mark values from left to right. Can be numbers (e.g., [0, 2, 4, 6]) or strings (e.g., ['0', '1/2', '1', '3/2']). Must have same count as other line for alignment.") 
+  }).strict().describe("Configuration for the lower number line. Represents the related quantity. Tick positions align vertically with top line."),
+}).strict().describe("Creates parallel number lines showing proportional relationships between two quantities. Vertical lines connect corresponding values. Essential for ratio reasoning, unit rates, and proportional thinking. Both lines must have the same number of ticks for proper alignment.")
 
 export type DoubleNumberLineProps = z.infer<typeof DoubleNumberLinePropsSchema>
 
@@ -92,7 +66,9 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 
 	// Top line
 	svg += `<line x1="${padding.horizontal}" y1="${topY}" x2="${width - padding.horizontal}" y2="${topY}" stroke="#333333"/>`
-	svg += `<text x="${width / 2}" y="${topY + TOP_LINE_LABEL_Y_OFFSET}" class="line-label">${topLine.label}</text>`
+	if (topLine.label !== null) {
+		svg += `<text x="${width / 2}" y="${topY + TOP_LINE_LABEL_Y_OFFSET}" class="line-label">${topLine.label}</text>`
+	}
 	topLine.ticks.forEach((t, i) => {
 		const x = padding.horizontal + i * tickSpacing
 		svg += `<line x1="${x}" y1="${topY - TICK_MARK_HEIGHT}" x2="${x}" y2="${topY + TICK_MARK_HEIGHT}" stroke="#333333"/>`
@@ -101,7 +77,9 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 
 	// Bottom line
 	svg += `<line x1="${padding.horizontal}" y1="${bottomY}" x2="${width - padding.horizontal}" y2="${bottomY}" stroke="#333333"/>`
-	svg += `<text x="${width / 2}" y="${bottomY + BOTTOM_LINE_LABEL_Y_OFFSET}" class="line-label">${bottomLine.label}</text>`
+	if (bottomLine.label !== null) {
+		svg += `<text x="${width / 2}" y="${bottomY + BOTTOM_LINE_LABEL_Y_OFFSET}" class="line-label">${bottomLine.label}</text>`
+	}
 	bottomLine.ticks.forEach((t, i) => {
 		const x = padding.horizontal + i * tickSpacing
 		svg += `<line x1="${x}" y1="${bottomY - TICK_MARK_HEIGHT}" x2="${x}" y2="${bottomY + TICK_MARK_HEIGHT}" stroke="#333333"/>`

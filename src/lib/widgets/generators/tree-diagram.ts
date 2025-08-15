@@ -1,75 +1,36 @@
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines a single node in the tree diagram
-const TreeNodeSchema = z
-	.object({
-		id: z.string().describe("A unique identifier for this node (e.g., 'root', 'n1-left')."),
-		label: z.string().describe("The text content to display within or near the node (e.g., '144', 'x')."),
-		position: z
-			.object({
-				x: z.number().describe("The horizontal coordinate for the center of the node."),
-				y: z.number().describe("The vertical coordinate for the center of the node.")
-			})
-			.strict()
-			.describe("The explicit {x, y} coordinates for the node's position."),
-		style: z
-			.enum(["circled", "default"])
-			.nullable()
-			.transform((val) => val ?? "default")
-			.describe("The visual style of the node. All nodes are now rendered with circles regardless of this setting."),
-		color: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "black")
-			.describe("The CSS color for the node's text and circle stroke.")
-	})
-	.strict()
+const Node = z.object({ 
+  id: z.string().describe("Unique identifier for this node (e.g., 'root', 'n1', 'left-child', 'outcome-A'). Used to reference in edges. Must be unique within diagram."), 
+  label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Text content displayed in the node (e.g., '24', '2 × 12', 'H', '0.5', 'Yes', null). Keep concise to fit within node circle. Null for unlabeled nodes."), 
+  position: z.object({ 
+    x: z.number().describe("Horizontal position of node center in pixels (e.g., 200, 100, 350). Origin (0,0) is top-left of diagram."), 
+    y: z.number().describe("Vertical position of node center in pixels (e.g., 50, 150, 200). Increases downward. Tree typically grows downward.") 
+  }).strict().describe("Exact position for the node center. No automatic layout - positions must be explicitly calculated."), 
+  style: z.enum(['circled','default']).describe("Visual style of the node. 'circled' draws a circle around the label. 'default' also shows a circle (legacy compatibility)."), 
+  color: z.string().regex(
+    CSS_COLOR_PATTERN,
+    "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+  ).describe("CSS color for the node's text and circle outline (e.g., 'black', '#0066CC', 'darkgreen'). Should contrast with white background.") 
+}).strict()
 
-// Defines a directed edge (a connecting line) between two nodes
-const TreeEdgeSchema = z
-	.object({
-		from: z.string().describe("The `id` of the parent node where the edge originates."),
-		to: z.string().describe("The `id` of the child node where the edge terminates."),
-		style: z
-			.enum(["solid", "dashed"])
-			.nullable()
-			.transform((val) => val ?? "solid")
-			.describe("The style of the connecting line.")
-	})
-	.strict()
+const Edge = z.object({ 
+  from: z.string().describe("ID of the parent/source node where this edge starts. Must match a node.id in the nodes array (e.g., 'root', 'n1')."), 
+  to: z.string().describe("ID of the child/target node where this edge ends. Must match a node.id in the nodes array (e.g., 'n2', 'left-child')."), 
+  style: z.enum(['solid','dashed']).describe("Visual style of the connecting line. 'solid' for regular edges, 'dashed' for special relationships or probability branches.") 
+}).strict()
 
-// The main Zod schema for the treeDiagram function
-export const TreeDiagramPropsSchema = z
-	.object({
-		type: z.literal("treeDiagram"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The total height of the output SVG container in pixels."),
-		nodes: z.array(TreeNodeSchema).min(1).describe("An array of all nodes to be rendered in the diagram."),
-		edges: z.array(TreeEdgeSchema).describe("An array of all edges connecting the nodes."),
-		nodeFontSize: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 16)
-			.describe("The font size for the text inside the nodes."),
-		nodeRadius: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 20)
-			.describe("The radius of the circle for 'circled' nodes.")
-	})
-	.strict()
-	.describe(
-		"Generates a versatile SVG tree diagram for representing hierarchical data. This widget is ideal for visualizing structures like prime factorization trees, probability diagrams, or simple organizational charts. It renders a collection of nodes (with text labels) and edges (lines) based on explicit coordinate positions, providing full control over the final layout."
-	)
+export const TreeDiagramPropsSchema = z.object({
+  type: z.literal('treeDiagram').describe("Identifies this as a tree diagram widget for hierarchical structures and decision trees."),
+  width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 400, 600, 500). Must accommodate all node positions and labels."),
+  height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 300, 400, 500). Trees typically need more height than width."),
+  nodes: z.array(Node).describe("All nodes in the tree with explicit positions. No automatic layout - each node's position must be calculated. Can be empty for blank diagram."),
+  edges: z.array(Edge).describe("Connections between nodes defining parent-child relationships. Each edge references nodes by their IDs. Can be empty for disconnected nodes."),
+  nodeFontSize: z.number().positive().describe("Font size for node labels in pixels (e.g., 14, 16, 12). Should be readable but fit within nodeRadius."),
+  nodeRadius: z.number().positive().describe("Radius of the circle for 'circled' style nodes in pixels (e.g., 20, 25, 30). Larger values accommodate longer labels."),
+}).strict().describe("Creates tree diagrams with manually positioned nodes and edges. Perfect for factor trees, probability trees, decision trees, and hierarchical structures. Unlike automatic layout systems, this gives complete control over node positioning for educational clarity. All nodes are rendered with circles for consistency.")
 
 export type TreeDiagramProps = z.infer<typeof TreeDiagramPropsSchema>
 
@@ -79,6 +40,11 @@ export type TreeDiagramProps = z.infer<typeof TreeDiagramPropsSchema>
  */
 export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema> = (props) => {
 	const { width, height, nodes, edges, nodeFontSize, nodeRadius } = props
+
+	// Handle empty nodes case
+	if (nodes.length === 0) {
+		return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"></svg>`
+	}
 
 	const padding = 20
 	const minX = Math.min(...nodes.map((n) => n.position.x))
@@ -112,8 +78,10 @@ export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema>
 		const { x, y } = node.position
 		// Draw a circle for all nodes
 		svg += `<circle cx="${x}" cy="${y}" r="${nodeRadius}" fill="white" stroke="${node.color}" stroke-width="2"/>`
-		// Draw the text label for all nodes
-		svg += `<text x="${x}" y="${y}" fill="${node.color}" font-size="${nodeFontSize}px" text-anchor="middle" dominant-baseline="middle">${node.label}</text>`
+		// Draw the text label only if it exists
+		if (node.label !== null) {
+			svg += `<text x="${x}" y="${y}" fill="${node.color}" font-size="${nodeFontSize}px" text-anchor="middle" dominant-baseline="middle">${node.label}</text>`
+		}
 	}
 
 	svg += "</svg>"

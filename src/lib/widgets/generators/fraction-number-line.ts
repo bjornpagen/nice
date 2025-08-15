@@ -1,86 +1,47 @@
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines a single tick mark with optional labels above and below the line.
-const TickMarkSchema = z
-	.object({
-		value: z.number().describe("The numerical position of the tick mark on the axis."),
-		topLabel: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe('An optional label to display above the tick mark (e.g., "3/8").'),
-		bottomLabel: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe('An optional label to display below the tick mark (e.g., "0", "1").'),
-		isMajor: z
-			.boolean()
-			.describe("If true, the tick mark is rendered taller to indicate significance (e.g., for whole numbers).")
-	})
-	.strict()
+const Tick = z.object({ 
+  value: z.number().describe("The numerical position of this tick mark on the number line (e.g., 0, 0.5, 1.5, 2.25, -0.75). Must be between min and max."), 
+  topLabel: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Label displayed above the tick mark (e.g., '0', '1/2', '1 1/2', '2.25', null). Null shows no top label. Often shows fractions."), 
+  bottomLabel: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Label displayed below the tick mark (e.g., '0', '2/4', '6/4', null). Null shows no bottom label. Often shows equivalent fractions."), 
+  isMajor: z.boolean().describe("Whether this is a major tick (taller line) or minor tick (shorter line). Major ticks typically mark whole numbers or key fractions.") 
+}).strict()
 
-// Defines a colored segment to be drawn directly on the number line axis.
-const NumberLineSegmentSchema = z
-	.object({
-		start: z.number().describe("The numerical starting value of the segment."),
-		end: z.number().describe("The numerical ending value of the segment."),
-		color: z.string().describe("A CSS color for the segment's fill (e.g., '#11accd', 'orange').")
-	})
-	.strict()
+const Segment = z.object({ 
+  start: z.number().describe("Starting position of the colored segment on the number line (e.g., 0, 0.5, 1). Must be >= min and <= end."), 
+  end: z.number().describe("Ending position of the colored segment on the number line (e.g., 1, 1.5, 2.75). Must be <= max and >= start."), 
+  color: z.string().regex(
+    CSS_COLOR_PATTERN,
+    "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+  ).describe("CSS fill color for this segment (e.g., '#FFE5B4' for peach, 'rgba(0,255,0,0.5)' for translucent green, 'lightblue'). Creates visual groupings.") 
+}).strict()
 
-// Defines a colored group of cells within the fraction model bar.
-const ModelCellGroupSchema = z
-	.object({
-		count: z.number().int().positive().describe("The number of cells in this group."),
-		color: z.string().describe("The CSS fill color for this group of cells.")
-	})
-	.strict()
+const ModelCellGroup = z.object({ 
+  count: z.number().int().positive().describe("Number of consecutive cells in this group (e.g., 3, 5, 1). Must be positive. Sum of all counts equals totalCells."), 
+  color: z.string().regex(
+    CSS_COLOR_PATTERN,
+    "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+  ).describe("CSS fill color for cells in this group (e.g., '#FF6B6B' for red, 'lightgreen', 'rgba(0,0,255,0.7)'). Differentiates cell groups visually.") 
+}).strict()
 
-// Defines the fraction model bar that is displayed above the number line.
-const FractionModelSchema = z
-	.object({
-		totalCells: z.number().int().positive().describe("The total number of cells to draw in the bar."),
-		cellGroups: z
-			.array(ModelCellGroupSchema)
-			.describe("An array of colored cell groups that will be rendered sequentially to fill the bar."),
-		bracketLabel: z
-			.string()
-			.nullable()
-			.describe("An optional text label to display above a bracket spanning the model.")
-	})
-	.strict()
+const Model = z.object({ 
+  totalCells: z.number().int().positive().describe("Total number of cells in the visual bar model (e.g., 8 for eighths, 10 for tenths, 12 for twelfths). Determines cell width."), 
+  cellGroups: z.array(ModelCellGroup).describe("Groups of colored cells shown in order left to right. Sum of all group counts must equal totalCells. Can show part-whole relationships."), 
+  bracketLabel: z.string().describe("Label for the bracket spanning the entire model (e.g., '1 whole', '2 units', '24 hours'). Indicates what the full bar represents.") 
+}).strict()
 
-// The main Zod schema for the fractionNumberLine function
-export const FractionNumberLinePropsSchema = z
-	.object({
-		type: z.literal("fractionNumberLine"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 500)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 200)
-			.describe("The total height of the output SVG container in pixels."),
-		min: z.number().describe("The minimum value displayed on the number line."),
-		max: z.number().describe("The maximum value displayed on the number line."),
-		ticks: z.array(TickMarkSchema).describe("An array of all tick marks to be rendered on the axis."),
-		segments: z
-			.array(NumberLineSegmentSchema)
-			.nullable()
-			.describe("An optional array of colored segments to overlay directly on the number line axis."),
-		model: FractionModelSchema.nullable().describe(
-			"An optional visual model composed of colored cells, rendered above the number line."
-		)
-	})
-	.strict()
-	.describe(
-		'Generates a highly illustrative number line designed to build conceptual understanding of fractions. It renders a number line with customizable fractional ticks and can overlay colored segments to show groups. Crucially, it can also display a separate "fraction model" bar above the number line, composed of colored cells that correspond to the segments, providing a clear, cell-based representation of the part-to-whole relationships.'
-	)
+export const FractionNumberLinePropsSchema = z.object({
+  type: z.literal('fractionNumberLine').describe("Identifies this as a fraction number line widget with optional visual models."),
+  width: z.number().positive().describe("Total width of the number line in pixels (e.g., 600, 700, 800). Must accommodate all labels and optional model bar."),
+  height: z.number().positive().describe("Total height of the widget in pixels (e.g., 150, 200, 250). Includes number line, labels, segments, and optional model."),
+  min: z.number().describe("Minimum value shown on the number line (e.g., 0, -1, -2.5). Must be less than max. Left endpoint of the line."),
+  max: z.number().describe("Maximum value shown on the number line (e.g., 3, 5, 10.5). Must be greater than min. Right endpoint of the line."),
+  ticks: z.array(Tick).describe("All tick marks to display with their labels. Order doesn't matter. Can show fractions, decimals, or mixed numbers. Empty array shows no ticks."),
+  segments: z.array(Segment).describe("Colored horizontal bars above the number line highlighting ranges. Empty array shows no segments. Useful for showing intervals or equivalent lengths."),
+  model: Model.nullable().transform((val) => val ?? null).describe("Optional visual bar divided into cells below the number line. Shows part-whole relationships and fraction concepts. Cells align with the number line scale. Null means no model."),
+}).strict().describe("Creates a number line optimized for fraction instruction with customizable tick marks, colored segments, and an optional cell-based visual model. Supports showing equivalent fractions, mixed numbers, and part-whole relationships. The model bar helps visualize fractions as parts of a whole.")
 
 export type FractionNumberLineProps = z.infer<typeof FractionNumberLinePropsSchema>
 
@@ -114,16 +75,16 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 		const x = toSvgX(tick.value)
 		const tickHeight = tick.isMajor ? 8 : 4
 		svg += `<line x1="${x}" y1="${yPosAxis - tickHeight}" x2="${x}" y2="${yPosAxis + tickHeight}" stroke="black" stroke-width="1.5"/>`
-		if (tick.topLabel) {
+		if (tick.topLabel !== null) {
 			svg += `<text x="${x}" y="${yPosAxis - 15}" class="label-top" text-anchor="middle">${tick.topLabel}</text>`
 		}
-		if (tick.bottomLabel) {
+		if (tick.bottomLabel !== null) {
 			svg += `<text x="${x}" y="${yPosAxis + 25}" class="label-bottom" text-anchor="middle">${tick.bottomLabel}</text>`
 		}
 	}
 
 	// 3. Draw On-Axis Segments
-	if (segments) {
+	if (segments.length > 0) {
 		for (const segment of segments) {
 			const startX = toSvgX(segment.start)
 			const endX = toSvgX(segment.end)
@@ -132,7 +93,7 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 	}
 
 	// 4. Draw Fraction Model Bar
-	if (model) {
+	if (model !== null) {
 		const modelY = padding.top - 20
 		const modelHeight = 36
 		const cellWidth = chartWidth / model.totalCells
@@ -155,7 +116,7 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 		}
 
 		// Render Bracket and Label
-		if (model.bracketLabel) {
+		if (model.bracketLabel !== "") {
 			const bracketY = modelY - 15
 			const bracketStartX = padding.left
 			const bracketEndX = padding.left + chartWidth

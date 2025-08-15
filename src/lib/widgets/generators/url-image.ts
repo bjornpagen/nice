@@ -16,25 +16,24 @@ export const UrlImageWidgetPropsSchema = z
 			.describe("The direct HTTPS URL to the image resource (must end with .svg, .png, .jpg, .jpeg, or .gif)."),
 		alt: z
 			.string()
-			.min(1)
 			.describe(
-				"Required alternative text describing the image for accessibility. This should be descriptive and meaningful."
+				"Required alternative text describing the image for accessibility. Plaintext only; no markdown or HTML."
 			),
 		width: z.number().positive().nullable().describe("Optional width for the image in pixels."),
 		height: z.number().positive().nullable().describe("Optional height for the image in pixels."),
 		caption: z
 			.string()
 			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"An optional descriptive caption to display below the image. This should describe what the image shows or provide context."
+				"An optional descriptive caption to display below the image. This should describe what the image shows or provide context. Plaintext only; no markdown or HTML."
 			),
 		attribution: z
 			.string()
 			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"Optional attribution or source credit. Use this to provide image source, creator, or licensing details. Keep the caption strictly descriptive and place attribution here instead."
+				"Optional attribution or source credit. Use this to provide image source, creator, or licensing details. Keep the caption strictly descriptive and place attribution here instead. Plaintext only; no markdown or HTML."
 			)
 	})
 	.strict()

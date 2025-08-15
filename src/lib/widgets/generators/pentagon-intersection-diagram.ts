@@ -1,70 +1,52 @@
 import * as errors from "@superbuilders/errors"
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
+import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Exact arc definition matching Khan Academy SVG format
-const KhanArcSchema = z
-	.object({
-		startX: z.number().describe("The x-coordinate where the arc starts (M command)."),
-		startY: z.number().describe("The y-coordinate where the arc starts (M command)."),
-		rx: z.number().describe("The x-radius of the elliptical arc."),
-		ry: z.number().describe("The y-radius of the elliptical arc."),
-		xAxisRotation: z.number().describe("The rotation of the arc's x-axis in degrees."),
-		largeArcFlag: z.number().min(0).max(1).describe("Large arc flag (0 or 1)."),
-		sweepFlag: z.number().min(0).max(1).describe("Sweep flag (0 or 1)."),
-		endDeltaX: z.number().describe("The relative x-distance to the arc's end point."),
-		endDeltaY: z.number().describe("The relative y-distance to the arc's end point."),
-		label: z.string().describe('The text label for the angle (e.g., "100°", "x°").'),
-		color: z.string().describe("The stroke color of the arc.")
-	})
-	.strict()
+const KAArc = z.object({ 
+  startX: z.number().describe("X-coordinate where the arc begins (e.g., 150, 200, 175.5). Usually on or near a line segment."), 
+  startY: z.number().describe("Y-coordinate where the arc begins (e.g., 100, 150, 125.5). Defines the arc's starting point."), 
+  rx: z.number().describe("Horizontal radius of the elliptical arc in pixels (e.g., 20, 30, 25). Controls arc width."), 
+  ry: z.number().describe("Vertical radius of the elliptical arc in pixels (e.g., 20, 30, 25). Often equals rx for circular arcs."), 
+  xAxisRotation: z.number().describe("Rotation of the ellipse in degrees (e.g., 0, 45, -30). Usually 0 for simple angle arcs."), 
+  largeArcFlag: z.number().describe("SVG arc flag: 0 for small arc (<180°), 1 for large arc (>180°). Typically 0 for angle markers."), 
+  sweepFlag: z.number().describe("SVG sweep direction: 0 for counter-clockwise, 1 for clockwise. Determines arc direction."), 
+  endDeltaX: z.number().describe("X-offset from start to end point (e.g., 15, -10, 20). End point = (startX + endDeltaX, startY + endDeltaY)."), 
+  endDeltaY: z.number().describe("Y-offset from start to end point (e.g., 10, -15, 5). Defines where the arc ends relative to start."), 
+  label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Text label for the angle (e.g., '72°', '36°', 'α', null). Null shows arc without label. Positioned near the arc."), 
+  color: z.string().regex(
+    CSS_COLOR_PATTERN,
+    "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+  ).describe("CSS color for the arc and its label (e.g., '#FF6B6B' for red, 'blue', 'green'). Different colors distinguish angle types.") 
+}).strict()
 
-// Pentagon points definition
-const PentagonPointSchema = z
-	.object({
-		id: z.string().describe("Unique identifier for the point."),
-		x: z.number().describe("The x-coordinate of the point."),
-		y: z.number().describe("The y-coordinate of the point.")
-	})
-	.strict()
+const Point = z.object({ 
+  id: z.string().describe("Unique identifier for this vertex (e.g., 'A', 'B', 'C', 'D', 'E'). Used to reference in intersection lines. Must be unique."), 
+  x: z.number().describe("X-coordinate of the vertex in SVG space (e.g., 200, 150, 250). Pentagon will be centered in the diagram."), 
+  y: z.number().describe("Y-coordinate of the vertex in SVG space (e.g., 50, 100, 200). Positive y is downward in SVG.") 
+}).strict()
 
-// Main schema for pentagon intersection diagram
-export const PentagonIntersectionDiagramPropsSchema = z
-	.object({
-		type: z.literal("pentagonIntersectionDiagram"),
-		width: z
-			.number()
-			.positive()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The width of the diagram canvas in pixels."),
-		height: z
-			.number()
-			.positive()
-			.nullable()
-			.transform((val) => val ?? 300)
-			.describe("The height of the diagram canvas in pixels."),
-		pentagonPoints: z.array(PentagonPointSchema).length(5).describe("The five vertices of the pentagon in order."),
-		intersectionLines: z
-			.array(
-				z.object({
-					from: z.string().describe("The starting point ID."),
-					to: z.string().describe("The ending point ID.")
-				})
-			)
-			.describe("The internal lines that create intersections."),
-		khanArcs: z.array(KhanArcSchema).describe("The angle arcs using exact Khan Academy SVG arc parameters.")
-	})
-	.strict()
+export const PentagonIntersectionDiagramPropsSchema = z.object({
+  type: z.literal('pentagonIntersectionDiagram').describe("Identifies this as a pentagon intersection diagram showing internal angle relationships."),
+  width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 400, 500, 350). Must accommodate the pentagon and labels."),
+  height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 400, 500, 350). Pentagon is centered within these bounds."),
+  pentagonPoints: z.array(Point).describe("Exactly 5 points defining the pentagon vertices in order. Connect sequentially to form the pentagon. Generator validates count = 5."),
+  intersectionLines: z.array(z.object({ 
+    from: z.string().describe("ID of the starting vertex for this diagonal. Must match a point.id in pentagonPoints (e.g., 'A', 'B')."), 
+    to: z.string().describe("ID of the ending vertex for this diagonal. Must match a point.id in pentagonPoints (e.g., 'C', 'D').") 
+  }).strict()).describe("Diagonal lines connecting non-adjacent vertices. Creates the internal star pattern. Empty array shows just the pentagon outline."),
+  khanArcs: z.array(KAArc).describe("Angle arcs using Khan Academy's style. Empty array means no angle markers. Uses SVG elliptical arc notation for precise control."),
+}).strict().describe("Creates a regular pentagon with optional diagonal lines forming a pentagram (5-pointed star) pattern. Shows interior angles (108°) and star point angles (36°) with customizable arc markers. Essential for teaching polygon angle sums, symmetry, and golden ratio relationships in pentagons.")
 
 export type PentagonIntersectionDiagramProps = z.infer<typeof PentagonIntersectionDiagramPropsSchema>
 
-export function generatePentagonIntersectionDiagram(props: PentagonIntersectionDiagramProps): string {
-	const result = errors.trySync(() => PentagonIntersectionDiagramPropsSchema.parse(props))
-	if (result.error) {
-		throw errors.wrap(result.error, "pentagon intersection diagram props validation failed")
+export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof PentagonIntersectionDiagramPropsSchema> = (data) => {
+	// Validate exactly 5 pentagon points
+	if (data.pentagonPoints.length !== 5) {
+		throw errors.new(`pentagon must have exactly 5 points, got ${data.pentagonPoints.length}`)
 	}
 
-	const { width, height, pentagonPoints, intersectionLines, khanArcs } = result.data
+	const { width, height, pentagonPoints, intersectionLines, khanArcs } = data
 
 	// Calculate viewBox with padding
 	const allX = pentagonPoints.map((p) => p.x)
@@ -124,12 +106,14 @@ export function generatePentagonIntersectionDiagram(props: PentagonIntersectionD
 		const perpX = -arc.endDeltaY / Math.sqrt(arc.endDeltaX * arc.endDeltaX + arc.endDeltaY * arc.endDeltaY)
 		const perpY = arc.endDeltaX / Math.sqrt(arc.endDeltaX * arc.endDeltaX + arc.endDeltaY * arc.endDeltaY)
 
-		// Position label just outside the arc edge (radius + small offset)
-		const labelOffset = arc.rx + 8 // Arc radius plus small gap
-		const labelX = arcCenterX + perpX * labelOffset
-		const labelY = arcCenterY + perpY * labelOffset
+		// Position label just outside the arc edge (radius + small offset) if label exists
+		if (arc.label) {
+			const labelOffset = arc.rx + 8 // Arc radius plus small gap
+			const labelX = arcCenterX + perpX * labelOffset
+			const labelY = arcCenterY + perpY * labelOffset
 
-		svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="14">${arc.label}</text>`
+			svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="14">${arc.label}</text>`
+		}
 	}
 
 	// Draw pentagon points

@@ -21,8 +21,10 @@ const BoxPlotAxisSchema = z
 			),
 		label: z
 			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"Title for the horizontal axis describing what is measured (e.g., 'Test Scores', 'Height (cm)', 'Temperature (°F)', 'Age'). Can be empty string if not needed."
+				"Title for the horizontal axis describing what is measured (e.g., 'Test Scores', 'Height (cm)', 'Temperature (°F)', 'Age', null). Null if not needed."
 			),
 		tickLabels: z
 			.array(z.number())
@@ -91,7 +93,7 @@ export const BoxPlotPropsSchema = z
 			.string()
 			.regex(
 				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
 			)
 			.describe(
 				"CSS color for the box fill showing the interquartile range (e.g., '#E8F4FD' for light blue, 'lightgray', 'rgba(150,150,150,0.3)'). Should be subtle to show median line clearly."
@@ -100,7 +102,7 @@ export const BoxPlotPropsSchema = z
 			.string()
 			.regex(
 				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
 			)
 			.describe(
 				"CSS color for the median line inside the box (e.g., '#FF6B6B' for red, 'black', 'darkblue'). Should contrast strongly with boxColor for emphasis."

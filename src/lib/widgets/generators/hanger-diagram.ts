@@ -1,69 +1,25 @@
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// The main Zod schema for the hangerDiagram function
-export const HangerDiagramPropsSchema = z
-	.object({
-		type: z.literal("hangerDiagram"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 320)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 240)
-			.describe("The total height of the output SVG container in pixels."),
-		// INLINED: The HangerWeightSchema is now defined directly inside the leftSide property.
-		leftSide: z
-			.array(
-				z
-					.object({
-						label: z
-							.union([z.string(), z.number()])
-							.describe('The text label displayed inside the weight (e.g., "c", 12, "1/2").'),
-						shape: z
-							.enum(["square", "circle", "pentagon", "hexagon", "triangle"])
-							.nullable()
-							.transform((val) => val ?? "square")
-							.describe("The geometric shape of the weight."),
-						color: z
-							.string()
-							.nullable()
-							.transform((val) => val ?? "#e0e0e0")
-							.describe("An optional CSS fill color for the shape.")
-					})
-					.strict()
-			)
-			.describe("An array of weight objects to be rendered on the left side of the hanger."),
-		// INLINED: The HangerWeightSchema is now defined directly inside the rightSide property.
-		rightSide: z
-			.array(
-				z
-					.object({
-						label: z
-							.union([z.string(), z.number()])
-							.describe('The text label displayed inside the weight (e.g., "c", 12, "1/2").'),
-						shape: z
-							.enum(["square", "circle", "pentagon", "hexagon", "triangle"])
-							.nullable()
-							.transform((val) => val ?? "square")
-							.describe("The geometric shape of the weight."),
-						color: z
-							.string()
-							.nullable()
-							.transform((val) => val ?? "#e0e0e0")
-							.describe("An optional CSS fill color for the shape.")
-					})
-					.strict()
-			)
-			.describe("An array of weight objects to be rendered on the right side of the hanger.")
-	})
-	.strict()
-	.describe(
-		'This template generates a "hanger diagram," a powerful visual metaphor for a balanced algebraic equation, rendered as an SVG graphic within an HTML <div>. This diagram is ideal for introducing students to the concept of solving equations by maintaining balance. The generator will construct a central balanced beam suspended from a hook. Two sides, left and right, hang from the beam, each capable of holding multiple "weights." The core principle is that the total weight on the left side must equal the total weight on the right for the hanger to be balanced. Each weight is a distinct visual element, configurable by shape (e.g., square, circle, pentagon, hexagon) and an internal label (e.g., a number like "12" or a variable like "c"). The generator will intelligently and aesthetically arrange multiple weights on each side, stacking or grouping them as needed for clarity. This allows for the visual representation of equations like 12 = 4c (a single 12-unit weight on the left balances four c-unit weights on the right) or d + 6 = 21 (a d-unit weight and a 6-unit weight on the left balance a 21-unit weight on the right). The final output is a clean, self-contained SVG that intuitively communicates the principle of equality in an equation, making abstract algebraic concepts more concrete and accessible.'
-	)
+function createWeightSchema() {
+  return z.object({ 
+    label: z.union([z.string(), z.number()]).nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("The value or variable displayed on this weight (e.g., 5, 'x', 12, 'y', '2x', 3.5, null). Can be numeric values or algebraic expressions. Null shows no label."), 
+    shape: z.enum(['square','circle','pentagon','hexagon','triangle']).describe("Geometric shape for this weight. Different shapes can represent different variables or value types in equations."), 
+    color: z.string().regex(
+      CSS_COLOR_PATTERN,
+      "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+    ).describe("Hex-only fill color for this weight (e.g., '#4472C4', '#1E90FF', '#FF000080' for 50% alpha). Use distinct colors for different variable types.") 
+  }).strict()
+}
+
+export const HangerDiagramPropsSchema = z.object({
+  type: z.literal('hangerDiagram').describe("Identifies this as a hanger diagram (balance scale) for visualizing algebraic equations."),
+  width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 500, 600, 400). Must accommodate both sides of the balance and labels."),
+  height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 300, 400, 250). Includes the hanger, beam, and hanging weights."),
+  leftSide: z.array(createWeightSchema()).describe("Weights hanging on the left side of the balance. Can be empty array for 0 = right side. Order determines left-to-right positioning."),
+  rightSide: z.array(createWeightSchema()).describe("Weights hanging on the right side of the balance. Can be empty array for left side = 0. Order determines left-to-right positioning."),
+}).strict().describe("Creates a balance scale visualization for algebraic equations where each side represents one side of the equation. Weights can show constants or variables with different shapes and colors. Perfect for teaching equation solving, algebraic thinking, and the balance method. The horizontal beam shows the equation is balanced (equal).")
 
 export type HangerDiagramProps = z.infer<typeof HangerDiagramPropsSchema>
 
@@ -138,7 +94,7 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 				shapeSvg = `<rect x="${x - size / 2}" y="${y}" width="${size}" height="${size}" fill="${weight.color}" stroke="#333333"/>`
 				break
 		}
-		const textSvg = `<text x="${x}" y="${y + size / 2 + 4}" fill="#333333" text-anchor="middle" font-weight="bold">${weight.label}</text>`
+		const textSvg = weight.label !== null ? `<text x="${x}" y="${y + size / 2 + 4}" fill="#333333" text-anchor="middle" font-weight="bold">${weight.label}</text>` : ""
 		return shapeSvg + textSvg
 	}
 

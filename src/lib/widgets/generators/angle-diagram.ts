@@ -3,9 +3,6 @@ import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Error constants
-export const ErrInvalidAngleVertexCount = errors.new("angle vertices must contain exactly 3 point IDs")
-
 // Utility function to find intersection point of two lines
 // Line 1: from point1 to point2, Line 2: from point3 to point4
 export const findLineIntersection = (
@@ -60,8 +57,10 @@ const Point = z
 			),
 		label: z
 			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"the text label to display next to this point (e.g., 'A', 'B', 'C', 'O' for origin). can be empty string to show no label."
+				"the text label to display next to this point (e.g., 'A', 'B', 'C', 'O' for origin, null). null means no label."
 			),
 		shape: z.enum(["circle", "ellipse"]).describe("the shape of the point marker. 'circle' or 'ellipse'.")
 	})
@@ -70,33 +69,33 @@ const Point = z
 const AngleArc = z
 	.object({
 		type: z.literal("arc").describe("arc angle visualization"),
-		vertices: z
-			.tuple([z.string(), z.string(), z.string()])
-			.describe(
-				"exactly three point ids defining the angle: [point on first ray, vertex point, point on second ray]. the middle id is the vertex."
-			),
-		label: z.string().describe("angle label text; empty string to hide"),
+		pointOnFirstRay: z.string().describe("point id on the first ray of the angle (e.g., 'A' in angle ABC). forms one side of the angle with the vertex."),
+		vertex: z.string().describe("point id at the vertex of the angle (e.g., 'B' in angle ABC). the angle is measured at this point."),
+		pointOnSecondRay: z.string().describe("point id on the second ray of the angle (e.g., 'C' in angle ABC). forms the other side of the angle with the vertex."),
+		label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("angle label text (e.g., '45°', 'θ', null). null shows arc without label. Plaintext only; no markdown or HTML."),
 		color: z
 			.string()
 			.regex(
 				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
 			)
 			.describe("css color for the angle arc and label"),
-		radius: z.number().describe("arc radius in pixels from the vertex")
+		radius: z.number().positive().describe("arc radius in pixels from the vertex")
 	})
 	.strict()
 
 const AngleRight = z
 	.object({
 		type: z.literal("right").describe("right angle visualization with square"),
-		vertices: z.tuple([z.string(), z.string(), z.string()]).describe("exactly three point ids; middle is the vertex"),
-		label: z.string().describe("label for the right angle; empty string to hide"),
+		pointOnFirstRay: z.string().describe("point id on the first ray of the angle (e.g., 'A' in angle ABC). forms one side of the angle with the vertex."),
+		vertex: z.string().describe("point id at the vertex of the angle (e.g., 'B' in angle ABC). the angle is measured at this point."),
+		pointOnSecondRay: z.string().describe("point id on the second ray of the angle (e.g., 'C' in angle ABC). forms the other side of the angle with the vertex."),
+		label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("label for the right angle (e.g., '90°', null). null shows square without label. Plaintext only; no markdown or HTML."),
 		color: z
 			.string()
 			.regex(
 				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
 			)
 			.describe("css color for the right-angle square and label")
 	})
@@ -161,17 +160,9 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 
 	// draw angles
 	for (const angle of angles) {
-		// validate vertex count
-		if (angle.vertices.length !== 3) {
-			throw errors.wrap(ErrInvalidAngleVertexCount, `expected 3 vertices, got ${angle.vertices.length}`)
-		}
-
-		const v0 = angle.vertices[0]
-		const v1 = angle.vertices[1]
-		const v2 = angle.vertices[2]
-		const p1 = pointMap.get(v0)
-		const vertex = pointMap.get(v1)
-		const p2 = pointMap.get(v2)
+		const p1 = pointMap.get(angle.pointOnFirstRay)
+		const vertex = pointMap.get(angle.vertex)
+		const p2 = pointMap.get(angle.pointOnSecondRay)
 		if (!p1 || !vertex || !p2) {
 			continue
 		}
@@ -221,7 +212,7 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			svg += `<path d="M ${arcStartX} ${arcStartY} A ${angle.radius} ${angle.radius} 0 ${largeArcFlag} ${sweepFlag} ${arcEndX} ${arcEndY}" fill="none" stroke="${angle.color}" stroke-width="2.5"/>`
 		}
 
-		if (angle.label !== "") {
+		if (angle.label !== null) {
 			let startAngle = Math.atan2(p1.y - vertex.y, p1.x - vertex.x)
 			let endAngle = Math.atan2(p2.y - vertex.y, p2.x - vertex.x)
 			let angleDiff = endAngle - startAngle
@@ -267,7 +258,7 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 		} else {
 			svg += `<circle cx="${point.x}" cy="${point.y}" r="4" fill="black"/>`
 		}
-		if (point.label) {
+		if (point.label !== null) {
 			// Smart label positioning: avoid rays emanating from this point
 			const raysFromPoint = rays.filter((ray) => ray.from === point.id)
 

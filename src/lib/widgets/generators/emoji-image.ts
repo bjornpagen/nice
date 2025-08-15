@@ -1,22 +1,11 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// The main Zod schema for the emojiImage function
-export const EmojiImagePropsSchema = z
-	.object({
-		type: z.literal("emojiImage"),
-		emoji: z.string().describe("The emoji character(s) to render. Can be a single emoji or multiple emojis."),
-		size: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 100)
-			.describe("The size of the emoji in pixels. Defaults to 100.")
-		// label: z.string().nullable().describe("Optional label text to display below the emoji.")
-	})
-	.strict()
-	.describe(
-		"Generates a simple image widget that renders an emoji at a specified size. This is useful for replacing various image widgets (trucks, horses, cookies, etc.) with emojis. The emoji is rendered as text within an SVG for consistent sizing and positioning."
-	)
+export const EmojiImagePropsSchema = z.object({
+  type: z.literal('emojiImage').describe("Identifies this as an emoji image widget for displaying a single emoji character."),
+  emoji: z.string().describe("The emoji character to display (e.g., '🎉', '📚', '🌟', '👍'). Must be a valid Unicode emoji. Can be single emoji or emoji with modifiers. This value is required."),
+  size: z.number().positive().max(512).describe("Size of the emoji in pixels (both width and height). Controls the font size and SVG dimensions (e.g., 48, 64, 100, 32). Larger sizes show more detail. Max 512."),
+}).strict().describe("Renders a single emoji as an SVG image with consistent sizing and centering. Useful for icons, visual elements in problems, or decorative purposes. The emoji is centered and baseline-adjusted for proper alignment.")
 
 export type EmojiImageProps = z.infer<typeof EmojiImagePropsSchema>
 

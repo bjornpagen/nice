@@ -32,13 +32,17 @@ export const NumberLineForOppositesPropsSchema = z
 			),
 		positiveLabel: z
 			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"label for the positive value (e.g., '5', '+5', 'a', ''). empty string hides the label. positioned near the positive point."
+				"label for the positive value (e.g., '5', '+5', 'a', null). null hides the label. positioned near the positive point."
 			),
 		negativeLabel: z
 			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"label for the negative value (e.g., '-5', 'opposite of 5', '-a', ''). empty string hides the label. positioned near the negative point."
+				"label for the negative value (e.g., '-5', 'opposite of 5', '-a', null). null hides the label. positioned near the negative point."
 			),
 		showArrows: z
 			.boolean()
@@ -95,9 +99,9 @@ export const generateNumberLineForOpposites: WidgetGenerator<typeof NumberLineFo
 
 	const posLab = positiveLabel
 	const negLab = negativeLabel
-	if (posLab !== "")
+	if (posLab !== null)
 		svg += `<text x="${posPos}" y="${yPos - 25}" fill="black" text-anchor="middle" font-weight="bold">${posLab}</text>`
-	if (negLab !== "")
+	if (negLab !== null)
 		svg += `<text x="${negPos}" y="${yPos - 25}" fill="black" text-anchor="middle" font-weight="bold">${negLab}</text>`
 
 	svg += "</svg>"

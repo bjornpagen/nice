@@ -4,23 +4,15 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 // The main Zod schema for the verticalArithmeticSetup function
 export const VerticalArithmeticSetupPropsSchema = z
 	.object({
-		type: z.literal("verticalArithmeticSetup"),
-		title: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("An optional title or instruction to display above the arithmetic problem."),
-		operand1: z
-			.string()
-			.describe(
-				'The first number (top operand) in the calculation, provided as a string to preserve formatting (e.g., "1.84", "740").'
-			),
-		operand2: z.string().describe("The second number (bottom operand) in the calculation, provided as a string."),
-		operator: z.enum(["×", "+", "−"]).describe("The arithmetic operator symbol to display.")
+		type: z.literal("verticalArithmeticSetup").describe("Identifies this as a vertical arithmetic setup widget for displaying math problems in traditional column format."),
+		title: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Optional instruction or problem context displayed above the arithmetic (e.g., 'Calculate:', 'Find the product:', 'Solve:', null). Null means no title."),
+		operand1: z.string().describe("The top number in the calculation, as a string to preserve formatting (e.g., '345', '12.5', '1,234', '7'). Appears above the line."),
+		operand2: z.string().describe("The bottom number in the calculation, as a string to preserve formatting (e.g., '67', '0.25', '89', '456'). Appears below operand1."),
+		operator: z.enum(["×", "+", "−"]).describe("The arithmetic operation symbol. '×' for multiplication, '+' for addition, '−' for subtraction. Appears to the left of operand2.")
 	})
 	.strict()
 	.describe(
-		"This template is designed to generate a clear, standards-compliant visual representation of a vertical arithmetic problem within an HTML <div>. It is ideal for scaffolding multi-digit multiplication, addition, or subtraction problems, particularly those involving decimals, by presenting them in the standard algorithm format. The generator will render two numbers (operands) stacked vertically. The alignment is handled automatically: for operations like addition and subtraction, the numbers are aligned by their decimal points; for multiplication, they are typically right-aligned. An operator symbol (×, +, or −) is placed to the left of the bottom number to clearly indicate the operation. A solid horizontal line is drawn underneath the bottom number, separating the problem from the space where the solution would be calculated. The final output is a self-contained, neatly formatted diagram that mimics how students would set up the problem on paper. It uses HTML and CSS to create a table-like structure that ensures proper alignment and readability, helping students focus on the calculation process itself."
+		"Creates a traditional vertical (column) arithmetic setup showing two numbers with an operation, ready for students to solve. Displays numbers aligned by place value with the operator symbol and a horizontal line where the answer would go. Perfect for teaching standard algorithms for addition, subtraction, and multiplication."
 	)
 
 export type VerticalArithmeticSetupProps = z.infer<typeof VerticalArithmeticSetupPropsSchema>
@@ -34,7 +26,7 @@ export const generateVerticalArithmeticSetup: WidgetGenerator<typeof VerticalAri
 	const { title, operand1, operand2, operator } = data
 
 	let html = `<div style="display: inline-block; font-family: 'Courier New', monospace; font-size: 1.2em; text-align: right;">`
-	if (title) {
+	if (title !== null) {
 		html += `<div style="text-align: center; margin-bottom: 5px; font-family: sans-serif;">${title}</div>`
 	}
 	html += `<table style="border-collapse: collapse;">`

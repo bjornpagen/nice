@@ -31,10 +31,12 @@ const BoxGridCellSchema = z
 			.string()
 			.regex(
 				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color (e.g., 'lightblue', 'transparent')"
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
 			)
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"CSS color for the cell background (e.g., '#FFE5B4' for peach, 'lightblue', 'rgba(255,0,0,0.3)' for translucent red). Empty string '' means no background color."
+				"Hex-only color for the cell background (e.g., '#FFE5B4', '#1E90FF', '#FF00004D' for ~30% alpha, null). Null means no background color (transparent)."
 			)
 	})
 	.strict()

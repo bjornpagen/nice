@@ -1,60 +1,32 @@
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines the collection of number set styles
-const NumberSetCollectionSchema = z
-	.object({
-		// INLINED: The NumberSetStyleSchema definition is now directly inside the whole property.
-		whole: z
-			.object({
-				label: z.string().describe('The text label for the number set (e.g., "Whole numbers").'),
-				color: z.string().describe('The CSS fill color for the region (e.g., "#E8F0FE").')
-			})
-			.strict(),
-		// INLINED: The NumberSetStyleSchema definition is now directly inside the integer property.
-		integer: z
-			.object({
-				label: z.string().describe('The text label for the number set (e.g., "Whole numbers").'),
-				color: z.string().describe('The CSS fill color for the region (e.g., "#E8F0FE").')
-			})
-			.strict(),
-		// INLINED: The NumberSetStyleSchema definition is now directly inside the rational property.
-		rational: z
-			.object({
-				label: z.string().describe('The text label for the number set (e.g., "Whole numbers").'),
-				color: z.string().describe('The CSS fill color for the region (e.g., "#E8F0FE").')
-			})
-			.strict(),
-		// INLINED: The NumberSetStyleSchema definition is now directly inside the irrational property.
-		irrational: z
-			.object({
-				label: z.string().describe('The text label for the number set (e.g., "Whole numbers").'),
-				color: z.string().describe('The CSS fill color for the region (e.g., "#E8F0FE").')
-			})
-			.strict()
-	})
-	.strict()
+function createStyleSchema() {
+  return z.object({ 
+    label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Display name for this number set (e.g., 'Whole Numbers', 'Integers', 'Rational', 'ℚ', null). Can use symbols or full names. Null shows no label."), 
+    color: z.string().regex(
+      CSS_COLOR_PATTERN,
+      "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+    ).describe("Hex-only fill color for this set's region (e.g., '#E8F4FD', '#1E90FF', '#FFC86480' for 50% alpha). Use translucency via 8-digit hex for nested visibility.") 
+  }).strict()
+}
 
 // The main Zod schema for the numberSetDiagram function
 export const NumberSetDiagramPropsSchema = z
 	.object({
 		type: z.literal("numberSetDiagram"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 475)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 180)
-			.describe("The total height of the output SVG container in pixels."),
-		sets: NumberSetCollectionSchema.describe("An object containing the labels and colors for each number set region.")
+		width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 500, 600, 450). Must accommodate all nested sets and labels."),
+		height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 400, 350, 450). Should provide good proportions for the nested ovals."),
+		sets: z.object({ 
+		    whole: createStyleSchema().describe("Style for whole numbers (0, 1, 2, ...). The innermost set in the hierarchy."), 
+		    integer: createStyleSchema().describe("Style for integers (..., -2, -1, 0, 1, 2, ...). Contains whole numbers and their negatives."), 
+		    rational: createStyleSchema().describe("Style for rational numbers (fractions/decimals). Contains integers and all fractions. Shown as containing whole ⊂ integer."), 
+		    irrational: createStyleSchema().describe("Style for irrational numbers (π, √2, e, ...). Separate from rationals, together they form the reals.") 
+		  }).strict().describe("Styling for each number set in the hierarchy. The diagram shows whole ⊂ integer ⊂ rational, with irrational separate.")
 	})
 	.strict()
-	.describe(
-		"Generates a static SVG Euler diagram that visually represents the hierarchical relationship between the sets of whole, integer, rational, and irrational numbers. It renders nested ovals for the first three sets and a separate oval for irrational numbers, with each region clearly labeled and colored. This provides a classic visual aid for classifying numbers."
-	)
+	.describe("Creates an Euler diagram showing the hierarchical relationship between number sets. Whole numbers nest inside integers, which nest inside rationals. Irrationals are shown separately. Together, rationals and irrationals form the real numbers. Essential for teaching number system classification and set relationships.")
 
 export type NumberSetDiagramProps = z.infer<typeof NumberSetDiagramPropsSchema>
 
@@ -81,23 +53,31 @@ export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPr
 
 	// Rational Numbers (outermost of the nested set)
 	svg += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${rationalRx}" ry="${rationalRy}" fill="${sets.rational.color}" stroke="black" />`
-	svg += `<text x="${mainCenterX}" y="${mainCenterY - rationalRy + 20}" class="set-label">${sets.rational.label}</text>`
+	if (sets.rational.label !== null) {
+		svg += `<text x="${mainCenterX}" y="${mainCenterY - rationalRy + 20}" class="set-label">${sets.rational.label}</text>`
+	}
 
 	// Integer Numbers
 	const integerRx = rationalRx * 0.7
 	const integerRy = rationalRy * 0.7
 	svg += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${integerRx}" ry="${integerRy}" fill="${sets.integer.color}" stroke="black" />`
-	svg += `<text x="${mainCenterX}" y="${mainCenterY - integerRy + (rationalRy - integerRy) / 2}" class="set-label">${sets.integer.label}</text>`
+	if (sets.integer.label !== null) {
+		svg += `<text x="${mainCenterX}" y="${mainCenterY - integerRy + (rationalRy - integerRy) / 2}" class="set-label">${sets.integer.label}</text>`
+	}
 
 	// Whole Numbers
 	const wholeRx = integerRx * 0.6
 	const wholeRy = integerRy * 0.6
 	svg += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${wholeRx}" ry="${wholeRy}" fill="${sets.whole.color}" stroke="black" />`
-	svg += `<text x="${mainCenterX}" y="${mainCenterY}" class="set-label">${sets.whole.label}</text>`
+	if (sets.whole.label !== null) {
+		svg += `<text x="${mainCenterX}" y="${mainCenterY}" class="set-label">${sets.whole.label}</text>`
+	}
 
 	// Irrational Numbers (separate)
 	svg += `<ellipse cx="${irrationalCenterX}" cy="${irrationalCenterY}" rx="${irrationalRx}" ry="${irrationalRy}" fill="${sets.irrational.color}" stroke="black" />`
-	svg += `<text x="${irrationalCenterX}" y="${irrationalCenterY}" class="set-label">${sets.irrational.label}</text>`
+	if (sets.irrational.label !== null) {
+		svg += `<text x="${irrationalCenterX}" y="${irrationalCenterY}" class="set-label">${sets.irrational.label}</text>`
+	}
 
 	svg += "</svg>"
 	return svg

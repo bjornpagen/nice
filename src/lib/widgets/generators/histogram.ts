@@ -1,73 +1,26 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines a single bar (bin) in the histogram
-const HistogramBinSchema = z
-	.object({
-		label: z.string().describe('The label for the bin, displayed on the X-axis (e.g., "0-10", "10-20").'),
-		frequency: z
-			.number()
-			.int()
-			.min(0)
-			.describe("The count of data points in this bin, which determines the bar height.")
-	})
-	.strict()
+const Bin = z.object({ 
+  label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("The range or category label for this bin (e.g., '0-10', '10-20', 'Small', 'Grade A', null). Displayed on x-axis below the bar. Null shows no label."), 
+  frequency: z.number().int().min(0).describe("The count/frequency for this bin. Determines bar height. Must be non-negative integer (e.g., 5, 12, 0, 23).") 
+}).strict()
 
-// The main Zod schema for the histogram function
-export const HistogramPropsSchema = z
-	.object({
-		type: z.literal("histogram"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 300)
-			.describe("The total height of the output SVG container in pixels."),
-		title: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("An optional title displayed above the histogram."),
-		// INLINED: The HistogramAxisSchema definition is now directly inside the xAxis property.
-		xAxis: z
-			.object({
-				label: z.string().describe('The text title for the axis (e.g., "Number of Guests" or "Frequency").'),
-				max: z
-					.number()
-					.int()
-					.nullable()
-					.describe(
-						"An optional maximum value for the Y-axis scale. If not provided, it will be calculated automatically."
-					),
-				tickInterval: z.number().nullable().describe("An optional numeric interval for tick marks on the Y-axis.")
-			})
-			.strict()
-			.describe("Configuration for the horizontal (X) axis."),
-		// INLINED: The HistogramAxisSchema definition is now directly inside the yAxis property.
-		yAxis: z
-			.object({
-				label: z.string().describe('The text title for the axis (e.g., "Number of Guests" or "Frequency").'),
-				max: z
-					.number()
-					.int()
-					.nullable()
-					.describe(
-						"An optional maximum value for the Y-axis scale. If not provided, it will be calculated automatically."
-					),
-				tickInterval: z.number().nullable().describe("An optional numeric interval for tick marks on the Y-axis.")
-			})
-			.strict()
-			.describe("Configuration for the vertical (Y) axis."),
-		bins: z.array(HistogramBinSchema).describe("An array of bin objects, each defining its label and frequency.")
-	})
-	.strict()
-	.describe(
-		'This template generates a standards-compliant histogram as an SVG graphic inside a <div>. A histogram is a bar chart that displays the frequency distribution of numerical data by grouping it into a series of consecutive, non-overlapping intervals (or "bins"). The generator constructs a complete Cartesian coordinate system with a horizontal X-axis and a vertical Y-axis. The X-axis represents the data intervals (e.g., "0-10", "10-20") and is labeled accordingly. The Y-axis represents the frequency (count) of data points within each interval and will have labeled tick marks to indicate the scale. Both axes can have titles (e.g., "Number of Guests", "Frequency"). For each specified bin, a rectangular bar is rendered. The width of the bar corresponds to the interval range, and the bars are drawn adjacent to one another to show the continuous nature of the data. The height of each bar is proportional to the frequency of data points falling into that bin. The final output is a clean and accurate visualization, essential for questions about the shape, center, and spread of continuous data.'
-	)
+export const HistogramPropsSchema = z.object({
+  type: z.literal('histogram').describe("Identifies this as a histogram widget for displaying frequency distributions."),
+  width: z.number().positive().describe("Total width of the histogram in pixels including margins (e.g., 500, 600, 400). Wider charts prevent label overlap."),
+  height: z.number().positive().describe("Total height of the histogram in pixels including title and labels (e.g., 400, 350, 500). Taller charts show frequencies more clearly."),
+  title: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Title displayed above the histogram (e.g., 'Test Score Distribution', 'Age Groups', null). Null means no title. Plaintext only; no markdown or HTML."),
+  xAxis: z.object({ 
+    label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Title for the horizontal axis describing the variable being binned (e.g., 'Score Range', 'Age (years)', 'Size Category', null). Null shows no label. Plaintext only; no markdown or HTML.") 
+  }).strict().describe("Configuration for the x-axis showing bin categories."),
+  yAxis: z.object({ 
+    label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Title for the vertical axis, typically 'Frequency' or 'Count' (e.g., 'Number of Students', 'Frequency', 'Count', null). Null shows no label. Plaintext only; no markdown or HTML."), 
+    max: z.number().int().positive().describe("Maximum value shown on y-axis. Should exceed highest frequency for clarity (e.g., 30, 50, 100). Must be positive integer."), 
+    tickInterval: z.number().positive().describe("Spacing between y-axis tick marks (e.g., 5, 10, 2). Should evenly divide max for clean appearance.") 
+  }).strict().describe("Configuration for the y-axis showing frequencies."),
+  bins: z.array(Bin).describe("Array of bins with their frequencies. Order determines left-to-right display. Adjacent bars touch (no gaps) in a histogram. Can be empty for blank chart."),
+}).strict().describe("Creates a histogram showing frequency distribution of data across bins/intervals. Unlike bar charts, histogram bars touch each other to show continuous data ranges. Essential for statistics education, showing data distributions, and identifying patterns like normal distributions or skewness.")
 
 export type HistogramProps = z.infer<typeof HistogramPropsSchema>
 
@@ -86,7 +39,7 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		return `<svg width="${width}" height="${height}"></svg>`
 	}
 
-	const maxFreq = yAxis.max ?? Math.max(...bins.map((b) => b.frequency))
+	const maxFreq = yAxis.max
 	const scaleY = chartHeight / maxFreq
 	const binWidth = chartWidth / bins.length
 
@@ -94,17 +47,21 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	svg +=
 		"<style>.axis-label { font-size: 14px; font-weight: bold; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
-	if (title) svg += `<text x="${width / 2}" y="${margin.top / 2}" class="title">${title}</text>`
+	if (title !== null) svg += `<text x="${width / 2}" y="${margin.top / 2}" class="title">${title}</text>`
 
 	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="#333333"/>` // Y-axis
 	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="#333333"/>` // X-axis
 
 	// Axis Labels
-	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 20}" class="axis-label">${xAxis.label}</text>`
-	svg += `<text x="${margin.left - 35}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 35}, ${margin.top + chartHeight / 2})">${yAxis.label}</text>`
+	if (xAxis.label !== null) {
+		svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 20}" class="axis-label">${xAxis.label}</text>`
+	}
+	if (yAxis.label !== null) {
+		svg += `<text x="${margin.left - 35}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 35}, ${margin.top + chartHeight / 2})">${yAxis.label}</text>`
+	}
 
 	// Y ticks and labels
-	const yTickInterval = yAxis.tickInterval || Math.ceil(maxFreq / 5)
+	const yTickInterval = yAxis.tickInterval
 	for (let t = 0; t <= maxFreq; t += yTickInterval) {
 		const y = height - margin.bottom - t * scaleY
 		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="#333333"/>`
@@ -118,14 +75,17 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		const y = height - margin.bottom - barHeight
 		svg += `<rect x="${x}" y="${y}" width="${binWidth}" height="${barHeight}" fill="#6495ED" stroke="#333333"/>`
 		// Label bins at the tick marks between them
-		if (i < bins.length) {
+		if (i < bins.length && b.label) {
 			svg += `<text x="${x + binWidth}" y="${height - margin.bottom + 15}" fill="#333333" text-anchor="middle">${b.label.split("-")[1] ?? b.label}</text>`
 		}
 	})
 	// Add first label for the start of the axis
-	const firstLabel = bins[0]?.label.split("-")[0]
-	if (firstLabel) {
-		svg += `<text x="${margin.left}" y="${height - margin.bottom + 15}" fill="#333333" text-anchor="middle">${firstLabel}</text>`
+	const firstBinLabel = bins[0]?.label
+	if (firstBinLabel) {
+		const firstLabel = firstBinLabel.split("-")[0]
+		if (firstLabel) {
+			svg += `<text x="${margin.left}" y="${height - margin.bottom + 15}" fill="#333333" text-anchor="middle">${firstLabel}</text>`
+		}
 	}
 
 	svg += "</svg>"

@@ -132,8 +132,8 @@ export const allWidgetSchemas = {
 export const typedSchemas = allWidgetSchemas
 
 // Create the discriminated union schema from the schemas (each now contains its type field)
-// Note: partitionedShape is handled separately as it has its own discriminated union
-const widgetSchemasWithoutPartitioned = [
+// Note: partitionedShape and polyhedronNetDiagram are handled separately as they have their own discriminated unions
+const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.threeDIntersectionDiagram,
 	typedSchemas.absoluteValueNumberLine,
 	typedSchemas.angleDiagram,
@@ -169,7 +169,7 @@ const widgetSchemasWithoutPartitioned = [
 	typedSchemas.pictograph,
 	typedSchemas.polyhedronDiagram,
 	typedSchemas.probabilitySpinner,
-	typedSchemas.polyhedronNetDiagram,
+	// typedSchemas.polyhedronNetDiagram, // Removed because it's a discriminated union itself
 	typedSchemas.pythagoreanProofDiagram,
 	typedSchemas.ratioBoxDiagram,
 	typedSchemas.rectangularFrameDiagram,
@@ -189,8 +189,9 @@ const widgetSchemasWithoutPartitioned = [
 ] as const
 
 export const WidgetSchema = z.union([
-	z.discriminatedUnion("type", widgetSchemasWithoutPartitioned),
-	typedSchemas.partitionedShape
+	z.discriminatedUnion("type", widgetSchemasWithoutSpecialUnions),
+	typedSchemas.partitionedShape,
+	typedSchemas.polyhedronNetDiagram
 ])
 export type Widget = z.infer<typeof WidgetSchema>
 export type WidgetInput = z.input<typeof WidgetSchema>
@@ -383,7 +384,7 @@ export function generateWidget(widget: Widget): string {
 		case "polyhedronDiagram":
 			return generatePolyhedronDiagram(widget)
 		case "polyhedronNetDiagram":
-			return generatePolyhedronNetDiagram(widget)
+			return generatePolyhedronNetDiagram(widget as any) // Type assertion needed due to discriminated union
 		case "probabilitySpinner":
 			return generateProbabilitySpinner(widget)
 		case "pythagoreanProofDiagram":

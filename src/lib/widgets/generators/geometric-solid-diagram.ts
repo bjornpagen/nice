@@ -1,67 +1,35 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines the properties for a cylinder
-const CylinderDataSchema = z
-	.object({
-		type: z.literal("cylinder"),
-		radius: z.number().describe("The radius of the circular bases."),
-		height: z.number().describe("The perpendicular distance between the two bases.")
-	})
-	.strict()
+const Cylinder = z.object({ 
+  type: z.literal('cylinder').describe("Specifies a circular cylinder shape."), 
+  radius: z.number().describe("Radius of the circular base in arbitrary units (e.g., 3, 5, 4.5). The cylinder has uniform circular cross-sections."), 
+  height: z.number().describe("Height of the cylinder along its axis in arbitrary units (e.g., 8, 10, 6.5). The distance between the two circular bases.") 
+}).strict()
 
-// Defines the properties for a cone
-const ConeDataSchema = z
-	.object({
-		type: z.literal("cone"),
-		radius: z.number().describe("The radius of the circular base."),
-		height: z.number().describe("The perpendicular height from the base to the apex.")
-	})
-	.strict()
+const Cone = z.object({ 
+  type: z.literal('cone').describe("Specifies a circular cone shape."), 
+  radius: z.number().describe("Radius of the circular base in arbitrary units (e.g., 4, 6, 3.5). The base is at the bottom of the cone."), 
+  height: z.number().describe("Perpendicular height from base to apex in arbitrary units (e.g., 7, 9, 5.5). Measured along the cone's axis.") 
+}).strict()
 
-// Defines the properties for a sphere
-const SphereDataSchema = z
-	.object({
-		type: z.literal("sphere"),
-		radius: z.number().describe("The radius of the sphere.")
-	})
-	.strict()
+const Sphere = z.object({ 
+  type: z.literal('sphere').describe("Specifies a perfect sphere shape."), 
+  radius: z.number().describe("Radius of the sphere in arbitrary units (e.g., 5, 8, 4). All points on the surface are equidistant from center.") 
+}).strict()
 
-// Defines a label for a dimension like radius or height
-const SolidDimensionLabelSchema = z
-	.object({
-		target: z.enum(["radius", "height"]).describe("The dimension to label."),
-		text: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("The text for the label. If omitted, the numerical value will be used.")
-	})
-	.strict()
+const DimensionLabel = z.object({ 
+  target: z.enum(['radius','height']).describe("Which dimension to label. 'radius' labels the radius/diameter, 'height' labels vertical dimension (not applicable for spheres)."), 
+  text: z.string().describe("The label text to display (e.g., 'r = 5', '10 cm', 'h = 8', 'd = 10'). Can include units, equations, or simple values.") 
+}).strict()
 
-// The main Zod schema for the geometricSolidDiagram function
-export const GeometricSolidDiagramPropsSchema = z
-	.object({
-		type: z.literal("geometricSolidDiagram"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 360)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 300)
-			.describe("The total height of the output SVG container in pixels."),
-		shape: z
-			.discriminatedUnion("type", [CylinderDataSchema, ConeDataSchema, SphereDataSchema])
-			.describe("The geometric data defining the solid shape."),
-		labels: z.array(SolidDimensionLabelSchema).nullable().describe("An array of dimension labels to display.")
-	})
-	.strict()
-	.describe(
-		"Generates a 3D diagram of a geometric solid that has at least one curved surface, such as a cylinder, cone, or sphere. The output is an SVG rendering from a perspective view, with hidden edges shown as dashed lines to convey three-dimensional structure. The diagram can include labeled dimensions (e.g., radius, height) with leader lines, making it ideal for problems involving volume or surface area calculations for these specific shapes."
-	)
+export const GeometricSolidDiagramPropsSchema = z.object({
+  type: z.literal('geometricSolidDiagram').describe("Identifies this as a geometric solid diagram showing 3D shapes with dimension labels."),
+  width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 300, 400, 350). Must accommodate the 3D projection and labels."),
+  height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 300, 400, 350). Should fit the shape with comfortable padding."),
+  shape: z.discriminatedUnion('type', [Cylinder, Cone, Sphere]).describe("The 3D geometric solid to display. Each type has specific dimension requirements."),
+  labels: z.array(DimensionLabel).describe("Dimension labels to display on the shape. Empty array means no labels. Can label radius, height, or both as appropriate for the shape type."),
+}).strict().describe("Creates 3D geometric solids (cylinder, cone, sphere) with optional dimension labels. Uses isometric-style projection to show depth. Essential for teaching volume, surface area, and 3D geometry concepts. Labels help identify key measurements for calculations.")
 
 export type GeometricSolidDiagramProps = z.infer<typeof GeometricSolidDiagramPropsSchema>
 
@@ -75,7 +43,7 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 	// --- NEW SCALING AND DRAWING LOGIC ---
 
 	const padding = 30 // Increased padding for labels and dimension lines
-	const labelSpace = labels ? 40 : 0 // Extra space for external labels
+	const labelSpace = labels.length > 0 ? 40 : 0 // Extra space for external labels
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
 	svg += `<defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black" /></marker></defs>`
 
@@ -103,20 +71,18 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		// Top base
 		svg += `<ellipse cx="${cx}" cy="${topY}" rx="${r}" ry="${ry}" fill="rgba(220, 220, 220, 0.4)" stroke="black" stroke-width="2"/>`
 
-		if (labels) {
-			for (const l of labels) {
-				if (l.target === "radius") {
-					// Dashed line for radius on the bottom base
-					svg += `<line x1="${cx}" y1="${bottomY}" x2="${cx + r}" y2="${bottomY}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
-					const textY = Math.min(bottomY + 18, height - 10) // Ensure text stays within bounds
-					svg += `<text x="${cx + r / 2}" y="${textY}" fill="black" text-anchor="middle">${l.text ?? shape.radius}</text>`
-				}
-				if (l.target === "height") {
-					// External line with arrows for height
-					const lineX = Math.min(cx + r + 15, width - 50) // Ensure it stays within bounds
-					svg += `<line x1="${lineX}" y1="${topY}" x2="${lineX}" y2="${bottomY}" stroke="black" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
-					svg += `<text x="${lineX + 10}" y="${height / 2}" fill="black" dominant-baseline="middle">${l.text ?? shape.height}</text>`
-				}
+		for (const l of labels) {
+			if (l.target === "radius") {
+				// Dashed line for radius on the bottom base
+				svg += `<line x1="${cx}" y1="${bottomY}" x2="${cx + r}" y2="${bottomY}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
+				const textY = Math.min(bottomY + 18, height - 10) // Ensure text stays within bounds
+				svg += `<text x="${cx + r / 2}" y="${textY}" fill="black" text-anchor="middle">${l.text}</text>`
+			}
+			if (l.target === "height") {
+				// External line with arrows for height
+				const lineX = Math.min(cx + r + 15, width - 50) // Ensure it stays within bounds
+				svg += `<line x1="${lineX}" y1="${topY}" x2="${lineX}" y2="${bottomY}" stroke="black" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
+				svg += `<text x="${lineX + 10}" y="${height / 2}" fill="black" dominant-baseline="middle">${l.text}</text>`
 			}
 		}
 	} else if (shape.type === "cone") {
@@ -137,22 +103,20 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		svg += `<path d="M ${cx - r} ${baseY} A ${r} ${ry} 0 0 0 ${cx + r} ${baseY}" fill="none" stroke="black" stroke-width="2" stroke-dasharray="4 3"/>`
 		svg += `<path d="M ${cx - r} ${baseY} A ${r} ${ry} 0 0 1 ${cx + r} ${baseY}" fill="rgba(200, 200, 200, 0.2)" stroke="black" stroke-width="2"/>`
 
-		if (labels) {
-			for (const l of labels) {
-				if (l.target === "radius") {
-					// Dashed line from center to right for radius
-					svg += `<line x1="${cx}" y1="${baseY}" x2="${cx + r}" y2="${baseY}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
-					const textY = Math.min(baseY + 18, height - 10) // Ensure text stays within bounds
-					svg += `<text x="${cx + r / 2}" y="${textY}" fill="black" text-anchor="middle">${l.text ?? shape.radius}</text>`
-				}
-				if (l.target === "height") {
-					// Dashed line from apex to center for height
-					svg += `<line x1="${cx}" y1="${apexY}" x2="${cx}" y2="${baseY}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
-					// Right angle indicator
-					const indicatorSize = Math.min(10, r * 0.2)
-					svg += `<path d="M ${cx + indicatorSize} ${baseY} L ${cx + indicatorSize} ${baseY - indicatorSize} L ${cx} ${baseY - indicatorSize}" fill="none" stroke="black" stroke-width="1"/>`
-					svg += `<text x="${cx - 10}" y="${height / 2}" fill="black" text-anchor="end" dominant-baseline="middle">${l.text ?? shape.height}</text>`
-				}
+		for (const l of labels) {
+			if (l.target === "radius") {
+				// Dashed line from center to right for radius
+				svg += `<line x1="${cx}" y1="${baseY}" x2="${cx + r}" y2="${baseY}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
+				const textY = Math.min(baseY + 18, height - 10) // Ensure text stays within bounds
+				svg += `<text x="${cx + r / 2}" y="${textY}" fill="black" text-anchor="middle">${l.text}</text>`
+			}
+			if (l.target === "height") {
+				// Dashed line from apex to center for height
+				svg += `<line x1="${cx}" y1="${apexY}" x2="${cx}" y2="${baseY}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
+				// Right angle indicator
+				const indicatorSize = Math.min(10, r * 0.2)
+				svg += `<path d="M ${cx + indicatorSize} ${baseY} L ${cx + indicatorSize} ${baseY - indicatorSize} L ${cx} ${baseY - indicatorSize}" fill="none" stroke="black" stroke-width="1"/>`
+				svg += `<text x="${cx - 10}" y="${height / 2}" fill="black" text-anchor="end" dominant-baseline="middle">${l.text}</text>`
 			}
 		}
 	} else if (shape.type === "sphere") {
@@ -170,13 +134,11 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		svg += `<path d="M ${cx - r} ${cy} A ${r} ${ry} 0 0 0 ${cx + r} ${cy}" fill="none" stroke="black" stroke-width="1.5" stroke-dasharray="4 3"/>`
 		svg += `<path d="M ${cx - r} ${cy} A ${r} ${ry} 0 0 1 ${cx + r} ${cy}" fill="none" stroke="black" stroke-width="1.5"/>`
 
-		if (labels) {
-			for (const l of labels) {
-				if (l.target === "radius") {
-					// Dashed line from center to circumference for radius
-					svg += `<line x1="${cx}" y1="${cy}" x2="${cx + r}" y2="${cy}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
-					svg += `<text x="${cx + r / 2}" y="${cy - 10}" fill="black" text-anchor="middle">${l.text ?? shape.radius}</text>`
-				}
+		for (const l of labels) {
+			if (l.target === "radius") {
+				// Dashed line from center to circumference for radius
+				svg += `<line x1="${cx}" y1="${cy}" x2="${cx + r}" y2="${cy}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
+				svg += `<text x="${cx + r / 2}" y="${cy - 10}" fill="black" text-anchor="middle">${l.text}</text>`
 			}
 		}
 	}

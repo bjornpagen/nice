@@ -66,8 +66,10 @@ const SegmentSchema = z
 			),
 		label: z
 			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"Text label for this segment's length or name (e.g., '5m', 'x+2', 'base', ''). Empty string shows no label. Positioned at segment midpoint."
+				"Text label for this segment's length or name (e.g., '5m', 'x+2', 'base', null). Null shows no label. Positioned at segment midpoint."
 			)
 	})
 	.strict()
@@ -83,7 +85,7 @@ const ShadedRegionSchema = z
 			.string()
 			.regex(
 				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
 			)
 			.describe(
 				"CSS fill color for this region (e.g., '#FFE5CC' for light peach, 'rgba(0,128,255,0.3)' for translucent blue, 'lightgreen'). Use alpha for overlapping regions."
@@ -105,8 +107,10 @@ const SideLabelSchema = z
 	.object({
 		text: z
 			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"Label for this edge/side of the outer boundary (e.g., '10 cm', 'x', '2a+b', ''). Empty string means no label for this side."
+				"Label for this edge/side of the outer boundary (e.g., '10 cm', 'x', '2a+b', null). Null means no label for this side."
 			),
 		offset: z
 			.number()
@@ -298,7 +302,7 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		if (!from || !to) continue
 		const dash = s.style === "dashed" ? ' stroke-dasharray="4 2"' : ""
 		svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="black" stroke-width="1.5"${dash}/>`
-		if (s.label !== "") {
+		if (s.label !== null) {
 			const midX = (from.x + to.x) / 2
 			const midY = (from.y + to.y) / 2
 			// Add a small offset perpendicular to the line for better label placement

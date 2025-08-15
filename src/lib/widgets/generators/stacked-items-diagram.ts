@@ -1,49 +1,25 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// The main Zod schema for the stackedItemsDiagram function
-export const StackedItemsDiagramPropsSchema = z
-	.object({
-		type: z.literal("stackedItemsDiagram"),
-		width: z.number().describe("The total width of the output container div in pixels."),
-		height: z.number().describe("The total height of the output container div in pixels."),
-		altText: z.string().describe("A comprehensive alt text describing the final composite image for accessibility."),
-		// INLINED: The DiagramEmojiSchema definition is now directly inside the baseItem property.
-		baseItem: z
-			.object({
-				emoji: z.string().describe("The emoji character to use as the icon (e.g., '🍦', '🥞', '📚')."),
-				size: z.number().describe("The size of the emoji in pixels."),
-				label: z.string().describe("Alternative text describing the emoji for accessibility.")
-			})
-			.strict()
-			.describe("The emoji for the non-repeated base item (e.g., the cone '🍦')."),
-		// INLINED: The DiagramEmojiSchema definition is now directly inside the stackedItem property.
-		stackedItem: z
-			.object({
-				emoji: z.string().describe("The emoji character to use as the icon (e.g., '🍦', '🥞', '📚')."),
-				size: z.number().describe("The size of the emoji in pixels."),
-				label: z.string().describe("Alternative text describing the emoji for accessibility.")
-			})
-			.strict()
-			.describe("The emoji for the item that will be repeated and stacked (e.g., the scoop '🍨')."),
-		count: z.number().int().min(0).describe("The number of times the stackedItem should be rendered."),
-		orientation: z
-			.enum(["vertical", "horizontal"])
-			.nullable()
-			.transform((val) => val ?? "vertical")
-			.describe("The direction of the stack."),
-		overlap: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 0.75)
-			.describe(
-				"The proportion of the stacked item's size to overlap. E.g., 0.75 means each new item overlaps 75% of the previous one. A value of 0 means they touch at the edges. A negative value would create space."
-			)
-	})
-	.strict()
-	.describe(
-		"This template is designed to generate a simple, clear visual representation of a quantity by stacking emoji items on top of a base emoji. It is particularly useful for word problems where a count of items (like scoops of ice cream, pancakes, or blocks) is central to the problem. The output is a self-contained <div> containing absolutely positioned emoji text elements to create a clean, layered visual. The generator will render a single baseItem emoji (e.g., an ice cream cone '🍦', a plate '🍽️'). It will then render a stackedItem emoji a specified number of times (count), creating a vertical or horizontal stack. The degree of overlap or spacing between the stacked items is configurable, allowing for a tight stack or a more spaced-out list. This template's purpose is purely illustrative, helping students visualize the number mentioned in the problem's text. All visual parameters, including the emoji characters, dimensions, and count, are fully configurable to adapt to various scenarios."
-	)
+function createEmojiSchema() {
+  return z.object({ 
+    emoji: z.string().describe("The emoji character to display (e.g., '🍦' for ice cream cone, '🍨' for scoop, '🥞' for pancake, '📚' for books). Single emoji recommended. This value is required."), 
+    size: z.number().positive().max(512).describe("Size of the emoji in pixels (e.g., 60, 80, 48). Controls both font size and spacing. Larger sizes are more visible but take more space. Max 512."), 
+    label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Accessibility label describing the emoji for screen readers (e.g., 'ice cream cone', 'scoop of ice cream', 'pancake', null). Optional; null means no label. Plaintext only; no markdown or HTML.") 
+  }).strict()
+}
+
+export const StackedItemsDiagramPropsSchema = z.object({
+  type: z.literal('stackedItemsDiagram').describe("Identifies this as a stacked items diagram for visualizing repeated objects in a stack."),
+  width: z.number().positive().describe("Total width of the diagram container in pixels (e.g., 300, 400, 250). Must accommodate the full stack width."),
+  height: z.number().positive().describe("Total height of the diagram container in pixels (e.g., 400, 500, 300). Must accommodate the full stack height."),
+  altText: z.string().describe("Comprehensive description of the complete stacked image for accessibility (e.g., 'An ice cream cone with 3 scoops stacked on top'). Describes the final visual."),
+  baseItem: createEmojiSchema().describe("The bottom/foundation item that appears once. This anchors the stack (e.g., cone for ice cream, plate for pancakes)."),
+  stackedItem: createEmojiSchema().describe("The item that repeats in the stack. Appears 'count' times above/beside the base (e.g., ice cream scoops, pancakes, books)."),
+  count: z.number().int().min(0).describe("Number of times to repeat the stacked item (e.g., 3 for three scoops, 5 for five pancakes). Can be 0 for just the base. Must be non-negative."),
+  orientation: z.enum(['vertical','horizontal']).describe("Stacking direction. 'vertical' stacks upward (like ice cream), 'horizontal' stacks sideways (like books on shelf)."),
+  overlap: z.number().min(0).max(1.2).describe("Overlap factor between stacked items. 1.0 = touching edges, 0.5 = 50% overlap, >1 = gaps between items. Typical: 0.7–0.9 for realistic stacking. Range: 0–1.2."),
+}).strict().describe("Creates visual representations of stacked items using emojis, perfect for word problems and counting exercises. Commonly used for ice cream scoops on cones, pancake stacks, book piles, or any scenario involving repeated items. The overlap parameter creates realistic-looking stacks.")
 
 export type StackedItemsDiagramProps = z.infer<typeof StackedItemsDiagramPropsSchema>
 
@@ -57,7 +33,8 @@ export const generateStackedItemsDiagram: WidgetGenerator<typeof StackedItemsDia
 	let html = `<div style="position: relative; width: ${width}px; height: ${height}px;" role="img" aria-label="${altText}">`
 
 	// Base item is aligned to the bottom-left corner of the container
-	html += `<span style="position: absolute; bottom: 0; left: 0; font-size: ${baseItem.size}px; line-height: 1; z-index: 1;" aria-label="${baseItem.label}">${baseItem.emoji}</span>`
+	const baseLabel = baseItem.label ? ` aria-label="${baseItem.label}"` : ""
+	html += `<span style="position: absolute; bottom: 0; left: 0; font-size: ${baseItem.size}px; line-height: 1; z-index: 1;"${baseLabel}>${baseItem.emoji}</span>`
 
 	// Stacked items
 	for (let i = 0; i < count; i++) {
@@ -72,7 +49,8 @@ export const generateStackedItemsDiagram: WidgetGenerator<typeof StackedItemsDia
 			const step = stackedItem.size * (1 - overlap)
 			posStyle = `left: ${i * step}px; bottom: 0;`
 		}
-		html += `<span style="position: absolute; font-size: ${stackedItem.size}px; line-height: 1; ${posStyle} z-index: ${i + 2};" aria-label="${stackedItem.label}">${stackedItem.emoji}</span>`
+		const stackedLabel = stackedItem.label ? ` aria-label="${stackedItem.label}"` : ""
+		html += `<span style="position: absolute; font-size: ${stackedItem.size}px; line-height: 1; ${posStyle} z-index: ${i + 2};"${stackedLabel}>${stackedItem.emoji}</span>`
 	}
 
 	html += "</div>"

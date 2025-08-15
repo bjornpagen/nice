@@ -12,14 +12,16 @@ const SegmentSchema = z
 			),
 		label: z
 			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"Text label for the segment (e.g., 'r', 'd', '5 cm', 'radius = 3'). Empty string shows no label. Positioned along the segment."
+				"Text label for the segment (e.g., 'r', 'd', '5 cm', 'radius = 3', null). Null shows no label. Positioned along the segment."
 			),
 		color: z
 			.string()
 			.regex(
 				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
 			)
 			.describe(
 				"CSS color for the segment line (e.g., '#333333' for dark gray, 'red', 'rgba(0,0,255,0.8)'). Should contrast with circle fill."
@@ -50,15 +52,17 @@ const SectorSchema = z
 			.string()
 			.regex(
 				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
 			)
 			.describe(
-				"CSS fill color for the sector/wedge (e.g., '#FFE5B4' for peach, 'lightblue', 'rgba(255,0,0,0.3)' for translucent red). Creates pie-slice effect."
+				"Hex-only fill color for the sector/wedge (e.g., '#FFE5B4', '#1E90FF', '#FF00004D' for ~30% alpha). Creates pie-slice effect."
 			),
 		label: z
 			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"Text label for the sector (e.g., '90°', '1/4', '25%', 'A'). Empty string shows no label. Positioned inside the sector near the arc."
+				"Text label for the sector (e.g., '90°', '1/4', '25%', 'A', null). Null shows no label. Positioned inside the sector near the arc."
 			),
 		showRightAngleMarker: z
 			.boolean()
@@ -86,15 +90,17 @@ const ArcSchema = z
 			.string()
 			.regex(
 				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
 			)
 			.describe(
-				"CSS color for the arc line (e.g., '#FF6B6B' for red, 'blue', 'green'). Should be visible against background and sectors."
+				"Hex-only color for the arc line (e.g., '#FF6B6B', '#1E90FF', '#008000'). Should be visible against background and sectors."
 			),
 		label: z
 			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"Text label for the arc length or angle (e.g., '90°', 'πr', 's = 5'). Empty string shows no label. Positioned along the arc."
+				"Text label for the arc length or angle (e.g., '90°', 'πr', 's = 5', null). Null shows no label. Positioned along the arc."
 			)
 	})
 	.strict()
@@ -138,19 +144,19 @@ export const CircleDiagramPropsSchema = z
 			.string()
 			.regex(
 				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
 			)
 			.describe(
-				"CSS fill color for the main circle area (e.g., '#E8F4FD' for light blue, 'white', 'transparent', 'rgba(255,255,0,0.2)'). Use 'transparent' for outline only."
+				"Hex-only fill color for the main circle area (e.g., '#E8F4FD', 'white', 'transparent', '#FFFF004D' for ~30% alpha). Use 'transparent' for outline only."
 			),
 		strokeColor: z
 			.string()
 			.regex(
 				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
 			)
 			.describe(
-				"CSS color for the circle's border/outline (e.g., 'black', '#333333', 'darkblue'). Set to 'transparent' or match fillColor for no visible border."
+				"Hex-only color for the circle's border/outline (e.g., '#000000', '#333333', '#00008B'). Set to 'transparent' or match fillColor for no visible border."
 			),
 		innerRadius: z
 			.number()
@@ -187,8 +193,10 @@ export const CircleDiagramPropsSchema = z
 			),
 		areaLabel: z
 			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"Label for the total area, displayed inside the circle (e.g., 'A = πr²', 'Area = 78.5 cm²', '314 sq units'). Empty string shows no area label."
+				"Label for the total area, displayed inside the circle (e.g., 'A = πr²', 'Area = 78.5 cm²', '314 sq units', null). Null shows no area label."
 			)
 	})
 	.strict()
@@ -303,7 +311,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 			const largeArcFlag = Math.abs(arc.endAngle - arc.startAngle) > 180 ? 1 : 0
 			const pathData = `M ${start.x},${start.y} A ${r},${r} 0 ${largeArcFlag} 1 ${end.x},${end.y}`
 			svg += `<path d="${pathData}" fill="none" stroke="${arc.strokeColor}" stroke-width="3"/>`
-			if (arc.label && arc.label !== "") {
+			if (arc.label !== null) {
 				const midAngle = (arc.startAngle + arc.endAngle) / 2
 				const labelPos = pointOnCircle(midAngle, r + PADDING)
 				const finalX = clamp(labelPos.x, PADDING, width - PADDING)
@@ -349,7 +357,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 		svg += `<circle cx="${cx}" cy="${cy}" r="3" fill="black"/>`
 	}
 
-	if (areaLabel) {
+	if (areaLabel !== null) {
 		const yOffset = -10
 		svg += `<text x="${cx}" y="${cy + yOffset}" font-size="16px" font-weight="bold" fill="#333" text-anchor="middle" dominant-baseline="middle">${areaLabel}</text>`
 	}

@@ -1,62 +1,32 @@
 import * as errors from "@superbuilders/errors"
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
 
-// Defines a single data category and its frequency for the dot plot
-const DotPlotDataPointSchema = z
-	.object({
-		value: z.number().describe("The numerical value on the horizontal axis."),
-		count: z.number().int().min(1).describe("The number of dots to stack vertically above this value.")
-	})
-	.strict()
+const DataPoint = z.object({ 
+  value: z.number().describe("The numerical value on the axis where dots are placed (e.g., 5, 12.5, -3, 0). Must be within axis min/max range."), 
+  count: z.number().int().min(0).describe("Number of dots to stack at this value. Represents frequency (e.g., 3 means 3 dots stacked vertically). Must be non-negative.") 
+}).strict()
 
-// The main Zod schema for the dotPlot function
-export const DotPlotPropsSchema = z
-	.object({
-		type: z.literal("dotPlot"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 420)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 200)
-			.describe("The total height of the output SVG container in pixels."),
-		axis: z
-			.object({
-				label: z
-					.string()
-					.nullable()
-					.transform((val) => (val === "null" || val === "NULL" ? null : val))
-					.describe('An optional title for the horizontal axis (e.g., "Hourly Wages").'),
-				min: z.number().describe("The minimum value displayed on the axis."),
-				max: z.number().describe("The maximum value displayed on the axis."),
-				tickInterval: z.number().describe("The numeric interval between labeled tick marks.")
-			})
-			.strict()
-			.describe("Configuration for the horizontal number line."),
-		data: z
-			.array(DotPlotDataPointSchema)
-			.describe("An array of data points, where each object specifies a value and how many dots to render for it."),
-		dotColor: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "#4285F4")
-			.describe("A CSS color string for the dots."),
-		dotRadius: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 5)
-			.describe("The radius of each dot in pixels.")
-	})
-	.strict()
-	.describe(
-		'This template is designed to generate a clear, accessible, and standards-compliant dot plot as an SVG graphic within an HTML <div>. Dot plots are used to visualize the distribution of a numerical data set, especially when the data consists of discrete values or has been binned. The generator will construct a horizontal number line that serves as the base axis. This axis will be fully configurable, with a specified minimum and maximum value, major tick marks at defined intervals, and corresponding numerical labels beneath each tick. The axis can also have a descriptive title (e.g., "Number of snow days," "Age in years"). Above the horizontal axis, the data points are represented as small, filled circles (dots). For each value on the number line, the generator will stack dots vertically, with each dot representing a single occurrence of that value in the data set. The vertical spacing between dots will be uniform to ensure clarity. The resulting stacks of dots visually represent the frequency of each value, making it easy to identify the shape of the distribution, including peaks (mode), clusters, gaps, and outliers. The final SVG is a self-contained, accurately scaled visual representation of the raw data.'
-	)
+export const DotPlotPropsSchema = z.object({
+  type: z.literal('dotPlot').describe("Identifies this as a dot plot widget for displaying frequency distributions."),
+  width: z.number().positive().describe("Total width of the plot in pixels including margins (e.g., 500, 600, 400). Wider plots prevent dot overlap on dense data."),
+  height: z.number().positive().describe("Total height of the plot in pixels including labels (e.g., 300, 400, 250). Taller plots accommodate higher dot stacks."),
+  axis: z.object({ 
+    label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Title for the horizontal axis describing the variable (e.g., 'Test Score', 'Number of Siblings', 'Temperature (°C)', null). Null shows no label."), 
+    min: z.number().describe("Minimum value shown on the axis (e.g., 0, -10, 50). Should be less than or equal to smallest data value."), 
+    max: z.number().describe("Maximum value shown on the axis (e.g., 100, 20, 10). Should be greater than or equal to largest data value."), 
+    tickInterval: z.number().describe("Spacing between axis tick marks (e.g., 10, 5, 0.5, 1). Should evenly divide the range for clean appearance.") 
+  }).strict().describe("Configuration for the horizontal number line axis."),
+  data: z.array(DataPoint).describe("Array of values and their frequencies. Each unique value gets its own dot stack. Order doesn't matter. Can be empty for blank plot."),
+  dotColor: z.string().regex(
+    CSS_COLOR_PATTERN,
+    "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+  ).describe("Hex-only color for the dots (e.g., '#4472C4', '#1E90FF', '#FF0000CC' for ~80% alpha). Should contrast with white background."),
+  dotRadius: z.number().positive().describe("Radius of each dot in pixels (e.g., 4, 5, 3). Larger dots are more visible but may overlap. Typical range: 3-6."),
+}).strict().describe("Creates a dot plot (line plot) showing frequency distribution of numerical data. Each value is represented by stacked dots indicating count/frequency. Excellent for small datasets, showing distribution shape, clusters, gaps, and outliers. Dots stack vertically when multiple observations have the same value.")
 
 export type DotPlotProps = z.infer<typeof DotPlotPropsSchema>
 
@@ -85,7 +55,7 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	svg += `<line x1="${margin.left}" y1="${axisY}" x2="${width - margin.right}" y2="${axisY}" stroke="black"/>`
 
 	// Axis label
-	if (axis.label) {
+	if (axis.label !== null) {
 		svg += `<text x="${width / 2}" y="${height - 15}" fill="black" text-anchor="middle" font-size="14">${axis.label}</text>`
 	}
 
@@ -115,10 +85,12 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	const dotSpacing = 2 // Vertical space between dots
 	const baseOffset = 10 // Additional space between axis and first dot
 	for (const dp of plotData) {
-		const x = toSvgX(dp.value)
-		for (let i = 0; i < dp.count; i++) {
-			const y = axisY - dotRadius - baseOffset - i * (dotDiameter + dotSpacing)
-			svg += `<circle cx="${x}" cy="${y}" r="${dotRadius}" fill="${dotColor}"/>`
+		if (dp.count > 0) {
+			const x = toSvgX(dp.value)
+			for (let i = 0; i < dp.count; i++) {
+				const y = axisY - dotRadius - baseOffset - i * (dotDiameter + dotSpacing)
+				svg += `<circle cx="${x}" cy="${y}" r="${dotRadius}" fill="${dotColor}"/>`
+			}
 		}
 	}
 

@@ -1,55 +1,33 @@
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Factory function that creates a rectangle dimensions schema
-const createRectangleDimensionsSchema = () =>
-	z
-		.object({
-			width: z.number().positive().describe("The width of the rectangle."),
-			height: z.number().positive().describe("The height of the rectangle.")
-		})
-		.strict()
+function createRectSchema() {
+  return z.object({ 
+    width: z.number().positive().describe("Width of the rectangle in relative units (e.g., 4, 6, 2.5). Not pixels - scaled to fit display area."), 
+    height: z.number().positive().describe("Height of the rectangle in relative units (e.g., 3, 4, 1.5). Proportions matter more than absolute values.") 
+  }).strict()
+}
 
-// Factory function that creates a shape transform schema
-const createShapeTransformSchema = () =>
-	z
-		.object({
-			label: z.string().describe("The label for this transformation group (e.g., 'Shape A')."),
-			before: createRectangleDimensionsSchema().describe("The dimensions of the shape before the transformation."),
-			after: createRectangleDimensionsSchema().describe("The dimensions of the shape after the transformation."),
-			color: z
-				.string()
-				.nullable()
-				.transform((val) => val ?? "#9AB8ED")
-				.describe("The fill color for both the before and after shapes in this group.")
-		})
-		.strict()
+function createGroupSchema() {
+  return z.object({ 
+    label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Label for this shape transformation (e.g., 'Shape A', 'Rectangle 1', 'Original', null). Displayed as a header for the shape pair. Null for no label."), 
+    before: createRectSchema().describe("Dimensions of the original rectangle before transformation."), 
+    after: createRectSchema().describe("Dimensions of the rectangle after transformation. Compare proportions to 'before' to show scaling type."), 
+    color: z.string().regex(
+      CSS_COLOR_PATTERN,
+      "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+    ).describe("CSS fill color for both rectangles in this group (e.g., '#4472C4' for blue, 'orange', 'rgba(255,0,0,0.7)'). Distinguishes the two shape groups.") 
+  }).strict()
+}
 
-// The main Zod schema for the scaleCopiesSlider widget.
-export const ScaleCopiesSliderPropsSchema = z
-	.object({
-		type: z.literal("scaleCopiesSlider"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 500)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 220)
-			.describe("The total height of the output SVG container in pixels."),
-		shapeA: createShapeTransformSchema().describe(
-			"The first transformation to display, typically corresponding to the 'Slider for Shape A'."
-		),
-		shapeB: createShapeTransformSchema().describe(
-			"The second transformation to display, typically corresponding to the 'Slider for Shape B'."
-		)
-	})
-	.strict()
-	.describe(
-		"Generates a static SVG diagram that visually represents the concept of scale copies. This widget displays two independent transformations, each with a 'before' and 'after' state. One transformation shows a shape being scaled proportionally (a true scale copy), while the other shows a non-proportional change. This is ideal for questions that ask students to identify which transformation results in a scale copy, mirroring the functionality of an interactive slider in a static format."
-	)
+export const ScaleCopiesSliderPropsSchema = z.object({
+  type: z.literal('scaleCopiesSlider').describe("Identifies this as a scale copies comparison widget showing proportional vs non-proportional scaling."),
+  width: z.number().positive().describe("Total width of the widget in pixels (e.g., 600, 700, 500). Must accommodate both shape groups side by side."),
+  height: z.number().positive().describe("Total height of the widget in pixels (e.g., 400, 350, 300). Must fit labels and largest rectangles."),
+  shapeA: createGroupSchema().describe("First shape transformation, typically showing proportional scaling where width and height scale by same factor."),
+  shapeB: createGroupSchema().describe("Second shape transformation, typically showing non-proportional scaling where dimensions scale differently."),
+}).strict().describe("Compares two rectangle transformations side-by-side to illustrate proportional (similar shapes) vs non-proportional scaling. Each group shows before/after rectangles. Essential for teaching similarity, scale factors, and distinguishing between scaling that preserves shape vs distortion.")
 
 export type ScaleCopiesSliderProps = z.infer<typeof ScaleCopiesSliderPropsSchema>
 
@@ -84,7 +62,7 @@ export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSlider
 	 * Helper function to draw a single row (e.g., for Shape A) containing
 	 * the "Before" shape, an arrow, and the "After" shape.
 	 */
-	const drawShapeGroup = (shape: ScaleCopiesSliderProps["shapeA"], yOffset: number, title: string): string => {
+	const drawShapeGroup = (shape: ScaleCopiesSliderProps["shapeA"], yOffset: number): string => {
 		let groupSvg = ""
 
 		// --- Before Shape ---
@@ -110,18 +88,20 @@ export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSlider
 		groupSvg += `<rect x="${afterX}" y="${afterY}" width="${afterW}" height="${afterH}" fill="${shape.color}" stroke="#333" stroke-width="1"/>`
 		groupSvg += `<text x="${padding.left + shapeWidth + colGap + shapeWidth / 2}" y="${yOffset + rowHeight + 15}" text-anchor="middle" class="sub-label">After</text>`
 
-		// --- Main Row Label ---
-		groupSvg += `<text x="${width / 2}" y="${yOffset - 8}" text-anchor="middle" class="label">${title}</text>`
+		// --- Main Row Label (only if label exists) ---
+		if (shape.label !== null) {
+			groupSvg += `<text x="${width / 2}" y="${yOffset - 8}" text-anchor="middle" class="label">${shape.label}</text>`
+		}
 
 		return groupSvg
 	}
 
 	// Draw Shape A group in the top half
-	svg += drawShapeGroup(shapeA, padding.top, shapeA.label)
+	svg += drawShapeGroup(shapeA, padding.top)
 
 	// Draw Shape B group in the bottom half
 	const shapeB_Y_Offset = padding.top + rowHeight + rowGap
-	svg += drawShapeGroup(shapeB, shapeB_Y_Offset, shapeB.label)
+	svg += drawShapeGroup(shapeB, shapeB_Y_Offset)
 
 	svg += "</svg>"
 	return svg

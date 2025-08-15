@@ -1,68 +1,61 @@
 import * as errors from "@superbuilders/errors"
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 export const ErrInvalidRange = errors.new("min must be less than max")
 
-// Defines a single continuous range to be graphed on the number line
-const InequalityRangeSchema = z
-	.object({
-		// INLINED: The InequalityBoundarySchema is now defined directly inside the start property.
-		start: z
-			.object({
-				value: z.number().describe("The numerical value of the boundary point."),
-				type: z
-					.enum(["open", "closed"])
-					.describe('The type of circle at the boundary: "open" for < or >, "closed" for ≤ or ≥.')
-			})
-			.strict()
-			.nullable()
-			.describe("The starting boundary of the range. If omitted, the range extends to negative infinity."),
-		// INLINED: The InequalityBoundarySchema is now defined directly inside the end property.
-		end: z
-			.object({
-				value: z.number().describe("The numerical value of the boundary point."),
-				type: z
-					.enum(["open", "closed"])
-					.describe('The type of circle at the boundary: "open" for < or >, "closed" for ≤ or ≥.')
-			})
-			.strict()
-			.nullable()
-			.describe("The ending boundary of the range. If omitted, the range extends to positive infinity."),
-		color: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "#4285F4")
-			.describe("The color of the shaded range and its boundary points.")
-	})
-	.strict()
+function createBoundarySchema() {
+  return z.object({ 
+    value: z.number().describe("The numerical value where this boundary occurs on the number line (e.g., 3, -2, 5.5, 0). Must be within min/max range."), 
+    type: z.enum(['open','closed']).describe("Boundary type. 'open' (exclusive) shows hollow circle for < or >, 'closed' (inclusive) shows filled circle for ≤ or ≥.") 
+  }).strict()
+}
 
-// The main Zod schema for the inequalityNumberLine function
-export const InequalityNumberLinePropsSchema = z
-	.object({
-		type: z.literal("inequalityNumberLine"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 460)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 80)
-			.describe("The total height of the output SVG container in pixels."),
-		min: z.number().describe("The minimum value displayed on the line."),
-		max: z.number().describe("The maximum value displayed on the line."),
-		tickInterval: z.number().describe("The numeric interval between labeled tick marks."),
-		ranges: z
-			.array(InequalityRangeSchema)
-			.min(1)
-			.describe("An array of one or more inequality ranges to be graphed on the line.")
-	})
-	.strict()
-	.describe(
-		"Generates an SVG number line to graph the solution set of one or more inequalities. This widget is ideal for visualizing simple inequalities (e.g., x > 5), compound 'and' inequalities (e.g., -2 < x ≤ 3), and compound 'or' inequalities (e.g., x ≤ 0 or x > 4). It renders a number line with a configurable range and tick marks. For each specified range, it draws a highlighted segment and places circles at the boundary points. The circles can be 'open' (for <, >) or 'closed' (for ≤, ≥), providing a mathematically precise representation of the solution."
-	)
+function createStartSchema() {
+  return z.discriminatedUnion('kind', [ 
+    z.object({ 
+      kind: z.literal('bounded').describe("The range has a defined starting point."), 
+      at: createBoundarySchema().describe("The starting boundary with its value and open/closed type.") 
+    }).strict(), 
+    z.object({ 
+      kind: z.literal('unbounded').describe("The range extends infinitely to the left (negative infinity).") 
+    }).strict() 
+  ])
+}
+
+function createEndSchema() {
+  return z.discriminatedUnion('kind', [ 
+    z.object({ 
+      kind: z.literal('bounded').describe("The range has a defined ending point."), 
+      at: createBoundarySchema().describe("The ending boundary with its value and open/closed type.") 
+    }).strict(), 
+    z.object({ 
+      kind: z.literal('unbounded').describe("The range extends infinitely to the right (positive infinity).") 
+    }).strict() 
+  ])
+}
+
+function createRangeSchema() {
+  return z.object({ 
+    start: createStartSchema().describe("The left boundary of the shaded region. Can be bounded (specific value) or unbounded (extends to -∞)."), 
+    end: createEndSchema().describe("The right boundary of the shaded region. Can be bounded (specific value) or unbounded (extends to +∞)."), 
+    color: z.string().regex(
+      CSS_COLOR_PATTERN,
+      "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
+    ).describe("Hex-only color for the shaded region (e.g., '#4287F54D' for 30% alpha, '#FFE5B4'). Use translucency via 8-digit hex for overlapping ranges.") 
+  }).strict()
+}
+
+export const InequalityNumberLinePropsSchema = z.object({
+  type: z.literal('inequalityNumberLine').describe("Identifies this as an inequality number line for visualizing solution sets."),
+  width: z.number().positive().describe("Total width of the number line in pixels (e.g., 600, 700, 500). Must show the relevant range clearly."),
+  height: z.number().positive().describe("Total height of the widget in pixels (e.g., 100, 120, 80). Includes number line, shading, and labels."),
+  min: z.number().describe("Minimum value shown on the number line (e.g., -10, -5, 0). Should be less than smallest relevant boundary."),
+  max: z.number().describe("Maximum value shown on the number line (e.g., 10, 20, 15). Should be greater than largest relevant boundary."),
+  tickInterval: z.number().positive().describe("Spacing between tick marks (e.g., 1, 2, 0.5). Should evenly divide the range for clean appearance."),
+  ranges: z.array(createRangeSchema()).describe("Solution ranges to shade on the number line. Can overlap for compound inequalities. Empty array shows blank number line. Order doesn't affect display."),
+}).strict().describe("Creates number lines showing solution sets for inequalities with shaded regions, open/closed endpoints, and arrows for unbounded intervals. Essential for teaching inequality notation (x < 5, x ≥ -2), compound inequalities (3 < x ≤ 7), and solution set visualization. Supports multiple overlapping ranges.")
 
 export type InequalityNumberLineProps = z.infer<typeof InequalityNumberLinePropsSchema>
 
@@ -108,29 +101,29 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 	}
 
 	for (const r of ranges) {
-		const startPos = r.start ? toSvgX(r.start.value) : padding.horizontal
-		const endPos = r.end ? toSvgX(r.end.value) : width - padding.horizontal
+		const startPos = r.start.kind === 'bounded' ? toSvgX(r.start.at.value) : padding.horizontal
+		const endPos = r.end.kind === 'bounded' ? toSvgX(r.end.at.value) : width - padding.horizontal
 		const colorId = r.color.replace(/[^a-zA-Z0-9]/g, "")
 
 		// Add markers for unbounded cases
 		let markerStart = ""
 		let markerEnd = ""
-		if (!r.start) {
+		if (r.start.kind === 'unbounded') {
 			markerStart = `marker-start="url(#arrow-${colorId})"`
 		}
-		if (!r.end) {
+		if (r.end.kind === 'unbounded') {
 			markerEnd = `marker-end="url(#arrow-${colorId})"`
 		}
 
 		svg += `<line x1="${startPos}" y1="${yPos}" x2="${endPos}" y2="${yPos}" stroke="${r.color}" stroke-width="5" stroke-linecap="butt" ${markerStart} ${markerEnd}/>`
 
 		// Boundary circles
-		if (r.start) {
-			const fill = r.start.type === "closed" ? r.color : "#FAFAFA"
+		if (r.start.kind === 'bounded') {
+			const fill = r.start.at.type === "closed" ? r.color : "#FAFAFA"
 			svg += `<circle cx="${startPos}" cy="${yPos}" r="5" fill="${fill}" stroke="${r.color}" stroke-width="1.5"/>`
 		}
-		if (r.end) {
-			const fill = r.end.type === "closed" ? r.color : "white"
+		if (r.end.kind === 'bounded') {
+			const fill = r.end.at.type === "closed" ? r.color : "white"
 			svg += `<circle cx="${endPos}" cy="${yPos}" r="5" fill="${fill}" stroke="${r.color}" stroke-width="1.5"/>`
 		}
 	}

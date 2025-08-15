@@ -1,4 +1,6 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import {
 	createAxisOptionsSchema,
 	createPlotPointSchema,
@@ -7,11 +9,13 @@ import {
 } from "@/lib/widgets/generators/coordinate-plane-base"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
+export const ErrInvalidPolygon = errors.new("polygon must have at least 3 vertices")
+
 const createVertexSchema = () =>
 	z
 		.object({
-			x: z.number().describe("The x-coordinate of the vertex."),
-			y: z.number().describe("The y-coordinate of the vertex.")
+			x: z.number().describe("X-coordinate of the vertex in the coordinate plane (e.g., -3, 0, 5, 2.5). Can be any real number within axis bounds."),
+			y: z.number().describe("Y-coordinate of the vertex in the coordinate plane (e.g., 4, -2, 0, 3.5). Can be any real number within axis bounds.")
 		})
 		.strict()
 
@@ -21,17 +25,19 @@ type Vertex = z.infer<typeof VertexSchema>
 const createPolygonObjectSchema = () =>
 	z
 		.object({
-			vertices: z.array(createVertexSchema()).min(3).describe("An array of vertices that define the shape."),
+			vertices: z.array(createVertexSchema()).describe("Ordered array of vertices defining the polygon. Connect in sequence, closing back to first. Minimum 3 vertices for valid polygon. Order affects appearance."),
 			color: z
 				.string()
-				.nullable()
-				.transform((val) => val ?? "rgba(66, 133, 244, 0.5)")
-				.describe("The fill color of the shape."),
+				.regex(
+					CSS_COLOR_PATTERN,
+					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				)
+				.describe("CSS fill color for the polygon (e.g., '#4472C4' for blue, 'rgba(255,0,0,0.3)' for translucent red, 'lightgreen'). Use alpha for transparency."),
 			label: z
 				.string()
 				.nullable()
-				.transform((val) => (val === "null" || val === "NULL" ? null : val))
-				.describe("An optional label for the shape.")
+				.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+				.describe("Text label for the shape (e.g., 'A', 'Original', 'Pre-image', null). Null means no label. Positioned at shape's centroid.")
 		})
 		.strict()
 
@@ -41,33 +47,34 @@ const createTransformationRuleSchema = () =>
 	z.discriminatedUnion("type", [
 		z
 			.object({
-				type: z.literal("translation"),
+				type: z.literal("translation").describe("Slide transformation moving all points by a fixed vector."),
 				vector: z
 					.object({
-						x: z.number().describe("The horizontal translation distance."),
-						y: z.number().describe("The vertical translation distance.")
+						x: z.number().describe("Horizontal translation distance. Positive moves right, negative moves left (e.g., 5, -3, 0)."),
+						y: z.number().describe("Vertical translation distance. Positive moves up, negative moves down (e.g., -2, 4, 0).")
 					})
 					.strict()
+					.describe("The displacement vector for the translation.")
 			})
 			.strict(),
 		z
 			.object({
-				type: z.literal("reflection"),
-				axis: z.enum(["x", "y"]).describe("The axis of reflection.")
+				type: z.literal("reflection").describe("Flip transformation across an axis."),
+				axis: z.enum(["x", "y"]).describe("The axis of reflection. 'x' reflects across x-axis (horizontal), 'y' reflects across y-axis (vertical).")
 			})
 			.strict(),
 		z
 			.object({
-				type: z.literal("rotation"),
-				center: createVertexSchema().describe("The center point of rotation."),
-				angle: z.number().describe("The angle of rotation in degrees.")
+				type: z.literal("rotation").describe("Turn transformation around a fixed point."),
+				center: createVertexSchema().describe("The center point of rotation. Shape rotates around this point, which remains fixed."),
+				angle: z.number().describe("Rotation angle in degrees. Positive is counter-clockwise, negative is clockwise (e.g., 90, -45, 180, 270).")
 			})
 			.strict(),
 		z
 			.object({
-				type: z.literal("dilation"),
-				center: createVertexSchema().describe("The center point of dilation."),
-				scaleFactor: z.number().describe("The scale factor for dilation.")
+				type: z.literal("dilation").describe("Scaling transformation from a center point."),
+				center: createVertexSchema().describe("The center of dilation. Points move toward (scale < 1) or away from (scale > 1) this point."),
+				scaleFactor: z.number().describe("The scaling factor. Values > 1 enlarge, 0 < values < 1 shrink, negative values enlarge and flip (e.g., 2, 0.5, -1, 3).")
 			})
 			.strict()
 	])
@@ -76,28 +83,28 @@ const createTransformationRuleSchema = () =>
 
 export const ShapeTransformationGraphPropsSchema = z
 	.object({
-		type: z.literal("shapeTransformationGraph"),
+		type: z.literal("shapeTransformationGraph").describe("Identifies this as a shape transformation graph showing geometric transformations on a coordinate plane."),
 		width: z
 			.number()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The total width of the output SVG container in pixels."),
+			.positive()
+			.describe("Total width of the coordinate plane in pixels (e.g., 500, 600, 400). Should accommodate both shapes and labels."),
 		height: z
 			.number()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The total height of the output SVG container in pixels."),
-		xAxis: createAxisOptionsSchema().describe("Configuration for the horizontal (X) axis."),
-		yAxis: createAxisOptionsSchema().describe("Configuration for the vertical (Y) axis."),
+			.positive()
+			.describe("Total height of the coordinate plane in pixels (e.g., 500, 600, 400). Often equal to width for square grid."),
+		xAxis: createAxisOptionsSchema().describe("Configuration for the horizontal axis including range, ticks, and grid. Should encompass both pre-image and image."),
+		yAxis: createAxisOptionsSchema().describe("Configuration for the vertical axis including range, ticks, and grid. Should encompass both pre-image and image."),
 		showQuadrantLabels: z
 			.boolean()
-			.describe('If true, displays the labels "I", "II", "III", and "IV" in the appropriate quadrants.'),
-		preImage: createPolygonObjectSchema().describe("The original shape before transformation."),
-		transformation: createTransformationRuleSchema().describe("The transformation to apply to the pre-image."),
-		points: z.array(createPlotPointSchema()).nullable().describe("Optional additional points to plot.")
+			.describe("Whether to display Roman numerals (I, II, III, IV) in quadrants. Helps identify shape positions and transformation effects."),
+		preImage: createPolygonObjectSchema().describe("The original shape before transformation. Usually shown in a distinct color. This is the shape that gets transformed."),
+		transformation: createTransformationRuleSchema().describe("The geometric transformation to apply. The system automatically calculates and displays the resulting image shape."),
+		points: z
+			.array(createPlotPointSchema())
+			.describe("Additional points to plot (e.g., center of rotation, reference points). Empty array means no extra points. Useful for marking key locations.")
 	})
 	.strict()
-	.describe("Generates a coordinate plane showing geometric transformations with pre-image and transformed image.")
+	.describe("Displays geometric transformations on a coordinate plane, showing both the original shape (pre-image) and the transformed shape (image). Supports translations, reflections, rotations, and dilations. Essential for teaching transformation geometry, symmetry, and coordinate geometry concepts.")
 
 export type ShapeTransformationGraphProps = z.infer<typeof ShapeTransformationGraphPropsSchema>
 
@@ -106,7 +113,12 @@ export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTrans
 ) => {
 	const { width, height, xAxis, yAxis, showQuadrantLabels, preImage, transformation, points } = props
 
-	const base = generateCoordinatePlaneBase(width, height, xAxis, yAxis, showQuadrantLabels, points || [])
+	// Validate polygon has at least 3 vertices
+	if (preImage.vertices.length < 3) {
+		throw errors.wrap(ErrInvalidPolygon, `polygon has ${preImage.vertices.length} vertices, requires at least 3`)
+	}
+
+	const base = generateCoordinatePlaneBase(width, height, xAxis, yAxis, showQuadrantLabels, points)
 	let content = ""
 
 	// 1. Draw Pre-Image (solid)
@@ -164,10 +176,8 @@ export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTrans
 		content += `<circle cx="${base.toSvgX(c.x)}" cy="${base.toSvgY(c.y)}" r="4" fill="red" />`
 	}
 
-	// 5. Render optional points
-	if (points) {
-		content += renderPoints(points, base.toSvgX, base.toSvgY)
-	}
+	// 5. Render points
+	content += renderPoints(points, base.toSvgX, base.toSvgY)
 
 	return `${base.svg}${content}</svg>`
 }
