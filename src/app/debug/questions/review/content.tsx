@@ -151,7 +151,28 @@ function SeveritySection({ severity, items }: { severity: Severity; items: Quest
 export function Content({ reviewsPromise }: ContentProps) {
 	const reviews = React.use(reviewsPromise)
 
-	// group by severity
+	// subject filter state and counts
+	type Subject = "science" | "math" | "history" | null
+	const [subjectFilter, setSubjectFilter] = React.useState<Subject | "all">("all")
+
+	const subjectCounts = reviews.reduce(
+		(acc, r) => {
+			if (r.subject === "science") acc.science++
+			else if (r.subject === "math") acc.math++
+			else if (r.subject === "history") acc.history++
+			else acc.unassigned++
+			return acc
+		},
+		{ science: 0, math: 0, history: 0, unassigned: 0 }
+	)
+
+	// apply subject filter first
+	let filteredBySubject: QuestionRenderReviewRow[]
+	if (subjectFilter === "all") filteredBySubject = reviews
+	else if (subjectFilter === null) filteredBySubject = reviews.filter((r) => r.subject === null)
+	else filteredBySubject = reviews.filter((r) => r.subject === subjectFilter)
+
+	// group by severity after subject filtering
 	type GroupMap = {
 		major: QuestionRenderReviewRow[]
 		minor: QuestionRenderReviewRow[]
@@ -159,7 +180,7 @@ export function Content({ reviewsPromise }: ContentProps) {
 		unassigned: QuestionRenderReviewRow[]
 	}
 	const groups: GroupMap = { major: [], minor: [], patch: [], unassigned: [] }
-	for (const row of reviews) {
+	for (const row of filteredBySubject) {
 		if (row.severity === "major") groups.major.push(row)
 		else if (row.severity === "minor") groups.minor.push(row)
 		else if (row.severity === "patch") groups.patch.push(row)
@@ -173,6 +194,42 @@ export function Content({ reviewsPromise }: ContentProps) {
 			<div style={{ marginBottom: 12 }}>
 				<h1 style={{ fontSize: 22, fontWeight: 800, letterSpacing: -0.2 }}>question render reviews</h1>
 				<p style={{ color: "#6b7280", marginTop: 4 }}>grouped by severity, newest first</p>
+			</div>
+			<div style={{ marginBottom: 12 }}>
+				<Tabs
+					value={subjectFilter ?? "unassigned"}
+					onValueChange={(value) => {
+						let mapped: Subject | "all" = "all"
+						switch (value) {
+							case "all":
+								mapped = "all"
+								break
+							case "science":
+								mapped = "science"
+								break
+							case "math":
+								mapped = "math"
+								break
+							case "history":
+								mapped = "history"
+								break
+							case "unassigned":
+								mapped = null
+								break
+							default:
+								mapped = "all"
+						}
+						setSubjectFilter(mapped)
+					}}
+				>
+					<TabsList>
+						<TabsTrigger value="all">All subjects</TabsTrigger>
+						<TabsTrigger value="science">Science ({subjectCounts.science})</TabsTrigger>
+						<TabsTrigger value="math">Math ({subjectCounts.math})</TabsTrigger>
+						<TabsTrigger value="history">History ({subjectCounts.history})</TabsTrigger>
+						<TabsTrigger value="unassigned">Unassigned ({subjectCounts.unassigned})</TabsTrigger>
+					</TabsList>
+				</Tabs>
 			</div>
 			<div style={{ marginBottom: 12 }}>
 				<Tabs

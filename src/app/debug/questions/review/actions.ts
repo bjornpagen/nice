@@ -13,6 +13,7 @@ export interface QuestionRenderReviewRow {
 	productionScreenshotUrl: string
 	perseusScreenshotUrl: string
 	reviewedAt: string
+	subject: "science" | "math" | "history" | null
 }
 
 export async function getQuestionRenderReviews(): Promise<QuestionRenderReviewRow[]> {
@@ -28,7 +29,8 @@ export async function getQuestionRenderReviews(): Promise<QuestionRenderReviewRo
 				raw: niceQuestionRenderReviews.raw,
 				productionScreenshotUrl: niceQuestionRenderReviews.productionScreenshotUrl,
 				perseusScreenshotUrl: niceQuestionRenderReviews.perseusScreenshotUrl,
-				reviewedAt: niceQuestionRenderReviews.reviewedAt
+				reviewedAt: niceQuestionRenderReviews.reviewedAt,
+				subject: niceQuestionRenderReviews.subject
 			})
 			.from(niceQuestionRenderReviews)
 			.orderBy(desc(niceQuestionRenderReviews.reviewedAt))
