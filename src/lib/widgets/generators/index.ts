@@ -11,6 +11,7 @@ import {
 	generateAbsoluteValueNumberLine
 } from "@/lib/widgets/generators/absolute-value-number-line"
 import { AngleDiagramPropsSchema, generateAngleDiagram } from "@/lib/widgets/generators/angle-diagram"
+import { AreaGraphPropsSchema, generateAreaGraph } from "@/lib/widgets/generators/area-graph"
 import { BarChartPropsSchema, generateBarChart } from "@/lib/widgets/generators/bar-chart"
 import { BoxGridPropsSchema, generateBoxGrid } from "@/lib/widgets/generators/box-grid"
 import { BoxPlotPropsSchema, generateBoxPlot } from "@/lib/widgets/generators/box-plot"
@@ -138,6 +139,7 @@ export const allWidgetSchemas = {
 	threeDIntersectionDiagram: ThreeDIntersectionDiagramPropsSchema,
 	absoluteValueNumberLine: AbsoluteValueNumberLinePropsSchema,
 	angleDiagram: AngleDiagramPropsSchema,
+	areaGraph: AreaGraphPropsSchema,
 	barChart: BarChartPropsSchema,
 	boxGrid: BoxGridPropsSchema,
 	boxPlot: BoxPlotPropsSchema,
@@ -203,6 +205,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.threeDIntersectionDiagram,
 	typedSchemas.absoluteValueNumberLine,
 	typedSchemas.angleDiagram,
+	typedSchemas.areaGraph,
 	typedSchemas.barChart,
 	typedSchemas.boxGrid,
 	typedSchemas.boxPlot,
@@ -270,6 +273,7 @@ export {
 	ThreeDIntersectionDiagramPropsSchema,
 	AbsoluteValueNumberLinePropsSchema,
 	AngleDiagramPropsSchema,
+	AreaGraphPropsSchema,
 	BarChartPropsSchema,
 	BoxGridPropsSchema,
 	BoxPlotPropsSchema,
@@ -331,6 +335,7 @@ export {
 	generateThreeDIntersectionDiagram,
 	generateAbsoluteValueNumberLine,
 	generateAngleDiagram,
+	generateAreaGraph,
 	generateBarChart,
 	generateBoxGrid,
 	generateBoxPlot,
@@ -396,6 +401,8 @@ export function generateWidget(widget: Widget): string {
 			return generateAbsoluteValueNumberLine(widget)
 		case "angleDiagram":
 			return generateAngleDiagram(widget)
+		case "areaGraph":
+			return generateAreaGraph(widget)
 		case "barChart":
 			return generateBarChart(widget)
 		case "boxGrid":
