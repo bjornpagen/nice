@@ -226,8 +226,81 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 			.replace(/\uFEFF/g, "")
 			// Normalize quotes by stripping straight, smart, and backtick variants
 			.replace(/[\'"‘’“”`´]/g, " ")
-			.replace(/[.,;:!?]/g, " ")
+			// Remove common punctuation including parentheses and dashes
+			.replace(/[.,;:!?()\[\]{}]/g, " ")
+			.replace(/[\-–—]/g, " ")
 	const toComparable = (s: string): string => collapseWhitespace(stripPunct(decodeEntities(s.toLowerCase())))
+
+	// Tokenization helpers for fuzzy matching
+	const STOPWORDS = new Set<string>([
+		"a",
+		"an",
+		"the",
+		"this",
+		"that",
+		"these",
+		"those",
+		"is",
+		"are",
+		"was",
+		"were",
+		"be",
+		"been",
+		"being",
+		"am",
+		"in",
+		"on",
+		"at",
+		"of",
+		"to",
+		"for",
+		"from",
+		"by",
+		"with",
+		"and",
+		"or",
+		"as",
+		"into",
+		"which",
+		"who",
+		"whom",
+		"whose",
+		"where",
+		"when",
+		"why",
+		"how",
+		"would",
+		"could",
+		"should",
+		"might",
+		"select",
+		"choose",
+		"pick",
+		"please"
+	])
+	const tokenizeForFuzzy = (s: string): string[] => {
+		const base = toComparable(s)
+		if (base === "") return []
+		const parts = base.split(/\s+/g)
+		const tokens: string[] = []
+		for (const p of parts) {
+			if (p === "") continue
+			if (STOPWORDS.has(p)) continue
+			// remove possessive 's that may survive after punctuation stripping
+			const cleaned = p.endsWith("'s") ? p.slice(0, -2) : p
+			if (cleaned) tokens.push(cleaned)
+		}
+		return tokens
+	}
+	const jaccardSimilarity = (aTokens: string[], bTokens: string[]): number => {
+		if (aTokens.length === 0 || bTokens.length === 0) return 0
+		const a = new Set(aTokens)
+		const b = new Set(bTokens)
+		let intersection = 0
+		for (const t of a) if (b.has(t)) intersection += 1
+		const union = a.size + b.size - intersection
+		return union === 0 ? 0 : intersection / union
+	}
 	const normalizeMath = (mathml: string): string => {
 		// prefer <mo> text; otherwise strip tags
 		const moMatches = Array.from(mathml.matchAll(/<mo[^>]*>([\s\S]*?)<\/mo>/g)).map((m) => m[1] ?? "")
@@ -283,11 +356,18 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 
 	// Helper to try to remove paragraphs in [start, end) that match the given prompt
 	const markMatchingParagraphs = (start: number, end: number, prompt: string, toDelete: Set<number>): void => {
-		// strategy A: single paragraph equals prompt
+		const promptTokens = tokenizeForFuzzy(prompt)
+		// strategy A: single paragraph equals prompt (exact comparable equality)
 		for (let i = start; i < end; i++) {
 			if (body[i]?.type !== "paragraph") continue
-			const pStr = paragraphNorms[i]
+			const pStr = paragraphNorms[i] ?? ""
 			if (pStr !== "" && pStr === prompt) {
+				toDelete.add(i)
+				continue
+			}
+			// fuzzy single-paragraph match using token Jaccard
+			const sim = jaccardSimilarity(tokenizeForFuzzy(pStr), promptTokens)
+			if (sim >= 0.82) {
 				toDelete.add(i)
 			}
 		}
@@ -295,13 +375,21 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 		for (let i = start; i < end; i++) {
 			if (body[i]?.type !== "paragraph") continue
 			if (toDelete.has(i)) continue
-			let acc = paragraphNorms[i]
+			let acc = paragraphNorms[i] ?? ""
+			let accTokens = tokenizeForFuzzy(acc)
 			for (let j = i + 1; j < end; j++) {
 				if (body[j]?.type !== "paragraph") break
-				acc = collapseWhitespace(`${acc} ${paragraphNorms[j]}`)
+				acc = collapseWhitespace(`${acc} ${paragraphNorms[j] ?? ""}`)
+				accTokens = tokenizeForFuzzy(acc)
 				if (acc === prompt) {
 					for (let k = i; k <= j; k++) toDelete.add(k)
 					i = j // advance outer loop
+					break
+				}
+				const sim = jaccardSimilarity(accTokens, promptTokens)
+				if (sim >= 0.86) {
+					for (let k = i; k <= j; k++) toDelete.add(k)
+					i = j
 					break
 				}
 			}
