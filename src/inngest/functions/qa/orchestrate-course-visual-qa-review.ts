@@ -1,8 +1,14 @@
 import * as errors from "@superbuilders/errors"
 import { and, eq, isNotNull } from "drizzle-orm"
+import { z } from "zod"
 import { db } from "@/db"
 import { niceCourses, niceExercises, niceLessonContents, niceLessons, niceQuestions, niceUnits } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
+
+const ReviewByCoursesEventSchema = z.object({
+	courseIds: z.array(z.string()),
+	subject: z.enum(["science", "math", "history"]).optional()
+})
 
 export const orchestrateCourseVisualQAReview = inngest.createFunction(
 	{
@@ -16,7 +22,12 @@ export const orchestrateCourseVisualQAReview = inngest.createFunction(
 		event: "qa/questions.review-by-courses"
 	},
 	async ({ event, step, logger }) => {
-		const { courseIds } = event.data
+		const parsed = ReviewByCoursesEventSchema.safeParse(event.data)
+		if (!parsed.success) {
+			logger.error("invalid event data for course visual qa orchestration", { error: parsed.error })
+			throw errors.wrap(parsed.error, "event data validation")
+		}
+		const { courseIds, subject } = parsed.data
 		logger.info("starting course-specific visual qa orchestration", {
 			courseIds,
 			courseCount: courseIds.length
@@ -112,7 +123,7 @@ export const orchestrateCourseVisualQAReview = inngest.createFunction(
 			// Send events for each question to be reviewed
 			const events = preparedData.questionIds.map((questionId) => ({
 				name: "qa/question.review-rendering" as const,
-				data: { questionId }
+				data: { questionId, subject }
 			}))
 
 			// Send events in batches to avoid overwhelming the system

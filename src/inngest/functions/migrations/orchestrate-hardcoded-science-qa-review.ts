@@ -15,7 +15,7 @@ export const orchestrateHardcodedScienceQAReview = inngest.createFunction(
 		const reviewResult = await errors.try(
 			step.invoke("review-qa-for-hardcoded-science-courses", {
 				function: orchestrateCourseVisualQAReview,
-				data: { courseIds: HARDCODED_SCIENCE_COURSE_IDS }
+				data: { courseIds: HARDCODED_SCIENCE_COURSE_IDS, subject: "science" }
 			})
 		)
 		if (reviewResult.error) {

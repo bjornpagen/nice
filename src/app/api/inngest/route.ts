@@ -6,6 +6,7 @@ import { clearCourseXmlData } from "@/inngest/functions/clear-course-xml-data"
 import { helloWorld } from "@/inngest/functions/hello"
 import { orchestrateHardcodedHistoryItemMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-item-migration"
 import { orchestrateHardcodedHistoryOnerosterIngestion } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-oneroster-ingestion"
+import { orchestrateHardcodedHistoryQAReview } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-qa-review"
 import { orchestrateHardcodedHistoryQtiGenerateUndifferentiated } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-qti-generate-undifferentiated"
 import { orchestrateHardcodedHistoryQtiUpload } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-qti-upload"
 import { orchestrateHardcodedHistoryStimulusMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-stimulus-migration"
@@ -14,6 +15,7 @@ import { orchestrateHardcodedMathDifferentiatedItemGeneration } from "@/inngest/
 // ✅ RENAMED & ADDED: Import all hardcoded migration functions
 import { orchestrateHardcodedMathItemMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-item-migration"
 import { orchestrateHardcodedMathOnerosterIngestion } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-oneroster-ingestion"
+import { orchestrateHardcodedMathQAReview } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-qa-review"
 import { orchestrateHardcodedMathQtiUpload } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-qti-upload"
 import { orchestrateHardcodedMathStimulusGeneration } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-stimulus-generation" // 🛑 RENAMED
 import { orchestrateHardcodedMathStimulusMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-stimulus-migration"
@@ -83,6 +85,8 @@ export const { GET, POST, PUT } = serve({
 		orchestrateHardcodedScienceQtiGenerateUndifferentiated,
 		orchestrateHardcodedScienceQtiUpload,
 		orchestrateHardcodedScienceQAReview,
+		orchestrateHardcodedMathQAReview,
+		orchestrateHardcodedHistoryQAReview,
 		// History orchestrators
 		orchestrateHardcodedHistoryItemMigration,
 		orchestrateHardcodedHistoryStimulusMigration,

@@ -32,6 +32,9 @@ export { lessonContentTypeEnum as niceLessonContentTypeEnum }
 const issueSeverityEnum = schema.enum("issue_severity_enum", ["major", "minor", "patch"])
 export { issueSeverityEnum as niceIssueSeverityEnum }
 
+const subjectEnum = schema.enum("subject_enum", ["science", "math", "history"])
+export { subjectEnum as niceSubjectEnum }
+
 // --- JSONB Type Definitions ---
 
 // --- Content Tables ---
@@ -266,7 +269,8 @@ const questionRenderReviews = schema.table(
 		raw: jsonb("raw"),
 		productionScreenshotUrl: text("production_screenshot_url").notNull(),
 		perseusScreenshotUrl: text("perseus_screenshot_url").notNull(),
-		reviewedAt: text("reviewed_at").notNull().default("")
+		reviewedAt: text("reviewed_at").notNull().default(""),
+		subject: subjectEnum("subject")
 	},
 	(table) => [
 		foreignKey({

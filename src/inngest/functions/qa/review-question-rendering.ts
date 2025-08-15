@@ -2,6 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { and, eq, isNotNull } from "drizzle-orm"
 import { NonRetriableError } from "inngest"
+import { z } from "zod"
 import { db } from "@/db"
 import { niceQuestionRenderReviews, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
@@ -45,6 +46,11 @@ function deserializeBuffer(bufferLike: ScreenshotBuffer | { type: string; data: 
 	throw errors.new("invalid buffer format received from inngest step")
 }
 
+const ReviewEventSchema = z.object({
+	questionId: z.string(),
+	subject: z.enum(["science", "math", "history"]).optional()
+})
+
 export const reviewQuestionRendering = inngest.createFunction(
 	{
 		id: "review-question-rendering",
@@ -57,7 +63,12 @@ export const reviewQuestionRendering = inngest.createFunction(
 		event: "qa/question.review-rendering"
 	},
 	async ({ event, step, logger }) => {
-		const { questionId } = event.data
+		const parsed = ReviewEventSchema.safeParse(event.data)
+		if (!parsed.success) {
+			logger.error("invalid event data for review", { error: parsed.error })
+			throw errors.wrap(parsed.error, "event data validation")
+		}
+		const { questionId, subject } = parsed.data
 		logger.info("starting visual qa review", { questionId })
 
 		// Fetch question data (outside step.run as per project rules)
@@ -240,7 +251,8 @@ export const reviewQuestionRendering = inngest.createFunction(
 				raw: analysis.rawResponse,
 				productionScreenshotUrl: screenshotUrls.productionUrl,
 				perseusScreenshotUrl: screenshotUrls.perseusUrl,
-				reviewedAt: new Date().toISOString()
+				reviewedAt: new Date().toISOString(),
+				subject
 			}
 		})
 
@@ -259,7 +271,8 @@ export const reviewQuestionRendering = inngest.createFunction(
 						raw: analysisData.raw,
 						productionScreenshotUrl: analysisData.productionScreenshotUrl,
 						perseusScreenshotUrl: analysisData.perseusScreenshotUrl,
-						reviewedAt: analysisData.reviewedAt
+						reviewedAt: analysisData.reviewedAt,
+						subject: analysisData.subject
 					}
 				})
 				.returning({ id: niceQuestionRenderReviews.questionId })

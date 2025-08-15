@@ -394,7 +394,8 @@ const events = {
 	// Visual QA Events
 	"qa/question.review-rendering": {
 		data: z.object({
-			questionId: z.string().min(1)
+			questionId: z.string().min(1),
+			subject: z.enum(["science", "math", "history"]).optional()
 		})
 	},
 	"qa/questions.review-all-rendering": {
@@ -402,10 +403,17 @@ const events = {
 	},
 	"qa/questions.review-by-courses": {
 		data: z.object({
-			courseIds: z.array(z.string().min(1)).min(1)
+			courseIds: z.array(z.string().min(1)).min(1),
+			subject: z.enum(["science", "math", "history"]).optional()
 		})
 	},
 	"qa/questions.review-hardcoded-science": {
+		data: z.object({})
+	},
+	"qa/questions.review-hardcoded-math": {
+		data: z.object({})
+	},
+	"qa/questions.review-hardcoded-history": {
 		data: z.object({})
 	}
 }
