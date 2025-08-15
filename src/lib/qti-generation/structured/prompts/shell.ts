@@ -510,6 +510,73 @@ ${perseusJson}
 - **Table Rule (MANDATORY)**:
   - Tables must NEVER be created as HTML \`<table>\` elements in the body.
   - ALWAYS create a widget slot for every table (e.g., \`<slot name="table_widget_1" />\`) and add "table_widget_1" to the 'widgets' array.
+  
+  **CRITICAL: TABLES OWN THEIR INPUTS — NO DUPLICATE INTERACTIONS**
+  - If an input belongs in a table cell, embed it INSIDE the table widget (cell type 'input' or 'dropdown').
+  - Do NOT create any matching \`inlineSlot\` in the body for the same \`responseIdentifier\`.
+  - Do NOT list table-owned \`responseIdentifier\` values in the shell's top-level \`interactions\` array.
+  - Do NOT repeat table rows below the table with separate inline inputs.
+  - Each \`responseIdentifier\` MUST be rendered exactly once: either owned by a widget OR as a standalone interaction, never both.
+
+  Negative example 1 (DO NOT OUTPUT) — duplicated inputs (table + inline slots below):
+  \`\`\`json
+  {
+    "body": [
+      { "type": "paragraph", "content": [{ "type": "text", "content": "A moving object's kinetic energy is determined by two factors." }] },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Select whether each quantity determines an object's kinetic energy." }] },
+      { "type": "blockSlot", "slotId": "ke_quantities_table" },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Mass: " }, { "type": "inlineSlot", "slotId": "dropdown_8" }] },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Volume: " }, { "type": "inlineSlot", "slotId": "dropdown_10" }] },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Height: " }, { "type": "inlineSlot", "slotId": "dropdown_11" }] },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Speed: " }, { "type": "inlineSlot", "slotId": "dropdown_12" }] }
+    ],
+    "widgets": ["ke_quantities_table"],
+    "interactions": ["dropdown_8", "dropdown_10", "dropdown_11", "dropdown_12"]
+  }
+  \`\`\`
+
+  Positive example 1 — table owns inputs; do not duplicate below:
+  \`\`\`json
+  {
+    "body": [
+      { "type": "paragraph", "content": [{ "type": "text", "content": "A moving object's kinetic energy is determined by two factors." }] },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Select whether each quantity determines an object's kinetic energy." }] },
+      { "type": "blockSlot", "slotId": "ke_quantities_table" }
+    ],
+    "widgets": ["ke_quantities_table"],
+    "interactions": []
+  }
+  \`\`\`
+
+  Negative example 2 (DO NOT OUTPUT) — duplicated inputs (table + inline slots):
+  \`\`\`json
+  {
+    "body": [
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Several students tested how the temperature changed when dissolving different solids in the same amount of water. The substances they tested were NH4Cl, MgSO4, and CaCl2." }] },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Only one student kept track of everyone’s data. Unfortunately, their lab notebook got wet, and some of the labels were damaged." }] },
+      { "type": "blockSlot", "slotId": "image_1" },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Use the data provided to identify the reactant and the amount that caused each temperature change. Each option is only used once." }] },
+      { "type": "blockSlot", "slotId": "react_temp_table" },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Experiment C: Reactant " }, { "type": "inlineSlot", "slotId": "react_c" }, { "type": "text", "content": ", Amount " }, { "type": "inlineSlot", "slotId": "amt_c" }] }
+    ],
+    "widgets": ["image_1", "react_temp_table"],
+    "interactions": ["react_c", "amt_c", "react_d", "amt_d", "react_e", "amt_e"]
+  }
+  \`\`\`
+
+  Positive example 2 — table owns inputs; do not duplicate below:
+  \`\`\`json
+  {
+    "body": [
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Several students tested how the temperature changed when dissolving different solids in the same amount of water." }] },
+      { "type": "blockSlot", "slotId": "image_1" },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Use the data provided to identify the reactant and the amount that caused each temperature change. Each option is only used once." }] },
+      { "type": "blockSlot", "slotId": "react_temp_table" }
+    ],
+    "widgets": ["image_1", "react_temp_table"],
+    "interactions": []
+  }
+  \`\`\`
 - **Response Declarations**:
   - The 'question.answers' from Perseus must be used to create the \`responseDeclarations\`.
   - **Numeric Answers Rule**: For text entry interactions, if the correct answer is a decimal that can be represented as a simple fraction (e.g., 0.5, 0.25), the 'correct' value in the response declaration should be a string representing that fraction (e.g., "1/2", "1/4"). This is to avoid forcing students to type decimals.
