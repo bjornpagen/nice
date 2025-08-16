@@ -1,7 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import { MATHML_INNER_PATTERN } from "@/lib/utils/mathml"
+import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
 import { typedSchemas } from "@/lib/widgets/generators"
 
 // LEVEL 2: INLINE CONTENT (for paragraphs, prompts, etc.)

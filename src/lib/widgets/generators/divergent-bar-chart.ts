@@ -1,8 +1,9 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { computeLabelSelection } from "@/lib/widgets/utils/labels"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -125,37 +126,10 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	}
 
 	// Bars and X-axis labels
-	// Determine a deterministic subset of x-axis labels to avoid overcrowding.
-	// Strategy:
-	// 1) Prefer only bars that actually have labels (category !== null) as candidates.
-	// 2) If none have labels, fall back to all bars as candidates.
-	// 3) Choose up to floor(chartWidth / minLabelSpacingPx) evenly spaced candidate indices,
-	//    including the first and last candidates.
 	const minLabelSpacingPx = 50
 	const allIndices = Array.from({ length: chartData.length }, (_, idx) => idx)
 	const candidateIndices = allIndices.filter((idx) => chartData[idx]?.category !== null)
-	const candidates = candidateIndices.length > 0 ? candidateIndices : allIndices
-	const maxLabels = Math.max(1, Math.floor(chartWidth / minLabelSpacingPx))
-	let selectedLabelIndices: Set<number>
-	if (candidates.length <= maxLabels) {
-		selectedLabelIndices = new Set(candidates)
-	} else {
-		const step = (candidates.length - 1) / (maxLabels - 1)
-		const indices: number[] = []
-		for (let k = 0; k < maxLabels; k++) {
-			const candidatePosition = Math.floor(k * step)
-			const candidateIndex = candidates[candidatePosition]
-			if (candidateIndex !== undefined) {
-				indices.push(candidateIndex)
-			}
-		}
-		// Ensure we include the last candidate explicitly (may dedupe if already included)
-		selectedLabelIndices = new Set(indices)
-		const lastCandidate = candidates[candidates.length - 1]
-		if (lastCandidate !== undefined) {
-			selectedLabelIndices.add(lastCandidate)
-		}
-	}
+	const selectedLabelIndices = computeLabelSelection(chartData.length, candidateIndices, chartWidth, minLabelSpacingPx)
 
 	chartData.forEach((d, i) => {
 		const barAbsHeight = Math.abs(d.value) * scaleY

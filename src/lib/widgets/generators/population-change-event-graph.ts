@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Factory helpers to avoid schema reuse and $ref generation

@@ -1,9 +1,9 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { renderWrappedText } from "@/lib/utils/text"
+import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 // Defines a single data point on the scatter plot
 const ScatterPointSchema = z

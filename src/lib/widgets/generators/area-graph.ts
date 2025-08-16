@@ -1,7 +1,7 @@
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { renderWrappedText } from "@/lib/utils/text"
+import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 const PointSchema = z.object({
 	x: z.number().describe("The x-coordinate (horizontal value) of the data point."),

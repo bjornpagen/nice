@@ -164,3 +164,70 @@ test("line graph - environmental change flowering time shift (legend below, labe
 	// Snapshot for full SVG structure
 	expect(svg).toMatchSnapshot()
 })
+
+// NEW: Arizona cities elevation dataset
+
+test("line graph - AZ cities temp elevation (title wrap + label thinning)", () => {
+	const input = {
+		type: "lineGraph",
+		title: "Average temperature (°C) by month for three Arizona cities",
+		width: 343,
+		height: 367,
+		xAxis: {
+			label: "Month",
+			categories: [
+				"January",
+				"February",
+				"March",
+				"April",
+				"May",
+				"June",
+				"July",
+				"August",
+				"September",
+				"October",
+				"November",
+				"December"
+			]
+		},
+		yAxis: {
+			label: "Average temperature (°C)",
+			min: -5,
+			max: 40,
+			tickInterval: 5,
+			showGridLines: true
+		},
+		yAxisRight: null,
+		series: [
+			{
+				name: "Bullhead City",
+				color: "#000",
+				style: "solid",
+				pointShape: "circle",
+				yAxis: "left",
+				values: [12.7, 14.6, 18.1, 22.2, 27.3, 32.2, 35.5, 35.1, 30.9, 24.1, 16.9, 12.1]
+			},
+			{
+				name: "Sedona",
+				color: "#11accd",
+				style: "dashed",
+				pointShape: "circle",
+				yAxis: "left",
+				values: [7.9, 9.3, 12.1, 15.2, 20.2, 25.4, 27.9, 27, 23.9, 18.2, 12.2, 7.4]
+			},
+			{
+				name: "Flagstaff",
+				color: "#e84d39",
+				style: "dotted",
+				pointShape: "circle",
+				yAxis: "left",
+				values: [-2, -0.6, 2.3, 5.5, 9.2, 14.1, 17.9, 17.1, 13.4, 7.7, 2.1, -2.2]
+			}
+		],
+		showLegend: true
+	} satisfies LineGraphInput
+
+	const parsed = LineGraphPropsSchema.parse(input)
+	const svg = generateLineGraph(parsed)
+	expect(svg).toMatchSnapshot()
+})

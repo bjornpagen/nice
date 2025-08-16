@@ -1,6 +1,7 @@
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 // Defines a single slice within a pie chart.
 const SliceSchema = z
@@ -57,27 +58,6 @@ export const PieChartWidgetPropsSchema = z
 
 export type PieChartWidgetProps = z.infer<typeof PieChartWidgetPropsSchema>
 
-// Conservative wrapped text utility for titles (see area-graph)
-const renderWrappedText = (text: string, x: number, y: number, className: string, lineHeight = "1.1em"): string => {
-	let lines: string[] = []
-	const titlePattern = /^(.+)\s+(\(.+\))$/
-	const titleMatch = text.match(titlePattern)
-	if (titleMatch?.[1] && titleMatch[2]) {
-		const base = titleMatch[1].trim()
-		const suffix = titleMatch[2].trim()
-		const shouldSplitConservatively = text.length > 36
-		lines = shouldSplitConservatively ? [base, suffix] : [text]
-	} else {
-		lines = [text]
-	}
-	let tspans = ""
-	lines.forEach((line, index) => {
-		const dy = index === 0 ? "0" : lineHeight
-		tspans += `<tspan x="${x}" dy="${dy}">${line}</tspan>`
-	})
-	return `<text x="${x}" y="${y}" class="${className}">${tspans}</text>`
-}
-
 /**
  * Generates one or more SVG pie charts from a declarative JSON structure.
  */
@@ -110,9 +90,10 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 		// Slightly smaller radius to leave more room for external labels
 		const radius = Math.min(chartAreaWidth, chartAreaHeight) * 0.33
 
-		// Draw title
+		// Draw title (width-aware wrapping)
 		if (chart.title) {
-			content += renderWrappedText(chart.title, cx, titleY, "title", "1.1em")
+			const maxTextWidth = chartAreaWidth - 40
+			content += renderWrappedText(chart.title, cx, titleY, "title", "1.1em", maxTextWidth, 8)
 		}
 
 		const totalValue = chart.slices.reduce((sum, slice) => sum + slice.value, 0)

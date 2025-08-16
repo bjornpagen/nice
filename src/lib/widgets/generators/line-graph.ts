@@ -1,8 +1,10 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { renderWrappedText } from "@/lib/widgets/utils/text"
+import { computeLabelSelection } from "@/lib/widgets/utils/labels"
 
 export const ErrMismatchedDataLength = errors.new("series data must have the same length as x-axis categories")
 
@@ -87,58 +89,6 @@ export const LineGraphPropsSchema = z
 
 export type LineGraphProps = z.infer<typeof LineGraphPropsSchema>
 
-// Title/label wrapping: conservative parenthetical split; otherwise width-aware two-line split to avoid clipping
-const renderWrappedText = (
-	text: string,
-	x: number,
-	y: number,
-	className: string,
-	lineHeight = "1.1em",
-	maxWidthPx?: number,
-	approxCharWidthPx = 8
-): string => {
-	let lines: string[] = []
-	const titlePattern = /^(.*)\s+(\(.+\))$/
-	const m = text.match(titlePattern)
-	if (m?.[1] && m[2]) {
-		const shouldSplit = text.length > 36
-		lines = shouldSplit ? [m[1].trim(), m[2].trim()] : [text]
-	} else {
-		const estimated = text.length * approxCharWidthPx
-		if (maxWidthPx && estimated > maxWidthPx) {
-			const words = text.split(/\s+/).filter(Boolean)
-			if (words.length > 1) {
-				const wordWidths = words.map((w) => w.length * approxCharWidthPx)
-				const total = wordWidths.reduce((a, b) => a + b, 0) + (words.length - 1) * approxCharWidthPx
-				const target = total / 2
-				let acc = 0
-				let splitIdx = 1
-				for (let i = 0; i < words.length - 1; i++) {
-					const w = wordWidths[i] ?? 0
-					acc += w + approxCharWidthPx
-					if (acc >= target) {
-						splitIdx = i + 1
-						break
-					}
-				}
-				const left = words.slice(0, splitIdx).join(" ")
-				const right = words.slice(splitIdx).join(" ")
-				lines = [left, right]
-			} else {
-				lines = [text]
-			}
-		} else {
-			lines = [text]
-		}
-	}
-	let tspans = ""
-	lines.forEach((line, i) => {
-		const dy = i === 0 ? "0" : lineHeight
-		tspans += `<tspan x="${x}" dy="${dy}">${line}</tspan>`
-	})
-	return `<text x="${x}" y="${y}" class="${className}">${tspans}</text>`
-}
-
 export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (props) => {
 	const { width, height, title, xAxis, yAxis, yAxisRight, series, showLegend } = props
 
@@ -213,18 +163,25 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		svg += "</g>"
 	}
 
-	// X-axis
+	// X-axis with label thinning
 	svg += `<g class="axis x-axis">`
 	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>`
 	if (xAxis.label)
 		svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + 36}" class="axis-label">${xAxis.label}</text>`
-	xAxis.categories.forEach((cat, i) => {
-		if (cat) {
+	{
+		const minLabelSpacingPx = 50
+		const allIndices = xAxis.categories.map((_, idx) => idx)
+		const nonEmpty = allIndices.filter((i) => !!xAxis.categories[i])
+		const selected = computeLabelSelection(xAxis.categories.length, nonEmpty, chartWidth, minLabelSpacingPx)
+		xAxis.categories.forEach((cat, i) => {
+			if (!cat) return
 			const x = toSvgX(i)
 			svg += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="black"/>`
-			svg += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${cat}</text>`
-		}
-	})
+			if (selected.has(i)) {
+				svg += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${cat}</text>`
+			}
+		})
+	}
 	svg += "</g>"
 
 	// Data Series
@@ -261,7 +218,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 
 		const xAxisY = height - margin.bottom
 		const axisLabelY = xAxis.label ? xAxisY + 36 : xAxisY + 18
-		let legendStartY = Math.max(axisLabelY + 8, height - 10 - series.length * legendItemHeight)
+		let legendStartY = Math.max(axisLabelY + 8, height - 10 - (series.length * legendItemHeight))
 
 		series.forEach((s, idx) => {
 			const y = legendStartY + idx * legendItemHeight

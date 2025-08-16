@@ -2,7 +2,7 @@ import * as logger from "@superbuilders/slog"
 import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { renderWrappedText } from "@/lib/utils/text"
+import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 const Bin = z
 	.object({

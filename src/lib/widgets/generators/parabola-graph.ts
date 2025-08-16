@@ -1,7 +1,7 @@
 import { z } from "zod"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 function createAxisOptionsSchema() {

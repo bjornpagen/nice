@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { renderInlineContent } from "@/lib/qti-generation/content-renderer"
-import { MATHML_INNER_PATTERN } from "@/lib/utils/mathml"
+import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { escapeXmlAttribute, sanitizeXmlAttributeValue } from "@/lib/xml-utils"
 

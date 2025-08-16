@@ -1,8 +1,9 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { computeLabelSelection } from "@/lib/widgets/utils/labels"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -140,27 +141,7 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 	const minLabelSpacingPx = 50
 	const allIndices = Array.from({ length: chartData.length }, (_, idx) => idx)
 	const candidateIndices = allIndices.filter((idx) => chartData[idx]?.label !== null)
-	const candidates = candidateIndices.length > 0 ? candidateIndices : allIndices
-	const maxLabels = Math.max(1, Math.floor(chartWidth / minLabelSpacingPx))
-	let selectedLabelIndices: Set<number>
-	if (candidates.length <= maxLabels) {
-		selectedLabelIndices = new Set(candidates)
-	} else {
-		const step = (candidates.length - 1) / (maxLabels - 1)
-		const indices: number[] = []
-		for (let k = 0; k < maxLabels; k++) {
-			const candidatePosition = Math.floor(k * step)
-			const candidateIndex = candidates[candidatePosition]
-			if (candidateIndex !== undefined) {
-				indices.push(candidateIndex)
-			}
-		}
-		selectedLabelIndices = new Set(indices)
-		const lastCandidate = candidates[candidates.length - 1]
-		if (lastCandidate !== undefined) {
-			selectedLabelIndices.add(lastCandidate)
-		}
-	}
+	const selectedLabelIndices = computeLabelSelection(chartData.length, candidateIndices, chartWidth, minLabelSpacingPx)
 
 	chartData.forEach((d, i) => {
 		const barHeight = d.value * scaleY
