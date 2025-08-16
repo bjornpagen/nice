@@ -77,23 +77,58 @@ Use "WIDGET_NOT_FOUND" if:
 	if (hasUrlImage) {
 		systemInstruction += `
 
-**WIDGET SELECTION RULES (urlImage as a fallback)**
-- **CRITICAL HIERARCHY**: When mapping image-based content:
-  1. FIRST: Try to find a semantically specific widget that matches the content
-  2. SECOND: If no specific widget fits, use \`urlImage\` as a fallback
+**WIDGET SELECTION RULES (urlImage is a STRICT last resort)**
+- **CRITICAL HIERARCHY** for visual content:
+  1. FIRST: Map to a semantically specific widget that matches the content
+  2. SECOND: If no specific widget fits, and the content is a truly static, non-semantic visual, then use \`urlImage\`
   3. LAST: Only use \`WIDGET_NOT_FOUND\` if the content cannot be represented by any widget including \`urlImage\`
-- Prefer semantically specific widgets over \`urlImage\` whenever the content clearly matches a more specific type in the available list.
-- Use \`urlImage\` as a fallback when the visual content doesn't match any specific widget type but can still be displayed as a static image.
-- Examples of when to PREFER specific widgets:
-  - Graphs/plots: choose graph/plot widgets (e.g., \`lineGraph\`, \`conceptualGraph\`, \`scatterPlot\`, \`barChart\`, etc.) rather than \`urlImage\`.
-  - Tables: choose \`dataTable\` rather than \`urlImage\`.
-  - Set comparisons: choose \`vennDiagram\` rather than \`urlImage\`.
-  - Reference resources: choose specific resource widgets (e.g., \`periodicTable\`) rather than \`urlImage\`.
-  - Emoji-only assets: choose \`emojiImage\` rather than \`urlImage\`.
-- Examples of when \`urlImage\` is appropriate as a fallback:
-  - A plain photograph or illustration (e.g., a whale, a cat, a lab apparatus) where no more specific widget exists in this collection.
-  - Any visual content that doesn't fit a specific widget but can be displayed as a static image.
-- **IMPORTANT**: Only use \`WIDGET_NOT_FOUND\` if the content truly cannot be represented by any widget type, including \`urlImage\`. Since \`urlImage\` can display most visual content, \`WIDGET_NOT_FOUND\` should be rare when \`urlImage\` is available.`
+- **Aggressive preference**: Always choose a purpose-built widget over \`urlImage\` whenever a match exists in the available list.
+
+- Prefer specific widgets over \`urlImage\`:
+  - Graphs/charts/plots: choose graph/plot widgets (e.g., \`barChart\`, \`lineGraph\`, \`conceptualGraph\`, \`scatterPlot\`, \`populationBarChart\`, etc.)
+  - Tables: choose \`dataTable\`
+  - Set comparisons: choose \`vennDiagram\`
+  - Reference resources: choose specific resource widgets (e.g., \`periodicTable\`)
+  - Emoji-only assets: choose \`emojiImage\`
+
+- When \`urlImage\` MAY be acceptable (still last resort):
+  - A plain photograph or illustration (e.g., a whale, a cat, a lab apparatus) where no more specific widget exists in this collection
+  - Visual content that does not match any specific widget but can be displayed as a static image
+
+**DO NOT USE urlImage for Graphie-generated graphs/charts**
+- If the Perseus JSON indicates that an \`image\` is actually a graph/chart produced by Graphie, you MUST map to a graph widget and NOT to \`urlImage\`.
+- Treat any \`image\` with a \`backgroundImage.url\` starting with \`web+graphie://\` (or containing \`ka-perseus-graphie\`) as a graph/chart with programmatic overlays.
+- If the alt text or problem text clearly describes a graph/chart (e.g., "bar graph", "line graph", "scatter plot", axes, ticks), then map to a specific graph widget even if numbers/labels are not baked into the underlying bitmap.
+- Rationale: Graphie overlays axes, ticks, and labels dynamically; we already have graph widgets that render these semantics natively and accessibly.
+
+Example — Graphie bar graph (DO NOT map to urlImage):
+\`\`\`json
+{
+  "widgets": {
+    "image 1": {
+      "type": "image",
+      "options": {
+        "alt": "A bar graph is shown...",
+        "backgroundImage": {
+          "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/65b7bb67f52aaaa9932dc39482e8f2e516840676",
+          "width": 300,
+          "height": 270
+        }
+      }
+    }
+  }
+}
+\`\`\`
+Correct mapping when graph widgets are available:
+\`\`\`json
+{
+  "widget_mapping": {
+    "image 1": "barChart" // or another specific graph widget listed in this collection
+  }
+}
+\`\`\`
+
+- **IMPORTANT**: Only use \`urlImage\` for graphs if and only if the collection provides no graph-capable widgets at all. Prefer domain-specific graph widgets whenever available.`
 	}
 
 	systemInstruction += `
