@@ -563,6 +563,15 @@ export function Content({
 								</span>
 							</div>
 						</div>
+
+						{/* XP Banking Information Note */}
+						<div className="mt-3 flex justify-center">
+							<div className="inline-flex items-center gap-2 rounded-md bg-gray-100 text-gray-600 px-3 py-2 text-xs sm:text-sm max-w-2xl">
+								<span className="text-center">
+									Watch this whole video to earn <span className="font-bold text-blue-600">{video.xp} XP</span>! You'll get your points after you show what you learned in the next exercise.
+								</span>
+							</div>
+						</div>
 					</div>
 
 					{/* Nice Academy Style Tabs */}

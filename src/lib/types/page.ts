@@ -31,6 +31,7 @@ export interface LessonLayoutData {
 export interface ArticlePageData {
 	id: string
 	title: string
+	xp: number
 }
 
 // Data for the /.../v/[video] page
@@ -39,6 +40,7 @@ export interface VideoPageData {
 	title: string
 	description: string
 	youtubeId: string
+	xp: number
 }
 
 // Data for the /.../e/[exercise] page

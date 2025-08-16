@@ -63,7 +63,8 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 
 	return {
 		id: resource.sourcedId,
-		title: resource.title
+		title: resource.title,
+		xp: resourceMetadataResult.data.xp
 	}
 }
 
@@ -174,6 +175,7 @@ export async function fetchVideoPageData(params: { video: string }): Promise<Vid
 		id: resource.sourcedId,
 		title: resource.title,
 		description: resourceMetadataResult.data.khanDescription,
-		youtubeId
+		youtubeId,
+		xp: resourceMetadataResult.data.xp
 	}
 }
