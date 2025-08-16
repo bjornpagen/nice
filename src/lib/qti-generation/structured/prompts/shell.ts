@@ -642,9 +642,10 @@ ${perseusJson}
   }
   \`\`\`
 
-  **BANNED: PSEUDO-TABLES IN BODY**
+  **BANNED: PSEUDO-TABLES AND PIPE CHARACTERS IN BODY**
   - NEVER simulate tables by stacking paragraphs with delimiter characters (e.g., "Substance | Density ...").
   - ALWAYS replace such lists with a dedicated table widget slot in the body and include its slotId in the widgets array.
+  - ABSOLUTE BAN: The vertical bar character \`|\` MUST NEVER appear in any text content anywhere in the output (body, prompts, feedback, choices). Use proper table widgets instead of textual pipes.
 
   Negative example (DO NOT OUTPUT) — pseudo-table paragraphs in body:
   \`\`\`json
@@ -935,6 +936,14 @@ Return ONLY the JSON object for the assessment shell.
   { "type": "math", "mathml": "<mn>25</mn><mo>%</mo>" }
 ]
 \`\`\`
+
+// ❌ WRONG - Pipe characters that imply a table layout
+"body": [
+  { "type": "paragraph", "content": [
+    { "type": "text", "content": "Substance | Density (g/cm^3)" }
+  ]}
+]
+// Error: pipe characters are banned; use a table widget slot instead
 
 **3. Banned Content (LaTeX, Deprecated MathML):**
 

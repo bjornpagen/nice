@@ -458,6 +458,24 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 	}
 }
 
+function enforceNoPipesInBody(item: AssessmentItem): void {
+	if (!item.body) return
+
+	for (let i = 0; i < item.body.length; i++) {
+		const block = item.body[i]
+		if (!block || block.type !== "paragraph") continue
+		const inline = block.content
+		for (let j = 0; j < inline.length; j++) {
+			const part = inline[j]
+			if (!part || part.type !== "text") continue
+			if (part.content.includes("|")) {
+				logger.error("pipe characters in body text", { index: i, snippet: part.content })
+				throw errors.new("pipe characters banned in body text")
+			}
+		}
+	}
+}
+
 export function compile(itemData: AssessmentItemInput): string {
 	// Step 0: Build widget mapping prior to schema enforcement
 	const widgetMapping: Record<string, string> = {}
@@ -511,6 +529,7 @@ export function compile(itemData: AssessmentItemInput): string {
 	// Manual deduplication of paragraphs that duplicate an interaction prompt
 	dedupePromptTextFromBody(enforcedItem)
 	validateAssessmentItemInput(enforcedItem, logger)
+	enforceNoPipesInBody(enforcedItem)
 
 	// Normalize choice identifiers now that we have strong types
 	normalizeChoiceIdentifiersInPlace(enforcedItem)
