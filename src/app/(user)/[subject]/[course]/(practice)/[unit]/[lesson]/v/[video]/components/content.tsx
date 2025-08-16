@@ -509,6 +509,15 @@ export function Content({
 				<div className="max-w-5xl mx-auto px-6">
 					{/* Video Player - YouTube component with skip disabled */}
 					<div className="py-6">
+						{/* XP Banking Information Note */}
+						<div className="mb-3 flex justify-center">
+							<div className="inline-flex items-center gap-2 rounded-md bg-gray-100 text-gray-600 px-3 py-2 text-xs sm:text-sm max-w-2xl">
+								<span className="text-center">
+									Watch this whole video to earn <span className="font-bold text-blue-600">{video.xp} XP</span>! You'll get your points <span className="font-bold text-blue-600">after</span> you show what you learned in the <span className="font-bold text-blue-600">next exercise</span>.
+								</span>
+							</div>
+						</div>
+
 						<div className="aspect-video bg-black rounded-lg overflow-hidden relative">
 							{showInitialPlayOverlay && (
 								<button
@@ -560,15 +569,6 @@ export function Content({
 								<span className="text-gray-400">/</span>
 								<span className="tabular-nums">
 									{durationSeconds && durationSeconds > 0 ? formatTime(durationSeconds) : "--:--"}
-								</span>
-							</div>
-						</div>
-
-						{/* XP Banking Information Note */}
-						<div className="mt-3 flex justify-center">
-							<div className="inline-flex items-center gap-2 rounded-md bg-gray-100 text-gray-600 px-3 py-2 text-xs sm:text-sm max-w-2xl">
-								<span className="text-center">
-									Watch this whole video to earn <span className="font-bold text-blue-600">{video.xp} XP</span>! You'll get your points after you show what you learned in the next exercise.
 								</span>
 							</div>
 						</div>

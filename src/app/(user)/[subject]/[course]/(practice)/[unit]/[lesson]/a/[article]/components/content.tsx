@@ -189,7 +189,7 @@ export function Content({
 				<div className="flex justify-center">
 					<div className="inline-flex items-center gap-2 rounded-md bg-gray-100 text-gray-600 px-3 py-2 text-xs sm:text-sm max-w-2xl">
 						<span className="text-center">
-							📚 Read this whole article to earn <span className="font-bold text-blue-600">{article.xp} XP</span>! You'll get your points after you show what you learned in the next exercise.
+							Read this whole article to earn <span className="font-bold text-blue-600">{article.xp} XP</span>! You'll get your points <span className="font-bold text-blue-600">after</span> you show what you learned in the <span className="font-bold text-blue-600">next exercise</span>.
 						</span>
 					</div>
 				</div>
