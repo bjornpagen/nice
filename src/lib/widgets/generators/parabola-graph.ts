@@ -1,9 +1,9 @@
-import { z } from "zod"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { initExtents, includeText, computeDynamicWidth } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 function createAxisOptionsSchema() {
 	return z
@@ -36,14 +36,19 @@ export const ParabolaGraphPropsSchema = z
 						y: z.number().positive().describe("y-coordinate of the vertex (must be > 0)")
 					})
 					.strict(),
-				yIntercept: z.number().positive().describe("Positive y-intercept at x = 0 (must be > 0 and less than vertex.y)."),
+				yIntercept: z
+					.number()
+					.positive()
+					.describe("Positive y-intercept at x = 0 (must be > 0 and less than vertex.y)."),
 				color: z.string().regex(CSS_COLOR_PATTERN, "invalid css color").describe("The color of the parabola curve."),
 				style: z.enum(["solid", "dashed"]).describe("The line style of the parabola curve.")
 			})
 			.strict()
 	})
 	.strict()
-	.describe("Creates a coordinate plane and renders a down-facing parabola in the first quadrant, defined by a positive vertex and positive y-intercept.")
+	.describe(
+		"Creates a coordinate plane and renders a down-facing parabola in the first quadrant, defined by a positive vertex and positive y-intercept."
+	)
 
 export type ParabolaGraphProps = z.infer<typeof ParabolaGraphPropsSchema>
 

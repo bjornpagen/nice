@@ -152,6 +152,8 @@ The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
 5. **NO INVALID XML CHARACTERS** - Do not include control characters or non-characters:
    - Disallowed: U+0000–U+001F (except TAB U+0009, LF U+000A, CR U+000D), U+FFFE, U+FFFF, and unpaired surrogates.
 
+${chemicalMathmlSection}
+
 **Currency: Comprehensive Examples**
 
 SCAN ALL text content in widgets (labels, captions, content) for '$' - these MUST be converted to MathML.

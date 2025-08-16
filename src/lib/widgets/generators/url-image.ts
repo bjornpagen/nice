@@ -42,7 +42,7 @@ export const UrlImageWidgetPropsSchema = z
 	)
 
 export const generateUrlImage: WidgetGenerator<typeof UrlImageWidgetPropsSchema> = (props) => {
-	const { url, alt, width, height, caption, attribution } = props
+	const { url, alt, width, height, caption } = props
 	// Note: attribution is intentionally not destructured or rendered
 	// The attribution field exists in the schema to encourage LLMs to separate
 	// attribution/source info from the caption, but we don't display it
@@ -86,7 +86,7 @@ export const generateUrlImage: WidgetGenerator<typeof UrlImageWidgetPropsSchema>
 	const normalizedAlt = stripWrappingDelimiters(alt)
 	const normalizedCaption = caption ? stripWrappingDelimiters(caption) : null
 	// Normalize attribution even though we don't render it yet to avoid leaking artifacts if usage changes
-	const _normalizedAttribution = attribution ? stripWrappingDelimiters(attribution) : null
+	// Note: do not keep an unused variable; normalize inline when/if rendering changes
 
 	const imgTag = `<img src="${escapeXmlAttribute(url)}" alt="${escapeXmlAttribute(normalizedAlt)}" style="${escapeXmlAttribute(imgStyles)}" />`
 	const captionTag = normalizedCaption

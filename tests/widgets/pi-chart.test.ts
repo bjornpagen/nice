@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
 import type { z } from "zod"
-import { PieChartWidgetPropsSchema, generatePieChart } from "@/lib/widgets/generators"
+import { generatePieChart, PieChartWidgetPropsSchema } from "@/lib/widgets/generators"
 
 type PieChartInput = z.input<typeof PieChartWidgetPropsSchema>
 

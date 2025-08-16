@@ -1,6 +1,6 @@
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 
 // Defines a group of identical sectors on the spinner
 const ProbabilitySpinnerSectorGroupSchema = z

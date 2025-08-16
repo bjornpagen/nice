@@ -8,10 +8,10 @@ import {
 	KeelingCurvePropsSchema,
 	LineGraphPropsSchema,
 	ParabolaGraphPropsSchema,
+	PieChartWidgetPropsSchema,
 	PopulationBarChartPropsSchema,
 	PopulationChangeEventGraphPropsSchema,
-	ScatterPlotPropsSchema,
-	PieChartWidgetPropsSchema
+	ScatterPlotPropsSchema
 } from "@/lib/widgets/generators"
 import { simpleVisualCollection } from "./simple-visual"
 

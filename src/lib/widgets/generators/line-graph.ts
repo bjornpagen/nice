@@ -1,11 +1,11 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { renderWrappedText } from "@/lib/widgets/utils/text"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { computeLabelSelection } from "@/lib/widgets/utils/labels"
-import { initExtents, includeText, computeDynamicWidth } from "@/lib/widgets/utils/layout"
+import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 export const ErrMismatchedDataLength = errors.new("series data must have the same length as x-axis categories")
 

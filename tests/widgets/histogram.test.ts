@@ -33,7 +33,9 @@ test("histogram - tomato production per plant", () => {
 
 	const parsedResult = HistogramPropsSchema.safeParse(input)
 	if (!parsedResult.success) {
-		throw parsedResult.error
+		// In tests, convert schema failure into an assertion-friendly failure
+		expect(parsedResult.success).toBeTrue()
+		return
 	}
 	const svg = generateHistogram(parsedResult.data)
 	expect(svg).toMatchSnapshot()
@@ -61,7 +63,8 @@ test("histogram - tomato plants production bins", () => {
 
 	const parsedResult = HistogramPropsSchema.safeParse(input)
 	if (!parsedResult.success) {
-		throw parsedResult.error
+		expect(parsedResult.success).toBeTrue()
+		return
 	}
 	const svg = generateHistogram(parsedResult.data)
 	expect(svg).toMatchSnapshot()

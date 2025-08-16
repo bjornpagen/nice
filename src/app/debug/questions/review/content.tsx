@@ -34,10 +34,8 @@ function Screenshot({ src, alt }: { src: string; alt: string }) {
 	const [zoomed, setZoomed] = React.useState(false)
 
 	// Always bust cache so the latest QA image is shown
-	const srcNoCache = React.useMemo(() => {
-		const separator = src.includes("?") ? "&" : "?"
-		return `${src}${separator}t=${Date.now()}`
-	}, [src])
+	const separator = src.includes("?") ? "&" : "?"
+	const srcNoCache = `${src}${separator}t=${Date.now()}`
 
 	return (
 		<>
@@ -46,6 +44,7 @@ function Screenshot({ src, alt }: { src: string; alt: string }) {
 				onClick={() => setOpen(true)}
 				style={{ cursor: "zoom-in", padding: 0, border: 0, background: "none" }}
 			>
+				{/* biome-ignore lint/performance/noImgElement: screenshots must bypass next/image caching for QA */}
 				<img
 					src={srcNoCache}
 					alt={alt}
@@ -81,6 +80,7 @@ function Screenshot({ src, alt }: { src: string; alt: string }) {
 							overflow: "auto"
 						}}
 					>
+						{/* biome-ignore lint/performance/noImgElement: screenshots must bypass next/image caching for QA */}
 						<img
 							src={srcNoCache}
 							alt={alt}

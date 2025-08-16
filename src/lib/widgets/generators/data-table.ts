@@ -1,7 +1,7 @@
 import { z } from "zod"
 import { renderInlineContent } from "@/lib/qti-generation/content-renderer"
-import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
 import { escapeXmlAttribute, sanitizeXmlAttributeValue } from "@/lib/xml-utils"
 
 // Factory function to create inline content schema - avoids $ref in OpenAI JSON schema

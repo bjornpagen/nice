@@ -1,8 +1,8 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
 import { typedSchemas } from "@/lib/widgets/generators"
+import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
 
 // LEVEL 2: INLINE CONTENT (for paragraphs, prompts, etc.)
 // Factory functions to create fresh schema instances (avoids $ref in JSON Schema)

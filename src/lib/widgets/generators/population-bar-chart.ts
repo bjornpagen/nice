@@ -1,8 +1,8 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { computeLabelSelection } from "@/lib/widgets/utils/labels"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
@@ -162,9 +162,7 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 		const useAutoThinning = xAxisVisibleLabels.length === 0
 		if (d.label !== null) {
 			const labelText = d.label
-			const shouldShowLabel = useAutoThinning
-				? selectedLabelIndices.has(i)
-				: visibleLabelSet.has(labelText)
+			const shouldShowLabel = useAutoThinning ? selectedLabelIndices.has(i) : visibleLabelSet.has(labelText)
 			if (shouldShowLabel) {
 				svg += `<text x="${labelX}" y="${chartHeight + 20}" class="tick-label" text-anchor="middle">${labelText}</text>`
 			}

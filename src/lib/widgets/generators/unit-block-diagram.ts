@@ -1,6 +1,6 @@
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 
 export const UnitBlockDiagramPropsSchema = z
 	.object({

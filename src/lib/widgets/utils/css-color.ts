@@ -9,5 +9,3 @@ const HEX = "#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})"
 const PATTERN = `^${HEX}$`
 
 export const CSS_COLOR_PATTERN = new RegExp(PATTERN, "i")
-
-

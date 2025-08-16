@@ -372,7 +372,7 @@ export async function generateStructuredQtiItem(
 
 	function collectAllSlotIds(shell: AssessmentItemShell): Set<string> {
 		const ids = new Set<string>()
-		const _seenInteractions = new Set<string>()
+		// Track seen interactions if needed for future validations (currently unused)
 
 		function walkInline(items: InlineContent | null | undefined) {
 			if (!items) return

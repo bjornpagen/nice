@@ -1,6 +1,7 @@
 import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
+import { z } from "zod"
 import { inngest } from "@/inngest/client"
 import { oneroster } from "@/lib/clients"
 import type { Resource } from "@/lib/oneroster"
@@ -23,13 +24,35 @@ export const ingestResourceOne = inngest.createFunction(
 			logger.error("failed to read resources file", { file: filePath, error: readResult.error })
 			throw errors.wrap(readResult.error, "file read")
 		}
-		const parseResult = errors.trySync(() => JSON.parse(readResult.data) as Array<Resource>)
+		const parseResult = errors.trySync(() => JSON.parse(readResult.data))
 		if (parseResult.error) {
 			logger.error("failed to parse resources file", { file: filePath, error: parseResult.error })
 			throw errors.wrap(parseResult.error, "json parse")
 		}
-		const allResources = parseResult.data
-		const resource = allResources.find((r) => r.sourcedId === sourcedId)
+		const arrayData: unknown[] = Array.isArray(parseResult.data) ? parseResult.data : []
+		const ResourceFileSchema = z.object({
+			sourcedId: z.string(),
+			status: z.string(),
+			title: z.string(),
+			format: z.string().optional(),
+			vendorResourceId: z.string(),
+			vendorId: z.string().nullable().optional(),
+			applicationId: z.string().nullable().optional(),
+			roles: z.array(z.string()).optional(),
+			importance: z.string().optional(),
+			metadata: z.record(z.string(), z.unknown()).optional()
+		})
+		function isResource(entry: unknown): entry is Resource {
+			const result = ResourceFileSchema.safeParse(entry)
+			return result.success
+		}
+		let resource: Resource | undefined
+		for (const entry of arrayData) {
+			if (isResource(entry) && entry.sourcedId === sourcedId) {
+				resource = entry
+				break
+			}
+		}
 
 		if (!resource) {
 			logger.error("resource not found in payload file", { sourcedId, file: filePath })

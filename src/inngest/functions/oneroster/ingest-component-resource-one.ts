@@ -1,6 +1,7 @@
 import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
+import { z } from "zod"
 import { inngest } from "@/inngest/client"
 import { oneroster } from "@/lib/clients"
 import type { ComponentResource } from "@/lib/oneroster"
@@ -22,13 +23,34 @@ export const ingestComponentResourceOne = inngest.createFunction(
 			logger.error("failed to read component-resources file", { file: filePath, error: readResult.error })
 			throw errors.wrap(readResult.error, "file read")
 		}
-		const parseResult = errors.trySync(() => JSON.parse(readResult.data) as Array<ComponentResource>)
+		const parseResult = errors.trySync(() => JSON.parse(readResult.data))
 		if (parseResult.error) {
 			logger.error("failed to parse component-resources file", { file: filePath, error: parseResult.error })
 			throw errors.wrap(parseResult.error, "json parse")
 		}
-		const allComponentResources = parseResult.data
-		const componentResource = allComponentResources.find((cr) => cr.sourcedId === sourcedId)
+		const arrayData: unknown[] = Array.isArray(parseResult.data) ? parseResult.data : []
+		// validate minimal shape before use (runtime guard without type assertions)
+		const GuidRefSchema = z.object({ sourcedId: z.string(), type: z.string() })
+		const ComponentResourceFileSchema = z.object({
+			sourcedId: z.string(),
+			status: z.string(),
+			title: z.string(),
+			courseComponent: GuidRefSchema,
+			resource: GuidRefSchema,
+			sortOrder: z.number(),
+			metadata: z.record(z.string(), z.any()).optional()
+		})
+		function isComponentResource(entry: unknown): entry is ComponentResource {
+			const result = ComponentResourceFileSchema.safeParse(entry)
+			return result.success
+		}
+		const allComponentResourcesValidated: ComponentResource[] = []
+		for (const entry of arrayData) {
+			if (isComponentResource(entry)) {
+				allComponentResourcesValidated.push(entry)
+			}
+		}
+		const componentResource = allComponentResourcesValidated.find((cr) => cr.sourcedId === sourcedId)
 
 		if (!componentResource) {
 			logger.error("component-resource not found in payload file", { sourcedId, file: filePath })

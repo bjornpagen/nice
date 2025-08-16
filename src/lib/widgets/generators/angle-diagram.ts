@@ -1,6 +1,6 @@
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 
 // Utility function to find intersection point of two lines
 // Line 1: from point1 to point2, Line 2: from point3 to point4

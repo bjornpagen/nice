@@ -13,8 +13,7 @@ const CreateItemInputSchema = z.object({
 const CourseRefSchema = z.object({ sourcedId: z.string(), type: z.literal("course") })
 const ComponentRefSchema = z.object({ sourcedId: z.string(), type: z.literal("courseComponent") })
 const ResourceRefSchema = z.object({ sourcedId: z.string(), type: z.literal("resource") })
-const OrgRefSchema = z.object({ sourcedId: z.string(), type: z.literal("org") })
-const AcademicSessionRefSchema = z.object({ sourcedId: z.string(), type: z.literal("term") })
+// Removed unused reference schemas to satisfy no-unused-vars policy
 
 const events = {
 	"nice/hello.world": {

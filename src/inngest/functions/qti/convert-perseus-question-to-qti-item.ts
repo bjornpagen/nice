@@ -5,6 +5,7 @@ import { db } from "@/db"
 import { niceExercises, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { compile } from "@/lib/qti-generation/compiler"
+import { ErrQuestionBlacklisted, isQuestionIdBlacklisted } from "@/lib/qti-generation/question-blacklist"
 // MODIFIED: Import the new ErrWidgetNotFound error.
 import {
 	ErrUnsupportedInteraction,
@@ -12,7 +13,6 @@ import {
 	generateStructuredQtiItem
 } from "@/lib/qti-generation/structured/client"
 import { validateAndSanitizeHtmlFields } from "@/lib/qti-generation/structured/validator"
-import { ErrQuestionBlacklisted, isQuestionIdBlacklisted } from "@/lib/qti-generation/question-blacklist"
 
 // A global key to ensure all OpenAI functions share the same concurrency limit.
 const OPENAI_CONCURRENCY_KEY = "openai-api-global-concurrency"

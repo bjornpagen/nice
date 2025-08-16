@@ -1,8 +1,8 @@
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
-import { initExtents, includeText, computeDynamicWidth } from "@/lib/widgets/utils/layout"
 
 const PointSchema = z.object({
 	x: z.number().describe("The x-coordinate (horizontal value) of the data point."),
@@ -88,7 +88,13 @@ export type AreaGraphProps = z.infer<typeof AreaGraphPropsSchema>
  * Renders a text element with automatic wrapping for certain patterns.
  * Keeping for area-label specific behavior. Not used for titles.
  */
-const renderWrappedText_local = (text: string, x: number, y: number, className: string, lineHeight = "1.2em"): string => {
+const renderWrappedText_local = (
+	text: string,
+	x: number,
+	y: number,
+	className: string,
+	lineHeight = "1.2em"
+): string => {
 	let lines: string[] = []
 
 	// For titles ending with any parenthetical, split before the parenthesis but only for sufficiently long titles

@@ -289,9 +289,8 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 			// remove possessive 's that may survive after punctuation stripping
 			const cleaned = p.endsWith("'s") ? p.slice(0, -2) : p
 			// naive stemming for simple plural/3rd-person 's' endings to improve fuzzy match
-			const stemmed = cleaned.length >= 4 && cleaned.endsWith("s") && !cleaned.endsWith("ss")
-				? cleaned.slice(0, -1)
-				: cleaned
+			const stemmed =
+				cleaned.length >= 4 && cleaned.endsWith("s") && !cleaned.endsWith("ss") ? cleaned.slice(0, -1) : cleaned
 			if (stemmed) tokens.push(stemmed)
 		}
 		return tokens
@@ -307,14 +306,13 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 	}
 	const tokensNearlyEqual = (aTokens: string[], bTokens: string[], jaccardThreshold: number): boolean => {
 		if (!lengthRatioOk(aTokens, bTokens)) return false
+		const jac = jaccardSimilarity(aTokens, bTokens)
+		if (jac >= jaccardThreshold) return true
+		// One-token tolerance: allow removal if sets differ by at most one token
 		const a = new Set(aTokens)
 		const b = new Set(bTokens)
 		let intersection = 0
 		for (const t of a) if (b.has(t)) intersection += 1
-		const union = a.size + b.size - intersection
-		const jac = union === 0 ? 0 : intersection / union
-		if (jac >= jaccardThreshold) return true
-		// One-token tolerance: allow removal if sets differ by at most one token
 		const minSize = Math.min(a.size, b.size)
 		if (minSize >= 3 && intersection >= minSize - 1) return true
 		return false

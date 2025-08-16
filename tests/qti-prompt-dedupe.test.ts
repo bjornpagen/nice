@@ -76,7 +76,10 @@ test("dedupes paraphrased prompt - red vs green lasers selection phrase", () => 
 					}
 				]
 			},
-			{ type: "paragraph", content: [{ type: "text", content: "Which wave properties are different for the two lights?" }] },
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Which wave properties are different for the two lights?" }]
+			},
 			{ type: "blockSlot", slotId: "choice_interaction" }
 		],
 		interactions: {
@@ -86,7 +89,9 @@ test("dedupes paraphrased prompt - red vs green lasers selection phrase", () => 
 				shuffle: true,
 				minChoices: 1,
 				maxChoices: 4,
-				prompt: [{ type: "text", content: "Which wave properties are different for the two lights? Select all that apply." }],
+				prompt: [
+					{ type: "text", content: "Which wave properties are different for the two lights? Select all that apply." }
+				],
 				choices: [
 					{
 						identifier: "A",
@@ -171,22 +176,30 @@ test("dedupes paraphrased prompt - balanced forces selection phrase", () => {
 				choices: [
 					{
 						identifier: "A",
-						content: [{ type: "paragraph", content: [{ type: "text", content: "The forces act on the same object." }] }],
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "The forces act on the same object." }] }
+						],
 						feedback: null
 					},
 					{
 						identifier: "B",
-						content: [{ type: "paragraph", content: [{ type: "text", content: "The forces act on different objects." }] }],
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "The forces act on different objects." }] }
+						],
 						feedback: null
 					},
 					{
 						identifier: "C",
-						content: [{ type: "paragraph", content: [{ type: "text", content: "The forces have the same strength." }] }],
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "The forces have the same strength." }] }
+						],
 						feedback: null
 					},
 					{
 						identifier: "D",
-						content: [{ type: "paragraph", content: [{ type: "text", content: "The forces have different strengths." }] }],
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "The forces have different strengths." }] }
+						],
 						feedback: null
 					}
 				]
@@ -273,7 +286,10 @@ test("dedupes paraphrased prompt - food provides describe vs describes", () => {
 					{
 						identifier: "C",
 						content: [
-							{ type: "paragraph", content: [{ type: "text", content: "New mitochondria that can carry out cellular respiration" }] }
+							{
+								type: "paragraph",
+								content: [{ type: "text", content: "New mitochondria that can carry out cellular respiration" }]
+							}
 						],
 						feedback: null
 					}
@@ -595,9 +611,7 @@ test("dedupes repeated prompt - kinetic energy selection phrase (duplicate body)
 					},
 					{
 						identifier: "B",
-						content: [
-							{ type: "paragraph", content: [{ type: "text", content: "a train slowing down" }] }
-						],
+						content: [{ type: "paragraph", content: [{ type: "text", content: "a train slowing down" }] }],
 						feedback: null
 					},
 					{
@@ -610,7 +624,10 @@ test("dedupes repeated prompt - kinetic energy selection phrase (duplicate body)
 					{
 						identifier: "D",
 						content: [
-							{ type: "paragraph", content: [{ type: "text", content: "an arrow pulled back in a bow, ready to be released" }] }
+							{
+								type: "paragraph",
+								content: [{ type: "text", content: "an arrow pulled back in a bow, ready to be released" }]
+							}
 						],
 						feedback: null
 					},
@@ -704,10 +721,26 @@ test("dedupes paraphrased prompt - same pitch different loudness wave properties
 					{ type: "text", content: "Which wave properties are the same for the two sounds? Select all that apply." }
 				],
 				choices: [
-					{ identifier: "A", content: [{ type: "paragraph", content: [{ type: "text", content: "amplitude" }] }], feedback: null },
-					{ identifier: "B", content: [{ type: "paragraph", content: [{ type: "text", content: "frequency" }] }], feedback: null },
-					{ identifier: "C", content: [{ type: "paragraph", content: [{ type: "text", content: "wavelength" }] }], feedback: null },
-					{ identifier: "D", content: [{ type: "paragraph", content: [{ type: "text", content: "speed" }] }], feedback: null }
+					{
+						identifier: "A",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "amplitude" }] }],
+						feedback: null
+					},
+					{
+						identifier: "B",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "frequency" }] }],
+						feedback: null
+					},
+					{
+						identifier: "C",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "wavelength" }] }],
+						feedback: null
+					},
+					{
+						identifier: "D",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "speed" }] }],
+						feedback: null
+					}
 				]
 			}
 		},
@@ -777,22 +810,26 @@ test("dedupes repeated prompt - heliocentric model selection phrase", () => {
 					{
 						identifier: "A",
 						content: [
-							{ type: "paragraph", content: [{ type: "text", content: "It shows Earth as the center of the universe." }] }
+							{
+								type: "paragraph",
+								content: [{ type: "text", content: "It shows Earth as the center of the universe." }]
+							}
 						],
 						feedback: null
 					},
 					{
 						identifier: "B",
 						content: [
-							{ type: "paragraph", content: [{ type: "text", content: "It shows the Sun as the center of the universe." }] }
+							{
+								type: "paragraph",
+								content: [{ type: "text", content: "It shows the Sun as the center of the universe." }]
+							}
 						],
 						feedback: null
 					},
 					{
 						identifier: "C",
-						content: [
-							{ type: "paragraph", content: [{ type: "text", content: "It replaced the geocentric model." }] }
-						],
+						content: [{ type: "paragraph", content: [{ type: "text", content: "It replaced the geocentric model." }] }],
 						feedback: null
 					},
 					{
@@ -958,7 +995,8 @@ test("does not remove instruction-augmented body question - zinc pieces vs conce
 								content: [
 									{
 										type: "text",
-										content: "Test A, because the temperature rose faster and the total change in temperature was greater."
+										content:
+											"Test A, because the temperature rose faster and the total change in temperature was greater."
 									}
 								]
 							}
@@ -970,9 +1008,7 @@ test("does not remove instruction-augmented body question - zinc pieces vs conce
 						content: [
 							{
 								type: "paragraph",
-								content: [
-									{ type: "text", content: "Test A, because it reached its final temperature in less time." }
-								]
+								content: [{ type: "text", content: "Test A, because it reached its final temperature in less time." }]
 							}
 						],
 						feedback: null
@@ -983,7 +1019,10 @@ test("does not remove instruction-augmented body question - zinc pieces vs conce
 							{
 								type: "paragraph",
 								content: [
-									{ type: "text", content: "Test B, because the temperature change was more consistent after each minute." }
+									{
+										type: "text",
+										content: "Test B, because the temperature change was more consistent after each minute."
+									}
 								]
 							}
 						],
@@ -995,7 +1034,10 @@ test("does not remove instruction-augmented body question - zinc pieces vs conce
 							{
 								type: "paragraph",
 								content: [
-									{ type: "text", content: "Test B, because the temperature increased more slowly and the total change was smaller." }
+									{
+										type: "text",
+										content: "Test B, because the temperature increased more slowly and the total change was smaller."
+									}
 								]
 							}
 						],
@@ -1161,9 +1203,8 @@ test("does not remove instruction-augmented body question - stirred vs cooled tr
 								content: [
 									{
 										type: "text",
-										content:
-											"Test A, because the temperature rose more quickly and reached its peak in less time."
-										}
+										content: "Test A, because the temperature rose more quickly and reached its peak in less time."
+									}
 								]
 							}
 						],
@@ -1174,9 +1215,7 @@ test("does not remove instruction-augmented body question - stirred vs cooled tr
 						content: [
 							{
 								type: "paragraph",
-								content: [
-									{ type: "text", content: "Test A, because the temperature decreased in the final minute." }
-								]
+								content: [{ type: "text", content: "Test A, because the temperature decreased in the final minute." }]
 							}
 						],
 						feedback: null
@@ -1189,9 +1228,8 @@ test("does not remove instruction-augmented body question - stirred vs cooled tr
 								content: [
 									{
 										type: "text",
-										content:
-											"Test B, because the temperature increased more slowly and the total change was smaller."
-										}
+										content: "Test B, because the temperature increased more slowly and the total change was smaller."
+									}
 								]
 							}
 						],
@@ -1203,7 +1241,10 @@ test("does not remove instruction-augmented body question - stirred vs cooled tr
 							{
 								type: "paragraph",
 								content: [
-									{ type: "text", content: "Test B, because the temperature change was more consistent after each minute." }
+									{
+										type: "text",
+										content: "Test B, because the temperature change was more consistent after each minute."
+									}
 								]
 							}
 						],
@@ -1259,13 +1300,11 @@ test("dedupes paraphrased prompt - pure substances particle diagrams", () => {
 		widgets: {
 			choice_a_sample: {
 				type: "urlImage",
-				alt:
-					"Two types of particles: one type consists of two red spheres attached to each other, and the second type consists of single pink spheres.",
+				alt: "Two types of particles: one type consists of two red spheres attached to each other, and the second type consists of single pink spheres.",
 				url: "https://cdn.kastatic.org/ka-content-images/e4461e542dae08f2320432899f6fcf5c10904a25.png",
 				width: 320,
 				height: 200,
-				caption:
-					"Sample with two particle types: diatomic red pairs and single pink spheres.",
+				caption: "Sample with two particle types: diatomic red pairs and single pink spheres.",
 				attribution: "Image courtesy of Khan Academy."
 			},
 			choice_b_sample: {
@@ -1288,18 +1327,19 @@ test("dedupes paraphrased prompt - pure substances particle diagrams", () => {
 			},
 			choice_d_sample: {
 				type: "urlImage",
-				alt:
-					"Three types of particles: one type consists of two red spheres attached to each other; the second type consists of large purple spheres; the third type consists of tiny pink spheres.",
+				alt: "Three types of particles: one type consists of two red spheres attached to each other; the second type consists of large purple spheres; the third type consists of tiny pink spheres.",
 				url: "https://cdn.kastatic.org/ka-content-images/a7d2f5587b0e20be9619a940046ba8d245175b13.png",
 				width: 320,
 				height: 200,
-				caption:
-					"Sample with three particle types: red diatomic pairs, large purple spheres, and tiny pink spheres.",
+				caption: "Sample with three particle types: red diatomic pairs, large purple spheres, and tiny pink spheres.",
 				attribution: "Image courtesy of Khan Academy."
 			}
 		},
 		body: [
-			{ type: "paragraph", content: [{ type: "text", content: "Which of the following samples depicts a pure substance?" }] },
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Which of the following samples depicts a pure substance?" }]
+			},
 			{ type: "blockSlot", slotId: "choice_interaction" }
 		],
 		interactions: {
@@ -1313,20 +1353,52 @@ test("dedupes paraphrased prompt - pure substances particle diagrams", () => {
 					{ type: "text", content: "Which of the following samples depict pure substances? Select all that apply." }
 				],
 				choices: [
-					{ identifier: "A", content: [{ type: "blockSlot", slotId: "choice_a_sample" }], feedback: [
-						{ type: "text", content: "This sample contains two different substances that are not chemically bonded together. One substance is made of atoms, and the other is made of diatomic molecules. A pure substance may consist of one type of atom or a fixed combination of different atoms bonded together." }
-					] },
-					{ identifier: "B", content: [{ type: "blockSlot", slotId: "choice_b_sample" }], feedback: [
-						{ type: "text", content: "This is a sample of a crystalline compound made of two different elements chemically combined in a repeating " },
-						{ type: "math", mathml: "<mn>1</mn><mo>:</mo><mn>1</mn>" },
-						{ type: "text", content: " ratio. This is a pure substance." }
-					] },
-					{ identifier: "C", content: [{ type: "blockSlot", slotId: "choice_c_sample" }], feedback: [
-						{ type: "text", content: "This is a sample of a diatomic element composed of one type of molecule. This is a pure substance." }
-					] },
-					{ identifier: "D", content: [{ type: "blockSlot", slotId: "choice_d_sample" }], feedback: [
-						{ type: "text", content: "This sample contains three different substances that are not chemically bonded together. Two substances are made of atoms, and the third is a diatomic element. A pure substance may consist of one type of atom or a fixed combination of different atoms bonded together." }
-					] }
+					{
+						identifier: "A",
+						content: [{ type: "blockSlot", slotId: "choice_a_sample" }],
+						feedback: [
+							{
+								type: "text",
+								content:
+									"This sample contains two different substances that are not chemically bonded together. One substance is made of atoms, and the other is made of diatomic molecules. A pure substance may consist of one type of atom or a fixed combination of different atoms bonded together."
+							}
+						]
+					},
+					{
+						identifier: "B",
+						content: [{ type: "blockSlot", slotId: "choice_b_sample" }],
+						feedback: [
+							{
+								type: "text",
+								content:
+									"This is a sample of a crystalline compound made of two different elements chemically combined in a repeating "
+							},
+							{ type: "math", mathml: "<mn>1</mn><mo>:</mo><mn>1</mn>" },
+							{ type: "text", content: " ratio. This is a pure substance." }
+						]
+					},
+					{
+						identifier: "C",
+						content: [{ type: "blockSlot", slotId: "choice_c_sample" }],
+						feedback: [
+							{
+								type: "text",
+								content:
+									"This is a sample of a diatomic element composed of one type of molecule. This is a pure substance."
+							}
+						]
+					},
+					{
+						identifier: "D",
+						content: [{ type: "blockSlot", slotId: "choice_d_sample" }],
+						feedback: [
+							{
+								type: "text",
+								content:
+									"This sample contains three different substances that are not chemically bonded together. Two substances are made of atoms, and the third is a diatomic element. A pure substance may consist of one type of atom or a fixed combination of different atoms bonded together."
+							}
+						]
+					}
 				]
 			}
 		},
@@ -1335,9 +1407,16 @@ test("dedupes paraphrased prompt - pure substances particle diagrams", () => {
 				{
 					type: "paragraph",
 					content: [
-						{ type: "text", content: "Correct! A pure substance can be either a compound with a fixed ratio of elements or an element consisting of identical particles. For example, an ionic crystal with a " },
+						{
+							type: "text",
+							content:
+								"Correct! A pure substance can be either a compound with a fixed ratio of elements or an element consisting of identical particles. For example, an ionic crystal with a "
+						},
 						{ type: "math", mathml: "<mn>1</mn><mo>:</mo><mn>1</mn>" },
-						{ type: "text", content: " ratio and a diatomic element made of identical molecules are both pure substances." }
+						{
+							type: "text",
+							content: " ratio and a diatomic element made of identical molecules are both pure substances."
+						}
 					]
 				}
 			],
@@ -1345,7 +1424,11 @@ test("dedupes paraphrased prompt - pure substances particle diagrams", () => {
 				{
 					type: "paragraph",
 					content: [
-						{ type: "text", content: "Not quite. A pure substance contains only one kind of particle: either a single element (atoms or identical molecules of one element) or a compound with a fixed chemical composition. Mixtures contain two or more different particles that are not chemically bonded together." }
+						{
+							type: "text",
+							content:
+								"Not quite. A pure substance contains only one kind of particle: either a single element (atoms or identical molecules of one element) or a compound with a fixed chemical composition. Mixtures contain two or more different particles that are not chemically bonded together."
+						}
 					]
 				}
 			]

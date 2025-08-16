@@ -26,5 +26,3 @@ export function isQuestionIdBlacklisted(questionId: string): boolean {
 
 // Custom error used to mark a blacklisted question migration attempt
 export const ErrQuestionBlacklisted = errors.new("question is blacklisted")
-
-

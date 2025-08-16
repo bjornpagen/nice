@@ -89,6 +89,7 @@ import {
 	PentagonIntersectionDiagramPropsSchema
 } from "@/lib/widgets/generators/pentagon-intersection-diagram"
 import { generatePeriodicTable, PeriodicTableWidgetPropsSchema } from "@/lib/widgets/generators/periodic-table"
+import { generatePieChart, PieChartWidgetPropsSchema } from "@/lib/widgets/generators/pi-chart"
 import { generatePictograph, PictographPropsSchema } from "@/lib/widgets/generators/pictograph"
 import { generatePointPlotGraph, PointPlotGraphPropsSchema } from "@/lib/widgets/generators/point-plot-graph"
 import { generatePolygonGraph, PolygonGraphPropsSchema } from "@/lib/widgets/generators/polygon-graph"
@@ -139,7 +140,6 @@ import {
 	generateVerticalArithmeticSetup,
 	VerticalArithmeticSetupPropsSchema
 } from "@/lib/widgets/generators/vertical-arithmetic-setup"
-import { generatePieChart, PieChartWidgetPropsSchema } from "@/lib/widgets/generators/pi-chart"
 
 // This object now contains every widget schema from every collection.
 // It serves as a master lookup for dynamic schema generation and compilation.

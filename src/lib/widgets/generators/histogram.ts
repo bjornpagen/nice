@@ -1,9 +1,9 @@
-import * as logger from "@superbuilders/slog"
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { renderWrappedText } from "@/lib/widgets/utils/text"
 import { computeLabelSelection } from "@/lib/widgets/utils/labels"
+import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 const Bin = z
 	.object({

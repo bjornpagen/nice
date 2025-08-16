@@ -50,7 +50,7 @@ interface ExerciseAnalysis {
 }
 
 // Widget types we DO have generators for
-const _OUR_WIDGET_GENERATORS = new Set([
+export const OUR_WIDGET_GENERATORS = new Set([
 	"3dIntersectionDiagram",
 	"absoluteValueNumberLine",
 	"angleDiagram",

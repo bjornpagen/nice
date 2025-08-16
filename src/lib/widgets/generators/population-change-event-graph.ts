@@ -1,7 +1,7 @@
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { initExtents, includeText, computeDynamicWidth } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 // Factory helpers to avoid schema reuse and $ref generation
 function createPointSchema() {

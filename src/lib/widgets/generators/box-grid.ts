@@ -1,7 +1,7 @@
 import { z } from "zod"
+import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
-import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Defines the content and styling for a single cell in the grid.
 const BoxGridCellSchema = z

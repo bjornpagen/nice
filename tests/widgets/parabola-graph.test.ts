@@ -32,7 +32,8 @@ test("parabola graph - enzyme activity", () => {
 
 	const parsed = ParabolaGraphPropsSchema.safeParse(input)
 	if (!parsed.success) {
-		throw parsed.error
+		expect(parsed.success).toBeTrue()
+		return
 	}
 
 	const svg = generateParabolaGraph(parsed.data)

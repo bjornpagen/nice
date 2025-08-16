@@ -41,6 +41,7 @@ import {
 	generatePentagonIntersectionDiagram,
 	generatePeriodicTable,
 	generatePictograph,
+	generatePieChart,
 	generatePointPlotGraph,
 	generatePolygonGraph,
 	generatePolyhedronDiagram,
@@ -63,8 +64,7 @@ import {
 	generateUnitBlockDiagram,
 	generateUrlImage,
 	generateVennDiagram,
-	generateVerticalArithmeticSetup,
-	generatePieChart
+	generateVerticalArithmeticSetup
 } from "@/lib/widgets/generators"
 
 export function generateWidget(widget: Widget): string {

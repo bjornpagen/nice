@@ -1,6 +1,6 @@
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 
 const Point = z
 	.object({
@@ -120,7 +120,7 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 	const scale = lineLength / (max - min)
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
-	const _pointMap = new Map<number, { count: number; current: number }>()
+	// Removed unused collision tracker to satisfy no-unused-vars policy
 
 	if (isHorizontal) {
 		const yPos = height / 2

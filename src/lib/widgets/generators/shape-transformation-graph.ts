@@ -1,7 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import {
 	createAxisOptionsSchema,
 	createPlotPointSchema,
@@ -9,6 +8,7 @@ import {
 	renderPoints
 } from "@/lib/widgets/generators/coordinate-plane-base"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 
 export const ErrInvalidPolygon = errors.new("polygon must have at least 3 vertices")
 

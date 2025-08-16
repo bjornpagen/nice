@@ -72,7 +72,9 @@ export function Sidebar() {
 								) : (
 									<Button asChild variant="ghost" className={highlight(pathname, item.href)}>
 										{item.external ? (
-											<a href={item.href} target="_blank" rel="noopener noreferrer">{item.name}</a>
+											<a href={item.href} target="_blank" rel="noopener noreferrer">
+												{item.name}
+											</a>
 										) : (
 											<Link href={`/profile/${item.href}`}>{item.name}</Link>
 										)}
@@ -98,7 +100,9 @@ export function Sidebar() {
 								) : (
 									<Button asChild variant="ghost" className={highlight(pathname, item.href)}>
 										{item.external ? (
-											<a href={item.href} target="_blank" rel="noopener noreferrer">{item.name}</a>
+											<a href={item.href} target="_blank" rel="noopener noreferrer">
+												{item.name}
+											</a>
 										) : (
 											<Link href={`/profile/${item.href}`}>{item.name}</Link>
 										)}

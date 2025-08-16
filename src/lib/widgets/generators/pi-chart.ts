@@ -1,13 +1,18 @@
 import { z } from "zod"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 // Defines a single slice within a pie chart.
 const SliceSchema = z
 	.object({
 		label: z.string().describe("The descriptive name for this slice (e.g., 'Category A', 'Habitable Land')."),
-		value: z.number().positive().describe("The numerical value of this slice. The chart will automatically calculate its percentage of the total."),
+		value: z
+			.number()
+			.positive()
+			.describe(
+				"The numerical value of this slice. The chart will automatically calculate its percentage of the total."
+			),
 		color: z
 			.string()
 			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
@@ -30,7 +35,9 @@ const PieChartDataSchema = z
 // The main Zod schema for the pieChart widget.
 export const PieChartWidgetPropsSchema = z
 	.object({
-		type: z.literal("pieChart").describe("Identifies this as a pie chart widget for showing part-to-whole relationships."),
+		type: z
+			.literal("pieChart")
+			.describe("Identifies this as a pie chart widget for showing part-to-whole relationships."),
 		width: z
 			.number()
 			.positive()
@@ -43,13 +50,8 @@ export const PieChartWidgetPropsSchema = z
 			.array(PieChartDataSchema)
 			.min(1)
 			.describe("An array of pie chart definitions to render. Multiple charts are stacked vertically."),
-		layout: z
-			.literal("vertical")
-			.describe("Pie charts stack vertically only. Horizontal layout is not supported."),
-		spacing: z
-			.number()
-			.min(0)
-			.describe("The gap in pixels between stacked charts.")
+		layout: z.literal("vertical").describe("Pie charts stack vertically only. Horizontal layout is not supported."),
+		spacing: z.number().min(0).describe("The gap in pixels between stacked charts.")
 	})
 	.strict()
 	.describe(
@@ -80,7 +82,10 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 	const avgCharWidth = 7 // rough monospace-ish estimate at 14px font
 	const padding = 10
 
-	charts.forEach((chart, index) => {
+	for (let index = 0; index < charts.length; index++) {
+		const chart = charts[index]
+		// Guard for environments with noUncheckedIndexedAccess enabled
+		if (!chart) continue
 		const xOffset = 0
 		const yOffset = index * (chartAreaHeight + spacing)
 
@@ -113,7 +118,7 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 		const labelsRight: LabelInfo[] = []
 		const labelsLeft: LabelInfo[] = []
 
-		chart.slices.forEach((slice) => {
+		for (const slice of chart.slices) {
 			const percentage = (slice.value / totalValue) * 100
 			const sliceAngle = (slice.value / totalValue) * 360
 			const endAngle = startAngle + sliceAngle
@@ -155,7 +160,7 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 			else labelsLeft.push(info)
 
 			startAngle = endAngle
-		})
+		}
 
 		// Anti-collision placement for each side
 		const topBound = yOffset + 40
@@ -166,18 +171,24 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 			const out: Array<LabelInfo & { finalY: number }> = []
 			for (let i = 0; i < sorted.length; i++) {
 				const prev = out[i - 1]
-				let y = Math.max(topBound, Math.min(sorted[i]!.preferredY, bottomBound))
+				const current = sorted[i]
+				if (!current) continue
+				let y = Math.max(topBound, Math.min(current.preferredY, bottomBound))
 				if (prev) y = Math.max(y, prev.finalY + minGap)
-				out.push({ ...sorted[i]!, finalY: y })
+				out.push({ ...current, finalY: y })
 			}
 			// If the last element exceeds bounds, shift upwards as needed
-			if (out.length > 0 && out[out.length - 1]!.finalY > bottomBound) {
-				let shift = out[out.length - 1]!.finalY - bottomBound
+			const last = out[out.length - 1]
+			if (last && last.finalY > bottomBound) {
+				let shift = last.finalY - bottomBound
 				for (let i = out.length - 1; i >= 0 && shift > 0; i--) {
-					const prevY = i > 0 ? out[i - 1]!.finalY + minGap : topBound
-					const newY = Math.max(prevY, out[i]!.finalY - shift)
-					shift -= out[i]!.finalY - newY
-					out[i]!.finalY = newY
+					const prevEntry = i > 0 ? out[i - 1] : undefined
+					const prevY = prevEntry ? prevEntry.finalY + minGap : topBound
+					const current = out[i]
+					if (!current) continue
+					const newY = Math.max(prevY, current.finalY - shift)
+					shift -= current.finalY - newY
+					current.finalY = newY
 				}
 			}
 			return out
@@ -215,9 +226,9 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 			}
 		}
 
-		placedRight.forEach(drawLabel)
-		placedLeft.forEach(drawLabel)
-	})
+		for (const item of placedRight) drawLabel(item)
+		for (const item of placedLeft) drawLabel(item)
+	}
 
 	// Compute dynamic width and viewBox to include any overflow regions; ignore provided width if needed
 	const vbMinX = Math.min(0, Math.floor(minX - padding))

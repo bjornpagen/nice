@@ -1,6 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { initExtents, includeText, computeDynamicWidth } from "@/lib/widgets/utils/layout"
+import { includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const AnnotationSchema = z.object({
 	year: z.number().describe("The year on the x-axis that the annotation arrow should point to."),

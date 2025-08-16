@@ -61,7 +61,11 @@ const DEFAULT_TEST_JSON = {
 	itemDataVersion: { major: 0, minor: 1 }
 }
 
-async function cleanupPageAndSession(page: Page, sessionId: string, logger: any) {
+async function cleanupPageAndSession(
+	page: Page,
+	sessionId: string,
+	logger: { warn: (msg: string, attrs?: unknown) => void }
+) {
 	const closeResult = await errors.try(page.close())
 	if (closeResult.error) {
 		logger.warn("failed to close page", { error: closeResult.error })
@@ -163,30 +167,30 @@ export const testPerseusTextarea = inngest.createFunction(
 			const inputs = inputResult.data
 			logger.info("found input elements", { count: inputs.length })
 
-					if (inputs.length === 0) {
-			await cleanupPageAndSession(page, sessionId, logger)
-			logger.error("no textarea or input elements found on page")
-			throw errors.new("no textarea or input elements found on page")
-		}
+			if (inputs.length === 0) {
+				await cleanupPageAndSession(page, sessionId, logger)
+				logger.error("no textarea or input elements found on page")
+				throw errors.new("no textarea or input elements found on page")
+			}
 
-		const firstInput = inputs[0]
-		if (!firstInput) {
-			await cleanupPageAndSession(page, sessionId, logger)
-			logger.error("first input element is undefined")
-			throw errors.new("first input element is undefined")
+			const firstInput = inputs[0]
+			if (!firstInput) {
+				await cleanupPageAndSession(page, sessionId, logger)
+				logger.error("first input element is undefined")
+				throw errors.new("first input element is undefined")
+			}
+			targetElement = firstInput
+			elementType = "input"
+		} else {
+			const firstTextarea = textareas[0]
+			if (!firstTextarea) {
+				await cleanupPageAndSession(page, sessionId, logger)
+				logger.error("first textarea element is undefined")
+				throw errors.new("first textarea element is undefined")
+			}
+			targetElement = firstTextarea
+			elementType = "textarea"
 		}
-		targetElement = firstInput
-		elementType = "input"
-	} else {
-		const firstTextarea = textareas[0]
-		if (!firstTextarea) {
-			await cleanupPageAndSession(page, sessionId, logger)
-			logger.error("first textarea element is undefined")
-			throw errors.new("first textarea element is undefined")
-		}
-		targetElement = firstTextarea
-		elementType = "textarea"
-	}
 
 		// prepare the json string
 		const jsonString = JSON.stringify(jsonData, null, 2)
