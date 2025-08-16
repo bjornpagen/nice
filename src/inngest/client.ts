@@ -377,6 +377,12 @@ const events = {
 	},
 	"qa/questions.review-hardcoded-history": {
 		data: z.object({})
+	},
+	"qa/test.perseus.textarea": {
+		data: z.object({
+			jsonData: z.record(z.any()).optional(),
+			targetUrl: z.string().optional()
+		})
 	}
 }
 

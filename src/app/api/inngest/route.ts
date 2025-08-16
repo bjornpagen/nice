@@ -45,6 +45,7 @@ import { orchestrateCourseVisualQAReview } from "@/inngest/functions/qa/orchestr
 // Import Visual QA workers
 import { orchestrateVisualQAReview } from "@/inngest/functions/qa/orchestrate-visual-qa-review"
 import { reviewQuestionRendering } from "@/inngest/functions/qa/review-question-rendering"
+import { testPerseusTextarea } from "@/inngest/functions/qa/test-perseus-textarea"
 // ✅ ADD: Import the new batch differentiation and assembly functions
 import { assembleDifferentiatedItemsAndCreateTests } from "@/inngest/functions/qti/assemble-differentiated-items-and-create-tests"
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
@@ -129,6 +130,7 @@ export const { GET, POST, PUT } = serve({
 		// Visual QA Functions
 		orchestrateVisualQAReview,
 		orchestrateCourseVisualQAReview,
-		reviewQuestionRendering
+		reviewQuestionRendering,
+		testPerseusTextarea
 	]
 })
