@@ -15,7 +15,7 @@
 		"db:drop": "bun run src/db/scripts/drop.ts",
 		"db:seed": "bun run src/db/scripts/seed.ts",
 		"dev": "next dev --turbo",
-		"dev:inngest": "inngest-cli dev --queue-workers 3000 --poll-interval 2",
+		"dev:inngest": "inngest-cli dev --queue-workers 4000 --poll-interval 2",
 		"preview": "next build && next start",
 		"start": "next start",
 		"typecheck": "tsc --noEmit",
