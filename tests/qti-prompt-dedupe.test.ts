@@ -1040,3 +1040,321 @@ test("does not remove instruction-augmented body question - zinc pieces vs conce
 	// The body question includes an extra instruction; it MUST be preserved
 	expect(xml).toContain("Justify your answer using evidence from the data.")
 })
+
+test("does not remove instruction-augmented body question - stirred vs cooled trial", () => {
+	const item: AssessmentItemInput = {
+		identifier: "stirred-vs-cooled-temperature-trial",
+		title: "Identify the stirred reaction trial from temperature data",
+		responseDeclarations: [
+			{ identifier: "choice_interaction", cardinality: "single", baseType: "identifier", correct: "A" }
+		],
+		widgets: {
+			image_1: {
+				type: "urlImage",
+				alt: "Continuously stirring a reaction mixture",
+				url: "https://cdn.kastatic.org/ka-content-images/ef43d00e9a5d843b3d8ee18f5206b7674ed760cb.gif",
+				width: 350,
+				height: 231,
+				caption: "Continuously stirring a reaction mixture",
+				attribution: "Khan Academy"
+			},
+			temperature_table: {
+				type: "dataTable",
+				title: "Temperature over Time for Two Tests",
+				columns: [
+					{ key: "time", label: [{ type: "text", content: "Time (min)" }], isNumeric: true },
+					{ key: "test_a", label: [{ type: "text", content: "Test A" }], isNumeric: true },
+					{ key: "test_b", label: [{ type: "text", content: "Test B" }], isNumeric: true }
+				],
+				rowHeaderKey: "time",
+				footer: null,
+				data: [
+					[
+						{ type: "number", value: 0 },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>22.0</mn><mo>°</mo><mi>C</mi>" }] },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>15.0</mn><mo>°</mo><mi>C</mi>" }] }
+					],
+					[
+						{ type: "number", value: 1 },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>27.1</mn><mo>°</mo><mi>C</mi>" }] },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>16.8</mn><mo>°</mo><mi>C</mi>" }] }
+					],
+					[
+						{ type: "number", value: 2 },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>32.8</mn><mo>°</mo><mi>C</mi>" }] },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>19.1</mn><mo>°</mo><mi>C</mi>" }] }
+					],
+					[
+						{ type: "number", value: 3 },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>35.1</mn><mo>°</mo><mi>C</mi>" }] },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>21.6</mn><mo>°</mo><mi>C</mi>" }] }
+					],
+					[
+						{ type: "number", value: 4 },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>35.7</mn><mo>°</mo><mi>C</mi>" }] },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>24.2</mn><mo>°</mo><mi>C</mi>" }] }
+					],
+					[
+						{ type: "number", value: 5 },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>35.3</mn><mo>°</mo><mi>C</mi>" }] },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>26.9</mn><mo>°</mo><mi>C</mi>" }] }
+					]
+				]
+			}
+		},
+		body: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"A group of students measured the temperature change over time for a chemical reaction between zinc and hydrochloric acid."
+					}
+				]
+			},
+			{ type: "paragraph", content: [{ type: "text", content: "Examine the image below." }] },
+			{ type: "blockSlot", slotId: "image_1" },
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"They conducted multiple experiments with different modifications. In one test, they continuously stirred the mixture during the reaction. In another test, they cooled the reaction container in an ice bath before starting. Their data is shown below."
+					}
+				]
+			},
+			{ type: "blockSlot", slotId: "temperature_table" },
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"Which experiment represents the trial where they continuously stirred the mixture? Justify your answer using evidence from the data."
+					}
+				]
+			},
+			{ type: "blockSlot", slotId: "choice_interaction" }
+		],
+		interactions: {
+			choice_interaction: {
+				type: "choiceInteraction",
+				responseIdentifier: "choice_interaction",
+				shuffle: true,
+				minChoices: 1,
+				maxChoices: 1,
+				prompt: [
+					{
+						type: "text",
+						content:
+							"Which experiment represents the trial where they continuously stirred the mixture? Select one answer."
+					}
+				],
+				choices: [
+					{
+						identifier: "A",
+						content: [
+							{
+								type: "paragraph",
+								content: [
+									{
+										type: "text",
+										content:
+											"Test A, because the temperature rose more quickly and reached its peak in less time."
+										}
+								]
+							}
+						],
+						feedback: null
+					},
+					{
+						identifier: "B",
+						content: [
+							{
+								type: "paragraph",
+								content: [
+									{ type: "text", content: "Test A, because the temperature decreased in the final minute." }
+								]
+							}
+						],
+						feedback: null
+					},
+					{
+						identifier: "C",
+						content: [
+							{
+								type: "paragraph",
+								content: [
+									{
+										type: "text",
+										content:
+											"Test B, because the temperature increased more slowly and the total change was smaller."
+										}
+								]
+							}
+						],
+						feedback: null
+					},
+					{
+						identifier: "D",
+						content: [
+							{
+								type: "paragraph",
+								content: [
+									{ type: "text", content: "Test B, because the temperature change was more consistent after each minute." }
+								]
+							}
+						],
+						feedback: null
+					}
+				]
+			}
+		},
+		feedback: {
+			correct: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Correct! Stirring increases the frequency of collisions between reactant particles, so the temperature rises more quickly and reaches its peak sooner."
+						}
+					]
+				}
+			],
+			incorrect: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Not quite. Stirring speeds up the reaction. Look for the test in which the temperature increases faster and reaches its maximum earlier."
+						}
+					]
+				}
+			]
+		}
+	}
+
+	const xml = compile(item)
+	// Prompt must be present
+	expect(xml).toContain(
+		"Which experiment represents the trial where they continuously stirred the mixture? Select one answer."
+	)
+	// The body question includes an extra instruction; it MUST be preserved
+	expect(xml).toContain("Justify your answer using evidence from the data.")
+})
+
+test("dedupes paraphrased prompt - pure substances particle diagrams", () => {
+	const item: AssessmentItemInput = {
+		identifier: "pure-substance-identification-samples",
+		title: "Identify Pure Substances from Particle Diagrams",
+		responseDeclarations: [
+			{ identifier: "RESPONSE", cardinality: "multiple", baseType: "identifier", correct: ["B", "C"] }
+		],
+		widgets: {
+			choice_a_sample: {
+				type: "urlImage",
+				alt:
+					"Two types of particles: one type consists of two red spheres attached to each other, and the second type consists of single pink spheres.",
+				url: "https://cdn.kastatic.org/ka-content-images/e4461e542dae08f2320432899f6fcf5c10904a25.png",
+				width: 320,
+				height: 200,
+				caption:
+					"Sample with two particle types: diatomic red pairs and single pink spheres.",
+				attribution: "Image courtesy of Khan Academy."
+			},
+			choice_b_sample: {
+				type: "urlImage",
+				alt: "A crystal with repeating purple and red spheres arranged in a 1:1 ratio.",
+				url: "https://cdn.kastatic.org/ka-content-images/ff13b54c6e5612a91b9159451373850a2790dcd4.png",
+				width: 320,
+				height: 200,
+				caption: "Crystalline lattice showing alternating purple and red spheres in a 1:1 pattern.",
+				attribution: "Sodium bromide crystal structure rendering; public domain."
+			},
+			choice_c_sample: {
+				type: "urlImage",
+				alt: "Green diatomic molecules; each consists of two green spheres connected to each other.",
+				url: "https://cdn.kastatic.org/ka-content-images/2ce2c30ea6cee965835267b3163e05b73e37f8ac.png",
+				width: 320,
+				height: 200,
+				caption: "Sample of green diatomic molecules, each made of two connected green spheres.",
+				attribution: "Image courtesy of Khan Academy."
+			},
+			choice_d_sample: {
+				type: "urlImage",
+				alt:
+					"Three types of particles: one type consists of two red spheres attached to each other; the second type consists of large purple spheres; the third type consists of tiny pink spheres.",
+				url: "https://cdn.kastatic.org/ka-content-images/a7d2f5587b0e20be9619a940046ba8d245175b13.png",
+				width: 320,
+				height: 200,
+				caption:
+					"Sample with three particle types: red diatomic pairs, large purple spheres, and tiny pink spheres.",
+				attribution: "Image courtesy of Khan Academy."
+			}
+		},
+		body: [
+			{ type: "paragraph", content: [{ type: "text", content: "Which of the following samples depicts a pure substance?" }] },
+			{ type: "blockSlot", slotId: "choice_interaction" }
+		],
+		interactions: {
+			choice_interaction: {
+				type: "choiceInteraction",
+				responseIdentifier: "RESPONSE",
+				shuffle: true,
+				minChoices: 1,
+				maxChoices: 4,
+				prompt: [
+					{ type: "text", content: "Which of the following samples depict pure substances? Select all that apply." }
+				],
+				choices: [
+					{ identifier: "A", content: [{ type: "blockSlot", slotId: "choice_a_sample" }], feedback: [
+						{ type: "text", content: "This sample contains two different substances that are not chemically bonded together. One substance is made of atoms, and the other is made of diatomic molecules. A pure substance may consist of one type of atom or a fixed combination of different atoms bonded together." }
+					] },
+					{ identifier: "B", content: [{ type: "blockSlot", slotId: "choice_b_sample" }], feedback: [
+						{ type: "text", content: "This is a sample of a crystalline compound made of two different elements chemically combined in a repeating " },
+						{ type: "math", mathml: "<mn>1</mn><mo>:</mo><mn>1</mn>" },
+						{ type: "text", content: " ratio. This is a pure substance." }
+					] },
+					{ identifier: "C", content: [{ type: "blockSlot", slotId: "choice_c_sample" }], feedback: [
+						{ type: "text", content: "This is a sample of a diatomic element composed of one type of molecule. This is a pure substance." }
+					] },
+					{ identifier: "D", content: [{ type: "blockSlot", slotId: "choice_d_sample" }], feedback: [
+						{ type: "text", content: "This sample contains three different substances that are not chemically bonded together. Two substances are made of atoms, and the third is a diatomic element. A pure substance may consist of one type of atom or a fixed combination of different atoms bonded together." }
+					] }
+				]
+			}
+		},
+		feedback: {
+			correct: [
+				{
+					type: "paragraph",
+					content: [
+						{ type: "text", content: "Correct! A pure substance can be either a compound with a fixed ratio of elements or an element consisting of identical particles. For example, an ionic crystal with a " },
+						{ type: "math", mathml: "<mn>1</mn><mo>:</mo><mn>1</mn>" },
+						{ type: "text", content: " ratio and a diatomic element made of identical molecules are both pure substances." }
+					]
+				}
+			],
+			incorrect: [
+				{
+					type: "paragraph",
+					content: [
+						{ type: "text", content: "Not quite. A pure substance contains only one kind of particle: either a single element (atoms or identical molecules of one element) or a compound with a fixed chemical composition. Mixtures contain two or more different particles that are not chemically bonded together." }
+					]
+				}
+			]
+		}
+	}
+
+	const xml = compile(item)
+	// Prompt must be present
+	expect(xml).toContain("Which of the following samples depict pure substances? Select all that apply.")
+	// Body variant should be removed
+	expect(xml).not.toContain("<p>Which of the following samples depicts a pure substance?</p>")
+})

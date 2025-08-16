@@ -288,7 +288,11 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 			if (STOPWORDS.has(p)) continue
 			// remove possessive 's that may survive after punctuation stripping
 			const cleaned = p.endsWith("'s") ? p.slice(0, -2) : p
-			if (cleaned) tokens.push(cleaned)
+			// naive stemming for simple plural/3rd-person 's' endings to improve fuzzy match
+			const stemmed = cleaned.length >= 4 && cleaned.endsWith("s") && !cleaned.endsWith("ss")
+				? cleaned.slice(0, -1)
+				: cleaned
+			if (stemmed) tokens.push(stemmed)
 		}
 		return tokens
 	}
