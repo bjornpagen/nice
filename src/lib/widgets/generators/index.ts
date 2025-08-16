@@ -139,6 +139,7 @@ import {
 	generateVerticalArithmeticSetup,
 	VerticalArithmeticSetupPropsSchema
 } from "@/lib/widgets/generators/vertical-arithmetic-setup"
+import { generatePieChart, PieChartWidgetPropsSchema } from "@/lib/widgets/generators/pi-chart"
 
 // This object now contains every widget schema from every collection.
 // It serves as a master lookup for dynamic schema generation and compilation.
@@ -204,7 +205,8 @@ export const allWidgetSchemas = {
 	urlImage: UrlImageWidgetPropsSchema,
 	vennDiagram: VennDiagramPropsSchema,
 	verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema,
-	parallelogramTrapezoidDiagram: ParallelogramTrapezoidDiagramPropsSchema
+	parallelogramTrapezoidDiagram: ParallelogramTrapezoidDiagramPropsSchema,
+	pieChart: PieChartWidgetPropsSchema
 }
 
 // The `type` field is now included in the base schemas, so we remove .extend()
@@ -272,7 +274,8 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.urlImage,
 	typedSchemas.vennDiagram,
 	typedSchemas.verticalArithmeticSetup,
-	typedSchemas.parallelogramTrapezoidDiagram
+	typedSchemas.parallelogramTrapezoidDiagram,
+	typedSchemas.pieChart
 ] as const
 
 export const WidgetSchema = z.union([
@@ -346,7 +349,8 @@ export {
 	UnitBlockDiagramPropsSchema,
 	UrlImageWidgetPropsSchema,
 	VennDiagramPropsSchema,
-	VerticalArithmeticSetupPropsSchema
+	VerticalArithmeticSetupPropsSchema,
+	PieChartWidgetPropsSchema
 }
 
 // Export the individual generators for direct use
@@ -412,7 +416,8 @@ export {
 	generateUrlImage,
 	generateVennDiagram,
 	generateVerticalArithmeticSetup,
-	generateParallelogramTrapezoidDiagram
+	generateParallelogramTrapezoidDiagram,
+	generatePieChart
 }
 
 // The generateWidget function is a comprehensive switch that can handle any widget type.
@@ -542,6 +547,8 @@ export function generateWidget(widget: Widget): string {
 			return generateVennDiagram(widget)
 		case "verticalArithmeticSetup":
 			return generateVerticalArithmeticSetup(widget)
+		case "pieChart":
+			return generatePieChart(widget)
 		default:
 			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)

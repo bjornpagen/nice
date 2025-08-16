@@ -1,15 +1,10 @@
+import * as logger from "@superbuilders/slog"
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 const Bin = z
 	.object({
-		label: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe(
-				"The range or category label for this bin (e.g., '0-10', '10-20', 'Small', 'Grade A', null). Displayed on x-axis below the bar. Null shows no label."
-			),
 		frequency: z
 			.number()
 			.int()
@@ -81,10 +76,17 @@ export const HistogramPropsSchema = z
 			})
 			.strict()
 			.describe("Configuration for the y-axis showing frequencies."),
+		// The numeric separators marking the boundaries between bars. If there are N bars, there must be N+1 separators.
+		separators: z
+			.array(z.number())
+			.min(2)
+			.describe(
+				"Numeric boundary markers along the x-axis. Bars are drawn between consecutive separators. Only these separators are tick-labeled. Must be strictly increasing."
+			),
 		bins: z
 			.array(Bin)
 			.describe(
-				"Array of bins with their frequencies. Order determines left-to-right display. Adjacent bars touch (no gaps) in a histogram. Can be empty for blank chart."
+				"Array of bins with their frequencies. Order determines left-to-right display. Adjacent bars touch (no gaps) in a histogram."
 			)
 	})
 	.strict()
@@ -100,7 +102,25 @@ export type HistogramProps = z.infer<typeof HistogramPropsSchema>
  * Unlike bar charts, histogram bars are adjacent to each other.
  */
 export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (data) => {
-	const { width, height, title, xAxis, yAxis, bins } = data
+	const { width, height, title, xAxis, yAxis, bins, separators } = data
+
+	// Runtime validation (no refine allowed in schema for structured outputs)
+	if (separators.length !== bins.length + 1) {
+		logger.error("histogram invalid separators length", { count: separators.length, bins: bins.length })
+		throw errors.new("histogram: separators length must equal bins length + 1")
+	}
+	for (let i = 1; i < separators.length; i++) {
+		const current = separators[i]
+		const prev = separators[i - 1]
+		if (current === undefined || prev === undefined) {
+			logger.error("histogram separators index out of range", { index: i })
+			throw errors.new("histogram: separators index out of range")
+		}
+		if (!(current > prev)) {
+			logger.error("histogram separators not strictly increasing", { index: i, prev, current })
+			throw errors.new("histogram: separators must be strictly increasing")
+		}
+	}
 	const margin = { top: 40, right: 20, bottom: 100, left: 50 }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
@@ -113,7 +133,6 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	const scaleY = chartHeight / maxFreq
 	const binWidth = chartWidth / bins.length
 	const averageCharWidthPx = 7
-	const rotationDegrees = -45
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg +=
@@ -140,7 +159,7 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		svg += `<text x="${margin.left - 10}" y="${y + 4}" fill="#333333" text-anchor="end">${t}</text>`
 	}
 
-	// Bins and X-axis labels
+	// Bins
 	bins.forEach((b, i) => {
 		const barHeight = b.frequency * scaleY
 		const x = margin.left + i * binWidth
@@ -148,32 +167,24 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		svg += `<rect x="${x}" y="${y}" width="${binWidth}" height="${barHeight}" fill="#6495ED" stroke="#333333"/>`
 	})
 
-	// Compute boundary tick labels: start of first bin, then end of each bin
+	// Compute boundary tick labels from numeric separators
 	const tickLabels: Array<{ x: number; text: string }> = []
-	const firstBinLabel = bins[0]?.label ?? null
-	if (firstBinLabel) {
-		const startCandidate = firstBinLabel.split("-")[0]
-		const startText = (startCandidate && startCandidate !== "") ? startCandidate : firstBinLabel
-		tickLabels.push({ x: margin.left, text: startText })
+	for (let i = 0; i < separators.length; i++) {
+		const x = margin.left + i * binWidth
+		tickLabels.push({ x, text: String(separators[i]) })
 	}
-	bins.forEach((b, i) => {
-		if (!b.label) return
-		const endCandidate = b.label.split("-")[1]
-		const endText = (endCandidate && endCandidate !== "") ? endCandidate : b.label
-		tickLabels.push({ x: margin.left + (i + 1) * binWidth, text: endText })
-	})
 
-	// Determine skip step to avoid crowding
+	// Determine skip step to avoid crowding (no rotation)
 	const maxLabelLength = tickLabels.reduce((max, t) => Math.max(max, t.text.length), 0)
-	const estimatedRotatedLabelSpanPx = maxLabelLength * averageCharWidthPx * 0.707
-	const step = Math.max(1, Math.ceil(estimatedRotatedLabelSpanPx / binWidth))
+	const estimatedLabelSpanPx = maxLabelLength * averageCharWidthPx
+	const step = Math.max(1, Math.ceil(estimatedLabelSpanPx / binWidth))
 
-	// Render rotated x-axis labels
+	// Render non-rotated x-axis labels centered at separators
 	tickLabels.forEach((tick, i) => {
 		if (i % step !== 0) return
 		const labelX = tick.x
 		const labelY = height - margin.bottom + 28
-		svg += `<text class="x-tick" x="${labelX}" y="${labelY}" fill="#333333" text-anchor="end" transform="rotate(${rotationDegrees}, ${labelX}, ${labelY})">${tick.text}</text>`
+		svg += `<text class="x-tick" x="${labelX}" y="${labelY}" fill="#333333" text-anchor="middle">${tick.text}</text>`
 	})
 
 	svg += "</svg>"

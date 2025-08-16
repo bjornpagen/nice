@@ -94,11 +94,14 @@ export type AreaGraphProps = z.infer<typeof AreaGraphPropsSchema>
 const renderWrappedText = (text: string, x: number, y: number, className: string, lineHeight = "1.2em"): string => {
 	let lines: string[] = []
 
-	// For titles ending with any parenthetical, split before the parenthesis
+	// For titles ending with any parenthetical, split before the parenthesis but only for sufficiently long titles
 	const titlePattern = /^(.+)\s+(\(.+\))$/
 	const titleMatch = text.match(titlePattern)
 	if (titleMatch?.[1] && titleMatch[2]) {
-		lines = [titleMatch[1].trim(), titleMatch[2].trim()]
+		const base = titleMatch[1].trim()
+		const suffix = titleMatch[2].trim()
+		const shouldSplitConservatively = text.length > 36
+		lines = shouldSplitConservatively ? [base, suffix] : [text]
 	} else {
 		// For area labels, split multi-word labels
 		const words = text.split(" ")

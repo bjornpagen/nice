@@ -63,7 +63,8 @@ import {
 	generateUnitBlockDiagram,
 	generateUrlImage,
 	generateVennDiagram,
-	generateVerticalArithmeticSetup
+	generateVerticalArithmeticSetup,
+	generatePieChart
 } from "@/lib/widgets/generators"
 
 export function generateWidget(widget: Widget): string {
@@ -192,6 +193,8 @@ export function generateWidget(widget: Widget): string {
 			return generateParallelogramTrapezoidDiagram(widget)
 		case "urlImage":
 			return generateUrlImage(widget)
+		case "pieChart":
+			return generatePieChart(widget)
 		default:
 			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
