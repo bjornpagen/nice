@@ -57,6 +57,96 @@ test("dedupes paraphrased prompt - modern-day country of Anatolia", () => {
 	expect(xml).not.toContain("In which modern-day country is Anatolia located?")
 })
 
+test("dedupes paraphrased prompt - red vs green lasers selection phrase", () => {
+	const item: AssessmentItemInput = {
+		identifier: "red-green-laser-wave-properties",
+		title: "Different wave properties for red and green lasers",
+		responseDeclarations: [
+			{ identifier: "choice_interaction", cardinality: "multiple", baseType: "identifier", correct: ["B", "C"] }
+		],
+		widgets: {},
+		body: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"Two lights, a red laser and a green laser, are shining through a vacuum. Both lights have the same brightness."
+					}
+				]
+			},
+			{ type: "paragraph", content: [{ type: "text", content: "Which wave properties are different for the two lights?" }] },
+			{ type: "blockSlot", slotId: "choice_interaction" }
+		],
+		interactions: {
+			choice_interaction: {
+				type: "choiceInteraction",
+				responseIdentifier: "choice_interaction",
+				shuffle: true,
+				minChoices: 1,
+				maxChoices: 4,
+				prompt: [{ type: "text", content: "Which wave properties are different for the two lights? Select all that apply." }],
+				choices: [
+					{
+						identifier: "A",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "amplitude" }] }],
+						feedback: null
+					},
+					{
+						identifier: "B",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "frequency" }] }],
+						feedback: null
+					},
+					{
+						identifier: "C",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "wavelength" }] }],
+						feedback: null
+					},
+					{
+						identifier: "D",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "speed" }] }],
+						feedback: null
+					}
+				]
+			}
+		},
+		feedback: {
+			correct: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Correct! In a vacuum, all electromagnetic waves travel at the same speed, and equal brightness implies equal amplitude. Red light has a longer wavelength and a lower frequency than green light, so the properties that differ are wavelength and frequency."
+						}
+					]
+				}
+			],
+			incorrect: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Not quite. In a vacuum, the speed is the same for all electromagnetic waves, and equal brightness means equal amplitude. Red and green light differ in wavelength and frequency."
+						}
+					]
+				}
+			]
+		}
+	}
+
+	const xml = compile(item)
+	// Prompt must be present
+	expect(xml).toContain("Which wave properties are different for the two lights? Select all that apply.")
+	// Body variant should be removed
+	// Check specifically for the body paragraph, not the prompt substring
+	expect(xml).not.toContain("<p>Which wave properties are different for the two lights?</p>")
+})
+
 test("dedupes paraphrased prompt - american decline excerpt", () => {
 	const item: AssessmentItemInput = {
 		identifier: "american-decline-belief",

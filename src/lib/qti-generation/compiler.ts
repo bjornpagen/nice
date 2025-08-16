@@ -332,12 +332,30 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 		return collapseWhitespace(out)
 	}
 
+	// Remove selection-guidance suffixes like "select all that apply" from prompts
+	const stripSelectionGuidance = (s: string): string => {
+		let out = s
+		const patterns: RegExp[] = [
+			// common guidance phrases
+			/\b(?:select|choose|pick|check)\s+all\s+that\s+apply(?:\s+to\b)?/gi,
+			/\b(?:select|choose|pick|check)\s+all\s+(?:correct\s+)?(?:answers|options)\b/gi,
+			/\b(?:select|choose|pick|check)\s+all\s+that\s+are\s+correct\b/gi,
+			/\b(?:select|choose|pick|check)\s+the\s+best\s+(?:answer|answers)\b/gi,
+			/\b(?:select|choose|pick|check)\s+the\s+correct\s+(?:answer|answers)\b/gi,
+			/\b(?:select|choose|pick|check)\s+(?:one|two|three|four)\s+(?:correct\s+)?(?:answer|answers|option|options)\b/gi,
+			/\b(?:select|choose|pick|check)\s+the\s+answer\b/gi
+		]
+		for (const re of patterns) out = out.replace(re, " ")
+		return collapseWhitespace(out)
+	}
+
 	// collect prompts from interactions that support it, keyed by interaction id
 	const interactionIdToPrompt: Record<string, string> = {}
 	for (const [id, interaction] of Object.entries(item.interactions)) {
 		if (interaction.type === "choiceInteraction" || interaction.type === "orderInteraction") {
 			if (interaction.prompt && interaction.prompt.length > 0) {
-				interactionIdToPrompt[id] = normalizeInline(interaction.prompt)
+				const normalizedPrompt = normalizeInline(interaction.prompt)
+				interactionIdToPrompt[id] = stripSelectionGuidance(normalizedPrompt)
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 import {
 	AreaGraphPropsSchema,
 	ConceptualGraphPropsSchema,
+	CoordinatePlaneComprehensivePropsSchema,
 	DivergentBarChartPropsSchema,
 	HistogramPropsSchema,
 	HorizontalBarChartPropsSchema,
@@ -20,6 +21,7 @@ export const scienceCollection = {
 		...simpleVisualCollection.schemas,
 		lineGraph: LineGraphPropsSchema,
 		conceptualGraph: ConceptualGraphPropsSchema,
+		coordinatePlane: CoordinatePlaneComprehensivePropsSchema,
 		populationChangeEventGraph: PopulationChangeEventGraphPropsSchema,
 		populationBarChart: PopulationBarChartPropsSchema,
 		areaGraph: AreaGraphPropsSchema,
@@ -35,6 +37,7 @@ export const scienceCollection = {
 		...simpleVisualCollection.widgetTypeKeys,
 		"lineGraph",
 		"conceptualGraph",
+		"coordinatePlane",
 		"populationChangeEventGraph",
 		"populationBarChart",
 		"areaGraph",
