@@ -301,6 +301,20 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 		const union = a.size + b.size - intersection
 		return union === 0 ? 0 : intersection / union
 	}
+	const tokensNearlyEqual = (aTokens: string[], bTokens: string[], jaccardThreshold: number): boolean => {
+		if (!lengthRatioOk(aTokens, bTokens)) return false
+		const a = new Set(aTokens)
+		const b = new Set(bTokens)
+		let intersection = 0
+		for (const t of a) if (b.has(t)) intersection += 1
+		const union = a.size + b.size - intersection
+		const jac = union === 0 ? 0 : intersection / union
+		if (jac >= jaccardThreshold) return true
+		// One-token tolerance: allow removal if sets differ by at most one token
+		const minSize = Math.min(a.size, b.size)
+		if (minSize >= 3 && intersection >= minSize - 1) return true
+		return false
+	}
 	const lengthRatioOk = (aTokens: string[], bTokens: string[]): boolean => {
 		const aLen = aTokens.length
 		const bLen = bTokens.length
@@ -390,10 +404,9 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 				toDelete.add(i)
 				continue
 			}
-			// fuzzy single-paragraph match using token Jaccard with length guard
+			// fuzzy single-paragraph match using token similarity with one-token tolerance
 			const paraTokens = tokenizeForFuzzy(pStr)
-			const sim = jaccardSimilarity(paraTokens, promptTokens)
-			if (sim >= 0.82 && lengthRatioOk(paraTokens, promptTokens)) {
+			if (tokensNearlyEqual(paraTokens, promptTokens, 0.82)) {
 				toDelete.add(i)
 			}
 		}
@@ -412,8 +425,7 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 					i = j // advance outer loop
 					break
 				}
-				const sim = jaccardSimilarity(accTokens, promptTokens)
-				if (sim >= 0.86 && lengthRatioOk(accTokens, promptTokens)) {
+				if (tokensNearlyEqual(accTokens, promptTokens, 0.86)) {
 					for (let k = i; k <= j; k++) toDelete.add(k)
 					i = j
 					break

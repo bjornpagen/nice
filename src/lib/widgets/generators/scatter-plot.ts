@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { renderWrappedText } from "@/lib/utils/text"
 
 // Defines a single data point on the scatter plot
 const ScatterPointSchema = z
@@ -349,7 +350,10 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	svg +=
 		"<style>.axis-label { font-size: 14px; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
-	if (title !== null) svg += `<text x="${width / 2}" y="${pad.top / 2}" class="title">${title}</text>`
+	if (title !== null) {
+		const maxTextWidth = width - 60
+		svg += renderWrappedText(title, width / 2, pad.top / 2, "title", "1.1em", maxTextWidth, 8)
+	}
 
 	// Grid lines, Axes, Ticks, Labels
 	if (xAxis.gridLines)

@@ -1,6 +1,7 @@
 import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { renderWrappedText } from "@/lib/utils/text"
 
 const PointSchema = z.object({
 	x: z.number().describe("The x-coordinate (horizontal value) of the data point."),
@@ -84,18 +85,13 @@ export type AreaGraphProps = z.infer<typeof AreaGraphPropsSchema>
 
 /**
  * Renders a text element with automatic wrapping for certain patterns.
- * @param text The string to render.
- * @param x The x-coordinate for the text block.
- * @param y The y-coordinate for the text block.
- * @param className The CSS class to apply to the text element.
- * @param lineHeight The line height (e.g., '1.2em').
- * @returns An SVG <text> element string with <tspan> children for wrapped lines.
+ * Keeping for area-label specific behavior. Not used for titles.
  */
-const renderWrappedText = (text: string, x: number, y: number, className: string, lineHeight = "1.2em"): string => {
+const renderWrappedText_local = (text: string, x: number, y: number, className: string, lineHeight = "1.2em"): string => {
 	let lines: string[] = []
 
 	// For titles ending with any parenthetical, split before the parenthesis but only for sufficiently long titles
-	const titlePattern = /^(.+)\s+(\(.+\))$/
+	const titlePattern = /^(.*)\s+(\(.+\))$/
 	const titleMatch = text.match(titlePattern)
 	if (titleMatch?.[1] && titleMatch[2]) {
 		const base = titleMatch[1].trim()
@@ -141,7 +137,8 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 		"<style>.axis-label { font-size: 16px; text-anchor: middle; } .title { font-size: 18px; font-weight: bold; text-anchor: middle; } .area-label { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
 	if (title) {
-		svg += renderWrappedText(title, width / 2, margin.top / 2 - 10, "title", "1.1em")
+		const maxTextWidth = width - 60
+		svg += renderWrappedText(title, width / 2, margin.top / 2 - 10, "title", "1.1em", maxTextWidth, 8)
 	}
 
 	// Axes and Labels
@@ -177,9 +174,9 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	svg += `<path d="${topPath}" fill="${topArea.color}" stroke="none"/>`
 	svg += `<polyline points="${pointsStr}" fill="none" stroke="${boundaryLine.color}" stroke-width="${boundaryLine.strokeWidth}"/>`
 
-	// Area Labels
-	svg += renderWrappedText(bottomArea.label, toSvgX(1975), toSvgY(40), "area-label")
-	svg += renderWrappedText(topArea.label, toSvgX(1850), toSvgY(70), "area-label")
+	// Area Labels (use local split for two-word labels)
+	svg += renderWrappedText_local(bottomArea.label, toSvgX(1975), toSvgY(40), "area-label")
+	svg += renderWrappedText_local(topArea.label, toSvgX(1850), toSvgY(70), "area-label")
 
 	svg += "</svg>"
 	return svg
