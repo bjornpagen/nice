@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import * as React from "react"
 import type { QuestionRenderReviewRow } from "@/app/debug/questions/review/actions"
 import { Badge } from "@/components/ui/badge"
@@ -34,6 +33,12 @@ function Screenshot({ src, alt }: { src: string; alt: string }) {
 	const [open, setOpen] = React.useState(false)
 	const [zoomed, setZoomed] = React.useState(false)
 
+	// Always bust cache so the latest QA image is shown
+	const srcNoCache = React.useMemo(() => {
+		const separator = src.includes("?") ? "&" : "?"
+		return `${src}${separator}t=${Date.now()}`
+	}, [src])
+
 	return (
 		<>
 			<button
@@ -41,12 +46,9 @@ function Screenshot({ src, alt }: { src: string; alt: string }) {
 				onClick={() => setOpen(true)}
 				style={{ cursor: "zoom-in", padding: 0, border: 0, background: "none" }}
 			>
-				<Image
-					unoptimized
-					src={src}
+				<img
+					src={srcNoCache}
 					alt={alt}
-					width={1400}
-					height={900}
 					style={{
 						width: "100%",
 						height: "auto",
@@ -56,6 +58,8 @@ function Screenshot({ src, alt }: { src: string; alt: string }) {
 						borderRadius: 8,
 						background: "#fafafa"
 					}}
+					decoding="async"
+					loading="eager"
 				/>
 			</button>
 			<Dialog
@@ -77,12 +81,9 @@ function Screenshot({ src, alt }: { src: string; alt: string }) {
 							overflow: "auto"
 						}}
 					>
-						<Image
-							unoptimized
-							src={src}
+						<img
+							src={srcNoCache}
 							alt={alt}
-							width={2400}
-							height={1600}
 							onClick={() => setZoomed((z) => !z)}
 							style={{
 								cursor: zoomed ? "zoom-out" : "zoom-in",
@@ -92,6 +93,8 @@ function Screenshot({ src, alt }: { src: string; alt: string }) {
 								transformOrigin: "center center",
 								transition: "transform 150ms ease"
 							}}
+							decoding="async"
+							loading="eager"
 						/>
 					</div>
 				</DialogContent>

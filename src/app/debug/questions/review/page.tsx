@@ -1,8 +1,10 @@
 import * as React from "react"
 import { getQuestionRenderReviews } from "@/app/debug/questions/review/actions"
 import { Content } from "@/app/debug/questions/review/content"
+import { connection } from 'next/server'
 
-export default function DebugQuestionRenderReviewsPage() {
+export default async function DebugQuestionRenderReviewsPage() {
+	await connection()
 	const reviewsPromise = getQuestionRenderReviews()
 
 	return (
