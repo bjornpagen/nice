@@ -745,3 +745,97 @@ test("dedupes paraphrased prompt - same pitch different loudness wave properties
 	// Body variant should be removed (only the question paragraph, not the context paragraph)
 	expect(xml).not.toContain("<p>Which wave properties are the same for the two sounds? Select all that apply.</p>")
 })
+
+test("dedupes repeated prompt - heliocentric model selection phrase", () => {
+	const item: AssessmentItemInput = {
+		identifier: "heliocentric-model-multi-select",
+		title: "Facts about the heliocentric model",
+		responseDeclarations: [
+			{ identifier: "choice_interaction_1", cardinality: "multiple", baseType: "identifier", correct: ["B", "C"] }
+		],
+		widgets: {},
+		body: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Which statements are true about the heliocentric model? Select all that apply." }
+				]
+			},
+			{ type: "blockSlot", slotId: "choice_interaction_1" }
+		],
+		interactions: {
+			choice_interaction_1: {
+				type: "choiceInteraction",
+				responseIdentifier: "choice_interaction_1",
+				shuffle: true,
+				minChoices: 1,
+				maxChoices: 4,
+				prompt: [
+					{ type: "text", content: "Which statements are true about the heliocentric model? Select all that apply." }
+				],
+				choices: [
+					{
+						identifier: "A",
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "It shows Earth as the center of the universe." }] }
+						],
+						feedback: null
+					},
+					{
+						identifier: "B",
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "It shows the Sun as the center of the universe." }] }
+						],
+						feedback: null
+					},
+					{
+						identifier: "C",
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "It replaced the geocentric model." }] }
+						],
+						feedback: null
+					},
+					{
+						identifier: "D",
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "It was replaced by the geocentric model." }] }
+						],
+						feedback: null
+					}
+				]
+			}
+		},
+		feedback: {
+			correct: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Correct! In the heliocentric model, the Sun is at the center, and this model replaced the earlier geocentric model."
+						}
+					]
+				}
+			],
+			incorrect: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Not quite. The heliocentric model places the Sun at the center and superseded the geocentric model."
+						}
+					]
+				}
+			]
+		}
+	}
+
+	const xml = compile(item)
+	// Prompt must be present
+	expect(xml).toContain("Which statements are true about the heliocentric model? Select all that apply.")
+	// Body variant should be removed
+	expect(xml).not.toContain("<p>Which statements are true about the heliocentric model? Select all that apply.</p>")
+})
