@@ -210,9 +210,6 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 		}
 	})
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }
