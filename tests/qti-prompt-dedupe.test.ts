@@ -839,3 +839,204 @@ test("dedupes repeated prompt - heliocentric model selection phrase", () => {
 	// Body variant should be removed
 	expect(xml).not.toContain("<p>Which statements are true about the heliocentric model? Select all that apply.</p>")
 })
+
+test("does not remove instruction-augmented body question - zinc pieces vs concentration", () => {
+	const item: AssessmentItemInput = {
+		identifier: "zinc-pieces-temperature-rise",
+		title: "Identify the experiment with larger zinc pieces",
+		responseDeclarations: [
+			{ identifier: "choice_interaction", cardinality: "single", baseType: "identifier", correct: "D" }
+		],
+		widgets: {
+			image_2: {
+				type: "urlImage",
+				alt: "irregularly shaped chunks of silvery-grey zinc metal ",
+				url: "https://cdn.kastatic.org/ka-content-images/96db70681a015a8d299513e780cb965ba88a4287.jpg",
+				width: 353,
+				height: 270,
+				caption: "Large chunks of zinc metal",
+				attribution: '"Zinc-sample" by Benjah-bmm27. Public Domain.'
+			},
+			temp_data_table: {
+				type: "dataTable",
+				title: "Temperature data over time",
+				columns: [
+					{ key: "time", label: [{ type: "text", content: "Time (min)" }], isNumeric: true },
+					{ key: "test_a", label: [{ type: "text", content: "Test A" }], isNumeric: true },
+					{ key: "test_b", label: [{ type: "text", content: "Test B" }], isNumeric: true }
+				],
+				rowHeaderKey: "time",
+				footer: null,
+				data: [
+					[
+						{ type: "number", value: 0 },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>22.0</mn><mo>°</mo><mi>C</mi>" }] },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>22.0</mn><mo>°</mo><mi>C</mi>" }] }
+					],
+					[
+						{ type: "number", value: 1 },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>27.8</mn><mo>°</mo><mi>C</mi>" }] },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>23.8</mn><mo>°</mo><mi>C</mi>" }] }
+					],
+					[
+						{ type: "number", value: 2 },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>33.2</mn><mo>°</mo><mi>C</mi>" }] },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>25.1</mn><mo>°</mo><mi>C</mi>" }] }
+					],
+					[
+						{ type: "number", value: 3 },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>36.8</mn><mo>°</mo><mi>C</mi>" }] },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>26.2</mn><mo>°</mo><mi>C</mi>" }] }
+					],
+					[
+						{ type: "number", value: 4 },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>38.9</mn><mo>°</mo><mi>C</mi>" }] },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>27.1</mn><mo>°</mo><mi>C</mi>" }] }
+					],
+					[
+						{ type: "number", value: 5 },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>40.1</mn><mo>°</mo><mi>C</mi>" }] },
+						{ type: "inline", content: [{ type: "math", mathml: "<mn>27.8</mn><mo>°</mo><mi>C</mi>" }] }
+					]
+				]
+			}
+		},
+		body: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"A group of students measured the change in temperature over time for a chemical reaction between zinc and hydrochloric acid."
+					}
+				]
+			},
+			{ type: "blockSlot", slotId: "image_2" },
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"They conducted multiple experiments with different modifications. In one test, they used larger pieces of zinc instead of small pieces. In another test, they used a more concentrated acid. The amount of each reactant was held constant across both tests. Their data are shown below."
+					}
+				]
+			},
+			{ type: "blockSlot", slotId: "temp_data_table" },
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"Which experiment represents the trial where they used larger pieces of zinc? Justify your answer using evidence from the data."
+					}
+				]
+			},
+			{ type: "blockSlot", slotId: "choice_interaction" }
+		],
+		interactions: {
+			choice_interaction: {
+				type: "choiceInteraction",
+				responseIdentifier: "choice_interaction",
+				shuffle: true,
+				minChoices: 1,
+				maxChoices: 1,
+				prompt: [
+					{
+						type: "text",
+						content: "Which experiment represents the trial where they used larger pieces of zinc? Select one answer."
+					}
+				],
+				choices: [
+					{
+						identifier: "A",
+						content: [
+							{
+								type: "paragraph",
+								content: [
+									{
+										type: "text",
+										content: "Test A, because the temperature rose faster and the total change in temperature was greater."
+									}
+								]
+							}
+						],
+						feedback: null
+					},
+					{
+						identifier: "B",
+						content: [
+							{
+								type: "paragraph",
+								content: [
+									{ type: "text", content: "Test A, because it reached its final temperature in less time." }
+								]
+							}
+						],
+						feedback: null
+					},
+					{
+						identifier: "C",
+						content: [
+							{
+								type: "paragraph",
+								content: [
+									{ type: "text", content: "Test B, because the temperature change was more consistent after each minute." }
+								]
+							}
+						],
+						feedback: null
+					},
+					{
+						identifier: "D",
+						content: [
+							{
+								type: "paragraph",
+								content: [
+									{ type: "text", content: "Test B, because the temperature increased more slowly and the total change was smaller." }
+								]
+							}
+						],
+						feedback: null
+					}
+				]
+			}
+		},
+		feedback: {
+			correct: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Correct! Larger pieces of zinc provide less surface area, which reduces the frequency of collisions and slows the reaction rate. The data set with the slower temperature increase and smaller overall change corresponds to the test with larger zinc pieces."
+						}
+					]
+				}
+			],
+			incorrect: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Not quite. Larger pieces of zinc mean less surface area is exposed, so the reaction proceeds more slowly. Look for the data set where the temperature rises more gradually and the total change is smaller."
+						}
+					]
+				}
+			]
+		}
+	}
+
+	const xml = compile(item)
+	// Prompt must be present
+	expect(xml).toContain(
+		"Which experiment represents the trial where they used larger pieces of zinc? Select one answer."
+	)
+	// The body question includes an extra instruction; it MUST be preserved
+	expect(xml).toContain("Justify your answer using evidence from the data.")
+})

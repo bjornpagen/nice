@@ -476,6 +476,66 @@ function enforceNoPipesInBody(item: AssessmentItem): void {
 	}
 }
 
+function enforceNoPipesInChoiceInteraction(item: AssessmentItem): void {
+	if (!item.interactions) return
+
+	for (const [interactionId, interaction] of Object.entries(item.interactions)) {
+		if (!interaction || interaction.type !== "choiceInteraction") continue
+
+		// Check prompt inline content
+		if (interaction.prompt && interaction.prompt.length > 0) {
+			for (let i = 0; i < interaction.prompt.length; i++) {
+				const part = interaction.prompt[i]
+				if (!part || part.type !== "text") continue
+				if (part.content.includes("|")) {
+					logger.error("pipe characters in choice prompt", { interactionId, snippet: part.content })
+					throw errors.new("pipe characters banned in choice prompt")
+				}
+			}
+		}
+
+		// Check each choice block content and optional feedback
+		for (let cIdx = 0; cIdx < interaction.choices.length; cIdx++) {
+			const choice = interaction.choices[cIdx]
+			if (!choice) continue
+			// Scan block content for paragraphs with text parts
+			for (let bIdx = 0; bIdx < choice.content.length; bIdx++) {
+				const block = choice.content[bIdx]
+				if (!block || block.type !== "paragraph") continue
+				const inline = block.content
+				for (let pIdx = 0; pIdx < inline.length; pIdx++) {
+					const part = inline[pIdx]
+					if (!part || part.type !== "text") continue
+					if (part.content.includes("|")) {
+						logger.error("pipe characters in choice content", {
+							interactionId,
+							choiceIndex: cIdx,
+							snippet: part.content
+						})
+						throw errors.new("pipe characters banned in choice content")
+					}
+				}
+			}
+
+			// Scan optional per-choice feedback (inline content)
+			if (choice.feedback) {
+				for (let fIdx = 0; fIdx < choice.feedback.length; fIdx++) {
+					const part = choice.feedback[fIdx]
+					if (!part || part.type !== "text") continue
+					if (part.content.includes("|")) {
+						logger.error("pipe characters in choice feedback", {
+							interactionId,
+							choiceIndex: cIdx,
+							snippet: part.content
+						})
+						throw errors.new("pipe characters banned in choice feedback")
+					}
+				}
+			}
+		}
+	}
+}
+
 export function compile(itemData: AssessmentItemInput): string {
 	// Step 0: Build widget mapping prior to schema enforcement
 	const widgetMapping: Record<string, string> = {}
@@ -530,6 +590,7 @@ export function compile(itemData: AssessmentItemInput): string {
 	dedupePromptTextFromBody(enforcedItem)
 	validateAssessmentItemInput(enforcedItem, logger)
 	enforceNoPipesInBody(enforcedItem)
+	enforceNoPipesInChoiceInteraction(enforcedItem)
 
 	// Normalize choice identifiers now that we have strong types
 	normalizeChoiceIdentifiersInPlace(enforcedItem)

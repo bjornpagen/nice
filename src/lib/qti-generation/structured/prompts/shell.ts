@@ -1582,6 +1582,59 @@ The compiler has a last-resort safety net that removes duplicated instruction te
 
 Any generated item that repeats instruction text in both body and prompt may be rejected even if the compiler could fix it. Your job is to avoid the duplication entirely.
 
+**7a. Endpoint Labels Around Ordering Interactions — BANNED:**
+Do not place endpoint or axis labels as separate body paragraphs around an ordering interaction block slot. These labels are redundant, visually noisy, and belong in the interaction prompt only.
+
+- BANNED endpoint/axis labels in body (examples, not exhaustive): "Longest", "Shortest", "Highest", "Lowest", "Smallest", "Largest", "Earliest", "Latest", "First", "Last", "Top", "Bottom", "Left", "Right", and domain-specific variants like "Longest wavelength" / "Shortest wavelength".
+- The ordering direction and axis MUST appear only in the interaction prompt (e.g., "from longest to shortest (top to bottom)" for vertical orientation), never as standalone body paragraphs.
+- The body should be empty or include only neutral context plus the JSON block slot entry: { "type": "blockSlot", "slotId": "order_interaction" }.
+
+WRONG (endpoint labels in body around the ordering slot):
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Rank the waves from longest wavelength to shortest wavelength." }] },
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Longest wavelength" }] },
+    { "type": "blockSlot", "slotId": "order_interaction" },
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Shortest wavelength" }] }
+  ],
+  "interactions": {
+    "order_interaction": {
+      "type": "orderInteraction",
+      "prompt": [
+        { "type": "text", "content": "Drag and drop to order the waves by wavelength from longest to shortest (top to bottom)." }
+      ],
+      "choices": [ /* ... */ ],
+      "shuffle": true,
+      "orientation": "vertical",
+      "responseIdentifier": "RESPONSE"
+    }
+  }
+}
+\`\`\`
+
+CORRECT (no endpoint labels in body; prompt carries direction and axis):
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Snapshots of four periodic waves are shown below. Each wave is drawn on the same grid." }] },
+    { "type": "blockSlot", "slotId": "order_interaction" }
+  ],
+  "interactions": {
+    "order_interaction": {
+      "type": "orderInteraction",
+      "prompt": [
+        { "type": "text", "content": "Drag and drop to order the waves by wavelength from longest to shortest (top to bottom)." }
+      ],
+      "choices": [ /* ... */ ],
+      "shuffle": true,
+      "orientation": "vertical",
+      "responseIdentifier": "RESPONSE"
+    }
+  }
+}
+\`\`\`
+
 **8. Poor Visual Separation - Cramped Layout - BANNED:**
 Never place equations, answer prompts, and input fields all in the same paragraph. This creates visual confusion and poor readability.
 
