@@ -147,6 +147,170 @@ test("dedupes paraphrased prompt - red vs green lasers selection phrase", () => 
 	expect(xml).not.toContain("<p>Which wave properties are different for the two lights?</p>")
 })
 
+test("dedupes paraphrased prompt - balanced forces selection phrase", () => {
+	const item: AssessmentItemInput = {
+		identifier: "balanced-forces-conditions",
+		title: "Conditions for Balanced Forces",
+		responseDeclarations: [
+			{ identifier: "choice_interaction_1", cardinality: "multiple", baseType: "identifier", correct: ["A", "C"] }
+		],
+		widgets: {},
+		body: [
+			{ type: "paragraph", content: [{ type: "text", content: "Two forces are balanced." }] },
+			{ type: "paragraph", content: [{ type: "text", content: "What must be true of the two forces?" }] },
+			{ type: "blockSlot", slotId: "choice_interaction_1" }
+		],
+		interactions: {
+			choice_interaction_1: {
+				type: "choiceInteraction",
+				responseIdentifier: "choice_interaction_1",
+				shuffle: true,
+				minChoices: 1,
+				maxChoices: 4,
+				prompt: [{ type: "text", content: "What must be true of the two forces? Select all that apply." }],
+				choices: [
+					{
+						identifier: "A",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "The forces act on the same object." }] }],
+						feedback: null
+					},
+					{
+						identifier: "B",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "The forces act on different objects." }] }],
+						feedback: null
+					},
+					{
+						identifier: "C",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "The forces have the same strength." }] }],
+						feedback: null
+					},
+					{
+						identifier: "D",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "The forces have different strengths." }] }],
+						feedback: null
+					}
+				]
+			}
+		},
+		feedback: {
+			correct: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Correct! Balanced forces act on the same object and have equal strength in opposite directions, so their effects cancel."
+						}
+					]
+				}
+			],
+			incorrect: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Not quite. For forces to be balanced, they must act on the same object with equal strength and in opposite directions."
+						}
+					]
+				}
+			]
+		}
+	}
+
+	const xml = compile(item)
+	// Prompt must be present
+	expect(xml).toContain("What must be true of the two forces? Select all that apply.")
+	// Body variant should be removed
+	expect(xml).not.toContain("<p>What must be true of the two forces?</p>")
+})
+
+test("dedupes paraphrased prompt - food provides describe vs describes", () => {
+	const item: AssessmentItemInput = {
+		identifier: "what-food-provides-organisms-multiselect",
+		title: "What food provides to organisms",
+		responseDeclarations: [
+			{ identifier: "choice_interaction", cardinality: "multiple", baseType: "identifier", correct: ["A", "B"] }
+		],
+		widgets: {},
+		body: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content: "Which of the following best describe what food provides to organisms?"
+					}
+				]
+			},
+			{ type: "blockSlot", slotId: "choice_interaction" }
+		],
+		interactions: {
+			choice_interaction: {
+				type: "choiceInteraction",
+				responseIdentifier: "choice_interaction",
+				shuffle: true,
+				minChoices: 1,
+				maxChoices: 3,
+				prompt: [{ type: "text", content: "Which of the following best describes what food provides to organisms?" }],
+				choices: [
+					{
+						identifier: "A",
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "Molecules that can be used for growth" }] }
+						],
+						feedback: null
+					},
+					{
+						identifier: "B",
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "Energy that can power cellular processes" }] }
+						],
+						feedback: null
+					},
+					{
+						identifier: "C",
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "New mitochondria that can carry out cellular respiration" }] }
+						],
+						feedback: null
+					}
+				]
+			}
+		},
+		feedback: {
+			correct: [
+				{
+					type: "paragraph",
+					content: [
+						{ type: "text", content: "Correct! Food provides molecules for growth and energy for cellular processes." }
+					]
+				}
+			],
+			incorrect: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Not quite. Food provides molecules that organisms use to build and grow, as well as energy to power cellular processes."
+						}
+					]
+				}
+			]
+		}
+	}
+
+	const xml = compile(item)
+	// Prompt must be present
+	expect(xml).toContain("Which of the following best describes what food provides to organisms?")
+	// Body variant should be removed
+	expect(xml).not.toContain("<p>Which of the following best describe what food provides to organisms?</p>")
+})
+
 test("dedupes paraphrased prompt - american decline excerpt", () => {
 	const item: AssessmentItemInput = {
 		identifier: "american-decline-belief",

@@ -100,9 +100,10 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 	svg += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${yAxisX}" y2="${padding.top}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
 	svg += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${width - padding.right}" y2="${xAxisY}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
 
-	// Axis Labels
-	svg += `<text x="${yAxisX - 45}" y="${padding.top + chartHeight / 2}" text-anchor="middle" transform="rotate(-90, ${yAxisX - 45}, ${padding.top + chartHeight / 2})">${yAxisLabel}</text>`
-	svg += `<text x="${padding.left + chartWidth / 2}" y="${xAxisY + 40}" text-anchor="middle">${xAxisLabel}</text>`
+	// Axis Labels (closer to axes)
+	const yLabelX = yAxisX - 30
+	svg += `<text x="${yLabelX}" y="${padding.top + chartHeight / 2}" text-anchor="middle" transform="rotate(-90, ${yLabelX}, ${padding.top + chartHeight / 2})">${yAxisLabel}</text>`
+	svg += `<text x="${padding.left + chartWidth / 2}" y="${xAxisY + 30}" text-anchor="middle">${xAxisLabel}</text>`
 
 	// Before Curve
 	if (beforeSegment.points.length > 0) {
@@ -116,26 +117,42 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 		svg += `<polyline points="${afterPointsStr}" fill="none" stroke="${afterSegment.color}" stroke-width="3" stroke-dasharray="8 6" stroke-linejoin="round" stroke-linecap="round"/>`
 	}
 
-	// Legend
+	// Legend (stacked vertically to avoid horizontal cutoff)
 	if (showLegend) {
-		// Center the legend at the bottom
-		const legendY = height - 25
-		const beforeTextWidth = beforeSegment.label.length * 7 // Rough estimate
-		const afterTextWidth = afterSegment.label.length * 7
-		const totalLegendWidth = 30 + beforeTextWidth + 40 + 30 + afterTextWidth
-		const legendStartX = (width - totalLegendWidth) / 2
+		const legendItems = [
+			{ label: beforeSegment.label, color: beforeSegment.color, dashed: false },
+			{ label: afterSegment.label, color: afterSegment.color, dashed: true }
+		]
 
-		let currentX = legendStartX
-		// Before segment legend
-		svg += `<line x1="${currentX}" y1="${legendY}" x2="${currentX + 30}" y2="${legendY}" stroke="${beforeSegment.color}" stroke-width="3"/>`
-		currentX += 35
-		svg += `<text x="${currentX}" y="${legendY + 5}">${beforeSegment.label}</text>`
-		currentX += beforeTextWidth + 20
+		const estimateTextWidth = (text: string) => text.length * 7 // rough estimate
+		const legendLineLength = 30
+		const legendGapX = 8
+		const legendItemHeight = 18 // fit two items between axis and x-axis label
 
-		// After segment legend
-		svg += `<line x1="${currentX}" y1="${legendY}" x2="${currentX + 30}" y2="${legendY}" stroke="${afterSegment.color}" stroke-width="3" stroke-dasharray="8 6"/>`
-		currentX += 35
-		svg += `<text x="${currentX}" y="${legendY + 5}">${afterSegment.label}</text>`
+		const maxTextWidth = Math.max(...legendItems.map((i) => estimateTextWidth(i.label)))
+		const legendBoxWidth = legendLineLength + legendGapX + maxTextWidth
+		const legendBoxHeight = legendItems.length * legendItemHeight
+
+		// Center horizontally below the plot area
+		let legendStartX = (width - legendBoxWidth) / 2
+		if (legendStartX < 10) legendStartX = 10
+
+		// Place vertically below the x-axis label but within the bottom margin
+		const xAxisY = height - padding.bottom
+		const axisLabelY = xAxisY + 30
+		let legendStartY = Math.max(axisLabelY + 12, height - 10 - legendBoxHeight)
+
+		for (const [i, item] of legendItems.entries()) {
+			const y = legendStartY + i * legendItemHeight
+			const textY = y + 5
+			const x1 = legendStartX
+			const x2 = legendStartX + legendLineLength
+			const textX = x2 + legendGapX
+
+			const dash = item.dashed ? ' stroke-dasharray="8 6"' : ""
+			svg += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${item.color}" stroke-width="3"${dash}/>`
+			svg += `<text x="${textX}" y="${textY}">${item.label}</text>`
+		}
 	}
 
 	svg += "</svg>"

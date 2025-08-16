@@ -115,3 +115,52 @@ test("line graph - collared lemmings and stoats (dual y-axis)", () => {
 	// Snapshot test the generated SVG
 	expect(svg).toMatchSnapshot()
 })
+
+test("line graph - environmental change flowering time shift (legend below, labels close, title wrap)", () => {
+	const input = {
+		type: "lineGraph",
+		width: 325,
+		height: 318,
+		title: "Effect of environmental change on flowering time",
+		xAxis: {
+			label: "Flowering time (shorter to longer)",
+			categories: ["Shorter", "", "", "", "", "", "", "", "", "", "Longer"]
+		},
+		yAxis: {
+			label: "Number of plants",
+			min: 0,
+			max: 10,
+			tickInterval: 2,
+			showGridLines: true
+		},
+		yAxisRight: null,
+		series: [
+			{
+				name: "before environmental change",
+				color: "#1f77b4",
+				style: "solid",
+				pointShape: "circle",
+				yAxis: "left",
+				values: [0, 2, 6, 9, 8, 6, 4, 3, 2, 1, 0]
+			},
+			{
+				name: "after environmental change",
+				color: "#ff7f0e",
+				style: "dashed",
+				pointShape: "circle",
+				yAxis: "left",
+				values: [0, 1, 2, 3, 5, 7, 9, 10, 6, 3, 0]
+			}
+		],
+		showLegend: true
+	} satisfies LineGraphInput
+
+	const parsed = LineGraphPropsSchema.parse(input)
+	const svg = generateLineGraph(parsed)
+
+	// Basic assertions to ensure legend and labels exist / are below chart
+	expect(svg).toContain("before environmental change")
+	expect(svg).toContain("after environmental change")
+	// Snapshot for full SVG structure
+	expect(svg).toMatchSnapshot()
+})

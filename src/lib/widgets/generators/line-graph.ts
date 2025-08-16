@@ -87,6 +87,58 @@ export const LineGraphPropsSchema = z
 
 export type LineGraphProps = z.infer<typeof LineGraphPropsSchema>
 
+// Title/label wrapping: conservative parenthetical split; otherwise width-aware two-line split to avoid clipping
+const renderWrappedText = (
+	text: string,
+	x: number,
+	y: number,
+	className: string,
+	lineHeight = "1.1em",
+	maxWidthPx?: number,
+	approxCharWidthPx = 8
+): string => {
+	let lines: string[] = []
+	const titlePattern = /^(.*)\s+(\(.+\))$/
+	const m = text.match(titlePattern)
+	if (m?.[1] && m[2]) {
+		const shouldSplit = text.length > 36
+		lines = shouldSplit ? [m[1].trim(), m[2].trim()] : [text]
+	} else {
+		const estimated = text.length * approxCharWidthPx
+		if (maxWidthPx && estimated > maxWidthPx) {
+			const words = text.split(/\s+/).filter(Boolean)
+			if (words.length > 1) {
+				const wordWidths = words.map((w) => w.length * approxCharWidthPx)
+				const total = wordWidths.reduce((a, b) => a + b, 0) + (words.length - 1) * approxCharWidthPx
+				const target = total / 2
+				let acc = 0
+				let splitIdx = 1
+				for (let i = 0; i < words.length - 1; i++) {
+					const w = wordWidths[i] ?? 0
+					acc += w + approxCharWidthPx
+					if (acc >= target) {
+						splitIdx = i + 1
+						break
+					}
+				}
+				const left = words.slice(0, splitIdx).join(" ")
+				const right = words.slice(splitIdx).join(" ")
+				lines = [left, right]
+			} else {
+				lines = [text]
+			}
+		} else {
+			lines = [text]
+		}
+	}
+	let tspans = ""
+	lines.forEach((line, i) => {
+		const dy = i === 0 ? "0" : lineHeight
+		tspans += `<tspan x="${x}" dy="${dy}">${line}</tspan>`
+	})
+	return `<text x="${x}" y="${y}" class="${className}">${tspans}</text>`
+}
+
 export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (props) => {
 	const { width, height, title, xAxis, yAxis, yAxisRight, series, showLegend } = props
 
@@ -104,7 +156,8 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		}
 	}
 
-	const legendHeight = showLegend ? 40 : 0
+	const legendItemHeight = 18
+	const legendHeight = showLegend ? series.length * legendItemHeight + 12 : 0
 	const rightAxisWidth = yAxisRight ? 60 : 0
 	const margin = { top: 40, right: 20 + rightAxisWidth, bottom: 50 + legendHeight, left: 60 }
 	const chartWidth = width - margin.left - margin.right
@@ -128,13 +181,13 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	svg +=
 		"<style>.axis-label { font-size: 14px; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
-	if (title) svg += `<text x="${width / 2}" y="${margin.top / 2}" class="title">${title}</text>`
+	if (title) svg += renderWrappedText(title, width / 2, margin.top / 2, "title", "1.1em", width - 60, 8)
 
 	// Left Y-axis
 	svg += `<g class="axis y-axis-left">`
 	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>`
 	if (yAxis.label)
-		svg += `<text x="${margin.left - 45}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 45}, ${margin.top + chartHeight / 2})">${yAxis.label}</text>`
+		svg += `<text x="${margin.left - 30}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 30}, ${margin.top + chartHeight / 2})">${yAxis.label}</text>`
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = toSvgYLeft(t)
 		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
@@ -151,7 +204,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		svg += `<g class="axis y-axis-right">`
 		svg += `<line x1="${rightAxisX}" y1="${margin.top}" x2="${rightAxisX}" y2="${height - margin.bottom}" stroke="black"/>`
 		if (yAxisRight.label)
-			svg += `<text x="${rightAxisX + 45}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${rightAxisX + 45}, ${margin.top + chartHeight / 2})">${yAxisRight.label}</text>`
+			svg += `<text x="${rightAxisX + 30}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${rightAxisX + 30}, ${margin.top + chartHeight / 2})">${yAxisRight.label}</text>`
 		for (let t = yAxisRight.min; t <= yAxisRight.max; t += yAxisRight.tickInterval) {
 			const y = toSvgYRight(t)
 			svg += `<line x1="${rightAxisX}" y1="${y}" x2="${rightAxisX + 5}" y2="${y}" stroke="black"/>`
@@ -164,7 +217,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	svg += `<g class="axis x-axis">`
 	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>`
 	if (xAxis.label)
-		svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + 40}" class="axis-label">${xAxis.label}</text>`
+		svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + 36}" class="axis-label">${xAxis.label}</text>`
 	xAxis.categories.forEach((cat, i) => {
 		if (cat) {
 			const x = toSvgX(i)
@@ -195,23 +248,39 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		}
 	}
 
-	// Legend
+	// Legend (stacked vertically below chart, centered)
 	if (showLegend) {
-		let currentX = margin.left
-		const legendY = height - legendHeight / 2 - 10
-		for (const s of series) {
-			let dasharray = ""
-			if (s.style === "dashed") dasharray = 'stroke-dasharray="8 4"'
-			svg += `<line x1="${currentX}" y1="${legendY}" x2="${currentX + 30}" y2="${legendY}" stroke="${s.color}" stroke-width="2.5" ${dasharray}/>`
+		const legendLineLength = 30
+		const legendGapX = 8
+		const estimateTextWidth = (text: string) => text.length * 7
+		const maxTextWidth = Math.max(...series.map((s) => estimateTextWidth(s.name)))
+		const legendBoxWidth = legendLineLength + 12 + legendGapX + maxTextWidth
+
+		let legendStartX = (width - legendBoxWidth) / 2
+		if (legendStartX < 10) legendStartX = 10
+
+		const xAxisY = height - margin.bottom
+		const axisLabelY = xAxis.label ? xAxisY + 36 : xAxisY + 18
+		let legendStartY = Math.max(axisLabelY + 8, height - 10 - series.length * legendItemHeight)
+
+		series.forEach((s, idx) => {
+			const y = legendStartY + idx * legendItemHeight
+			const x1 = legendStartX
+			const x2 = legendStartX + legendLineLength
+			const markerCx = x1 + legendLineLength / 2
+			const textX = x2 + legendGapX + 12
+
+			let dash = ""
+			if (s.style === "dashed") dash = ' stroke-dasharray="8 4"'
+			if (s.style === "dotted") dash = ' stroke-dasharray="2 6"'
+			svg += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${s.color}" stroke-width="2.5"${dash}/>`
 			if (s.pointShape === "circle") {
-				svg += `<circle cx="${currentX + 15}" cy="${legendY}" r="4" fill="${s.color}"/>`
+				svg += `<circle cx="${markerCx}" cy="${y}" r="4" fill="${s.color}"/>`
 			} else if (s.pointShape === "square") {
-				svg += `<rect x="${currentX + 11}" y="${legendY - 4}" width="8" height="8" fill="${s.color}"/>`
+				svg += `<rect x="${markerCx - 4}" y="${y - 4}" width="8" height="8" fill="${s.color}"/>`
 			}
-			currentX += 40
-			svg += `<text x="${currentX}" y="${legendY + 4}">${s.name}</text>`
-			currentX += s.name.length * 8 + 20
-		}
+			svg += `<text x="${textX}" y="${y + 4}">${s.name}</text>`
+		})
 	}
 
 	svg += "</svg>"
