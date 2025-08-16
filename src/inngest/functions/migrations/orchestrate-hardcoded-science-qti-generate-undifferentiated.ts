@@ -9,6 +9,8 @@ import { inngest } from "@/inngest/client"
 import { qti } from "@/lib/clients"
 import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
 import { ErrQtiNotFound } from "@/lib/qti"
+// ADD: Import the question blacklist utility.
+import { isQuestionIdBlacklisted } from "@/lib/qti-generation/question-blacklist"
 import { buildDeterministicKBuckets } from "@/lib/utils/k-bucketing"
 import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
 
@@ -143,7 +145,21 @@ export const orchestrateHardcodedScienceQtiGenerateUndifferentiated = inngest.cr
 					})
 				])
 
-				const itemsUnvalidated: AssessmentItem[] = allQuestions.map((q) => {
+				// ADD: Filter out any questions that are on the blacklist.
+				const totalBeforeBlacklist = allQuestions.length
+				const validQuestions = allQuestions.filter((q) => !isQuestionIdBlacklisted(q.id))
+				const skippedCount = totalBeforeBlacklist - validQuestions.length
+
+				if (skippedCount > 0) {
+					logger.info("skipping blacklisted questions", {
+						courseId,
+						skippedCount,
+						originalCount: totalBeforeBlacklist,
+						finalCount: validQuestions.length
+					})
+				}
+
+				const itemsUnvalidated: AssessmentItem[] = validQuestions.map((q) => {
 					if (!q.xml) {
 						logger.error("question is missing XML", { questionId: q.id })
 						throw errors.new(`question ${q.id} is missing XML`)
@@ -261,7 +277,7 @@ export const orchestrateHardcodedScienceQtiGenerateUndifferentiated = inngest.cr
 
 				const allAssessments = [...unitAssessments, ...courseAssessments]
 				const questionsByExerciseId = new Map<string, string[]>()
-				for (const q of allQuestions) {
+				for (const q of validQuestions) {
 					if (!questionsByExerciseId.has(q.exerciseId)) {
 						questionsByExerciseId.set(q.exerciseId, [])
 					}
@@ -404,7 +420,7 @@ ${selectionStrategy}
 					const questionIds = data.exerciseIds.flatMap((exerciseId) => questionsByExerciseId.get(exerciseId) || [])
 					const filteredIds = questionIds.filter((id) => validOriginalIds.has(String(id)))
 					const allQuestionsForTest = filteredIds.map((id) => {
-						const question = allQuestions.find((q) => q.id === id)
+						const question = validQuestions.find((q) => q.id === id)
 						if (!question) {
 							logger.error("question not found when building test", { questionId: id })
 							throw errors.new(`question ${id} not found when building test`)
@@ -420,7 +436,7 @@ ${selectionStrategy}
 				})
 
 				const exerciseTests = allExercises.map((exercise) => {
-					const questionsForExercise = allQuestions.filter(
+					const questionsForExercise = validQuestions.filter(
 						(q) => q.exerciseId === exercise.id && validOriginalIds.has(String(q.id))
 					)
 					// Group questions by their problemType.
