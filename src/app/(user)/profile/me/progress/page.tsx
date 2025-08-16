@@ -1,8 +1,10 @@
+import { redirect } from "next/navigation"
 import * as React from "react"
+import { Content } from "@/app/(user)/profile/me/progress/components/content"
 import { fetchProgressPageData, type ProgressPageData } from "@/lib/data/progress"
-import { Content } from "./components/content"
 
 export default function ProgressPage() {
+	redirect("/profile/me/courses")
 	const progressPromise: Promise<ProgressPageData> = fetchProgressPageData()
 
 	return (

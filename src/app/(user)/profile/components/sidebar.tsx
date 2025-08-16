@@ -5,31 +5,42 @@ import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { assertNoEncodedColons, cn, normalizeString } from "@/lib/utils"
 
-const stuff = [
+type SidebarItem = {
+	name: string
+	href: string
+	disabled: boolean
+	external: boolean
+}
+
+const stuff: SidebarItem[] = [
 	{
 		name: "Courses",
 		href: "me/courses",
-		disabled: false
+		disabled: false,
+		external: false
 	}
-] as const
+]
 
-const account = [
+const account: SidebarItem[] = [
 	{
 		name: "Progress",
-		href: "me/progress",
-		disabled: false
+		href: "https://timeback.timeback.com/app/learning-metrics",
+		disabled: false,
+		external: true
 	},
 	{
 		name: "Profile",
 		href: "me",
-		disabled: true
+		disabled: true,
+		external: false
 	},
 	{
 		name: "Teachers",
 		href: "me/teachers",
-		disabled: true
+		disabled: true,
+		external: false
 	}
-] as const
+]
 
 function highlight(pathname: string, href: string) {
 	return pathname.endsWith(href)
@@ -60,7 +71,11 @@ export function Sidebar() {
 									</Button>
 								) : (
 									<Button asChild variant="ghost" className={highlight(pathname, item.href)}>
-										<Link href={`/profile/${item.href}`}>{item.name}</Link>
+										{item.external ? (
+											<a href={item.href} target="_blank" rel="noopener noreferrer">{item.name}</a>
+										) : (
+											<Link href={`/profile/${item.href}`}>{item.name}</Link>
+										)}
 									</Button>
 								)}
 							</li>
@@ -82,7 +97,11 @@ export function Sidebar() {
 									</Button>
 								) : (
 									<Button asChild variant="ghost" className={highlight(pathname, item.href)}>
-										<Link href={`/profile/${item.href}`}>{item.name}</Link>
+										{item.external ? (
+											<a href={item.href} target="_blank" rel="noopener noreferrer">{item.name}</a>
+										) : (
+											<Link href={`/profile/${item.href}`}>{item.name}</Link>
+										)}
 									</Button>
 								)}
 							</li>

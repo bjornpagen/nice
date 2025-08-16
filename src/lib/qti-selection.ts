@@ -131,7 +131,10 @@ export function applyQtiSelectionAndOrdering(
 				const k = Math.min(selectCount, n)
 				const attemptIndex = options?.attemptNumber ?? 0
 				if (n > 0 && k > 0) {
-					const userIdForPartition = options?.userSourceId
+					// When an attempt number is provided, rotation windows must be disjoint until full coverage.
+					// To guarantee this, disable per-user partitioning during rotation; otherwise duplicates can
+					// occur across attempts before coverage.
+					const userIdForPartition = options?.attemptNumber !== undefined ? undefined : options?.userSourceId
 					const resourceId = options?.resourceSourcedId ?? assessmentTest.identifier
 					const T = 3
 					// Determine preferred starting bucket based on resource id
