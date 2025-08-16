@@ -4,17 +4,17 @@ import { AreaGraphPropsSchema, generateAreaGraph } from "@/lib/widgets/generator
 
 type AreaGraphInput = z.input<typeof AreaGraphPropsSchema>
 
-test("area graph - U.S. energy consumption by source", () => {
+test("area graph - U.S. energy consumption by source (wrapping title)", () => {
 	const input = {
 		type: "areaGraph",
-		width: 600,
-		height: 450,
-		title: "U.S. energy consumption by source (1776–2021)",
+		width: 369,
+		height: 299,
+		title: "U.S. energy consumption by source (1776 to 2021)",
 		xAxis: {
 			label: "Year",
 			min: 1776,
 			max: 2021,
-			tickValues: [1776, 1825, 1875, 1925, 1975, 2021]
+			tickValues: [1776, 1850, 1900, 1950, 2021]
 		},
 		yAxis: {
 			label: "Percent of total",
@@ -26,14 +26,10 @@ test("area graph - U.S. energy consumption by source", () => {
 		},
 		dataPoints: [
 			{ x: 1776, y: 0 },
-			{ x: 1850, y: 5 },
-			{ x: 1875, y: 22 },
-			{ x: 1900, y: 72 },
-			{ x: 1925, y: 90 },
-			{ x: 1950, y: 92 },
+			{ x: 1850, y: 0 },
+			{ x: 1900, y: 76 },
+			{ x: 1950, y: 91 },
 			{ x: 1966, y: 94 },
-			{ x: 1975, y: 91 },
-			{ x: 2000, y: 85 },
 			{ x: 2021, y: 79 }
 		],
 		bottomArea: {
@@ -46,7 +42,7 @@ test("area graph - U.S. energy consumption by source", () => {
 		},
 		boundaryLine: {
 			color: "#000000",
-			strokeWidth: 3
+			strokeWidth: 2
 		}
 	} satisfies AreaGraphInput
 

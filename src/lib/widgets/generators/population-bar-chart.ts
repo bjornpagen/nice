@@ -135,7 +135,33 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 	}
 
 	// Bars, X-axis ticks, and X-axis labels
+	// Determine deterministic subset of x-axis labels when not explicitly provided
 	const visibleLabelSet = new Set<string>(xAxisVisibleLabels)
+	const minLabelSpacingPx = 50
+	const allIndices = Array.from({ length: chartData.length }, (_, idx) => idx)
+	const candidateIndices = allIndices.filter((idx) => chartData[idx]?.label !== null)
+	const candidates = candidateIndices.length > 0 ? candidateIndices : allIndices
+	const maxLabels = Math.max(1, Math.floor(chartWidth / minLabelSpacingPx))
+	let selectedLabelIndices: Set<number>
+	if (candidates.length <= maxLabels) {
+		selectedLabelIndices = new Set(candidates)
+	} else {
+		const step = (candidates.length - 1) / (maxLabels - 1)
+		const indices: number[] = []
+		for (let k = 0; k < maxLabels; k++) {
+			const candidatePosition = Math.floor(k * step)
+			const candidateIndex = candidates[candidatePosition]
+			if (candidateIndex !== undefined) {
+				indices.push(candidateIndex)
+			}
+		}
+		selectedLabelIndices = new Set(indices)
+		const lastCandidate = candidates[candidates.length - 1]
+		if (lastCandidate !== undefined) {
+			selectedLabelIndices.add(lastCandidate)
+		}
+	}
+
 	chartData.forEach((d, i) => {
 		const barHeight = d.value * scaleY
 		const x = i * barWidth
@@ -152,10 +178,12 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 		svg += `<line x1="${labelX}" y1="${chartHeight}" x2="${labelX}" y2="${chartHeight + 5}" stroke="black" stroke-width="1.5"/>`
 
 		// X-axis label (conditionally rendered)
-		const showAll = xAxisVisibleLabels.length === 0
+		const useAutoThinning = xAxisVisibleLabels.length === 0
 		if (d.label !== null) {
 			const labelText = d.label
-			const shouldShowLabel = showAll ? true : visibleLabelSet.has(labelText)
+			const shouldShowLabel = useAutoThinning
+				? selectedLabelIndices.has(i)
+				: visibleLabelSet.has(labelText)
 			if (shouldShowLabel) {
 				svg += `<text x="${labelX}" y="${chartHeight + 20}" class="tick-label" text-anchor="middle">${labelText}</text>`
 			}

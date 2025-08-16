@@ -125,6 +125,38 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	}
 
 	// Bars and X-axis labels
+	// Determine a deterministic subset of x-axis labels to avoid overcrowding.
+	// Strategy:
+	// 1) Prefer only bars that actually have labels (category !== null) as candidates.
+	// 2) If none have labels, fall back to all bars as candidates.
+	// 3) Choose up to floor(chartWidth / minLabelSpacingPx) evenly spaced candidate indices,
+	//    including the first and last candidates.
+	const minLabelSpacingPx = 50
+	const allIndices = Array.from({ length: chartData.length }, (_, idx) => idx)
+	const candidateIndices = allIndices.filter((idx) => chartData[idx]?.category !== null)
+	const candidates = candidateIndices.length > 0 ? candidateIndices : allIndices
+	const maxLabels = Math.max(1, Math.floor(chartWidth / minLabelSpacingPx))
+	let selectedLabelIndices: Set<number>
+	if (candidates.length <= maxLabels) {
+		selectedLabelIndices = new Set(candidates)
+	} else {
+		const step = (candidates.length - 1) / (maxLabels - 1)
+		const indices: number[] = []
+		for (let k = 0; k < maxLabels; k++) {
+			const candidatePosition = Math.floor(k * step)
+			const candidateIndex = candidates[candidatePosition]
+			if (candidateIndex !== undefined) {
+				indices.push(candidateIndex)
+			}
+		}
+		// Ensure we include the last candidate explicitly (may dedupe if already included)
+		selectedLabelIndices = new Set(indices)
+		const lastCandidate = candidates[candidates.length - 1]
+		if (lastCandidate !== undefined) {
+			selectedLabelIndices.add(lastCandidate)
+		}
+	}
+
 	chartData.forEach((d, i) => {
 		const barAbsHeight = Math.abs(d.value) * scaleY
 		const x = i * barWidth
@@ -145,7 +177,7 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 		svg += `<rect x="${x + xOffset}" y="${y}" width="${innerBarWidth}" height="${barAbsHeight}" fill="${color}"/>`
 
 		const labelX = x + barWidth / 2
-		if (d.category !== null) {
+		if (d.category !== null && selectedLabelIndices.has(i)) {
 			svg += `<text x="${labelX}" y="${chartHeight + 25}" class="tick-label" text-anchor="middle">${d.category}</text>`
 		}
 	})

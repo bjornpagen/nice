@@ -44,11 +44,11 @@ test("population bar chart - elk population 1990-2005", () => {
 	expect(svg).toMatchSnapshot()
 })
 
-// Verifies that an empty xAxisVisibleLabels renders all labels
-test("population bar chart - all x labels when visible list empty", () => {
+// Verifies auto label thinning when visible list is empty to prevent overcrowding
+test("population bar chart - auto label thinning when visible list empty", () => {
 	const input = {
 		type: "populationBarChart",
-		width: 600,
+		width: 390,
 		height: 360,
 		xAxisLabel: "Year",
 		yAxis: { label: "Number of elk", min: 0, max: 1400, tickInterval: 200 },
@@ -56,7 +56,20 @@ test("population bar chart - all x labels when visible list empty", () => {
 		data: [
 			{ label: "1990", value: 160 },
 			{ label: "1991", value: 350 },
-			{ label: "1992", value: 650 }
+			{ label: "1992", value: 647 },
+			{ label: "1993", value: 940 },
+			{ label: "1994", value: 1139 },
+			{ label: "1995", value: 1235 },
+			{ label: "1996", value: 1278 },
+			{ label: "1997", value: 1247 },
+			{ label: "1998", value: 1175 },
+			{ label: "1999", value: 1050 },
+			{ label: "2000", value: 975 },
+			{ label: "2001", value: 1025 },
+			{ label: "2002", value: 985 },
+			{ label: "2003", value: 1015 },
+			{ label: "2004", value: 995 },
+			{ label: "2005", value: 1005 }
 		],
 		barColor: "#208388",
 		gridColor: "#CCCCCC"
@@ -64,5 +77,14 @@ test("population bar chart - all x labels when visible list empty", () => {
 
 	const parsed = PopulationBarChartPropsSchema.parse(input)
 	const svg = generatePopulationBarChart(parsed)
-	expect(svg).toMatchSnapshot()
+
+	// Count x-axis labels (middle-anchored only)
+	const xTickLabelMatches = svg.match(/<text[^>]*class="tick-label"[^>]*text-anchor="middle"[^>]*>[^<]+<\/text>/g) ?? []
+	const expectedMaxLabels = Math.max(1, Math.floor((390 - 100) / 50)) // margin left+right ~100
+	expect(xTickLabelMatches.length).toBeGreaterThan(0)
+	expect(xTickLabelMatches.length).toBeLessThanOrEqual(expectedMaxLabels)
+
+	// Ensure first and last labels render for determinism
+	expect(svg).toContain(">1990<")
+	expect(svg).toContain(">2005<")
 })

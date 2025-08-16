@@ -94,8 +94,8 @@ export type AreaGraphProps = z.infer<typeof AreaGraphPropsSchema>
 const renderWrappedText = (text: string, x: number, y: number, className: string, lineHeight = "1.2em"): string => {
 	let lines: string[] = []
 
-	// For titles with year ranges in parentheses, split before the parenthesis
-	const titlePattern = /^(.+)\s+(\(\d{4}–\d{4}\))$/
+	// For titles ending with any parenthetical, split before the parenthesis
+	const titlePattern = /^(.+)\s+(\(.+\))$/
 	const titleMatch = text.match(titlePattern)
 	if (titleMatch?.[1] && titleMatch[2]) {
 		lines = [titleMatch[1].trim(), titleMatch[2].trim()]
