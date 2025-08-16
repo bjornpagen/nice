@@ -665,3 +665,83 @@ test("dedupes repeated prompt - kinetic energy selection phrase (duplicate body)
 	// Body variant should be removed
 	expect(xml).not.toContain("<p>Which of the following objects have kinetic energy? Select all that apply.</p>")
 })
+
+test("dedupes paraphrased prompt - same pitch different loudness wave properties", () => {
+	const item: AssessmentItemInput = {
+		identifier: "same-pitch-different-loudness-wave-properties",
+		title: "Identify wave properties shared by two sounds in the same medium",
+		responseDeclarations: [
+			{ identifier: "choice_interaction", cardinality: "multiple", baseType: "identifier", correct: ["B", "C", "D"] }
+		],
+		widgets: {},
+		body: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"Two speakers are in the same room filled with air. Both are playing sounds with the same pitch. One speaker’s sound is louder than the other’s."
+					}
+				]
+			},
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Which wave properties are the same for the two sounds? Select all that apply." }
+				]
+			},
+			{ type: "blockSlot", slotId: "choice_interaction" }
+		],
+		interactions: {
+			choice_interaction: {
+				type: "choiceInteraction",
+				responseIdentifier: "choice_interaction",
+				shuffle: true,
+				minChoices: 1,
+				maxChoices: 4,
+				prompt: [
+					{ type: "text", content: "Which wave properties are the same for the two sounds? Select all that apply." }
+				],
+				choices: [
+					{ identifier: "A", content: [{ type: "paragraph", content: [{ type: "text", content: "amplitude" }] }], feedback: null },
+					{ identifier: "B", content: [{ type: "paragraph", content: [{ type: "text", content: "frequency" }] }], feedback: null },
+					{ identifier: "C", content: [{ type: "paragraph", content: [{ type: "text", content: "wavelength" }] }], feedback: null },
+					{ identifier: "D", content: [{ type: "paragraph", content: [{ type: "text", content: "speed" }] }], feedback: null }
+				]
+			}
+		},
+		feedback: {
+			correct: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Correct! In the same medium, sound waves travel at the same speed. If two sounds have the same pitch, they have the same frequency, and with equal speed, they also have the same wavelength. Loudness relates to amplitude, which can differ."
+						}
+					]
+				}
+			],
+			incorrect: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Not quite. Pitch corresponds to frequency, and in the same medium all sound waves have the same speed. With equal speed and equal frequency, the wavelength is also the same. Loudness depends on amplitude and can be different."
+						}
+					]
+				}
+			]
+		}
+	}
+
+	const xml = compile(item)
+	// Prompt must be present
+	expect(xml).toContain("Which wave properties are the same for the two sounds? Select all that apply.")
+	// Body variant should be removed (only the question paragraph, not the context paragraph)
+	expect(xml).not.toContain("<p>Which wave properties are the same for the two sounds? Select all that apply.</p>")
+})
