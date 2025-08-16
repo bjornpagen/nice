@@ -15,10 +15,12 @@ export function Content({ exercisePromise }: { exercisePromise: Promise<Exercise
 	const { resourceLockStatus } = useCourseLockStatus()
 	const isLocked = resourceLockStatus[exercise.id] === true
 	const [hasStarted, setHasStarted] = React.useState(false)
+	const [retakeKey, setRetakeKey] = React.useState(0)
 
 	if (hasStarted) {
 		return (
 			<AssessmentStepper
+				key={`${exercise.id}:${retakeKey}`}
 				questions={questions}
 				contentType="Exercise"
 				onerosterComponentResourceSourcedId={exercise.componentResourceSourcedId} // Use the componentResource ID for XP farming prevention
@@ -29,6 +31,16 @@ export function Content({ exercisePromise }: { exercisePromise: Promise<Exercise
 				unitData={layoutData.unitData}
 				expectedXp={exercise.expectedXp}
 				layoutData={layoutData}
+				onRetake={(_newAttemptNumber) => {
+					// Return to start screen to make retake explicit and ensure full reset
+					setHasStarted(false)
+					// Bump key so the assessment stepper remounts on next start
+					setRetakeKey((k) => k + 1)
+					// Force a route data refresh to get a newly rotated question set
+					if (typeof window !== "undefined") {
+						window.location.reload()
+					}
+				}}
 			/>
 		)
 	}
