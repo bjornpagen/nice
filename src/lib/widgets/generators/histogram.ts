@@ -3,6 +3,7 @@ import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
+import { computeLabelSelection } from "@/lib/widgets/utils/labels"
 
 const Bin = z
 	.object({
@@ -178,14 +179,15 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		tickLabels.push({ x, text: String(separators[i]) })
 	}
 
-	// Determine skip step to avoid crowding (no rotation)
+	// Use shared label thinning with width-aware spacing
 	const maxLabelLength = tickLabels.reduce((max, t) => Math.max(max, t.text.length), 0)
-	const estimatedLabelSpanPx = maxLabelLength * averageCharWidthPx
-	const step = Math.max(1, Math.ceil(estimatedLabelSpanPx / binWidth))
+	const estimatedLabelSpanPx = Math.max(1, maxLabelLength * averageCharWidthPx)
+	const allIndices = tickLabels.map((_, idx) => idx)
+	const selected = computeLabelSelection(tickLabels.length, allIndices, chartWidth, estimatedLabelSpanPx)
 
 	// Render non-rotated x-axis labels centered at separators
 	tickLabels.forEach((tick, i) => {
-		if (i % step !== 0) return
+		if (!selected.has(i)) return
 		const labelX = tick.x
 		const labelY = height - margin.bottom + 28
 		svg += `<text class="x-tick" x="${labelX}" y="${labelY}" fill="#333333" text-anchor="middle">${tick.text}</text>`
