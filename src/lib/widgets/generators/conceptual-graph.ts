@@ -1,6 +1,7 @@
 import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { initExtents, includeText, computeDynamicWidth } from "@/lib/widgets/utils/layout"
 
 // Factory functions to avoid schema instance reuse which causes $ref in JSON Schema
 function createPointSchema() {
@@ -74,6 +75,7 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 	const toSvgX = (val: number) => padding.left + (val - minX) * scaleX
 	const toSvgY = (val: number) => height - padding.bottom - (val - minY) * scaleY
 
+	const ext = initExtents(width)
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">`
 	svg += `<defs><marker id="graph-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker></defs>`
 
@@ -85,7 +87,9 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 
 	// Axis Labels
 	svg += `<text x="${yAxisX - 20}" y="${padding.top + chartHeight / 2}" text-anchor="middle" transform="rotate(-90, ${yAxisX - 20}, ${padding.top + chartHeight / 2})">${yAxisLabel}</text>`
+	includeText(ext, yAxisX - 20, yAxisLabel, "middle", 7)
 	svg += `<text x="${padding.left + chartWidth / 2}" y="${xAxisY + 40}" text-anchor="middle">${xAxisLabel}</text>`
+	includeText(ext, padding.left + chartWidth / 2, xAxisLabel, "middle", 7)
 
 	// Curve
 	const pointsStr = curvePoints.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
@@ -97,8 +101,12 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 		const cy = toSvgY(p.y)
 		svg += `<circle cx="${cx}" cy="${cy}" r="${highlightPointRadius}" fill="${highlightPointColor}"/>`
 		svg += `<text x="${cx - highlightPointRadius - 5}" y="${cy}" text-anchor="end" dominant-baseline="middle" font-weight="bold">${p.label}</text>`
+		includeText(ext, cx - highlightPointRadius - 5, p.label, "end", 7)
 	}
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

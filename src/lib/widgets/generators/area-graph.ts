@@ -2,6 +2,7 @@ import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
+import { initExtents, includeText, computeDynamicWidth } from "@/lib/widgets/utils/layout"
 
 const PointSchema = z.object({
 	x: z.number().describe("The x-coordinate (horizontal value) of the data point."),
@@ -132,6 +133,7 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	const toSvgX = (val: number) => margin.left + ((val - xAxis.min) / (xAxis.max - xAxis.min)) * chartWidth
 	const toSvgY = (val: number) => height - margin.bottom - ((val - yAxis.min) / (yAxis.max - yAxis.min)) * chartHeight
 
+	const ext = initExtents(width)
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
 	svg +=
 		"<style>.axis-label { font-size: 16px; text-anchor: middle; } .title { font-size: 18px; font-weight: bold; text-anchor: middle; } .area-label { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
@@ -139,16 +141,21 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	if (title) {
 		const maxTextWidth = width - 60
 		svg += renderWrappedText(title, width / 2, margin.top / 2 - 10, "title", "1.1em", maxTextWidth, 8)
+		includeText(ext, width / 2, title, "middle", 7)
 	}
 
 	// Axes and Labels
 	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black" stroke-width="2"/>` // Y-axis
 	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black" stroke-width="2"/>` // X-axis
 
-	if (xAxis.label)
+	if (xAxis.label) {
 		svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + 45}" class="axis-label">${xAxis.label}</text>`
-	if (yAxis.label)
+		includeText(ext, margin.left + chartWidth / 2, xAxis.label, "middle", 7)
+	}
+	if (yAxis.label) {
 		svg += `<text x="${margin.left - 55}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 55}, ${margin.top + chartHeight / 2})">${yAxis.label}</text>`
+		includeText(ext, margin.left - 55, yAxis.label, "middle", 7)
+	}
 
 	// Ticks
 	for (const val of xAxis.tickValues) {
@@ -160,6 +167,7 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 		const y = toSvgY(t)
 		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black" stroke-width="2"/>`
 		svg += `<text x="${margin.left - 10}" y="${y + 5}" text-anchor="end">${t}${yAxis.tickFormat || ""}</text>`
+		includeText(ext, margin.left - 10, `${t}${yAxis.tickFormat || ""}`, "end", 7)
 		if (yAxis.showGridLines && t > yAxis.min) {
 			svg += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#e0e0e0"/>`
 		}
@@ -178,6 +186,9 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	svg += renderWrappedText_local(bottomArea.label, toSvgX(1975), toSvgY(40), "area-label")
 	svg += renderWrappedText_local(topArea.label, toSvgX(1850), toSvgY(70), "area-label")
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

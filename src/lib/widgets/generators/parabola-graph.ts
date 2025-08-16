@@ -3,6 +3,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { initExtents, includeText, computeDynamicWidth } from "@/lib/widgets/utils/layout"
 
 function createAxisOptionsSchema() {
 	return z
@@ -80,6 +81,7 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 		throw errors.new("invalid parabola shape")
 	}
 
+	const ext = initExtents(width)
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg += "<style>.axis-label { font-size: 14px; text-anchor: middle; }</style>"
 
@@ -100,6 +102,7 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 		svg += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="black"/>`
 		if (xAxis.showTickLabels !== false) {
 			svg += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${t}</text>`
+			includeText(ext, x, String(t), "middle", 7)
 		}
 	}
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
@@ -107,13 +110,18 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
 		if (yAxis.showTickLabels !== false) {
 			svg += `<text x="${margin.left - 10}" y="${y + 4}" text-anchor="end">${t}</text>`
+			includeText(ext, margin.left - 10, String(t), "end", 7)
 		}
 	}
 	// Labels
-	if (xAxis.label)
+	if (xAxis.label) {
 		svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 15}" class="axis-label">${xAxis.label}</text>`
-	if (yAxis.label)
+		includeText(ext, margin.left + chartWidth / 2, xAxis.label, "middle", 7)
+	}
+	if (yAxis.label) {
 		svg += `<text x="${margin.left - 45}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 45}, ${margin.top + chartHeight / 2})">${yAxis.label}</text>`
+		includeText(ext, margin.left - 45, yAxis.label, "middle", 7)
+	}
 
 	// Parabola Curve - clip to first quadrant (x >= 0, y >= 0)
 	const steps = 200
@@ -128,6 +136,9 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 	const dash = parabola.style === "dashed" ? ' stroke-dasharray="8 6"' : ""
 	svg += `<polyline points="${pointsStr.trim()}" fill="none" stroke="${parabola.color}" stroke-width="2.5" ${dash}/>`
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

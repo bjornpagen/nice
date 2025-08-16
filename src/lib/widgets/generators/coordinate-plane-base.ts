@@ -2,6 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { initExtents, includeText, computeDynamicWidth } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
 
@@ -315,6 +316,7 @@ export function generateCoordinatePlaneBase(
 	// Build point map for ID resolution
 	const pointMap = new Map(points.map((pt) => [pt.id, pt]))
 
+	const ext = initExtents(width)
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg +=
 		"<style>.axis-label { font-size: 14px; text-anchor: middle; } .quadrant-label { font-size: 18px; fill: #ccc; text-anchor: middle; dominant-baseline: middle; }</style>"
@@ -344,20 +346,28 @@ export function generateCoordinatePlaneBase(
 		if (t === 0) continue
 		const x = toSvgX(t)
 		svg += `<line x1="${x}" y1="${zeroY - 4}" x2="${x}" y2="${zeroY + 4}" stroke="black"/>`
-		svg += `<text x="${x}" y="${zeroY + 15}" fill="black" text-anchor="middle">${formatPiLabel(t)}</text>`
+		const label = formatPiLabel(t)
+		svg += `<text x="${x}" y="${zeroY + 15}" fill="black" text-anchor="middle">${label}</text>`
+		includeText(ext, x, label, "middle", 7)
 	}
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		if (t === 0) continue
 		const y = toSvgY(t)
 		svg += `<line x1="${zeroX - 4}" y1="${y}" x2="${zeroX + 4}" y2="${y}" stroke="black"/>`
-		svg += `<text x="${zeroX - 8}" y="${y + 4}" fill="black" text-anchor="end">${formatPiLabel(t)}</text>`
+		const label = formatPiLabel(t)
+		svg += `<text x="${zeroX - 8}" y="${y + 4}" fill="black" text-anchor="end">${label}</text>`
+		includeText(ext, zeroX - 8, label, "end", 7)
 	}
 
 	// Axis labels
-	if (xAxis.label)
+	if (xAxis.label) {
 		svg += `<text x="${pad.left + chartWidth / 2}" y="${height - 5}" class="axis-label">${xAxis.label}</text>`
-	if (yAxis.label)
+		includeText(ext, pad.left + chartWidth / 2, xAxis.label, "middle", 7)
+	}
+	if (yAxis.label) {
 		svg += `<text x="${pad.left - 25}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${pad.left - 25}, ${pad.top + chartHeight / 2})">${yAxis.label}</text>`
+		includeText(ext, pad.left - 25, yAxis.label, "middle", 7)
+	}
 
 	// Quadrant labels
 	if (showQuadrantLabels) {
@@ -367,7 +377,11 @@ export function generateCoordinatePlaneBase(
 		svg += `<text x="${zeroX + chartWidth / 4}" y="${zeroY + chartHeight / 4}" class="quadrant-label">IV</text>`
 	}
 
-	return { svg, toSvgX, toSvgY, width, height, pointMap }
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
+
+	return { svg, toSvgX, toSvgY, width: dynamicWidth, height, pointMap }
 }
 
 /**

@@ -5,6 +5,7 @@ import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 import { computeLabelSelection } from "@/lib/widgets/utils/labels"
+import { initExtents, includeText, includePointX, computeDynamicWidth } from "@/lib/widgets/utils/layout"
 
 export const ErrMismatchedDataLength = errors.new("series data must have the same length as x-axis categories")
 

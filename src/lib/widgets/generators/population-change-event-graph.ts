@@ -1,6 +1,7 @@
 import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { initExtents, includeText, computeDynamicWidth } from "@/lib/widgets/utils/layout"
 
 // Factory helpers to avoid schema reuse and $ref generation
 function createPointSchema() {
@@ -91,6 +92,7 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 	const toSvgX = (val: number) => padding.left + (val - minX) * scaleX
 	const toSvgY = (val: number) => height - padding.bottom - (val - paddedMinY) * scaleY
 
+	const ext = initExtents(width)
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">`
 	svg += `<defs><marker id="graph-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker></defs>`
 
@@ -103,7 +105,9 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 	// Axis Labels (closer to axes)
 	const yLabelX = yAxisX - 30
 	svg += `<text x="${yLabelX}" y="${padding.top + chartHeight / 2}" text-anchor="middle" transform="rotate(-90, ${yLabelX}, ${padding.top + chartHeight / 2})">${yAxisLabel}</text>`
+	includeText(ext, yLabelX, yAxisLabel, "middle", 7)
 	svg += `<text x="${padding.left + chartWidth / 2}" y="${xAxisY + 30}" text-anchor="middle">${xAxisLabel}</text>`
+	includeText(ext, padding.left + chartWidth / 2, xAxisLabel, "middle", 7)
 
 	// Before Curve
 	if (beforeSegment.points.length > 0) {
@@ -152,9 +156,13 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 			const dash = item.dashed ? ' stroke-dasharray="8 6"' : ""
 			svg += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${item.color}" stroke-width="3"${dash}/>`
 			svg += `<text x="${textX}" y="${textY}">${item.label}</text>`
+			includeText(ext, textX, item.label, "start", 7)
 		}
 	}
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

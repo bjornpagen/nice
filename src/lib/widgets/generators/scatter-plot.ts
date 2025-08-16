@@ -4,6 +4,7 @@ import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
+import { initExtents, includeText, computeDynamicWidth } from "@/lib/widgets/utils/layout"
 import { computeLabelSelection } from "@/lib/widgets/utils/labels"
 
 // Defines a single data point on the scatter plot
@@ -347,6 +348,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		return ` stroke="${style.color}" stroke-width="${style.strokeWidth}"${dash}`
 	}
 
+	const ext = initExtents(width)
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg +=
 		"<style>.axis-label { font-size: 14px; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
@@ -354,6 +356,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	if (title !== null) {
 		const maxTextWidth = width - 60
 		svg += renderWrappedText(title, width / 2, pad.top / 2, "title", "1.1em", maxTextWidth, 8)
+		includeText(ext, width / 2, title, "middle", 7)
 	}
 
 	// Grid lines, Axes, Ticks, Labels
@@ -378,16 +381,22 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		svg += `<line x1="${x}" y1="${height - pad.bottom}" x2="${x}" y2="${height - pad.bottom + 5}" stroke="black"/>`
 		if (selected.has(slotIndex)) {
 			svg += `<text x="${x}" y="${height - pad.bottom + 20}" text-anchor="middle">${t}</text>`
+			includeText(ext, x, String(t), "middle", 7)
 		}
 		slotIndex++
 	}
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		svg += `<line x1="${pad.left}" y1="${toSvgY(t)}" x2="${pad.left - 5}" y2="${toSvgY(t)}" stroke="black"/><text x="${pad.left - 10}" y="${toSvgY(t) + 4}" text-anchor="end">${t}</text>`
+		includeText(ext, pad.left - 10, String(t), "end", 7)
 	}
-	if (xAxis.label !== null)
+	if (xAxis.label !== null) {
 		svg += `<text x="${pad.left + chartWidth / 2}" y="${height - 20}" class="axis-label">${xAxis.label}</text>`
-	if (yAxis.label !== null)
+		includeText(ext, pad.left + chartWidth / 2, xAxis.label, "middle", 7)
+	}
+	if (yAxis.label !== null) {
 		svg += `<text x="${pad.left - 35}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${pad.left - 35}, ${pad.top + chartHeight / 2})">${yAxis.label}</text>`
+		includeText(ext, pad.left - 35, yAxis.label ?? "", "middle", 7)
+	}
 
 	// Render line overlays (computed or explicit)
 	for (const line of lines) {
@@ -466,6 +475,9 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		}
 	}
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

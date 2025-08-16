@@ -4,6 +4,7 @@ import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { computeLabelSelection } from "@/lib/widgets/utils/labels"
+import { initExtents, includeText, computeDynamicWidth } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -96,6 +97,7 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 
 	// yZero is derivable from yAxis and scale; not needed directly
 
+	const ext = initExtents(width)
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
 	svg +=
 		"<style>.axis-label { font-size: 1.1em; font-weight: bold; text-anchor: middle; } .tick-label { font-size: 1em; font-weight: bold; } </style>"
@@ -120,9 +122,12 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	// Axis Labels
 	if (xAxisLabel !== null) {
 		svg += `<text x="${chartWidth / 2}" y="${chartHeight + 45}" class="axis-label">${xAxisLabel}</text>`
+		includeText(ext, chartWidth / 2, xAxisLabel, "middle", 7)
 	}
 	if (yAxis.label !== null) {
 		svg += `<text x="${-chartHeight / 2}" y="-60" class="axis-label" transform="rotate(-90)">${yAxis.label}</text>`
+		// approximate at left margin area, include as middle at some x near -60 rotated
+		includeText(ext, -60, yAxis.label, "middle", 7)
 	}
 
 	// Bars and X-axis labels
@@ -153,6 +158,7 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 		const labelX = x + barWidth / 2
 		if (d.category !== null && selectedLabelIndices.has(i)) {
 			svg += `<text x="${labelX}" y="${chartHeight + 25}" class="tick-label" text-anchor="middle">${d.category}</text>`
+			includeText(ext, labelX, d.category, "middle", 7)
 		}
 	})
 
@@ -160,6 +166,9 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	svg += `<line x1="${chartWidth}" y1="0" x2="${chartWidth}" y2="${chartHeight}" stroke="#333" stroke-width="2"/>`
 
 	svg += "</g>" // Close chartBody group
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }
