@@ -8,8 +8,6 @@ export default async function DebugQuestionRenderReviewsPage() {
 	const reviewsPromise = getQuestionRenderReviews()
 
 	return (
-		<React.Suspense fallback={<div>loading reviews...</div>}>
-			<Content reviewsPromise={reviewsPromise} />
-		</React.Suspense>
+		<Content reviewsPromise={reviewsPromise} />
 	)
 }
