@@ -399,7 +399,9 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 		// strategy A: single paragraph equals prompt (exact comparable equality)
 		for (let i = start; i < end; i++) {
 			if (body[i]?.type !== "paragraph") continue
-			const pStr = paragraphNorms[i] ?? ""
+			// Strip selection guidance from body paragraph before comparison to align with prompt normalization
+			const rawPara = paragraphNorms[i] ?? ""
+			const pStr = rawPara === "" ? "" : stripSelectionGuidance(rawPara)
 			if (pStr !== "" && pStr === prompt) {
 				toDelete.add(i)
 				continue
@@ -414,11 +416,12 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 		for (let i = start; i < end; i++) {
 			if (body[i]?.type !== "paragraph") continue
 			if (toDelete.has(i)) continue
-			let acc = paragraphNorms[i] ?? ""
+			let acc = stripSelectionGuidance(paragraphNorms[i] ?? "")
 			let accTokens = tokenizeForFuzzy(acc)
 			for (let j = i + 1; j < end; j++) {
 				if (body[j]?.type !== "paragraph") break
-				acc = collapseWhitespace(`${acc} ${paragraphNorms[j] ?? ""}`)
+				const nextSegment = stripSelectionGuidance(paragraphNorms[j] ?? "")
+				acc = collapseWhitespace(`${acc} ${nextSegment}`)
 				accTokens = tokenizeForFuzzy(acc)
 				if (acc === prompt) {
 					for (let k = i; k <= j; k++) toDelete.add(k)

@@ -557,3 +557,111 @@ test("dedupes paraphrased prompt - affordable care act provisions", () => {
 	// Body variant should be removed
 	expect(xml).not.toContain("Which of the following were among the provisions of the Affordable Care Act?")
 })
+
+test("dedupes repeated prompt - kinetic energy selection phrase (duplicate body)", () => {
+	const item: AssessmentItemInput = {
+		identifier: "which-objects-have-kinetic-energy",
+		title: "Identify objects with kinetic energy",
+		responseDeclarations: [
+			{ identifier: "choice_interaction", cardinality: "multiple", baseType: "identifier", correct: ["A", "B", "E"] }
+		],
+		widgets: {},
+		body: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Which of the following objects have kinetic energy? Select all that apply." }
+				]
+			},
+			{ type: "blockSlot", slotId: "choice_interaction" }
+		],
+		interactions: {
+			choice_interaction: {
+				type: "choiceInteraction",
+				responseIdentifier: "choice_interaction",
+				shuffle: true,
+				minChoices: 1,
+				maxChoices: 6,
+				prompt: [
+					{ type: "text", content: "Which of the following objects have kinetic energy? Select all that apply." }
+				],
+				choices: [
+					{
+						identifier: "A",
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "the Earth traveling around the Sun" }] }
+						],
+						feedback: null
+					},
+					{
+						identifier: "B",
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "a train slowing down" }] }
+						],
+						feedback: null
+					},
+					{
+						identifier: "C",
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "a bucket hanging at rest from a rope" }] }
+						],
+						feedback: null
+					},
+					{
+						identifier: "D",
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "an arrow pulled back in a bow, ready to be released" }] }
+						],
+						feedback: null
+					},
+					{
+						identifier: "E",
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "a soccer ball that has just been kicked" }] }
+						],
+						feedback: null
+					},
+					{
+						identifier: "F",
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "a car that is stopped at a stoplight" }] }
+						],
+						feedback: null
+					}
+				]
+			}
+		},
+		feedback: {
+			correct: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Correct! Kinetic energy is the energy of motion, so any object that is moving has kinetic energy."
+						}
+					]
+				}
+			],
+			incorrect: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Not quite. Kinetic energy is the energy of motion. Only objects that are moving have kinetic energy."
+						}
+					]
+				}
+			]
+		}
+	}
+
+	const xml = compile(item)
+	// Prompt must be present
+	expect(xml).toContain("Which of the following objects have kinetic energy? Select all that apply.")
+	// Body variant should be removed
+	expect(xml).not.toContain("<p>Which of the following objects have kinetic energy? Select all that apply.</p>")
+})
