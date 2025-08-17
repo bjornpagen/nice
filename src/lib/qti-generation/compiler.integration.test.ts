@@ -1,7 +1,8 @@
 import { describe, expect, test } from "bun:test"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { qti } from "@/lib/clients"
+import { env } from "@/env"
+import { Client as QtiClient } from "@/lib/qti"
 import { compile } from "./compiler"
 import { allExamples } from "./examples"
 
@@ -11,6 +12,13 @@ import { allExamples } from "./examples"
 // is fully compliant with the target QTI service.
 describe("QTI Compiler API Validation", () => {
 	test("should produce valid QTI XML for all examples that passes API validation", async () => {
+		// Use a dedicated client instance to avoid test interference from module mocks
+		const qti = new QtiClient({
+			serverUrl: env.TIMEBACK_QTI_SERVER_URL,
+			tokenUrl: env.TIMEBACK_TOKEN_URL,
+			clientId: env.TIMEBACK_CLIENT_ID,
+			clientSecret: env.TIMEBACK_CLIENT_SECRET
+		})
 		// Step 1: Compile all examples into QTI XML strings in parallel.
 		// This compiles all examples at once, taking advantage of CPU parallelism.
 		const compiledExamples = allExamples.map((example) => ({
