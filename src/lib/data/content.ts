@@ -12,6 +12,7 @@ import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 // rotation mode removed; selection is now always deterministic via unified helper
 import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/types/page"
 import { assertNoEncodedColons } from "@/lib/utils"
+import { stripResourceTypeSuffix } from "@/lib/utils/format-resource-title"
 import { fetchLessonLayoutData } from "./lesson"
 
 export async function fetchArticlePageData(params: { article: string }): Promise<ArticlePageData> {
@@ -63,7 +64,7 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 
 	return {
 		id: resource.sourcedId,
-		title: resource.title,
+		title: stripResourceTypeSuffix(resource.title),
 		xp: resourceMetadataResult.data.xp
 	}
 }
@@ -107,7 +108,7 @@ export async function fetchExercisePageData(params: {
 			id: resource.sourcedId,
 			componentResourceSourcedId: componentResource.sourcedId,
 			onerosterCourseSourcedId: layoutData.courseData.id,
-			title: resource.title,
+			title: stripResourceTypeSuffix(resource.title),
 			path: `/${params.subject}/${params.course}/${params.unit}/${params.lesson}/e/${resourceMetadata.khanSlug}`,
 			type: "Exercise" as const,
 			expectedXp: resourceMetadata.xp
@@ -173,7 +174,7 @@ export async function fetchVideoPageData(params: { video: string }): Promise<Vid
 
 	return {
 		id: resource.sourcedId,
-		title: resource.title,
+		title: stripResourceTypeSuffix(resource.title),
 		description: resourceMetadataResult.data.khanDescription,
 		youtubeId,
 		xp: resourceMetadataResult.data.xp

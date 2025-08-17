@@ -24,7 +24,9 @@ import type {
 } from "@/lib/types/domain"
 import type { CoursePageData } from "@/lib/types/page"
 import { assertNoEncodedColons } from "@/lib/utils"
-import { formatResourceTitleForDisplay } from "@/lib/utils/format-resource-title"
+import { stripResourceTypeSuffix } from "@/lib/utils/format-resource-title"
+
+// Removed title formatter to avoid appending bracketed type labels in UI
 
 // Helper function to remove "Nice Academy - " prefix from course titles
 function removeNiceAcademyPrefix(title: string): string {
@@ -351,7 +353,7 @@ export async function fetchCoursePageData(
 					id: resource.sourcedId,
 					type: assessmentType,
 					slug: resourceMetadata.khanSlug,
-					title: formatResourceTitleForDisplay(resource.title, assessmentType),
+					title: resource.title,
 					description: resourceMetadata.khanDescription,
 					path: `/${params.subject}/${params.course}/${unit.slug}/${pathSegment}/${resourceMetadata.khanSlug}`,
 					questions: [], // Questions are not needed on the course page
@@ -424,7 +426,7 @@ export async function fetchCoursePageData(
 
 					videos.push({
 						id: resource.sourcedId,
-						title: formatResourceTitleForDisplay(resource.title, "Video"),
+						title: stripResourceTypeSuffix(resource.title),
 						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonComponentMeta.data.khanSlug}/v/${resourceMetadata.khanSlug}`, // Construct path from slugs
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.khanDescription,
@@ -449,7 +451,7 @@ export async function fetchCoursePageData(
 					articles.push({
 						type: "Article",
 						id: resource.sourcedId,
-						title: formatResourceTitleForDisplay(resource.title, "Article"),
+						title: stripResourceTypeSuffix(resource.title),
 						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonComponentMeta.data.khanSlug}/a/${resourceMetadata.khanSlug}`, // Construct path from slugs
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.khanDescription,
@@ -484,7 +486,7 @@ export async function fetchCoursePageData(
 					exercises.push({
 						type: "Exercise",
 						id: resource.sourcedId,
-						title: formatResourceTitleForDisplay(resource.title, "Exercise"),
+						title: stripResourceTypeSuffix(resource.title),
 						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonComponentMeta.data.khanSlug}/e/${resourceMetadata.khanSlug}`, // Construct path from slugs
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.khanDescription,
@@ -630,7 +632,7 @@ export async function fetchCoursePageData(
 				const challenge: CourseChallenge = {
 					id: resourceMetadata.khanId,
 					type: "CourseChallenge" as const,
-					title: formatResourceTitleForDisplay(resourceMetadata.khanTitle, "CourseChallenge"),
+					title: resourceMetadata.khanTitle,
 					slug: resourceMetadata.khanSlug,
 					path: challengePath,
 					description: resourceMetadata.khanDescription,

@@ -8,6 +8,7 @@ import { getCourseMapping, isHardcodedCourse } from "@/lib/constants/course-mapp
 import { getAssessmentTest } from "@/lib/data/fetchers/qti"
 import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
 import { applyQtiSelectionAndOrdering } from "@/lib/qti-selection"
+import { formatResourceTitleForDisplay } from "@/lib/utils/format-resource-title"
 
 // Normalize slugs that may include an ID prefix like "x123:real-slug" to just "real-slug"
 function normalizeKhanSlug(slug: string): string {
@@ -576,6 +577,19 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				if (content) {
 					const contentSourcedId = `nice_${content.id}`
 					if (!resourceSet.has(contentSourcedId)) {
+						// Compute resource title with bracketed type label ONLY for Video, Article, Exercise
+						let resourceTitle = content.title
+						let activityType: "Video" | "Article" | "Exercise" | null = null
+						if (lc.contentType === "Video") {
+							activityType = "Video"
+						} else if (lc.contentType === "Article") {
+							activityType = "Article"
+						} else if (lc.contentType === "Exercise") {
+							activityType = "Exercise"
+						}
+						if (activityType !== null) {
+							resourceTitle = formatResourceTitleForDisplay(content.title, activityType)
+						}
 						// Construct metadata based on content type
 						let metadata: Record<string, unknown> = {
 							khanId: content.id,
@@ -634,7 +648,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						onerosterPayload.resources.push({
 							sourcedId: contentSourcedId,
 							status: "active",
-							title: content.title,
+							title: resourceTitle,
 							vendorResourceId: `nice-academy-${content.id}`,
 							vendorId: "superbuilders",
 							applicationId: "nice",

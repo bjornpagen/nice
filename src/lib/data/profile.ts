@@ -11,6 +11,7 @@ import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
 import type { Lesson, ProfileCourse, Quiz, Unit, UnitTest } from "@/lib/types/domain"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
 import { getResourceIdFromLineItem } from "@/lib/utils/assessment-line-items"
+import { stripResourceTypeSuffix } from "@/lib/utils/format-resource-title"
 import type { ClassReadSchemaType } from "../oneroster"
 
 // NEW: Interface for unit proficiency tracking
@@ -546,7 +547,7 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 								lesson.children.push({
 									type: "Exercise",
 									id: resource.sourcedId,
-									title: resource.title,
+									title: stripResourceTypeSuffix(resource.title),
 									path: "", // Will be set later
 									sortOrder: componentResource.sortOrder
 								})
