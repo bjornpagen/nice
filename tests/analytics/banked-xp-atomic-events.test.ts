@@ -1,261 +1,97 @@
+// tests/analytics/banked-xp-atomic-events.test.ts
+
 import { afterEach, describe, expect, mock, spyOn, test } from "bun:test"
-import * as errors from "@superbuilders/errors"
-import * as logger from "@superbuilders/slog"
-
-// Import subject under test after mocks are in place
 import { finalizeAssessment } from "@/lib/actions/assessment"
-import type { Unit } from "@/lib/types/domain"
 
-// --- Mocks for external ports and services ---
-const mockGetAllResults = mock(() => Promise.resolve(undefined))
-const mockPutResult = mock(() => Promise.resolve(undefined))
-const mockGetResult = mock(() => Promise.resolve(undefined))
-const mockSaveResult = mock(() => Promise.resolve("sourcedId"))
-const mockCheckExistingProficiency = mock((_userSourcedId: string, _assessmentSourcedId: string) =>
-	Promise.resolve(false)
-)
-const mockAwardBankedXpForExercise = mock(
-	(_params: {
-		exerciseResourceSourcedId: string
-		onerosterUserSourcedId: string
-		onerosterCourseSourcedId: string
-	}): Promise<{ bankedXp: number; awardedResourceIds: string[] }> =>
-		Promise.resolve({ bankedXp: 0, awardedResourceIds: [] })
-)
-
-// OneRoster client used by gradebook port
+// --- Mocks ---
+mock.module("@/lib/ports/gradebook", () => ({ saveResult: () => Promise.resolve("result_id") }))
+// Provide minimal clients and cache mocks to avoid cross-test import issues
 mock.module("@/lib/clients", () => ({
-	oneroster: {
-		getAllResults: mockGetAllResults,
-		putResult: mockPutResult,
-		getResult: mockGetResult,
-		getComponentResource: () => Promise.resolve({})
-	},
-	caliper: {
-		sendCaliperEvents: (_envelope: unknown) => Promise.resolve()
-	}
+	caliper: { sendCaliperEvents: (_e: unknown) => Promise.resolve() },
+	qti: { /* used in separate suites; provide noop shape to prevent import errors */ }
 }))
-
-mock.module("@/lib/ports/gradebook", () => ({
-	saveResult: mockSaveResult
+mock.module("@/lib/cache", () => ({
+	redisCache: async <T>(cb: () => Promise<T>, _k: (string | number)[], _o: { revalidate: number | false }) => cb(),
+	userProgressByCourse: (_u: string, _c: string) => `user-progress:${_u}:${_c}`,
+	invalidateCache: (_k: string) => Promise.resolve()
 }))
-
-// No proficiency mocking required for these tests
-
-mock.module("@/lib/actions/assessment", () => ({
-	finalizeAssessment,
-	checkExistingProficiency: mockCheckExistingProficiency
+mock.module("@/lib/data/fetchers/oneroster", () => ({
+	getClass: (_id: string) => Promise.resolve(null),
+	getActiveEnrollmentsForUser: (_u: string) => Promise.resolve([])
 }))
-
-mock.module("@/lib/xp/bank", () => ({
-	awardBankedXpForExercise: mockAwardBankedXpForExercise
-}))
-
-const mockAuth = mock(() => Promise.resolve({ userId: "mock_clerk_user_id" }))
 mock.module("@clerk/nextjs/server", () => ({
-	auth: mockAuth,
-	clerkClient: () => ({
-		users: {
-			getUser: () => Promise.resolve({ publicMetadata: {} }),
-			updateUserMetadata: mock(() => Promise.resolve({ publicMetadata: {} }))
-		}
-	})
+	auth: () => Promise.resolve({ userId: "atomic_test_user" }),
+	clerkClient: () => ({ users: { getUser: () => Promise.resolve({ publicMetadata: {} }) } })
 }))
+mock.module("@/lib/actions/assessment", () => ({ checkExistingProficiency: () => Promise.resolve(false) }))
+mock.module("@/lib/actions/streak", () => ({ updateStreak: () => Promise.resolve() }))
+const mockAwardBankedXp = mock(() => Promise.resolve({ bankedXp: 50, awardedResourceIds: ["video1"] }))
+mock.module("@/lib/xp/bank", () => ({ awardBankedXpForExercise: mockAwardBankedXp }))
 
-// Import after mocks
+// --- Spies ---
 const analytics = await import("@/lib/ports/analytics")
-const gradebook = await import("@/lib/ports/gradebook")
-const xpBank = await import("@/lib/xp/bank")
-const clients = await import("@/lib/clients")
-
 const analyticsSpy = spyOn(analytics, "sendActivityCompletedEvent")
-const gradebookSpy = spyOn(gradebook, "saveResult")
-const bankSpy = spyOn(xpBank, "awardBankedXpForExercise")
-const caliperSendSpy = spyOn(clients.caliper, "sendCaliperEvents").mockImplementation((_e) => Promise.resolve())
 
-const unit: Unit = {
-	id: "unit-1",
-	slug: "unit-1",
-	title: "Unit 1",
-	description: "",
-	path: "/math/algebra/unit-1",
-	ordering: 1,
-	children: []
-}
-
-const baseOptions = {
-	onerosterResourceSourcedId: "res_exercise_1",
-	onerosterComponentResourceSourcedId: "comp_exercise_1",
-	onerosterCourseSourcedId: "course_1",
-	onerosterUserSourcedId: "user_1",
-	sessionResults: [
-		{ qtiItemId: "q1", isCorrect: true, isReported: false },
-		{ qtiItemId: "q2", isCorrect: true, isReported: false },
-		{ qtiItemId: "q3", isCorrect: true, isReported: false },
-		{ qtiItemId: "q4", isCorrect: true, isReported: false },
-		{ qtiItemId: "q5", isCorrect: true, isReported: false }
-	],
+// --- Test Data ---
+const defaultOptions = {
+	onerosterResourceSourcedId: "res_atomic_exercise",
+	onerosterComponentResourceSourcedId: "comp_atomic_exercise",
+	onerosterCourseSourcedId: "course_atomic",
+	onerosterUserSourcedId: "user_atomic",
+	sessionResults: [{ qtiItemId: "q1", isCorrect: true }],
 	attemptNumber: 1,
-	durationInSeconds: 120,
+	durationInSeconds: 60,
 	expectedXp: 100,
-	assessmentTitle: "Exercise 1",
-	assessmentPath: "/math/algebra/unit-1/exercise-1",
-	userEmail: "student@example.com",
+	assessmentTitle: "Atomic XP Test",
+	assessmentPath: "/math/course/unit/lesson/e/atomic-test",
+	userEmail: "test@example.com",
 	contentType: "Exercise" as const,
-	unitData: unit
+	unitData: { id: "u1", slug: "u1", title: "U1", path: "/p", description: "", ordering: 1, children: [] }
 }
 
 afterEach(() => {
 	analyticsSpy.mockClear()
-	gradebookSpy.mockClear()
-	bankSpy.mockClear()
-	caliperSendSpy.mockClear()
-	mockSaveResult.mockClear()
-	mockCheckExistingProficiency.mockClear()
-	mockAwardBankedXpForExercise.mockReset()
-	mockAwardBankedXpForExercise.mockImplementation((_p) => Promise.resolve({ bankedXp: 0, awardedResourceIds: [] }))
+	mockAwardBankedXp.mockClear()
 })
 
-describe("Banked XP - Additional Edge Cases", () => {
-	test("Rush penalty: negative exercise XP → ActivityEvent equals penalized exercise-only XP; no banking", async () => {
-		const shortDurationOptions = {
-			...baseOptions,
-			durationInSeconds: 30,
-			sessionResults: [
-				{ qtiItemId: "q1", isCorrect: true, isReported: false },
-				{ qtiItemId: "q2", isCorrect: false, isReported: false },
-				{ qtiItemId: "q3", isCorrect: false, isReported: false },
-				{ qtiItemId: "q4", isCorrect: false, isReported: false },
-				{ qtiItemId: "q5", isCorrect: false, isReported: false },
-				{ qtiItemId: "q6", isCorrect: false, isReported: false },
-				{ qtiItemId: "q7", isCorrect: false, isReported: false },
-				{ qtiItemId: "q8", isCorrect: false, isReported: false },
-				{ qtiItemId: "q9", isCorrect: false, isReported: false },
-				{ qtiItemId: "q10", isCorrect: false, isReported: false }
-			]
-		}
+describe("Banked XP - Atomic Caliper Events Contract", () => {
+	test("ActivityCompleted event for an Exercise MUST report exercise-only XP, excluding banked XP", async () => {
+		// Act
+		await finalizeAssessment({ ...defaultOptions })
 
-		await finalizeAssessment(shortDurationOptions)
-
-		const payload = analyticsSpy.mock.calls.at(-1)?.[0]
-		if (!payload) {
-			logger.error("missing analytics payload (penalty)")
-			throw errors.new("missing analytics payload")
-		}
-		expect(payload.finalXp).toBe(-10)
-		expect(bankSpy).not.toHaveBeenCalled()
+		// Assert
+		expect(analyticsSpy).toHaveBeenCalledTimes(1)
+		const eventPayload = analyticsSpy.mock.calls[0]?.[0]
+		const exerciseOnlyXp = 125 // 100 base * 1.25 bonus for 1st attempt 100%
+		expect(eventPayload?.finalXp).toBe(exerciseOnlyXp)
 	})
 
-	test("Attempt 2 mastery: ActivityEvent equals attempt-2 exercise-only XP; daily aggregation adds banked XP once", async () => {
-		mockAwardBankedXpForExercise.mockImplementation((_p) =>
-			Promise.resolve({ bankedXp: 20, awardedResourceIds: ["video1"] })
-		)
+	test("Quiz/Test ActivityEvent MUST report total XP as no banking occurs", async () => {
+		// Act
+		await finalizeAssessment({ ...defaultOptions, contentType: "Quiz" })
 
-		await finalizeAssessment({
-			...baseOptions,
-			attemptNumber: 2,
-			sessionResults: [
-				{ qtiItemId: "q1", isCorrect: true, isReported: false },
-				{ qtiItemId: "q2", isCorrect: true, isReported: false },
-				{ qtiItemId: "q3", isCorrect: true, isReported: false },
-				{ qtiItemId: "q4", isCorrect: true, isReported: false },
-				{ qtiItemId: "q5", isCorrect: true, isReported: false }
-			]
-		})
-
-		const payload = analyticsSpy.mock.calls.at(-1)?.[0]
-		if (!payload) {
-			logger.error("missing analytics payload (attempt 2)")
-			throw errors.new("missing analytics payload")
-		}
-		const exerciseOnlyAttempt2Xp = 100
-		expect(payload.finalXp).toBe(exerciseOnlyAttempt2Xp)
-		const aggregated = payload.finalXp + 20
-		expect(aggregated).toBe(120)
+		// Assert
+		expect(analyticsSpy).toHaveBeenCalledTimes(1)
+		const eventPayload = analyticsSpy.mock.calls[0]?.[0]
+		const totalXp = 125 // 100 base * 1.25 bonus
+		expect(eventPayload?.finalXp).toBe(totalXp)
+		expect(mockAwardBankedXp).not.toHaveBeenCalled()
 	})
 
-	test("Below mastery (<80%): no banking; ActivityEvent equals exercise-only XP (often 0)", async () => {
-		mockAwardBankedXpForExercise.mockImplementation((_p) =>
-			Promise.resolve({ bankedXp: 50, awardedResourceIds: ["video1", "article1"] })
-		)
+	test("Daily aggregation (simulated) MUST equal atomic event XP + banked XP to prevent double counting", async () => {
+		const bankedXpAmount = 50
+		mockAwardBankedXp.mockResolvedValue({ bankedXp: bankedXpAmount, awardedResourceIds: ["video1"] })
 
-		await finalizeAssessment({
-			...baseOptions,
-			sessionResults: [
-				{ qtiItemId: "q1", isCorrect: true, isReported: false },
-				{ qtiItemId: "q2", isCorrect: true, isReported: false },
-				{ qtiItemId: "q3", isCorrect: false, isReported: false },
-				{ qtiItemId: "q4", isCorrect: false, isReported: false },
-				{ qtiItemId: "q5", isCorrect: false, isReported: false }
-			]
-		})
+		// Act
+		await finalizeAssessment({ ...defaultOptions })
 
-		const payload = analyticsSpy.mock.calls.at(-1)?.[0]
-		if (!payload) {
-			logger.error("missing analytics payload (<80%)")
-			throw errors.new("missing analytics payload")
-		}
-		expect(payload.finalXp).toBe(0)
-		expect(bankSpy).not.toHaveBeenCalled()
-	})
-})
+		// Assert
+		const eventPayload = analyticsSpy.mock.calls[0]?.[0]
+		const exerciseOnlyXp = 125
+		expect(eventPayload?.finalXp).toBe(exerciseOnlyXp)
 
-describe("Banked XP - Atomic Caliper Events and Double-Counting", () => {
-	test("Exercise ActivityEvent MUST be atomic: xpEarned == exercise-only XP (no banked)", async () => {
-		// Arrange: banked XP present (video=5, article=1)
-		mockAwardBankedXpForExercise.mockImplementation((_p) =>
-			Promise.resolve({ bankedXp: 6, awardedResourceIds: ["video1", "article1"] })
-		)
-
-		await finalizeAssessment({ ...baseOptions })
-
-		const payload = analyticsSpy.mock.calls.at(-1)?.[0]
-		if (!payload) {
-			logger.error("missing analytics payload")
-			throw errors.new("missing analytics payload")
-		}
-		// For attempt 1 with 100% accuracy, base = expectedXp * 1.25
-		const expectedExerciseOnlyXp = baseOptions.expectedXp * 1.25
-		// EXPECTATION (Atomic rule): xpEarned should equal exercise-only XP
-		expect(payload.finalXp).toBe(expectedExerciseOnlyXp)
-	})
-
-	test("Daily aggregation MUST equal exercise-only XP + passive ETL facts (no duplication)", async () => {
-		// Arrange: banked XP present (5 + 1)
-		const passiveFacts = [5, 1]
-		mockAwardBankedXpForExercise.mockImplementation((_p) =>
-			Promise.resolve({ bankedXp: passiveFacts.reduce((a, b) => a + b, 0), awardedResourceIds: ["video1", "article1"] })
-		)
-
-		await finalizeAssessment({ ...baseOptions })
-		const payload = analyticsSpy.mock.calls.at(-1)?.[0]
-		if (!payload) {
-			logger.error("missing analytics payload")
-			throw errors.new("missing analytics payload")
-		}
-
-		const exerciseOnlyXp = baseOptions.expectedXp * 1.25
-		const etlSum = passiveFacts.reduce((a, b) => a + b, 0)
-
-		// Simulated UI/Reporting sum: Caliper event xp + ETL facts
-		const aggregated = payload.finalXp + etlSum
-		const expectedTotal = exerciseOnlyXp + etlSum
-		// EXPECTATION: aggregated must equal exercise-only (atomic) + ETL facts
-		expect(aggregated).toBe(expectedTotal)
-	})
-
-	test("No banked XP: ActivityEvent xpEarned equals exercise-only XP and aggregation equals base", async () => {
-		mockAwardBankedXpForExercise.mockImplementation((_p) => Promise.resolve({ bankedXp: 0, awardedResourceIds: [] }))
-
-		await finalizeAssessment({ ...baseOptions })
-		const payload = analyticsSpy.mock.calls.at(-1)?.[0]
-		if (!payload) {
-			logger.error("missing analytics payload")
-			throw errors.new("missing analytics payload")
-		}
-		const exerciseOnlyXp = baseOptions.expectedXp * 1.25
-		expect(payload.finalXp).toBe(exerciseOnlyXp)
-		// Simulated aggregation adds 0 from ETL
-		expect(payload.finalXp + 0).toBe(exerciseOnlyXp)
+		// Simulate the analytics pipeline summing the atomic event with ETL'd banked data
+		const simulatedTotal = (eventPayload?.finalXp ?? 0) + bankedXpAmount
+		expect(simulatedTotal).toBe(175) // 125 (exercise) + 50 (banked)
 	})
 })

@@ -16,10 +16,10 @@ ignore_patterns:
   - "src/db/**"
   - "**/__snapshots__/**"
   - "docs/**"
-  - "**/*.test.ts"
   - "src/lib/widgets/**"
   - "src/lib/qti-generation/**"
   - "src/lib/qti-validation/**"
+  - "src/app/**"
 priority_rules:
   - score: 99
     pattern: "^rules/"

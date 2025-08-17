@@ -16,16 +16,24 @@ mock.module("@/lib/clients", () => ({
 	oneroster: {
 		getResult: mockGetResult,
 		putResult: mockPutResult
-	}
+	},
+	// Provide caliper and qti client stubs so other suites don't fail
+	caliper: { sendCaliperEvents: (_e: unknown) => Promise.resolve() },
+	qti: {}
 }))
 
 mock.module("@/lib/data/fetchers/oneroster", () => ({
-	getAllCoursesBySlug: (slug: string) => mockGetAllCoursesBySlug(slug)
+	getAllCoursesBySlug: (slug: string) => mockGetAllCoursesBySlug(slug),
+	// Export getClass as a no-op to avoid missing export in other tests
+	getClass: (_id: string) => Promise.resolve(null),
+	getActiveEnrollmentsForUser: (_u: string) => Promise.resolve([])
 }))
 
 mock.module("@/lib/cache", () => ({
 	userProgressByCourse,
-	invalidateCache: (key: string) => mockInvalidateCache(key)
+	invalidateCache: (key: string) => mockInvalidateCache(key),
+	// Provide redisCache passthrough to satisfy modules that import it during the suite
+	redisCache: async <T>(cb: () => Promise<T>, _keys: (string | number)[], _opts: { revalidate: number | false }) => cb()
 }))
 
 // Import after mocks
