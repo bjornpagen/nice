@@ -861,11 +861,6 @@ export function AssessmentStepper({
 		setAttemptCount(MAX_ATTEMPTS)
 		setIsAnswerChecked(true)
 		setShowFeedback(true)
-
-		// Move to next question after showing feedback
-		skipTimeoutRef.current = window.setTimeout(() => {
-			void goToNext()
-		}, 1500)
 	}
 
 	// OPEN REPORT POPOVER
@@ -937,9 +932,13 @@ export function AssessmentStepper({
 	const buttonConfig = getButtonConfig()
 
 	// Enable button only when all expected fields have been filled
-	const isButtonEnabled =
+	// Enable continue either when inputs are complete OR when feedback is being shown
+	const hasAllExpectedFilled =
 		expectedResponses.length > 0 &&
-		expectedResponses.every((id) => selectedResponses[id] !== "" && selectedResponses[id] !== undefined) &&
+		expectedResponses.every((id) => selectedResponses[id] !== "" && selectedResponses[id] !== undefined)
+
+	const isButtonEnabled =
+		(isAnswerChecked || hasAllExpectedFilled) &&
 		!isSubmitting &&
 		!isFinalizing &&
 		isAttemptReady
@@ -1001,6 +1000,7 @@ export function AssessmentStepper({
 							className="h-full w-full"
 							onResponseChange={handleResponseChange}
 							displayFeedback={isAnswerChecked && index === currentQuestionIndex}
+							showAllFeedback={isAnswerChecked && !isAnswerCorrect && index === currentQuestionIndex}
 						/>
 					</div>
 				))}

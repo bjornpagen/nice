@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="limited-resource-population-growth"
+    title="Effect of a limited resource on population growth"
+    time-dependent="false"
+    xml:lang="en-US">
+    <qti-response-declaration identifier="choice_interaction" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>A</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <!-- add hint/skip flag -->
+    <qti-response-declaration identifier="HINTREQUEST" cardinality="single" base-type="boolean"/>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+    <qti-item-body>
+        <p>What effect does a limited resource have on a population’s growth?</p>
+        <div><div><qti-choice-interaction response-identifier="choice_interaction" shuffle="true" min-choices="1" max-choices="1">
+            <qti-prompt>Select one answer.</qti-prompt>
+            <qti-simple-choice identifier="A"><p>A limited resource can cause a population’s growth to slow down.</p><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">A limited resource is one that does not have an endless supply. When a population becomes large enough, there may not be enough of the limited resource to go around. As a result, the population’s growth is likely to slow or stop.</qti-feedback-inline></qti-simple-choice>
+            <qti-simple-choice identifier="B"><p>A limited resource can cause a population to grow faster.</p><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">Organisms need resources to grow and stay healthy. When a resource is limited, organisms in a population may not get as much of it as they need. Therefore, a limited resource is unlikely to cause a population to grow faster.</qti-feedback-inline></qti-simple-choice>
+            <qti-simple-choice identifier="C"><p>A limited resource can cause a population to keep growing forever.</p><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">Organisms need resources to grow and stay healthy. When a resource is limited, organisms in a population may not get as much of it as they need. Therefore, a limited resource is unlikely to cause a population to continue growing indefinitely.</qti-feedback-inline></qti-simple-choice>
+        </qti-choice-interaction>
+        <!-- native hint control; does not count as an attempt -->
+        <p>
+            <qti-end-attempt-interaction response-identifier="HINTREQUEST" title="Show hint" count-attempt="false"/>
+        </p>
+        </div></div>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p>Correct! When a necessary resource is limited, individuals may not obtain enough to support rapid reproduction, so population growth tends to slow and can eventually level off.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p>Not quite. Organisms need adequate resources (such as food, water, and space) to grow and reproduce. When a resource is limited, growth typically slows rather than speeding up or continuing indefinitely.</p></qti-content-body>
+        </qti-feedback-block>
+        <!-- explicit skipped block -->
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="SKIPPED" show-hide="show">
+            <qti-content-body><p>You skipped this one. Review the explanations under each choice to learn.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+    <qti-response-processing>
+        <!-- branch 0: hint/skip requested -->
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-match>
+                    <qti-variable identifier="HINTREQUEST"/>
+                    <qti-base-value base-type="boolean">true</qti-base-value>
+                </qti-match>
+                <!-- mark as skipped and reveal ALL inline explanations -->
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">SKIPPED</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK-INLINE">
+                    <qti-multiple>
+                        <qti-base-value base-type="identifier">A</qti-base-value>
+                        <qti-base-value base-type="identifier">B</qti-base-value>
+                        <qti-base-value base-type="identifier">C</qti-base-value>
+                    </qti-multiple>
+                </qti-set-outcome-value>
+                <!-- do not change SCORE here -->
+            </qti-response-if>
+        </qti-response-condition>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="choice_interaction"/><qti-correct identifier="choice_interaction"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>

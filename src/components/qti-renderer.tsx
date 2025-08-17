@@ -15,6 +15,7 @@ interface QTIRendererProps {
 	height?: string | number
 	width?: string | number
 	displayFeedback?: boolean
+	showAllFeedback?: boolean
 }
 
 export function QTIRenderer({
@@ -26,7 +27,8 @@ export function QTIRenderer({
 	className = "",
 	height = "600px",
 	width = "100%",
-	displayFeedback = false
+	displayFeedback = false,
+	showAllFeedback = false
 }: QTIRendererProps) {
 	const iframeRef = React.useRef<HTMLIFrameElement>(null)
 
@@ -103,6 +105,19 @@ export function QTIRenderer({
 			)
 		}
 	}, [displayFeedback])
+
+	React.useEffect(() => {
+		if (!showAllFeedback) {
+			return
+		}
+		if (!iframeRef.current?.contentWindow) {
+			return
+		}
+		iframeRef.current.contentWindow.postMessage(
+			{ type: "QTI_SHOW_ALL_FEEDBACK" },
+			"*"
+		)
+	}, [showAllFeedback])
 
 	// Use 100% for both dimensions when they are percentage values
 	const iframeStyle: React.CSSProperties = {
