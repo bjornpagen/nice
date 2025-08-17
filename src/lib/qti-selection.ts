@@ -158,7 +158,7 @@ export function applyQtiSelectionAndOrdering(
 								guard++
 							}
 						}
-						const perAssessmentOffset = fnv1aHash(`${resourceId}:offset`) % n
+						const perAssessmentOffset = fnv1aHash(`${resourceId}:${assessmentTest.identifier}:${sectionId}:offset`) % n
 						const offset = (attemptIndex * k + perAssessmentOffset) % n
 						indices = Array.from({ length: n }, (_, i) => (offset + i * step) % n)
 						logger.debug("applyQtiSelectionAndOrdering: stride candidate sequence", {
@@ -171,7 +171,7 @@ export function applyQtiSelectionAndOrdering(
 						})
 					} else {
 						// No shuffle: preserve author order modulo rotation
-						const perAssessmentOffset = fnv1aHash(`${resourceId}:offset`) % n
+						const perAssessmentOffset = fnv1aHash(`${resourceId}:${assessmentTest.identifier}:${sectionId}:offset`) % n
 						const offset = (attemptIndex * k + perAssessmentOffset) % n
 						indices = Array.from({ length: n }, (_, i) => (offset + i) % n)
 						logger.debug("applyQtiSelectionAndOrdering: sequential candidate sequence", {
