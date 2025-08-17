@@ -253,3 +253,100 @@ export async function sendTimeSpentEvent(options: {
 		})
 	}
 }
+
+// Sends an ActivityEvent that ONLY reports xpEarned for banked XP awards
+export async function sendBankedXpAwardedEvent(options: {
+	actor: NiceCaliperActor
+	context: NiceCaliperContext
+	awardedXp: number
+	correlationId: string
+}): Promise<void> {
+	logger.info("sending banked xp awarded event via analytics port", {
+		actorId: options.actor.id,
+		activityId: options.context.activity?.id,
+		awardedXp: options.awardedXp,
+		correlationId: options.correlationId
+	})
+
+	// Invariant checks aligned with other Caliper senders
+	if (options.context.app?.name !== NICE_APP_NAME) {
+		logger.error("invalid caliper app name", {
+			appName: options.context.app?.name,
+			correlationId: options.correlationId
+		})
+		throw errors.new("caliper app name invalid")
+	}
+	if (!options.context.id.startsWith(NICE_SENSOR_DOMAIN)) {
+		logger.error("invalid caliper context id domain", { id: options.context.id, correlationId: options.correlationId })
+		throw errors.new("caliper context id domain invalid")
+	}
+	const userPrefix = `${NICE_ONEROSTER_BASE}/ims/oneroster/rostering/v1p2/users/`
+	if (!options.actor.id.startsWith(userPrefix)) {
+		logger.error("invalid caliper actor id domain", { actorId: options.actor.id, correlationId: options.correlationId })
+		throw errors.new("caliper actor id domain invalid")
+	}
+	if (options.context.course?.id) {
+		const coursePrefix = `${NICE_ONEROSTER_BASE}/ims/oneroster/rostering/v1p2/courses/`
+		if (!options.context.course.id.startsWith(coursePrefix)) {
+			logger.error("invalid caliper course id domain", {
+				courseId: options.context.course.id,
+				correlationId: options.correlationId
+			})
+			throw errors.new("caliper course id domain invalid")
+		}
+	}
+
+	if (!options.context.activity?.id) {
+		logger.error("CRITICAL: Missing activity ID in context for banked XP event", {
+			contextId: options.context.id,
+			correlationId: options.correlationId
+		})
+		throw errors.new("activity ID is required for Caliper event")
+	}
+
+	// Normalize activity id to legacy format
+	const normalizedResourceId = extractResourceIdFromCompoundId(options.context.activity.id)
+	options.context.activity.id = normalizeCaliperId(normalizedResourceId)
+
+	const metrics: Array<{ type: "xpEarned"; value: number }> = [{ type: "xpEarned", value: options.awardedXp }]
+
+	const event = {
+		"@context": CALIPER_CONTEXT_URL,
+		id: randomUUID(),
+		type: "ActivityEvent" as const,
+		profile: "TimebackProfile" as const,
+		action: "Completed" as const,
+		actor: options.actor,
+		object: options.context,
+		eventTime: new Date().toISOString(),
+		generated: {
+			id: `urn:uuid:${randomUUID()}`,
+			type: "TimebackActivityMetricsCollection" as const,
+			items: metrics
+		}
+	}
+
+	const envelope = {
+		sensor: SENSOR_ID,
+		sendTime: new Date().toISOString(),
+		dataVersion: "http://purl.imsglobal.org/ctx/caliper/v1p2" as const,
+		data: [event]
+	}
+
+	const validationResult = CaliperEnvelopeSchema.safeParse(envelope)
+	if (!validationResult.success) {
+		logger.error("failed to validate caliper envelope for banked xp", {
+			error: validationResult.error,
+			correlationId: options.correlationId
+		})
+		throw errors.new("invalid caliper envelope structure for banked xp")
+	}
+
+	const result = await errors.try(caliper.sendCaliperEvents(envelope))
+	if (result.error) {
+		logger.error("failed to send caliper banked xp event", {
+			error: result.error,
+			correlationId: options.correlationId
+		})
+	}
+}
