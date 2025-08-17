@@ -105,6 +105,11 @@ conclusion from xml tests:
 - the api accepts `HINTREQUEST` (as string) and applies outcomes (bottom feedback proves it).
 - the embedded renderer does not honor multi-value `FEEDBACK‑INLINE`, and evidence suggests it may ignore `FEEDBACK‑INLINE` entirely during hint/skip (displaying a fixed choice’s inline or the correct-only path in other themes). renderer code needs to iterate the identifiers and render each inline block even when no selection exists.
 
+> additional renderer observations (critical)
+>
+> - the native `<qti-end-attempt-interaction>` button did not render in the embedded player theme we’re using (no visible control). we therefore exercised the hint branch via the debug page’s host-side call to `process-response`.
+> - attempts to surface hints using `infoControl` did not render in the embedded player either (the theme appears not to support an info-control affordance). this further supports the need for a renderer PR for any in-item hint affordances.
+
 ---
 
 ### host → player custom messages (what exists vs needed)
@@ -136,8 +141,8 @@ conclusion from xml tests:
 ### options we enumerated (host/content/renderer)
 
 1) host overlay (works today):
-   - add server action `getQuestionHints(qtiItemId)` that fetches `rawXml` and extracts all `<qti-feedback-inline>` per choice.
-   - on skip, render a host panel below the iframe listing each choice and its explanation. zero renderer reliance.
+   - status: explored and validated feasibility; we used `scripts/print-qti-item.ts` to confirm the api returns both `content` and `rawXml` and that `rawXml` contains the `<qti-feedback-inline>` blocks we need. we have not yet wired the extractor into `assessment-stepper.tsx` ui, but this is the most reliable path requiring no renderer or xml changes.
+   - plan: add server action `getQuestionHints(qtiItemId)` (fetch `rawXml`, parse choice feedback) and render a host panel beneath the iframe on skip showing all explanations.
 
 2) spec-compliant in-item (ideal ux, requires renderer):
    - use `endAttemptInteraction` + hint branch in responseProcessing to set `FEEDBACK‑INLINE=[A,B,C]` and optionally `FEEDBACK=SKIPPED` / `HINT_ALL` with `count-attempt=false`.
@@ -145,6 +150,7 @@ conclusion from xml tests:
 
 3) infoControl (spec-compliant alternative):
    - surface hint content via `infoControl` (no response processing, no scoring impact). different ux (not inline choices).
+   - status: attempted; the embedded renderer did not render an infoControl affordance in our theme, so this path is blocked without renderer work.
 
 4) renderer PR (inbound protocol):
    - implement and document: `QTI_DISPLAY_FEEDBACK`, `QTI_PROCESS_RESPONSE`, optional `QTI_SHOW_ALL_FEEDBACK`.
@@ -160,13 +166,15 @@ conclusion from xml tests:
 - what works now:
   - bottom feedback shows correctly on skip/hint via `HINTREQUEST="true"` (string).
   - host visibility toggle works (`QTI_DISPLAY_FEEDBACK`).
+  - we validated that the api returns `rawXml` for a reliable host overlay extraction path.
 
 - what does not work in the renderer:
   - showing ALL per-choice inline explanations based on `FEEDBACK‑INLINE` (multi or single) when no selection exists.
   - recognizing inbound host messages beyond visibility toggling.
+  - rendering of in-item hint affordances: `endAttemptInteraction` and `infoControl` were not displayed by the current embed theme.
 
 - recommended path to ship immediately:
-  - implement host overlay panel on skip with explanations extracted from `rawXml`.
+  - implement host overlay panel on skip with explanations extracted from `rawXml` (no renderer or xml changes required).
 
 - recommended renderer improvements (PR scope):
   1) implement inbound messages (`QTI_PROCESS_RESPONSE`, `QTI_SHOW_ALL_FEEDBACK`).
