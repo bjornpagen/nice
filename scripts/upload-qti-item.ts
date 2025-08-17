@@ -53,11 +53,11 @@ async function main(): Promise<void> {
 }
 
 async function runCli(): Promise<void> {
-    const result = await errors.try(main())
-    if (result.error) {
-        logger.error("operation failed", { error: result.error })
-        process.exit(1)
-    }
+	const result = await errors.try(main())
+	if (result.error) {
+		logger.error("operation failed", { error: result.error })
+		process.exit(1)
+	}
 }
 
 void runCli()

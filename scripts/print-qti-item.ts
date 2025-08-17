@@ -39,7 +39,7 @@ async function main(): Promise<void> {
 		const contentUnknown = item.content
 		const content = isRecord(contentUnknown) ? contentUnknown : undefined
 		const interactionsUnknown = content?.interactions
-		const interactions = isRecord(interactionsUnknown) ? (interactionsUnknown as Record<string, unknown>) : undefined
+		const interactions = isRecord(interactionsUnknown) ? interactionsUnknown : undefined
 		const choiceKeys = interactions ? Object.keys(interactions) : []
 		const firstInteraction = choiceKeys[0]
 		let feedbackInline: Array<{ id: unknown; feedback: unknown }> | undefined

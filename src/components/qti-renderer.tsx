@@ -113,10 +113,7 @@ export function QTIRenderer({
 		if (!iframeRef.current?.contentWindow) {
 			return
 		}
-		iframeRef.current.contentWindow.postMessage(
-			{ type: "QTI_SHOW_ALL_FEEDBACK" },
-			"*"
-		)
+		iframeRef.current.contentWindow.postMessage({ type: "QTI_SHOW_ALL_FEEDBACK" }, "*")
 	}, [showAllFeedback])
 
 	// Use 100% for both dimensions when they are percentage values

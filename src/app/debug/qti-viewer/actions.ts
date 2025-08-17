@@ -55,7 +55,11 @@ export async function getQtiHints(identifier: string): Promise<QtiHintsResponse>
 	// Extract question text and hints from rawXml
 	const hintsResult = extractHintsFromXml(rawXml)
 
-	logger.debug("extracted hints", { identifier, hintCount: hintsResult.hints.length, questionText: hintsResult.questionText })
+	logger.debug("extracted hints", {
+		identifier,
+		hintCount: hintsResult.hints.length,
+		questionText: hintsResult.questionText
+	})
 
 	return hintsResult
 }
@@ -77,7 +81,7 @@ function extractHintsFromXml(xml: string): QtiHintsResponse {
 	// First find the correct-response block, then extract the value from within it
 	const correctResponseBlockPattern = /<qti-correct-response[^>]*>(.*?)<\/qti-correct-response>/s
 	const correctResponseBlockMatch = correctResponseBlockPattern.exec(xml)
-	
+
 	let correctAnswer: string | undefined
 	if (correctResponseBlockMatch?.[1]) {
 		const correctResponseBlock = correctResponseBlockMatch[1]
@@ -85,9 +89,9 @@ function extractHintsFromXml(xml: string): QtiHintsResponse {
 		const valueMatch = valuePattern.exec(correctResponseBlock)
 		correctAnswer = valueMatch?.[1]?.trim()
 	}
-	
-	logger.debug("parsing correct answer", { 
-		correctAnswer, 
+
+	logger.debug("parsing correct answer", {
+		correctAnswer,
 		hasCorrectResponseBlock: !!correctResponseBlockMatch,
 		correctResponseBlockContent: correctResponseBlockMatch?.[1]?.substring(0, 100)
 	})
@@ -99,10 +103,10 @@ function extractHintsFromXml(xml: string): QtiHintsResponse {
 	while (true) {
 		choiceMatch = choicePattern.exec(xml)
 		if (choiceMatch === null) break
-		
+
 		const choiceId = choiceMatch[1]
 		const choiceContent = choiceMatch[2]
-		
+
 		if (!choiceId || !choiceContent) continue
 
 		// Extract the choice text by removing the feedback-inline block

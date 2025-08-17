@@ -139,31 +139,37 @@ export function Content() {
 							<p className="text-muted-foreground italic">No hints found for this question.</p>
 						) : (
 							hintsData.hints.map((hint) => (
-								<div 
-									key={hint.choiceId} 
+								<div
+									key={hint.choiceId}
 									className={`border rounded-lg p-4 ${
-										hint.isCorrect 
-											? "bg-green-50 border-green-200 dark:bg-green-950 dark:border-green-800" 
+										hint.isCorrect
+											? "bg-green-50 border-green-200 dark:bg-green-950 dark:border-green-800"
 											: "bg-red-50 border-red-200 dark:bg-red-950 dark:border-red-800"
 									}`}
 								>
-									<div className={`font-medium text-sm mb-2 flex items-center gap-2 ${
-										hint.isCorrect ? "text-green-700 dark:text-green-300" : "text-red-700 dark:text-red-300"
-									}`}>
+									<div
+										className={`font-medium text-sm mb-2 flex items-center gap-2 ${
+											hint.isCorrect ? "text-green-700 dark:text-green-300" : "text-red-700 dark:text-red-300"
+										}`}
+									>
 										<span>Choice {hint.choiceId}</span>
-										<span className={`px-2 py-0.5 text-xs font-medium rounded-full ${
-											hint.isCorrect 
-												? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" 
-												: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
-										}`}>
+										<span
+											className={`px-2 py-0.5 text-xs font-medium rounded-full ${
+												hint.isCorrect
+													? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+													: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
+											}`}
+										>
 											{hint.isCorrect ? "Correct" : "Incorrect"}
 										</span>
 									</div>
-									<div className={`mb-3 p-2 rounded border-l-2 ${
-										hint.isCorrect 
-											? "bg-green-25 border-green-300 dark:bg-green-900/50 dark:border-green-600" 
-											: "bg-red-25 border-red-300 dark:bg-red-900/50 dark:border-red-600"
-									}`}>
+									<div
+										className={`mb-3 p-2 rounded border-l-2 ${
+											hint.isCorrect
+												? "bg-green-25 border-green-300 dark:bg-green-900/50 dark:border-green-600"
+												: "bg-red-25 border-red-300 dark:bg-red-900/50 dark:border-red-600"
+										}`}
+									>
 										<div className="font-medium text-sm mb-1">Answer:</div>
 										<div className="text-sm">{hint.choiceText}</div>
 									</div>

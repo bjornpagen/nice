@@ -937,11 +937,7 @@ export function AssessmentStepper({
 		expectedResponses.length > 0 &&
 		expectedResponses.every((id) => selectedResponses[id] !== "" && selectedResponses[id] !== undefined)
 
-	const isButtonEnabled =
-		(isAnswerChecked || hasAllExpectedFilled) &&
-		!isSubmitting &&
-		!isFinalizing &&
-		isAttemptReady
+	const isButtonEnabled = (isAnswerChecked || hasAllExpectedFilled) && !isSubmitting && !isFinalizing && isAttemptReady
 
 	return (
 		<div className="flex flex-col h-full bg-white">
