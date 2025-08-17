@@ -4,8 +4,11 @@ import { randomUUID } from "node:crypto"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
+import { env } from "@/env"
+import { sendCaliperBankedXpAwardedEvent } from "@/lib/actions/caliper"
 import { extractResourceIdFromCompoundId } from "@/lib/caliper/utils"
 import { oneroster } from "@/lib/clients"
+import { CALIPER_SUBJECT_MAPPING, isSubjectSlug } from "@/lib/constants/subjects"
 import { calculateBankedXpForResources } from "@/lib/data/fetchers/caliper"
 import type { Resource } from "@/lib/oneroster"
 import * as gradebook from "@/lib/ports/gradebook"
@@ -328,6 +331,45 @@ export async function awardBankedXpForExercise(params: {
 				// Continue with other resources even if one fails
 			} else {
 				logger.info("saved banked xp assessment result", { resourceId })
+
+				// After successful gradebook upsert, send Caliper banked XP event (best-effort)
+				const userResult = await errors.try(oneroster.getAllUsers({ filter: `sourcedId='${userId}'` }))
+				if (userResult.error) {
+					logger.error("failed to fetch user for banked xp caliper event", { error: userResult.error, userId })
+				} else {
+					const user = userResult.data[0]
+					if (!user || !user.email) {
+						logger.error("missing user email for banked xp caliper event", { userId })
+					} else {
+						const subjectSlug = String(resource.metadata?.khanSubjectSlug ?? "")
+						const mappedSubject = isSubjectSlug(subjectSlug) ? CALIPER_SUBJECT_MAPPING[subjectSlug] : "None"
+						const awardedXp = typeof resource.metadata?.xp === "number" ? resource.metadata.xp : 0
+						const actor = {
+							id: `${env.TIMEBACK_ONEROSTER_SERVER_URL}/ims/oneroster/rostering/v1p2/users/${userId}`,
+							type: "TimebackUser" as const,
+							email: user.email
+						}
+						const context = {
+							id: `${env.NEXT_PUBLIC_APP_DOMAIN}/resources/${resource.sourcedId}`,
+							type: "TimebackActivityContext" as const,
+							subject: mappedSubject,
+							app: { name: "Nice Academy" },
+							course: {
+								name: "Unknown",
+								id: `${env.TIMEBACK_ONEROSTER_SERVER_URL}/ims/oneroster/rostering/v1p2/courses/${params.onerosterCourseSourcedId}`
+							},
+							activity: { name: resource.title, id: resource.sourcedId },
+							process: false
+						}
+
+						const caliperResult = await errors.try(sendCaliperBankedXpAwardedEvent(actor, context, awardedXp))
+						if (caliperResult.error) {
+							logger.error("failed to send banked xp caliper event", { error: caliperResult.error, userId, resourceId })
+						} else {
+							logger.info("sent banked xp caliper event", { userId, resourceId, awardedXp })
+						}
+					}
+				}
 			}
 		}
 	}
