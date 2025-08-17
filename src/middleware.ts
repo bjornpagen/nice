@@ -6,12 +6,12 @@ import * as logger from "@superbuilders/slog"
 // Define which routes should be protected (require authentication)
 const isProtectedRoute = createRouteMatcher([
 	"/profile(.*)", // Protect all profile routes
-	"/debug/questions(.*)", // Protect debug questions specifically
+	"/debug/questions/review(.*)", // Protect only the specific review route
 	"/((?!api|login|sign-up|debug|demo|test-redirect|sso-callback|a|e|v).*)" // Protect all subject routes (exclude public routes)
 ])
 
 // Route matcher for debug questions
-const isDebugQuestionsRoute = createRouteMatcher(["/debug/questions(.*)"])
+const isDebugQuestionsRoute = createRouteMatcher(["/debug/questions/review(.*)"])
 
 // Define which routes authenticated users shouldn't access
 const isAuthRoute = createRouteMatcher([
