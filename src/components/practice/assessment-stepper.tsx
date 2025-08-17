@@ -630,9 +630,7 @@ export function AssessmentStepper({
 		setIsSubmitting(true)
 		setShowFeedback(false)
 
-		// Extract user source ID if available (for authenticated users)
-		const onerosterUserSourcedId = userSourceId
-		const isAuthenticated = typeof onerosterUserSourcedId === "string"
+		const isAuthenticated = typeof userSourceId === "string"
 
 		// Determine response format based on the question type
 		const responseIdentifiers = Object.keys(selectedResponses)
@@ -674,10 +672,9 @@ export function AssessmentStepper({
 				currentQuestion.id,
 				responseValue,
 				responseIdentifier,
-				isAuthenticated ? onerosterUserSourcedId : undefined,
 				isAuthenticated ? onerosterComponentResourceSourcedId : undefined,
 				isInteractiveAssessment && isAuthenticated,
-				attemptNumber - 1 // Pass assessment attempt number (0-indexed)
+				attemptNumber - 1
 			)
 		)
 

@@ -5,6 +5,7 @@ import { randomUUID } from "node:crypto"
 import { auth, clerkClient } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { getCurrentUserSourcedId, isUserAuthorizedForQuestion } from "@/lib/authorization"
 import { oneroster, qti } from "@/lib/clients"
 import { XP_PROFICIENCY_THRESHOLD } from "@/lib/constants/progress"
 import { isSubjectSlug } from "@/lib/constants/subjects"
@@ -34,7 +35,7 @@ import { assertPercentageInteger } from "@/lib/utils/score"
  *
  * @param qtiItemId - The QTI assessment item ID (e.g., nice_question123)
  * @param selectedResponse - The user's selected response
- * @param onerosterUserSourcedId - The user's OneRoster sourcedId
+ * @param responseIdentifier - The identifier for the response being submitted
  * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId - used by PowerPath
  * @param isInteractiveAssessment - Whether this is a quiz or test (vs exercise)
  * @param assessmentAttemptNumber - The attempt number (0 = first attempt)
@@ -43,11 +44,11 @@ export async function processQuestionResponse(
 	qtiItemId: string,
 	selectedResponse: string | unknown[] | Record<string, unknown>,
 	responseIdentifier: string,
-	onerosterUserSourcedId?: string,
 	onerosterComponentResourceSourcedId?: string,
 	isInteractiveAssessment?: boolean,
-	assessmentAttemptNumber?: number // REMOVED: _isLastQuestion
+	assessmentAttemptNumber?: number
 ) {
+	const onerosterUserSourcedId = await getCurrentUserSourcedId()
 	logger.debug("processing question response", {
 		qtiItemId,
 		responseIdentifier,
@@ -429,6 +430,14 @@ export async function flagQuestionAsReported(questionId: string, report: string)
 	if (!clerkUserId) {
 		logger.error("flag question: user not authenticated", { questionId })
 		throw errors.new("user not authenticated")
+	}
+
+	const userSourcedId = await getCurrentUserSourcedId()
+
+	const isAuthorized = await isUserAuthorizedForQuestion(userSourcedId, questionId)
+	if (!isAuthorized) {
+		logger.warn("unauthorized attempt to report question", { clerkUserId, userSourcedId, questionId })
+		throw errors.new("user not authorized to report this question")
 	}
 
 	logger.info("flagging question as reported", { clerkUserId, questionId, report })
