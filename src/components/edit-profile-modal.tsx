@@ -1,6 +1,7 @@
 "use client"
 
 import * as errors from "@superbuilders/errors"
+import { useRouter } from "next/navigation"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
@@ -22,6 +23,7 @@ interface EditProfileModalProps {
 export function EditProfileModal({ open, onOpenChange, initialData }: EditProfileModalProps) {
 	const [formData, setFormData] = React.useState(initialData)
 	const [isSubmitting, setIsSubmitting] = React.useState(false)
+	const router = useRouter()
 
 	// Reset form data when modal opens/closes or initial data changes
 	React.useEffect(() => {
@@ -51,7 +53,7 @@ export function EditProfileModal({ open, onOpenChange, initialData }: EditProfil
 
 		// Close modal and refresh the page to show updated data
 		onOpenChange(false)
-		window.location.reload()
+		router.refresh()
 	}
 
 	return (

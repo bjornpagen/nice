@@ -65,8 +65,8 @@ export async function updateUserProfile(data: z.infer<typeof updateProfileSchema
 
 	await clerk.users.updateUserMetadata(userId, metadata)
 
-	// Revalidate the profile page to show updated data
-	revalidatePath("/profile")
+	// Revalidate the entire application layout to show updated data in the header
+	revalidatePath("/", "layout")
 
 	return { success: true }
 }
