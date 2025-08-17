@@ -1,6 +1,5 @@
 import { afterEach, describe, expect, mock, spyOn, test } from "bun:test"
 import * as errors from "@superbuilders/errors"
-import * as logger from "@superbuilders/slog"
 import { finalizeAssessment } from "@/lib/actions/assessment"
 import type { Unit } from "@/lib/types/domain"
 
@@ -162,5 +161,3 @@ describe("Caliper Event Dispatch", () => {
 		expect(timeSpentSpy).not.toHaveBeenCalled()
 	})
 })
-
-

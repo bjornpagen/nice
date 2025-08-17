@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test"
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import type { z } from "zod"
 import { generatePopulationChangeEventGraph, PopulationChangeEventGraphPropsSchema } from "@/lib/widgets/generators"
 
@@ -35,7 +37,12 @@ test("population change event graph - initial question prompt", () => {
 		showLegend: false
 	} satisfies PopulationChangeEventGraphInput
 
-	const parsed = PopulationChangeEventGraphPropsSchema.parse(input)
+	const validation = PopulationChangeEventGraphPropsSchema.safeParse(input)
+	if (!validation.success) {
+		logger.error("input validation", { error: validation.error })
+		throw errors.wrap(validation.error, "input validation")
+	}
+	const parsed = validation.data
 	const svg = generatePopulationChangeEventGraph(parsed)
 	expect(svg).toMatchSnapshot()
 })
@@ -78,7 +85,12 @@ test("population change event graph - choice A steady population", () => {
 		showLegend: true
 	} satisfies PopulationChangeEventGraphInput
 
-	const parsed = PopulationChangeEventGraphPropsSchema.parse(input)
+	const validation = PopulationChangeEventGraphPropsSchema.safeParse(input)
+	if (!validation.success) {
+		logger.error("input validation", { error: validation.error })
+		throw errors.wrap(validation.error, "input validation")
+	}
+	const parsed = validation.data
 	const svg = generatePopulationChangeEventGraph(parsed)
 	expect(svg).toMatchSnapshot()
 })
@@ -121,7 +133,12 @@ test("population change event graph - choice B decreased population", () => {
 		showLegend: true
 	} satisfies PopulationChangeEventGraphInput
 
-	const parsed = PopulationChangeEventGraphPropsSchema.parse(input)
+	const validation = PopulationChangeEventGraphPropsSchema.safeParse(input)
+	if (!validation.success) {
+		logger.error("input validation", { error: validation.error })
+		throw errors.wrap(validation.error, "input validation")
+	}
+	const parsed = validation.data
 	const svg = generatePopulationChangeEventGraph(parsed)
 	expect(svg).toMatchSnapshot()
 })
@@ -164,7 +181,12 @@ test("population change event graph - choice C increased population", () => {
 		showLegend: true
 	} satisfies PopulationChangeEventGraphInput
 
-	const parsed = PopulationChangeEventGraphPropsSchema.parse(input)
+	const validation = PopulationChangeEventGraphPropsSchema.safeParse(input)
+	if (!validation.success) {
+		logger.error("input validation", { error: validation.error })
+		throw errors.wrap(validation.error, "input validation")
+	}
+	const parsed = validation.data
 	const svg = generatePopulationChangeEventGraph(parsed)
 	expect(svg).toMatchSnapshot()
 })
@@ -208,7 +230,12 @@ test("population change event graph - snake body length example legend does not 
 		showLegend: true
 	} satisfies PopulationChangeEventGraphInput
 
-	const parsed = PopulationChangeEventGraphPropsSchema.parse(input)
+	const validation = PopulationChangeEventGraphPropsSchema.safeParse(input)
+	if (!validation.success) {
+		logger.error("input validation", { error: validation.error })
+		throw errors.wrap(validation.error, "input validation")
+	}
+	const parsed = validation.data
 	const svg = generatePopulationChangeEventGraph(parsed)
 	// Assert that legend text is within the viewBox by checking approximate placement
 	// We ensure no negative X positions for legend text and lines by basic substring checks

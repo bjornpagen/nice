@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test"
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import type { z } from "zod"
 import { generateLineGraph, LineGraphPropsSchema } from "@/lib/widgets/generators"
 
@@ -52,7 +54,12 @@ test("line graph - Arizona city temperatures", () => {
 	} satisfies LineGraphInput
 
 	// Validate the input
-	const parsed = LineGraphPropsSchema.parse(input)
+	const parseResult = errors.trySync(() => LineGraphPropsSchema.parse(input))
+	if (parseResult.error) {
+		logger.error("input validation", { error: parseResult.error })
+		throw errors.wrap(parseResult.error, "input validation")
+	}
+	const parsed = parseResult.data
 
 	// Generate the SVG
 	const svg = generateLineGraph(parsed)
@@ -107,7 +114,12 @@ test("line graph - collared lemmings and stoats (dual y-axis)", () => {
 	} satisfies LineGraphInput
 
 	// Validate the input
-	const parsed = LineGraphPropsSchema.parse(input)
+	const parseResult = errors.trySync(() => LineGraphPropsSchema.parse(input))
+	if (parseResult.error) {
+		logger.error("input validation", { error: parseResult.error })
+		throw errors.wrap(parseResult.error, "input validation")
+	}
+	const parsed = parseResult.data
 
 	// Generate the SVG
 	const svg = generateLineGraph(parsed)
@@ -155,7 +167,12 @@ test("line graph - environmental change flowering time shift (legend below, labe
 		showLegend: true
 	} satisfies LineGraphInput
 
-	const parsed = LineGraphPropsSchema.parse(input)
+	const parseResult = errors.trySync(() => LineGraphPropsSchema.parse(input))
+	if (parseResult.error) {
+		logger.error("input validation", { error: parseResult.error })
+		throw errors.wrap(parseResult.error, "input validation")
+	}
+	const parsed = parseResult.data
 	const svg = generateLineGraph(parsed)
 
 	// Basic assertions to ensure legend and labels exist / are below chart
@@ -227,7 +244,12 @@ test("line graph - AZ cities temp elevation (title wrap + label thinning)", () =
 		showLegend: true
 	} satisfies LineGraphInput
 
-	const parsed = LineGraphPropsSchema.parse(input)
+	const parseResult = errors.trySync(() => LineGraphPropsSchema.parse(input))
+	if (parseResult.error) {
+		logger.error("input validation", { error: parseResult.error })
+		throw errors.wrap(parseResult.error, "input validation")
+	}
+	const parsed = parseResult.data
 	const svg = generateLineGraph(parsed)
 	expect(svg).toMatchSnapshot()
 })

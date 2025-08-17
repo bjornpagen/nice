@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test"
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import type { z } from "zod"
 import { ConceptualGraphPropsSchema, generateConceptualGraph } from "@/lib/widgets/generators"
 
@@ -34,7 +36,12 @@ test("conceptual graph - frog population size", () => {
 	} satisfies ConceptualGraphInput
 
 	// Validate the input
-	const parsed = ConceptualGraphPropsSchema.parse(input)
+	const parseResult = errors.trySync(() => ConceptualGraphPropsSchema.parse(input))
+	if (parseResult.error) {
+		logger.error("input validation", { error: parseResult.error })
+		throw errors.wrap(parseResult.error, "input validation")
+	}
+	const parsed = parseResult.data
 
 	// Generate the SVG
 	const svg = generateConceptualGraph(parsed)

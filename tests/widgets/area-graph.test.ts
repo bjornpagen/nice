@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test"
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import type { z } from "zod"
 import { AreaGraphPropsSchema, generateAreaGraph } from "@/lib/widgets/generators"
 
@@ -47,7 +49,12 @@ test("area graph - U.S. energy consumption by source (wrapping title)", () => {
 	} satisfies AreaGraphInput
 
 	// Validate the input
-	const parsed = AreaGraphPropsSchema.parse(input)
+	const parseResult = errors.trySync(() => AreaGraphPropsSchema.parse(input))
+	if (parseResult.error) {
+		logger.error("input validation", { error: parseResult.error })
+		throw errors.wrap(parseResult.error, "input validation")
+	}
+	const parsed = parseResult.data
 
 	// Generate the SVG
 	const svg = generateAreaGraph(parsed)

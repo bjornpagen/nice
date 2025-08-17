@@ -284,7 +284,12 @@ export async function fetchProgressPageData(): Promise<ProgressPageData> {
 		throw errors.new("user not authenticated")
 	}
 
-	const metadata = ClerkUserPublicMetadataSchema.parse(user.publicMetadata)
+	const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+	if (!metadataValidation.success) {
+		logger.error("input validation", { error: metadataValidation.error, userId: user.id })
+		return { activities: [], exerciseMinutes: 0, totalLearningMinutes: 0, totalXpEarned: 0 }
+	}
+	const metadata = metadataValidation.data
 	if (!metadata.sourceId) {
 		logger.warn("user has no sourceId, cannot fetch progress", { userId: user.id })
 		return { activities: [], exerciseMinutes: 0, totalLearningMinutes: 0, totalXpEarned: 0 }

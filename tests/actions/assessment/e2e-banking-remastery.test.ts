@@ -78,8 +78,8 @@ const clients = await import("@/lib/clients")
 // Ensure caliper client exists
 // @ts-ignore
 if (!clients.caliper?.sendCaliperEvents) {
-  // @ts-ignore
-  clients.caliper = { sendCaliperEvents: (_e: unknown) => Promise.resolve() }
+	// @ts-ignore
+	clients.caliper = { sendCaliperEvents: (_e: unknown) => Promise.resolve() }
 }
 
 const analyticsSpy = spyOn(analytics, "sendActivityCompletedEvent")
@@ -218,5 +218,3 @@ describe("End-to-end banking across lesson → exercise → quiz → exercise re
 		expect(bankSpy).toHaveBeenCalledTimes(2)
 	})
 })
-
-

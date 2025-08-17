@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test"
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import type { z } from "zod"
 import { generatePopulationBarChart, PopulationBarChartPropsSchema } from "@/lib/widgets/generators"
 
@@ -39,7 +41,12 @@ test("population bar chart - elk population 1990-2005", () => {
 		gridColor: "#CCCCCC"
 	} satisfies PopulationBarChartInput
 
-	const parsed = PopulationBarChartPropsSchema.parse(input)
+	const validation = PopulationBarChartPropsSchema.safeParse(input)
+	if (!validation.success) {
+		logger.error("input validation", { error: validation.error })
+		throw errors.wrap(validation.error, "input validation")
+	}
+	const parsed = validation.data
 	const svg = generatePopulationBarChart(parsed)
 	expect(svg).toMatchSnapshot()
 })
@@ -75,7 +82,12 @@ test("population bar chart - auto label thinning when visible list empty", () =>
 		gridColor: "#CCCCCC"
 	} satisfies PopulationBarChartInput
 
-	const parsed = PopulationBarChartPropsSchema.parse(input)
+	const validation = PopulationBarChartPropsSchema.safeParse(input)
+	if (!validation.success) {
+		logger.error("input validation", { error: validation.error })
+		throw errors.wrap(validation.error, "input validation")
+	}
+	const parsed = validation.data
 	const svg = generatePopulationBarChart(parsed)
 
 	// Count x-axis labels (middle-anchored only)

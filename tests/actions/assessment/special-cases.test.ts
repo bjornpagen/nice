@@ -358,5 +358,3 @@ describe("XP Rewarding Logic - Special Cases", () => {
 		expect(payload.finalXp).toBe(defaultOptions.expectedXp * 1.0)
 	})
 })
-
-

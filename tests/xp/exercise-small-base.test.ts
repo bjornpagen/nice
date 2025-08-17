@@ -1,15 +1,14 @@
 // tests/xp/exercise-small-base.test.ts
 
 import { afterEach, beforeAll, describe, expect, mock, spyOn, test } from "bun:test"
-import * as errors from "@superbuilders/errors"
-import * as logger from "@superbuilders/slog"
-import { calculateAssessmentXp } from "@/lib/xp/core"
 
 // --- Mocks ---
 const mockSaveResult = mock(() => Promise.resolve("result_id"))
 mock.module("@/lib/ports/gradebook", () => ({ saveResult: mockSaveResult }))
 // Do not mock '@/lib/clients' to avoid leaking across other suites
-mock.module("@/lib/services/cache", () => ({ invalidateUserCourseProgress: (_u: string, _c: string) => Promise.resolve() }))
+mock.module("@/lib/services/cache", () => ({
+	invalidateUserCourseProgress: (_u: string, _c: string) => Promise.resolve()
+}))
 mock.module("@/lib/cache", () => ({
 	redisCache: async <T>(cb: () => Promise<T>, _k: (string | number)[], _o: { revalidate: number | false }) => cb(),
 	userProgressByCourse: (_u: string, _c: string) => `user-progress:${_u}:${_c}`,
@@ -24,13 +23,17 @@ mock.module("@clerk/nextjs/server", () => ({
 	clerkClient: () => ({ users: { getUser: () => Promise.resolve({ publicMetadata: {} }) } })
 }))
 // Keep banking out of this test's behavior explicitly
-mock.module("@/lib/xp/bank", () => ({ awardBankedXpForExercise: () => Promise.resolve({ bankedXp: 0, awardedResourceIds: [] }) }))
+mock.module("@/lib/xp/bank", () => ({
+	awardBankedXpForExercise: () => Promise.resolve({ bankedXp: 0, awardedResourceIds: [] })
+}))
 mock.module("@/lib/actions/streak", () => ({ updateStreak: () => Promise.resolve() }))
 mock.module("@/lib/services/streak", () => ({ update: (_u: string, _m: unknown) => Promise.resolve() }))
-mock.module("@/lib/services/proficiency", () => ({ updateFromAssessment: () => Promise.resolve({ success: true, exercisesUpdated: 0 }) }))
+mock.module("@/lib/services/proficiency", () => ({
+	updateFromAssessment: () => Promise.resolve({ success: true, exercisesUpdated: 0 })
+}))
 
 // Import module under test after mocks are registered
-let finalizeAssessment: (options: any) => Promise<any>
+let finalizeAssessment: typeof import("@/lib/actions/assessment").finalizeAssessment
 beforeAll(async () => {
 	const mod = await import("@/lib/actions/assessment")
 	finalizeAssessment = mod.finalizeAssessment
@@ -48,7 +51,10 @@ const baseOptions = {
 	onerosterComponentResourceSourcedId: "comp_exercise_small_base",
 	onerosterCourseSourcedId: "course_1",
 	onerosterUserSourcedId: "user_1",
-	sessionResults: [{ qtiItemId: "q1", isCorrect: true }, { qtiItemId: "q2", isCorrect: true }],
+	sessionResults: [
+		{ qtiItemId: "q1", isCorrect: true },
+		{ qtiItemId: "q2", isCorrect: true }
+	],
 	durationInSeconds: 60,
 	expectedXp: 2, // Very small base XP
 	assessmentTitle: "Small Base Exercise",
@@ -107,7 +113,10 @@ describe("XP Calculation with Small Base XP (expectedXp = 2)", () => {
 			...baseOptions,
 			attemptNumber: 1,
 			durationInSeconds: 5, // Rush
-			sessionResults: [{ qtiItemId: "q1", isCorrect: false }, { qtiItemId: "q2", isCorrect: false }]
+			sessionResults: [
+				{ qtiItemId: "q1", isCorrect: false },
+				{ qtiItemId: "q2", isCorrect: false }
+			]
 		})
 		const metadata = gradebookSpy.mock.calls[0]?.[0]?.metadata
 		expect(metadata?.xp).toBe(-2) // Penalty is -floor(totalQuestions)

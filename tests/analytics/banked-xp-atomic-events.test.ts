@@ -8,7 +8,9 @@ mock.module("@/lib/ports/gradebook", () => ({ saveResult: () => Promise.resolve(
 // Provide minimal clients and cache mocks to avoid cross-test import issues
 mock.module("@/lib/clients", () => ({
 	caliper: { sendCaliperEvents: (_e: unknown) => Promise.resolve() },
-	qti: { /* used in separate suites; provide noop shape to prevent import errors */ }
+	qti: {
+		/* used in separate suites; provide noop shape to prevent import errors */
+	}
 }))
 mock.module("@/lib/cache", () => ({
 	redisCache: async <T>(cb: () => Promise<T>, _k: (string | number)[], _o: { revalidate: number | false }) => cb(),

@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test"
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import type { z } from "zod"
 import { generatePieChart, PieChartWidgetPropsSchema } from "@/lib/widgets/generators"
 
@@ -38,7 +40,12 @@ test("pie chart - earth land breakdown", () => {
 		]
 	} satisfies PieChartInput
 
-	const parsed = PieChartWidgetPropsSchema.parse(input)
+	const parseResult = errors.trySync(() => PieChartWidgetPropsSchema.parse(input))
+	if (parseResult.error) {
+		logger.error("input validation", { error: parseResult.error })
+		throw errors.wrap(parseResult.error, "input validation")
+	}
+	const parsed = parseResult.data
 	const svg = generatePieChart(parsed)
 	expect(svg).toMatchSnapshot()
 })

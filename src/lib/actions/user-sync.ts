@@ -146,7 +146,7 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 	logger.info("syncing user to oneroster", { clerkId, email })
 
 	// Initialize metadata payload (same as webhook and route)
-	const publicMetadataPayload = ClerkUserPublicMetadataSchema.parse({
+	const payloadValidation = ClerkUserPublicMetadataSchema.safeParse({
 		nickname: nickname,
 		username: "",
 		bio: "",
@@ -154,6 +154,11 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 		sourceId: undefined,
 		roles: []
 	})
+	if (!payloadValidation.success) {
+		logger.error("input validation", { error: payloadValidation.error, clerkId })
+		throw errors.wrap(payloadValidation.error, "input validation")
+	}
+	const publicMetadataPayload = payloadValidation.data
 
 	// Check if user exists in OneRoster
 	const onerosterUserResult = await errors.try(oneroster.getUsersByEmail(email))

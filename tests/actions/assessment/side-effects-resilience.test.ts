@@ -1,4 +1,4 @@
- import { afterEach, describe, expect, mock, spyOn, test } from "bun:test"
+import { afterEach, describe, expect, mock, spyOn, test } from "bun:test"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { finalizeAssessment } from "@/lib/actions/assessment"
@@ -78,8 +78,8 @@ const clients = await import("@/lib/clients")
 // Ensure caliper client exists
 // @ts-ignore
 if (!clients.caliper?.sendCaliperEvents) {
-  // @ts-ignore
-  clients.caliper = { sendCaliperEvents: (_e: unknown) => Promise.resolve() }
+	// @ts-ignore
+	clients.caliper = { sendCaliperEvents: (_e: unknown) => Promise.resolve() }
 }
 
 const analyticsSpy = spyOn(analytics, "sendActivityCompletedEvent")
@@ -330,5 +330,3 @@ describe("Side Effects and Error Propagation", () => {
 		expect(analyticsSpy).toHaveBeenCalledTimes(1)
 	})
 })
-
-

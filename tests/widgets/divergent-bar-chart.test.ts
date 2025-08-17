@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test"
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import type { z } from "zod"
 import { DivergentBarChartPropsSchema, generateDivergentBarChart } from "@/lib/widgets/generators"
 
@@ -45,7 +47,12 @@ test("divergent bar chart - sea level change by century", () => {
 		gridColor: "#CCCCCC"
 	} satisfies DivergentBarChartInput
 
-	const parsed = DivergentBarChartPropsSchema.parse(input)
+	const parseResult = errors.trySync(() => DivergentBarChartPropsSchema.parse(input))
+	if (parseResult.error) {
+		logger.error("input validation", { error: parseResult.error })
+		throw errors.wrap(parseResult.error, "input validation")
+	}
+	const parsed = parseResult.data
 	const svg = generateDivergentBarChart(parsed)
 	expect(svg).toMatchSnapshot()
 })
@@ -89,7 +96,12 @@ test("divergent bar chart - auto label thinning prevents overcrowding determinis
 		gridColor: "#0000004D"
 	} satisfies DivergentBarChartInput
 
-	const parsed = DivergentBarChartPropsSchema.parse(input)
+	const parseResult = errors.trySync(() => DivergentBarChartPropsSchema.parse(input))
+	if (parseResult.error) {
+		logger.error("input validation", { error: parseResult.error })
+		throw errors.wrap(parseResult.error, "input validation")
+	}
+	const parsed = parseResult.data
 	const svg = generateDivergentBarChart(parsed)
 
 	// Count how many x-axis tick labels were rendered (middle-anchored only)

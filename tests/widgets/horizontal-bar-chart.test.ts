@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test"
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import type { z } from "zod"
 import { generateHorizontalBarChart, HorizontalBarChartPropsSchema } from "@/lib/widgets/generators"
 
@@ -26,7 +28,12 @@ test("horizontal bar chart - land use per 100 grams of protein", () => {
 		gridColor: "#CCCCCC"
 	} satisfies HorizontalBarChartInput
 
-	const parsed = HorizontalBarChartPropsSchema.parse(input)
+	const parseResult = errors.trySync(() => HorizontalBarChartPropsSchema.parse(input))
+	if (parseResult.error) {
+		logger.error("input validation", { error: parseResult.error })
+		throw errors.wrap(parseResult.error, "input validation")
+	}
+	const parsed = parseResult.data
 	const svg = generateHorizontalBarChart(parsed)
 	expect(svg).toMatchSnapshot()
 })

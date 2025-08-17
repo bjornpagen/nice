@@ -347,6 +347,10 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		}
 	}
 
-	const parsedCompositeProps = CompositeShapeDiagramPropsSchema.parse(compositeProps)
-	return generateCompositeShapeDiagram(parsedCompositeProps)
+	const validation = CompositeShapeDiagramPropsSchema.safeParse(compositeProps)
+	if (!validation.success) {
+		logger.error("input validation", { error: validation.error })
+		throw errors.wrap(validation.error, "input validation")
+	}
+	return generateCompositeShapeDiagram(validation.data)
 }

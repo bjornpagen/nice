@@ -94,11 +94,34 @@ async function main() {
 			continue
 		}
 
-		// Parse JSON
-		const components = z.array(CourseComponentSchema).parse(JSON.parse(componentsResult.data))
-		const resources = z.array(ResourceSchema).parse(JSON.parse(resourcesResult.data))
-		const componentResources = z.array(ComponentResourceSchema).parse(JSON.parse(componentResourcesResult.data))
-		const assessmentItems = z.array(AssessmentItemSchema).parse(JSON.parse(assessmentItemsResult.data))
+		// Parse JSON with validation
+		const componentsValidation = z.array(CourseComponentSchema).safeParse(JSON.parse(componentsResult.data))
+		if (!componentsValidation.success) {
+			logger.error("input validation", { error: componentsValidation.error, file: courseComponentsPath })
+			continue
+		}
+		const resourcesValidation = z.array(ResourceSchema).safeParse(JSON.parse(resourcesResult.data))
+		if (!resourcesValidation.success) {
+			logger.error("input validation", { error: resourcesValidation.error, file: resourcesPath })
+			continue
+		}
+		const componentResourcesValidation = z
+			.array(ComponentResourceSchema)
+			.safeParse(JSON.parse(componentResourcesResult.data))
+		if (!componentResourcesValidation.success) {
+			logger.error("input validation", { error: componentResourcesValidation.error, file: componentResourcesPath })
+			continue
+		}
+		const assessmentItemsValidation = z.array(AssessmentItemSchema).safeParse(JSON.parse(assessmentItemsResult.data))
+		if (!assessmentItemsValidation.success) {
+			logger.error("input validation", { error: assessmentItemsValidation.error, file: assessmentItemsPath })
+			continue
+		}
+
+		const components = componentsValidation.data
+		const resources = resourcesValidation.data
+		const componentResources = componentResourcesValidation.data
+		const assessmentItems = assessmentItemsValidation.data
 
 		logger.info("Loaded course data", {
 			courseSlug,
