@@ -83,19 +83,7 @@ export function Breadcrumbs({
 						</React.Fragment>
 					)}
 
-					{/* Course Lesson */}
-					{lesson != null && (
-						<React.Fragment>
-							<BreadcrumbSeparator />
-							<BreadcrumbItem className="max-w-[150px]">
-								<BreadcrumbLink asChild>
-									<Link href={lesson.path} className="capitalize hover:text-gray-800 hover:underline truncate block">
-										{lesson.title}
-									</Link>
-								</BreadcrumbLink>
-							</BreadcrumbItem>
-						</React.Fragment>
-					)}
+					{/* Lesson breadcrumb intentionally omitted: subject > course > unit > resource */}
 
 					{/* Course Resource */}
 					<BreadcrumbSeparator />
