@@ -3,18 +3,14 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { computeLabelSelection } from "@/lib/widgets/utils/labels"
+import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
 // Defines the data for a single category's count (e.g., yearly elk count)
 const PopulationBarDataPointSchema = z
 	.object({
-		label: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe("The category label for the bar (e.g., year '1990'). Use null to hide the label for a bar."),
+		label: z.string().describe("The category label for the bar (e.g., year '1990')."),
 		value: z.number().min(0).describe("The non-negative value represented by the bar.")
 	})
 	.strict()
@@ -22,11 +18,7 @@ const PopulationBarDataPointSchema = z
 // Defines the Y-axis configuration
 const YAxisOptionsSchema = z
 	.object({
-		label: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe("The title for the vertical axis (e.g., 'Number of elk'). Null shows no label."),
+		label: z.string().describe("The title for the vertical axis (e.g., 'Number of elk')."),
 		min: z.number().describe("The minimum value shown on the y-axis."),
 		max: z.number().describe("The maximum value shown on the y-axis."),
 		tickInterval: z.number().positive().describe("The spacing between tick marks and grid lines on the y-axis.")
@@ -47,11 +39,7 @@ export const PopulationBarChartPropsSchema = z
 			.number()
 			.positive()
 			.describe("Total height of the chart in pixels including title and axis labels (e.g., 400)."),
-		xAxisLabel: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe("The label for the horizontal axis (e.g., 'Year'). Null shows no label."),
+		xAxisLabel: z.string().describe("The label for the horizontal axis (e.g., 'Year')."),
 		yAxis: YAxisOptionsSchema.describe("Configuration for the vertical axis including scale and labels."),
 		xAxisVisibleLabels: z
 			.array(z.string())
@@ -119,12 +107,8 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 	svg += `<line x1="0" y1="${chartHeight}" x2="${chartWidth}" y2="${chartHeight}" stroke="black" stroke-width="2"/>`
 
 	// Axis Labels
-	if (xAxisLabel !== null) {
-		svg += `<text x="${chartWidth / 2}" y="${chartHeight + 45}" class="axis-label">${xAxisLabel}</text>`
-	}
-	if (yAxis.label !== null) {
-		svg += `<text x="${-chartHeight / 2}" y="-60" class="axis-label" transform="rotate(-90)">${yAxis.label}</text>`
-	}
+	svg += `<text x="${chartWidth / 2}" y="${chartHeight + 45}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
+	svg += `<text x="${-chartHeight / 2}" y="-60" class="axis-label" transform="rotate(-90)">${abbreviateMonth(yAxis.label)}</text>`
 
 	// Y ticks and SOLID grid lines
 	for (let t = yAxis.min; t <= maxValue; t += yAxis.tickInterval) {
@@ -140,8 +124,8 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 	const visibleLabelSet = new Set<string>(xAxisVisibleLabels)
 	const minLabelSpacingPx = 50
 	const allIndices = Array.from({ length: chartData.length }, (_, idx) => idx)
-	const candidateIndices = allIndices.filter((idx) => chartData[idx]?.label !== null)
-	const selectedLabelIndices = computeLabelSelection(chartData.length, candidateIndices, chartWidth, minLabelSpacingPx)
+	// The .filter() call is no longer needed as 'label' is a required string.
+	const selectedLabelIndices = computeLabelSelection(chartData.length, allIndices, chartWidth, minLabelSpacingPx)
 
 	chartData.forEach((d, i) => {
 		const barHeight = d.value * scaleY
@@ -160,12 +144,10 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 
 		// X-axis label (conditionally rendered)
 		const useAutoThinning = xAxisVisibleLabels.length === 0
-		if (d.label !== null) {
-			const labelText = d.label
-			const shouldShowLabel = useAutoThinning ? selectedLabelIndices.has(i) : visibleLabelSet.has(labelText)
-			if (shouldShowLabel) {
-				svg += `<text x="${labelX}" y="${chartHeight + 20}" class="tick-label" text-anchor="middle">${labelText}</text>`
-			}
+		const labelText = d.label
+		const shouldShowLabel = useAutoThinning ? selectedLabelIndices.has(i) : visibleLabelSet.has(labelText)
+		if (shouldShowLabel) {
+			svg += `<text x="${labelX}" y="${chartHeight + 20}" class="tick-label" text-anchor="middle">${abbreviateMonth(labelText)}</text>`
 		}
 	})
 

@@ -46,7 +46,7 @@ test("histogram - tomato plants production bins", () => {
 		type: "histogram",
 		width: 600,
 		height: 420,
-		title: null,
+		title: "Test Histogram",
 		xAxis: { label: "Number of tomatoes produced" },
 		yAxis: { label: "Number of tomato plants", max: 30, tickInterval: 10 },
 		separators: [20, 30, 40, 50, 60, 70, 80, 90],

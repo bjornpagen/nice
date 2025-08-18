@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 // Defines a single slice within a pie chart.
@@ -23,11 +24,7 @@ const SliceSchema = z
 // Defines the data and title for a single pie chart.
 const PieChartDataSchema = z
 	.object({
-		title: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe("The title displayed above this specific pie chart. Null for no title."),
+		title: z.string().describe("The title displayed above this specific pie chart."),
 		slices: z.array(SliceSchema).min(1).describe("An array of slice objects that make up this pie chart.")
 	})
 	.strict()
@@ -96,10 +93,8 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 		const radius = Math.min(chartAreaWidth, chartAreaHeight) * 0.33
 
 		// Draw title (width-aware wrapping)
-		if (chart.title) {
-			const maxTextWidth = chartAreaWidth - 40
-			content += renderWrappedText(chart.title, cx, titleY, "title", "1.1em", maxTextWidth, 8)
-		}
+		const maxTextWidth = chartAreaWidth - 40
+		content += renderWrappedText(abbreviateMonth(chart.title), cx, titleY, "title", "1.1em", maxTextWidth, 8)
 
 		const totalValue = chart.slices.reduce((sum, slice) => sum + slice.value, 0)
 		let startAngle = -90 // Start from the top
@@ -147,7 +142,7 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 			const preferredY = cy + radius * 1.15 * Math.sin(midRad)
 
 			const info: LabelInfo = {
-				text: `${slice.label} ${Math.round(percentage)}%`,
+				text: `${abbreviateMonth(slice.label)} ${Math.round(percentage)}%`,
 				percentage,
 				midAngle,
 				midRad,

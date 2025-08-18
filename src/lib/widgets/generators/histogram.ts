@@ -2,7 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { computeLabelSelection } from "@/lib/widgets/utils/labels"
+import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 const Bin = z
@@ -34,21 +34,13 @@ export const HistogramPropsSchema = z
 			.describe(
 				"Total height of the histogram in pixels including title and labels (e.g., 400, 350, 500). Taller charts show frequencies more clearly."
 			),
-		title: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe(
-				"Title displayed above the histogram (e.g., 'Test Score Distribution', 'Age Groups', null). Null means no title. Plaintext only; no markdown or HTML."
-			),
+		title: z.string().describe("Title displayed above the histogram (e.g., 'Test Score Distribution', 'Age Groups')."),
 		xAxis: z
 			.object({
 				label: z
 					.string()
-					.nullable()
-					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 					.describe(
-						"Title for the horizontal axis describing the variable being binned (e.g., 'Score Range', 'Age (years)', 'Size Category', null). Null shows no label. Plaintext only; no markdown or HTML."
+						"Title for the horizontal axis describing the variable being binned (e.g., 'Score Range', 'Age (years)', 'Size Category')."
 					)
 			})
 			.strict()
@@ -57,10 +49,8 @@ export const HistogramPropsSchema = z
 			.object({
 				label: z
 					.string()
-					.nullable()
-					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 					.describe(
-						"Title for the vertical axis, typically 'Frequency' or 'Count' (e.g., 'Number of Students', 'Frequency', 'Count', null). Null shows no label. Plaintext only; no markdown or HTML."
+						"Title for the vertical axis, typically 'Frequency' or 'Count' (e.g., 'Number of Students', 'Frequency', 'Count')."
 					),
 				max: z
 					.number()
@@ -140,21 +130,15 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	svg +=
 		"<style>.axis-label { font-size: 14px; font-weight: bold; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; } .x-tick { font-size: 11px; }</style>"
 
-	if (title !== null) {
-		const maxTextWidth = width - 60
-		svg += renderWrappedText(title, width / 2, margin.top / 2, "title", "1.1em", maxTextWidth, 8)
-	}
+	const maxTextWidth = width - 60
+	svg += renderWrappedText(abbreviateMonth(title), width / 2, margin.top / 2, "title", "1.1em", maxTextWidth, 8)
 
 	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="#333333"/>` // Y-axis
 	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="#333333"/>` // X-axis
 
 	// Axis Labels
-	if (xAxis.label !== null) {
-		svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 20}" class="axis-label">${xAxis.label}</text>`
-	}
-	if (yAxis.label !== null) {
-		svg += `<text x="${margin.left - 35}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 35}, ${margin.top + chartHeight / 2})">${yAxis.label}</text>`
-	}
+	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 20}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
+	svg += `<text x="${margin.left - 35}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 35}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
 
 	// Y ticks and labels
 	const yTickInterval = yAxis.tickInterval

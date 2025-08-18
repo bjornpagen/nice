@@ -3,15 +3,13 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 function createAxisOptionsSchema() {
 	return z
 		.object({
-			label: z
-				.string()
-				.nullable()
-				.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)),
+			label: z.string(),
 			min: z.number(),
 			max: z.number(),
 			tickInterval: z.number().positive(),
@@ -119,14 +117,10 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 		}
 	}
 	// Labels
-	if (xAxis.label) {
-		svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 15}" class="axis-label">${xAxis.label}</text>`
-		includeText(ext, margin.left + chartWidth / 2, xAxis.label, "middle", 7)
-	}
-	if (yAxis.label) {
-		svg += `<text x="${margin.left - 45}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 45}, ${margin.top + chartHeight / 2})">${yAxis.label}</text>`
-		includeText(ext, margin.left - 45, yAxis.label, "middle", 7)
-	}
+	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 15}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
+	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
+	svg += `<text x="${margin.left - 45}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 45}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
+	includeText(ext, margin.left - 45, abbreviateMonth(yAxis.label), "middle", 7)
 
 	// Parabola Curve - clip to first quadrant (x >= 0, y >= 0)
 	const steps = 200

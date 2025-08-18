@@ -2,6 +2,7 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 const PointSchema = z.object({
@@ -14,18 +15,10 @@ export const AreaGraphPropsSchema = z
 		type: z.literal("areaGraph"),
 		width: z.number().positive().describe("Total width of the SVG in pixels (e.g., 600, 500)."),
 		height: z.number().positive().describe("Total height of the SVG in pixels (e.g., 400, 350)."),
-		title: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe("The main title displayed above the graph. null for no title."),
+		title: z.string().describe("The main title displayed above the graph."),
 		xAxis: z
 			.object({
-				label: z
-					.string()
-					.nullable()
-					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-					.describe("The label for the horizontal axis (e.g., 'Year')."),
+				label: z.string().describe("The label for the horizontal axis (e.g., 'Year')."),
 				min: z.number().describe("The minimum value for the x-axis scale."),
 				max: z.number().describe("The maximum value for the x-axis scale."),
 				tickValues: z
@@ -35,11 +28,7 @@ export const AreaGraphPropsSchema = z
 			.strict(),
 		yAxis: z
 			.object({
-				label: z
-					.string()
-					.nullable()
-					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-					.describe("The label for the vertical axis (e.g., 'Percent of total')."),
+				label: z.string().describe("The label for the vertical axis (e.g., 'Percent of total')."),
 				min: z.number().describe("The minimum value for the y-axis scale."),
 				max: z.number().describe("The maximum value for the y-axis scale."),
 				tickInterval: z.number().positive().describe("The numeric interval between labeled tick marks on the y-axis."),
@@ -144,24 +133,18 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	svg +=
 		"<style>.axis-label { font-size: 16px; text-anchor: middle; } .title { font-size: 18px; font-weight: bold; text-anchor: middle; } .area-label { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
-	if (title) {
-		const maxTextWidth = width - 60
-		svg += renderWrappedText(title, width / 2, margin.top / 2 - 10, "title", "1.1em", maxTextWidth, 8)
-		includeText(ext, width / 2, title, "middle", 7)
-	}
+	const maxTextWidth = width - 60
+	svg += renderWrappedText(abbreviateMonth(title), width / 2, margin.top / 2 - 10, "title", "1.1em", maxTextWidth, 8)
+	includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
 
 	// Axes and Labels
 	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black" stroke-width="2"/>` // Y-axis
 	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black" stroke-width="2"/>` // X-axis
 
-	if (xAxis.label) {
-		svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + 45}" class="axis-label">${xAxis.label}</text>`
-		includeText(ext, margin.left + chartWidth / 2, xAxis.label, "middle", 7)
-	}
-	if (yAxis.label) {
-		svg += `<text x="${margin.left - 55}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 55}, ${margin.top + chartHeight / 2})">${yAxis.label}</text>`
-		includeText(ext, margin.left - 55, yAxis.label, "middle", 7)
-	}
+	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + 45}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
+	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
+	svg += `<text x="${margin.left - 55}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 55}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
+	includeText(ext, margin.left - 55, abbreviateMonth(yAxis.label), "middle", 7)
 
 	// Ticks
 	for (const val of xAxis.tickValues) {
@@ -189,8 +172,8 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	svg += `<polyline points="${pointsStr}" fill="none" stroke="${boundaryLine.color}" stroke-width="${boundaryLine.strokeWidth}"/>`
 
 	// Area Labels (use local split for two-word labels)
-	svg += renderWrappedText_local(bottomArea.label, toSvgX(1975), toSvgY(40), "area-label")
-	svg += renderWrappedText_local(topArea.label, toSvgX(1850), toSvgY(70), "area-label")
+	svg += renderWrappedText_local(abbreviateMonth(bottomArea.label), toSvgX(1975), toSvgY(40), "area-label")
+	svg += renderWrappedText_local(abbreviateMonth(topArea.label), toSvgX(1850), toSvgY(70), "area-label")
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)

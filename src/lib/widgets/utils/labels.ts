@@ -1,4 +1,41 @@
-// Utilities for thinning axis/category labels to avoid overlap
+// Utilities for thinning axis/category labels to avoid overlap and transforming labels
+
+/**
+ * Transform full month names to 3-letter abbreviations.
+ * Case-insensitive matching, preserves original case style in abbreviation.
+ */
+export function abbreviateMonth(text: string): string {
+	const monthMap: Record<string, string> = {
+		january: "Jan",
+		february: "Feb", 
+		march: "Mar",
+		april: "Apr",
+		may: "May",
+		june: "Jun",
+		july: "Jul",
+		august: "Aug",
+		september: "Sep",
+		october: "Oct",
+		november: "Nov",
+		december: "Dec"
+	} as const
+	
+	const lowerText = text.toLowerCase().trim()
+	const abbreviation = monthMap[lowerText]
+	
+	if (abbreviation) {
+		// Preserve case style: if original was all caps, return all caps; if mixed/title case, return title case
+		if (text === text.toUpperCase()) {
+			return abbreviation.toUpperCase()
+		}
+		if (text === text.toLowerCase()) {
+			return abbreviation.toLowerCase()
+		}
+		return abbreviation // Default to title case
+	}
+	
+	return text // Return original if not a month
+}
 
 /**
  * Compute equally spaced indices over a total count.

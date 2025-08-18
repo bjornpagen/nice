@@ -3,7 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { computeLabelSelection } from "@/lib/widgets/utils/labels"
+import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
 import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
@@ -11,11 +11,7 @@ export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data
 // Defines the data for a single bar in the chart
 const DataPointSchema = z
 	.object({
-		category: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe("The label for this category on the x-axis (e.g., '1st', '5th'). Null hides the label."),
+		category: z.string().describe("The label for this category on the x-axis (e.g., '1st', '5th')."),
 		value: z
 			.number()
 			.describe("The numerical value. Positive values are drawn above the zero line, negative values below.")
@@ -28,18 +24,10 @@ export const DivergentBarChartPropsSchema = z
 		type: z.literal("divergentBarChart"),
 		width: z.number().positive().describe("Total width of the chart in pixels (e.g., 600)."),
 		height: z.number().positive().describe("Total height of the chart in pixels (e.g., 400)."),
-		xAxisLabel: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe("The label for the horizontal axis (e.g., 'Century'). Null shows no label."),
+		xAxisLabel: z.string().describe("The label for the horizontal axis (e.g., 'Century')."),
 		yAxis: z
 			.object({
-				label: z
-					.string()
-					.nullable()
-					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-					.describe("The title for the vertical axis (e.g., 'Change in sea level (cm)'). Null shows no label."),
+				label: z.string().describe("The title for the vertical axis (e.g., 'Change in sea level (cm)')."),
 				min: z.number().describe("The minimum value on the y-axis (can be negative)."),
 				max: z.number().describe("The maximum value on the y-axis."),
 				tickInterval: z.number().positive().describe("The spacing between tick marks on the y-axis.")
@@ -120,21 +108,17 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	svg += `<line x1="0" y1="${yZeroInChartCoords}" x2="${chartWidth}" y2="${yZeroInChartCoords}" stroke="black" stroke-width="2"/>`
 
 	// Axis Labels
-	if (xAxisLabel !== null) {
-		svg += `<text x="${chartWidth / 2}" y="${chartHeight + 45}" class="axis-label">${xAxisLabel}</text>`
-		includeText(ext, chartWidth / 2, xAxisLabel, "middle", 7)
-	}
-	if (yAxis.label !== null) {
-		svg += `<text x="${-chartHeight / 2}" y="-60" class="axis-label" transform="rotate(-90)">${yAxis.label}</text>`
-		// approximate at left margin area, include as middle at some x near -60 rotated
-		includeText(ext, -60, yAxis.label, "middle", 7)
-	}
+	svg += `<text x="${chartWidth / 2}" y="${chartHeight + 45}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
+	includeText(ext, chartWidth / 2, abbreviateMonth(xAxisLabel), "middle", 7)
+	svg += `<text x="${-chartHeight / 2}" y="-60" class="axis-label" transform="rotate(-90)">${abbreviateMonth(yAxis.label)}</text>`
+	// approximate at left margin area, include as middle at some x near -60 rotated
+	includeText(ext, -60, abbreviateMonth(yAxis.label), "middle", 7)
 
 	// Bars and X-axis labels
 	const minLabelSpacingPx = 50
 	const allIndices = Array.from({ length: chartData.length }, (_, idx) => idx)
-	const candidateIndices = allIndices.filter((idx) => chartData[idx]?.category !== null)
-	const selectedLabelIndices = computeLabelSelection(chartData.length, candidateIndices, chartWidth, minLabelSpacingPx)
+	// The .filter() call is no longer needed as 'category' is a required string.
+	const selectedLabelIndices = computeLabelSelection(chartData.length, allIndices, chartWidth, minLabelSpacingPx)
 
 	chartData.forEach((d, i) => {
 		const barAbsHeight = Math.abs(d.value) * scaleY
@@ -156,9 +140,9 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 		svg += `<rect x="${x + xOffset}" y="${y}" width="${innerBarWidth}" height="${barAbsHeight}" fill="${color}"/>`
 
 		const labelX = x + barWidth / 2
-		if (d.category !== null && selectedLabelIndices.has(i)) {
-			svg += `<text x="${labelX}" y="${chartHeight + 25}" class="tick-label" text-anchor="middle">${d.category}</text>`
-			includeText(ext, labelX, d.category, "middle", 7)
+		if (selectedLabelIndices.has(i)) {
+			svg += `<text x="${labelX}" y="${chartHeight + 25}" class="tick-label" text-anchor="middle">${abbreviateMonth(d.category)}</text>`
+			includeText(ext, labelX, abbreviateMonth(d.category), "middle", 7)
 		}
 	})
 

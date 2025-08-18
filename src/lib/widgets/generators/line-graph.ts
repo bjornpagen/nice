@@ -3,7 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { computeLabelSelection } from "@/lib/widgets/utils/labels"
+import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
 import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 
@@ -41,11 +41,7 @@ function createSeriesSchema() {
 function createYAxisSchema() {
 	return z
 		.object({
-			label: z
-				.string()
-				.nullable()
-				.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-				.describe("The label for the vertical axis (e.g., 'Average temperature (°C)')."),
+			label: z.string().describe("The label for the vertical axis (e.g., 'Average temperature (°C)')."),
 			min: z.number().describe("The minimum value for the y-axis scale."),
 			max: z.number().describe("The maximum value for the y-axis scale."),
 			tickInterval: z.number().positive().describe("The numeric interval between labeled tick marks on the y-axis."),
@@ -59,18 +55,10 @@ export const LineGraphPropsSchema = z
 		type: z.literal("lineGraph"),
 		width: z.number().positive().describe("Total width of the SVG in pixels (e.g., 500, 600)."),
 		height: z.number().positive().describe("Total height of the SVG in pixels (e.g., 400, 350)."),
-		title: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe("The main title displayed above the graph. Null for no title."),
+		title: z.string().describe("The main title displayed above the graph."),
 		xAxis: z
 			.object({
-				label: z
-					.string()
-					.nullable()
-					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-					.describe("The label for the horizontal axis (e.g., 'Month')."),
+				label: z.string().describe("The label for the horizontal axis (e.g., 'Month')."),
 				categories: z
 					.array(z.string())
 					.describe("An array of labels for the x-axis categories (e.g., ['Jan', 'Feb', 'Mar']).")
@@ -133,16 +121,13 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	svg +=
 		"<style>.axis-label { font-size: 14px; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
-	if (title) {
-		svg += renderWrappedText(title, width / 2, margin.top / 2, "title", "1.1em", width - 60, 8)
-		includeText(ext, width / 2, title, "middle", 7)
-	}
+	svg += renderWrappedText(abbreviateMonth(title), width / 2, margin.top / 2, "title", "1.1em", width - 60, 8)
+	includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
 
 	// Left Y-axis
 	svg += `<g class="axis y-axis-left">`
 	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>`
-	if (yAxis.label)
-		svg += `<text x="${margin.left - 30}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 30}, ${margin.top + chartHeight / 2})">${yAxis.label}</text>`
+	svg += `<text x="${margin.left - 30}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 30}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = toSvgYLeft(t)
 		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
@@ -175,10 +160,8 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	// X-axis with label thinning
 	svg += `<g class="axis x-axis">`
 	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>`
-	if (xAxis.label) {
-		svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + 36}" class="axis-label">${xAxis.label}</text>`
-		includeText(ext, margin.left + chartWidth / 2, xAxis.label, "middle", 7)
-	}
+	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + 36}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
+	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
 	{
 		const minLabelSpacingPx = 50
 		const allIndices = xAxis.categories.map((_, idx) => idx)
@@ -189,8 +172,9 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 			const x = toSvgX(i)
 			svg += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="black"/>`
 			if (selected.has(i)) {
-				svg += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${cat}</text>`
-				includeText(ext, x, cat, "middle", 7)
+				const abbreviatedCat = abbreviateMonth(cat)
+				svg += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${abbreviatedCat}</text>`
+				includeText(ext, x, abbreviatedCat, "middle", 7)
 			}
 		})
 	}

@@ -3,24 +3,19 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
 // Defines the data and styling for a single bar in the chart
 const BarDataSchema = z
 	.object({
-		category: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe("The category name displayed on the y-axis (e.g., 'Lamb', 'Beef'). Null hides the label."),
+		category: z.string().describe("The category name displayed on the y-axis (e.g., 'Lamb', 'Beef')."),
 		value: z.number().positive().describe("The numerical value determining the bar's length."),
 		label: z
 			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"The text label to display next to the bar, showing its value (e.g., '184.8 m²'). Null hides the label."
+				"The text label to display next to the bar, showing its value (e.g., '184.8 m²')."
 			),
 		color: z.string().regex(CSS_COLOR_PATTERN, "invalid css color").describe("CSS color for this specific bar.")
 	})
@@ -36,10 +31,8 @@ export const HorizontalBarChartPropsSchema = z
 			.object({
 				label: z
 					.string()
-					.nullable()
-					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 					.describe(
-						"The label for the horizontal axis (e.g., 'Land use per 100 grams of protein (m²)'). Null shows no label."
+						"The label for the horizontal axis (e.g., 'Land use per 100 grams of protein (m²)')."
 					),
 				min: z.number().min(0).describe("The minimum value on the x-axis (usually 0)."),
 				max: z.number().positive().describe("The maximum value on the x-axis."),
@@ -103,9 +96,7 @@ export const generateHorizontalBarChart: WidgetGenerator<typeof HorizontalBarCha
 	svg += `<line x1="0" y1="0" x2="0" y2="${chartHeight}" stroke="black" stroke-width="2"/>`
 
 	// X-Axis Label
-	if (xAxis.label !== null) {
-		svg += `<text x="${chartWidth / 2}" y="${chartHeight + 50}" class="axis-label">${xAxis.label}</text>`
-	}
+	svg += `<text x="${chartWidth / 2}" y="${chartHeight + 50}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
 
 	// Bars, Y-axis categories, and value labels
 	chartData.forEach((d, i) => {
@@ -118,16 +109,12 @@ export const generateHorizontalBarChart: WidgetGenerator<typeof HorizontalBarCha
 		svg += `<rect x="0" y="${y}" width="${barLength}" height="${innerBarHeight}" fill="${d.color}"/>`
 
 		// Y-axis category label
-		if (d.category !== null) {
-			svg += `<text x="-10" y="${y + innerBarHeight / 2}" class="category-label" text-anchor="end" dominant-baseline="middle">${d.category}</text>`
-		}
+		svg += `<text x="-10" y="${y + innerBarHeight / 2}" class="category-label" text-anchor="end" dominant-baseline="middle">${abbreviateMonth(d.category)}</text>`
 		// Tick mark for category
 		svg += `<line x1="0" y1="${y + innerBarHeight / 2}" x2="-5" y2="${y + innerBarHeight / 2}" stroke="black" stroke-width="1.5"/>`
 
 		// Value label
-		if (d.label !== null) {
-			svg += `<text x="${barLength + 5}" y="${y + innerBarHeight / 2}" class="value-label" text-anchor="start" dominant-baseline="middle">${d.label}</text>`
-		}
+		svg += `<text x="${barLength + 5}" y="${y + innerBarHeight / 2}" class="value-label" text-anchor="start" dominant-baseline="middle">${abbreviateMonth(d.label)}</text>`
 	})
 
 	svg += "</g>" // Close chartBody group

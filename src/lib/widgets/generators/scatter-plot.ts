@@ -3,7 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { computeLabelSelection } from "@/lib/widgets/utils/labels"
+import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
 import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 
@@ -22,11 +22,7 @@ const ScatterPointSchema = z
 			),
 		label: z
 			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe(
-				"Optional text label for this point (e.g., 'A', 'Outlier', '(3,4)', null). Null means no label. Positioned near the point."
-			)
+			.describe("Text label for this point (e.g., 'A', 'Outlier', '(3,4)'). Positioned near the point.")
 	})
 	.strict()
 
@@ -79,11 +75,7 @@ const LineTwoPointsSchema = z
 		),
 		label: z
 			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe(
-				"Text label for the line (e.g., 'y = 2x + 1', 'Line A', 'Model', null). Null means no label. Positioned along the line."
-			),
+			.describe("Text label for the line (e.g., 'y = 2x + 1', 'Line A', 'Model'). Positioned along the line."),
 		style: createLineStyleSchema().describe(
 			"Visual styling for this specific line. Overrides any default line appearance."
 		)
@@ -104,11 +96,7 @@ const LineBestFitSchema = z
 			),
 		label: z
 			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe(
-				"Text label for the regression line (e.g., 'Best Fit', 'Trend', 'y = 0.5x + 10', null). Null means no label."
-			),
+			.describe("Text label for the regression line (e.g., 'Best Fit', 'Trend', 'y = 0.5x + 10')."),
 		style: createLineStyleSchema().describe(
 			"Visual styling for the regression line. Often uses distinct color or dash pattern."
 		)
@@ -136,19 +124,15 @@ export const ScatterPlotPropsSchema = z
 			),
 		title: z
 			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"Title displayed above or below the plot (e.g., 'Age vs. Income', 'Temperature Over Time', null). Null means no title. Plaintext only; no markdown or HTML."
+				"Title displayed above or below the plot (e.g., 'Age vs. Income', 'Temperature Over Time'). Plaintext only; no markdown or HTML."
 			),
 		xAxis: z
 			.object({
 				label: z
 					.string()
-					.nullable()
-					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 					.describe(
-						"Title for the horizontal axis describing the variable (e.g., 'Age (years)', 'Time (hours)', 'Temperature (°C)', null). Null means no label."
+						"Title for the horizontal axis describing the variable (e.g., 'Age (years)', 'Time (hours)', 'Temperature (°C)')."
 					),
 				min: z
 					.number()
@@ -177,10 +161,8 @@ export const ScatterPlotPropsSchema = z
 			.object({
 				label: z
 					.string()
-					.nullable()
-					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 					.describe(
-						"Title for the vertical axis describing the variable (e.g., 'Income ($1000s)', 'Score', 'Growth (cm)', null). Null means no label."
+						"Title for the vertical axis describing the variable (e.g., 'Income ($1000s)', 'Score', 'Growth (cm)')."
 					),
 				min: z
 					.number()
@@ -353,11 +335,9 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	svg +=
 		"<style>.axis-label { font-size: 14px; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
-	if (title !== null) {
-		const maxTextWidth = width - 60
-		svg += renderWrappedText(title, width / 2, pad.top / 2, "title", "1.1em", maxTextWidth, 8)
-		includeText(ext, width / 2, title, "middle", 7)
-	}
+	const maxTextWidth = width - 60
+	svg += renderWrappedText(abbreviateMonth(title), width / 2, pad.top / 2, "title", "1.1em", maxTextWidth, 8)
+	includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
 
 	// Grid lines, Axes, Ticks, Labels
 	if (xAxis.gridLines)
@@ -389,14 +369,10 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		svg += `<line x1="${pad.left}" y1="${toSvgY(t)}" x2="${pad.left - 5}" y2="${toSvgY(t)}" stroke="black"/><text x="${pad.left - 10}" y="${toSvgY(t) + 4}" text-anchor="end">${t}</text>`
 		includeText(ext, pad.left - 10, String(t), "end", 7)
 	}
-	if (xAxis.label !== null) {
-		svg += `<text x="${pad.left + chartWidth / 2}" y="${height - 20}" class="axis-label">${xAxis.label}</text>`
-		includeText(ext, pad.left + chartWidth / 2, xAxis.label, "middle", 7)
-	}
-	if (yAxis.label !== null) {
-		svg += `<text x="${pad.left - 35}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${pad.left - 35}, ${pad.top + chartHeight / 2})">${yAxis.label}</text>`
-		includeText(ext, pad.left - 35, yAxis.label ?? "", "middle", 7)
-	}
+	svg += `<text x="${pad.left + chartWidth / 2}" y="${height - 20}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
+	includeText(ext, pad.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
+	svg += `<text x="${pad.left - 35}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${pad.left - 35}, ${pad.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
+	includeText(ext, pad.left - 35, abbreviateMonth(yAxis.label), "middle", 7)
 
 	// Render line overlays (computed or explicit)
 	for (const line of lines) {
@@ -409,11 +385,9 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 					svg += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(y1)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(y2)}"${styleAttrs(
 						line.style
 					)} />`
-					if (line.label !== null) {
-						const labelX = toSvgX(xAxis.max) - 5
-						const labelY = toSvgY(y2)
-						svg += `<text x="${labelX}" y="${labelY - 6}" text-anchor="end" fill="black">${line.label}</text>`
-					}
+					const labelX = toSvgX(xAxis.max) - 5
+					const labelY = toSvgY(y2)
+					svg += `<text x="${labelX}" y="${labelY - 6}" text-anchor="end" fill="black">${abbreviateMonth(line.label)}</text>`
 				}
 			}
 			if (line.method === "quadratic") {
@@ -429,12 +403,10 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 						path += `${i === 0 ? "M" : "L"} ${px} ${py} `
 					}
 					svg += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
-					if (line.label !== null) {
-						const yRight = coeff.a * xAxis.max ** 2 + coeff.b * xAxis.max + coeff.c
-						const labelX = toSvgX(xAxis.max) - 5
-						const labelY = toSvgY(clamp(yRight, yAxis.min, yAxis.max))
-						svg += `<text x="${labelX}" y="${labelY - 6}" text-anchor="end" fill="black">${line.label}</text>`
-					}
+					const yRight = coeff.a * xAxis.max ** 2 + coeff.b * xAxis.max + coeff.c
+					const labelX = toSvgX(xAxis.max) - 5
+					const labelY = toSvgY(clamp(yRight, yAxis.min, yAxis.max))
+					svg += `<text x="${labelX}" y="${labelY - 6}" text-anchor="end" fill="black">${abbreviateMonth(line.label)}</text>`
 				}
 			}
 		} else if (line.type === "twoPoints") {
@@ -444,11 +416,9 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 				svg += `<line x1="${toSvgX(a.x)}" y1="${toSvgY(yAxis.min)}" x2="${toSvgX(a.x)}" y2="${toSvgY(yAxis.max)}"${styleAttrs(
 					line.style
 				)} />`
-				if (line.label !== null) {
-					const labelX = toSvgX(a.x) + 6
-					const labelY = toSvgY(yAxis.max) + 14
-					svg += `<text x="${labelX}" y="${labelY}" fill="black">${line.label}</text>`
-				}
+				const labelX = toSvgX(a.x) + 6
+				const labelY = toSvgY(yAxis.max) + 14
+				svg += `<text x="${labelX}" y="${labelY}" fill="black">${abbreviateMonth(line.label)}</text>`
 			} else {
 				const slope = (b.y - a.y) / (b.x - a.x)
 				const intercept = a.y - slope * a.x
@@ -457,11 +427,9 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 				svg += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(yAtMin)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(yAtMax)}"${styleAttrs(
 					line.style
 				)} />`
-				if (line.label !== null) {
-					const labelX = toSvgX(xAxis.max) - 5
-					const labelY = toSvgY(yAtMax)
-					svg += `<text x="${labelX}" y="${labelY - 6}" text-anchor="end" fill="black">${line.label}</text>`
-				}
+				const labelX = toSvgX(xAxis.max) - 5
+				const labelY = toSvgY(yAtMax)
+				svg += `<text x="${labelX}" y="${labelY - 6}" text-anchor="end" fill="black">${abbreviateMonth(line.label)}</text>`
 			}
 		}
 	}
@@ -470,9 +438,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		const px = toSvgX(p.x)
 		const py = toSvgY(p.y)
 		svg += `<circle cx="${px}" cy="${py}" r="3.5" fill="black" fill-opacity="0.7"/>`
-		if (p.label !== null) {
-			svg += `<text x="${px + 5}" y="${py - 5}" fill="black">${p.label}</text>`
-		}
+		svg += `<text x="${px + 5}" y="${py - 5}" fill="black">${abbreviateMonth(p.label)}</text>`
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)

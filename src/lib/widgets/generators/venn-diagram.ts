@@ -1,16 +1,15 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 
 function createCircleSchema() {
 	return z
 		.object({
 			label: z
 				.string()
-				.nullable()
-				.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 				.describe(
-					"Category name for this circle (e.g., 'Has a Dog', 'Likes Pizza', 'Students in Band', 'Even Numbers', null). Keep concise to fit above circle. Null for no label. Plaintext only; no markdown or HTML."
+					"Category name for this circle (e.g., 'Has a Dog', 'Likes Pizza', 'Students in Band', 'Even Numbers'). Keep concise to fit above circle. Plaintext only; no markdown or HTML."
 				),
 			count: z
 				.number()
@@ -101,13 +100,9 @@ export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema>
 	svg += `<circle cx="${cxA}" cy="${cy}" r="${r}" fill="${circleA.color}" fill-opacity="0.6" stroke="#333333"/>`
 	svg += `<circle cx="${cxB}" cy="${cy}" r="${r}" fill="${circleB.color}" fill-opacity="0.6" stroke="#333333"/>`
 
-	// Labels for circles - positioned farther apart to use side space (only if labels exist)
-	if (circleA.label) {
-		svg += `<text x="${cxA - r * 0.5}" y="${padding.top - 5}" class="label">${circleA.label}</text>` // Moved left
-	}
-	if (circleB.label) {
-		svg += `<text x="${cxB + r * 0.5}" y="${padding.top - 5}" class="label">${circleB.label}</text>` // Moved right
-	}
+	// Labels for circles - positioned farther apart to use side space
+	svg += `<text x="${cxA - r * 0.5}" y="${padding.top - 5}" class="label">${abbreviateMonth(circleA.label)}</text>` // Moved left
+	svg += `<text x="${cxB + r * 0.5}" y="${padding.top - 5}" class="label">${abbreviateMonth(circleB.label)}</text>` // Moved right
 
 	// A only
 	svg += `<text x="${cxA - r / 2}" y="${cy}" class="count" dominant-baseline="middle">${circleA.count}</text>`

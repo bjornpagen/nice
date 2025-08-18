@@ -2,6 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
@@ -12,10 +13,7 @@ export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis
 export const createAxisOptionsSchema = () =>
 	z
 		.object({
-			label: z
-				.string()
-				.nullable()
-				.describe('The text title for the axis (e.g., "Number of Days"). If omitted, a simple "x" or "y" may be used.'),
+			label: z.string().describe('The text title for the axis (e.g., "Number of Days").'),
 			min: z.number().describe("The minimum value displayed on the axis."),
 			max: z.number().describe("The maximum value displayed on the axis."),
 			tickInterval: z.number().describe("The numeric interval between labeled tick marks on the axis."),
@@ -34,11 +32,7 @@ export const createPlotPointSchema = () =>
 			id: z.string().describe("A unique identifier for this point, used to reference it when creating polygons."),
 			x: z.number().describe("The value of the point on the horizontal (X) axis."),
 			y: z.number().describe("The value of the point on the vertical (Y) axis."),
-			label: z
-				.string()
-				.nullable()
-				.transform((val) => (val === "null" || val === "NULL" ? null : val))
-				.describe('An optional text label to display near the point (e.g., "A", "(m, n)").'),
+			label: z.string().describe('A text label to display near the point (e.g., "A", "(m, n)").'),
 			color: z
 				.string()
 				.regex(
@@ -151,11 +145,7 @@ export const createPolygonSchema = () =>
 					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
 				)
 				.describe("The border color of the polygon."),
-			label: z
-				.string()
-				.nullable()
-				.transform((val) => (val === "null" || val === "NULL" ? null : val))
-				.describe("An optional label for the polygon itself.")
+			label: z.string().describe("A label for the polygon itself.")
 		})
 		.strict()
 
@@ -170,11 +160,7 @@ export const createDistanceSchema = () =>
 			pointId2: z.string().describe("The ID of the second point."),
 			showLegs: z.boolean().describe("If true, draws the 'rise' and 'run' legs of the right triangle."),
 			showLegLabels: z.boolean().describe("If true, labels the legs with their lengths."),
-			hypotenuseLabel: z
-				.string()
-				.nullable()
-				.transform((val) => (val === "null" || val === "NULL" ? null : val))
-				.describe("An optional label for the hypotenuse (the distance line)."),
+			hypotenuseLabel: z.string().describe("A label for the hypotenuse (the distance line)."),
 			color: z
 				.string()
 				.regex(
@@ -360,14 +346,10 @@ export function generateCoordinatePlaneBase(
 	}
 
 	// Axis labels
-	if (xAxis.label) {
-		svg += `<text x="${pad.left + chartWidth / 2}" y="${height - 5}" class="axis-label">${xAxis.label}</text>`
-		includeText(ext, pad.left + chartWidth / 2, xAxis.label, "middle", 7)
-	}
-	if (yAxis.label) {
-		svg += `<text x="${pad.left - 25}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${pad.left - 25}, ${pad.top + chartHeight / 2})">${yAxis.label}</text>`
-		includeText(ext, pad.left - 25, yAxis.label, "middle", 7)
-	}
+	svg += `<text x="${pad.left + chartWidth / 2}" y="${height - 5}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
+	includeText(ext, pad.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
+	svg += `<text x="${pad.left - 25}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${pad.left - 25}, ${pad.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
+	includeText(ext, pad.left - 25, abbreviateMonth(yAxis.label), "middle", 7)
 
 	// Quadrant labels
 	if (showQuadrantLabels) {
@@ -405,9 +387,7 @@ export function renderPoints(
 		const fill = p.style === "open" ? "none" : p.color
 		const stroke = p.color
 		pointsSvg += `<circle cx="${px}" cy="${py}" r="4" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`
-		if (p.label) {
-			pointsSvg += `<text x="${px + 6}" y="${py - 6}" fill="black">${p.label}</text>`
-		}
+		pointsSvg += `<text x="${px + 6}" y="${py - 6}" fill="black">${abbreviateMonth(p.label)}</text>`
 	}
 	return pointsSvg
 }
@@ -493,8 +473,8 @@ export function renderPolygons(
 			const fill = poly.isClosed ? poly.fillColor : "none"
 			polygonsSvg += `<${tag} points="${polyPointsStr}" fill="${fill}" stroke="${poly.strokeColor}" stroke-width="2"/>`
 
-			// Render polygon label if provided
-			if (poly.label && polyPoints.length > 0) {
+			// Render polygon label
+			if (polyPoints.length > 0) {
 				// Calculate the centroid of the polygon for label placement
 				const centroidX = polyPoints.reduce((sum, pt) => sum + pt.x, 0) / polyPoints.length
 
@@ -505,7 +485,7 @@ export function renderPolygons(
 				const labelX = centroidX
 				const labelY = bottomY + 20
 
-				polygonsSvg += `<text x="${labelX}" y="${labelY}" fill="${poly.strokeColor}" text-anchor="middle" font-size="14" font-weight="500">${poly.label}</text>`
+				polygonsSvg += `<text x="${labelX}" y="${labelY}" fill="${poly.strokeColor}" text-anchor="middle" font-size="14" font-weight="500">${abbreviateMonth(poly.label)}</text>`
 			}
 		}
 	}

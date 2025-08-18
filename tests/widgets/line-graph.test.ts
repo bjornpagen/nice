@@ -11,7 +11,7 @@ test("line graph - Arizona city temperatures", () => {
 		type: "lineGraph",
 		width: 500,
 		height: 450,
-		title: null,
+		title: "Test Line Graph",
 		xAxis: {
 			label: "Month",
 			categories: ["Jan.", "", "Mar.", "", "May", "", "July", "", "Sept.", "", "Nov.", ""]
@@ -73,7 +73,7 @@ test("line graph - collared lemmings and stoats (dual y-axis)", () => {
 		type: "lineGraph",
 		width: 600,
 		height: 450,
-		title: null,
+		title: "Test Line Graph",
 		xAxis: {
 			label: "Year",
 			categories: ["1988", "", "1990", "", "1992", "", "1994", "", "1996", "", "1998", "", "2000", "", "2002"]
