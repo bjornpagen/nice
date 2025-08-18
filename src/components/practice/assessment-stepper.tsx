@@ -26,12 +26,17 @@ import {
 	finalizeAssessment,
 	flagQuestionAsReported,
 	getNextAttemptNumber,
-	processQuestionResponse
+	getOrCreateAssessmentState,
+	submitAnswer,
+	reportQuestion,
+	skipQuestion
 } from "@/lib/actions/assessment"
+import type { AssessmentState } from "@/lib/assessment-cache"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { Question, Unit } from "@/lib/types/domain"
 import type { LessonLayoutData } from "@/lib/types/page"
 import { cn } from "@/lib/utils"
+import { AssessmentLoadingSkeleton } from "@/components/practice/assessment-loading-skeleton"
 
 // Shared helper: render XP penalty alert
 function renderPenaltyAlert(penaltyXp: number, contentType: string, xpReason?: string, avgSecondsPerQuestion?: number) {
@@ -220,7 +225,9 @@ export function AssessmentStepper({
 	const { user } = useUser()
 	const router = useRouter()
 
-	const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0)
+	const [serverState, setServerState] = React.useState<AssessmentState | null>(null)
+	const [isLoading, setIsLoading] = React.useState(true)
+
 	const [selectedResponses, setSelectedResponses] = React.useState<Record<string, unknown>>({})
 	const [expectedResponses, setExpectedResponses] = React.useState<string[]>([])
 	const [showFeedback, setShowFeedback] = React.useState(false)
@@ -228,13 +235,7 @@ export function AssessmentStepper({
 	const [isAnswerChecked, setIsAnswerChecked] = React.useState(false)
 	const [isSubmitting, setIsSubmitting] = React.useState(false)
 	const [attemptCount, setAttemptCount] = React.useState(0)
-	// REMOVED: correctAnswersCount is no longer needed on the client.
 	const [showSummary, setShowSummary] = React.useState(false)
-	// ADDED: New state to track the current attempt number. Default to 1 for the first attempt.
-	const [attemptNumber, setAttemptNumber] = React.useState(1)
-	const [sessionResults, setSessionResults] = React.useState<
-		{ qtiItemId: string; isCorrect: boolean | null; isReported?: boolean }[]
-	>([])
 
 	const [isReportPopoverOpen, setIsReportPopoverOpen] = React.useState(false)
 	const [reportText, setReportText] = React.useState("")
@@ -254,6 +255,9 @@ export function AssessmentStepper({
 	// Track when all finalization operations are fully completed
 	const [isFinalizationComplete, setIsFinalizationComplete] = React.useState(false)
 	const [isFinalizing, setIsFinalizing] = React.useState(false)
+	const [loadError, setLoadError] = React.useState(false)
+
+	const assessmentStartTimeRef = React.useRef<Date | null>(null)
 
 	// Admin-only: practice header lock toggle (far right)
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
@@ -289,8 +293,98 @@ export function AssessmentStepper({
 	}
 	const audioRef = React.useRef<HTMLAudioElement | null>(null)
 	const wrongAudioRef = React.useRef<HTMLAudioElement | null>(null)
+
+	// Define initState as a useCallback so it can be called from error UI
+	const initState = React.useCallback(async (retries = 3) => {
+		setLoadError(false) // Reset error on each init
+		setIsLoading(true)
+		const result = await errors.try(getOrCreateAssessmentState(onerosterResourceSourcedId))
+		if (result.error) {
+			if (retries > 0) {
+				toast.info("Retrying load in 5s...")
+				setTimeout(() => initState(retries - 1), 5000)
+				return // Keep loading during auto-retry
+			}
+			toast.error("Could not load assessment after retries.")
+			setIsLoading(false)
+			setLoadError(true)
+			return
+		}
+		const state = result.data
+		setServerState(state)
+
+		if (state.currentQuestionIndex >= questions.length && !state.isFinalized) {
+			setIsFinalizing(true)
+			const finalizeResult = await errors.try(
+				finalizeAssessment({
+					onerosterResourceSourcedId,
+					onerosterComponentResourceSourcedId,
+					onerosterCourseSourcedId,
+					durationInSeconds: assessmentStartTimeRef.current
+						? Math.round((Date.now() - assessmentStartTimeRef.current.getTime()) / 1000)
+						: undefined,
+					expectedXp,
+					assessmentTitle,
+					assessmentPath,
+					unitData,
+					contentType
+				})
+			)
+			if (finalizeResult.error) {
+				toast.error("Failed to complete assessment. Retry or contact support.")
+				setIsFinalizing(false)
+				setIsLoading(false)
+				setLoadError(true)
+				return
+			}
+			const finalSummaryData = finalizeResult.data
+			setSummaryData({
+				score: finalSummaryData.score,
+				correctAnswersCount: finalSummaryData.correctAnswersCount,
+				totalQuestions: finalSummaryData.totalQuestions,
+				xpPenaltyInfo: finalSummaryData.xpPenaltyInfo
+					? {
+						penaltyXp: typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number" ? finalSummaryData.xpPenaltyInfo.penaltyXp : 0,
+						reason: typeof finalSummaryData.xpPenaltyInfo.reason === "string" ? finalSummaryData.xpPenaltyInfo.reason : "Unknown penalty reason",
+						avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
+					}
+					: undefined
+			})
+			setShowSummary(true)
+			setIsFinalizing(false)
+		} else if (state.isFinalized || state.currentQuestionIndex >= questions.length) {
+			setShowSummary(true)
+		}
+		setIsLoading(false)
+	}, [onerosterResourceSourcedId, onerosterComponentResourceSourcedId, onerosterCourseSourcedId, questions.length, expectedXp, assessmentTitle, assessmentPath, unitData, contentType])
+
+	// Fetch initial state on mount
+	React.useEffect(() => {
+		void initState()
+	}, [initState])
+
+	// Gate rendering on loading state to prevent UI flash
+	if (isLoading || !serverState) {
+		return <AssessmentLoadingSkeleton />
+	}
+
+	if (loadError) {
+		return (
+			<div className="flex flex-col h-full items-center justify-center p-8 text-center text-red-500">
+				<p>Failed to load assessment. Please try again or contact support if the issue persists.</p>
+				<Button
+					onClick={() => { setLoadError(false); void initState(); }}
+					variant="default"
+					className="mt-4 bg-blue-600 text-white"
+				>
+					Retry
+				</Button>
+			</div>
+		)
+	}
+
+	const currentQuestionIndex = serverState.currentQuestionIndex
 	const currentQuestion = questions[currentQuestionIndex]
-	const assessmentStartTimeRef = React.useRef<Date | null>(null)
 	// Removed old summary-time finalization flags
 	const { setProgressForResource, beginProgressUpdate, endProgressUpdate } = useLessonProgress()
 
@@ -375,31 +469,6 @@ export function AssessmentStepper({
 		}
 	}, [questions.length])
 
-	// ADDED: Derive attempt number from OneRoster results when component mounts or when assessment changes
-	React.useEffect(() => {
-		if (!userSourceId || !onerosterResourceSourcedId) {
-			return
-		}
-
-		if (typeof userSourceId !== "string") {
-			return
-		}
-
-		// Fetch the next attempt number derived from existing results
-		const initializeAttempt = async () => {
-			const attemptResult = await errors.try(getNextAttemptNumber(userSourceId, onerosterResourceSourcedId))
-			if (attemptResult.error) {
-				setIsAttemptReady(false)
-				toast.error("Could not initialize assessment. Please reload and try again.")
-				return
-			}
-			setAttemptNumber(attemptResult.data)
-			setIsAttemptReady(true)
-		}
-
-		initializeAttempt()
-	}, [userSourceId, onerosterResourceSourcedId])
-
 	// Cleanup any pending timers on unmount
 	React.useEffect(() => {
 		return () => {
@@ -482,11 +551,10 @@ export function AssessmentStepper({
 	const handleReset = async () => {
 		if (onRetake) {
 			// Use the next attempt number as a hint to parent for UX
-			onRetake(attemptNumber + 1)
+			onRetake(serverState.attemptNumber + 1)
 			return
 		}
-		// Fallback: local reset then refresh
-		setCurrentQuestionIndex(0)
+		// Fallback: refresh to get a new attempt
 		setSelectedResponses({})
 		setExpectedResponses([])
 		setShowFeedback(false)
@@ -495,7 +563,7 @@ export function AssessmentStepper({
 		setAttemptCount(0)
 		setShowSummary(false)
 		setSummaryData(null)
-		setSessionResults([])
+
 		assessmentStartTimeRef.current = new Date()
 		router.refresh()
 	}
@@ -619,18 +687,12 @@ export function AssessmentStepper({
 	}
 
 	const handleCheckAnswer = async () => {
-		// Prevent actions before attempt is ready for interactive assessments
-		if (isInteractiveAssessment && !isAttemptReady) {
-			return
-		}
 		if (Object.keys(selectedResponses).length === 0 || !currentQuestion) {
 			return
 		}
 
 		setIsSubmitting(true)
 		setShowFeedback(false)
-
-		const isAuthenticated = typeof userSourceId === "string"
 
 		// Determine response format based on the question type
 		const responseIdentifiers = Object.keys(selectedResponses)
@@ -666,15 +728,13 @@ export function AssessmentStepper({
 			}
 		}
 
-		// REMOVED: isLastQuestion variable is no longer needed for this call.
 		const result = await errors.try(
-			processQuestionResponse(
+			submitAnswer(
+				onerosterResourceSourcedId,
 				currentQuestion.id,
+				currentQuestionIndex,
 				responseValue,
-				responseIdentifier,
-				isAuthenticated ? onerosterComponentResourceSourcedId : undefined,
-				isInteractiveAssessment && isAuthenticated,
-				attemptNumber - 1
+				responseIdentifier
 			)
 		)
 
@@ -684,28 +744,21 @@ export function AssessmentStepper({
 			return
 		}
 
-		if (!result.data) {
-			logger.error("question response: missing result data")
-			throw errors.new("question response: missing result data")
-		}
+		const { state: newState, isCorrect } = result.data
 
-		const isCorrect = result.data.isCorrect
-		if (typeof isCorrect !== "boolean") {
-			logger.error("question response: invalid correctness indicator", { isCorrect })
-			throw errors.new("question response: invalid correctness indicator")
-		}
+		// Show immediate feedback for this UI attempt
+		setIsAnswerCorrect(isCorrect)
+		setShowFeedback(true)
 
-		// NEW: Add result to session state
-		setSessionResults((prev) => [...prev, { qtiItemId: currentQuestion.id, isCorrect }])
+		// Update the component's state with the authoritative state from the server
+		setServerState(newState)
 
 		setIsSubmitting(false)
 		setIsAnswerChecked(true)
-		setIsAnswerCorrect(isCorrect)
 		setAttemptCount((prev) => prev + 1)
 
 		if (isCorrect) {
 			handleCorrectAnswer()
-			// REMOVED: Client no longer counts correct answers.
 			setTimeout(() => setShowFeedback(true), 150)
 		} else {
 			handleWrongAnswer()
@@ -725,7 +778,7 @@ export function AssessmentStepper({
 		}
 		isNavigatingRef.current = true
 
-		const nextIndex = currentQuestionIndex + 1
+		const nextIndex = serverState.currentQuestionIndex
 		const isLast = nextIndex >= questions.length
 		if (isLast) {
 			setIsFinalizing(true)
@@ -734,30 +787,17 @@ export function AssessmentStepper({
 			const durationInSeconds = assessmentStartTimeRef.current
 				? Math.round((Date.now() - assessmentStartTimeRef.current.getTime()) / 1000)
 				: undefined
-			const userEmail = user?.primaryEmailAddress?.emailAddress
-
-			if (!userSourceId || !userEmail) {
-				toast.error("Cannot save results. User session is not valid.")
-				setIsFinalizing(false)
-				endProgressUpdate(onerosterResourceSourcedId)
-				isNavigatingRef.current = false
-				return
-			}
 
 			const result = await errors.try(
 				finalizeAssessment({
 					onerosterResourceSourcedId,
 					onerosterComponentResourceSourcedId,
 					onerosterCourseSourcedId,
-					onerosterUserSourcedId: userSourceId,
-					sessionResults,
-					attemptNumber,
 					durationInSeconds,
 					expectedXp,
 					assessmentTitle,
 					assessmentPath,
 					unitData,
-					userEmail,
 					contentType
 				})
 			)
@@ -780,16 +820,16 @@ export function AssessmentStepper({
 				totalQuestions: finalSummaryData.totalQuestions,
 				xpPenaltyInfo: finalSummaryData.xpPenaltyInfo
 					? {
-							penaltyXp:
-								typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
-									? finalSummaryData.xpPenaltyInfo.penaltyXp
-									: 0,
-							reason:
-								typeof finalSummaryData.xpPenaltyInfo.reason === "string"
-									? finalSummaryData.xpPenaltyInfo.reason
-									: "Unknown penalty reason",
-							avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
-						}
+						penaltyXp:
+							typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
+								? finalSummaryData.xpPenaltyInfo.penaltyXp
+								: 0,
+						reason:
+							typeof finalSummaryData.xpPenaltyInfo.reason === "string"
+								? finalSummaryData.xpPenaltyInfo.reason
+								: "Unknown penalty reason",
+						avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
+					}
 					: undefined
 			})
 
@@ -826,16 +866,13 @@ export function AssessmentStepper({
 		}
 
 		// Not last: advance to next question and reset per-question state
-		setCurrentQuestionIndex((prevIndex) => {
-			const next = prevIndex + 1
-			setSelectedResponses({})
-			setExpectedResponses([])
-			setShowFeedback(false)
-			setIsAnswerCorrect(false)
-			setIsAnswerChecked(false)
-			setAttemptCount(0)
-			return next
-		})
+		// The server has already updated the currentQuestionIndex
+		setSelectedResponses({})
+		setExpectedResponses([])
+		setShowFeedback(false)
+		setIsAnswerCorrect(false)
+		setIsAnswerChecked(false)
+		setAttemptCount(0)
 
 		// Release navigation lock on next frame
 		requestAnimationFrame(() => {
@@ -843,15 +880,21 @@ export function AssessmentStepper({
 		})
 	}
 
-	const handleSkip = () => {
+	const handleSkip = async () => {
 		// Prevent actions before attempt is ready for interactive assessments
 		if (isInteractiveAssessment && !isAttemptReady) {
 			return
 		}
-		// For ALL assessments, treat skip as incorrect (no external logging)
+		if (!currentQuestion) return
 
-		// NEW: Add skipped result to session state
-		setSessionResults((prev) => [...prev, { qtiItemId: currentQuestion.id, isCorrect: false }])
+		const result = await errors.try(
+			skipQuestion(onerosterResourceSourcedId, currentQuestion.id, currentQuestionIndex)
+		)
+		if (result.error) {
+			toast.error("Failed to skip question. Please try again.")
+			return
+		}
+		setServerState(result.data.state)
 
 		// Treat skip as wrong answer
 		setIsAnswerCorrect(false)
@@ -886,8 +929,15 @@ export function AssessmentStepper({
 
 		const toastId = toast.loading("Reporting issue...")
 
-		// Call the server action to flag the question with the report message.
-		const result = await errors.try(flagQuestionAsReported(currentQuestion.id, savedReportText))
+		// Call the server action to report the question
+		const result = await errors.try(
+			reportQuestion(
+				onerosterResourceSourcedId,
+				currentQuestion.id,
+				currentQuestionIndex,
+				savedReportText
+			)
+		)
 
 		if (result.error) {
 			toast.error("Failed to report issue. Please try again.", { id: toastId })
@@ -896,8 +946,13 @@ export function AssessmentStepper({
 
 		toast.success("Issue reported. Thank you!", { id: toastId })
 
-		// Add reported question to sessionResults for proficiency analysis
-		setSessionResults((prev) => [...prev, { qtiItemId: currentQuestion.id, isCorrect: null, isReported: true }])
+		// Refresh state after report (index advanced)
+		const refreshResult = await errors.try(getOrCreateAssessmentState(onerosterResourceSourcedId))
+		if (refreshResult.data) {
+			setServerState(refreshResult.data)
+		} else {
+			toast.error("Failed to refresh after report.")
+		}
 
 		// Immediately advance the student.
 		goToNext()
