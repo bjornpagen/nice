@@ -66,6 +66,48 @@ ALWAYS express currency symbols and percentages in MathML, NEVER as raw text:
 - Percentages: MUST use <math><mn>number</mn><mo>%</mo></math> (e.g., <math><mn>75</mn><mo>%</mo></math>)
 - Raw text like "$5" or "75%" will cause IMMEDIATE REJECTION and compilation errors
 
+**⚠️ CRITICAL: CHEMISTRY NOTATION MUST BE MATHML — NEVER PLAIN TEXT ⚠️**
+All chemistry notation in the body (and anywhere inline content is used) MUST use MathML inline items, not plain text or HTML <sub>/<sup> tags. Use ONLY inner MathML (no outer <math> wrapper) inside the { "type": "math", "mathml": "..." } objects.
+
+- Formulas/ions: Use <msub> for subscripts and <msup> for charges.
+  - Example ions: Ca<sup>2+</sup> → <msup><mi>Ca</mi><mrow><mn>2</mn><mo>+</mo></mrow></msup>
+  - Example subscripts: NH4Cl → <mi>N</mi><msub><mi>H</mi><mn>4</mn></msub><mi>Cl</mi>
+- Reactions: Use MathML tokens for operators and coefficients.
+  - Coefficients as <mn>, plus as <mo>+</mo>, arrow as <mo>→</mo>, equilibrium as <mo>⇌</mo>
+  - Example: 2H2 + O2 → 2H2O → <mn>2</mn><mi>H</mi><msub><mi>2</mi><mn> </mn></msub> (build fully with proper tokens) — see positive example below
+- States/phase labels: (aq), (s), (l), (g) should be represented as text in MathML; wrap labels in <mtext> and surround with parentheses tokens, e.g., <mo>(</mo><mtext>aq</mtext><mo>)</mo>
+- BANNED: Plain text chemical formulas/reactions; HTML <sub>/<sup>; using arrows like "->" in text; outer <math> wrappers.
+
+Negative example (DO NOT OUTPUT) — chemistry as plain text in body paragraphs:
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [
+      { "type": "text", "content": "Dissolving NH4Cl in water cools the solution." }
+    ] },
+    { "type": "paragraph", "content": [
+      { "type": "text", "content": "2H2 + O2 -> 2H2O" }
+    ] }
+  ]
+}
+\`\`\`
+
+Positive example — chemistry using MathML inline items (inner MathML only):
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [
+      { "type": "text", "content": "Dissolving " },
+      { "type": "math", "mathml": "<mi>N</mi><msub><mi>H</mi><mn>4</mn></msub><mi>Cl</mi>" },
+      { "type": "text", "content": " in water cools the solution." }
+    ] },
+    { "type": "paragraph", "content": [
+      { "type": "math", "mathml": "<mn>2</mn><msub><mi>H</mi><mn>2</mn></msub><mo>+</mo><msub><mi>O</mi><mn>2</mn></msub><mo>→</mo><mn>2</mn><msub><mi>H</mi><mn>2</mn></msub><mi>O</mi>" }
+    ] }
+  ]
+}
+\`\`\`
+
 The shell should:
 1. Convert Perseus content into a structured 'body' field as a JSON array of block-level items.
 2. List all widget and interaction identifiers as arrays of strings in the 'widgets' and 'interactions' properties.

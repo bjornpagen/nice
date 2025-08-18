@@ -38,6 +38,51 @@ We FULLY support the following QTI interaction types:
 
 **CRITICAL: Perseus \`sorter\` widgets should be converted to QTI \`orderInteraction\`.** This is a fully supported interaction type where students drag items to arrange them in the correct sequence.
 
+**⚠️ CRITICAL: CHEMISTRY NOTATION MUST BE MATHML — NEVER PLAIN TEXT ⚠️**
+All chemistry notation in prompts, choices, and feedback MUST use MathML inline items, not plain text or HTML <sub>/<sup>. This is especially important for \`inlineChoiceInteraction\` (dropdowns), where each choice's \`content\` is an array of inline items per the schemas in \`@/lib/qti-generation/schemas.ts\`.
+
+- Formulas/ions: Use <msub> for subscripts and <msup> for charges.
+  - Example ions: Ca<sup>2+</sup> → <msup><mi>Ca</mi><mrow><mn>2</mn><mo>+</mo></mrow></msup>
+  - Example subscripts: NH4Cl → <mi>N</mi><msub><mi>H</mi><mn>4</mn></msub><mi>Cl</mi>
+- Reactions: Use MathML tokens for coefficients and operators.
+  - Coefficients as <mn>, plus as <mo>+</mo>, arrow as <mo>→</mo>, equilibrium as <mo>⇌</mo>
+- States/phase labels: Use <mtext> inside parentheses tokens: <mo>(</mo><mtext>aq</mtext><mo>)</mo>
+- BANNED: Plain text chemical formulas/reactions; HTML <sub>/<sup>; using arrows like "->" in text; outer <math> wrappers.
+
+Negative examples (DO NOT OUTPUT):
+\`\`\`json
+{
+  "inline_choice": {
+    "type": "inlineChoiceInteraction",
+    "responseIdentifier": "RESP",
+    "choices": [
+      { "identifier": "A", "content": [{ "type": "text", "content": "NH4Cl" }] },
+      { "identifier": "B", "content": [{ "type": "text", "content": "Ca2+" }] }
+    ],
+    "shuffle": true
+  }
+}
+\`\`\`
+
+Positive examples — chemistry using MathML in dropdown choices:
+\`\`\`json
+{
+  "inline_choice": {
+    "type": "inlineChoiceInteraction",
+    "responseIdentifier": "RESP",
+    "choices": [
+      { "identifier": "A", "content": [
+        { "type": "math", "mathml": "<mi>N</mi><msub><mi>H</mi><mn>4</mn></msub><mi>Cl</mi>" }
+      ]},
+      { "identifier": "B", "content": [
+        { "type": "math", "mathml": "<msup><mi>Ca</mi><mrow><mn>2</mn><mo>+</mo></mrow></msup>" }
+      ]}
+    ],
+    "shuffle": true
+  }
+}
+\`\`\`
+
 **UNSUPPORTED INTERACTION HANDLING**
 Some Perseus widgets require complex, dynamic user input that we do not support. You MUST identify these and flag them.
 
