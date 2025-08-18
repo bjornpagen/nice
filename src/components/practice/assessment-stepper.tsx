@@ -2,7 +2,6 @@
 
 import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
-import * as logger from "@superbuilders/slog"
 import confetti from "canvas-confetti"
 import { Lock, Unlock } from "lucide-react"
 import Image from "next/image"
@@ -11,6 +10,7 @@ import * as React from "react"
 import { toast } from "sonner"
 import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
 import { AssessmentBottomNav, type AssessmentType } from "@/components/practice/assessment-bottom-nav"
+import { AssessmentLoadingSkeleton } from "@/components/practice/assessment-loading-skeleton"
 import greenFriend from "@/components/practice/course/unit/lesson/exercise/images/green-friend_v3.png"
 import lightBlueFriend from "@/components/practice/course/unit/lesson/exercise/images/light-blue-friend_v3.png"
 import spaceFriend from "@/components/practice/course/unit/lesson/exercise/images/space-friend_v3.png"
@@ -24,19 +24,18 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Textarea } from "@/components/ui/textarea"
 import {
 	finalizeAssessment,
-	flagQuestionAsReported,
-	getNextAttemptNumber,
 	getOrCreateAssessmentState,
-	submitAnswer,
+	processQuestionResponse,
 	reportQuestion,
-	skipQuestion
+	skipQuestion,
+	startNewAssessmentAttempt,
+	submitAnswer
 } from "@/lib/actions/assessment"
 import type { AssessmentState } from "@/lib/assessment-cache"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { Question, Unit } from "@/lib/types/domain"
 import type { LessonLayoutData } from "@/lib/types/page"
 import { cn } from "@/lib/utils"
-import { AssessmentLoadingSkeleton } from "@/components/practice/assessment-loading-skeleton"
 
 // Shared helper: render XP penalty alert
 function renderPenaltyAlert(penaltyXp: number, contentType: string, xpReason?: string, avgSecondsPerQuestion?: number) {
@@ -55,7 +54,7 @@ function renderPenaltyAlert(penaltyXp: number, contentType: string, xpReason?: s
 				<p>
 					{xpReason || "insincere effort detected"}. Deducted
 					<span className="font-semibold"> {Math.abs(penaltyXp)} XP</span>
-					{typeof avgSecondsPerQuestion === "number" && <> (~{avgSecondsPerQuestion.toFixed(1)}s per question)</>}.
+					{typeof avgSecondsPerQuestion === "number" && <> (~{avgSecondsPerQuestion.toFixed(1)}s per question)</>}
 				</p>
 				<p>Slow down and aim for accuracy to earn XP.</p>
 			</AlertDescription>
@@ -87,8 +86,8 @@ function SummaryView({
 	titleClass: string
 	bgClass: string
 	showCharacters: boolean
-	correctAnswersCount: number
-	totalQuestions: number
+	correctAnswersCount: number | null
+	totalQuestions: number | null
 	contentType: AssessmentType
 	assessmentTitle: string
 	onComplete?: () => void
@@ -99,14 +98,6 @@ function SummaryView({
 	xpReason?: string
 	avgSecondsPerQuestion?: number
 }) {
-	// Play summary sound when component mounts
-	React.useEffect(() => {
-		const audio = new Audio("/summary-sound.mp3")
-		audio.play().catch(() => {
-			// Ignore audio play errors (e.g., autoplay policy)
-		})
-	}, [])
-
 	return (
 		<div className="flex flex-col h-full bg-white">
 			{/* Summary Header */}
@@ -133,11 +124,13 @@ function SummaryView({
 						</div>
 					)}
 					<div className="mt-8">
-						<p
-							className={`text-3xl font-bold ${contentType === "Exercise" || contentType === "Quiz" || contentType === "Test" ? "text-white" : "text-gray-900"}`}
-						>
-							{correctAnswersCount}/{totalQuestions} correct
-						</p>
+						{typeof correctAnswersCount === "number" && typeof totalQuestions === "number" && (
+							<p
+								className={`text-3xl font-bold ${contentType === "Exercise" || contentType === "Quiz" || contentType === "Test" ? "text-white" : "text-gray-900"}`}
+							>
+								{correctAnswersCount}/{totalQuestions} correct
+							</p>
+						)}
 					</div>
 				</div>
 
@@ -180,8 +173,9 @@ function SummaryView({
 					onComplete?.()
 				}}
 				isEnabled={true}
-				currentQuestion={totalQuestions + 1} // Setting this higher than totalQuestions to trigger complete state
-				totalQuestions={totalQuestions}
+				isComplete={true}
+				currentQuestion={(totalQuestions ?? 0) + 1} // Setting this higher than totalQuestions to trigger complete state
+				totalQuestions={totalQuestions ?? undefined}
 				onReset={() => {
 					// Reset the entire assessment to try again
 					handleReset()
@@ -226,6 +220,7 @@ export function AssessmentStepper({
 	const router = useRouter()
 
 	const [serverState, setServerState] = React.useState<AssessmentState | null>(null)
+	const [visibleQuestionIndex, setVisibleQuestionIndex] = React.useState(0)
 	const [isLoading, setIsLoading] = React.useState(true)
 
 	const [selectedResponses, setSelectedResponses] = React.useState<Record<string, unknown>>({})
@@ -243,8 +238,8 @@ export function AssessmentStepper({
 	// Store summary data from the server's finalization response
 	const [summaryData, setSummaryData] = React.useState<{
 		score: number
-		correctAnswersCount: number
-		totalQuestions: number
+		correctAnswersCount: number | null
+		totalQuestions: number | null
 		xpPenaltyInfo?: { penaltyXp: number; reason: string; avgSecondsPerQuestion?: number }
 	} | null>(null)
 
@@ -259,18 +254,55 @@ export function AssessmentStepper({
 
 	const assessmentStartTimeRef = React.useRef<Date | null>(null)
 
+	// Guard: ensure summary sfx (sound/confetti) only plays once per attempt
+	const hasAnnouncedSummaryRef = React.useRef(false)
+	React.useEffect(() => {
+		if (showSummary && !hasAnnouncedSummaryRef.current) {
+			hasAnnouncedSummaryRef.current = true
+			const audio = new Audio("/summary-sound.mp3")
+			audio.play().catch(() => { })
+		}
+	}, [showSummary])
+
+	// Removed cache-busting logic; no longer needed
+
+	/**
+	 * Ensures all per-question state is reset whenever the visible question changes.
+	 *
+	 * CRITICAL BUSINESS LOGIC:
+	 * This useEffect hook serves as the SINGLE SOURCE OF TRUTH for resetting per-question state.
+	 * It fixes a bug where state from a previous question could "bleed" into the next one after
+	 * a page refresh, leaving the submit button permanently disabled.
+	 *
+	 * This hook is triggered whenever `visibleQuestionIndex` changes, which happens:
+	 * - When navigating to the next question after answering
+	 * - When skipping a question
+	 * - When reporting a question (which auto-skips)
+	 * - When the page is refreshed and re-hydrates with the server's current question index
+	 *
+	 * DO NOT add manual state resets in other navigation functions. This centralized approach
+	 * ensures consistency and prevents state management bugs.
+	 */
+	// biome-ignore lint/correctness/useExhaustiveDependencies: visibleQuestionIndex dependency is required to reset state on question change
+	React.useEffect(() => {
+		setSelectedResponses({})
+		setExpectedResponses([])
+		setShowFeedback(false)
+		setIsAnswerCorrect(false)
+		setIsAnswerChecked(false)
+		setAttemptCount(0)
+	}, [visibleQuestionIndex])
+
 	// Admin-only: practice header lock toggle (far right)
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
+	const { setProgressForResource, beginProgressUpdate, endProgressUpdate } = useLessonProgress()
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
 	// Parse Clerk metadata using errors.trySync (no client logging)
-	let userSourceId: string | undefined
 	let canUnlockAll = false
 	const parsedMetaResult = errors.trySync(() => parseUserPublicMetadata(user?.publicMetadata))
 	if (parsedMetaResult.error) {
-		userSourceId = undefined
 		canUnlockAll = false
 	} else {
-		userSourceId = parsedMetaResult.data.sourceId
 		canUnlockAll = parsedMetaResult.data.roles.some((r) => r.role !== "student")
 	}
 
@@ -294,111 +326,179 @@ export function AssessmentStepper({
 	const audioRef = React.useRef<HTMLAudioElement | null>(null)
 	const wrongAudioRef = React.useRef<HTMLAudioElement | null>(null)
 
-	// Define initState as a useCallback so it can be called from error UI
-	const initState = React.useCallback(async (retries = 3) => {
-		setLoadError(false) // Reset error on each init
-		setIsLoading(true)
-		const result = await errors.try(getOrCreateAssessmentState(onerosterResourceSourcedId))
-		if (result.error) {
-			if (retries > 0) {
-				toast.info("Retrying load in 5s...")
-				setTimeout(() => initState(retries - 1), 5000)
-				return // Keep loading during auto-retry
-			}
-			toast.error("Could not load assessment after retries.")
-			setIsLoading(false)
-			setLoadError(true)
-			return
-		}
-		const state = result.data
-		setServerState(state)
+	// Store init function in a ref to avoid stale closures
+	const initStateRef = React.useRef<(retries?: number) => Promise<void>>(null)
 
-		if (state.currentQuestionIndex >= questions.length && !state.isFinalized) {
-			setIsFinalizing(true)
-			const finalizeResult = await errors.try(
-				finalizeAssessment({
-					onerosterResourceSourcedId,
-					onerosterComponentResourceSourcedId,
-					onerosterCourseSourcedId,
-					durationInSeconds: assessmentStartTimeRef.current
-						? Math.round((Date.now() - assessmentStartTimeRef.current.getTime()) / 1000)
-						: undefined,
-					expectedXp,
-					assessmentTitle,
-					assessmentPath,
-					unitData,
-					contentType
-				})
-			)
-			if (finalizeResult.error) {
-				toast.error("Failed to complete assessment. Retry or contact support.")
-				setIsFinalizing(false)
+	/**
+	 * Initializes and synchronizes the assessment state with the server.
+	 *
+	 * CRITICAL BUSINESS LOGIC:
+	 * - This effect is responsible for fetching the server-side assessment state on mount
+	 * - The dependency array MUST NOT include `questions.length` because the `questions` prop
+	 *   is a new array object on every render, causing infinite re-renders
+	 * - The assessment's identity is tied to `onerosterResourceSourcedId`, which is sufficient
+	 *   to trigger a re-fetch when the assessment itself changes
+	 * - DO NOT add `questions.length` back to dependencies - it will cause infinite loops
+	 */
+	// biome-ignore lint/correctness/useExhaustiveDependencies: questions.length intentionally omitted to prevent infinite re-render loop
+	React.useEffect(() => {
+		let timeoutId: number | null = null
+
+		async function initState(retries = 3): Promise<void> {
+			// Guard: ensure init runs once per mount; also if summary already visible or we're finalizing, skip
+			if (didInitRef.current || showSummary || isFinalizationComplete || isFinalizing) {
+				return
+			}
+			didInitRef.current = true
+			setLoadError(false)
+			setIsLoading(true)
+			const result = await errors.try(getOrCreateAssessmentState(onerosterResourceSourcedId))
+			if (result.error) {
+				if (retries > 0) {
+					// Avoid stacking toasts in retries
+					if (!loadError) toast.info("Retrying load in 5s...")
+					// Use window.setTimeout which returns a number in browser environments
+					timeoutId = window.setTimeout(() => void initState(retries - 1), 5000)
+					return
+				}
+				toast.error("Could not load assessment after retries.")
 				setIsLoading(false)
 				setLoadError(true)
 				return
 			}
-			const finalSummaryData = finalizeResult.data
-			setSummaryData({
-				score: finalSummaryData.score,
-				correctAnswersCount: finalSummaryData.correctAnswersCount,
-				totalQuestions: finalSummaryData.totalQuestions,
-				xpPenaltyInfo: finalSummaryData.xpPenaltyInfo
-					? {
-						penaltyXp: typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number" ? finalSummaryData.xpPenaltyInfo.penaltyXp : 0,
-						reason: typeof finalSummaryData.xpPenaltyInfo.reason === "string" ? finalSummaryData.xpPenaltyInfo.reason : "Unknown penalty reason",
-						avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
+			const state = result.data
+			setServerState(state)
+			const isComplete = state.currentQuestionIndex >= questions.length
+			if (!isComplete) {
+				// Only set a visible question when in-progress to avoid flashing the last question on completed attempts
+				const clampedIndex = Math.max(0, Math.min(state.currentQuestionIndex, questions.length - 1))
+				setVisibleQuestionIndex(clampedIndex)
+			}
+
+			// NEW: Check for a persistent finalization error first.
+			if (state.finalizationError) {
+				toast.error(`Could not complete assessment: ${state.finalizationError}`)
+				setIsLoading(false)
+				setLoadError(true)
+				return
+			}
+
+			if (state.currentQuestionIndex >= questions.length && !state.isFinalized) {
+				setIsFinalizing(true)
+				const finalizeResult = await errors.try(
+					finalizeAssessment({
+						onerosterResourceSourcedId,
+						onerosterComponentResourceSourcedId,
+						onerosterCourseSourcedId,
+						expectedXp,
+						assessmentTitle,
+						assessmentPath,
+						unitData,
+						contentType
+					})
+				)
+				if (finalizeResult.error) {
+					toast.error("Failed to complete assessment. Retry or contact support.")
+					setIsFinalizing(false)
+					setIsLoading(false)
+					setLoadError(true)
+					return
+				}
+				const finalSummaryData = finalizeResult.data
+				setSummaryData({
+					score: finalSummaryData.score,
+					correctAnswersCount: finalSummaryData.correctAnswersCount,
+					totalQuestions: finalSummaryData.totalQuestions,
+					xpPenaltyInfo: finalSummaryData.xpPenaltyInfo
+						? {
+							penaltyXp:
+								typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
+									? finalSummaryData.xpPenaltyInfo.penaltyXp
+									: 0,
+							reason:
+								typeof finalSummaryData.xpPenaltyInfo.reason === "string"
+									? finalSummaryData.xpPenaltyInfo.reason
+									: "Unknown penalty reason",
+							avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
+						}
+						: undefined
+				})
+				setShowSummary(true)
+				setIsFinalizationComplete(true)
+				setIsFinalizing(false)
+				setIsLoading(false)
+				return
+			}
+
+			// Handle already-finalized assessment on refresh
+			if (state.currentQuestionIndex >= questions.length && state.isFinalized) {
+				if (state.finalSummary) {
+					setSummaryData(state.finalSummary)
+					setShowSummary(true)
+					setIsFinalizationComplete(true)
+					setIsLoading(false)
+					return
+				}
+				// Avoid re-finalizing a new attempt; briefly poll for summary to appear to handle propagation
+				for (let i = 0; i < 3; i++) {
+					await new Promise((r) => setTimeout(r, 200 * (i + 1)))
+					const refetch = await errors.try(getOrCreateAssessmentState(onerosterResourceSourcedId))
+					if (!refetch.error && refetch.data && refetch.data.finalSummary) {
+						setSummaryData(refetch.data.finalSummary)
+						setShowSummary(true)
+						setIsFinalizationComplete(true)
+						setIsLoading(false)
+						break
 					}
-					: undefined
-			})
-			setShowSummary(true)
-			setIsFinalizing(false)
-		} else if (state.isFinalized || state.currentQuestionIndex >= questions.length) {
-			setShowSummary(true)
+				}
+				// If still no summary after retries, keep loading skeleton to avoid flashing question
+				return
+			}
+			// In-progress path: safe to render question now
+			setIsLoading(false)
 		}
-		setIsLoading(false)
-	}, [onerosterResourceSourcedId, onerosterComponentResourceSourcedId, onerosterCourseSourcedId, questions.length, expectedXp, assessmentTitle, assessmentPath, unitData, contentType])
 
-	// Fetch initial state on mount
-	React.useEffect(() => {
+		initStateRef.current = initState
 		void initState()
-	}, [initState])
 
-	// Gate rendering on loading state to prevent UI flash
-	if (isLoading || !serverState) {
-		return <AssessmentLoadingSkeleton />
-	}
+		return () => {
+			if (timeoutId) {
+				clearTimeout(timeoutId)
+			}
+		}
+	}, [
+		onerosterResourceSourcedId,
+		onerosterComponentResourceSourcedId,
+		onerosterCourseSourcedId,
+		assessmentPath,
+		assessmentTitle,
+		contentType,
+		expectedXp,
+		// questions.length has been removed to prevent an infinite re-render loop
+		unitData
+	])
 
-	if (loadError) {
-		return (
-			<div className="flex flex-col h-full items-center justify-center p-8 text-center text-red-500">
-				<p>Failed to load assessment. Please try again or contact support if the issue persists.</p>
-				<Button
-					onClick={() => { setLoadError(false); void initState(); }}
-					variant="default"
-					className="mt-4 bg-blue-600 text-white"
-				>
-					Retry
-				</Button>
-			</div>
-		)
-	}
-
-	const currentQuestionIndex = serverState.currentQuestionIndex
-	const currentQuestion = questions[currentQuestionIndex]
-	// Removed old summary-time finalization flags
-	const { setProgressForResource, beginProgressUpdate, endProgressUpdate } = useLessonProgress()
-
-	// Navigation race-condition guards
+	// Navigation race-condition guards (must be declared before any conditional returns)
 	const isNavigatingRef = React.useRef(false)
 	const skipTimeoutRef = React.useRef<number | null>(null)
+	// Ensure we only refresh once after showing the summary to update shared layouts/locks
+	const hasRefreshedAfterSummaryRef = React.useRef(false)
+
+	// After summary appears, refresh once to update server-rendered sidebar/proficiency
+	React.useEffect(() => {
+		if (showSummary && !hasRefreshedAfterSummaryRef.current) {
+			hasRefreshedAfterSummaryRef.current = true
+			// Non-blocking refresh to update layout/sidebars
+			router.refresh()
+		}
+	}, [showSummary, router])
+	// Guard to ensure init executes only once per mount (avoid Strict Mode double-effect)
+	const didInitRef = React.useRef(false)
 
 	// Interactive assessments include Exercises as well
-	const isInteractiveAssessment = contentType === "Quiz" || contentType === "Test" || contentType === "Exercise"
 	const MAX_ATTEMPTS = 3
-	const hasExhaustedAttempts = attemptCount >= MAX_ATTEMPTS && !isAnswerCorrect
 
 	// Ensure attempt is initialized for all assessments (now always interactive)
-	const [isAttemptReady, setIsAttemptReady] = React.useState<boolean>(false)
 
 	function triggerConfetti() {
 		const canvas = document.createElement("canvas")
@@ -479,13 +579,7 @@ export function AssessmentStepper({
 		}
 	}, [])
 
-	// If unauthenticated or missing resource id, allow UI but disable server logging
-	React.useEffect(() => {
-		const hasAuthIds = Boolean(userSourceId && onerosterResourceSourcedId)
-		if (!hasAuthIds) {
-			setIsAttemptReady(true)
-		}
-	}, [userSourceId, onerosterResourceSourcedId])
+	// Cleanup any pending timers on unmount
 
 	React.useEffect(() => {
 		// When the summary screen is shown, determine the next piece of content.
@@ -545,26 +639,47 @@ export function AssessmentStepper({
 		}
 	}, [showSummary, onerosterResourceSourcedId, unitData])
 
-	// REMOVED: finalizeAndAnalyze function. This logic is now in the `finalizeAssessment` server action.
+	// Gate rendering on loading state to prevent UI flash
+	if (isLoading || !serverState) {
+		return <AssessmentLoadingSkeleton />
+	}
 
-	// Retake: honor parent onRetake for explicit reset/remount
+	if (loadError) {
+		return (
+			<div className="flex flex-col h-full items-center justify-center p-8 text-center text-red-500">
+				<p>Failed to load assessment. Please try again or contact support if the issue persists.</p>
+				<Button
+					onClick={() => {
+						if (initStateRef.current) {
+							void initStateRef.current()
+						}
+					}}
+					variant="default"
+					className="mt-4 bg-blue-600 text-white"
+				>
+					Retry
+				</Button>
+			</div>
+		)
+	}
+
+	const currentQuestion = questions[visibleQuestionIndex]
+
 	const handleReset = async () => {
 		if (onRetake) {
 			// Use the next attempt number as a hint to parent for UX
 			onRetake(serverState.attemptNumber + 1)
 			return
 		}
-		// Fallback: refresh to get a new attempt
-		setSelectedResponses({})
-		setExpectedResponses([])
-		setShowFeedback(false)
-		setIsAnswerCorrect(false)
-		setIsAnswerChecked(false)
-		setAttemptCount(0)
-		setShowSummary(false)
-		setSummaryData(null)
 
-		assessmentStartTimeRef.current = new Date()
+		// MODIFIED: Clear server state before refreshing to force a new attempt.
+		const result = await errors.try(startNewAssessmentAttempt(onerosterResourceSourcedId))
+		if (result.error) {
+			toast.error("Could not start a new attempt. Please refresh the page manually.")
+			return
+		}
+
+		// Now, refreshing the page will correctly generate a new attempt state on the server.
 		router.refresh()
 	}
 
@@ -573,10 +688,24 @@ export function AssessmentStepper({
 	}
 
 	if (showSummary && summaryData) {
+		/**
+		 * Calculate the percentage score for the assessment summary.
+		 *
+		 * CRITICAL BUSINESS LOGIC:
+		 * - When totalQuestions is 0 or null (e.g., all questions were reported/skipped),
+		 *   the percentage MUST default to 0, not 100.
+		 * - This prevents users from seeing an incorrect "perfect score" when they haven't
+		 *   actually answered any scorable questions.
+		 * - The default of 0 ensures the UI accurately reflects that no questions were
+		 *   successfully answered.
+		 *
+		 * DO NOT change the default back to 100 - this would show misleading success
+		 * messages to users who reported all questions.
+		 */
 		const percentage =
-			summaryData.totalQuestions > 0
+			summaryData.totalQuestions !== null && summaryData.totalQuestions > 0 && summaryData.correctAnswersCount !== null
 				? Math.round((summaryData.correctAnswersCount / summaryData.totalQuestions) * 100)
-				: 100
+				: 0
 		const getMessage = () => {
 			// For exercises, always use blue theme with white text
 			if (contentType === "Exercise") {
@@ -652,7 +781,11 @@ export function AssessmentStepper({
 				totalQuestions={summaryData.totalQuestions}
 				contentType={contentType}
 				assessmentTitle={assessmentTitle}
-				onComplete={onComplete}
+				onComplete={() => {
+					// Minimal fix: rely on the useEffect(showSummary) one-time refresh.
+					// Here we only call the optional parent callback.
+					onComplete?.()
+				}}
 				handleReset={handleReset}
 				nextItem={nextItem}
 				isNextEnabled={isNextEnabled}
@@ -668,9 +801,19 @@ export function AssessmentStepper({
 	}
 
 	const handleResponseChange = (responseIdentifier: string, response: unknown) => {
-		// Add the identifier to our list of expected inputs if it's not already there
-		if (!expectedResponses.includes(responseIdentifier)) {
-			setExpectedResponses((prev) => [...prev, responseIdentifier])
+		// Derive expected inputs from the shape of the response to avoid timing issues
+		if (
+			responseIdentifier === "RESPONSE" &&
+			typeof response === "object" &&
+			response !== null &&
+			!Array.isArray(response)
+		) {
+			// Multi-input (fill-in-the-blank): expected fields are the object's keys
+			const keys = Object.keys(response)
+			setExpectedResponses(keys)
+		} else {
+			// Single input or multi-select: the single identifier is the expectation
+			setExpectedResponses([responseIdentifier])
 		}
 
 		// Update the current value for this specific input
@@ -686,6 +829,22 @@ export function AssessmentStepper({
 		}
 	}
 
+	/**
+	 * Handles the "Check" button action. This function implements a critical piece of business logic:
+	 *
+	 * 1.  **First Attempt (`attemptCount === 0`):**
+	 *     - It calls the `submitAnswer` server action.
+	 *     - This action is **authoritative**. It records the user's first answer (correct or incorrect)
+	 *       to the persistent Redis state and immediately advances the server's question index.
+	 *     - This design intentionally prevents users from gaming the system by refreshing the page
+	 *       on an incorrect answer to get another "first attempt". The first answer is final.
+	 *
+	 * 2.  **Subsequent Attempts (`attemptCount > 0`):**
+	 *     - It calls the `processQuestionResponse` server action, which is a **compute-only** check.
+	 *     - This provides immediate UI feedback for the "Try Again" loop.
+	 *     - These subsequent attempts are purely for formative learning and **do not** alter the
+	 *       already-recorded score or state on the server.
+	 */
 	const handleCheckAnswer = async () => {
 		if (Object.keys(selectedResponses).length === 0 || !currentQuestion) {
 			return
@@ -728,30 +887,45 @@ export function AssessmentStepper({
 			}
 		}
 
-		const result = await errors.try(
-			submitAnswer(
-				onerosterResourceSourcedId,
-				currentQuestion.id,
-				currentQuestionIndex,
-				responseValue,
-				responseIdentifier
+		let isCorrect = false
+		if (attemptCount === 0) {
+			// FIRST ATTEMPT: Mutates the server state and advances server index
+			const result = await errors.try(
+				submitAnswer(
+					onerosterResourceSourcedId,
+					currentQuestion.id,
+					visibleQuestionIndex,
+					responseValue,
+					responseIdentifier
+				)
 			)
-		)
-
-		if (result.error) {
-			toast.error("Failed to check answer. Please try again.")
-			setIsSubmitting(false)
-			return
+			if (result.error) {
+				toast.error("Failed to save answer. Please try again.")
+				setIsSubmitting(false)
+				// Force a re-sync with the server on failure
+				if (initStateRef.current) void initStateRef.current()
+				return
+			}
+			const { state: newState, isCorrect: correct } = result.data
+			setServerState(newState) // Update server state, index is now advanced
+			isCorrect = correct
+			setIsAnswerCorrect(isCorrect)
+		} else {
+			// RETRY ATTEMPT: Compute-only check for UI feedback
+			const result = await errors.try(processQuestionResponse(currentQuestion.id, responseValue, responseIdentifier))
+			if (result.error || !result.data) {
+				toast.error("Failed to check answer. Please try again.")
+				setIsSubmitting(false)
+				// It's safest to re-sync even on a compute failure
+				if (initStateRef.current) void initStateRef.current()
+				return
+			}
+			isCorrect = result.data.isCorrect
+			setIsAnswerCorrect(isCorrect)
 		}
 
-		const { state: newState, isCorrect } = result.data
-
-		// Show immediate feedback for this UI attempt
-		setIsAnswerCorrect(isCorrect)
+		// Shared logic for showing feedback after any attempt
 		setShowFeedback(true)
-
-		// Update the component's state with the authoritative state from the server
-		setServerState(newState)
 
 		setIsSubmitting(false)
 		setIsAnswerChecked(true)
@@ -780,20 +954,19 @@ export function AssessmentStepper({
 
 		const nextIndex = serverState.currentQuestionIndex
 		const isLast = nextIndex >= questions.length
+
+		// --- MODIFICATION START ---
+		// First, check if the assessment is complete. This prevents updating
+		// the visible index to an out-of-bounds value.
 		if (isLast) {
 			setIsFinalizing(true)
 			beginProgressUpdate(onerosterResourceSourcedId)
-
-			const durationInSeconds = assessmentStartTimeRef.current
-				? Math.round((Date.now() - assessmentStartTimeRef.current.getTime()) / 1000)
-				: undefined
 
 			const result = await errors.try(
 				finalizeAssessment({
 					onerosterResourceSourcedId,
 					onerosterComponentResourceSourcedId,
 					onerosterCourseSourcedId,
-					durationInSeconds,
 					expectedXp,
 					assessmentTitle,
 					assessmentPath,
@@ -805,15 +978,14 @@ export function AssessmentStepper({
 			if (result.error) {
 				setIsFinalizing(false)
 				endProgressUpdate(onerosterResourceSourcedId)
+				// FIX: Release the navigation lock on failure to allow the user to retry.
 				isNavigatingRef.current = false
 				toast.error("Could not save final result. Please retry.")
 				return
 			}
 
-			// Store the authoritative summary data from the server
+			// (Code to set summaryData and progress remains the same)...
 			const finalSummaryData = result.data
-
-			// Type-safe assignment with validation
 			setSummaryData({
 				score: finalSummaryData.score,
 				correctAnswersCount: finalSummaryData.correctAnswersCount,
@@ -833,7 +1005,7 @@ export function AssessmentStepper({
 					: undefined
 			})
 
-			// Update local sidebar progress overlay
+			// (Code for setProgressForResource remains the same)...
 			const score = finalSummaryData.score
 			const calculateProficiency = () => {
 				if (score >= 100) return "proficient" as const
@@ -841,7 +1013,6 @@ export function AssessmentStepper({
 				return "attempted" as const
 			}
 			const proficiencyLevel = calculateProficiency()
-
 			setProgressForResource(onerosterResourceSourcedId, {
 				completed: true,
 				score,
@@ -857,22 +1028,22 @@ export function AssessmentStepper({
 			}
 
 			endProgressUpdate(onerosterResourceSourcedId)
-			router.refresh()
+			// REMOVED: router.refresh() - This was the cause of the double-render bug.
 			setIsFinalizationComplete(true)
 			setIsFinalizing(false)
-			setShowSummary(true)
+			setShowSummary(true) // This is sufficient to show the summary.
 			isNavigatingRef.current = false
 			return
 		}
 
-		// Not last: advance to next question and reset per-question state
+		// This part only runs if it's NOT the last question.
+		// Sync the UI with the server state before advancing
+		setVisibleQuestionIndex(serverState.currentQuestionIndex)
+		// --- MODIFICATION END ---
+
+		// Not last: advance to next question
 		// The server has already updated the currentQuestionIndex
-		setSelectedResponses({})
-		setExpectedResponses([])
-		setShowFeedback(false)
-		setIsAnswerCorrect(false)
-		setIsAnswerChecked(false)
-		setAttemptCount(0)
+		// Per-question state reset is handled by the useEffect watching visibleQuestionIndex
 
 		// Release navigation lock on next frame
 		requestAnimationFrame(() => {
@@ -880,85 +1051,6 @@ export function AssessmentStepper({
 		})
 	}
 
-	const handleSkip = async () => {
-		// Prevent actions before attempt is ready for interactive assessments
-		if (isInteractiveAssessment && !isAttemptReady) {
-			return
-		}
-		if (!currentQuestion) return
-
-		const result = await errors.try(
-			skipQuestion(onerosterResourceSourcedId, currentQuestion.id, currentQuestionIndex)
-		)
-		if (result.error) {
-			toast.error("Failed to skip question. Please try again.")
-			return
-		}
-		setServerState(result.data.state)
-
-		// Treat skip as wrong answer
-		setIsAnswerCorrect(false)
-		setAttemptCount(MAX_ATTEMPTS)
-		setIsAnswerChecked(true)
-		setShowFeedback(true)
-	}
-
-	// OPEN REPORT POPOVER
-	const handleReportIssue = () => {
-		setIsReportPopoverOpen(true)
-		setReportText("")
-	}
-
-	// SUBMIT REPORT
-	const handleSubmitReport = async () => {
-		if (!currentQuestion) return
-
-		if (reportText.trim() === "") {
-			toast.error("Please describe the issue.")
-			return
-		}
-
-		// Save the report text before clearing it
-		const savedReportText = reportText.trim()
-
-		// Close popover and clear text
-		setIsReportPopoverOpen(false)
-		setReportText("")
-
-		// Note: We no longer need to track reported questions locally for scoring.
-
-		const toastId = toast.loading("Reporting issue...")
-
-		// Call the server action to report the question
-		const result = await errors.try(
-			reportQuestion(
-				onerosterResourceSourcedId,
-				currentQuestion.id,
-				currentQuestionIndex,
-				savedReportText
-			)
-		)
-
-		if (result.error) {
-			toast.error("Failed to report issue. Please try again.", { id: toastId })
-			return
-		}
-
-		toast.success("Issue reported. Thank you!", { id: toastId })
-
-		// Refresh state after report (index advanced)
-		const refreshResult = await errors.try(getOrCreateAssessmentState(onerosterResourceSourcedId))
-		if (refreshResult.data) {
-			setServerState(refreshResult.data)
-		} else {
-			toast.error("Failed to refresh after report.")
-		}
-
-		// Immediately advance the student.
-		goToNext()
-	}
-
-	// Handle try again for wrong answers
 	const handleTryAgain = () => {
 		setSelectedResponses({})
 		setExpectedResponses([])
@@ -967,17 +1059,105 @@ export function AssessmentStepper({
 		// Note: We keep attemptCount as is, since we're continuing with the same question
 	}
 
+	const handleSkip = async () => {
+		if (!currentQuestion) return
+
+		// Only allow skip when server and UI indices are in sync and before first check
+		if (!serverState || serverState.currentQuestionIndex !== visibleQuestionIndex || attemptCount > 0) {
+			toast.error("Skip is unavailable after checking or when the question has already advanced.")
+			return
+		}
+
+		const result = await errors.try(skipQuestion(onerosterResourceSourcedId, currentQuestion.id, visibleQuestionIndex))
+		if (result.error) {
+			toast.error("Failed to skip question. Please try again.")
+			// Force a re-sync with the server on failure
+			if (initStateRef.current) void initStateRef.current()
+			return
+		}
+		setServerState(result.data.state)
+		setVisibleQuestionIndex(result.data.state.currentQuestionIndex)
+
+		// Per-question state reset is handled by the useEffect watching visibleQuestionIndex
+	}
+
+	// OPEN REPORT POPOVER
+	const handleReportIssue = () => {
+		// Only allow report when server and UI indices are in sync and before first check
+		if (!serverState || serverState.currentQuestionIndex !== visibleQuestionIndex || attemptCount > 0) {
+			toast.error("Report is unavailable after checking or when the question has already advanced.")
+			return
+		}
+		setIsReportPopoverOpen(true)
+		setReportText("")
+	}
+
+	/**
+	 * Submits a user's report about a question. This function implements another key piece of business logic:
+	 *
+	 * - It calls the `reportQuestion` server action, which performs two main tasks:
+	 *   1. Flags the question in the external reporting service.
+	 *   2. Atomically updates the assessment state in Redis to mark the question as `isReported: true`
+	 *      and **advances the `currentQuestionIndex`**.
+	 * - The client then syncs its UI to this new server state.
+	 * - **Effect:** The user is intentionally and immediately moved to the next question. This "report and skip"
+	 *   flow removes the problematic question from the user's path and ensures it is excluded from final scoring.
+	 */
+	const handleSubmitReport = async () => {
+		if (!currentQuestion) return
+
+		if (reportText.trim() === "") {
+			toast.error("Please describe the issue.")
+			return
+		}
+
+		const savedReportText = reportText.trim()
+		setIsReportPopoverOpen(false)
+		setReportText("")
+
+		const toastId = toast.loading("Reporting issue...")
+
+		const result = await errors.try(
+			reportQuestion(onerosterResourceSourcedId, currentQuestion.id, visibleQuestionIndex, savedReportText)
+		)
+
+		if (result.error) {
+			toast.error("Failed to report issue. Please try again.", { id: toastId })
+			// Force a re-sync on failure to be safe
+			if (initStateRef.current) void initStateRef.current()
+			return
+		}
+
+		toast.success("Issue reported. Thank you!", { id: toastId })
+
+		// Update the state based on the atomic response from the server
+		if (result.data.state) {
+			setServerState(result.data.state)
+			setVisibleQuestionIndex(result.data.state.currentQuestionIndex)
+
+			// Per-question state reset is handled by the useEffect watching visibleQuestionIndex
+		} else {
+			toast.error("Failed to refresh after report. Reloading...")
+			// Full reload is the safest recovery here
+			router.refresh()
+		}
+	}
+
 	// Determine button text and action
 	const getButtonConfig = () => {
+		const hasExhaustedAttempts = attemptCount >= MAX_ATTEMPTS && !isAnswerCorrect
+		const isLastQuestion = visibleQuestionIndex >= questions.length - 1
+
 		if (isAnswerCorrect) {
-			return { text: "Continue", action: () => void goToNext() }
+			return { text: isLastQuestion ? "Show summary" : "Continue", action: () => void goToNext() }
 		}
 		if (hasExhaustedAttempts) {
-			return { text: "Next question", action: () => void goToNext() }
+			return { text: isLastQuestion ? "Show summary" : "Next question", action: () => void goToNext() }
 		}
 		if (isAnswerChecked && !isAnswerCorrect) {
 			return { text: "Try again", action: handleTryAgain }
 		}
+		// Default state: The user has not yet checked their answer.
 		return { text: "Check", action: handleCheckAnswer }
 	}
 
@@ -985,11 +1165,53 @@ export function AssessmentStepper({
 
 	// Enable button only when all expected fields have been filled
 	// Enable continue either when inputs are complete OR when feedback is being shown
-	const hasAllExpectedFilled =
-		expectedResponses.length > 0 &&
-		expectedResponses.every((id) => selectedResponses[id] !== "" && selectedResponses[id] !== undefined)
+	// Determine if inputs are sufficiently filled to enable the Check button
+	function isMeaningfulValue(value: unknown): boolean {
+		if (typeof value === "string") {
+			return value.trim().length > 0
+		}
+		if (Array.isArray(value)) {
+			return value.length > 0
+		}
+		return value !== null && value !== undefined
+	}
 
-	const isButtonEnabled = (isAnswerChecked || hasAllExpectedFilled) && !isSubmitting && !isFinalizing && isAttemptReady
+	function computeHasAllExpectedFilled(): boolean {
+		// Primary path: use explicit expectedResponses derived from the latest response shape
+		if (expectedResponses.length > 0) {
+			// Support nested multi-input stored under selectedResponses["RESPONSE"]
+			const nested = selectedResponses.RESPONSE
+			if (nested && typeof nested === "object" && !Array.isArray(nested)) {
+				// Type guard ensures nested is an object, so we can safely access properties
+				// Using Object.entries to iterate without type assertions
+				const nestedEntries = Object.entries(nested)
+				const nestedMap = new Map(nestedEntries)
+				return expectedResponses.every((key) => {
+					// Access the property value safely via Map
+					const value = nestedMap.get(key)
+					return isMeaningfulValue(value)
+				})
+			}
+			// Fallback to top-level entries
+			return expectedResponses.every((key) => isMeaningfulValue(selectedResponses[key]))
+		}
+
+		// Fallback path: no expectedResponses yet (edge timing). Infer readiness from current selection.
+		const maybe = selectedResponses.RESPONSE
+		if (maybe && typeof maybe === "object" && !Array.isArray(maybe)) {
+			// Multi-input object: require all present keys to be meaningful if any exist
+			const entries = Object.values(maybe)
+			return entries.length > 0 && entries.every((v) => isMeaningfulValue(v))
+		}
+		// Single input or multi-select array or string under a known identifier
+		const values = Object.values(selectedResponses)
+		// Enable only if at least one meaningful value exists
+		return values.some((v) => isMeaningfulValue(v))
+	}
+
+	const hasAllExpectedFilled = computeHasAllExpectedFilled()
+
+	const isButtonEnabled = (isAnswerChecked || hasAllExpectedFilled) && !isSubmitting && !isFinalizing
 
 	return (
 		<div className="flex flex-col h-full bg-white">
@@ -1034,11 +1256,20 @@ export function AssessmentStepper({
 			<div className="flex-1 overflow-y-auto overflow-x-hidden relative">
 				{/* --- IFRAME PRELOADING --- */}
 				{/* Render all question iframes at once, but only display the current one. */}
+				{/**
+				 * CRITICAL BUSINESS LOGIC:
+				 * - The `key` prop MUST use `question.id` to ensure React correctly tracks each question component
+				 * - Using `visibleQuestionIndex` as the key causes severe performance degradation and incorrect
+				 *   question content display because it's not unique across list items
+				 * - When the key changes, React remounts the entire iframe, causing flickering and data loss
+				 * - Each question has a stable, unique ID that properly identifies it across navigation
+				 * - DO NOT change the key prop back to visibleQuestionIndex - it will break question rendering
+				 */}
 				{questions.map((question, index) => (
 					<div
 						key={question.id}
 						className="h-full w-full"
-						style={{ display: index === currentQuestionIndex ? "block" : "none" }}
+						style={{ display: index === visibleQuestionIndex ? "block" : "none" }}
 					>
 						<QTIRenderer
 							identifier={question.id}
@@ -1047,8 +1278,8 @@ export function AssessmentStepper({
 							width="100%"
 							className="h-full w-full"
 							onResponseChange={handleResponseChange}
-							displayFeedback={isAnswerChecked && index === currentQuestionIndex}
-							showAllFeedback={isAnswerChecked && !isAnswerCorrect && index === currentQuestionIndex}
+							displayFeedback={isAnswerChecked && index === visibleQuestionIndex}
+							showAllFeedback={isAnswerChecked && !isAnswerCorrect && index === visibleQuestionIndex}
 						/>
 					</div>
 				))}
@@ -1060,7 +1291,7 @@ export function AssessmentStepper({
 				buttonText={buttonConfig.text === "Check" ? "Check" : "Continue"}
 				isEnabled={isButtonEnabled}
 				isBusy={isSubmitting || isFinalizing}
-				currentQuestion={currentQuestionIndex + 1}
+				currentQuestion={visibleQuestionIndex + 1}
 				totalQuestions={questions.length}
 				showFeedback={showFeedback}
 				isCorrect={isAnswerCorrect}
@@ -1070,7 +1301,9 @@ export function AssessmentStepper({
 				maxAttempts={MAX_ATTEMPTS}
 				onSkip={handleSkip}
 				onReset={handleReset}
-				onReportIssue={handleReportIssue} // PASS THE NEW HANDLER
+				onReportIssue={handleReportIssue}
+				canSkip={Boolean(serverState && serverState.currentQuestionIndex === visibleQuestionIndex && attemptCount === 0)}
+				canReport={Boolean(serverState && serverState.currentQuestionIndex === visibleQuestionIndex && attemptCount === 0)}
 			/>
 
 			{/* Report Issue Popover */}

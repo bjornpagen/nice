@@ -27,6 +27,7 @@ interface AssessmentBottomNavProps {
 	isBusy?: boolean
 	buttonText?: "Check" | "Continue"
 	isStartScreen?: boolean
+	isComplete?: boolean
 	currentQuestion?: number
 	totalQuestions?: number
 	showFeedback?: boolean
@@ -41,6 +42,8 @@ interface AssessmentBottomNavProps {
 	nextItem?: { text: string; path: string; type?: string } | null
 	onReportIssue?: () => void
 	nextEnabled?: boolean
+	canSkip?: boolean
+	canReport?: boolean
 }
 
 const renderContinueButton = (
@@ -81,6 +84,7 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 			isEnabled,
 			buttonText,
 			isStartScreen = false,
+			isComplete: isCompleteOverride,
 			currentQuestion,
 			totalQuestions,
 			showFeedback = false,
@@ -95,11 +99,14 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 			nextItem,
 			onReportIssue,
 			nextEnabled = true,
-			isBusy = false
+			isBusy = false,
+			canSkip = true,
+			canReport = true
 		},
 		ref
 	) => {
-		const isComplete = Boolean(currentQuestion && totalQuestions && currentQuestion > totalQuestions)
+		const isComplete =
+			isCompleteOverride ?? Boolean(currentQuestion && totalQuestions && currentQuestion > totalQuestions)
 		const isInProgress = Boolean(
 			currentQuestion && totalQuestions && currentQuestion > 0 && currentQuestion <= totalQuestions
 		)
@@ -110,15 +117,14 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 			<div className={cn("bg-white border-t border-gray-200 shadow-lg", className)}>
 				<div className="max-w-7xl mx-auto px-4 py-3">
 					<div className="flex items-center justify-between">
-						{/* Left Section - Action Buttons */}
 						<LeftSection
 							isStartScreen={isStartScreen}
 							isComplete={isComplete}
 							isInProgress={isInProgress}
 							onReportIssue={onReportIssue}
+							canReport={canReport}
 						/>
 
-						{/* Center Section - Progress Dots */}
 						<CenterSection
 							isStartScreen={isStartScreen}
 							isComplete={isComplete}
@@ -127,7 +133,6 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 							onReset={onReset}
 						/>
 
-						{/* Right Section - Primary Actions */}
 						<RightSection
 							ref={ref}
 							isStartScreen={isStartScreen}
@@ -148,6 +153,7 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 							maxAttempts={maxAttempts}
 							nextItem={nextItem}
 							nextEnabled={nextEnabled}
+							canSkip={canSkip}
 						/>
 					</div>
 				</div>
@@ -162,12 +168,14 @@ function LeftSection({
 	isStartScreen,
 	isComplete,
 	isInProgress,
-	onReportIssue
+	onReportIssue,
+	canReport
 }: {
 	isStartScreen?: boolean
 	isComplete?: boolean
 	isInProgress?: boolean
 	onReportIssue?: () => void
+	canReport?: boolean
 }) {
 	const handleDrawClick = () => {
 		// TODO: Implement draw functionality
@@ -194,14 +202,16 @@ function LeftSection({
 				</HoverCardContent>
 			</HoverCard>
 
-			<Button
-				variant="link"
-				onClick={onReportIssue}
-				className="text-xs text-gray-500 hover:text-blue-600 hover:underline px-0 flex items-center gap-1"
-			>
-				<AlertCircle className="w-3 h-3" />
-				Report an issue
-			</Button>
+			{canReport && (
+				<Button
+					variant="link"
+					onClick={onReportIssue}
+					className="text-xs text-gray-500 hover:text-blue-600 hover:underline px-0 flex items-center gap-1"
+				>
+					<AlertCircle className="w-3 h-3" />
+					Report an issue
+				</Button>
+			)}
 		</div>
 	)
 }
@@ -320,7 +330,8 @@ function RightSection({
 	attemptCount,
 	maxAttempts,
 	nextItem,
-	nextEnabled
+	nextEnabled,
+	canSkip
 }: {
 	ref?: React.Ref<HTMLButtonElement>
 	isStartScreen?: boolean
@@ -341,6 +352,7 @@ function RightSection({
 	maxAttempts?: number
 	nextItem?: { text: string; path: string; type?: string } | null
 	nextEnabled?: boolean
+	canSkip?: boolean
 }) {
 	const handleSkipClick = () => {
 		if (onSkip) {
@@ -478,7 +490,7 @@ function RightSection({
 					</div>
 				)}
 				<div className="flex flex-row gap-2">
-					{!hasExhaustedAttempts && !isCorrect && (
+					{!hasExhaustedAttempts && !isCorrect && canSkip && (
 						<Button variant="link" className="text-blue-600 hover:underline hover:cursor-pointer" asChild>
 							<AlertDialog>
 								<AlertDialogTrigger className="text-sm text-blue-600 hover:underline hover:cursor-pointer">
@@ -523,32 +535,34 @@ function RightSection({
 	// Unanswered question - show Skip and Check buttons
 	return (
 		<div className="flex flex-row gap-4">
-			<Button variant="link" className="text-blue-600 hover:underline hover:cursor-pointer" asChild>
-				<AlertDialog>
-					<AlertDialogTrigger className="text-sm text-blue-600 hover:underline hover:cursor-pointer">
-						Skip
-					</AlertDialogTrigger>
-					<AlertDialogContent className="bg-white text-blue-600">
-						<AlertDialogHeader>
-							<AlertDialogTitle>Are you sure?</AlertDialogTitle>
-						</AlertDialogHeader>
-						<AlertDialogDescription>
-							Skipped questions will count as incorrect. You'll still be able to review the solution.
-						</AlertDialogDescription>
-						<AlertDialogFooter>
-							<AlertDialogAction
-								onClick={handleSkipClick}
-								className="bg-white text-blue-600 hover:cursor-pointer hover:bg-white hover:underline"
-							>
-								Yes, skip
-							</AlertDialogAction>
-							<AlertDialogCancel className="bg-blue-600 text-white hover:cursor-pointer hover:bg-blue-600 hover:text-white hover:ring-1 hover:ring-blue-600 hover:ring-offset-1">
-								Cancel
-							</AlertDialogCancel>
-						</AlertDialogFooter>
-					</AlertDialogContent>
-				</AlertDialog>
-			</Button>
+			{canSkip && (
+				<Button variant="link" className="text-blue-600 hover:underline hover:cursor-pointer" asChild>
+					<AlertDialog>
+						<AlertDialogTrigger className="text-sm text-blue-600 hover:underline hover:cursor-pointer">
+							Skip
+						</AlertDialogTrigger>
+						<AlertDialogContent className="bg-white text-blue-600">
+							<AlertDialogHeader>
+								<AlertDialogTitle>Are you sure?</AlertDialogTitle>
+							</AlertDialogHeader>
+							<AlertDialogDescription>
+								Skipped questions will count as incorrect. You'll still be able to review the solution.
+							</AlertDialogDescription>
+							<AlertDialogFooter>
+								<AlertDialogAction
+									onClick={handleSkipClick}
+									className="bg-white text-blue-600 hover:cursor-pointer hover:bg-white hover:underline"
+								>
+									Yes, skip
+								</AlertDialogAction>
+								<AlertDialogCancel className="bg-blue-600 text-white hover:cursor-pointer hover:bg-blue-600 hover:text-white hover:ring-1 hover:ring-blue-600 hover:ring-offset-1">
+									Cancel
+								</AlertDialogCancel>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
+				</Button>
+			)}
 			<Button
 				ref={ref}
 				variant="default"

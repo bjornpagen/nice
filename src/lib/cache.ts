@@ -135,14 +135,14 @@ export async function invalidateCache(keys: string | string[]): Promise<void> {
 }
 
 /**
- * Creates a base key array with environment and deployment info.
+ * Creates a base key array with deployment info.
  * This ensures caches are automatically invalidated on new deployments.
  */
 function createBaseKey(base: (string | number)[]): string[] {
 	// Sanitize inputs to prevent injection attacks
 	const sanitized = base.map((part) => String(part).replace(/[:\s]/g, "_"))
 
-	const parts = [...sanitized, env.NODE_ENV]
+	const parts = [...sanitized]
 	if (env.VERCEL_DEPLOYMENT_ID) {
 		parts.push(env.VERCEL_DEPLOYMENT_ID)
 	}
@@ -151,7 +151,7 @@ function createBaseKey(base: (string | number)[]): string[] {
 
 /**
  * Creates a Redis-compatible cache key from parts.
- * Keys are namespaced by environment and deployment.
+ * Keys are namespaced by deployment ID when available.
  */
 export function createCacheKey(baseKey: (string | number)[]): string {
 	return createBaseKey(baseKey).join(":")
@@ -159,7 +159,7 @@ export function createCacheKey(baseKey: (string | number)[]): string {
 
 /**
  * Generates a cache key for user progress data.
- * Pattern: "user-progress:{userId}:{courseId}:{env}:{deploymentId}"
+ * Pattern: "user-progress:{userId}:{courseId}:{deploymentId}"
  */
 export function userProgressByCourse(userId: string, onerosterCourseSourcedId: string): string {
 	const base = ["user-progress", userId, onerosterCourseSourcedId]

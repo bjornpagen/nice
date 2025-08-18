@@ -5,14 +5,27 @@ import { randomUUID } from "node:crypto"
 import { auth, clerkClient } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import {
+	type AssessmentQuestionState,
+	type AssessmentState,
+	createAssessmentState,
+	deleteAssessmentState,
+	ErrAssessmentStateNotFound,
+	getAssessmentState,
+	markAssessmentFinalizationFailed,
+	markAssessmentFinalized,
+	updateStateAndQuestion
+} from "@/lib/assessment-cache"
 import { getCurrentUserSourcedId, isUserAuthorizedForQuestion } from "@/lib/authorization"
 import { oneroster, qti } from "@/lib/clients"
 import { XP_PROFICIENCY_THRESHOLD } from "@/lib/constants/progress"
 import { isSubjectSlug } from "@/lib/constants/subjects"
+import { fetchAndResolveQuestions } from "@/lib/data/fetchers/interactive-helpers"
 import type { SaveAssessmentResultCommand } from "@/lib/dtos/assessment"
+import { applyQtiSelectionAndOrdering } from "@/lib/qti-selection"
 import * as assessment from "@/lib/services/assessment"
 import * as attempt from "@/lib/services/attempt"
-import type { Unit } from "@/lib/types/domain"
+import type { Question, Unit } from "@/lib/types/domain"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 import { findLatestInteractiveAttempt } from "@/lib/utils/assessment-results"
 import { assertPercentageInteger } from "@/lib/utils/score"
@@ -28,6 +41,27 @@ import { assertPercentageInteger } from "@/lib/utils/score"
  * In this file, we use OneRoster's correct terminology in our function parameters
  * (onerosterComponentResourceSourcedId) but pass it to PowerPath's "lesson" field.
  */
+
+/**
+ * Retrieves a deterministic list of questions for an assessment based on user, assessment, and attempt.
+ * This ensures the same questions are shown for a specific attempt, even after page refresh.
+ */
+async function getDeterministicQuestionList(
+	userSourcedId: string,
+	assessmentResourceSourcedId: string,
+	attemptNumber: number
+): Promise<Question[]> {
+	const { assessmentTest, resolvedQuestions } = await fetchAndResolveQuestions(assessmentResourceSourcedId)
+
+	const questions = applyQtiSelectionAndOrdering(assessmentTest, resolvedQuestions, {
+		baseSeed: `${userSourcedId}:${assessmentResourceSourcedId}`,
+		attemptNumber,
+		userSourceId: userSourcedId,
+		resourceSourcedId: assessmentResourceSourcedId
+	})
+
+	return questions
+}
 
 /**
  * Processes a question response using the QTI API.
@@ -132,45 +166,316 @@ export async function processQuestionResponse(
 }
 
 /**
- * Creates a new attempt for an assessment in PowerPath.
- * This allows users to retake assessments multiple times.
- *
- * @param onerosterUserSourcedId - The user's OneRoster sourcedId
- * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId
- * @returns The new attempt information
+ * Gets or creates the assessment state in Redis.
+ * If the assessment is already finalized or completed, triggers finalization and returns the finalized state.
+ * Otherwise returns the current state to resume from.
  */
-// createNewAssessmentAttempt removed
+export async function getOrCreateAssessmentState(onerosterResourceSourcedId: string): Promise<AssessmentState> {
+	const onerosterUserSourcedId = await getCurrentUserSourcedId()
+
+	const attemptNumber = await getNextAttemptNumber(onerosterUserSourcedId, onerosterResourceSourcedId)
+	const existingState = await getAssessmentState(onerosterUserSourcedId, onerosterResourceSourcedId, attemptNumber)
+
+	if (existingState) {
+		// If the state exists and is already finalized, simply return it.
+		// The client will use this to display the summary screen.
+		if (existingState.isFinalized) {
+			logger.info("resuming an already finalized assessment state", {
+				onerosterUserSourcedId,
+				onerosterResourceSourcedId,
+				attemptNumber
+			})
+			return existingState
+		}
+		// This is a valid, in-progress state that can be resumed.
+		return existingState
+	}
+
+	const questions = await getDeterministicQuestionList(
+		onerosterUserSourcedId,
+		onerosterResourceSourcedId,
+		attemptNumber
+	)
+	return createAssessmentState(onerosterUserSourcedId, onerosterResourceSourcedId, attemptNumber, questions.length)
+}
 
 /**
- * Checks the current assessment progress and creates a new attempt if the assessment
- * is already finalized (completed). Returns the current attempt number.
+ * Submits the **first and only graded answer** for a question.
  *
- * @param onerosterUserSourcedId - The user's OneRoster sourcedId
- * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId
- * @returns The current attempt number to use
+ * This action is central to the assessment's integrity. It is called only on the user's
+ * first attempt for a given question. It determines correctness, records the result and response
+ * into the Redis state, and then **atomically advances the server's `currentQuestionIndex`**.
+ *
+ * This immediate advancement ensures that even if the user refreshes the page, their first
+ * answer is locked in, preventing any attempts to "game" the system. Subsequent attempts on the
+ * client-side are for formative feedback only and use the compute-only `processQuestionResponse` function.
+ *
+ * @returns An object containing the new, advanced `AssessmentState` and the `isCorrect` boolean.
  */
-// checkAndCreateNewAttemptIfNeeded removed
+export async function submitAnswer(
+	onerosterResourceSourcedId: string,
+	questionId: string,
+	questionIndex: number,
+	responseValue: string | unknown[] | Record<string, unknown>,
+	responseIdentifier: string
+): Promise<{ state: AssessmentState; isCorrect: boolean }> {
+	const onerosterUserSourcedId = await getCurrentUserSourcedId()
+
+	const attemptNumber = await getNextAttemptNumber(onerosterUserSourcedId, onerosterResourceSourcedId)
+	const state = await getAssessmentState(onerosterUserSourcedId, onerosterResourceSourcedId, attemptNumber)
+	if (!state) {
+		logger.error("assessment state not found", { onerosterUserSourcedId, onerosterResourceSourcedId, attemptNumber })
+		throw ErrAssessmentStateNotFound
+	}
+	if (state.currentQuestionIndex !== questionIndex) {
+		logger.error("out-of-order answer submission", {
+			currentIndex: state.currentQuestionIndex,
+			submittedIndex: questionIndex
+		})
+		throw errors.new("out-of-order answer submission")
+	}
+
+	const questionList = await getDeterministicQuestionList(
+		onerosterUserSourcedId,
+		onerosterResourceSourcedId,
+		state.attemptNumber
+	)
+	if (questionList[questionIndex]?.id !== questionId) {
+		logger.error("question id mismatch", {
+			expectedId: questionList[questionIndex]?.id,
+			receivedId: questionId,
+			questionIndex
+		})
+		throw errors.new("question id mismatch")
+	}
+
+	// Process the response to determine correctness
+	let isCorrect = false
+
+	// Handle fill-in-the-blank questions with multiple responses
+	if (typeof responseValue === "object" && !Array.isArray(responseValue) && responseValue !== null) {
+		// This is a fill-in-the-blank question with multiple inputs.
+		const responseEntries = Object.entries(responseValue)
+
+		logger.info("processing multi-input question", {
+			qtiItemId: questionId,
+			responseCount: responseEntries.length,
+			responseIdentifiers: responseEntries.map(([id]) => id)
+		})
+
+		const results = await Promise.all(
+			responseEntries.map(([identifier, value]) =>
+				errors.try(
+					qti.processResponse(questionId, {
+						responseIdentifier: identifier,
+						value: String(value) // Ensure value is a string
+					})
+				)
+			)
+		)
+
+		// Check for any failed API calls
+		const anyErrors = results.some((r) => r.error)
+		if (anyErrors) {
+			const failedResponses = results.filter((r) => r.error)
+			logger.error("one or more qti response processing calls failed for multi-input question", {
+				failedResponses: failedResponses.map((r, _idx) => ({
+					identifier: responseEntries[results.indexOf(r)]?.[0],
+					error: r.error
+				})),
+				qtiItemId: questionId,
+				selectedResponse: responseValue
+			})
+			throw errors.new("qti response processing failed for multi-input question")
+		}
+
+		// The entire question is correct only if ALL individual responses are correct.
+		isCorrect = results.every((r) => r.data && r.data.score > 0)
+
+		logger.info("multi-input question processing complete", {
+			qtiItemId: questionId,
+			isCorrect,
+			individualScores: results.map((r, idx) => ({
+				identifier: responseEntries[idx]?.[0],
+				score: r.data?.score
+			}))
+		})
+	} else {
+		// Single response or array response (multi-select)
+		const qtiResult = await errors.try(qti.processResponse(questionId, { responseIdentifier, value: responseValue }))
+		if (qtiResult.error) {
+			logger.error("qti response processing failed", { error: qtiResult.error, qtiItemId: questionId })
+			throw errors.wrap(qtiResult.error, "qti response processing")
+		}
+
+		isCorrect = qtiResult.data.score > 0
+	}
+
+	await updateStateAndQuestion(onerosterUserSourcedId, onerosterResourceSourcedId, state.attemptNumber, questionIndex, {
+		isCorrect,
+		response: responseValue,
+		isReported: false
+	})
+
+	// Refresh local state object based on what was just written
+	state.questions[questionIndex] = { isCorrect, response: responseValue, isReported: false }
+	state.currentQuestionIndex = questionIndex + 1
+
+	// Note: We don't auto-finalize here since we don't have all required params
+	// The client will need to call finalizeAssessment when ready
+
+	return { state, isCorrect }
+}
 
 /**
- * Finalizes an assessment in PowerPath to ensure all responses are graded
- * and ready for proficiency analysis.
+ * Skips the current question, marking it as INCORRECT
  *
- * @param onerosterUserSourcedId - The user's OneRoster sourcedId
- * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId
+ * This action records the question with `isCorrect: false` in the Redis state.
+ * The question will count towards the denominator (total questions) and will
+ * negatively impact the final score, which is consistent with the user-facing
+ * messaging. This behavior is distinct from reporting a question.
+ *
+ * @returns An object containing the new, advanced `AssessmentState`.
  */
-// finalizeAssessment removed
+export async function skipQuestion(
+	onerosterResourceSourcedId: string,
+	questionId: string,
+	questionIndex: number
+): Promise<{ state: AssessmentState }> {
+	const onerosterUserSourcedId = await getCurrentUserSourcedId()
+	const attemptNumber = await getNextAttemptNumber(onerosterUserSourcedId, onerosterResourceSourcedId)
+	const state = await getAssessmentState(onerosterUserSourcedId, onerosterResourceSourcedId, attemptNumber)
+	if (!state) {
+		logger.error("assessment state not found for skip", {
+			onerosterUserSourcedId,
+			onerosterResourceSourcedId,
+			attemptNumber
+		})
+		throw ErrAssessmentStateNotFound
+	}
+	if (state.currentQuestionIndex !== questionIndex) {
+		logger.error("out-of-order skip", { currentIndex: state.currentQuestionIndex, submittedIndex: questionIndex })
+		throw errors.new("out-of-order skip")
+	}
+
+	const questionList = await getDeterministicQuestionList(
+		onerosterUserSourcedId,
+		onerosterResourceSourcedId,
+		state.attemptNumber
+	)
+	if (questionList[questionIndex]?.id !== questionId) {
+		logger.error("question id mismatch on skip", {
+			expectedId: questionList[questionIndex]?.id,
+			receivedId: questionId,
+			questionIndex
+		})
+		throw errors.new("question id mismatch")
+	}
+
+	// This is the key business logic change. A skipped question is an incorrect question.
+	const skipState: AssessmentQuestionState = { isCorrect: false, response: null, isReported: false }
+	await updateStateAndQuestion(
+		onerosterUserSourcedId,
+		onerosterResourceSourcedId,
+		state.attemptNumber,
+		questionIndex,
+		skipState
+	)
+
+	// Update local state
+	state.questions[questionIndex] = skipState
+	state.currentQuestionIndex = questionIndex + 1
+
+	logger.info("question skipped", { questionId, questionIndex })
+	return { state }
+}
 
 /**
- * Processes a skipped question by logging it as incorrect to PowerPath.
- * This is used for summative assessments (quizzes, tests) where skipping
- * should count as an incorrect answer.
+ * Reports an issue with a question and advances the user past it, EXCLUDING it from the final score.
  *
- * @param qtiItemId - The QTI assessment item ID that was skipped (e.g., nice_question123)
- * @param onerosterUserSourcedId - The user's OneRoster sourcedId
- * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId
- * @param attemptNumber - The current attempt number
+ * This action implements the "report and skip" business logic:
+ * 1. It atomically updates the question's state in Redis, setting `isReported: true` and `isCorrect: null`.
+ * 2. It advances the `currentQuestionIndex`, removing the question from the user's active assessment path.
+ * 3. It then flags the question in an external service with the user's report.
+ *
+ * During finalization, any question with `isReported: true` or `isCorrect: null` is
+ * excluded from both the numerator (correct answers) and the denominator (total questions) of the score.
+ *
+ * @returns An object containing the new, advanced `AssessmentState`.
  */
-// processSkippedQuestion removed
+export async function reportQuestion(
+	onerosterResourceSourcedId: string,
+	questionId: string,
+	questionIndex: number,
+	report: string
+): Promise<{ state: AssessmentState }> {
+	const onerosterUserSourcedId = await getCurrentUserSourcedId()
+	const attemptNumber = await getNextAttemptNumber(onerosterUserSourcedId, onerosterResourceSourcedId)
+
+	const currentState = await getAssessmentState(onerosterUserSourcedId, onerosterResourceSourcedId, attemptNumber)
+	if (!currentState) {
+		logger.error("assessment state not found for report", {
+			onerosterUserSourcedId,
+			onerosterResourceSourcedId,
+			attemptNumber
+		})
+		throw ErrAssessmentStateNotFound
+	}
+
+	// Prepare the updated question state. A reported question is neither correct nor incorrect for scoring purposes.
+	const existingQuestionState = currentState.questions[questionIndex]
+	const updatedQuestionState: AssessmentQuestionState = {
+		...existingQuestionState,
+		isCorrect: null, // Always nullify correctness when reported to exclude from scoring.
+		response: existingQuestionState?.response ?? null,
+		isReported: true
+	}
+
+	// CRITICAL: First, update the user's state in Redis to ensure they are unblocked and their progress is saved.
+	const updateResult = await errors.try(
+		updateStateAndQuestion(
+			onerosterUserSourcedId,
+			onerosterResourceSourcedId,
+			currentState.attemptNumber,
+			questionIndex,
+			updatedQuestionState,
+			true // Overwrite any existing state for this question.
+		)
+	)
+	if (updateResult.error) {
+		logger.error("failed to update redis state for reported question", {
+			error: updateResult.error,
+			questionId,
+			questionIndex
+		})
+		throw errors.wrap(updateResult.error, "update redis state for reported question")
+	}
+
+	// NON-CRITICAL: After the user's state is secured, call the external reporting service.
+	// A failure here is logged but does not affect the user's experience.
+	const flagResult = await errors.try(flagQuestionAsReported(questionId, report))
+	if (flagResult.error) {
+		logger.error("non-critical: failed to flag question in external service after state update", {
+			error: flagResult.error,
+			questionId
+		})
+	} else {
+		logger.info("question reported to external service", { questionId })
+	}
+
+	// Fetch and return the latest state to ensure the client UI is consistent.
+	const newState = await getAssessmentState(onerosterUserSourcedId, onerosterResourceSourcedId, attemptNumber)
+	if (!newState) {
+		logger.error("failed to get state after reporting question", {
+			onerosterUserSourcedId,
+			onerosterResourceSourcedId,
+			attemptNumber
+		})
+		throw ErrAssessmentStateNotFound
+	}
+
+	return { state: newState }
+}
 
 /**
  * Computes the next attempt number for a user on an assessment resource using OneRoster.
@@ -247,176 +552,236 @@ export async function checkExistingProficiency(
 }
 
 /**
- * Orchestrates the finalization of an assessment. It calculates the score, saves
- * the result, awards XP, and updates proficiency all in one atomic server action.
+ * Orchestrates the finalization of an assessment.
  *
- * @param options - The context and raw session data for the assessment.
- * @returns A summary payload for the client's SummaryView.
+ * This is the culminating action called when a user completes the last question. It reads the
+ * **server-authoritative state from Redis** (not from client input), calculates the final score,
+ * saves the official result to OneRoster via the assessment service, and awards XP.
+ *
+ * **CRITICAL BUSINESS LOGIC:**
+ * - The Redis state is the SINGLE SOURCE OF TRUTH for assessment results
+ * - Redis only stores the FIRST ATTEMPT for each question (subsequent attempts are for formative feedback only)
+ * - Reported questions (where isReported=true or isCorrect=null) are EXCLUDED from scoring
+ * - The final score = (correct answers / scorable questions) × 100, where scorable questions exclude reported ones
+ *
+ * After all permanent storage is updated, it marks the assessment state in Redis as `isFinalized: true`.
+ * This makes the finalization step idempotent; if called again on an already-finalized state, it will
+ * simply return the calculated summary without performing duplicate writes.
+ *
+ * @param options Contextual data for the assessment (no session results are passed from the client).
+ * @returns A summary payload for the client's SummaryView, including score and any XP penalties.
  */
 export async function finalizeAssessment(options: {
 	onerosterResourceSourcedId: string
 	onerosterComponentResourceSourcedId: string
 	onerosterCourseSourcedId: string
-	onerosterUserSourcedId: string
-	sessionResults: Array<{ qtiItemId: string; isCorrect: boolean | null; isReported?: boolean }>
-	attemptNumber: number
-	durationInSeconds?: number
 	expectedXp: number
 	assessmentTitle: string
 	assessmentPath: string
 	unitData?: Unit
-	userEmail?: string
 	contentType: "Exercise" | "Quiz" | "Test" | "CourseChallenge"
 }) {
 	const correlationId = randomUUID()
-	logger.info("finalizing assessment", {
-		userSourcedId: options.onerosterUserSourcedId,
-		resourceSourcedId: options.onerosterResourceSourcedId,
-		correlationId
-	})
+	const onerosterUserSourcedId = await getCurrentUserSourcedId()
+	const attemptNumber = await getNextAttemptNumber(onerosterUserSourcedId, options.onerosterResourceSourcedId)
 
-	const { userId: clerkUserId } = await auth()
-	if (!clerkUserId) {
-		logger.error("finalize assessment: user not authenticated", { correlationId })
-		throw errors.new("user not authenticated")
+	const state = await getAssessmentState(onerosterUserSourcedId, options.onerosterResourceSourcedId, attemptNumber)
+	if (!state) {
+		logger.error("assessment state not found for finalization", {
+			onerosterUserSourcedId,
+			onerosterResourceSourcedId: options.onerosterResourceSourcedId,
+			attemptNumber
+		})
+		throw ErrAssessmentStateNotFound
 	}
 
-	// Normalize session results for scoring:
-	// - Exclude any question where a report was filed at any point
-	// - Score ONLY the first attempt with a boolean correctness value per qtiItemId
-	//   (subsequent retries do not convert an initially-wrong answer into correct)
-	const normalizeSessionResults = (
-		session: Array<{ qtiItemId: string; isCorrect: boolean | null; isReported?: boolean }>
-	) => {
-		// Track per-question state capturing first-attempt semantics and report flags
-		const perQuestion: Map<
-			string,
-			{
-				firstBooleanAttempt?: { qtiItemId: string; isCorrect: boolean; isReported?: boolean }
-				hasReport: boolean
-			}
-		> = new Map()
-
-		for (const entry of session) {
-			const existing = perQuestion.get(entry.qtiItemId)
-			const hasReport = Boolean(existing?.hasReport || entry.isReported)
-
-			// Capture the first attempt that has a definitive boolean correctness
-			let firstBooleanAttempt = existing?.firstBooleanAttempt
-			if (!firstBooleanAttempt && typeof entry.isCorrect === "boolean") {
-				firstBooleanAttempt = { qtiItemId: entry.qtiItemId, isCorrect: entry.isCorrect, isReported: entry.isReported }
-			}
-
-			perQuestion.set(entry.qtiItemId, {
-				firstBooleanAttempt,
-				hasReport
+	// Wrap finalization logic in an async function to use errors.try
+	const performFinalization = async () => {
+		// IDEMPOTENCY: If the summary has already been calculated and stored, return it immediately.
+		if (state.finalSummary) {
+			logger.info("finalizeAssessment called on an already finalized state, returning stored summary.", {
+				correlationId
 			})
+			return state.finalSummary
 		}
 
-		// Collect only questions without any report, taking their first boolean attempt
-		const normalized: Array<{ qtiItemId: string; isCorrect: boolean; isReported?: boolean }> = []
-		for (const { firstBooleanAttempt, hasReport } of perQuestion.values()) {
-			if (hasReport) continue
-			if (firstBooleanAttempt) {
-				normalized.push({ qtiItemId: firstBooleanAttempt.qtiItemId, isCorrect: firstBooleanAttempt.isCorrect })
+		// Calculate server-authoritative duration
+		const durationInSeconds = Math.round((Date.now() - new Date(state.startedAt).getTime()) / 1000)
+
+		// Reconstruct sessionResults from Redis state
+		const questionList = await getDeterministicQuestionList(
+			onerosterUserSourcedId,
+			options.onerosterResourceSourcedId,
+			attemptNumber
+		)
+		const sessionResults = Object.entries(state.questions).map(([indexStr, qState]) => {
+			const index = Number(indexStr)
+			const questionId = questionList[index]?.id
+
+			if (!questionId) {
+				logger.error("critical state inconsistency: question ID not found at expected index during finalization", {
+					onerosterUserSourcedId,
+					onerosterResourceSourcedId: options.onerosterResourceSourcedId,
+					attemptNumber,
+					failedIndex: index,
+					totalQuestionsInList: questionList.length,
+					totalQuestionsInState: Object.keys(state.questions).length,
+					correlationId
+				})
+				throw errors.new("critical state inconsistency: could not map question state to a question ID")
 			}
-		}
-		return normalized
-	}
 
-	const normalizedResults = normalizeSessionResults(options.sessionResults)
+			return {
+				qtiItemId: questionId,
+				isCorrect: qState.isCorrect,
+				isReported: qState.isReported
+			}
+		})
 
-	const correctAnswers = normalizedResults.filter((r) => r.isCorrect).length
-	const totalQuestions = normalizedResults.length
-	const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 100
+		// The sessionResults from Redis are authoritative. We only need to filter out
+		// reported questions (where isCorrect is null) for scoring.
+		const scorableResults = sessionResults.filter((r) => typeof r.isCorrect === "boolean")
 
-	// Extract subject and course slugs from assessment path
-	const pathParts = options.assessmentPath.split("/")
-	if (pathParts.length < 3 || !pathParts[1] || !pathParts[2]) {
-		logger.error("invalid assessment path structure", { assessmentPath: options.assessmentPath, correlationId })
-		throw errors.new("assessment path invalid")
-	}
-	const subjectSlugRaw = pathParts[1]
-	if (!isSubjectSlug(subjectSlugRaw)) {
-		logger.error("invalid subject slug in assessment path", {
-			subjectSlug: subjectSlugRaw,
-			assessmentPath: options.assessmentPath,
+		const correctAnswers = scorableResults.filter((r) => r.isCorrect).length
+		const totalQuestions = scorableResults.length
+		const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 100
+		const avgSecondsPerQuestion =
+			durationInSeconds && totalQuestions > 0 ? durationInSeconds / totalQuestions : undefined
+
+		logger.info("finalizing assessment", {
+			userSourcedId: onerosterUserSourcedId,
+			resourceSourcedId: options.onerosterResourceSourcedId,
 			correlationId
 		})
-		throw errors.new("subject slug invalid")
-	}
-	const subjectSlug = subjectSlugRaw
-	const courseSlug = pathParts[2]
 
-	// Build the command DTO for the service layer
-	// Fetch user metadata for downstream services (streak)
-	const clerk = await clerkClient()
-	const user = await clerk.users.getUser(clerkUserId)
+		const { userId: clerkUserId } = await auth()
+		if (!clerkUserId) {
+			logger.error("finalize assessment: user not authenticated", { correlationId })
+			throw errors.new("user not authenticated")
+		}
 
-	const command: SaveAssessmentResultCommand = {
-		...options,
-		// Persist normalized session results to ensure downstream consumers use consistent data
-		sessionResults: normalizedResults,
-		score: assertPercentageInteger(score, "assessment score"),
-		correctAnswers,
-		totalQuestions,
-		isInteractiveAssessment: true,
-		clerkUserId,
-		correlationId,
-		// zod schema now validates subjectSlug against SUBJECT_SLUGS; pass through
-		subjectSlug,
-		courseSlug,
-		userPublicMetadata: user.publicMetadata
-	}
+		// Extract subject and course slugs from assessment path
+		const pathParts = options.assessmentPath.split("/")
+		if (pathParts.length < 3 || !pathParts[1] || !pathParts[2]) {
+			logger.error("invalid assessment path structure", { assessmentPath: options.assessmentPath, correlationId })
+			throw errors.new("assessment path invalid")
+		}
+		const subjectSlugRaw = pathParts[1]
+		if (!isSubjectSlug(subjectSlugRaw)) {
+			logger.error("invalid subject slug in assessment path", {
+				subjectSlug: subjectSlugRaw,
+				assessmentPath: options.assessmentPath,
+				correlationId
+			})
+			throw errors.new("subject slug invalid")
+		}
+		const subjectSlug = subjectSlugRaw
+		const courseSlug = pathParts[2]
 
-	// 2. Call the new assessment service orchestrator
-	const saveResult = await errors.try(assessment.saveResult(command))
-	if (saveResult.error) {
-		logger.error("failed to save final assessment result", {
-			error: saveResult.error,
-			resourceSourcedId: options.onerosterResourceSourcedId
-		})
-		throw errors.wrap(saveResult.error, "failed to save final assessment result")
-	}
+		// Build the command DTO for the service layer
+		// Fetch user metadata for downstream services (streak)
+		const clerk = await clerkClient()
+		const user = await clerk.users.getUser(clerkUserId)
 
-	// 3. Return a clean summary object for the client's SummaryView.
-	const extractXpInfo = () => {
-		if (!saveResult.data || typeof saveResult.data !== "object" || !("xp" in saveResult.data)) {
+		const command: SaveAssessmentResultCommand = {
+			...options,
+			onerosterUserSourcedId,
+			// Persist the scorable results to ensure downstream consumers use consistent data
+			sessionResults: scorableResults,
+			attemptNumber,
+			score: assertPercentageInteger(score, "assessment score"),
+			correctAnswers,
+			totalQuestions,
+			durationInSeconds,
+			isInteractiveAssessment: true,
+			clerkUserId,
+			correlationId,
+			// zod schema now validates subjectSlug against SUBJECT_SLUGS; pass through
+			subjectSlug,
+			courseSlug,
+			userPublicMetadata: user.publicMetadata,
+			userEmail: user.emailAddresses[0]?.emailAddress
+		}
+
+		const saveResult = await errors.try(assessment.saveResult(command))
+		if (saveResult.error) {
+			logger.error("failed to save final assessment result", {
+				error: saveResult.error,
+				resourceSourcedId: options.onerosterResourceSourcedId
+			})
+			throw errors.wrap(saveResult.error, "failed to save final assessment result")
+		}
+
+		const extractXpInfo = (): { finalXp: number; penaltyApplied: boolean; reason: string } | undefined => {
+			if (!saveResult.data || typeof saveResult.data !== "object" || !("xp" in saveResult.data)) {
+				return undefined
+			}
+			const xp = saveResult.data.xp
+			if (
+				xp &&
+				typeof xp === "object" &&
+				"finalXp" in xp &&
+				"penaltyApplied" in xp &&
+				"reason" in xp &&
+				typeof xp.finalXp === "number" &&
+				typeof xp.penaltyApplied === "boolean" &&
+				typeof xp.reason === "string"
+			) {
+				return {
+					finalXp: xp.finalXp,
+					penaltyApplied: xp.penaltyApplied,
+					reason: xp.reason
+				}
+			}
 			return undefined
 		}
-		const xp = saveResult.data.xp
-		if (
-			xp &&
-			typeof xp === "object" &&
-			"finalXp" in xp &&
-			"penaltyApplied" in xp &&
-			"reason" in xp &&
-			typeof xp.finalXp === "number" &&
-			typeof xp.penaltyApplied === "boolean" &&
-			typeof xp.reason === "string"
-		) {
-			return xp
+		const xpInfo = extractXpInfo()
+
+		const finalSummary = {
+			score: score,
+			correctAnswersCount: correctAnswers,
+			totalQuestions: totalQuestions,
+			xpPenaltyInfo:
+				xpInfo?.penaltyApplied === true
+					? {
+							penaltyXp: xpInfo.finalXp,
+							reason: xpInfo.reason,
+							avgSecondsPerQuestion
+						}
+					: undefined
 		}
-		return undefined
-	}
-	const xpInfo = extractXpInfo()
 
-	const avgSecondsPerQuestion =
-		options.durationInSeconds && totalQuestions > 0 ? options.durationInSeconds / totalQuestions : undefined
+		await markAssessmentFinalized(
+			onerosterUserSourcedId,
+			options.onerosterResourceSourcedId,
+			attemptNumber,
+			finalSummary
+		)
 
-	return {
-		score: score,
-		correctAnswersCount: correctAnswers,
-		totalQuestions: totalQuestions,
-		xpPenaltyInfo:
-			xpInfo?.penaltyApplied === true
-				? {
-						penaltyXp: xpInfo.finalXp,
-						reason: xpInfo.reason,
-						avgSecondsPerQuestion
-					}
-				: undefined
+		return finalSummary
 	}
+
+	// Execute finalization with error handling
+	const finalizationResult = await errors.try(performFinalization())
+	if (finalizationResult.error) {
+		const errorMessage =
+			finalizationResult.error instanceof Error
+				? finalizationResult.error.toString()
+				: "An unknown error occurred during finalization."
+
+		// NEW: Mark state as failed before re-throwing
+		await markAssessmentFinalizationFailed(
+			onerosterUserSourcedId,
+			options.onerosterResourceSourcedId,
+			attemptNumber,
+			errorMessage
+		)
+
+		logger.error("assessment finalization failed unexpectedly", { correlationId, error: finalizationResult.error })
+		throw finalizationResult.error // Re-throw to ensure client knows it failed
+	}
+
+	return finalizationResult.data
 }
 
 /**
@@ -471,5 +836,45 @@ export async function flagQuestionAsReported(questionId: string, report: string)
 	}
 
 	logger.info("successfully flagged question as reported", { clerkUserId, questionId })
+	return { success: true }
+}
+
+/**
+ * Clears the current assessment state from Redis for a user, allowing getOrCreateAssessmentState
+ * to generate a new attempt on the next page load.
+ *
+ * CRITICAL BUSINESS LOGIC:
+ * This action clears ANY existing assessment state from Redis, regardless of finalization status.
+ * The purpose is to clear the way for a new attempt. Since Redis is our ephemeral progress cache
+ * and finalized attempts are already persisted in OneRoster (the source of truth), it's safe
+ * to clear even finalized states from Redis. This makes the action's behavior consistent and
+ * less brittle - it always succeeds in clearing the way for a new attempt.
+ *
+ * @param onerosterResourceSourcedId - The OneRoster resource ID for the assessment
+ * @returns Success status (always true unless an error occurs)
+ */
+export async function startNewAssessmentAttempt(onerosterResourceSourcedId: string): Promise<{ success: boolean }> {
+	const onerosterUserSourcedId = await getCurrentUserSourcedId()
+	const attemptNumber = await getNextAttemptNumber(onerosterUserSourcedId, onerosterResourceSourcedId)
+
+	const existingState = await getAssessmentState(onerosterUserSourcedId, onerosterResourceSourcedId, attemptNumber)
+
+	// FIX: Remove the !existingState.isFinalized check.
+	// The purpose of this action is to clear the way for a new attempt.
+	// If a state exists in Redis (our ephemeral progress cache), it should be cleared.
+	// The finalized attempt is already persisted in OneRoster, which is the source of truth.
+	// This makes the action's behavior consistent and less brittle.
+	if (existingState) {
+		await deleteAssessmentState(onerosterUserSourcedId, onerosterResourceSourcedId, attemptNumber)
+		logger.info("cleared previous assessment state to start new one", {
+			onerosterUserSourcedId,
+			onerosterResourceSourcedId,
+			attemptNumber,
+			wasFinalized: existingState.isFinalized
+		})
+		return { success: true }
+	}
+
+	// If no state exists, there's nothing to do.
 	return { success: true }
 }
