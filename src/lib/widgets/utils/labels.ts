@@ -38,21 +38,50 @@ export function abbreviateMonth(text: string): string {
 }
 
 /**
- * Compute equally spaced indices over a total count.
+ * Compute label indices using smart interval selection.
+ * Prefers clean intervals (every 2nd, 3rd, etc.) over rigid label count limits.
  */
 export function computeEquallySpacedIndices(totalCount: number, maxCount: number): number[] {
 	if (totalCount <= 0) return []
 	if (maxCount <= 1) return [0]
 	if (totalCount <= maxCount) return Array.from({ length: totalCount }, (_, i) => i)
-	const step = (totalCount - 1) / (maxCount - 1)
-	const indices: number[] = []
-	for (let k = 0; k < maxCount; k++) {
-		const raw = Math.round(k * step)
-		const idx = Math.max(0, Math.min(totalCount - 1, raw))
-		indices.push(idx)
+	
+	// Try clean intervals, allowing slight tolerance over maxCount for better spacing
+	const tolerance = Math.max(1, Math.ceil(maxCount * 0.2)) // Allow 20% more labels for clean intervals
+	
+	for (let interval = 1; interval <= totalCount; interval++) {
+		const indices: number[] = []
+		for (let i = 0; i < totalCount; i += interval) {
+			indices.push(i)
+		}
+		
+		// Accept clean intervals that are within tolerance of maxCount
+		if (indices.length <= maxCount + tolerance) {
+			return indices
+		}
 	}
-	// De-duplicate while preserving order
-	return Array.from(new Set(indices))
+	
+	// Fallback to endpoint-aware fractional spacing only if no clean interval works
+	const lastIndex = totalCount - 1
+	if (maxCount >= 2) {
+		// Always include first and last, distribute others in between
+		const indices = [0]
+		const remainingSlots = maxCount - 2
+		
+		if (remainingSlots > 0) {
+			const step = (lastIndex - 1) / (remainingSlots + 1)
+			for (let k = 1; k <= remainingSlots; k++) {
+				const idx = Math.round(k * step)
+				indices.push(idx)
+			}
+		}
+		
+		indices.push(lastIndex)
+		return Array.from(new Set(indices)).sort((a, b) => a - b)
+	}
+	
+	// Final fallback for maxCount === 1
+	return [0]
 }
 
 /**
