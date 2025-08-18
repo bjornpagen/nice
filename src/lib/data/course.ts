@@ -24,7 +24,6 @@ import type {
 } from "@/lib/types/domain"
 import type { CoursePageData } from "@/lib/types/page"
 import { assertNoEncodedColons } from "@/lib/utils"
-import { stripResourceTypeSuffix } from "@/lib/utils/format-resource-title"
 
 // Removed title formatter to avoid appending bracketed type labels in UI
 
@@ -426,7 +425,7 @@ export async function fetchCoursePageData(
 
 					videos.push({
 						id: resource.sourcedId,
-						title: stripResourceTypeSuffix(resource.title),
+						title: resource.title,
 						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonComponentMeta.data.khanSlug}/v/${resourceMetadata.khanSlug}`, // Construct path from slugs
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.khanDescription,
@@ -451,7 +450,7 @@ export async function fetchCoursePageData(
 					articles.push({
 						type: "Article",
 						id: resource.sourcedId,
-						title: stripResourceTypeSuffix(resource.title),
+						title: resource.title,
 						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonComponentMeta.data.khanSlug}/a/${resourceMetadata.khanSlug}`, // Construct path from slugs
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.khanDescription,
@@ -486,7 +485,7 @@ export async function fetchCoursePageData(
 					exercises.push({
 						type: "Exercise",
 						id: resource.sourcedId,
-						title: stripResourceTypeSuffix(resource.title),
+						title: resource.title,
 						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonComponentMeta.data.khanSlug}/e/${resourceMetadata.khanSlug}`, // Construct path from slugs
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.khanDescription,

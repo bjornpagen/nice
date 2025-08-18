@@ -577,19 +577,8 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				if (content) {
 					const contentSourcedId = `nice_${content.id}`
 					if (!resourceSet.has(contentSourcedId)) {
-						// Compute resource title with bracketed type label ONLY for Video, Article, Exercise
-						let resourceTitle = content.title
-						let activityType: "Video" | "Article" | "Exercise" | null = null
-						if (lc.contentType === "Video") {
-							activityType = "Video"
-						} else if (lc.contentType === "Article") {
-							activityType = "Article"
-						} else if (lc.contentType === "Exercise") {
-							activityType = "Exercise"
-						}
-						if (activityType !== null) {
-							resourceTitle = formatResourceTitleForDisplay(content.title, activityType)
-						}
+						// No suffixing on Resource titles; suffixing is applied to ComponentResource titles below
+
 						// Construct metadata based on content type
 						let metadata: Record<string, unknown> = {
 							khanId: content.id,
@@ -648,7 +637,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						onerosterPayload.resources.push({
 							sourcedId: contentSourcedId,
 							status: "active",
-							title: resourceTitle,
+							title: content.title,
 							vendorResourceId: `nice-academy-${content.id}`,
 							vendorId: "superbuilders",
 							applicationId: "nice",
@@ -697,10 +686,20 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						}
 					}
 
+					// Apply bracketed suffix to ComponentResource titles for Video/Article/Exercise only
+					let componentTitle = content.title
+					if (lc.contentType === "Video") {
+						componentTitle = formatResourceTitleForDisplay(content.title, "Video")
+					} else if (lc.contentType === "Article") {
+						componentTitle = formatResourceTitleForDisplay(content.title, "Article")
+					} else if (lc.contentType === "Exercise") {
+						componentTitle = formatResourceTitleForDisplay(content.title, "Exercise")
+					}
+
 					onerosterPayload.componentResources.push({
 						sourcedId: `nice_${lesson.id}_${content.id}`,
 						status: "active",
-						title: content.title,
+						title: componentTitle,
 						courseComponent: { sourcedId: `nice_${lesson.id}`, type: "courseComponent" },
 						resource: { sourcedId: contentSourcedId, type: "resource" },
 						sortOrder: lc.ordering

@@ -39,21 +39,3 @@ export function formatResourceTitleForDisplay(
 
 	return `${title}${suffix}`
 }
-
-/**
- * Removes a trailing bracketed resource-type label from a title, if present.
- * Matches labels we control: [Video], [Article], [Exercise], [Quiz], [Test], [Course Challenge]
- * Case-insensitive and idempotent.
- */
-export function stripResourceTypeSuffix(title: string): string {
-	const labels = ["Video", "Article", "Exercise", "Quiz", "Test", "Course Challenge"]
-	const trimmed = title.trim()
-	for (const label of labels) {
-		const suffix = ` [${label}]`
-		if (trimmed.toLowerCase().endsWith(suffix.toLowerCase())) {
-			// Remove the suffix preserving original casing before the suffix
-			return trimmed.slice(0, trimmed.length - suffix.length)
-		}
-	}
-	return title
-}
