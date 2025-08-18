@@ -12,8 +12,27 @@ import { Button } from "@/components/ui/button"
 // 	{ color: "bg-gray-500", count: 0 }
 // ] as const
 
-export function ProfileBanner({ uid, username, bio }: { uid: string; username: string; bio: string }) {
+export function ProfileBanner({
+	uid,
+	username,
+	bio,
+	email
+}: {
+	uid: string
+	username: string
+	bio: string
+	email?: string | null
+}) {
 	const [showEditModal, setShowEditModal] = React.useState(false)
+
+	let bioDisplay = ""
+	if (bio === "") {
+		bioDisplay = "Add your bio"
+	} else if (bio.length > 40) {
+		bioDisplay = `${bio.slice(0, 40)}...`
+	} else {
+		bioDisplay = bio
+	}
 
 	return (
 		<>
@@ -53,9 +72,10 @@ export function ProfileBanner({ uid, username, bio }: { uid: string; username: s
 										}
 										onClick={() => setShowEditModal(true)}
 									>
-										{bio === "" ? "Add your bio" : bio}
+										{bioDisplay}
 									</Button>
 								</div>
+								{email ? <div className="text-xs text-gray-500 mt-1">{email}</div> : null}
 							</div>
 						</div>
 						<div className="flex flex-col items-end space-y-2">

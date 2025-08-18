@@ -20,6 +20,8 @@ ignore_patterns:
   - "src/lib/qti-generation/**"
   - "src/lib/qti-validation/**"
   - "src/app/**"
+  - "src/lib/types/**"
+  - "scripts/**"
 priority_rules:
   - score: 99
     pattern: "^rules/"

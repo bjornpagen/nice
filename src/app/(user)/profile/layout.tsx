@@ -4,12 +4,12 @@ import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import * as React from "react"
+import { ProfileBanner } from "@/app/(user)/profile/components/profile-banner"
+import { Sidebar } from "@/app/(user)/profile/components/sidebar"
 import { Banner } from "@/components/banner"
 import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
-import { ProfileBanner } from "./components/profile-banner"
-import { Sidebar } from "./components/sidebar"
 
 function ProfileLayoutContent({ children }: { children: React.ReactNode }) {
 	const { user, isLoaded } = useUser()
@@ -45,6 +45,13 @@ function ProfileLayoutContent({ children }: { children: React.ReactNode }) {
 
 	const { nickname, username, bio, streak } = publicMetadataResult.data
 
+	// Compute primary email in a narrow, explicit way (no fallbacks)
+	let primaryEmail: string | null = null
+	const emailEntry = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)
+	if (emailEntry && typeof emailEntry.emailAddress === "string") {
+		primaryEmail = emailEntry.emailAddress
+	}
+
 	return (
 		<div className="flex flex-col h-screen bg-white font-lato">
 			<div className="flex-shrink-0 z-50">
@@ -54,7 +61,7 @@ function ProfileLayoutContent({ children }: { children: React.ReactNode }) {
 
 			{/* User Profile Banner */}
 			<div className="flex-shrink-0">
-				<ProfileBanner uid={nickname} username={username} bio={bio} />
+				<ProfileBanner uid={nickname} username={username} bio={bio} email={primaryEmail} />
 			</div>
 
 			{/* Main Content Area now scrolls internally */}
