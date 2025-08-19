@@ -1,5 +1,5 @@
 import * as errors from "@superbuilders/errors"
-import { eq, inArray } from "drizzle-orm"
+import { and, eq, inArray, isNull } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { type Events, inngest } from "@/inngest/client"
@@ -65,7 +65,13 @@ export async function dispatchMigrationsForCourses(
 					.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
 					.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
 					.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
-					.where(inArray(schema.niceLessons.unitId, unitIds))
+					.where(
+						and(
+							inArray(schema.niceLessons.unitId, unitIds),
+							isNull(schema.niceQuestions.xml),
+							isNull(schema.niceQuestions.structuredJson)
+						)
+					)
 			: Promise.resolve([]), // Return empty array if not requested
 		options.stimulusEventName
 			? db
