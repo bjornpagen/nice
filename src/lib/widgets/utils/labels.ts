@@ -7,7 +7,7 @@
 export function abbreviateMonth(text: string): string {
 	const monthMap: Record<string, string> = {
 		january: "Jan",
-		february: "Feb", 
+		february: "Feb",
 		march: "Mar",
 		april: "Apr",
 		may: "May",
@@ -19,10 +19,10 @@ export function abbreviateMonth(text: string): string {
 		november: "Nov",
 		december: "Dec"
 	} as const
-	
+
 	const lowerText = text.toLowerCase().trim()
 	const abbreviation = monthMap[lowerText]
-	
+
 	if (abbreviation) {
 		// Preserve case style: if original was all caps, return all caps; if mixed/title case, return title case
 		if (text === text.toUpperCase()) {
@@ -33,7 +33,7 @@ export function abbreviateMonth(text: string): string {
 		}
 		return abbreviation // Default to title case
 	}
-	
+
 	return text // Return original if not a month
 }
 
@@ -45,29 +45,29 @@ export function computeEquallySpacedIndices(totalCount: number, maxCount: number
 	if (totalCount <= 0) return []
 	if (maxCount <= 1) return [0]
 	if (totalCount <= maxCount) return Array.from({ length: totalCount }, (_, i) => i)
-	
+
 	// Try clean intervals, allowing slight tolerance over maxCount for better spacing
 	const tolerance = Math.max(1, Math.ceil(maxCount * 0.2)) // Allow 20% more labels for clean intervals
-	
+
 	for (let interval = 1; interval <= totalCount; interval++) {
 		const indices: number[] = []
 		for (let i = 0; i < totalCount; i += interval) {
 			indices.push(i)
 		}
-		
+
 		// Accept clean intervals that are within tolerance of maxCount
 		if (indices.length <= maxCount + tolerance) {
 			return indices
 		}
 	}
-	
+
 	// Fallback to endpoint-aware fractional spacing only if no clean interval works
 	const lastIndex = totalCount - 1
 	if (maxCount >= 2) {
 		// Always include first and last, distribute others in between
 		const indices = [0]
 		const remainingSlots = maxCount - 2
-		
+
 		if (remainingSlots > 0) {
 			const step = (lastIndex - 1) / (remainingSlots + 1)
 			for (let k = 1; k <= remainingSlots; k++) {
@@ -75,11 +75,11 @@ export function computeEquallySpacedIndices(totalCount: number, maxCount: number
 				indices.push(idx)
 			}
 		}
-		
+
 		indices.push(lastIndex)
 		return Array.from(new Set(indices)).sort((a, b) => a - b)
 	}
-	
+
 	// Final fallback for maxCount === 1
 	return [0]
 }

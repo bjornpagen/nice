@@ -11,7 +11,10 @@ import { allExamples } from "./examples"
 // Its purpose is to provide a final guarantee that the XML produced by our compiler
 // is fully compliant with the target QTI service.
 describe("QTI Compiler API Validation", () => {
-	test("should produce valid QTI XML for all examples that passes API validation", async () => {
+	const shouldRun = process.env.RUN_QTI_API_TESTS === "true"
+	const itOrSkip = shouldRun ? test : test.skip
+
+	itOrSkip("should produce valid QTI XML for all examples that passes API validation", async () => {
 		// Use a dedicated client instance to avoid test interference from module mocks
 		const qti = new QtiClient({
 			serverUrl: env.TIMEBACK_QTI_SERVER_URL,

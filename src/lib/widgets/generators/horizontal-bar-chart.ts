@@ -13,11 +13,7 @@ const BarDataSchema = z
 	.object({
 		category: z.string().describe("The category name displayed on the y-axis (e.g., 'Lamb', 'Beef')."),
 		value: z.number().positive().describe("The numerical value determining the bar's length."),
-		label: z
-			.string()
-			.describe(
-				"The text label to display next to the bar, showing its value (e.g., '184.8 m²')."
-			),
+		label: z.string().describe("The text label to display next to the bar, showing its value (e.g., '184.8 m²')."),
 		color: z.string().regex(CSS_COLOR_PATTERN, "invalid css color").describe("CSS color for this specific bar.")
 	})
 	.strict()
@@ -32,9 +28,7 @@ export const HorizontalBarChartPropsSchema = z
 			.object({
 				label: z
 					.string()
-					.describe(
-						"The label for the horizontal axis (e.g., 'Land use per 100 grams of protein (m²)')."
-					),
+					.describe("The label for the horizontal axis (e.g., 'Land use per 100 grams of protein (m²)')."),
 				min: z.number().min(0).describe("The minimum value on the x-axis (usually 0)."),
 				max: z.number().positive().describe("The maximum value on the x-axis."),
 				tickInterval: z.number().positive().describe("The spacing between tick marks on the x-axis.")

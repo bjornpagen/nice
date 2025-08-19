@@ -20,9 +20,7 @@ const ScatterPointSchema = z
 			.describe(
 				"The y-coordinate value of the data point (e.g., 180, 95.5, -5, 0). Must be within yAxis min/max range."
 			),
-		label: z
-			.string()
-			.describe("Text label for this point (e.g., 'A', 'Outlier', '(3,4)'). Positioned near the point.")
+		label: z.string().describe("Text label for this point (e.g., 'A', 'Outlier', '(3,4)'). Positioned near the point.")
 	})
 	.strict()
 
@@ -94,9 +92,7 @@ const LineBestFitSchema = z
 			.describe(
 				"Regression type. 'linear' fits a straight line (y = mx + b). 'quadratic' fits a parabola (y = ax² + bx + c)."
 			),
-		label: z
-			.string()
-			.describe("Text label for the regression line (e.g., 'Best Fit', 'Trend', 'y = 0.5x + 10')."),
+		label: z.string().describe("Text label for the regression line (e.g., 'Best Fit', 'Trend', 'y = 0.5x + 10')."),
 		style: createLineStyleSchema().describe(
 			"Visual styling for the regression line. Often uses distinct color or dash pattern."
 		)

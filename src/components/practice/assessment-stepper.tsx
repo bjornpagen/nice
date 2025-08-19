@@ -260,7 +260,7 @@ export function AssessmentStepper({
 		if (showSummary && !hasAnnouncedSummaryRef.current) {
 			hasAnnouncedSummaryRef.current = true
 			const audio = new Audio("/summary-sound.mp3")
-			audio.play().catch(() => { })
+			audio.play().catch(() => {})
 		}
 	}, [showSummary])
 
@@ -411,16 +411,16 @@ export function AssessmentStepper({
 					totalQuestions: finalSummaryData.totalQuestions,
 					xpPenaltyInfo: finalSummaryData.xpPenaltyInfo
 						? {
-							penaltyXp:
-								typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
-									? finalSummaryData.xpPenaltyInfo.penaltyXp
-									: 0,
-							reason:
-								typeof finalSummaryData.xpPenaltyInfo.reason === "string"
-									? finalSummaryData.xpPenaltyInfo.reason
-									: "Unknown penalty reason",
-							avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
-						}
+								penaltyXp:
+									typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
+										? finalSummaryData.xpPenaltyInfo.penaltyXp
+										: 0,
+								reason:
+									typeof finalSummaryData.xpPenaltyInfo.reason === "string"
+										? finalSummaryData.xpPenaltyInfo.reason
+										: "Unknown penalty reason",
+								avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
+							}
 						: undefined
 				})
 				setShowSummary(true)
@@ -992,16 +992,16 @@ export function AssessmentStepper({
 				totalQuestions: finalSummaryData.totalQuestions,
 				xpPenaltyInfo: finalSummaryData.xpPenaltyInfo
 					? {
-						penaltyXp:
-							typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
-								? finalSummaryData.xpPenaltyInfo.penaltyXp
-								: 0,
-						reason:
-							typeof finalSummaryData.xpPenaltyInfo.reason === "string"
-								? finalSummaryData.xpPenaltyInfo.reason
-								: "Unknown penalty reason",
-						avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
-					}
+							penaltyXp:
+								typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
+									? finalSummaryData.xpPenaltyInfo.penaltyXp
+									: 0,
+							reason:
+								typeof finalSummaryData.xpPenaltyInfo.reason === "string"
+									? finalSummaryData.xpPenaltyInfo.reason
+									: "Unknown penalty reason",
+							avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
+						}
 					: undefined
 			})
 
@@ -1302,8 +1302,12 @@ export function AssessmentStepper({
 				onSkip={handleSkip}
 				onReset={handleReset}
 				onReportIssue={handleReportIssue}
-				canSkip={Boolean(serverState && serverState.currentQuestionIndex === visibleQuestionIndex && attemptCount === 0)}
-				canReport={Boolean(serverState && serverState.currentQuestionIndex === visibleQuestionIndex && attemptCount === 0)}
+				canSkip={Boolean(
+					serverState && serverState.currentQuestionIndex === visibleQuestionIndex && attemptCount === 0
+				)}
+				canReport={Boolean(
+					serverState && serverState.currentQuestionIndex === visibleQuestionIndex && attemptCount === 0
+				)}
 			/>
 
 			{/* Report Issue Popover */}

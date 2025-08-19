@@ -1,86 +1,126 @@
 import { afterEach, describe, expect, mock, spyOn, test } from "bun:test"
 import * as errors from "@superbuilders/errors"
-import { finalizeAssessment } from "@/lib/actions/assessment"
-import type { Unit } from "@/lib/types/domain"
+import type { AssessmentState } from "@/lib/assessment-cache"
+import type { Question, Unit } from "@/lib/types/domain"
 
-// Create typed mock functions
-const mockGetAllResults = mock(() => {})
-const mockPutResult = mock(() => {})
-const mockGetResult = mock(() => {})
-const mockSaveResult = mock(() => {})
-// Local spies are created below via spyOn; keep placeholders for type
-const mockUpdateFromAssessment = mock(() => {})
-const mockUpdateStreak = mock(() => {})
-const mockCheckExistingProficiency = mock((_userSourcedId: string, _assessmentSourcedId: string) =>
-	Promise.resolve(false)
-)
-const mockAwardBankedXpForExercise = mock(
-	(_params: {
-		exerciseResourceSourcedId: string
-		onerosterUserSourcedId: string
-		onerosterCourseSourcedId: string
-	}): Promise<{ bankedXp: number; awardedResourceIds: string[] }> =>
-		Promise.resolve({ bankedXp: 0, awardedResourceIds: [] })
-)
+// --- MOCKS (BEFORE SUT IMPORT) ---
 
-// Mock external dependencies and ports
-mock.module("@/lib/clients", () => ({
-	oneroster: {
-		getAllResults: mockGetAllResults,
-		putResult: mockPutResult,
-		getResult: mockGetResult
-	}
+// Mock assessment cache (partial)
+const actualAssessmentCache = await import("@/lib/assessment-cache")
+const mockGetAssessmentState = mock((): Promise<AssessmentState | null> => Promise.resolve(null))
+const mockMarkAssessmentFinalized = mock(() => Promise.resolve())
+const mockMarkAssessmentFinalizationFailed = mock(() => Promise.resolve())
+mock.module("@/lib/assessment-cache", () => ({
+	...actualAssessmentCache,
+	getAssessmentState: mockGetAssessmentState,
+	markAssessmentFinalized: mockMarkAssessmentFinalized,
+	markAssessmentFinalizationFailed: mockMarkAssessmentFinalizationFailed
 }))
 
-mock.module("@/lib/ports/gradebook", () => ({
-	saveResult: mockSaveResult
+// Mock authorization (partial)
+const actualAuthorization = await import("@/lib/authorization")
+mock.module("@/lib/authorization", () => ({
+	...actualAuthorization,
+	getCurrentUserSourcedId: mock(() => Promise.resolve("user1"))
 }))
 
-// NOTE: Do not mock analytics module globally to avoid polluting other test files
-
-mock.module("@/lib/services/proficiency", () => ({
-	updateFromAssessment: mockUpdateFromAssessment
+// Mock attempt service
+const mockGetNextAttempt = mock(() => Promise.resolve(1))
+mock.module("@/lib/services/attempt", () => ({
+	getNext: mockGetNextAttempt
 }))
 
-mock.module("@/lib/actions/streak", () => ({
-	updateStreak: mockUpdateStreak
+// Mock question fetching and selection
+mock.module("@/lib/data/fetchers/interactive-helpers", () => ({
+	fetchAndResolveQuestions: mock(async () => ({ assessmentTest: {}, resolvedQuestions: [] }))
+}))
+const mockApplyQtiSelection = mock((): Question[] => [])
+mock.module("@/lib/qti-selection", () => ({
+	applyQtiSelectionAndOrdering: mockApplyQtiSelection
 }))
 
-mock.module("@/lib/actions/assessment", () => ({
-	finalizeAssessment,
-	checkExistingProficiency: mockCheckExistingProficiency
+// Mock XP service
+const mockAwardXp = mock(() => Promise.resolve({ finalXp: 125, multiplier: 1.25, penaltyApplied: false, reason: "ok" }))
+mock.module("@/lib/xp/service", () => ({
+	awardXpForAssessment: mockAwardXp
 }))
 
-mock.module("@/lib/xp/bank", () => ({
-	awardBankedXpForExercise: mockAwardBankedXpForExercise
-}))
-
+// Mock Clerk
 const mockAuth = mock(() => Promise.resolve({ userId: "mock_clerk_user_id" }))
 mock.module("@clerk/nextjs/server", () => ({
 	auth: mockAuth,
 	clerkClient: () => ({
 		users: {
-			getUser: () => Promise.resolve({ publicMetadata: {} }),
-			updateUserMetadata: mock(() => Promise.resolve({ publicMetadata: {} }))
+			getUser: () =>
+				Promise.resolve({
+					publicMetadata: {},
+					emailAddresses: [{ emailAddress: "test@example.com" }]
+				})
 		}
 	})
 }))
 
-// Default auth behavior
-mockAuth.mockImplementation(() => Promise.resolve({ userId: "mock_clerk_user_id" }))
+// Mock OneRoster fetchers
+mock.module("@/lib/data/fetchers/oneroster", () => ({
+	getAllCoursesBySlug: mock(() => Promise.resolve([])),
+	getClass: mock((_id: string) => Promise.resolve(null)),
+	getActiveEnrollmentsForUser: mock((_u: string) => Promise.resolve([])),
+	getCourseComponentByCourseAndSlug: mock(() => Promise.resolve(null))
+}))
 
-// Import modules after mocking
+// Mock cache first to avoid side effects
+mock.module("@/lib/cache", () => ({
+	userProgressByCourse: (_u: string, _c: string) => `user-progress:${_u}:${_c}`,
+	invalidateCache: mock(() => Promise.resolve()),
+	redisCache: async <T>(cb: () => Promise<T>) => cb()
+}))
+
+// Mock services
+mock.module("@/lib/services/streak", () => ({
+	update: mock(() => Promise.resolve())
+}))
+mock.module("@/lib/services/cache", () => ({
+	invalidateUserCourseProgress: mock((_u: string, _c: string) => Promise.resolve())
+}))
+mock.module("@/lib/services/proficiency", () => ({
+	updateFromAssessment: mock(() => Promise.resolve())
+}))
+
+// Mock clients
+const mockGetAllResults = mock(() => Promise.resolve([]))
+const mockPutResult = mock(() => Promise.resolve({}))
+const mockGetResult = mock(() => Promise.resolve({}))
+const mockSaveResult = mock(() => Promise.resolve("result_id"))
+mock.module("@/lib/clients", () => ({
+	oneroster: {
+		getAllResults: mockGetAllResults,
+		putResult: mockPutResult,
+		getResult: mockGetResult
+	},
+	caliper: { sendCaliperEvents: mock(() => Promise.resolve()) }
+}))
+
+// Mock ports
+mock.module("@/lib/ports/gradebook", () => ({
+	saveResult: mockSaveResult
+}))
+
+// Mock XP bank
+const mockAwardBankedXpForExercise = mock(() => Promise.resolve({ bankedXp: 0, awardedResourceIds: [] }))
+mock.module("@/lib/xp/bank", () => ({
+	awardBankedXpForExercise: mockAwardBankedXpForExercise
+}))
+
+// --- IMPORT SUT (AFTER MOCKS) ---
+const { finalizeAssessment } = await import("@/lib/actions/assessment")
+
+// --- SETUP SPIES ---
 const analytics = await import("@/lib/ports/analytics")
 const gradebook = await import("@/lib/ports/gradebook")
-const xpBank = await import("@/lib/xp/bank")
-const clients = await import("@/lib/clients")
 
 const analyticsSpy = spyOn(analytics, "sendActivityCompletedEvent")
 const timeSpentSpy = spyOn(analytics, "sendTimeSpentEvent")
-const gradebookSpy = spyOn(gradebook, "saveResult")
-const bankSpy = spyOn(xpBank, "awardBankedXpForExercise")
-// Prevent outbound Caliper HTTP calls from this test file
-const caliperSendSpy = spyOn(clients.caliper, "sendCaliperEvents").mockImplementation((_e) => Promise.resolve())
+const gradebookSpy = spyOn(gradebook, "saveResult").mockResolvedValue("result_id")
 
 // Create a proper Unit object for testing
 const mockUnit: Unit = {
@@ -98,14 +138,9 @@ const defaultOptions = {
 	onerosterResourceSourcedId: "exercise1",
 	onerosterComponentResourceSourcedId: "component_exercise1",
 	onerosterCourseSourcedId: "course1",
-	onerosterUserSourcedId: "user1",
-	sessionResults: [{ qtiItemId: "q1", isCorrect: true, isReported: false }],
-	attemptNumber: 1,
-	durationInSeconds: 60,
 	expectedXp: 100,
 	assessmentTitle: "Test Assessment",
-	assessmentPath: "/math/algebra",
-	userEmail: "test@example.com",
+	assessmentPath: "/math/algebra/unit/lesson",
 	contentType: "Exercise" as const,
 	unitData: mockUnit
 }
@@ -113,51 +148,119 @@ const defaultOptions = {
 afterEach(() => {
 	// Clear all mock history between tests
 	analyticsSpy.mockClear()
-	gradebookSpy.mockClear()
-	bankSpy.mockClear()
-	mockGetAllResults.mockClear()
-	mockCheckExistingProficiency.mockClear()
 	timeSpentSpy.mockClear()
-	mockUpdateStreak.mockClear()
+	gradebookSpy.mockClear()
+	mockGetAllResults.mockClear()
+	mockGetAssessmentState.mockClear()
+	mockApplyQtiSelection.mockClear()
+	mockGetNextAttempt.mockClear()
 	mockAuth.mockClear()
-	// Reset bank implementation to default to avoid spillover between tests
-	mockAwardBankedXpForExercise.mockReset()
-	mockAwardBankedXpForExercise.mockImplementation((_params) => Promise.resolve({ bankedXp: 0, awardedResourceIds: [] }))
-	caliperSendSpy.mockClear()
-	// Reset gradebook mock to default implementation
-	mockSaveResult.mockReset()
-	mockSaveResult.mockImplementation(() => Promise.resolve("result_id"))
+	mockAwardXp.mockClear()
+	mockSaveResult.mockClear()
 })
 
 describe("Caliper Event Dispatch", () => {
 	test("should send exactly one ActivityCompleted and one TimeSpent event on success", async () => {
-		await finalizeAssessment({ ...defaultOptions, durationInSeconds: 60 })
+		// Mock server state with a duration of 60s
+		mockApplyQtiSelection.mockReturnValue([{ id: "q1" }])
+		mockGetNextAttempt.mockResolvedValue(1)
+		mockGetAssessmentState.mockResolvedValue({
+			attemptNumber: 1,
+			currentQuestionIndex: 1,
+			totalQuestions: 1,
+			startedAt: new Date(Date.now() - 60000).toISOString(), // 60s ago
+			isFinalized: false,
+			finalizationError: null,
+			finalSummary: null,
+			questions: {
+				0: { isCorrect: true, response: null, isReported: false }
+			}
+		})
+
+		await finalizeAssessment(defaultOptions)
 
 		expect(analyticsSpy).toHaveBeenCalledTimes(1)
 		expect(timeSpentSpy).toHaveBeenCalledTimes(1)
+
+		// Verify time spent event has correct duration
+		const timeSpentCall = timeSpentSpy.mock.calls[0]?.[0]
+		expect(timeSpentCall?.durationInSeconds).toBe(60)
 	})
 
 	test("should send exactly one ActivityCompleted event when duration is zero", async () => {
-		await finalizeAssessment({ ...defaultOptions, durationInSeconds: 0 })
+		// Mock server state with zero duration (startedAt = now)
+		mockApplyQtiSelection.mockReturnValue([{ id: "q1" }])
+		mockGetNextAttempt.mockResolvedValue(1)
+		mockGetAssessmentState.mockResolvedValue({
+			attemptNumber: 1,
+			currentQuestionIndex: 1,
+			totalQuestions: 1,
+			startedAt: new Date().toISOString(), // now = 0 duration
+			isFinalized: false,
+			finalizationError: null,
+			finalSummary: null,
+			questions: {
+				0: { isCorrect: true, response: null, isReported: false }
+			}
+		})
 
-		expect(analyticsSpy).toHaveBeenCalledTimes(1)
-		expect(timeSpentSpy).not.toHaveBeenCalled()
-	})
-
-	test("should send exactly one ActivityCompleted event when duration is zero", async () => {
-		await finalizeAssessment({ ...defaultOptions, durationInSeconds: 0 })
+		await finalizeAssessment(defaultOptions)
 
 		expect(analyticsSpy).toHaveBeenCalledTimes(1)
 		expect(timeSpentSpy).not.toHaveBeenCalled()
 	})
 
 	test("should NOT send any analytics events if gradebook save fails", async () => {
-		gradebookSpy.mockImplementation(() => Promise.reject(errors.new("database unavailable")))
+		// Setup state
+		mockApplyQtiSelection.mockReturnValue([{ id: "q1" }])
+		mockGetNextAttempt.mockResolvedValue(1)
+		mockGetAssessmentState.mockResolvedValue({
+			attemptNumber: 1,
+			currentQuestionIndex: 1,
+			totalQuestions: 1,
+			startedAt: new Date(Date.now() - 60000).toISOString(),
+			isFinalized: false,
+			finalizationError: null,
+			finalSummary: null,
+			questions: {
+				0: { isCorrect: true, response: null, isReported: false }
+			}
+		})
 
-		const result = await errors.try(finalizeAssessment({ ...defaultOptions }))
+		// Make gradebook save fail
+		gradebookSpy.mockRejectedValue(errors.new("database unavailable"))
+
+		const result = await errors.try(finalizeAssessment(defaultOptions))
 
 		expect(result.error).toBeDefined()
 		expect(analyticsSpy).not.toHaveBeenCalled()
 		expect(timeSpentSpy).not.toHaveBeenCalled()
+		// Verify that the failure was marked
+		expect(mockMarkAssessmentFinalizationFailed).toHaveBeenCalled()
+	})
+
+	test("should send TimeSpent event only when duration >= 1 second", async () => {
+		// Mock server state with 0.5s duration (should not send TimeSpent)
+		mockApplyQtiSelection.mockReturnValue([{ id: "q1" }])
+		mockGetNextAttempt.mockResolvedValue(1)
+		mockGetAssessmentState.mockResolvedValue({
+			attemptNumber: 1,
+			currentQuestionIndex: 1,
+			totalQuestions: 1,
+			startedAt: new Date(Date.now() - 100).toISOString(), // ~0.1s ago to avoid rounding up to 1s
+			isFinalized: false,
+			finalizationError: null,
+			finalSummary: null,
+			questions: {
+				0: { isCorrect: true, response: null, isReported: false }
+			}
+		})
+
+		// Ensure gradebook spy is resolved in this test (avoid pollution from previous test)
+		gradebookSpy.mockResolvedValue("result_id")
+		await finalizeAssessment(defaultOptions)
+
+		expect(analyticsSpy).toHaveBeenCalledTimes(1)
+		expect(timeSpentSpy).not.toHaveBeenCalled() // Duration < 1s
 	})
 })
