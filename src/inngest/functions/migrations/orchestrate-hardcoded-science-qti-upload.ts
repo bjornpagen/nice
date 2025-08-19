@@ -1,14 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
-
-export const HARDCODED_SCIENCE_COURSE_IDS = [
-	"x0c5bb03129646fd6", // ms-biology
-	"x1baed5db7c1bb50b", // ms-physics
-	"x87d03b443efbea0a", // middle-school-earth-and-space-science
-	"x230b3ff252126bb6", // hs-bio
-	"xc370bc422b7f75fc" // ms-chemistry
-]
+import { HARDCODED_SCIENCE_COURSE_IDS } from "@/lib/constants/course-mapping"
 
 export const orchestrateHardcodedScienceQtiUpload = inngest.createFunction(
 	{
@@ -19,7 +12,7 @@ export const orchestrateHardcodedScienceQtiUpload = inngest.createFunction(
 	async ({ step, logger }) => {
 		logger.info("starting hardcoded science qti data upload", { courseCount: HARDCODED_SCIENCE_COURSE_IDS.length })
 
-		const qtiUploadPromises = HARDCODED_SCIENCE_COURSE_IDS.map((courseId) =>
+		const qtiUploadPromises = [...HARDCODED_SCIENCE_COURSE_IDS].map((courseId) =>
 			step.invoke(`upload-qti-for-${courseId}`, {
 				function: orchestrateCourseUploadToQti,
 				data: { courseId }

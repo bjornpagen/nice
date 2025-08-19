@@ -1452,8 +1452,7 @@ test("dedupes paraphrased prompt - volcanic hazards from map", () => {
 		widgets: {
 			image_1: {
 				type: "urlImage",
-				alt:
-					"A map of the Crater Lake region is shown. A key shows the types of volcanic hazards by color. Black indicates lava flows, orange indicates mudflows, and yellow indicates volcanic ash. A campsite is marked on the map. The area surrounding the campsite has black layered on top of yellow.",
+				alt: "A map of the Crater Lake region is shown. A key shows the types of volcanic hazards by color. Black indicates lava flows, orange indicates mudflows, and yellow indicates volcanic ash. A campsite is marked on the map. The area surrounding the campsite has black layered on top of yellow.",
 				url: "https://cdn.kastatic.org/ka-perseus-images/9bea064c1db29e7e13d6452221432917372219bd.svg",
 				width: 500,
 				height: 482,
@@ -1502,23 +1501,17 @@ test("dedupes paraphrased prompt - volcanic hazards from map", () => {
 				choices: [
 					{
 						identifier: "A",
-						content: [
-							{ type: "paragraph", content: [{ type: "text", content: "lava flows" }] }
-						],
+						content: [{ type: "paragraph", content: [{ type: "text", content: "lava flows" }] }],
 						feedback: null
 					},
 					{
 						identifier: "B",
-						content: [
-							{ type: "paragraph", content: [{ type: "text", content: "mudflows" }] }
-						],
+						content: [{ type: "paragraph", content: [{ type: "text", content: "mudflows" }] }],
 						feedback: null
 					},
 					{
 						identifier: "C",
-						content: [
-							{ type: "paragraph", content: [{ type: "text", content: "volcanic ash" }] }
-						],
+						content: [{ type: "paragraph", content: [{ type: "text", content: "volcanic ash" }] }],
 						feedback: null
 					}
 				]
@@ -1611,7 +1604,10 @@ test("dedupes paraphrased prompt - outputs of photosynthesis selection phrase", 
 		},
 		feedback: {
 			correct: [
-				{ type: "paragraph", content: [{ type: "text", content: "Correct! Oxygen and sugars are outputs of photosynthesis." }] }
+				{
+					type: "paragraph",
+					content: [{ type: "text", content: "Correct! Oxygen and sugars are outputs of photosynthesis." }]
+				}
 			],
 			incorrect: [
 				{
@@ -1681,7 +1677,7 @@ test("dedupes paraphrased prompt - genetic variation birds with separated instru
 										type: "text",
 										content:
 											"Some birds in the population will have traits that help them survive longer and reproduce more than other birds under specific environmental conditions."
-										}
+									}
 								]
 							}
 						],
@@ -1697,7 +1693,7 @@ test("dedupes paraphrased prompt - genetic variation birds with separated instru
 										type: "text",
 										content:
 											"The population will have phenotypic variation, such as differences in beak size and tail length."
-										}
+									}
 								]
 							}
 						],
@@ -1713,7 +1709,7 @@ test("dedupes paraphrased prompt - genetic variation birds with separated instru
 										type: "text",
 										content:
 											"All birds in the population will produce the same number of offspring because they are the same species and have the same genetic variations."
-										}
+									}
 								]
 							}
 						],

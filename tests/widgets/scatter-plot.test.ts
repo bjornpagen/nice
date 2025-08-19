@@ -52,7 +52,7 @@ test("scatter plot - acceleration vs mass with trend", () => {
 		logger.error("parsing failed", { error: parseResult.error })
 		throw errors.wrap(parseResult.error, "schema parsing")
 	}
-	
+
 	const validation = parseResult.data
 	if (!validation.success) {
 		logger.error("input validation failed", { error: validation.error })
@@ -115,7 +115,7 @@ test("scatter plot - bacterial population growth with exponential trend", () => 
 		logger.error("parsing failed", { error: parseResult.error })
 		throw errors.wrap(parseResult.error, "schema parsing")
 	}
-	
+
 	const validation = parseResult.data
 	if (!validation.success) {
 		logger.error("input validation failed", { error: validation.error })

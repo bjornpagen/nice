@@ -1,5 +1,5 @@
 import * as errors from "@superbuilders/errors"
-import { and, eq, inArray, isNull } from "drizzle-orm"
+import { and, eq, inArray, isNull, or } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { type Events, inngest } from "@/inngest/client"
@@ -68,8 +68,7 @@ export async function dispatchMigrationsForCourses(
 					.where(
 						and(
 							inArray(schema.niceLessons.unitId, unitIds),
-							isNull(schema.niceQuestions.xml),
-							isNull(schema.niceQuestions.structuredJson)
+							or(isNull(schema.niceQuestions.xml), isNull(schema.niceQuestions.structuredJson))
 						)
 					)
 			: Promise.resolve([]), // Return empty array if not requested

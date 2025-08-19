@@ -4,17 +4,9 @@ import { z } from "zod"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
+import { HARDCODED_SCIENCE_COURSE_IDS } from "@/lib/constants/course-mapping"
 import { scienceCollection } from "@/lib/widget-collections/science"
 import { simpleVisualCollection } from "@/lib/widget-collections/simple-visual"
-
-// Hardcoded science course IDs copied from the science orchestration job
-const HARDCODED_SCIENCE_COURSE_IDS = [
-	"x0c5bb03129646fd6", // ms-biology
-	"x1baed5db7c1bb50b", // ms-physics
-	"x87d03b443efbea0a", // middle-school-earth-and-space-science
-	"x230b3ff252126bb6", // hs-bio
-	"xc370bc422b7f75fc" // ms-chemistry
-]
 
 // Schema to safely inspect widget type names inside structuredJson
 const WidgetsMapSchema = z.record(z.object({ type: z.string() }).passthrough())
@@ -45,7 +37,7 @@ export const orchestrateHardcodedScienceClearXmlForScienceWidgets = inngest.crea
 			db
 				.select({ id: schema.niceCourses.id, slug: schema.niceCourses.slug })
 				.from(schema.niceCourses)
-				.where(inArray(schema.niceCourses.id, HARDCODED_SCIENCE_COURSE_IDS))
+				.where(inArray(schema.niceCourses.id, [...HARDCODED_SCIENCE_COURSE_IDS]))
 		)
 		if (coursesResult.error) {
 			logger.error("db query for science courses failed", { error: coursesResult.error })

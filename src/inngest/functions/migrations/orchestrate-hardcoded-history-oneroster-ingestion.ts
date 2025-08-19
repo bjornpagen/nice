@@ -2,15 +2,7 @@ import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orchestrate-course-oneroster-generation"
 import { orchestrateCourseUploadToOneroster } from "@/inngest/functions/orchestrate-course-upload-to-oneroster"
-
-const HARDCODED_HISTORY_COURSE_IDS = [
-	"x71a94f19", // us-history
-	"xb87a304a", // ap-us-history
-	"x66f79d8a", // world-history
-	"xb41992e0ff5e0f09", // ap-world-history
-	"x231f0f4241b58f49", // us-government-and-civics
-	"x3e2fc37246974751" // ap-college-us-government-and-politics
-]
+import { HARDCODED_HISTORY_COURSE_IDS } from "@/lib/constants/course-mapping"
 
 export const orchestrateHardcodedHistoryOnerosterIngestion = inngest.createFunction(
 	{
@@ -25,7 +17,7 @@ export const orchestrateHardcodedHistoryOnerosterIngestion = inngest.createFunct
 
 		// Step 1: Generate OneRoster payloads for all courses in parallel
 		logger.info("fanning out oneroster payload generation jobs")
-		const generationPromises = HARDCODED_HISTORY_COURSE_IDS.map((courseId) =>
+		const generationPromises = [...HARDCODED_HISTORY_COURSE_IDS].map((courseId) =>
 			step.invoke(`generate-oneroster-payload-for-${courseId}`, {
 				function: orchestrateCourseOnerosterGeneration,
 				data: { courseId }
@@ -40,7 +32,7 @@ export const orchestrateHardcodedHistoryOnerosterIngestion = inngest.createFunct
 
 		// Step 2: Upload OneRoster payloads for all courses in parallel
 		logger.info("fanning out oneroster upload jobs")
-		const uploadPromises = HARDCODED_HISTORY_COURSE_IDS.map((courseId) =>
+		const uploadPromises = [...HARDCODED_HISTORY_COURSE_IDS].map((courseId) =>
 			step.invoke(`upload-oneroster-payload-for-${courseId}`, {
 				function: orchestrateCourseUploadToOneroster,
 				data: { courseId }

@@ -108,7 +108,9 @@ const LineBestFitSchema = z
 		)
 	})
 	.strict()
-	.describe("A computed best-fit line or curve derived from the data points. Supports linear, quadratic, and exponential regression (where negative b indicates decay).")
+	.describe(
+		"A computed best-fit line or curve derived from the data points. Supports linear, quadratic, and exponential regression (where negative b indicates decay)."
+	)
 
 // The main Zod schema for the scatterPlot function
 export const ScatterPlotPropsSchema = z
@@ -295,12 +297,12 @@ function computeExponentialRegression(
 	if (count < 2) return null
 
 	// Filter out points where y <= 0 since we need ln(y)
-	const validPoints = points.filter(p => p.y > 0)
+	const validPoints = points.filter((p) => p.y > 0)
 	if (validPoints.length < 2) return null
 
 	// Transform data: ln(y) = ln(a) + bx, so we fit ln(y) vs x
-	const transformedPoints = validPoints.map(p => ({ x: p.x, y: Math.log(p.y) }))
-	
+	const transformedPoints = validPoints.map((p) => ({ x: p.x, y: Math.log(p.y) }))
+
 	// Use linear regression on transformed data
 	const linearCoeff = computeLinearRegression(transformedPoints)
 	if (!linearCoeff) return null
@@ -308,11 +310,9 @@ function computeExponentialRegression(
 	// Convert back: ln(y) = mx + b => y = e^(mx + b) = e^b * e^(mx) = ae^(bx)
 	const a = Math.exp(linearCoeff.yIntercept) // e^b
 	const b = linearCoeff.slope // m
-	
+
 	return { a, b }
 }
-
-
 
 type LineStyle = z.infer<ReturnType<typeof createLineStyleSchema>>
 
@@ -323,7 +323,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	const hasLinear = lines.some((l) => l.type === "bestFit" && l.method === "linear")
 	const hasQuadratic = lines.some((l) => l.type === "bestFit" && l.method === "quadratic")
 	const hasExponential = lines.some((l) => l.type === "bestFit" && l.method === "exponential")
-	
+
 	if (hasLinear && points.length < 2) {
 		logger.error("linear best fit requires at least 2 points", { pointsLength: points.length })
 		throw errors.new("linear best fit requires at least 2 points")
@@ -336,9 +336,9 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		logger.error("exponential best fit requires at least 2 points", { pointsLength: points.length })
 		throw errors.new("exponential best fit requires at least 2 points")
 	}
-	if (hasExponential && points.some(p => p.y <= 0)) {
-		logger.error("exponential regression requires all y-values to be positive", { 
-			negativePoints: points.filter(p => p.y <= 0) 
+	if (hasExponential && points.some((p) => p.y <= 0)) {
+		logger.error("exponential regression requires all y-values to be positive", {
+			negativePoints: points.filter((p) => p.y <= 0)
 		})
 		throw errors.new("exponential regression requires all y-values to be positive")
 	}
@@ -388,7 +388,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg +=
 		"<style>.axis-label { font-size: 14px; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
-	
+
 	// Define clip path for chart area to properly clip lines at boundaries
 	svg += createChartClipPath("chartArea", pad.left, pad.top, chartWidth, chartHeight)
 

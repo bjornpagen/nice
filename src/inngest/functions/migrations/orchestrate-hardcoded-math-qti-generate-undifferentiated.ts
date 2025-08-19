@@ -7,6 +7,7 @@ import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { qti } from "@/lib/clients"
+import { HARDCODED_MATH_COURSE_IDS } from "@/lib/constants/course-mapping"
 import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
 import { ErrQtiNotFound } from "@/lib/qti"
 import { buildDeterministicKBuckets } from "@/lib/utils/k-bucketing"
@@ -23,12 +24,6 @@ const AssessmentItemSchema = z.object({
 })
 type AssessmentItem = z.infer<typeof AssessmentItemSchema>
 
-const HARDCODED_MATH_COURSE_IDS = [
-	"x0267d782", // 6th grade math (Common Core)
-	"x6b17ba59", // 7th grade math (Common Core)
-	"x7c7044d7" // 8th grade math (Common Core)
-]
-
 export const orchestrateHardcodedMathQtiGenerateUndifferentiated = inngest.createFunction(
 	{
 		id: "orchestrate-hardcoded-math-qti-generate-undifferentiated",
@@ -41,7 +36,7 @@ export const orchestrateHardcodedMathQtiGenerateUndifferentiated = inngest.creat
 		})
 
 		const courses = await db.query.niceCourses.findMany({
-			where: inArray(schema.niceCourses.id, HARDCODED_MATH_COURSE_IDS),
+			where: inArray(schema.niceCourses.id, [...HARDCODED_MATH_COURSE_IDS]),
 			columns: { id: true, slug: true }
 		})
 

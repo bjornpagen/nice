@@ -181,7 +181,9 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 				.describe("Whether to randomize initial order. Always true to ensure varied starting points."),
 			orientation: z
 				.literal("vertical")
-				.describe("Visual layout direction for the orderable items. Only vertical orientation is supported. Prompts MUST include '(top to bottom)'.")
+				.describe(
+					"Visual layout direction for the orderable items. Only vertical orientation is supported. Prompts MUST include '(top to bottom)'."
+				)
 		})
 		.strict()
 		.describe(

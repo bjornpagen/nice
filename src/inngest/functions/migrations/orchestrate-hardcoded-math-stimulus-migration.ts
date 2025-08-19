@@ -1,11 +1,6 @@
 import { inngest } from "@/inngest/client"
-import { dispatchMigrationsForCourses } from "./dispatch-course-migrations"
-
-const HARDCODED_MATH_COURSE_IDS = [
-	"x0267d782", // 6th grade math (Common Core)
-	"x6b17ba59", // 7th grade math (Common Core)
-	"x7c7044d7" // 8th grade math (Common Core)
-]
+import { dispatchMigrationsForCourses } from "@/inngest/functions/migrations/dispatch-course-migrations"
+import { HARDCODED_MATH_COURSE_IDS } from "@/lib/constants/course-mapping"
 
 export const orchestrateHardcodedMathStimulusMigration = inngest.createFunction(
 	{
@@ -13,18 +8,16 @@ export const orchestrateHardcodedMathStimulusMigration = inngest.createFunction(
 		name: "Orchestrate Hardcoded Math Course Perseus to QTI Stimulus Migration"
 	},
 	{ event: "migration/hardcoded.math.stimuli.perseus-to-qti" },
-	async ({ step, logger }) => {
+	async ({ logger }) => {
 		logger.info("dispatching stimulus migrations for hardcoded math courses", {
 			courseCount: HARDCODED_MATH_COURSE_IDS.length
 		})
 
-		const result = await step.run("dispatch-math-stimulus-migrations", () =>
-			dispatchMigrationsForCourses(logger, HARDCODED_MATH_COURSE_IDS, {
-				// MODIFIED: Explicitly set itemEventName to undefined to prevent item migration
-				itemEventName: undefined,
-				stimulusEventName: "qti/stimulus.migrate"
-			})
-		)
+		const result = await dispatchMigrationsForCourses(logger, [...HARDCODED_MATH_COURSE_IDS], {
+			// MODIFIED: Explicitly set itemEventName to undefined to prevent item migration
+			itemEventName: undefined,
+			stimulusEventName: "qti/stimulus.migrate"
+		})
 
 		return {
 			status: "complete",

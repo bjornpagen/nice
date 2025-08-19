@@ -7,6 +7,7 @@ import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { qti } from "@/lib/clients"
+import { HARDCODED_HISTORY_COURSE_IDS } from "@/lib/constants/course-mapping"
 import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
 import { ErrQtiNotFound } from "@/lib/qti"
 import { buildDeterministicKBuckets } from "@/lib/utils/k-bucketing"
@@ -21,15 +22,6 @@ const AssessmentItemSchema = z.object({
 })
 type AssessmentItem = z.infer<typeof AssessmentItemSchema>
 
-const HARDCODED_HISTORY_COURSE_IDS = [
-	"x71a94f19", // us-history
-	"xb87a304a", // ap-us-history
-	"x66f79d8a", // world-history
-	"xb41992e0ff5e0f09", // ap-world-history
-	"x231f0f4241b58f49", // us-government-and-civics
-	"x3e2fc37246974751" // ap-college-us-government-and-politics
-]
-
 export const orchestrateHardcodedHistoryQtiGenerateUndifferentiated = inngest.createFunction(
 	{
 		id: "orchestrate-hardcoded-history-qti-generate-undifferentiated",
@@ -42,7 +34,7 @@ export const orchestrateHardcodedHistoryQtiGenerateUndifferentiated = inngest.cr
 		})
 
 		const courses = await db.query.niceCourses.findMany({
-			where: inArray(schema.niceCourses.id, HARDCODED_HISTORY_COURSE_IDS),
+			where: inArray(schema.niceCourses.id, [...HARDCODED_HISTORY_COURSE_IDS]),
 			columns: { id: true, slug: true }
 		})
 

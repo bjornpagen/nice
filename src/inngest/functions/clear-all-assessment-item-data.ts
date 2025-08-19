@@ -1,100 +1,140 @@
 import * as errors from "@superbuilders/errors"
+import { and, eq, inArray, notInArray } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
+import { HARDCODED_SCIENCE_COURSE_IDS } from "@/lib/constants/course-mapping"
 
 export const clearAllAssessmentItemData = inngest.createFunction(
 	{
 		id: "clear-all-assessment-item-data",
-		name: "Clear QTI assessment XML/JSON, analysis notes, and QA review table"
+		name: "Clear QTI assessment XML/JSON, analysis notes, and QA review table for non-science courses"
 	},
 	{ event: "qti/database.clear-assessment-item-data" },
 	async ({ logger }) => {
-		logger.info("starting database-wide clearing of assessment item data")
+		logger.info("starting database-wide clearing of assessment item data for non-science courses")
 
-		// Count questions beforehand for logging/return consistency
-		const questionsCountResult = await errors.try(
-			db.query.niceQuestions.findMany({
-				columns: { id: true }
+		const transactionResult = await errors.try(
+			db.transaction(async (tx) => {
+				// Fail-fast guard: ensure science questions exist (limit 1 for efficiency)
+				const existenceCheck = await tx
+					.select({ id: schema.niceQuestions.id })
+					.from(schema.niceQuestions)
+					.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
+					.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
+					.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+					.innerJoin(schema.niceUnits, eq(schema.niceLessons.unitId, schema.niceUnits.id))
+					.where(
+						and(
+							inArray(schema.niceUnits.courseId, [...HARDCODED_SCIENCE_COURSE_IDS]),
+							eq(schema.niceLessonContents.contentType, "Exercise")
+						)
+					)
+					.limit(1)
+				if (existenceCheck.length === 0) {
+					logger.error(
+						"fail-fast: subquery returned zero science questions, aborting clear operation to prevent data loss"
+					)
+					throw errors.new("fail-fast: subquery for science questions returned zero results")
+				}
+
+				// Step 2: Clear XML and structuredJson from questions for NON-SCIENCE courses using an inclusion subquery on exercises
+				logger.info("clearing xml and structuredJson from questions table for non-science courses")
+				const questionsCleared = await tx
+					.update(schema.niceQuestions)
+					.set({ xml: null, structuredJson: null })
+					.where(
+						inArray(
+							schema.niceQuestions.exerciseId,
+							tx
+								.select({ id: schema.niceExercises.id })
+								.from(schema.niceExercises)
+								.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
+								.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+								.innerJoin(schema.niceUnits, eq(schema.niceLessons.unitId, schema.niceUnits.id))
+								.where(
+									and(
+										eq(schema.niceLessonContents.contentType, "Exercise"),
+										notInArray(schema.niceUnits.courseId, [...HARDCODED_SCIENCE_COURSE_IDS])
+									)
+								)
+						)
+					)
+					.returning({ id: schema.niceQuestions.id })
+				logger.info("cleared non-science questions xml and structuredJson data", { count: questionsCleared.length })
+
+				// Step 3: Wipe the questions_analysis table for NON-SCIENCE questions via subquery
+				logger.info("deleting records from questions_analysis table for non-science courses")
+				const analysisCleared = await tx
+					.delete(schema.niceQuestionsAnalysis)
+					.where(
+						inArray(
+							schema.niceQuestionsAnalysis.questionId,
+							tx
+								.select({ id: schema.niceQuestions.id })
+								.from(schema.niceQuestions)
+								.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
+								.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
+								.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+								.innerJoin(schema.niceUnits, eq(schema.niceLessons.unitId, schema.niceUnits.id))
+								.where(
+									and(
+										eq(schema.niceLessonContents.contentType, "Exercise"),
+										notInArray(schema.niceUnits.courseId, [...HARDCODED_SCIENCE_COURSE_IDS])
+									)
+								)
+						)
+					)
+					.returning({ id: schema.niceQuestionsAnalysis.id })
+				logger.info("successfully deleted non-science records from questions_analysis", {
+					count: analysisCleared.length
+				})
+
+				// Step 4: Wipe the question_render_reviews table for NON-SCIENCE questions via subquery
+				logger.info("deleting records from question_render_reviews table for non-science courses")
+				const reviewsCleared = await tx
+					.delete(schema.niceQuestionRenderReviews)
+					.where(
+						inArray(
+							schema.niceQuestionRenderReviews.questionId,
+							tx
+								.select({ id: schema.niceQuestions.id })
+								.from(schema.niceQuestions)
+								.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
+								.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
+								.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+								.innerJoin(schema.niceUnits, eq(schema.niceLessons.unitId, schema.niceUnits.id))
+								.where(
+									and(
+										eq(schema.niceLessonContents.contentType, "Exercise"),
+										notInArray(schema.niceUnits.courseId, [...HARDCODED_SCIENCE_COURSE_IDS])
+									)
+								)
+						)
+					)
+					.returning({ questionId: schema.niceQuestionRenderReviews.questionId })
+				logger.info("successfully deleted non-science records from question_render_reviews", {
+					count: reviewsCleared.length
+				})
+
+				return {
+					questions: questionsCleared.length,
+					questionsAnalysis: analysisCleared.length,
+					questionRenderReviews: reviewsCleared.length
+				}
 			})
 		)
-		if (questionsCountResult.error) {
-			logger.error("failed to count questions", { error: questionsCountResult.error })
-			throw errors.wrap(questionsCountResult.error, "questions count query")
+
+		if (transactionResult.error) {
+			logger.error("database transaction failed during clearing operation", { error: transactionResult.error })
+			throw errors.wrap(transactionResult.error, "clearing transaction")
 		}
-		const totalQuestions = questionsCountResult.data.length
 
-		// Step 1: Clear all XML and structuredJson data from the questions table.
-		logger.info("clearing xml and structuredJson from questions table")
-		const questionsUpdateResult = await errors.try(
-			db.update(schema.niceQuestions).set({ xml: null, structuredJson: null })
-		)
-		if (questionsUpdateResult.error) {
-			logger.error("failed to clear questions xml/json", { error: questionsUpdateResult.error })
-			throw errors.wrap(questionsUpdateResult.error, "clear questions xml/json")
-		}
-		const questionsClearedCount = totalQuestions
-		logger.info("cleared questions xml and structuredJson data", { count: questionsClearedCount })
-
-		// Count questions_analysis beforehand
-		const analysisCountResult = await errors.try(
-			db.query.niceQuestionsAnalysis.findMany({
-				columns: { id: true }
-			})
-		)
-		if (analysisCountResult.error) {
-			logger.error("failed to count questions_analysis", { error: analysisCountResult.error })
-			throw errors.wrap(analysisCountResult.error, "questions analysis count query")
-		}
-		const totalAnalysis = analysisCountResult.data.length
-
-		// Step 2: Wipe the entire questions_analysis table.
-		logger.info("deleting all records from questions_analysis table")
-		const analysisDeleteResult = await errors.try(db.delete(schema.niceQuestionsAnalysis))
-		if (analysisDeleteResult.error) {
-			logger.error("failed to delete from questions_analysis table", { error: analysisDeleteResult.error })
-			throw errors.wrap(analysisDeleteResult.error, "delete questions_analysis")
-		}
-		const analysisClearedCount = totalAnalysis
-		logger.info("successfully deleted all records from questions_analysis", { count: analysisClearedCount })
-
-		// Step 3: Wipe the entire question_render_reviews table (skip blob deletion)
-		logger.info("preparing to clear question_render_reviews table")
-
-		// Count rows for logging/return
-		const reviewsResult = await errors.try(
-			db.query.niceQuestionRenderReviews.findMany({
-				columns: { questionId: true }
-			})
-		)
-		if (reviewsResult.error) {
-			logger.error("failed to count question_render_reviews", { error: reviewsResult.error })
-			throw errors.wrap(reviewsResult.error, "question render reviews count query")
-		}
-		const totalReviews = reviewsResult.data.length
-
-		logger.info("deleting all records from question_render_reviews table")
-		const reviewsDeleteResult = await errors.try(db.delete(schema.niceQuestionRenderReviews))
-		if (reviewsDeleteResult.error) {
-			logger.error("failed to delete from question_render_reviews table", { error: reviewsDeleteResult.error })
-			throw errors.wrap(reviewsDeleteResult.error, "delete question_render_reviews")
-		}
-		logger.info("successfully deleted all records from question_render_reviews", { count: totalReviews })
-
-		logger.info("completed database-wide clearing of assessment item data", {
-			questionsCleared: questionsClearedCount,
-			questionsAnalysisCleared: analysisClearedCount,
-			questionRenderReviewsCleared: totalReviews
-		})
+		logger.info("completed database-wide clearing of non-science assessment item data")
 
 		return {
 			status: "success",
-			cleared: {
-				questions: questionsClearedCount,
-				questionsAnalysis: analysisClearedCount,
-				questionRenderReviews: totalReviews,
-				total: questionsClearedCount + analysisClearedCount + totalReviews
-			}
+			cleared: transactionResult.data
 		}
 	}
 )

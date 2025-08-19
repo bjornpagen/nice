@@ -5,13 +5,8 @@ import { eq, inArray } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
+import { HARDCODED_MATH_COURSE_IDS } from "@/lib/constants/course-mapping"
 import { replaceRootAttributes } from "@/lib/xml-utils"
-
-const HARDCODED_COURSE_IDS = [
-	"x0267d782", // 6th grade math (Common Core)
-	"x6b17ba59", // 7th grade math (Common Core)
-	"x7c7044d7" // 8th grade math (Common Core)
-]
 
 export const orchestrateHardcodedMathStimulusGeneration = inngest.createFunction(
 	{
@@ -21,11 +16,11 @@ export const orchestrateHardcodedMathStimulusGeneration = inngest.createFunction
 	{ event: "migration/hardcoded.math.stimuli.generate" },
 	async ({ logger }) => {
 		logger.info("starting hardcoded qti generation for stimuli", {
-			courseCount: HARDCODED_COURSE_IDS.length
+			courseCount: HARDCODED_MATH_COURSE_IDS.length
 		})
 
 		const courses = await db.query.niceCourses.findMany({
-			where: inArray(schema.niceCourses.id, HARDCODED_COURSE_IDS),
+			where: inArray(schema.niceCourses.id, [...HARDCODED_MATH_COURSE_IDS]),
 			columns: { id: true, slug: true }
 		})
 
@@ -98,6 +93,6 @@ export const orchestrateHardcodedMathStimulusGeneration = inngest.createFunction
 		)
 
 		logger.info("completed hardcoded qti generation for stimuli")
-		return { status: "complete", courseCount: HARDCODED_COURSE_IDS.length }
+		return { status: "complete", courseCount: HARDCODED_MATH_COURSE_IDS.length }
 	}
 )

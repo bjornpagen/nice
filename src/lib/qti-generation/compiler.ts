@@ -558,7 +558,7 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 				if (compacted.length === 0) {
 					toDelete.add(i)
 				} else {
-					(block as typeof block).content = compacted
+					block.content = compacted
 					paragraphNorms[i] = normalizeInline(compacted)
 				}
 				removedSentence = true
@@ -736,95 +736,95 @@ function enforceNoCaretsInChoiceInteraction(item: AssessmentItem): void {
 }
 
 function enforceNoCaretsInInlineChoiceInteraction(item: AssessmentItem): void {
-    if (!item.interactions) return
+	if (!item.interactions) return
 
-    for (const [interactionId, interaction] of Object.entries(item.interactions)) {
-        if (!interaction || interaction.type !== "inlineChoiceInteraction") continue
+	for (const [interactionId, interaction] of Object.entries(item.interactions)) {
+		if (!interaction || interaction.type !== "inlineChoiceInteraction") continue
 
-        // choice inline content
-        for (let cIdx = 0; cIdx < interaction.choices.length; cIdx++) {
-            const choice = interaction.choices[cIdx]
-            if (!choice) continue
-            for (let pIdx = 0; pIdx < choice.content.length; pIdx++) {
-                const part = choice.content[pIdx]
-                if (!part || part.type !== "text") continue
-                if (part.content.includes("^")) {
-                    logger.error("caret characters in inline choice content", {
-                        interactionId,
-                        choiceIndex: cIdx,
-                        snippet: part.content
-                    })
-                    throw errors.new("caret characters banned in inline choice content")
-                }
-            }
-        }
-    }
+		// choice inline content
+		for (let cIdx = 0; cIdx < interaction.choices.length; cIdx++) {
+			const choice = interaction.choices[cIdx]
+			if (!choice) continue
+			for (let pIdx = 0; pIdx < choice.content.length; pIdx++) {
+				const part = choice.content[pIdx]
+				if (!part || part.type !== "text") continue
+				if (part.content.includes("^")) {
+					logger.error("caret characters in inline choice content", {
+						interactionId,
+						choiceIndex: cIdx,
+						snippet: part.content
+					})
+					throw errors.new("caret characters banned in inline choice content")
+				}
+			}
+		}
+	}
 }
 
 function enforceNoCaretsInTopLevelFeedback(item: AssessmentItem): void {
-    const checkBlocks = (blocks: NonNullable<AssessmentItem["feedback"]>["correct"]): void => {
-        for (let i = 0; i < blocks.length; i++) {
-            const block = blocks[i]
-            if (!block || block.type !== "paragraph") continue
-            const inline = block.content
-            for (let j = 0; j < inline.length; j++) {
-                const part = inline[j]
-                if (!part || part.type !== "text") continue
-                if (part.content.includes("^")) {
-                    logger.error("caret characters in top-level feedback", { index: i, snippet: part.content })
-                    throw errors.new("caret characters banned in top-level feedback")
-                }
-            }
-        }
-    }
-    if (item.feedback?.correct) checkBlocks(item.feedback.correct)
-    if (item.feedback?.incorrect) checkBlocks(item.feedback.incorrect)
+	const checkBlocks = (blocks: NonNullable<AssessmentItem["feedback"]>["correct"]): void => {
+		for (let i = 0; i < blocks.length; i++) {
+			const block = blocks[i]
+			if (!block || block.type !== "paragraph") continue
+			const inline = block.content
+			for (let j = 0; j < inline.length; j++) {
+				const part = inline[j]
+				if (!part || part.type !== "text") continue
+				if (part.content.includes("^")) {
+					logger.error("caret characters in top-level feedback", { index: i, snippet: part.content })
+					throw errors.new("caret characters banned in top-level feedback")
+				}
+			}
+		}
+	}
+	if (item.feedback?.correct) checkBlocks(item.feedback.correct)
+	if (item.feedback?.incorrect) checkBlocks(item.feedback.incorrect)
 }
 
 function enforceNoPipesInInlineChoiceInteraction(item: AssessmentItem): void {
-    if (!item.interactions) return
+	if (!item.interactions) return
 
-    for (const [interactionId, interaction] of Object.entries(item.interactions)) {
-        if (!interaction || interaction.type !== "inlineChoiceInteraction") continue
+	for (const [interactionId, interaction] of Object.entries(item.interactions)) {
+		if (!interaction || interaction.type !== "inlineChoiceInteraction") continue
 
-        // choice inline content
-        for (let cIdx = 0; cIdx < interaction.choices.length; cIdx++) {
-            const choice = interaction.choices[cIdx]
-            if (!choice) continue
-            for (let pIdx = 0; pIdx < choice.content.length; pIdx++) {
-                const part = choice.content[pIdx]
-                if (!part || part.type !== "text") continue
-                if (part.content.includes("|")) {
-                    logger.error("pipe characters in inline choice content", {
-                        interactionId,
-                        choiceIndex: cIdx,
-                        snippet: part.content
-                    })
-                    throw errors.new("pipe characters banned in inline choice content")
-                }
-            }
-        }
-    }
+		// choice inline content
+		for (let cIdx = 0; cIdx < interaction.choices.length; cIdx++) {
+			const choice = interaction.choices[cIdx]
+			if (!choice) continue
+			for (let pIdx = 0; pIdx < choice.content.length; pIdx++) {
+				const part = choice.content[pIdx]
+				if (!part || part.type !== "text") continue
+				if (part.content.includes("|")) {
+					logger.error("pipe characters in inline choice content", {
+						interactionId,
+						choiceIndex: cIdx,
+						snippet: part.content
+					})
+					throw errors.new("pipe characters banned in inline choice content")
+				}
+			}
+		}
+	}
 }
 
 function enforceNoPipesInTopLevelFeedback(item: AssessmentItem): void {
-    const checkBlocks = (blocks: NonNullable<AssessmentItem["feedback"]>["correct"]): void => {
-        for (let i = 0; i < blocks.length; i++) {
-            const block = blocks[i]
-            if (!block || block.type !== "paragraph") continue
-            const inline = block.content
-            for (let j = 0; j < inline.length; j++) {
-                const part = inline[j]
-                if (!part || part.type !== "text") continue
-                if (part.content.includes("|")) {
-                    logger.error("pipe characters in top-level feedback", { index: i, snippet: part.content })
-                    throw errors.new("pipe characters banned in top-level feedback")
-                }
-            }
-        }
-    }
-    if (item.feedback?.correct) checkBlocks(item.feedback.correct)
-    if (item.feedback?.incorrect) checkBlocks(item.feedback.incorrect)
+	const checkBlocks = (blocks: NonNullable<AssessmentItem["feedback"]>["correct"]): void => {
+		for (let i = 0; i < blocks.length; i++) {
+			const block = blocks[i]
+			if (!block || block.type !== "paragraph") continue
+			const inline = block.content
+			for (let j = 0; j < inline.length; j++) {
+				const part = inline[j]
+				if (!part || part.type !== "text") continue
+				if (part.content.includes("|")) {
+					logger.error("pipe characters in top-level feedback", { index: i, snippet: part.content })
+					throw errors.new("pipe characters banned in top-level feedback")
+				}
+			}
+		}
+	}
+	if (item.feedback?.correct) checkBlocks(item.feedback.correct)
+	if (item.feedback?.incorrect) checkBlocks(item.feedback.incorrect)
 }
 
 export function compile(itemData: AssessmentItemInput): string {

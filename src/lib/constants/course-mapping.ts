@@ -61,3 +61,26 @@ export function getCourseMapping(courseId: CourseId): readonly string[] {
 export function isHardcodedCourse(courseId: string): courseId is CourseId {
 	return courseId in HARDCODED_COURSE_MAPPING
 }
+
+export const HARDCODED_MATH_COURSE_IDS = [
+	"x0267d782", // 6th grade math (Common Core)
+	"x6b17ba59", // 7th grade math (Common Core)
+	"x7c7044d7" // 8th grade math (Common Core)
+] as const
+
+export const HARDCODED_SCIENCE_COURSE_IDS = [
+	"x0c5bb03129646fd6", // ms-biology
+	"x1baed5db7c1bb50b", // ms-physics
+	"x87d03b443efbea0a", // middle-school-earth-and-space-science
+	"x230b3ff252126bb6", // hs-bio
+	"xc370bc422b7f75fc" // ms-chemistry
+] as const
+
+export const HARDCODED_HISTORY_COURSE_IDS = [
+	"x71a94f19", // us-history
+	"xb87a304a", // ap-us-history
+	"x66f79d8a", // world-history
+	"xb41992e0ff5e0f09", // ap-world-history
+	"x231f0f4241b58f49", // us-government-and-civics
+	"x3e2fc37246974751" // ap-college-us-government-and-politics
+] as const

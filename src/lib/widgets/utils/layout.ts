@@ -158,24 +158,18 @@ export function calculateRightYAxisLayout(
  * This prevents lines, curves, and other chart elements from extending beyond the chart boundaries.
  * @param clipId - Unique identifier for the clipPath element
  * @param x - Left edge of the clipping rectangle (typically pad.left)
- * @param y - Top edge of the clipping rectangle (typically pad.top) 
+ * @param y - Top edge of the clipping rectangle (typically pad.top)
  * @param width - Width of the clipping rectangle (typically chartWidth)
  * @param height - Height of the clipping rectangle (typically chartHeight)
  * @returns SVG clipPath definition string
  */
-export function createChartClipPath(
-	clipId: string,
-	x: number,
-	y: number,
-	width: number,
-	height: number
-): string {
+export function createChartClipPath(clipId: string, x: number, y: number, width: number, height: number): string {
 	return `<defs><clipPath id="${clipId}"><rect x="${x}" y="${y}" width="${width}" height="${height}"/></clipPath></defs>`
 }
 
 /**
  * Wraps chart elements (lines, curves, paths) in an SVG group with clipping applied.
- * This ensures mathematical curves are cleanly cut off at chart boundaries rather than 
+ * This ensures mathematical curves are cleanly cut off at chart boundaries rather than
  * artificially clamped, preserving the true shape of the function.
  * @param clipId - The clipPath ID to reference
  * @param content - SVG content to be clipped
@@ -196,7 +190,7 @@ function estimateTitleLines(title: string, maxWidthPx: number, avgCharWidthPx = 
 	if (match?.[1] && match[2] && title.length > 36) {
 		return 2 // Will be split into main title + parenthetical
 	}
-	
+
 	// Estimate width and determine if wrapping is needed
 	const estimatedWidth = title.length * avgCharWidthPx
 	if (maxWidthPx && estimatedWidth > maxWidthPx) {
@@ -208,7 +202,7 @@ function estimateTitleLines(title: string, maxWidthPx: number, avgCharWidthPx = 
 		// Single very long word - may overflow but renderWrappedText keeps as 1 line
 		return 1
 	}
-	
+
 	return 1 // Single line
 }
 
@@ -220,38 +214,42 @@ function estimateTitleLines(title: string, maxWidthPx: number, avgCharWidthPx = 
  * @param customTopMargin - Override for special cases (optional)
  * @returns Object with titleY position, topMargin, and estimated title height
  */
-export function calculateTitleLayout(title?: string, maxTitleWidth?: number, customTopMargin?: number): { 
-	titleY: number; 
-	topMargin: number;
-	estimatedTitleHeight: number;
+export function calculateTitleLayout(
+	title?: string,
+	maxTitleWidth?: number,
+	customTopMargin?: number
+): {
+	titleY: number
+	topMargin: number
+	estimatedTitleHeight: number
 } {
 	// If no title provided, use conservative defaults
 	if (!title) {
 		const topMargin = customTopMargin || 65
 		return { titleY: 15, topMargin, estimatedTitleHeight: 16 }
 	}
-	
+
 	const fontSize = 16 // Title font size in pixels
 	const lineHeight = 1.1 // Line height multiplier from renderWrappedText
 	const titleBufferTop = 15 // Space above title for proper rendering
 	const titleBufferBottom = 15 // Minimum space between title and chart
-	
+
 	// Estimate how many lines the title will actually wrap to
 	const estimatedLines = maxTitleWidth ? estimateTitleLines(title, maxTitleWidth) : 1
-	
+
 	// Calculate actual title height including line spacing
 	const estimatedTitleHeight = fontSize * estimatedLines * lineHeight
-	
+
 	// Calculate required top margin: buffer + title height + buffer
 	const calculatedTopMargin = titleBufferTop + estimatedTitleHeight + titleBufferBottom
-	
+
 	// Use custom margin if provided, otherwise ensure minimum spacing
 	const topMargin = customTopMargin || Math.max(65, Math.ceil(calculatedTopMargin))
-	
-	return { 
-		titleY: titleBufferTop, 
-		topMargin, 
-		estimatedTitleHeight 
+
+	return {
+		titleY: titleBufferTop,
+		topMargin,
+		estimatedTitleHeight
 	}
 }
 

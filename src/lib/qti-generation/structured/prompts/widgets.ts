@@ -1,8 +1,8 @@
+import { caretBanPromptSection } from "@/lib/ai/prompts/utils/caret"
 import type { AnyInteraction } from "@/lib/qti-generation/schemas"
 import type { ImageContext } from "@/lib/qti-generation/structured/perseus-image-resolver"
 import { type WidgetCollectionName, widgetCollections } from "@/lib/widget-collections"
 import { allWidgetSchemas } from "@/lib/widgets/generators"
-import { caretBanPromptSection } from "@/lib/ai/prompts/utils/caret"
 export function createWidgetContentPrompt(
 	perseusJson: string,
 	assessmentShell: unknown,

@@ -1,14 +1,6 @@
 import { inngest } from "@/inngest/client"
 import { dispatchMigrationsForCourses } from "@/inngest/functions/migrations/dispatch-course-migrations"
-
-const HARDCODED_HISTORY_COURSE_IDS = [
-	"x71a94f19", // us-history
-	"xb87a304a", // ap-us-history
-	"x66f79d8a", // world-history
-	"xb41992e0ff5e0f09", // ap-world-history
-	"x231f0f4241b58f49", // us-government-and-civics
-	"x3e2fc37246974751" // ap-college-us-government-and-politics
-]
+import { HARDCODED_HISTORY_COURSE_IDS } from "@/lib/constants/course-mapping"
 
 export const orchestrateHardcodedHistoryItemMigration = inngest.createFunction(
 	{
@@ -16,18 +8,16 @@ export const orchestrateHardcodedHistoryItemMigration = inngest.createFunction(
 		name: "Orchestrate Hardcoded History Course Perseus to QTI Item Migration"
 	},
 	{ event: "migration/hardcoded.history.items.perseus-to-qti" },
-	async ({ step, logger }) => {
+	async ({ logger }) => {
 		logger.info("dispatching item migrations for hardcoded history courses", {
 			courseCount: HARDCODED_HISTORY_COURSE_IDS.length
 		})
 
-		const result = await step.run("dispatch-history-item-migrations", () =>
-			dispatchMigrationsForCourses(logger, HARDCODED_HISTORY_COURSE_IDS, {
-				itemEventName: "qti/item.migrate",
-				widgetCollection: "simple-visual",
-				stimulusEventName: undefined
-			})
-		)
+		const result = await dispatchMigrationsForCourses(logger, [...HARDCODED_HISTORY_COURSE_IDS], {
+			itemEventName: "qti/item.migrate",
+			widgetCollection: "simple-visual",
+			stimulusEventName: undefined
+		})
 
 		return {
 			status: "complete",

@@ -7,6 +7,7 @@ import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { qti } from "@/lib/clients"
+import { HARDCODED_SCIENCE_COURSE_IDS } from "@/lib/constants/course-mapping"
 import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
 import { ErrQtiNotFound } from "@/lib/qti"
 // ADD: Import the question blacklist utility.
@@ -25,14 +26,6 @@ const AssessmentItemSchema = z.object({
 })
 type AssessmentItem = z.infer<typeof AssessmentItemSchema>
 
-const HARDCODED_SCIENCE_COURSE_IDS = [
-	"x0c5bb03129646fd6", // ms-biology
-	"x1baed5db7c1bb50b", // ms-physics
-	"x87d03b443efbea0a", // middle-school-earth-and-space-science
-	"x230b3ff252126bb6", // hs-bio
-	"xc370bc422b7f75fc" // ms-chemistry
-]
-
 export const orchestrateHardcodedScienceQtiGenerateUndifferentiated = inngest.createFunction(
 	{
 		id: "orchestrate-hardcoded-science-qti-generate-undifferentiated",
@@ -45,7 +38,7 @@ export const orchestrateHardcodedScienceQtiGenerateUndifferentiated = inngest.cr
 		})
 
 		const courses = await db.query.niceCourses.findMany({
-			where: inArray(schema.niceCourses.id, HARDCODED_SCIENCE_COURSE_IDS),
+			where: inArray(schema.niceCourses.id, [...HARDCODED_SCIENCE_COURSE_IDS]),
 			columns: { id: true, slug: true }
 		})
 

@@ -7,12 +7,7 @@ import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 // ✅ ADD: Import the new atomic function for AI generation.
 import { differentiateAndSaveQuestion } from "@/inngest/functions/qti/differentiate-and-save-question"
-
-const HARDCODED_COURSE_IDS = [
-	"x0267d782", // 6th grade math (Common Core)
-	"x6b17ba59", // 7th grade math (Common Core)
-	"x7c7044d7" // 8th grade math (Common Core)
-]
+import { HARDCODED_MATH_COURSE_IDS } from "@/lib/constants/course-mapping"
 
 const DIFFERENTIATION_COUNT = 3
 // ❌ REMOVED: The batch size is no longer needed for AI generation.
@@ -25,19 +20,19 @@ export const orchestrateHardcodedMathDifferentiatedItemGeneration = inngest.crea
 	{ event: "migration/hardcoded.math.differentiated-items.generate" },
 	async ({ step, logger }) => {
 		logger.info("starting hardcoded qti generation: DISPATCH PHASE", {
-			courseCount: HARDCODED_COURSE_IDS.length,
+			courseCount: HARDCODED_MATH_COURSE_IDS.length,
 			variationsPerItem: DIFFERENTIATION_COUNT
 		})
 
 		// Fetch the courses to process
 		const coursesResult = await errors.try(
 			db.query.niceCourses.findMany({
-				where: inArray(schema.niceCourses.id, HARDCODED_COURSE_IDS),
+				where: inArray(schema.niceCourses.id, [...HARDCODED_MATH_COURSE_IDS]),
 				columns: { id: true, slug: true }
 			})
 		)
 		if (coursesResult.error) {
-			logger.error("db query for courses failed", { error: coursesResult.error, courseIds: HARDCODED_COURSE_IDS })
+			logger.error("db query for courses failed", { error: coursesResult.error, courseIds: HARDCODED_MATH_COURSE_IDS })
 			throw errors.wrap(coursesResult.error, "db query for courses")
 		}
 		const courses = coursesResult.data

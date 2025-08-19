@@ -7,8 +7,8 @@ import {
 	renderLines,
 	renderPoints
 } from "@/lib/widgets/generators/coordinate-plane-base"
-import { wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 
 export const LineEquationGraphPropsSchema = z
 	.object({

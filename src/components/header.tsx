@@ -39,7 +39,7 @@ export function Header({
 					<ExploreDropdown dark={dark} />
 
 					{/* Search - strictly constrained width */}
-					<div className="relative w-24 sm:w-32 md:w-40 cursor-not-allowed">
+					<div className="relative w-24 sm:w-32 md:w-40 cursor-not-allowed hidden">
 						<Search
 							className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 ${
 								dark ? "text-white" : "text-blue-600"

@@ -1,5 +1,5 @@
-import type { ImageContext } from "@/lib/qti-generation/structured/perseus-image-resolver"
 import { caretBanPromptSection } from "@/lib/ai/prompts/utils/caret"
+import type { ImageContext } from "@/lib/qti-generation/structured/perseus-image-resolver"
 import type { allWidgetSchemas } from "@/lib/widgets/generators"
 export function createInteractionContentPrompt(
 	perseusJson: string,

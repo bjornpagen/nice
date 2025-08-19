@@ -1,7 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
-import { HARDCODED_SCIENCE_COURSE_IDS } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-qti-upload"
 import { orchestrateCourseVisualQAReview } from "@/inngest/functions/qa/orchestrate-course-visual-qa-review"
+import { HARDCODED_SCIENCE_COURSE_IDS } from "@/lib/constants/course-mapping"
 
 export const orchestrateHardcodedScienceQAReview = inngest.createFunction(
 	{
@@ -15,7 +15,7 @@ export const orchestrateHardcodedScienceQAReview = inngest.createFunction(
 		const reviewResult = await errors.try(
 			step.invoke("review-qa-for-hardcoded-science-courses", {
 				function: orchestrateCourseVisualQAReview,
-				data: { courseIds: HARDCODED_SCIENCE_COURSE_IDS, subject: "science" }
+				data: { courseIds: [...HARDCODED_SCIENCE_COURSE_IDS], subject: "science" }
 			})
 		)
 		if (reviewResult.error) {

@@ -49,5 +49,3 @@ General rules:
 - Inside MathML, use <msup> for exponents; do NOT encode exponents via raw text with carets.
 - This applies to ALL content fields: body, prompts, feedback, choice content, table cells, widget labels, etc.
 `
-
-

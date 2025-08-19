@@ -1,12 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
-
-const HARDCODED_MATH_COURSE_IDS = [
-	"x0267d782", // 6th grade math (Common Core)
-	"x6b17ba59", // 7th grade math (Common Core)
-	"x7c7044d7" // 8th grade math (Common Core)
-]
+import { HARDCODED_MATH_COURSE_IDS } from "@/lib/constants/course-mapping"
 
 export const orchestrateHardcodedMathQtiUpload = inngest.createFunction(
 	{
@@ -17,7 +12,7 @@ export const orchestrateHardcodedMathQtiUpload = inngest.createFunction(
 	async ({ step, logger }) => {
 		logger.info("starting hardcoded math qti data upload", { courseCount: HARDCODED_MATH_COURSE_IDS.length })
 
-		const qtiUploadPromises = HARDCODED_MATH_COURSE_IDS.map((courseId) =>
+		const qtiUploadPromises = [...HARDCODED_MATH_COURSE_IDS].map((courseId) =>
 			step.invoke(`upload-qti-for-${courseId}`, {
 				function: orchestrateCourseUploadToQti,
 				data: { courseId }

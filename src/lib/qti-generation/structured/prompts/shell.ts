@@ -1,9 +1,9 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { caretBanPromptSection } from "@/lib/ai/prompts/utils/caret"
 import { allExamples } from "@/lib/qti-generation/examples"
 import { AssessmentItemShellSchema } from "@/lib/qti-generation/schemas"
 import type { ImageContext } from "@/lib/qti-generation/structured/perseus-image-resolver"
-import { caretBanPromptSection } from "@/lib/ai/prompts/utils/caret"
 
 // Helper to convert a full AssessmentItemInput into a shell for prompt examples
 function createShellFromExample(item: (typeof allExamples)[0]) {
