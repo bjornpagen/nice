@@ -92,6 +92,7 @@ export const DataTablePropsSchema = z
 				if (val === "null" || val === "NULL" || val === "") return null
 				const s = typeof val === "string" ? val.trim() : val
 				if (typeof s === "string") {
+					if (s.includes("|")) return null
 					const looksLikeObject = /^\{[\s\S]*\}$/.test(s)
 					const looksLikeArray = /^\[[\s\S]*\]$/.test(s)
 					if (looksLikeObject || looksLikeArray) return null
