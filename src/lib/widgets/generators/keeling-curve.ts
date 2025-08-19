@@ -1,6 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const AnnotationSchema = z.object({
 	year: z.number().describe("The year on the x-axis that the annotation arrow should point to."),
@@ -210,6 +210,9 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 		}
 	})
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

@@ -4,7 +4,13 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
-import { calculateXAxisLayout, calculateYAxisLayout } from "@/lib/widgets/utils/layout"
+import {
+	calculateXAxisLayout,
+	calculateYAxisLayout,
+	computeDynamicWidth,
+	includeText,
+	initExtents
+} from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -95,6 +101,7 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 	const barWidth = chartWidth / chartData.length
 	const barPadding = 0.3 // Visually closer to the example image
 
+	const ext = initExtents(width)
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
 	svg +=
 		"<style>.axis-label { font-size: 1.1em; font-weight: bold; text-anchor: middle; } .tick-label { font-size: 1em; font-weight: bold; } </style>"
@@ -108,9 +115,8 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 	// X-axis line
 	svg += `<line x1="0" y1="${chartHeight}" x2="${chartWidth}" y2="${chartHeight}" stroke="black" stroke-width="2"/>`
 
-	// Axis Labels
+	// Axis Labels (x-axis inside group; y-axis will be rendered in global coordinates later)
 	svg += `<text x="${chartWidth / 2}" y="${chartHeight + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
-	svg += `<text x="${-yAxisLabelX}" y="-${margin.left - yAxisLabelX}" class="axis-label" transform="rotate(-90)">${abbreviateMonth(yAxis.label)}</text>`
 
 	// Y ticks and SOLID grid lines
 	for (let t = yAxis.min; t <= maxValue; t += yAxis.tickInterval) {
@@ -154,6 +160,22 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 	})
 
 	svg += "</g>" // Close chartBody group
+
+	// Global coordinates for axis labels with proper pivot to avoid clipping
+	const globalXAxisLabelX = margin.left + chartWidth / 2
+	const globalXAxisLabelY = height - margin.bottom + xAxisTitleY
+	includeText(ext, globalXAxisLabelX, abbreviateMonth(xAxisLabel), "middle", 7)
+
+	const globalYAxisLabelX = yAxisLabelX
+	const globalYAxisLabelY = margin.top + chartHeight / 2
+	svg += `<text x="${globalYAxisLabelX}" y="${globalYAxisLabelY}" class="axis-label" transform="rotate(-90, ${globalYAxisLabelX}, ${globalYAxisLabelY})">${abbreviateMonth(yAxis.label)}</text>`
+	includeText(ext, globalYAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
+
+	// Expand viewBox as needed to accommodate labels
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
+
 	svg += "</svg>"
 	return svg
 }

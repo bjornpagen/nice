@@ -12,8 +12,9 @@ describe("keelingCurve widget", () => {
 			annotations: []
 		})
 
-		expect(result).toContain('<svg width="600" height="400"')
-		expect(result).toContain('viewBox="0 0 600 400"')
+		// Height is fixed; width may expand dynamically. ViewBox min-x may be negative.
+		expect(result).toMatch(/<svg width="\d+" height="400"/)
+		expect(result).toMatch(/viewBox="-?\d+ 0 \d+ 400"/)
 	})
 
 	it("should include axis labels", () => {
