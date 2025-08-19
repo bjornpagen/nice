@@ -253,3 +253,51 @@ test("line graph - AZ cities temp elevation (title wrap + label thinning)", () =
 	const svg = generateLineGraph(parsed)
 	expect(svg).toMatchSnapshot()
 })
+
+test("line graph - mammal species vs latitude", () => {
+	const input = {
+		type: "lineGraph",
+		width: 556,
+		height: 350,
+		title: "Number of mammal species vs. latitude",
+		xAxis: {
+			label: "Latitude (in degrees)",
+			categories: [
+				"0 degrees",
+				"10 degrees south", 
+				"20 degrees south",
+				"30 degrees south",
+				"40 degrees south",
+				"50 degrees south"
+			]
+		},
+		yAxis: {
+			label: "Number of mammal species",
+			min: 0,
+			max: 100,
+			tickInterval: 20,
+			showGridLines: true
+		},
+		yAxisRight: null,
+		series: [
+			{
+				name: "Species Count",
+				values: [100, 50, 15, 0, 55, 100],
+				color: "#3377dd",
+				pointShape: "circle",
+				style: "solid",
+				yAxis: "left"
+			}
+		],
+		showLegend: false
+	} satisfies LineGraphInput
+
+	const parseResult = errors.trySync(() => LineGraphPropsSchema.parse(input))
+	if (parseResult.error) {
+		logger.error("input validation", { error: parseResult.error })
+		throw errors.wrap(parseResult.error, "input validation")
+	}
+	const parsed = parseResult.data
+	const svg = generateLineGraph(parsed)
+	expect(svg).toMatchSnapshot()
+})

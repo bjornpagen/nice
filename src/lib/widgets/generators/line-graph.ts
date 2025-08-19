@@ -6,6 +6,7 @@ import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
 import {
 	calculateRightYAxisLayout,
+	calculateTextAwareLabelSelection,
 	calculateTitleLayout,
 	calculateXAxisLayout,
 	calculateYAxisLayout,
@@ -172,10 +173,11 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
 	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
 	{
-		const minLabelSpacingPx = 50
-		const allIndices = xAxis.categories.map((_, idx) => idx)
-		const nonEmpty = allIndices.filter((i) => !!xAxis.categories[i])
-		const selected = computeLabelSelection(xAxis.categories.length, nonEmpty, chartWidth, minLabelSpacingPx)
+		// Text-width-aware label selection for better spacing
+		const positions = xAxis.categories.map((_, i) => toSvgX(i))
+		const abbreviatedLabels = xAxis.categories.map(cat => abbreviateMonth(cat))
+		const selected = calculateTextAwareLabelSelection(abbreviatedLabels, positions, chartWidth)
+		
 		xAxis.categories.forEach((cat, i) => {
 			if (!cat) return
 			const x = toSvgX(i)

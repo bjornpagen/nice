@@ -3,6 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
+	calculateTextAwareLabelSelection,
 	calculateTitleLayout,
 	calculateXAxisLayout,
 	calculateYAxisLayout,
@@ -156,12 +157,19 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	svg += `<text x="${yAxisLabelX}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
 	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
 
-	// Ticks
-	for (const val of xAxis.tickValues) {
+	// X-axis ticks with text-width-aware label selection
+	const xTickPositions = xAxis.tickValues.map(val => toSvgX(val))
+	const xTickLabels = xAxis.tickValues.map(val => String(val))
+	const selectedXLabels = calculateTextAwareLabelSelection(xTickLabels, xTickPositions, chartWidth)
+	
+	xAxis.tickValues.forEach((val, i) => {
 		const x = toSvgX(val)
 		svg += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="black" stroke-width="2"/>`
-		svg += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${val}</text>`
-	}
+		if (selectedXLabels.has(i)) {
+			svg += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${val}</text>`
+			includeText(ext, x, String(val), "middle", 7)
+		}
+	})
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = toSvgY(t)
 		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black" stroke-width="2"/>`

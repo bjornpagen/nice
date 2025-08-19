@@ -5,6 +5,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
 import {
+	calculateTextAwareLabelSelection,
 	calculateXAxisLayout,
 	calculateYAxisLayout,
 	computeDynamicWidth,
@@ -135,44 +136,10 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	// Reopen group for remaining chart elements
 	svg += `<g transform="translate(${margin.left},${margin.top})">`
 
-	// Smart label selection for visual uniformity
-	const minLabelSpacingPx = 50
-	
-	// Find indices that actually have labels (non-empty categories)
-	const labeledIndices = chartData
-		.map((d, i) => ({ index: i, hasLabel: d.category.trim() !== "" }))
-		.filter(item => item.hasLabel)
-		.map(item => item.index)
-	
-	// Calculate if all labeled indices can fit with minimum spacing
-	const labelPositions = labeledIndices.map(i => i * barWidth + barWidth / 2)
-	
-	let allLabelsCanFit = true
-	for (let i = 1; i < labelPositions.length; i++) {
-		const currentPos = labelPositions[i]
-		const prevPos = labelPositions[i-1]
-		if (currentPos === undefined || prevPos === undefined) {
-			continue
-		}
-		const spacing = currentPos - prevPos
-		if (spacing < minLabelSpacingPx) {
-			allLabelsCanFit = false
-			break
-		}
-	}
-	
-	let selectedLabelIndices: Set<number>
-	if (allLabelsCanFit) {
-		// All labels fit - show them all
-		selectedLabelIndices = new Set(labeledIndices)
-	} else {
-		// Labels would clash - use uniform intermittent pattern
-		// Show every 2nd, 3rd, etc. based on density
-		const targetCount = Math.max(1, Math.floor(chartWidth / minLabelSpacingPx))
-		const step = Math.max(1, Math.ceil(labeledIndices.length / targetCount))
-		const uniformIndices = labeledIndices.filter((_, i) => i % step === 0)
-		selectedLabelIndices = new Set(uniformIndices)
-	}
+	// Text-width-aware label selection for visual uniformity
+	const barLabels = chartData.map(d => abbreviateMonth(d.category))
+	const barPositions = chartData.map((_, i) => i * barWidth + barWidth / 2)
+	const selectedLabelIndices = calculateTextAwareLabelSelection(barLabels, barPositions, chartWidth)
 
 	chartData.forEach((d, i) => {
 		const barAbsHeight = Math.abs(d.value) * scaleY

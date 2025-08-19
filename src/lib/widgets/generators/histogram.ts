@@ -3,7 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
-import { calculateTitleLayout, calculateXAxisLayout, calculateYAxisLayout } from "@/lib/widgets/utils/layout"
+import { calculateTextAwareLabelSelection, calculateTitleLayout, calculateXAxisLayout, calculateYAxisLayout } from "@/lib/widgets/utils/layout"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 const Bin = z
@@ -163,24 +163,17 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	})
 
 	// Compute boundary tick labels from numeric separators
-	const tickLabels: Array<{ x: number; text: string }> = []
-	for (let i = 0; i < separators.length; i++) {
-		const x = margin.left + i * binWidth
-		tickLabels.push({ x, text: String(separators[i]) })
-	}
-
-	// Use shared label thinning with width-aware spacing
-	const maxLabelLength = tickLabels.reduce((max, t) => Math.max(max, t.text.length), 0)
-	const estimatedLabelSpanPx = Math.max(1, maxLabelLength * averageCharWidthPx)
-	const allIndices = tickLabels.map((_, idx) => idx)
-	const selected = computeLabelSelection(tickLabels.length, allIndices, chartWidth, estimatedLabelSpanPx)
+	// X-axis ticks with text-width-aware label selection
+	const tickPositions = separators.map((_, i) => margin.left + i * binWidth)
+	const tickLabels = separators.map(sep => String(sep))
+	const selected = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartWidth)
 
 	// Render non-rotated x-axis labels centered at separators
-	tickLabels.forEach((tick, i) => {
+	separators.forEach((sep, i) => {
 		if (!selected.has(i)) return
-		const labelX = tick.x
+		const labelX = margin.left + i * binWidth
 		const labelY = height - margin.bottom + 28
-		svg += `<text class="x-tick" x="${labelX}" y="${labelY}" fill="#333333" text-anchor="middle">${tick.text}</text>`
+		svg += `<text class="x-tick" x="${labelX}" y="${labelY}" fill="#333333" text-anchor="middle">${sep}</text>`
 	})
 
 	svg += "</svg>"

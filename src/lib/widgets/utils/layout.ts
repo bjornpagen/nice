@@ -1,3 +1,6 @@
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
+
 export type Extents = { minX: number; maxX: number }
 
 export function initExtents(initialWidth: number): Extents {
@@ -285,4 +288,91 @@ export function calculateLineLegendLayout(
 		legendSpacing,
 		requiredRightMargin
 	}
+}
+
+/**
+ * Intelligent label selection based on actual text width rather than hardcoded spacing.
+ * Provides uniform visual spacing and prevents cramped or overlapping labels.
+ * @param labels - Array of label strings to potentially display
+ * @param positions - Array of x-positions (in pixels) where labels would be placed
+ * @param chartWidthPx - Available chart width for label placement
+ * @param avgCharWidthPx - Average character width for text estimation (default: 8px)
+ * @param paddingPx - Minimum padding between labels (default: 10px)
+ * @returns Set of indices indicating which labels to display
+ */
+export function calculateTextAwareLabelSelection(
+	labels: string[],
+	positions: number[],
+	chartWidthPx: number,
+	avgCharWidthPx = 8,
+	paddingPx = 10
+): Set<number> {
+	if (labels.length === 0 || positions.length === 0) {
+		return new Set<number>()
+	}
+	
+	if (labels.length !== positions.length) {
+		logger.error("label and position arrays must have same length", {
+			labelsLength: labels.length,
+			positionsLength: positions.length
+		})
+		throw errors.new("label and position arrays must have same length")
+	}
+	
+	// Calculate estimated width for each label
+	const labelWidths = labels.map(label => label.length * avgCharWidthPx)
+	
+	// Find indices that have actual content (non-empty labels)
+	const nonEmptyIndices = labels
+		.map((label, i) => ({ index: i, hasContent: label.trim() !== "" }))
+		.filter(item => item.hasContent)
+		.map(item => item.index)
+	
+	if (nonEmptyIndices.length === 0) {
+		return new Set<number>()
+	}
+	
+	// Check if all labels can fit without overlap
+	let allLabelsCanFit = true
+	for (let i = 1; i < nonEmptyIndices.length; i++) {
+		const currentIdx = nonEmptyIndices[i]
+		const prevIdx = nonEmptyIndices[i-1]
+		
+		if (currentIdx === undefined || prevIdx === undefined) continue
+		
+		const currentPos = positions[currentIdx]
+		const prevPos = positions[prevIdx]
+		const currentWidth = labelWidths[currentIdx]
+		const prevWidth = labelWidths[prevIdx]
+		
+		if (currentPos === undefined || prevPos === undefined || 
+			currentWidth === undefined || prevWidth === undefined) continue
+		
+		// Calculate minimum spacing needed between these two labels
+		const prevRightEdge = prevPos + (prevWidth / 2)
+		const currentLeftEdge = currentPos - (currentWidth / 2)
+		const actualSpacing = currentLeftEdge - prevRightEdge
+		
+		if (actualSpacing < paddingPx) {
+			allLabelsCanFit = false
+			break
+		}
+	}
+	
+	if (allLabelsCanFit) {
+		// All labels fit with adequate spacing
+		return new Set(nonEmptyIndices)
+	}
+	
+	// Labels would clash - use uniform intermittent pattern
+	// Calculate how many labels can reasonably fit
+	const maxLabelWidth = Math.max(...labelWidths)
+	const approximateLabelsPerChart = Math.floor(chartWidthPx / (maxLabelWidth + paddingPx))
+	const targetCount = Math.max(1, Math.min(approximateLabelsPerChart, nonEmptyIndices.length))
+	
+	// Select uniform spacing from available labels
+	const step = Math.max(1, Math.ceil(nonEmptyIndices.length / targetCount))
+	const uniformIndices = nonEmptyIndices.filter((_, i) => i % step === 0)
+	
+	return new Set(uniformIndices)
 }
