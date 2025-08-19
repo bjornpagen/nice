@@ -19,6 +19,7 @@ export const QuestionIdBlacklist: ReadonlySet<string> = new Set<string>([
 	"x0630ce7689f9aec4",
 	"x11d42aefb42e9b05",
 	"x8e92c6136cc86f7b",
+	"x0630ce7689f9aec4",
 	"x1fcfc168b3341604" // temporary
 ])
 
