@@ -115,19 +115,64 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	const yZeroInChartCoords = chartHeight - (0 - yAxis.min) * scaleY
 	svg += `<line x1="0" y1="${yZeroInChartCoords}" x2="${chartWidth}" y2="${yZeroInChartCoords}" stroke="black" stroke-width="2"/>`
 
-	// Axis Labels
+	// X-axis label (using group-relative coordinates)
 	svg += `<text x="${chartWidth / 2}" y="${chartHeight + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
-	includeText(ext, chartWidth / 2, abbreviateMonth(xAxisLabel), "middle", 7)
-	svg += `<text x="${-yAxisLabelX}" y="-${margin.left - yAxisLabelX}" class="axis-label" transform="rotate(-90)">${abbreviateMonth(yAxis.label)}</text>`
-	// The yAxisLabelX is relative to the chart body's origin (margin.left).
-	// The label needs to be positioned within the margin area, so we adjust its coordinates relative to the group transform.
-	includeText(ext, -yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
+	
+	// Close group before rendering y-axis label
+	svg += "</g>" 
+	
+	// Y-axis label using standard global coordinate system (like other science widgets)
+	const globalYAxisLabelX = yAxisLabelX
+	const globalYAxisLabelY = margin.top + chartHeight / 2
+	svg += `<text x="${globalYAxisLabelX}" y="${globalYAxisLabelY}" class="axis-label" transform="rotate(-90, ${globalYAxisLabelX}, ${globalYAxisLabelY})">${abbreviateMonth(yAxis.label)}</text>`
+	includeText(ext, globalYAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
+	
+	// X-axis label (global coordinates)
+	const globalXAxisLabelX = margin.left + chartWidth / 2
+	const globalXAxisLabelY = height - margin.bottom + xAxisTitleY
+	includeText(ext, globalXAxisLabelX, abbreviateMonth(xAxisLabel), "middle", 7)
+	
+	// Reopen group for remaining chart elements
+	svg += `<g transform="translate(${margin.left},${margin.top})">`
 
-	// Bars and X-axis labels
+	// Smart label selection for visual uniformity
 	const minLabelSpacingPx = 50
-	const allIndices = Array.from({ length: chartData.length }, (_, idx) => idx)
-	// The .filter() call is no longer needed as 'category' is a required string.
-	const selectedLabelIndices = computeLabelSelection(chartData.length, allIndices, chartWidth, minLabelSpacingPx)
+	
+	// Find indices that actually have labels (non-empty categories)
+	const labeledIndices = chartData
+		.map((d, i) => ({ index: i, hasLabel: d.category.trim() !== "" }))
+		.filter(item => item.hasLabel)
+		.map(item => item.index)
+	
+	// Calculate if all labeled indices can fit with minimum spacing
+	const labelPositions = labeledIndices.map(i => i * barWidth + barWidth / 2)
+	
+	let allLabelsCanFit = true
+	for (let i = 1; i < labelPositions.length; i++) {
+		const currentPos = labelPositions[i]
+		const prevPos = labelPositions[i-1]
+		if (currentPos === undefined || prevPos === undefined) {
+			continue
+		}
+		const spacing = currentPos - prevPos
+		if (spacing < minLabelSpacingPx) {
+			allLabelsCanFit = false
+			break
+		}
+	}
+	
+	let selectedLabelIndices: Set<number>
+	if (allLabelsCanFit) {
+		// All labels fit - show them all
+		selectedLabelIndices = new Set(labeledIndices)
+	} else {
+		// Labels would clash - use uniform intermittent pattern
+		// Show every 2nd, 3rd, etc. based on density
+		const targetCount = Math.max(1, Math.floor(chartWidth / minLabelSpacingPx))
+		const step = Math.max(1, Math.ceil(labeledIndices.length / targetCount))
+		const uniformIndices = labeledIndices.filter((_, i) => i % step === 0)
+		selectedLabelIndices = new Set(uniformIndices)
+	}
 
 	chartData.forEach((d, i) => {
 		const barAbsHeight = Math.abs(d.value) * scaleY
@@ -151,14 +196,14 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 		const labelX = x + barWidth / 2
 		if (selectedLabelIndices.has(i)) {
 			svg += `<text x="${labelX}" y="${chartHeight + 25}" class="tick-label" text-anchor="middle">${abbreviateMonth(d.category)}</text>`
-			includeText(ext, labelX, abbreviateMonth(d.category), "middle", 7)
+			includeText(ext, margin.left + labelX, abbreviateMonth(d.category), "middle", 7)
 		}
 	})
 
 	// Add right-side border for the chart area
 	svg += `<line x1="${chartWidth}" y1="0" x2="${chartWidth}" y2="${chartHeight}" stroke="#333" stroke-width="2"/>`
 
-	svg += "</g>" // Close chartBody group
+	svg += "</g>" // Close final group
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
