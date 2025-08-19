@@ -317,6 +317,10 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 		if (minSize >= 3 && intersection >= minSize - 1) return true
 		return false
 	}
+	const tokensStrictlySimilar = (aTokens: string[], bTokens: string[], jaccardThreshold: number): boolean => {
+		if (!lengthRatioOk(aTokens, bTokens)) return false
+		return jaccardSimilarity(aTokens, bTokens) >= jaccardThreshold
+	}
 	const lengthRatioOk = (aTokens: string[], bTokens: string[]): boolean => {
 		const aLen = aTokens.length
 		const bLen = bTokens.length
@@ -446,6 +450,120 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 		const prompt = interactionIdToPrompt[interactionId]
 		if (prompt) {
 			markMatchingParagraphs(regionStart, slotIdx, prompt, toDelete)
+		}
+		regionStart = slotIdx + 1
+	}
+
+	// Sentence-level pass: handle paragraphs that mix context + question in a single block
+	const promptByInteraction: Record<string, string> = {}
+	for (const [id, p] of Object.entries(interactionIdToPrompt)) {
+		promptByInteraction[id] = p
+	}
+	const extractTextWithSpans = (
+		inline: InlineContent
+	): { text: string; spans: Array<{ partIdx: number; start: number; end: number }> } => {
+		let cursor = 0
+		const spans: Array<{ partIdx: number; start: number; end: number }> = []
+		let text = ""
+		for (let i = 0; i < inline.length; i++) {
+			const part = inline[i]
+			if (!part) continue
+			if (part.type === "text") {
+				const content = String(part.content)
+				const start = cursor
+				text += content
+				cursor += content.length
+				spans.push({ partIdx: i, start, end: cursor })
+			}
+		}
+		return { text, spans }
+	}
+	const splitSentences = (source: string): Array<{ start: number; end: number; text: string }> => {
+		const results: Array<{ start: number; end: number; text: string }> = []
+		let start = 0
+		for (let i = 0; i < source.length; i++) {
+			const ch = source.charAt(i)
+			if (ch === "." || ch === "!" || ch === "?" || ch === "…") {
+				let end = i + 1
+				while (end < source.length && /[)\]"'\s]/.test(source.charAt(end))) end += 1
+				const raw = source.slice(start, end)
+				if (raw.trim() !== "") results.push({ start, end, text: raw })
+				start = end
+			}
+		}
+		if (start < source.length) {
+			const raw = source.slice(start)
+			if (raw.trim() !== "") results.push({ start, end: source.length, text: raw })
+		}
+		return results
+	}
+	const isQuestionish = (s: string): boolean => {
+		if (s.trim().endsWith("?")) return true
+		const tokens = tokenizeForFuzzy(s)
+		return tokens.some((t) => t === "which" || t === "what" || t === "why" || t === "how" || t === "where")
+	}
+
+	regionStart = 0
+	for (const { index: slotIdx, interactionId } of slotIndices) {
+		const promptSentence = promptByInteraction[interactionId]
+		if (!promptSentence) {
+			regionStart = slotIdx + 1
+			continue
+		}
+		const promptTokens = tokenizeForFuzzy(promptSentence)
+		for (let i = regionStart; i < slotIdx; i++) {
+			if (toDelete.has(i)) continue
+			const block = body[i]
+			if (!block || block.type !== "paragraph") continue
+			const { text: paraText, spans } = extractTextWithSpans(block.content)
+			if (paraText.trim() === "") continue
+			const sentences = splitSentences(paraText)
+			if (sentences.length <= 1) continue
+			let removedSentence = false
+			for (const sent of sentences) {
+				if (!isQuestionish(sent.text)) continue
+				const sNorm = stripSelectionGuidance(toComparable(sent.text))
+				if (sNorm === "") continue
+				const sTokens = tokenizeForFuzzy(sNorm)
+				if (!tokensStrictlySimilar(sTokens, promptTokens, 0.9)) continue
+				const newInline: InlineContent = []
+				for (let pIdx = 0; pIdx < block.content.length; pIdx++) {
+					const part = block.content[pIdx]
+					if (!part) continue
+					if (part.type !== "text") {
+						newInline.push(part)
+						continue
+					}
+					const span = spans.find((sp) => sp.partIdx === pIdx)
+					if (!span) {
+						newInline.push(part)
+						continue
+					}
+					const overlapStart = Math.max(span.start, sent.start)
+					const overlapEnd = Math.min(span.end, sent.end)
+					if (overlapStart >= overlapEnd) {
+						newInline.push(part)
+						continue
+					}
+					const relStart = overlapStart - span.start
+					const relEnd = overlapEnd - span.start
+					const originalText = String(part.content)
+					const left = originalText.slice(0, relStart)
+					const right = originalText.slice(relEnd)
+					if (left !== "") newInline.push({ type: "text", content: left })
+					if (right !== "") newInline.push({ type: "text", content: right })
+				}
+				const compacted = newInline.filter((p) => !(p.type === "text" && String(p.content).trim() === ""))
+				if (compacted.length === 0) {
+					toDelete.add(i)
+				} else {
+					(block as typeof block).content = compacted
+					paragraphNorms[i] = normalizeInline(compacted)
+				}
+				removedSentence = true
+				break
+			}
+			if (removedSentence) continue
 		}
 		regionStart = slotIdx + 1
 	}

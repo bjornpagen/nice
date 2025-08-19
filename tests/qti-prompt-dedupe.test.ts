@@ -1441,3 +1441,124 @@ test("dedupes paraphrased prompt - pure substances particle diagrams", () => {
 	// Body variant should be removed
 	expect(xml).not.toContain("<p>Which of the following samples depicts a pure substance?</p>")
 })
+
+test("dedupes paraphrased prompt - volcanic hazards from map", () => {
+	const item: AssessmentItemInput = {
+		identifier: "crater-lake-volcanic-hazards",
+		title: "Identify volcanic hazards from a map",
+		responseDeclarations: [
+			{ identifier: "choice_interaction", cardinality: "multiple", baseType: "identifier", correct: ["A", "C"] }
+		],
+		widgets: {
+			image_1: {
+				type: "urlImage",
+				alt:
+					"A map of the Crater Lake region is shown. A key shows the types of volcanic hazards by color. Black indicates lava flows, orange indicates mudflows, and yellow indicates volcanic ash. A campsite is marked on the map. The area surrounding the campsite has black layered on top of yellow.",
+				url: "https://cdn.kastatic.org/ka-perseus-images/9bea064c1db29e7e13d6452221432917372219bd.svg",
+				width: 500,
+				height: 482,
+				caption: null,
+				attribution: "Map modified from Sémhur on Wikimedia Commons, CC BY-SA 4.0"
+			}
+		},
+		body: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"Volcanic eruptions can cause several hazards, including lava flows, mudflows, and volcanic ash. A volcanic hazard map shows areas at risk of these hazards. The volcanic hazard map for Crater Lake, a volcanic region in the western United States, is shown below."
+					}
+				]
+			},
+			{ type: "blockSlot", slotId: "image_1" },
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"Imagine that a campsite is built at the location indicated on the map. Which two volcanic hazards could affect the campsite during a volcanic eruption?"
+					}
+				]
+			},
+			{ type: "blockSlot", slotId: "choice_interaction" }
+		],
+		interactions: {
+			choice_interaction: {
+				type: "choiceInteraction",
+				responseIdentifier: "choice_interaction",
+				shuffle: true,
+				minChoices: 1,
+				maxChoices: 3,
+				prompt: [
+					{
+						type: "text",
+						content:
+							"Which two volcanic hazards could affect the campsite during a volcanic eruption? Select all that apply."
+					}
+				],
+				choices: [
+					{
+						identifier: "A",
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "lava flows" }] }
+						],
+						feedback: null
+					},
+					{
+						identifier: "B",
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "mudflows" }] }
+						],
+						feedback: null
+					},
+					{
+						identifier: "C",
+						content: [
+							{ type: "paragraph", content: [{ type: "text", content: "volcanic ash" }] }
+						],
+						feedback: null
+					}
+				]
+			}
+		},
+		feedback: {
+			correct: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Correct! Based on the map key and the layered colors at the campsite location, the campsite could be affected by lava flows and volcanic ash."
+						}
+					]
+				}
+			],
+			incorrect: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Not quite. Use the map key to interpret the colors at the campsite and identify the two hazards indicated by the overlapping colors."
+						}
+					]
+				}
+			]
+		}
+	}
+
+	const xml = compile(item)
+	// Prompt must be present
+	expect(xml).toContain(
+		"Which two volcanic hazards could affect the campsite during a volcanic eruption? Select all that apply."
+	)
+	// Body variant should be removed (only the question paragraph, not the context paragraph)
+	expect(xml).not.toContain(
+		"<p>Imagine that a campsite is built at the location indicated on the map. Which two volcanic hazards could affect the campsite during a volcanic eruption?</p>"
+	)
+})
