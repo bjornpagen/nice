@@ -1634,3 +1634,130 @@ test("dedupes paraphrased prompt - outputs of photosynthesis selection phrase", 
 	// Body variant should be removed
 	expect(xml).not.toContain("<p>Which of these are outputs of photosynthesis?</p>")
 })
+
+test("dedupes paraphrased prompt - genetic variation birds with separated instruction", () => {
+	const item: AssessmentItemInput = {
+		identifier: "genetic-variation-birds-results",
+		title: "Genetic variation outcomes in a bird population",
+		responseDeclarations: [
+			{ identifier: "choice_interaction", cardinality: "multiple", baseType: "identifier", correct: ["A", "B"] }
+		],
+		widgets: {},
+		body: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content: "Which of the following describes a likely result of genetic variation in a population of birds?"
+					}
+				]
+			},
+			{ type: "paragraph", content: [{ type: "text", content: "Select all that apply." }] },
+			{ type: "blockSlot", slotId: "choice_interaction" }
+		],
+		interactions: {
+			choice_interaction: {
+				type: "choiceInteraction",
+				responseIdentifier: "choice_interaction",
+				shuffle: true,
+				minChoices: 1,
+				maxChoices: 3,
+				prompt: [
+					{
+						type: "text",
+						content:
+							"Which of the following describe likely results of genetic variation in a population of birds? Select all that apply."
+					}
+				],
+				choices: [
+					{
+						identifier: "A",
+						content: [
+							{
+								type: "paragraph",
+								content: [
+									{
+										type: "text",
+										content:
+											"Some birds in the population will have traits that help them survive longer and reproduce more than other birds under specific environmental conditions."
+										}
+								]
+							}
+						],
+						feedback: null
+					},
+					{
+						identifier: "B",
+						content: [
+							{
+								type: "paragraph",
+								content: [
+									{
+										type: "text",
+										content:
+											"The population will have phenotypic variation, such as differences in beak size and tail length."
+										}
+								]
+							}
+						],
+						feedback: null
+					},
+					{
+						identifier: "C",
+						content: [
+							{
+								type: "paragraph",
+								content: [
+									{
+										type: "text",
+										content:
+											"All birds in the population will produce the same number of offspring because they are the same species and have the same genetic variations."
+										}
+								]
+							}
+						],
+						feedback: null
+					}
+				]
+			}
+		},
+		feedback: {
+			correct: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Correct! Genetic variation leads to differences in traits within a population. Under specific environmental conditions, some individuals may survive longer and produce more offspring."
+						}
+					]
+				}
+			],
+			incorrect: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Not quite. Genetic variation can cause phenotypic differences within a population, and those differences can influence survival and reproductive success."
+						}
+					]
+				}
+			]
+		}
+	}
+
+	const xml = compile(item)
+	// Prompt must be present
+	expect(xml).toContain(
+		"Which of the following describe likely results of genetic variation in a population of birds? Select all that apply."
+	)
+	// Body question should be removed; separate instruction line may be preserved
+	expect(xml).not.toContain(
+		"<p>Which of the following describes a likely result of genetic variation in a population of birds?</p>"
+	)
+	expect(xml).toContain("<p>Select all that apply.</p>")
+})
