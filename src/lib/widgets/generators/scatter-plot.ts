@@ -97,9 +97,9 @@ const LineBestFitSchema = z
 	.object({
 		type: z.literal("bestFit").describe("Line computed from the scatter plot data using regression analysis."),
 		method: z
-			.enum(["linear", "quadratic"])
+			.enum(["linear", "quadratic", "exponential"])
 			.describe(
-				"Regression type. 'linear' fits a straight line (y = mx + b). 'quadratic' fits a parabola (y = ax² + bx + c)."
+				"Regression type. 'linear' fits y = mx + b. 'quadratic' fits y = ax² + bx + c. 'exponential' fits y = ae^(bx) where b > 0 indicates growth, b < 0 indicates decay."
 			),
 		label: z.string().describe("Text label for the regression line (e.g., 'Best Fit', 'Trend', 'y = 0.5x + 10')."),
 		style: createLineStyleSchema().describe(
@@ -107,7 +107,7 @@ const LineBestFitSchema = z
 		)
 	})
 	.strict()
-	.describe("A computed best-fit line (linear) or curve (quadratic) derived from the data points.")
+	.describe("A computed best-fit line or curve derived from the data points. Supports linear, quadratic, and exponential regression (where negative b indicates decay).")
 
 // The main Zod schema for the scatterPlot function
 export const ScatterPlotPropsSchema = z
@@ -287,6 +287,32 @@ function computeQuadraticRegression(
 	return { a: Da / D, b: Db / D, c: Dc / D }
 }
 
+function computeExponentialRegression(
+	points: ReadonlyArray<{ x: number; y: number }>
+): { a: number; b: number } | null {
+	const count = points.length
+	if (count < 2) return null
+
+	// Filter out points where y <= 0 since we need ln(y)
+	const validPoints = points.filter(p => p.y > 0)
+	if (validPoints.length < 2) return null
+
+	// Transform data: ln(y) = ln(a) + bx, so we fit ln(y) vs x
+	const transformedPoints = validPoints.map(p => ({ x: p.x, y: Math.log(p.y) }))
+	
+	// Use linear regression on transformed data
+	const linearCoeff = computeLinearRegression(transformedPoints)
+	if (!linearCoeff) return null
+
+	// Convert back: ln(y) = mx + b => y = e^(mx + b) = e^b * e^(mx) = ae^(bx)
+	const a = Math.exp(linearCoeff.yIntercept) // e^b
+	const b = linearCoeff.slope // m
+	
+	return { a, b }
+}
+
+
+
 type LineStyle = z.infer<ReturnType<typeof createLineStyleSchema>>
 
 export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema> = (data) => {
@@ -295,6 +321,8 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	// Validation logic moved from schema
 	const hasLinear = lines.some((l) => l.type === "bestFit" && l.method === "linear")
 	const hasQuadratic = lines.some((l) => l.type === "bestFit" && l.method === "quadratic")
+	const hasExponential = lines.some((l) => l.type === "bestFit" && l.method === "exponential")
+	
 	if (hasLinear && points.length < 2) {
 		logger.error("linear best fit requires at least 2 points", { pointsLength: points.length })
 		throw errors.new("linear best fit requires at least 2 points")
@@ -302,6 +330,16 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	if (hasQuadratic && points.length < 3) {
 		logger.error("quadratic best fit requires at least 3 points", { pointsLength: points.length })
 		throw errors.new("quadratic best fit requires at least 3 points")
+	}
+	if (hasExponential && points.length < 2) {
+		logger.error("exponential best fit requires at least 2 points", { pointsLength: points.length })
+		throw errors.new("exponential best fit requires at least 2 points")
+	}
+	if (hasExponential && points.some(p => p.y <= 0)) {
+		logger.error("exponential regression requires all y-values to be positive", { 
+			negativePoints: points.filter(p => p.y <= 0) 
+		})
+		throw errors.new("exponential regression requires all y-values to be positive")
 	}
 	// Validate twoPoints lines have different endpoints
 	for (const line of lines) {
@@ -416,6 +454,22 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 					lineContent += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
 				}
 			}
+			if (line.method === "exponential") {
+				const coeff = computeExponentialRegression(points)
+				if (coeff) {
+					// Render exponential curve: y = ae^(bx) - b can be positive (growth) or negative (decay)
+					const steps = 100
+					let path = ""
+					for (let i = 0; i <= steps; i++) {
+						const xVal = xAxis.min + (i / steps) * (xAxis.max - xAxis.min)
+						const yVal = coeff.a * Math.exp(coeff.b * xVal)
+						const px = toSvgX(xVal)
+						const py = toSvgY(yVal)
+						path += `${i === 0 ? "M" : "L"} ${px} ${py} `
+					}
+					lineContent += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
+				}
+			}
 		} else if (line.type === "twoPoints") {
 			const { a, b } = line
 			if (a.x === b.x) {
@@ -455,6 +509,17 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 				const coeff = computeQuadraticRegression(points)
 				if (coeff) {
 					const yRight = coeff.a * xAxis.max ** 2 + coeff.b * xAxis.max + coeff.c
+					const labelX = toSvgX(xAxis.max) - 5
+					const labelY = toSvgY(clamp(yRight, yAxis.min, yAxis.max)) - 6
+					// Ensure label stays within chart bounds
+					const clampedLabelY = clamp(labelY, pad.top + 10, height - pad.bottom - 10)
+					svg += `<text x="${labelX}" y="${clampedLabelY}" text-anchor="end" fill="black">${abbreviateMonth(line.label)}</text>`
+				}
+			}
+			if (line.method === "exponential") {
+				const coeff = computeExponentialRegression(points)
+				if (coeff) {
+					const yRight = coeff.a * Math.exp(coeff.b * xAxis.max)
 					const labelX = toSvgX(xAxis.max) - 5
 					const labelY = toSvgY(clamp(yRight, yAxis.min, yAxis.max)) - 6
 					// Ensure label stays within chart bounds
