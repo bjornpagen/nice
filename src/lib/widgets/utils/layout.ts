@@ -184,3 +184,19 @@ export function createChartClipPath(
 export function wrapInClippedGroup(clipId: string, content: string): string {
 	return `<g clip-path="url(#${clipId})">${content}</g>`
 }
+
+/**
+ * Calculates optimal title positioning with proper spacing from chart area.
+ * Provides consistent title placement across all graph widgets.
+ * @param topMargin - The top margin of the chart (e.g., 50, 60)
+ * @returns Object with titleY position and recommended top margin
+ */
+export function calculateTitleLayout(customTopMargin?: number): { 
+	titleY: number; 
+	topMargin: number 
+} {
+	const topMargin = customTopMargin || 50 // Standard top margin for good spacing
+	const titleY = 20 // Position title 20px from top edge
+	
+	return { titleY, topMargin }
+}

@@ -5,6 +5,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
 import {
+	calculateTitleLayout,
 	calculateXAxisLayout,
 	calculateYAxisLayout,
 	computeDynamicWidth,
@@ -312,7 +313,8 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	// Use the same robust coordinate plane logic from generateCoordinatePlane
 	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const pad = { top: 40, right: 30, bottom: bottomMargin, left: leftMargin }
+	const { titleY, topMargin } = calculateTitleLayout()
+	const pad = { top: topMargin, right: 30, bottom: bottomMargin, left: leftMargin }
 	const chartWidth = width - pad.left - pad.right
 	const chartHeight = height - pad.top - pad.bottom
 
@@ -345,7 +347,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	svg += createChartClipPath("chartArea", pad.left, pad.top, chartWidth, chartHeight)
 
 	const maxTextWidth = width - 60
-	svg += renderWrappedText(abbreviateMonth(title), width / 2, pad.top / 2, "title", "1.1em", maxTextWidth, 8)
+	svg += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", maxTextWidth, 8)
 	includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
 
 	// Grid lines, Axes, Ticks, Labels

@@ -3,7 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
-import { calculateXAxisLayout, calculateYAxisLayout } from "@/lib/widgets/utils/layout"
+import { calculateTitleLayout, calculateXAxisLayout, calculateYAxisLayout } from "@/lib/widgets/utils/layout"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 const Bin = z
@@ -118,7 +118,8 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	const mockYAxis = { ...yAxis, min: 0 }
 	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(mockYAxis)
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const margin = { top: 40, right: 20, bottom: bottomMargin, left: leftMargin }
+	const { titleY, topMargin } = calculateTitleLayout()
+	const margin = { top: topMargin, right: 20, bottom: bottomMargin, left: leftMargin }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 
@@ -136,7 +137,7 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		"<style>.axis-label { font-size: 14px; font-weight: bold; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; } .x-tick { font-size: 11px; }</style>"
 
 	const maxTextWidth = width - 60
-	svg += renderWrappedText(abbreviateMonth(title), width / 2, margin.top / 2, "title", "1.1em", maxTextWidth, 8)
+	svg += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", maxTextWidth, 8)
 
 	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="#333333"/>` // Y-axis
 	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="#333333"/>` // X-axis

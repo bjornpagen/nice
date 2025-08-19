@@ -6,6 +6,7 @@ import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
 import {
 	calculateRightYAxisLayout,
+	calculateTitleLayout,
 	calculateXAxisLayout,
 	calculateYAxisLayout,
 	computeDynamicWidth,
@@ -107,7 +108,8 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
 	const { rightMargin, rightYAxisLabelX } = calculateRightYAxisLayout(yAxisRight)
 	const { bottomMargin: xAxisBottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const margin = { top: 40, right: rightMargin, bottom: xAxisBottomMargin + legendHeight, left: leftMargin }
+	const { titleY, topMargin } = calculateTitleLayout()
+	const margin = { top: topMargin, right: rightMargin, bottom: xAxisBottomMargin + legendHeight, left: leftMargin }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 
@@ -130,7 +132,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	svg +=
 		"<style>.axis-label { font-size: 14px; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
-	svg += renderWrappedText(abbreviateMonth(title), width / 2, margin.top / 2, "title", "1.1em", width - 60, 8)
+	svg += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", width - 60, 8)
 	includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
 
 	// Left Y-axis

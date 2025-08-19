@@ -3,6 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
+	calculateTitleLayout,
 	calculateXAxisLayout,
 	calculateYAxisLayout,
 	computeDynamicWidth,
@@ -125,7 +126,8 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 
 	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const margin = { top: 60, right: 20, bottom: bottomMargin, left: leftMargin }
+	const { titleY, topMargin } = calculateTitleLayout(60) // Keep existing 60px margin for area graphs
+	const margin = { top: topMargin, right: 20, bottom: bottomMargin, left: leftMargin }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 
@@ -142,7 +144,7 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 		"<style>.axis-label { font-size: 16px; text-anchor: middle; } .title { font-size: 18px; font-weight: bold; text-anchor: middle; } .area-label { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
 	const maxTextWidth = width - 60
-	svg += renderWrappedText(abbreviateMonth(title), width / 2, margin.top / 2 - 10, "title", "1.1em", maxTextWidth, 8)
+	svg += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", maxTextWidth, 8)
 	includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
 
 	// Axes and Labels
