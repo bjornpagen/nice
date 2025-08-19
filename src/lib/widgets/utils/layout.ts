@@ -195,8 +195,8 @@ export function calculateTitleLayout(customTopMargin?: number): {
 	titleY: number; 
 	topMargin: number 
 } {
-	const topMargin = customTopMargin || 50 // Standard top margin for good spacing
-	const titleY = 20 // Position title 20px from top edge
+	const topMargin = customTopMargin || 65 // Standard top margin for good spacing
+	const titleY = 15 // Position title with room for text to render properly
 	
 	return { titleY, topMargin }
 }
