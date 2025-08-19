@@ -559,7 +559,7 @@ export const compare3DigitNumbers: AssessmentItemInput = {
 			type: "orderInteraction",
 			responseIdentifier: "RESPONSE",
 			shuffle: true,
-			orientation: "horizontal",
+			orientation: "vertical",
 			prompt: [{ type: "text", content: "Arrange the cards to make a true comparison." }],
 			choices: [
 				{

@@ -1756,6 +1756,109 @@ WRONG (instruction placed in body instead of deferring to the interaction prompt
 }
 \`\`\`
 
+ **SPECIFIC NEGATIVE EXAMPLE (ORDERING – BODY PARTS BY COMPLEXITY) – DO NOT OUTPUT:**
+
+ \`\`\`json
+ {
+   "body": [
+     {
+       "type": "paragraph",
+       "content": [
+         { "type": "text", "content": "The parts of the body listed below are involved in breaking down and absorbing nutrients from food." }
+       ]
+     },
+     {
+       "type": "paragraph",
+       "content": [
+         { "type": "text", "content": "Order the parts from least to most complex." }
+       ]
+     },
+     { "type": "blockSlot", "slotId": "order_interaction" }
+   ],
+   "title": "Order body parts by complexity",
+   "widgets": [],
+   "feedback": {
+     "correct": [
+       {
+         "type": "paragraph",
+         "content": [
+           { "type": "text", "content": "Correct! Multicellular organisms have a nested organization: cells form tissues, tissues form organs, and organs work together in organ systems. In this context, the correct order from least to most complex is parietal cell, epithelial tissue, stomach, and digestive system." }
+         ]
+       }
+     ],
+     "incorrect": [
+       {
+         "type": "paragraph",
+         "content": [
+           { "type": "text", "content": "Not quite. Think about the biological hierarchy: cells are the basic units, groups of similar cells make tissues, tissues form organs, and organs work together in organ systems." }
+         ]
+       }
+     ]
+   },
+   "identifier": "order-body-parts-complexity-digestive",
+   "interactions": ["order_interaction"],
+   "responseDeclarations": [
+     {
+       "correct": [
+         "PARIETAL_CELL",
+         "EPITHELIAL_TISSUE",
+         "STOMACH",
+         "DIGESTIVE_SYSTEM"
+       ],
+       "baseType": "identifier",
+       "identifier": "order_interaction",
+       "cardinality": "ordered"
+     }
+   ]
+ }
+ \`\`\`
+
+ CORRECT (instruction deferred to the interaction step; body contains only neutral context + slot):
+
+ \`\`\`json
+ {
+   "body": [
+     {
+       "type": "paragraph",
+       "content": [
+         { "type": "text", "content": "The parts of the body listed below are involved in breaking down and absorbing nutrients from food." }
+       ]
+     },
+     { "type": "blockSlot", "slotId": "order_interaction" }
+   ],
+   "title": "Order body parts by complexity",
+   "widgets": [],
+   "feedback": {
+     "correct": [
+       {
+         "type": "paragraph",
+         "content": [
+           { "type": "text", "content": "Correct! Multicellular organisms have a nested organization: cells form tissues, tissues form organs, and organs work together in organ systems. In this context, the correct order from least to most complex is parietal cell, epithelial tissue, stomach, and digestive system." }
+         ]
+       }
+     ],
+     "incorrect": [
+       {
+         "type": "paragraph",
+         "content": [
+           { "type": "text", "content": "Not quite. Think about the biological hierarchy: cells are the basic units, groups of similar cells make tissues, tissues form organs, and organs work together in organ systems." }
+         ]
+       }
+     ]
+   },
+   "identifier": "order-body-parts-complexity-digestive",
+   "interactions": ["order_interaction"],
+   "responseDeclarations": [
+     {
+       "correct": ["PARIETAL_CELL", "EPITHELIAL_TISSUE", "STOMACH", "DIGESTIVE_SYSTEM"],
+       "baseType": "identifier",
+       "identifier": "order_interaction",
+       "cardinality": "ordered"
+     }
+   ]
+ }
+ \`\`\`
+
 CORRECT (instruction deferred to the interaction step; body contains only neutral context + slot):
 \`\`\`json
 {

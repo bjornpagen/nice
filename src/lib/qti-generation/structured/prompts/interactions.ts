@@ -442,11 +442,9 @@ Additional negative example (DO NOT OUTPUT) – Secondary Succession:
 For any \`orderInteraction\`, the prompt MUST be explicit about:
 - **Sort property** (what to sort by: e.g., density, size, value, alphabetical order)
 - **Direction** using unambiguous phrasing (e.g., "least to greatest", "greatest to least", "smallest to largest")
-- **Axis** corresponding to \`orientation\`:
-  - \`orientation: "horizontal"\` → include "(left to right)"
-  - \`orientation: "vertical"\` → include "(top to bottom)"
+- **Axis phrase**: always include "(top to bottom)" because orientation MUST be "vertical".
 
-Do NOT use vague instructions like "Arrange the items in correct order" without property, direction, and axis.
+Do NOT use vague instructions like "Arrange the items in correct order" without property, direction, and the axis phrase.
 
 Negative example (DO NOT OUTPUT):
 \`\`\`
@@ -454,7 +452,7 @@ Negative example (DO NOT OUTPUT):
   "order_interaction": {
     "type": "orderInteraction",
     "responseIdentifier": "RESPONSE",
-    "orientation": "horizontal",
+    "orientation": "vertical",
     "prompt": [
       { "type": "text", "content": "Arrange the items in correct order." }
     ],
@@ -470,9 +468,9 @@ Positive example (MANDATORY PATTERN):
   "order_interaction": {
     "type": "orderInteraction",
     "responseIdentifier": "RESPONSE",
-    "orientation": "horizontal",
+    "orientation": "vertical",
     "prompt": [
-      { "type": "text", "content": "Drag and drop the items below to sort them in order from least to most dense (left to right)." }
+      { "type": "text", "content": "Drag and drop the items below to sort them in order from least to most dense (top to bottom)." }
     ],
     "choices": [ /* ... */ ],
     "shuffle": true
@@ -480,7 +478,7 @@ Positive example (MANDATORY PATTERN):
 }
 \`\`\`
 
-Additional acceptable direction phrases: "greatest to least", "most to least", "smallest to largest", "largest to smallest". Always include the axis phrase that matches \`orientation\`.
+Additional acceptable direction phrases: "greatest to least", "most to least", "smallest to largest", "largest to smallest". Always include the axis phrase "(top to bottom)".
 
 **Choice Content - DEPENDS ON INTERACTION TYPE:**
 

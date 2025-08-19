@@ -161,7 +161,7 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 			type: z.literal("orderInteraction").describe("Identifies this as an ordering/sequencing interaction."),
 			responseIdentifier: z.string().describe("Links this interaction to its response declaration for scoring."),
 			prompt: createInlineContentSchema().describe(
-				"Explicit instructions for arranging items that MUST: (1) name the sort property (e.g., density, size, value), (2) state the sort direction using unambiguous phrases like 'least to greatest' or 'greatest to least', and (3) include the axis consistent with orientation — use '(left to right)' when orientation is horizontal and '(top to bottom)' when orientation is vertical."
+				"Explicit instructions for arranging items that MUST: (1) name the sort property (e.g., density, size, value), (2) state the sort direction using unambiguous phrases like 'least to greatest' or 'greatest to least', and (3) include the axis phrase '(top to bottom)' to match the enforced vertical orientation."
 			),
 			choices: z
 				.array(
@@ -180,14 +180,12 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 				.literal(true)
 				.describe("Whether to randomize initial order. Always true to ensure varied starting points."),
 			orientation: z
-				.enum(["horizontal", "vertical"])
-				.describe(
-					"Visual layout direction for the orderable items. The prompt's axis wording MUST match orientation: horizontal → '(left to right)', vertical → '(top to bottom)'."
-				)
+				.literal("vertical")
+				.describe("Visual layout direction for the orderable items. Only vertical orientation is supported. Prompts MUST include '(top to bottom)'.")
 		})
 		.strict()
 		.describe(
-			"An interaction where users arrange items in a specific sequence or order. Prompts must never be vague (e.g., 'Arrange the items in correct order'). They must specify the sort property, the direction (ascending/descending using 'least to greatest'/'greatest to least'), and the axis matching orientation."
+			"An interaction where users arrange items in a specific sequence or order. Prompts must never be vague (e.g., 'Arrange the items in correct order'). They must specify the sort property, the direction (ascending/descending using 'least to greatest'/'greatest to least'), and include the axis phrase '(top to bottom)'."
 		)
 
 	const UnsupportedInteractionSchema = z
