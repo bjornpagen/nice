@@ -376,3 +376,39 @@ export function calculateTextAwareLabelSelection(
 	
 	return new Set(uniformIndices)
 }
+
+/**
+ * Determines which tick values should have labels to avoid intersection collisions.
+ * Systematically skips the first negative value on both axes to create a label-free
+ * zone around the coordinate plane intersection.
+ * @param tickValues - Array of tick values for this axis
+ * @param isXAxis - Whether this is the x-axis (affects collision logic)
+ * @returns Set of indices indicating which ticks should have labels
+ */
+export function calculateIntersectionAwareTicks(
+	tickValues: number[],
+	isXAxis: boolean
+): Set<number> {
+	const labeledIndices = new Set<number>()
+	
+	// Find the first negative value (closest to intersection)
+	let firstNegativeIndex = -1
+	for (let i = 0; i < tickValues.length; i++) {
+		const value = tickValues[i]
+		if (value === undefined) continue
+		
+		// Skip origin (standard behavior)
+		if (value === 0) continue
+		
+		// Skip first negative to avoid intersection collision
+		if (value < 0 && firstNegativeIndex === -1) {
+			firstNegativeIndex = i
+			continue // Skip this one
+		}
+		
+		// Label all other values
+		labeledIndices.add(i)
+	}
+	
+	return labeledIndices
+}

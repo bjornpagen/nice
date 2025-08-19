@@ -4,6 +4,7 @@ import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
+	calculateIntersectionAwareTicks,
 	calculateXAxisLayout,
 	calculateYAxisLayout,
 	computeDynamicWidth,
@@ -339,23 +340,41 @@ export function generateCoordinatePlaneBase(
 	svg += `<line x1="${pad.left}" y1="${zeroY}" x2="${width - pad.right}" y2="${zeroY}" stroke="black" stroke-width="1.5"/>`
 	svg += `<line x1="${zeroX}" y1="${pad.top}" x2="${zeroX}" y2="${height - pad.bottom}" stroke="black" stroke-width="1.5"/>`
 
-	// Ticks and labels
+	// X-axis ticks and labels with intersection collision avoidance
+	const xTickValues: number[] = []
 	for (let t = xAxis.min; t <= xAxis.max; t += xAxis.tickInterval) {
-		if (t === 0) continue
+		xTickValues.push(t)
+	}
+	const selectedXTicks = calculateIntersectionAwareTicks(xTickValues, true)
+	
+	xTickValues.forEach((t, i) => {
+		if (t === 0) return // Skip origin
 		const x = toSvgX(t)
 		svg += `<line x1="${x}" y1="${zeroY - 4}" x2="${x}" y2="${zeroY + 4}" stroke="black"/>`
-		const label = formatPiLabel(t)
-		svg += `<text x="${x}" y="${zeroY + 15}" fill="black" text-anchor="middle">${label}</text>`
-		includeText(ext, x, label, "middle", 7)
-	}
+		if (selectedXTicks.has(i)) {
+			const label = formatPiLabel(t)
+			svg += `<text x="${x}" y="${zeroY + 15}" fill="black" text-anchor="middle">${label}</text>`
+			includeText(ext, x, label, "middle", 7)
+		}
+	})
+	
+	// Y-axis ticks and labels with intersection collision avoidance  
+	const yTickValues: number[] = []
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
-		if (t === 0) continue
+		yTickValues.push(t)
+	}
+	const selectedYTicks = calculateIntersectionAwareTicks(yTickValues, false)
+	
+	yTickValues.forEach((t, i) => {
+		if (t === 0) return // Skip origin
 		const y = toSvgY(t)
 		svg += `<line x1="${zeroX - 4}" y1="${y}" x2="${zeroX + 4}" y2="${y}" stroke="black"/>`
-		const label = formatPiLabel(t)
-		svg += `<text x="${zeroX - 8}" y="${y + 4}" fill="black" text-anchor="end">${label}</text>`
-		includeText(ext, zeroX - 8, label, "end", 7)
-	}
+		if (selectedYTicks.has(i)) {
+			const label = formatPiLabel(t)
+			svg += `<text x="${zeroX - 8}" y="${y + 4}" fill="black" text-anchor="end">${label}</text>`
+			includeText(ext, zeroX - 8, label, "end", 7)
+		}
+	})
 
 	// Axis labels
 	svg += `<text x="${pad.left + chartWidth / 2}" y="${height - pad.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
