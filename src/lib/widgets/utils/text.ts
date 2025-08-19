@@ -57,3 +57,74 @@ export function renderWrappedText(
 	})
 	return `<text x="${x}" y="${y}" class="${className}">${tspans}</text>`
 }
+
+/**
+ * Strip common Markdown/HTML syntax to produce safe plaintext for widget fields.
+ *
+ * Goals:
+ * - Replace links/images with their human-readable text (drop URLs)
+ * - Remove emphasis markers, code fences/spans, headings, blockquotes, list bullets
+ * - Remove HTML tags
+ * - Normalize whitespace
+ * - If the result is a bare URL or empty, return an empty string
+ */
+export function stripMarkdownToPlaintext(input: string): string {
+	if (!input) return ""
+	let text = String(input)
+
+	// Normalize newlines
+	text = text.replace(/\r\n?|\n/g, "\n")
+
+	// Remove reference-style link definitions: [ref]: https://...
+	text = text.replace(/^\s*\[[^\]]+\]:\s+\S+.*$/gim, "")
+
+	// Images: ![alt](url) -> alt
+	text = text.replace(/!\[([^\]]*)]\([^)]*\)/g, "$1")
+
+	// Inline links: [text](url) -> text
+	text = text.replace(/\[([^\]]+)\]\((?:[^)]+)\)/g, "$1")
+
+	// Reference-style links: [text][ref] -> text
+	text = text.replace(/\[([^\]]+)\]\[[^\]]*\]/g, "$1")
+
+	// Autolinks: <https://...> or <mailto:...> -> remove entirely
+	text = text.replace(/<(?:(?:https?:\/\/)|mailto:)[^>]+>/gim, "")
+
+	// Code fences (```lang\ncode\n```): drop fences, keep inner text
+	text = text.replace(/```[\s\S]*?```/g, (m) => m.replace(/```/g, ""))
+
+	// Inline code: `code` -> code
+	text = text.replace(/`([^`]+)`/g, "$1")
+
+	// Emphasis/strong/strike markers -> keep inner text
+	text = text.replace(/(\*\*|__)(.*?)\1/g, "$2")
+	text = text.replace(/(\*|_)(.*?)\1/g, "$2")
+	text = text.replace(/~~(.*?)~~/g, "$1")
+
+	// Headings: remove leading # markup
+	text = text.replace(/^#{1,6}\s+/gm, "")
+
+	// Blockquotes: remove '>' markers
+	text = text.replace(/^>\s?/gm, "")
+
+	// Lists: bullets and ordered markers at line starts
+	text = text.replace(/^\s*[-*+]\s+/gm, "")
+	text = text.replace(/^\s*\d+\.\s+/gm, "")
+
+	// HTML tags: strip tags but keep inner text
+	text = text.replace(/<\/?[^>]+>/g, "")
+
+	// Unescape common backslash-escaped punctuation used by markdown
+	text = text.replace(/\\([\\`*_{}\[\]()#+\-.!>])/g, "$1")
+
+	// Collapse whitespace
+	text = text.replace(/\u00A0/g, " ") // nbsp
+	text = text.replace(/\s+/g, " ").trim()
+
+	// If the remaining text is just a URL, drop it
+	if (/^(?:https?:\/\/|mailto:)[^\s]+$/i.test(text)) {
+		return ""
+	}
+
+	return text
+}

@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { escapeXmlAttribute, sanitizeXmlAttributeValue } from "@/lib/xml-utils"
+import { stripMarkdownToPlaintext } from "@/lib/widgets/utils/text"
 
 export const UrlImageWidgetPropsSchema = z
 	.object({
@@ -83,8 +84,10 @@ export const generateUrlImage: WidgetGenerator<typeof UrlImageWidgetPropsSchema>
 	const escapeXmlText = (text: string): string =>
 		sanitizeXmlAttributeValue(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
 
-	const normalizedAlt = stripWrappingDelimiters(alt)
-	const normalizedCaption = caption ? stripWrappingDelimiters(caption) : null
+	const sanitizedAlt = stripMarkdownToPlaintext(alt)
+	const normalizedAlt = stripWrappingDelimiters(sanitizedAlt)
+	const sanitizedCaption = caption ? stripMarkdownToPlaintext(caption) : ""
+	const normalizedCaption = sanitizedCaption ? stripWrappingDelimiters(sanitizedCaption) : null
 	// Normalize attribution even though we don't render it yet to avoid leaking artifacts if usage changes
 	// Note: do not keep an unused variable; normalize inline when/if rendering changes
 
