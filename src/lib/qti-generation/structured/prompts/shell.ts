@@ -1528,6 +1528,8 @@ Hints and answer-revealing content must NEVER appear in the 'body' field.
 **7. Redundant Body and Interaction Prompt - BANNED:**
 Never duplicate the same instructional text in both the body and interaction prompt. When an interaction has a clear prompt, the body can be empty.
 
+**CRITICAL RULE:** For ordering, multiple choice, and multiple select interactions, the question prompt MUST ALWAYS be placed in the interaction's \`prompt\` field and NEVER in the \`body\`. Keep the body to neutral context and the block slot only.
+
 **WRONG (Duplicate text in body and prompt):**
 \`\`\`json
 {
@@ -1571,6 +1573,198 @@ Never duplicate the same instructional text in both the body and interaction pro
 \`\`\`
 
 **Explanation:** The wrong example wastes space by repeating identical instructions. The correct version places the instruction only in the interaction prompt where it belongs, keeping the body minimal and focused.
+
+**SPECIFIC NEGATIVE EXAMPLE (ORDERING – GRAVITATIONAL FORCE) – DO NOT OUTPUT:**
+
+WRONG (instruction placed in body instead of deferring to the interaction prompt):
+\`\`\`json
+{
+  "body": [
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "Four different pairs of objects are shown. All of the objects are spheres made of the same solid material." }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "Rank the pairs from strongest to weakest by the strength of the gravitational forces the objects exert on each other." }
+      ]
+    },
+    { "type": "blockSlot", "slotId": "order_interaction" }
+  ],
+  "title": "Rank gravitational force strengths",
+  "widgets": [
+    "pair_choice_a",
+    "pair_choice_b",
+    "pair_choice_c",
+    "pair_choice_d"
+  ],
+  "feedback": {
+    "correct": [
+      {
+        "type": "paragraph",
+        "content": [
+          { "type": "text", "content": "Correct! Gravitational force increases with the masses of the objects and decreases as the distance between their centers increases. Closer and more massive pairs exert stronger forces than pairs that are farther apart or less massive." }
+        ]
+      }
+    ],
+    "incorrect": [
+      {
+        "type": "paragraph",
+        "content": [
+          { "type": "text", "content": "Not quite. Remember that gravitational force depends on two factors: greater mass means a stronger force, and greater distance between centers means a weaker force. Compare the relative sizes (masses) and the separation of the spheres when ranking." }
+        ]
+      }
+    ]
+  },
+  "identifier": "rank-gravitational-forces-spheres",
+  "interactions": [
+    "order_interaction"
+  ],
+  "responseDeclarations": [
+    { "correct": ["A", "B", "C", "D"], "baseType": "identifier", "identifier": "RESPONSE", "cardinality": "ordered" }
+  ]
+}
+\`\`\`
+
+CORRECT (instruction deferred to the interaction step; body contains only neutral context + slot):
+\`\`\`json
+{
+  "body": [
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "Four different pairs of objects are shown. All of the objects are spheres made of the same solid material." }
+      ]
+    },
+    { "type": "blockSlot", "slotId": "order_interaction" }
+  ],
+  "title": "Rank gravitational force strengths",
+  "widgets": [
+    "pair_choice_a",
+    "pair_choice_b",
+    "pair_choice_c",
+    "pair_choice_d"
+  ],
+  "feedback": {
+    "correct": [
+      {
+        "type": "paragraph",
+        "content": [
+          { "type": "text", "content": "Correct! Gravitational force increases with the masses of the objects and decreases as the distance between their centers increases. Closer and more massive pairs exert stronger forces than pairs that are farther apart or less massive." }
+        ]
+      }
+    ],
+    "incorrect": [
+      {
+        "type": "paragraph",
+        "content": [
+          { "type": "text", "content": "Not quite. Remember that gravitational force depends on two factors: greater mass means a stronger force, and greater distance between centers means a weaker force. Compare the relative sizes (masses) and the separation of the spheres when ranking." }
+        ]
+      }
+    ]
+  },
+  "identifier": "rank-gravitational-forces-spheres",
+  "interactions": [
+    "order_interaction"
+  ],
+  "responseDeclarations": [
+    { "correct": ["A", "B", "C", "D"], "baseType": "identifier", "identifier": "RESPONSE", "cardinality": "ordered" }
+  ]
+}
+\`\`\`
+
+**SPECIFIC NEGATIVE EXAMPLE (ORDERING – TRUCK MASSES) – DO NOT OUTPUT:**
+
+WRONG (instruction placed in body instead of deferring to the interaction prompt):
+\`\`\`json
+{
+  "body": [
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "Three trucks start at rest, side by side. The trucks carry loads of different masses. The three drivers press their accelerators at the same time, and the trucks experience net forces of equal strength. The positions of the three trucks before starting and a short time later are shown below." }
+      ]
+    },
+    { "type": "blockSlot", "slotId": "image_1" },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "Rank the mass of each truck (including its load) from greatest to least." }
+      ]
+    },
+    { "type": "blockSlot", "slotId": "order_interaction" }
+  ],
+  "title": "Rank the truck masses from greatest to least",
+  "widgets": ["image_1"],
+  "feedback": {
+    "correct": [
+      {
+        "type": "paragraph",
+        "content": [
+          { "type": "text", "content": "Correct! All three trucks experienced the same net force for the same time interval. The truck with the smallest acceleration has the greatest mass. The order from greatest to least mass is R, G, B." }
+        ]
+      }
+    ],
+    "incorrect": [
+      {
+        "type": "paragraph",
+        "content": [
+          { "type": "text", "content": "Not quite. Since each truck experiences the same net force for the same amount of time, compare how far they traveled in that interval. The truck that traveled the least distance had the smallest acceleration and therefore the greatest mass." }
+        ]
+      }
+    ]
+  },
+  "identifier": "rank-truck-masses",
+  "interactions": ["order_interaction"],
+  "responseDeclarations": [
+    { "correct": ["R", "G", "B"], "baseType": "identifier", "identifier": "order_interaction", "cardinality": "ordered" }
+  ]
+}
+\`\`\`
+
+CORRECT (instruction deferred to the interaction step; body contains only neutral context + slot):
+\`\`\`json
+{
+  "body": [
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "Three trucks start at rest, side by side. The trucks carry loads of different masses. The three drivers press their accelerators at the same time, and the trucks experience net forces of equal strength. The positions of the three trucks before starting and a short time later are shown below." }
+      ]
+    },
+    { "type": "blockSlot", "slotId": "image_1" },
+    { "type": "blockSlot", "slotId": "order_interaction" }
+  ],
+  "title": "Rank the truck masses from greatest to least",
+  "widgets": ["image_1"],
+  "feedback": {
+    "correct": [
+      {
+        "type": "paragraph",
+        "content": [
+          { "type": "text", "content": "Correct! All three trucks experienced the same net force for the same time interval. The truck with the smallest acceleration has the greatest mass. The order from greatest to least mass is R, G, B." }
+        ]
+      }
+    ],
+    "incorrect": [
+      {
+        "type": "paragraph",
+        "content": [
+          { "type": "text", "content": "Not quite. Since each truck experiences the same net force for the same amount of time, compare how far they traveled in that interval. The truck that traveled the least distance had the smallest acceleration and therefore the greatest mass." }
+        ]
+      }
+    ]
+  },
+  "identifier": "rank-truck-masses",
+  "interactions": ["order_interaction"],
+  "responseDeclarations": [
+    { "correct": ["R", "G", "B"], "baseType": "identifier", "identifier": "order_interaction", "cardinality": "ordered" }
+  ]
+}
+\`\`\`
 
 **REAL-WORLD NEGATIVE EXAMPLE (FROM QA) – DUPLICATED SENTENCES:**
 
