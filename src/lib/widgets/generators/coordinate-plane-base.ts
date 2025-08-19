@@ -3,7 +3,13 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { calculateXAxisLayout, calculateYAxisLayout, computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import {
+	calculateXAxisLayout,
+	calculateYAxisLayout,
+	computeDynamicWidth,
+	includeText,
+	initExtents
+} from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
 

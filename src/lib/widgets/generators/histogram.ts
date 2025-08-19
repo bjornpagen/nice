@@ -117,7 +117,7 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	// Create a mock yAxis with min for the layout calculation (histogram y-axis always starts at 0)
 	const mockYAxis = { ...yAxis, min: 0 }
 	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(mockYAxis)
-	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels  
+	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
 	const margin = { top: 40, right: 20, bottom: bottomMargin, left: leftMargin }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom

@@ -55,12 +55,15 @@ export function computeDynamicWidth(
  * @param titlePadding - Optional spacing between tick labels and title (default: 20px)
  * @returns An object containing the calculated `leftMargin` and `yAxisLabelX` position.
  */
-export function calculateYAxisLayout(yAxis: {
-	max: number
-	min: number
-	tickInterval: number
-	label: string
-}, titlePadding = 20): { leftMargin: number; yAxisLabelX: number } {
+export function calculateYAxisLayout(
+	yAxis: {
+		max: number
+		min: number
+		tickInterval: number
+		label: string
+	},
+	titlePadding = 20
+): { leftMargin: number; yAxisLabelX: number } {
 	const AVG_CHAR_WIDTH_PX = 8 // Estimated width for an average character
 	const TICK_LENGTH = 5
 	const LABEL_PADDING = 10 // Space between ticks and labels
@@ -102,7 +105,7 @@ export function calculateXAxisLayout(
 		const xAxisTitleY = TICK_LENGTH + TICK_LABEL_HEIGHT + titlePadding
 		return { bottomMargin, xAxisTitleY }
 	}
-	
+
 	// No tick labels case
 	const bottomMargin = TICK_LENGTH + titlePadding + TITLE_HEIGHT
 	const xAxisTitleY = TICK_LENGTH + titlePadding / 2
@@ -115,12 +118,15 @@ export function calculateXAxisLayout(
  * @param titlePadding - Optional spacing between tick labels and title (default: 20px)
  * @returns An object containing the calculated `rightMargin` and `rightYAxisLabelX` position.
  */
-export function calculateRightYAxisLayout(yAxisRight: {
-	max: number
-	min: number
-	tickInterval: number
-	label: string
-} | null, titlePadding = 20): { rightMargin: number; rightYAxisLabelX: number } {
+export function calculateRightYAxisLayout(
+	yAxisRight: {
+		max: number
+		min: number
+		tickInterval: number
+		label: string
+	} | null,
+	titlePadding = 20
+): { rightMargin: number; rightYAxisLabelX: number } {
 	if (!yAxisRight) {
 		return { rightMargin: 20, rightYAxisLabelX: 0 } // Default right margin when no right axis
 	}

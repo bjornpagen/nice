@@ -4,7 +4,13 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
-import { calculateXAxisLayout, calculateYAxisLayout, computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import {
+	calculateXAxisLayout,
+	calculateYAxisLayout,
+	computeDynamicWidth,
+	includeText,
+	initExtents
+} from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -62,7 +68,7 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	const { width, height, xAxisLabel, yAxis, data: chartData, positiveBarColor, negativeBarColor, gridColor } = data
 
 	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
-	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels  
+	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
 	const margin = { top: 20, right: 20, bottom: bottomMargin, left: leftMargin }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
@@ -113,7 +119,7 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	svg += `<text x="${chartWidth / 2}" y="${chartHeight + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
 	includeText(ext, chartWidth / 2, abbreviateMonth(xAxisLabel), "middle", 7)
 	svg += `<text x="${-yAxisLabelX}" y="-${margin.left - yAxisLabelX}" class="axis-label" transform="rotate(-90)">${abbreviateMonth(yAxis.label)}</text>`
-	// The yAxisLabelX is relative to the chart body's origin (margin.left). 
+	// The yAxisLabelX is relative to the chart body's origin (margin.left).
 	// The label needs to be positioned within the margin area, so we adjust its coordinates relative to the group transform.
 	includeText(ext, -yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
 

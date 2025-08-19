@@ -4,7 +4,14 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
-import { calculateRightYAxisLayout, calculateXAxisLayout, calculateYAxisLayout, computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import {
+	calculateRightYAxisLayout,
+	calculateXAxisLayout,
+	calculateYAxisLayout,
+	computeDynamicWidth,
+	includeText,
+	initExtents
+} from "@/lib/widgets/utils/layout"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 export const ErrMismatchedDataLength = errors.new("series data must have the same length as x-axis categories")
