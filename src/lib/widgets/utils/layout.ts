@@ -44,3 +44,105 @@ export function computeDynamicWidth(
 	const dynamicWidth = Math.max(1, vbMaxX - vbMinX)
 	return { vbMinX, vbMaxX, dynamicWidth }
 }
+
+/**
+ * Calculates the required left margin and Y-axis title position for a chart.
+ * @param yAxis - The Y-axis configuration object.
+ * @param yAxis.max - The maximum value on the axis.
+ * @param yAxis.min - The minimum value on the axis.
+ * @param yAxis.tickInterval - The interval between ticks.
+ * @param yAxis.label - The text label for the axis.
+ * @param titlePadding - Optional spacing between tick labels and title (default: 20px)
+ * @returns An object containing the calculated `leftMargin` and `yAxisLabelX` position.
+ */
+export function calculateYAxisLayout(yAxis: {
+	max: number
+	min: number
+	tickInterval: number
+	label: string
+}, titlePadding = 20): { leftMargin: number; yAxisLabelX: number } {
+	const AVG_CHAR_WIDTH_PX = 8 // Estimated width for an average character
+	const TICK_LENGTH = 5
+	const LABEL_PADDING = 10 // Space between ticks and labels
+	const AXIS_TITLE_HEIGHT = 16 // Font size of the title
+
+	let maxLabelWidth = 0
+
+	// Determine the longest tick label string
+	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
+		const label = String(t)
+		const estimatedWidth = label.length * AVG_CHAR_WIDTH_PX
+		if (estimatedWidth > maxLabelWidth) {
+			maxLabelWidth = estimatedWidth
+		}
+	}
+
+	const leftMargin = TICK_LENGTH + LABEL_PADDING + maxLabelWidth + titlePadding + AXIS_TITLE_HEIGHT
+	const yAxisLabelX = AXIS_TITLE_HEIGHT / 2 // Position title at the far left of the margin
+
+	return { leftMargin, yAxisLabelX }
+}
+
+/**
+ * Calculates the required bottom margin and X-axis title position for a chart.
+ * @param hasTickLabels - Whether the chart has tick labels on the X-axis
+ * @param titlePadding - Optional spacing between tick labels and title (default: 25px)
+ * @returns An object containing the calculated `bottomMargin` and `xAxisTitleY` position.
+ */
+export function calculateXAxisLayout(
+	hasTickLabels = true,
+	titlePadding = 25
+): { bottomMargin: number; xAxisTitleY: number } {
+	const TICK_LENGTH = 5
+	const TICK_LABEL_HEIGHT = 16 // Height of tick label text
+	const TITLE_HEIGHT = 16 // Height of axis title text
+
+	if (hasTickLabels) {
+		const bottomMargin = TICK_LENGTH + TICK_LABEL_HEIGHT + titlePadding + TITLE_HEIGHT
+		const xAxisTitleY = TICK_LENGTH + TICK_LABEL_HEIGHT + titlePadding
+		return { bottomMargin, xAxisTitleY }
+	}
+	
+	// No tick labels case
+	const bottomMargin = TICK_LENGTH + titlePadding + TITLE_HEIGHT
+	const xAxisTitleY = TICK_LENGTH + titlePadding / 2
+	return { bottomMargin, xAxisTitleY }
+}
+
+/**
+ * Calculates the required right margin and right Y-axis title position for a chart.
+ * @param yAxisRight - The right Y-axis configuration object (null if no right axis).
+ * @param titlePadding - Optional spacing between tick labels and title (default: 20px)
+ * @returns An object containing the calculated `rightMargin` and `rightYAxisLabelX` position.
+ */
+export function calculateRightYAxisLayout(yAxisRight: {
+	max: number
+	min: number
+	tickInterval: number
+	label: string
+} | null, titlePadding = 20): { rightMargin: number; rightYAxisLabelX: number } {
+	if (!yAxisRight) {
+		return { rightMargin: 20, rightYAxisLabelX: 0 } // Default right margin when no right axis
+	}
+
+	const AVG_CHAR_WIDTH_PX = 8 // Estimated width for an average character
+	const TICK_LENGTH = 5
+	const LABEL_PADDING = 10 // Space between ticks and labels
+	const AXIS_TITLE_HEIGHT = 16 // Font size of the title
+
+	let maxLabelWidth = 0
+
+	// Determine the longest tick label string
+	for (let t = yAxisRight.min; t <= yAxisRight.max; t += yAxisRight.tickInterval) {
+		const label = String(t)
+		const estimatedWidth = label.length * AVG_CHAR_WIDTH_PX
+		if (estimatedWidth > maxLabelWidth) {
+			maxLabelWidth = estimatedWidth
+		}
+	}
+
+	const rightMargin = TICK_LENGTH + LABEL_PADDING + maxLabelWidth + titlePadding + AXIS_TITLE_HEIGHT
+	const rightYAxisLabelX = TICK_LENGTH + LABEL_PADDING + maxLabelWidth + titlePadding + AXIS_TITLE_HEIGHT / 2
+
+	return { rightMargin, rightYAxisLabelX }
+}

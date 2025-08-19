@@ -4,7 +4,7 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
-import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { calculateXAxisLayout, calculateYAxisLayout, computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -61,7 +61,9 @@ export type DivergentBarChartProps = z.infer<typeof DivergentBarChartPropsSchema
 export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChartPropsSchema> = (data) => {
 	const { width, height, xAxisLabel, yAxis, data: chartData, positiveBarColor, negativeBarColor, gridColor } = data
 
-	const margin = { top: 20, right: 20, bottom: 60, left: 80 }
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
+	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels  
+	const margin = { top: 20, right: 20, bottom: bottomMargin, left: leftMargin }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 
@@ -108,11 +110,12 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	svg += `<line x1="0" y1="${yZeroInChartCoords}" x2="${chartWidth}" y2="${yZeroInChartCoords}" stroke="black" stroke-width="2"/>`
 
 	// Axis Labels
-	svg += `<text x="${chartWidth / 2}" y="${chartHeight + 45}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
+	svg += `<text x="${chartWidth / 2}" y="${chartHeight + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
 	includeText(ext, chartWidth / 2, abbreviateMonth(xAxisLabel), "middle", 7)
-	svg += `<text x="${-chartHeight / 2}" y="-60" class="axis-label" transform="rotate(-90)">${abbreviateMonth(yAxis.label)}</text>`
-	// approximate at left margin area, include as middle at some x near -60 rotated
-	includeText(ext, -60, abbreviateMonth(yAxis.label), "middle", 7)
+	svg += `<text x="${-yAxisLabelX}" y="-${margin.left - yAxisLabelX}" class="axis-label" transform="rotate(-90)">${abbreviateMonth(yAxis.label)}</text>`
+	// The yAxisLabelX is relative to the chart body's origin (margin.left). 
+	// The label needs to be positioned within the margin area, so we adjust its coordinates relative to the group transform.
+	includeText(ext, -yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
 
 	// Bars and X-axis labels
 	const minLabelSpacingPx = 50

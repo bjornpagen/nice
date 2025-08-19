@@ -1,7 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { calculateYAxisLayout, computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 // Factory helpers to avoid schema reuse and $ref generation
 function createPointSchema() {
@@ -75,7 +75,10 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 		return `<svg width="${width}" height="${height}"></svg>`
 	}
 
-	const padding = { top: 40, right: 40, bottom: 80, left: 80 }
+	// Create a mock yAxis object for the utility
+	const mockYAxis = { min: yAxisMin, max: yAxisMax, tickInterval: (yAxisMax - yAxisMin) / 5, label: yAxisLabel }
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(mockYAxis)
+	const padding = { top: 40, right: 40, bottom: 80, left: leftMargin }
 
 	// Use the explicitly provided axis ranges
 	const minX = xAxisMin
@@ -103,9 +106,8 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 	svg += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${width - padding.right}" y2="${xAxisY}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
 
 	// Axis Labels (closer to axes)
-	const yLabelX = yAxisX - 30
-	svg += `<text x="${yLabelX}" y="${padding.top + chartHeight / 2}" text-anchor="middle" transform="rotate(-90, ${yLabelX}, ${padding.top + chartHeight / 2})">${yAxisLabel}</text>`
-	includeText(ext, yLabelX, yAxisLabel, "middle", 7)
+	svg += `<text x="${yAxisLabelX}" y="${padding.top + chartHeight / 2}" text-anchor="middle" transform="rotate(-90, ${yAxisLabelX}, ${padding.top + chartHeight / 2})">${yAxisLabel}</text>`
+	includeText(ext, yAxisLabelX, yAxisLabel, "middle", 7)
 	svg += `<text x="${padding.left + chartWidth / 2}" y="${xAxisY + 30}" text-anchor="middle">${xAxisLabel}</text>`
 	includeText(ext, padding.left + chartWidth / 2, xAxisLabel, "middle", 7)
 

@@ -3,7 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { calculateXAxisLayout, calculateYAxisLayout, computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
 
@@ -278,7 +278,9 @@ export function generateCoordinatePlaneBase(
 	showQuadrantLabels = false,
 	points: PlotPoint[] = []
 ): CoordinatePlaneBase {
-	const pad = { top: 30, right: 30, bottom: 40, left: 40 }
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
+	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
+	const pad = { top: 30, right: 30, bottom: bottomMargin, left: leftMargin }
 	const chartWidth = width - pad.left - pad.right
 	const chartHeight = height - pad.top - pad.bottom
 
@@ -346,10 +348,10 @@ export function generateCoordinatePlaneBase(
 	}
 
 	// Axis labels
-	svg += `<text x="${pad.left + chartWidth / 2}" y="${height - 5}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
+	svg += `<text x="${pad.left + chartWidth / 2}" y="${height - pad.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
 	includeText(ext, pad.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
-	svg += `<text x="${pad.left - 25}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${pad.left - 25}, ${pad.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
-	includeText(ext, pad.left - 25, abbreviateMonth(yAxis.label), "middle", 7)
+	svg += `<text x="${yAxisLabelX}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${pad.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
+	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
 
 	// Quadrant labels
 	if (showQuadrantLabels) {

@@ -4,7 +4,7 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
-import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { calculateRightYAxisLayout, calculateXAxisLayout, calculateYAxisLayout, computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 export const ErrMismatchedDataLength = errors.new("series data must have the same length as x-axis categories")
@@ -97,8 +97,10 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 
 	const legendItemHeight = 18
 	const legendHeight = showLegend ? series.length * legendItemHeight + 12 : 0
-	const rightAxisWidth = yAxisRight ? 60 : 0
-	const margin = { top: 40, right: 20 + rightAxisWidth, bottom: 50 + legendHeight, left: 60 }
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
+	const { rightMargin, rightYAxisLabelX } = calculateRightYAxisLayout(yAxisRight)
+	const { bottomMargin: xAxisBottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
+	const margin = { top: 40, right: rightMargin, bottom: xAxisBottomMargin + legendHeight, left: leftMargin }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 
@@ -127,7 +129,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	// Left Y-axis
 	svg += `<g class="axis y-axis-left">`
 	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>`
-	svg += `<text x="${margin.left - 30}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 30}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
+	svg += `<text x="${yAxisLabelX}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = toSvgYLeft(t)
 		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
@@ -144,10 +146,8 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		const rightAxisX = width - margin.right
 		svg += `<g class="axis y-axis-right">`
 		svg += `<line x1="${rightAxisX}" y1="${margin.top}" x2="${rightAxisX}" y2="${height - margin.bottom}" stroke="black"/>`
-		if (yAxisRight.label) {
-			svg += `<text x="${rightAxisX + 30}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${rightAxisX + 30}, ${margin.top + chartHeight / 2})">${yAxisRight.label}</text>`
-			includeText(ext, rightAxisX + 30, yAxisRight.label, "middle", 7)
-		}
+		svg += `<text x="${rightAxisX + rightYAxisLabelX}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${rightAxisX + rightYAxisLabelX}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxisRight.label)}</text>`
+		includeText(ext, rightAxisX + rightYAxisLabelX, abbreviateMonth(yAxisRight.label), "middle", 7)
 		for (let t = yAxisRight.min; t <= yAxisRight.max; t += yAxisRight.tickInterval) {
 			const y = toSvgYRight(t)
 			svg += `<line x1="${rightAxisX}" y1="${y}" x2="${rightAxisX + 5}" y2="${y}" stroke="black"/>`
@@ -160,7 +160,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	// X-axis with label thinning
 	svg += `<g class="axis x-axis">`
 	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>`
-	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + 36}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
+	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
 	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
 	{
 		const minLabelSpacingPx = 50

@@ -1,8 +1,8 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
+import { calculateXAxisLayout, calculateYAxisLayout, computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 const PointSchema = z.object({
@@ -117,7 +117,9 @@ const renderWrappedText_local = (
 export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (props) => {
 	const { width, height, title, xAxis, yAxis, dataPoints, bottomArea, topArea, boundaryLine } = props
 
-	const margin = { top: 60, right: 20, bottom: 60, left: 80 }
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
+	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
+	const margin = { top: 60, right: 20, bottom: bottomMargin, left: leftMargin }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 
@@ -141,10 +143,10 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black" stroke-width="2"/>` // Y-axis
 	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black" stroke-width="2"/>` // X-axis
 
-	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + 45}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
+	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
 	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
-	svg += `<text x="${margin.left - 55}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 55}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
-	includeText(ext, margin.left - 55, abbreviateMonth(yAxis.label), "middle", 7)
+	svg += `<text x="${yAxisLabelX}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
+	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
 
 	// Ticks
 	for (const val of xAxis.tickValues) {

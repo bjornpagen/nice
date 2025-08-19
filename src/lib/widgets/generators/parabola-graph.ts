@@ -4,7 +4,7 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { calculateXAxisLayout, calculateYAxisLayout, computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 function createAxisOptionsSchema() {
 	return z
@@ -53,7 +53,9 @@ export type ParabolaGraphProps = z.infer<typeof ParabolaGraphPropsSchema>
 export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSchema> = (props) => {
 	const { width, height, xAxis, yAxis, parabola } = props
 
-	const margin = { top: 20, right: 20, bottom: 50, left: 60 }
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
+	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
+	const margin = { top: 20, right: 20, bottom: bottomMargin, left: leftMargin }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 
@@ -117,10 +119,10 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 		}
 	}
 	// Labels
-	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 15}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
+	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
 	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
-	svg += `<text x="${margin.left - 45}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 45}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
-	includeText(ext, margin.left - 45, abbreviateMonth(yAxis.label), "middle", 7)
+	svg += `<text x="${yAxisLabelX}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
+	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
 
 	// Parabola Curve - clip to first quadrant (x >= 0, y >= 0)
 	const steps = 200

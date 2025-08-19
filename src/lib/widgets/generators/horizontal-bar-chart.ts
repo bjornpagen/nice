@@ -4,6 +4,7 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
+import { calculateXAxisLayout } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -59,7 +60,8 @@ export type HorizontalBarChartProps = z.infer<typeof HorizontalBarChartPropsSche
 export const generateHorizontalBarChart: WidgetGenerator<typeof HorizontalBarChartPropsSchema> = (data) => {
 	const { width, height, xAxis, data: chartData, gridColor } = data
 
-	const margin = { top: 20, right: 80, bottom: 60, left: 100 }
+	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
+	const margin = { top: 20, right: 80, bottom: bottomMargin, left: 100 }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 
@@ -96,7 +98,7 @@ export const generateHorizontalBarChart: WidgetGenerator<typeof HorizontalBarCha
 	svg += `<line x1="0" y1="0" x2="0" y2="${chartHeight}" stroke="black" stroke-width="2"/>`
 
 	// X-Axis Label
-	svg += `<text x="${chartWidth / 2}" y="${chartHeight + 50}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
+	svg += `<text x="${chartWidth / 2}" y="${chartHeight + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
 
 	// Bars, Y-axis categories, and value labels
 	chartData.forEach((d, i) => {

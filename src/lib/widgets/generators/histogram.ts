@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
+import { calculateXAxisLayout, calculateYAxisLayout } from "@/lib/widgets/utils/layout"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 const Bin = z
@@ -113,7 +114,11 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 			throw errors.new("histogram: separators must be strictly increasing")
 		}
 	}
-	const margin = { top: 40, right: 20, bottom: 100, left: 50 }
+	// Create a mock yAxis with min for the layout calculation (histogram y-axis always starts at 0)
+	const mockYAxis = { ...yAxis, min: 0 }
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(mockYAxis)
+	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels  
+	const margin = { top: 40, right: 20, bottom: bottomMargin, left: leftMargin }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 
@@ -137,8 +142,8 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="#333333"/>` // X-axis
 
 	// Axis Labels
-	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 20}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
-	svg += `<text x="${margin.left - 35}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 35}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
+	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
+	svg += `<text x="${yAxisLabelX}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
 
 	// Y ticks and labels
 	const yTickInterval = yAxis.tickInterval

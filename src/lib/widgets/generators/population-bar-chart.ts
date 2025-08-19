@@ -4,6 +4,7 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
+import { calculateXAxisLayout, calculateYAxisLayout } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -71,8 +72,9 @@ export type PopulationBarChartProps = z.infer<typeof PopulationBarChartPropsSche
 export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarChartPropsSchema> = (data) => {
 	const { width, height, xAxisLabel, yAxis, data: chartData, barColor, gridColor, xAxisVisibleLabels } = data
 
-	// Margins are adjusted to give more space for the bold labels
-	const margin = { top: 20, right: 20, bottom: 60, left: 80 }
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
+	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
+	const margin = { top: 20, right: 20, bottom: bottomMargin, left: leftMargin }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 
@@ -107,8 +109,8 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 	svg += `<line x1="0" y1="${chartHeight}" x2="${chartWidth}" y2="${chartHeight}" stroke="black" stroke-width="2"/>`
 
 	// Axis Labels
-	svg += `<text x="${chartWidth / 2}" y="${chartHeight + 45}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
-	svg += `<text x="${-chartHeight / 2}" y="-60" class="axis-label" transform="rotate(-90)">${abbreviateMonth(yAxis.label)}</text>`
+	svg += `<text x="${chartWidth / 2}" y="${chartHeight + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
+	svg += `<text x="${-yAxisLabelX}" y="-${margin.left - yAxisLabelX}" class="axis-label" transform="rotate(-90)">${abbreviateMonth(yAxis.label)}</text>`
 
 	// Y ticks and SOLID grid lines
 	for (let t = yAxis.min; t <= maxValue; t += yAxis.tickInterval) {
