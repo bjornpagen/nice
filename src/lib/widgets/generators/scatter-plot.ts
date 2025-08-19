@@ -338,6 +338,9 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg +=
 		"<style>.axis-label { font-size: 14px; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
+	
+	// Define clip path for chart area to properly clip lines at boundaries
+	svg += `<defs><clipPath id="chartArea"><rect x="${pad.left}" y="${pad.top}" width="${chartWidth}" height="${chartHeight}"/></clipPath></defs>`
 
 	const maxTextWidth = width - 60
 	svg += renderWrappedText(abbreviateMonth(title), width / 2, pad.top / 2, "title", "1.1em", maxTextWidth, 8)
@@ -378,25 +381,25 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	svg += `<text x="${yAxisLabelX}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${pad.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
 	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
 
-	// Render line overlays (computed or explicit)
+	// Render line overlays (computed or explicit) with proper clipping
+	svg += `<g clip-path="url(#chartArea)">`
 	for (const line of lines) {
 		if (line.type === "bestFit") {
 			if (line.method === "linear") {
 				const coeff = computeLinearRegression(points)
 				if (coeff) {
+					// Render full mathematical line - clipping will handle bounds
 					const y1 = coeff.slope * xAxis.min + coeff.yIntercept
 					const y2 = coeff.slope * xAxis.max + coeff.yIntercept
 					svg += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(y1)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(y2)}"${styleAttrs(
 						line.style
 					)} />`
-					const labelX = toSvgX(xAxis.max) - 5
-					const labelY = toSvgY(y2)
-					svg += `<text x="${labelX}" y="${labelY - 6}" text-anchor="end" fill="black">${abbreviateMonth(line.label)}</text>`
 				}
 			}
 			if (line.method === "quadratic") {
 				const coeff = computeQuadraticRegression(points)
 				if (coeff) {
+					// Render full mathematical curve - clipping will handle bounds
 					const steps = 100
 					let path = ""
 					for (let i = 0; i <= steps; i++) {
@@ -407,10 +410,6 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 						path += `${i === 0 ? "M" : "L"} ${px} ${py} `
 					}
 					svg += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
-					const yRight = coeff.a * xAxis.max ** 2 + coeff.b * xAxis.max + coeff.c
-					const labelX = toSvgX(xAxis.max) - 5
-					const labelY = toSvgY(clamp(yRight, yAxis.min, yAxis.max))
-					svg += `<text x="${labelX}" y="${labelY - 6}" text-anchor="end" fill="black">${abbreviateMonth(line.label)}</text>`
 				}
 			}
 		} else if (line.type === "twoPoints") {
@@ -420,10 +419,8 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 				svg += `<line x1="${toSvgX(a.x)}" y1="${toSvgY(yAxis.min)}" x2="${toSvgX(a.x)}" y2="${toSvgY(yAxis.max)}"${styleAttrs(
 					line.style
 				)} />`
-				const labelX = toSvgX(a.x) + 6
-				const labelY = toSvgY(yAxis.max) + 14
-				svg += `<text x="${labelX}" y="${labelY}" fill="black">${abbreviateMonth(line.label)}</text>`
 			} else {
+				// Render full mathematical line - clipping will handle bounds
 				const slope = (b.y - a.y) / (b.x - a.x)
 				const intercept = a.y - slope * a.x
 				const yAtMin = slope * xAxis.min + intercept
@@ -431,9 +428,51 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 				svg += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(yAtMin)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(yAtMax)}"${styleAttrs(
 					line.style
 				)} />`
+			}
+		}
+	}
+	svg += `</g>`
+	
+	// Render line labels outside clipped area so they stay visible
+	for (const line of lines) {
+		if (line.type === "bestFit") {
+			if (line.method === "linear") {
+				const coeff = computeLinearRegression(points)
+				if (coeff) {
+					const y2 = coeff.slope * xAxis.max + coeff.yIntercept
+					const labelX = toSvgX(xAxis.max) - 5
+					const labelY = toSvgY(clamp(y2, yAxis.min, yAxis.max)) - 6
+					// Ensure label stays within chart bounds
+					const clampedLabelY = clamp(labelY, pad.top + 10, height - pad.bottom - 10)
+					svg += `<text x="${labelX}" y="${clampedLabelY}" text-anchor="end" fill="black">${abbreviateMonth(line.label)}</text>`
+				}
+			}
+			if (line.method === "quadratic") {
+				const coeff = computeQuadraticRegression(points)
+				if (coeff) {
+					const yRight = coeff.a * xAxis.max ** 2 + coeff.b * xAxis.max + coeff.c
+					const labelX = toSvgX(xAxis.max) - 5
+					const labelY = toSvgY(clamp(yRight, yAxis.min, yAxis.max)) - 6
+					// Ensure label stays within chart bounds
+					const clampedLabelY = clamp(labelY, pad.top + 10, height - pad.bottom - 10)
+					svg += `<text x="${labelX}" y="${clampedLabelY}" text-anchor="end" fill="black">${abbreviateMonth(line.label)}</text>`
+				}
+			}
+		} else if (line.type === "twoPoints") {
+			const { a, b } = line
+			if (a.x === b.x) {
+				const labelX = toSvgX(a.x) + 6
+				const labelY = clamp(toSvgY(yAxis.max) + 14, pad.top + 10, height - pad.bottom - 10)
+				svg += `<text x="${labelX}" y="${labelY}" fill="black">${abbreviateMonth(line.label)}</text>`
+			} else {
+				const slope = (b.y - a.y) / (b.x - a.x)
+				const intercept = a.y - slope * a.x
+				const yAtMax = slope * xAxis.max + intercept
 				const labelX = toSvgX(xAxis.max) - 5
-				const labelY = toSvgY(yAtMax)
-				svg += `<text x="${labelX}" y="${labelY - 6}" text-anchor="end" fill="black">${abbreviateMonth(line.label)}</text>`
+				const labelY = toSvgY(clamp(yAtMax, yAxis.min, yAxis.max)) - 6
+				// Ensure label stays within chart bounds
+				const clampedLabelY = clamp(labelY, pad.top + 10, height - pad.bottom - 10)
+				svg += `<text x="${labelX}" y="${clampedLabelY}" text-anchor="end" fill="black">${abbreviateMonth(line.label)}</text>`
 			}
 		}
 	}
