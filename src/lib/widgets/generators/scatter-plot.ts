@@ -431,17 +431,19 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	svg += `<text x="${yAxisLabelX}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${pad.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
 	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
 
-	// Render line overlays (computed or explicit) with proper clipping
-	let lineContent = ""
+	// Render line overlays - linear lines don't need clipping, curves do
+	let linearLineContent = ""
+	let curveLineContent = ""
+	
 	for (const line of lines) {
 		if (line.type === "bestFit") {
 			if (line.method === "linear") {
 				const coeff = computeLinearRegression(points)
 				if (coeff) {
-					// Render full mathematical line - clipping will handle bounds
+					// Linear lines span exact chart range - no clipping needed
 					const y1 = coeff.slope * xAxis.min + coeff.yIntercept
 					const y2 = coeff.slope * xAxis.max + coeff.yIntercept
-					lineContent += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(y1)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(y2)}"${styleAttrs(
+					linearLineContent += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(y1)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(y2)}"${styleAttrs(
 						line.style
 					)} />`
 				}
@@ -459,13 +461,13 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 						const py = toSvgY(yVal)
 						path += `${i === 0 ? "M" : "L"} ${px} ${py} `
 					}
-					lineContent += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
+					curveLineContent += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
 				}
 			}
 			if (line.method === "exponential") {
 				const coeff = computeExponentialRegression(points)
 				if (coeff) {
-					// Render exponential curve: y = ae^(bx) - b can be positive (growth) or negative (decay)
+					// Render exponential curve: y = ae^(bx) - clipping prevents infinite values
 					const steps = 100
 					let path = ""
 					for (let i = 0; i <= steps; i++) {
@@ -475,29 +477,36 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 						const py = toSvgY(yVal)
 						path += `${i === 0 ? "M" : "L"} ${px} ${py} `
 					}
-					lineContent += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
+					curveLineContent += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
 				}
 			}
 		} else if (line.type === "twoPoints") {
 			const { a, b } = line
 			if (a.x === b.x) {
-				// vertical line across full y-domain
-				lineContent += `<line x1="${toSvgX(a.x)}" y1="${toSvgY(yAxis.min)}" x2="${toSvgX(a.x)}" y2="${toSvgY(yAxis.max)}"${styleAttrs(
+				// vertical line across full y-domain - no clipping needed
+				linearLineContent += `<line x1="${toSvgX(a.x)}" y1="${toSvgY(yAxis.min)}" x2="${toSvgX(a.x)}" y2="${toSvgY(yAxis.max)}"${styleAttrs(
 					line.style
 				)} />`
 			} else {
-				// Render full mathematical line - clipping will handle bounds
+				// twoPoints lines can extend beyond bounds - use clipping
 				const slope = (b.y - a.y) / (b.x - a.x)
 				const intercept = a.y - slope * a.x
 				const yAtMin = slope * xAxis.min + intercept
 				const yAtMax = slope * xAxis.max + intercept
-				lineContent += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(yAtMin)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(yAtMax)}"${styleAttrs(
+				curveLineContent += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(yAtMin)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(yAtMax)}"${styleAttrs(
 					line.style
 				)} />`
 			}
 		}
 	}
-	svg += wrapInClippedGroup("chartArea", lineContent)
+	
+	// Render linear lines without clipping (they're already bounded)
+	svg += linearLineContent
+	
+	// Render curves with clipping (they can extend to infinity)
+	if (curveLineContent) {
+		svg += wrapInClippedGroup("chartArea", curveLineContent)
+	}
 	
 	// Render line labels in dedicated legend area to prevent conflicts
 	if (lines.length > 0) {
