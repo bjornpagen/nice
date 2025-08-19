@@ -12,7 +12,14 @@ function createPointSchema() {
 }
 
 function createHighlightPointSchema() {
-	return createPointSchema().extend({
+	return z.object({
+		t: z
+			.number()
+			.min(0)
+			.max(1)
+			.describe(
+				"Position along the curve as a fraction of total arc length; 0 = start of curve, 1 = end of curve."
+			),
 		label: z.string().describe("The text label to display next to this point (e.g., 'A', 'B', 'C').")
 	})
 }
@@ -58,7 +65,7 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 		highlightPointRadius
 	} = props
 
-	const allPoints = [...curvePoints, ...highlightPoints]
+	const allPoints = curvePoints
 	const padding = { top: 40, right: 40, bottom: 60, left: 80 }
 
 	const minX = Math.min(...allPoints.map((p) => p.x))
@@ -95,13 +102,57 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 	const pointsStr = curvePoints.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
 	svg += `<polyline points="${pointsStr}" fill="none" stroke="${curveColor}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`
 
+	// Precompute cumulative arc lengths along the curve for t-based positioning
+	const cumulativeLengths: number[] = [0]
+	for (let i = 1; i < curvePoints.length; i++) {
+		const prev = curvePoints[i - 1]!
+		const curr = curvePoints[i]!
+		const dx = curr.x - prev.x
+		const dy = curr.y - prev.y
+		const segLen = Math.hypot(dx, dy)
+		cumulativeLengths[i] = (cumulativeLengths[i - 1] ?? 0) + segLen
+	}
+	const totalLength = cumulativeLengths[cumulativeLengths.length - 1] ?? 0
+
+	function pointAtT(t: number): { x: number; y: number } {
+		if (curvePoints.length === 0) return { x: 0, y: 0 }
+		if (curvePoints.length === 1 || totalLength === 0) return curvePoints[0]!
+		if (t <= 0) return curvePoints[0]!
+		if (t >= 1) return curvePoints[curvePoints.length - 1]!
+
+		const target = t * totalLength
+		let idx = 0
+		for (let i = 0; i < cumulativeLengths.length - 1; i++) {
+			const cStart = cumulativeLengths[i]
+			const cEnd = cumulativeLengths[i + 1]
+			if (cStart === undefined || cEnd === undefined) {
+				continue
+			}
+			if (target >= cStart && target <= cEnd) {
+				idx = i
+				break
+			}
+		}
+		const segStart = cumulativeLengths[idx]!
+		const segEnd = cumulativeLengths[idx + 1]!
+		const segmentLength = segEnd - segStart
+		const localT = segmentLength === 0 ? 0 : (target - segStart) / segmentLength
+		const p0 = curvePoints[idx]!
+		const p1 = curvePoints[idx + 1]!
+		return {
+			x: p0.x + (p1.x - p0.x) * localT,
+			y: p0.y + (p1.y - p0.y) * localT
+		}
+	}
+
 	// Highlight Points
-	for (const p of highlightPoints) {
-		const cx = toSvgX(p.x)
-		const cy = toSvgY(p.y)
+	for (const hp of highlightPoints) {
+		const pt = pointAtT(hp.t)
+		const cx = toSvgX(pt.x)
+		const cy = toSvgY(pt.y)
 		svg += `<circle cx="${cx}" cy="${cy}" r="${highlightPointRadius}" fill="${highlightPointColor}"/>`
-		svg += `<text x="${cx - highlightPointRadius - 5}" y="${cy}" text-anchor="end" dominant-baseline="middle" font-weight="bold">${p.label}</text>`
-		includeText(ext, cx - highlightPointRadius - 5, p.label, "end", 7)
+		svg += `<text x="${cx - highlightPointRadius - 5}" y="${cy}" text-anchor="end" dominant-baseline="middle" font-weight="bold">${hp.label}</text>`
+		includeText(ext, cx - highlightPointRadius - 5, hp.label, "end", 7)
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)

@@ -101,3 +101,38 @@ test("population bar chart - auto label thinning when visible list empty", () =>
 	expect(svg).toContain(">1990<")
 	expect(svg).toContain(">2005<")
 })
+
+test("population bar chart - bird population 2010-2015", () => {
+	const input = {
+		type: "populationBarChart",
+		width: 360,
+		height: 270,
+		xAxisLabel: "Year",
+		yAxis: {
+			label: "Number of birds",
+			min: 0,
+			max: 400,
+			tickInterval: 100
+		},
+		xAxisVisibleLabels: [],
+		data: [
+			{ label: "2010", value: 350 },
+			{ label: "2011", value: 325 },
+			{ label: "2012", value: 305 },
+			{ label: "2013", value: 250 },
+			{ label: "2014", value: 225 },
+			{ label: "2015", value: 225 }
+		],
+		barColor: "#babec2",
+		gridColor: "#cccccc"
+	} satisfies PopulationBarChartInput
+
+	const validation = PopulationBarChartPropsSchema.safeParse(input)
+	if (!validation.success) {
+		logger.error("input validation", { error: validation.error })
+		throw errors.wrap(validation.error, "input validation")
+	}
+	const parsed = validation.data
+	const svg = generatePopulationBarChart(parsed)
+	expect(svg).toMatchSnapshot()
+})
