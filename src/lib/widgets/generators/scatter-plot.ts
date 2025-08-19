@@ -8,8 +8,10 @@ import {
 	calculateXAxisLayout,
 	calculateYAxisLayout,
 	computeDynamicWidth,
+	createChartClipPath,
 	includeText,
-	initExtents
+	initExtents,
+	wrapInClippedGroup
 } from "@/lib/widgets/utils/layout"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 
@@ -340,7 +342,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		"<style>.axis-label { font-size: 14px; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 	
 	// Define clip path for chart area to properly clip lines at boundaries
-	svg += `<defs><clipPath id="chartArea"><rect x="${pad.left}" y="${pad.top}" width="${chartWidth}" height="${chartHeight}"/></clipPath></defs>`
+	svg += createChartClipPath("chartArea", pad.left, pad.top, chartWidth, chartHeight)
 
 	const maxTextWidth = width - 60
 	svg += renderWrappedText(abbreviateMonth(title), width / 2, pad.top / 2, "title", "1.1em", maxTextWidth, 8)
@@ -382,7 +384,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
 
 	// Render line overlays (computed or explicit) with proper clipping
-	svg += `<g clip-path="url(#chartArea)">`
+	let lineContent = ""
 	for (const line of lines) {
 		if (line.type === "bestFit") {
 			if (line.method === "linear") {
@@ -391,7 +393,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 					// Render full mathematical line - clipping will handle bounds
 					const y1 = coeff.slope * xAxis.min + coeff.yIntercept
 					const y2 = coeff.slope * xAxis.max + coeff.yIntercept
-					svg += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(y1)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(y2)}"${styleAttrs(
+					lineContent += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(y1)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(y2)}"${styleAttrs(
 						line.style
 					)} />`
 				}
@@ -409,14 +411,14 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 						const py = toSvgY(yVal)
 						path += `${i === 0 ? "M" : "L"} ${px} ${py} `
 					}
-					svg += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
+					lineContent += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
 				}
 			}
 		} else if (line.type === "twoPoints") {
 			const { a, b } = line
 			if (a.x === b.x) {
 				// vertical line across full y-domain
-				svg += `<line x1="${toSvgX(a.x)}" y1="${toSvgY(yAxis.min)}" x2="${toSvgX(a.x)}" y2="${toSvgY(yAxis.max)}"${styleAttrs(
+				lineContent += `<line x1="${toSvgX(a.x)}" y1="${toSvgY(yAxis.min)}" x2="${toSvgX(a.x)}" y2="${toSvgY(yAxis.max)}"${styleAttrs(
 					line.style
 				)} />`
 			} else {
@@ -425,13 +427,13 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 				const intercept = a.y - slope * a.x
 				const yAtMin = slope * xAxis.min + intercept
 				const yAtMax = slope * xAxis.max + intercept
-				svg += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(yAtMin)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(yAtMax)}"${styleAttrs(
+				lineContent += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(yAtMin)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(yAtMax)}"${styleAttrs(
 					line.style
 				)} />`
 			}
 		}
 	}
-	svg += `</g>`
+	svg += wrapInClippedGroup("chartArea", lineContent)
 	
 	// Render line labels outside clipped area so they stay visible
 	for (const line of lines) {

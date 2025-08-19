@@ -14,6 +14,7 @@ import {
 	renderPolygons,
 	renderPolylines
 } from "@/lib/widgets/generators/coordinate-plane-base"
+import { wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 export const CoordinatePlaneComprehensivePropsSchema = z
@@ -111,9 +112,10 @@ export const generateCoordinatePlaneComprehensive: WidgetGenerator<typeof Coordi
 		content += renderDistances(distances, base.pointMap, base.toSvgX, base.toSvgY)
 	}
 
-	// 3. Lines (middle-front layer)
+	// 3. Lines (middle-front layer) - clip to prevent extending beyond chart bounds
 	if (lines.length > 0) {
-		content += renderLines(lines, xAxis, yAxis, base.toSvgX, base.toSvgY)
+		const lineContent = renderLines(lines, xAxis, yAxis, base.toSvgX, base.toSvgY)
+		content += wrapInClippedGroup("chartArea", lineContent)
 	}
 
 	// 4. Polylines/function plots (front layer)

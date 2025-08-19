@@ -7,6 +7,7 @@ import {
 	renderLines,
 	renderPoints
 } from "@/lib/widgets/generators/coordinate-plane-base"
+import { wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 export const LineEquationGraphPropsSchema = z
@@ -61,8 +62,9 @@ export const generateLineEquationGraph: WidgetGenerator<typeof LineEquationGraph
 	const base = generateCoordinatePlaneBase(width, height, xAxis, yAxis, showQuadrantLabels, points)
 	let content = ""
 
-	// Render lines first (background)
-	content += renderLines(lines, xAxis, yAxis, base.toSvgX, base.toSvgY)
+	// Render lines first (background) - clip to prevent extending beyond chart bounds
+	const lineContent = renderLines(lines, xAxis, yAxis, base.toSvgX, base.toSvgY)
+	content += wrapInClippedGroup("chartArea", lineContent)
 
 	// Render points last (foreground)
 	content += renderPoints(points, base.toSvgX, base.toSvgY)

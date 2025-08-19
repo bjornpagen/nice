@@ -7,8 +7,10 @@ import {
 	calculateXAxisLayout,
 	calculateYAxisLayout,
 	computeDynamicWidth,
+	createChartClipPath,
 	includeText,
-	initExtents
+	initExtents,
+	wrapInClippedGroup
 } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
@@ -314,6 +316,9 @@ export function generateCoordinatePlaneBase(
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg +=
 		"<style>.axis-label { font-size: 14px; text-anchor: middle; } .quadrant-label { font-size: 18px; fill: #ccc; text-anchor: middle; dominant-baseline: middle; }</style>"
+	
+	// Add clipping path for chart area to prevent lines from extending beyond bounds
+	svg += createChartClipPath("chartArea", pad.left, pad.top, chartWidth, chartHeight)
 
 	// Grid lines
 	if (xAxis.showGridLines) {

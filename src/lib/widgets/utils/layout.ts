@@ -152,3 +152,35 @@ export function calculateRightYAxisLayout(
 
 	return { rightMargin, rightYAxisLabelX }
 }
+
+/**
+ * Generates SVG clipPath definition for constraining chart elements to the plot area.
+ * This prevents lines, curves, and other chart elements from extending beyond the chart boundaries.
+ * @param clipId - Unique identifier for the clipPath element
+ * @param x - Left edge of the clipping rectangle (typically pad.left)
+ * @param y - Top edge of the clipping rectangle (typically pad.top) 
+ * @param width - Width of the clipping rectangle (typically chartWidth)
+ * @param height - Height of the clipping rectangle (typically chartHeight)
+ * @returns SVG clipPath definition string
+ */
+export function createChartClipPath(
+	clipId: string,
+	x: number,
+	y: number,
+	width: number,
+	height: number
+): string {
+	return `<defs><clipPath id="${clipId}"><rect x="${x}" y="${y}" width="${width}" height="${height}"/></clipPath></defs>`
+}
+
+/**
+ * Wraps chart elements (lines, curves, paths) in an SVG group with clipping applied.
+ * This ensures mathematical curves are cleanly cut off at chart boundaries rather than 
+ * artificially clamped, preserving the true shape of the function.
+ * @param clipId - The clipPath ID to reference
+ * @param content - SVG content to be clipped
+ * @returns SVG group with clip-path applied
+ */
+export function wrapInClippedGroup(clipId: string, content: string): string {
+	return `<g clip-path="url(#${clipId})">${content}</g>`
+}
