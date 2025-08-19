@@ -313,7 +313,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	// Use the same robust coordinate plane logic from generateCoordinatePlane
 	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const { titleY, topMargin } = calculateTitleLayout()
+	const { titleY, topMargin } = calculateTitleLayout(title, width - 60)
 	const pad = { top: topMargin, right: 30, bottom: bottomMargin, left: leftMargin }
 	const chartWidth = width - pad.left - pad.right
 	const chartHeight = height - pad.top - pad.bottom

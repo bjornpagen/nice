@@ -186,17 +186,71 @@ export function wrapInClippedGroup(clipId: string, content: string): string {
 }
 
 /**
- * Calculates optimal title positioning with proper spacing from chart area.
- * Provides consistent title placement across all graph widgets.
- * @param topMargin - The top margin of the chart (e.g., 50, 60)
- * @returns Object with titleY position and recommended top margin
+ * Estimates how many lines a title will wrap to based on available width.
+ * Accounts for the wrapping logic in renderWrappedText.
  */
-export function calculateTitleLayout(customTopMargin?: number): { 
-	titleY: number; 
-	topMargin: number 
-} {
-	const topMargin = customTopMargin || 65 // Standard top margin for good spacing
-	const titleY = 15 // Position title with room for text to render properly
+function estimateTitleLines(title: string, maxWidthPx: number, avgCharWidthPx = 8): number {
+	// Handle parenthetical splitting (from renderWrappedText logic)
+	const titlePattern = /^(.*)\s+(\(.+\))$/
+	const match = title.match(titlePattern)
+	if (match?.[1] && match[2] && title.length > 36) {
+		return 2 // Will be split into main title + parenthetical
+	}
 	
-	return { titleY, topMargin }
+	// Estimate width and determine if wrapping is needed
+	const estimatedWidth = title.length * avgCharWidthPx
+	if (maxWidthPx && estimatedWidth > maxWidthPx) {
+		const words = title.split(/\s+/).filter(Boolean)
+		if (words.length > 1) {
+			// renderWrappedText splits into 2 balanced lines
+			return 2
+		}
+		// Single very long word - may overflow but renderWrappedText keeps as 1 line
+		return 1
+	}
+	
+	return 1 // Single line
+}
+
+/**
+ * Calculates dynamic title positioning with proper spacing that adapts to title length.
+ * Provides bulletproof title placement that prevents clipping regardless of title length.
+ * @param title - The title text to measure
+ * @param maxTitleWidth - Available width for the title (typically width - 60px)
+ * @param customTopMargin - Override for special cases (optional)
+ * @returns Object with titleY position, topMargin, and estimated title height
+ */
+export function calculateTitleLayout(title?: string, maxTitleWidth?: number, customTopMargin?: number): { 
+	titleY: number; 
+	topMargin: number;
+	estimatedTitleHeight: number;
+} {
+	// If no title provided, use conservative defaults
+	if (!title) {
+		const topMargin = customTopMargin || 65
+		return { titleY: 15, topMargin, estimatedTitleHeight: 16 }
+	}
+	
+	const fontSize = 16 // Title font size in pixels
+	const lineHeight = 1.1 // Line height multiplier from renderWrappedText
+	const titleBufferTop = 15 // Space above title for proper rendering
+	const titleBufferBottom = 15 // Minimum space between title and chart
+	
+	// Estimate how many lines the title will actually wrap to
+	const estimatedLines = maxTitleWidth ? estimateTitleLines(title, maxTitleWidth) : 1
+	
+	// Calculate actual title height including line spacing
+	const estimatedTitleHeight = fontSize * estimatedLines * lineHeight
+	
+	// Calculate required top margin: buffer + title height + buffer
+	const calculatedTopMargin = titleBufferTop + estimatedTitleHeight + titleBufferBottom
+	
+	// Use custom margin if provided, otherwise ensure minimum spacing
+	const topMargin = customTopMargin || Math.max(65, Math.ceil(calculatedTopMargin))
+	
+	return { 
+		titleY: titleBufferTop, 
+		topMargin, 
+		estimatedTitleHeight 
+	}
 }
