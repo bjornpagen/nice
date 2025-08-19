@@ -1562,3 +1562,75 @@ test("dedupes paraphrased prompt - volcanic hazards from map", () => {
 		"<p>Imagine that a campsite is built at the location indicated on the map. Which two volcanic hazards could affect the campsite during a volcanic eruption?</p>"
 	)
 })
+
+test("dedupes paraphrased prompt - outputs of photosynthesis selection phrase", () => {
+	const item: AssessmentItemInput = {
+		identifier: "outputs-of-photosynthesis-multiple-select",
+		title: "Outputs of photosynthesis",
+		responseDeclarations: [
+			{ identifier: "choice_interaction", cardinality: "multiple", baseType: "identifier", correct: ["C", "D"] }
+		],
+		widgets: {},
+		body: [
+			{ type: "paragraph", content: [{ type: "text", content: "Which of these are outputs of photosynthesis?" }] },
+			{ type: "blockSlot", slotId: "choice_interaction" }
+		],
+		interactions: {
+			choice_interaction: {
+				type: "choiceInteraction",
+				responseIdentifier: "choice_interaction",
+				shuffle: true,
+				minChoices: 1,
+				maxChoices: 4,
+				prompt: [
+					{ type: "text", content: "Which of the following are outputs of photosynthesis? Select all that apply." }
+				],
+				choices: [
+					{
+						identifier: "A",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "carbon dioxide" }] }],
+						feedback: null
+					},
+					{
+						identifier: "B",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "water" }] }],
+						feedback: null
+					},
+					{
+						identifier: "C",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "oxygen" }] }],
+						feedback: null
+					},
+					{
+						identifier: "D",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "sugars" }] }],
+						feedback: null
+					}
+				]
+			}
+		},
+		feedback: {
+			correct: [
+				{ type: "paragraph", content: [{ type: "text", content: "Correct! Oxygen and sugars are outputs of photosynthesis." }] }
+			],
+			incorrect: [
+				{
+					type: "paragraph",
+					content: [
+						{
+							type: "text",
+							content:
+								"Not quite. The outputs of photosynthesis include oxygen and sugars, while carbon dioxide and water are inputs."
+						}
+					]
+				}
+			]
+		}
+	}
+
+	const xml = compile(item)
+	// Prompt must be present
+	expect(xml).toContain("Which of the following are outputs of photosynthesis? Select all that apply.")
+	// Body variant should be removed
+	expect(xml).not.toContain("<p>Which of these are outputs of photosynthesis?</p>")
+})

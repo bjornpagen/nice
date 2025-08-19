@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { allExamples } from "@/lib/qti-generation/examples"
 import { AssessmentItemShellSchema } from "@/lib/qti-generation/schemas"
 import type { ImageContext } from "@/lib/qti-generation/structured/perseus-image-resolver"
+import { caretBanPromptSection } from "@/lib/ai/prompts/utils/caret"
 
 // Helper to convert a full AssessmentItemInput into a shell for prompt examples
 function createShellFromExample(item: (typeof allExamples)[0]) {
@@ -684,10 +685,10 @@ ${perseusJson}
   }
   \`\`\`
 
-  **BANNED: PSEUDO-TABLES AND PIPE CHARACTERS IN BODY**
+  **BANNED: PSEUDO-TABLES AND PIPE/CARET CHARACTERS IN TEXT**
   - NEVER simulate tables by stacking paragraphs with delimiter characters (e.g., "Substance | Density ...").
   - ALWAYS replace such lists with a dedicated table widget slot in the body and include its slotId in the widgets array.
-  - ABSOLUTE BAN: The vertical bar character \`|\` MUST NEVER appear in any text content anywhere in the output (body, prompts, feedback, choices). Use proper table widgets instead of textual pipes.
+  - ABSOLUTE BAN: The vertical bar character \`|\` and the caret character \`^\` MUST NEVER appear in any text content anywhere in the output (body, prompts, feedback, choices). Use proper table widgets instead of textual pipes, and express exponents in MathML.
 
   Negative example (DO NOT OUTPUT) — pseudo-table paragraphs in body:
   \`\`\`json
@@ -987,6 +988,34 @@ Return ONLY the JSON object for the assessment shell.
 ]
 // Error: pipe characters are banned; use a table widget slot instead
 
+// Error: caret characters are banned; use MathML exponents instead
+// WRONG inline text example: "m/s^2"
+// CORRECT inline items example:
+// [
+//   { "type": "text", "content": " " },
+//   { "type": "math", "mathml": "<mfrac><mi>m</mi><msup><mi>s</mi><mn>2</mn></msup></mfrac>" },
+//   { "type": "text", "content": "." }
+// ]
+
+**Pipes in Text BANNED in the body — Use proper data tables instead of textual pipes:**
+WRONG:
+\`\`\`
+{
+  "type": "paragraph",
+  "content": [
+    { "type": "text", "content": "Seconds | Meters" }
+  ]
+}
+\`\`\`
+
+CORRECT:
+\`\`\`
+{
+  "type": "blockSlot",
+  "slotId": "choice_a_table"
+}
+\`\`\`
+
 **3. Banned Content (LaTeX, Deprecated MathML):**
 
 **WRONG (LaTeX in text content):**
@@ -1037,6 +1066,8 @@ WRONG: \`costs $5\` (bare dollar) --> CORRECT: \`costs <math><mo>$</mo><mn>5</mn
 **Deprecated <mfenced> - ALL BANNED:**
 WRONG: \`<mfenced open="|" close="|"><mrow><mo>-</mo><mn>6</mn></mrow></mfenced>\`
 CORRECT: \`<mrow><mo>|</mo><mrow><mo>-</mo><mn>6</mn></mrow><mo>|</mo></mrow>\`
+
+${caretBanPromptSection}
 
 WRONG: \`<mfenced open="(" close=")"><mrow><mo>-</mo><mfrac>...</mfrac></mrow></mfenced>\`
 CORRECT: \`<mrow><mo>(</mo><mrow><mo>-</mo><mfrac>...</mfrac></mrow><mo>)</mo></mrow>\`

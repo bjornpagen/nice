@@ -1,4 +1,5 @@
 import type { ImageContext } from "@/lib/qti-generation/structured/perseus-image-resolver"
+import { caretBanPromptSection } from "@/lib/ai/prompts/utils/caret"
 import type { allWidgetSchemas } from "@/lib/widgets/generators"
 export function createInteractionContentPrompt(
 	perseusJson: string,
@@ -278,6 +279,35 @@ WRONG: \`costs $5\` (bare dollar) --> CORRECT: \`costs <math><mo>$</mo><mn>5</mn
 **Deprecated MathML BANNED:**
 WRONG: \`<mfenced open="|" close="|"><mi>x</mi></mfenced>\` --> CORRECT: \`<mrow><mo>|</mo><mi>x</mi><mo>|</mo></mrow>\`
 WRONG: \`<mfenced open="(" close=")">content</mfenced>\` --> CORRECT: \`<mrow><mo>(</mo>content<mo>)</mo></mrow>\`
+
+${caretBanPromptSection}
+
+**Pipes in Text BANNED — Use widget slots for tables inside choices:**
+WRONG (pipes in a choice paragraph):
+\`\`\`
+{
+  "choices": [
+    {
+      "identifier": "A",
+      "content": [
+        { "type": "paragraph", "content": [ { "type": "text", "content": "Seconds | Meters" } ] }
+      ]
+    }
+  ]
+}
+\`\`\`
+
+CORRECT (embed the declared table widget slot):
+\`\`\`
+{
+  "choices": [
+    {
+      "identifier": "A",
+      "content": [ { "type": "blockSlot", "slotId": "choice_a_table" } ]
+    }
+  ]
+}
+\`\`\`
 
 **QTI Content Model Violations:**
 

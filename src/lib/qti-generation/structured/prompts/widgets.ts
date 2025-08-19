@@ -2,6 +2,7 @@ import type { AnyInteraction } from "@/lib/qti-generation/schemas"
 import type { ImageContext } from "@/lib/qti-generation/structured/perseus-image-resolver"
 import { type WidgetCollectionName, widgetCollections } from "@/lib/widget-collections"
 import { allWidgetSchemas } from "@/lib/widgets/generators"
+import { caretBanPromptSection } from "@/lib/ai/prompts/utils/caret"
 export function createWidgetContentPrompt(
 	perseusJson: string,
 	assessmentShell: unknown,
@@ -262,6 +263,44 @@ WRONG: \`costs $5\` (bare dollar) --> CORRECT: \`costs <math><mo>$</mo><mn>5</mn
 **Deprecated MathML BANNED:**
 WRONG: \`<mfenced open="|" close="|"><mi>x</mi></mfenced>\` --> CORRECT: \`<mrow><mo>|</mo><mi>x</mi><mo>|</mo></mrow>\`
 WRONG: \`<mfenced open="(" close=")">content</mfenced>\` --> CORRECT: \`<mrow><mo>(</mo>content<mo>)</mo></mrow>\`
+
+${caretBanPromptSection}
+
+**Pipes in Text BANNED — Use proper data table widgets instead of textual pipes:**
+WRONG (pseudo-table using pipes in widget content):
+\`\`\`
+{
+  "some_table": {
+    "type": "dataTable",
+    "columns": [
+      { "key": "c1", "label": [{ "type": "text", "content": "Seconds | Meters" }], "isNumeric": false }
+    ],
+    "data": [
+      [{ "type": "inline", "content": [{ "type": "text", "content": "8 | 225" }] }]
+    ]
+  }
+}
+\`\`\`
+
+CORRECT (structured columns and cells, no text pipes):
+\`\`\`
+{
+  "some_table": {
+    "type": "dataTable",
+    "columns": [
+      { "key": "seconds", "label": [{ "type": "text", "content": "Seconds" }], "isNumeric": true },
+      { "key": "meters",  "label": [{ "type": "text", "content": "Meters" }],  "isNumeric": true }
+    ],
+    "data": [
+      [
+        { "type": "inline", "content": [{ "type": "text", "content": "8" }] },
+        { "type": "inline", "content": [{ "type": "text", "content": "225" }] }
+      ]
+    ],
+    "rowHeaderKey": "seconds"
+  }
+}
+\`\`\`
 
 **QTI Content Model Violations:**
 
