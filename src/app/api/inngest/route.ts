@@ -2,7 +2,6 @@ import { serve } from "inngest/next"
 import { inngest } from "@/inngest/client"
 // Import QTI workers
 import { clearAllAssessmentItemData } from "@/inngest/functions/clear-all-assessment-item-data"
-import { clearCourseXmlData } from "@/inngest/functions/clear-course-xml-data"
 import { helloWorld } from "@/inngest/functions/hello"
 import { orchestrateHardcodedScienceClearXmlForScienceWidgets } from "@/inngest/functions/migrations/clear-science-xml-for-science-widgets"
 import { orchestrateHardcodedHistoryItemMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-item-migration"
@@ -112,7 +111,6 @@ export const { GET, POST, PUT } = serve({
 		ingestAssessmentLineItems,
 		// QTI Functions
 		clearAllAssessmentItemData,
-		clearCourseXmlData,
 		convertPerseusArticleToQtiStimulus,
 		convertPerseusQuestionToQtiItem,
 		convertPerseusQuestionToDifferentiatedQtiItems,
