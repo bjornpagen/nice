@@ -5,6 +5,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
 import {
+	calculateLineLegendLayout,
 	calculateTitleLayout,
 	calculateXAxisLayout,
 	calculateYAxisLayout,
@@ -352,7 +353,14 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
 	const { titleY, topMargin } = calculateTitleLayout(title, width - 60)
-	const pad = { top: topMargin, right: 30, bottom: bottomMargin, left: leftMargin }
+	
+	// Calculate line legend layout for dedicated label area
+	const lineCount = lines.length
+	const basePadRight = 30
+	const { requiredRightMargin } = calculateLineLegendLayout(lineCount, 0, 0) // chartRight/chartTop calculated after padding
+	const rightMargin = lineCount > 0 ? requiredRightMargin : basePadRight
+	
+	const pad = { top: topMargin, right: rightMargin, bottom: bottomMargin, left: leftMargin }
 	const chartWidth = width - pad.left - pad.right
 	const chartHeight = height - pad.top - pad.bottom
 
@@ -491,58 +499,27 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	}
 	svg += wrapInClippedGroup("chartArea", lineContent)
 	
-	// Render line labels outside clipped area so they stay visible
-	for (const line of lines) {
-		if (line.type === "bestFit") {
-			if (line.method === "linear") {
-				const coeff = computeLinearRegression(points)
-				if (coeff) {
-					const y2 = coeff.slope * xAxis.max + coeff.yIntercept
-					const labelX = toSvgX(xAxis.max) - 5
-					const labelY = toSvgY(clamp(y2, yAxis.min, yAxis.max)) - 6
-					// Ensure label stays within chart bounds
-					const clampedLabelY = clamp(labelY, pad.top + 10, height - pad.bottom - 10)
-					svg += `<text x="${labelX}" y="${clampedLabelY}" text-anchor="end" fill="black">${abbreviateMonth(line.label)}</text>`
-				}
-			}
-			if (line.method === "quadratic") {
-				const coeff = computeQuadraticRegression(points)
-				if (coeff) {
-					const yRight = coeff.a * xAxis.max ** 2 + coeff.b * xAxis.max + coeff.c
-					const labelX = toSvgX(xAxis.max) - 5
-					const labelY = toSvgY(clamp(yRight, yAxis.min, yAxis.max)) - 6
-					// Ensure label stays within chart bounds
-					const clampedLabelY = clamp(labelY, pad.top + 10, height - pad.bottom - 10)
-					svg += `<text x="${labelX}" y="${clampedLabelY}" text-anchor="end" fill="black">${abbreviateMonth(line.label)}</text>`
-				}
-			}
-			if (line.method === "exponential") {
-				const coeff = computeExponentialRegression(points)
-				if (coeff) {
-					const yRight = coeff.a * Math.exp(coeff.b * xAxis.max)
-					const labelX = toSvgX(xAxis.max) - 5
-					const labelY = toSvgY(clamp(yRight, yAxis.min, yAxis.max)) - 6
-					// Ensure label stays within chart bounds
-					const clampedLabelY = clamp(labelY, pad.top + 10, height - pad.bottom - 10)
-					svg += `<text x="${labelX}" y="${clampedLabelY}" text-anchor="end" fill="black">${abbreviateMonth(line.label)}</text>`
-				}
-			}
-		} else if (line.type === "twoPoints") {
-			const { a, b } = line
-			if (a.x === b.x) {
-				const labelX = toSvgX(a.x) + 6
-				const labelY = clamp(toSvgY(yAxis.max) + 14, pad.top + 10, height - pad.bottom - 10)
-				svg += `<text x="${labelX}" y="${labelY}" fill="black">${abbreviateMonth(line.label)}</text>`
-			} else {
-				const slope = (b.y - a.y) / (b.x - a.x)
-				const intercept = a.y - slope * a.x
-				const yAtMax = slope * xAxis.max + intercept
-				const labelX = toSvgX(xAxis.max) - 5
-				const labelY = toSvgY(clamp(yAtMax, yAxis.min, yAxis.max)) - 6
-				// Ensure label stays within chart bounds
-				const clampedLabelY = clamp(labelY, pad.top + 10, height - pad.bottom - 10)
-				svg += `<text x="${labelX}" y="${clampedLabelY}" text-anchor="end" fill="black">${abbreviateMonth(line.label)}</text>`
-			}
+	// Render line labels in dedicated legend area to prevent conflicts
+	if (lines.length > 0) {
+		const chartRight = pad.left + chartWidth
+		const { legendAreaX, legendStartY, legendSpacing } = calculateLineLegendLayout(lines.length, chartRight, pad.top)
+		
+		for (let i = 0; i < lines.length; i++) {
+			const line = lines[i]
+			if (!line) continue
+			
+			const legendY = legendStartY + i * legendSpacing
+			const lineStartX = legendAreaX
+			const lineEndX = legendAreaX + 20
+			const lineCenterY = legendY - 3
+			
+			// Draw small line sample with same style as the actual line
+			const styleStr = styleAttrs(line.style)
+			svg += `<line x1="${lineStartX}" y1="${lineCenterY}" x2="${lineEndX}" y2="${lineCenterY}"${styleStr}/>`
+			
+			// Label positioned after the line sample
+			svg += `<text x="${lineEndX + 5}" y="${legendY}" fill="black" text-anchor="start">${abbreviateMonth(line.label)}</text>`
+			includeText(ext, lineEndX + 5, abbreviateMonth(line.label), "start", 7)
 		}
 	}
 

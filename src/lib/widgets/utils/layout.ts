@@ -254,3 +254,37 @@ export function calculateTitleLayout(title?: string, maxTitleWidth?: number, cus
 		estimatedTitleHeight 
 	}
 }
+
+/**
+ * Calculates layout for a dedicated line legend area positioned outside the chart.
+ * Prevents label conflicts with curves, points, and axis elements.
+ * @param lineCount - Number of line labels to accommodate
+ * @param chartRight - Right edge of chart area (pad.left + chartWidth)
+ * @param chartTop - Top edge of chart area (pad.top)
+ * @param legendSpacing - Vertical spacing between legend items (default: 18px)
+ * @returns Object with legend positioning and required right margin
+ */
+export function calculateLineLegendLayout(
+	lineCount: number,
+	chartRight: number,
+	chartTop: number,
+	legendSpacing = 18
+): {
+	legendAreaX: number;
+	legendStartY: number;
+	legendSpacing: number;
+	requiredRightMargin: number;
+} {
+	const legendPadding = 15 // Space between chart and legend
+	const maxLabelWidth = 80 // Estimated max width for line labels
+	const legendAreaX = chartRight + legendPadding
+	const legendStartY = chartTop + 10 // Small offset from chart top
+	const requiredRightMargin = legendPadding + maxLabelWidth + 10 // Extra buffer
+	
+	return {
+		legendAreaX,
+		legendStartY,
+		legendSpacing,
+		requiredRightMargin
+	}
+}
