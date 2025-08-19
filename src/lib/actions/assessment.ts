@@ -92,32 +92,73 @@ export async function processQuestionResponse(
 		assessmentAttemptNumber
 	})
 
-	let isCorrect = false
+	// Fetch authoritative response declarations to validate identifiers
+	/**
+	 * IMPORTANT: Temporary compatibility with AE Studios' OTI/QTI service
+	 *
+	 * We currently rely on the provider's JSON representation of assessment items
+	 * (e.g., `responseDeclarations` on the GET /assessment-items/:id response) to
+	 * derive the set of declared response identifiers for validation and filtering.
+	 * This is necessary to harden against the iframe/player emitting undeclared
+	 * identifiers (e.g., a stray "RESPONSE").
+	 *
+	 * TODO(migration): When we migrate off the current AE Studios implementation
+	 * of OTI/QTI, REWRITE this logic to parse the raw XML (`rawXml`) directly
+	 * to extract response declarations, their identifiers, cardinalities, and
+	 * base types. Do not depend on provider-specific JSON shapes. The XML parse
+	 * must be the single source of truth to avoid vendor lock-in and drift.
+	 *
+	 * Migration acceptance criteria:
+	 * - Parse <qti-response-declaration> nodes from XML and compute `allowedIds`
+	 * - Respect record vs single/multiple/ordered cardinality for how we submit
+	 * - Keep unknown identifiers strictly rejected (no fallbacks)
+	 * - Preserve the behavior documented by tests in
+	 *   `tests/actions/assessment/response-filtering.test.ts`
+	 */
+	const itemResult = await errors.try(qti.getAssessmentItem(qtiItemId))
+	if (itemResult.error) {
+		logger.error("failed to get qti assessment item for response processing", { error: itemResult.error, qtiItemId })
+		throw errors.wrap(itemResult.error, "qti get assessment item")
+	}
+	const declarations = itemResult.data.responseDeclarations ?? []
+	const allowedIds = new Set(declarations.map((d) => d.identifier))
+	if (allowedIds.size === 0) {
+		logger.error("qti item has no response declarations", { qtiItemId })
+		throw errors.new("qti item: no response declarations")
+	}
 
 	// Handle fill-in-the-blank questions with multiple responses
 	if (typeof selectedResponse === "object" && !Array.isArray(selectedResponse) && selectedResponse !== null) {
-		// This is a fill-in-the-blank question with multiple inputs.
-		// The QTI API expects each response to be processed in a separate API call.
-		const responseEntries = Object.entries(selectedResponse)
+		const originalEntries = Object.entries(selectedResponse)
+		const responseEntries = originalEntries.filter(([id]) => allowedIds.has(id))
 
 		logger.info("processing multi-input question", {
 			qtiItemId,
 			responseCount: responseEntries.length,
-			responseIdentifiers: responseEntries.map(([id]) => id)
+			responseIdentifiers: responseEntries.map(([id]) => id),
+			ignoredIdentifiers: originalEntries.filter(([id]) => !allowedIds.has(id)).map(([id]) => id)
 		})
+
+		if (responseEntries.length === 0) {
+			logger.error("no declared response identifiers present in selected response", {
+				qtiItemId,
+				allowedIdentifiers: Array.from(allowedIds),
+				originalIdentifiers: originalEntries.map(([id]) => id)
+			})
+			throw errors.new("no declared response identifiers")
+		}
 
 		const results = await Promise.all(
 			responseEntries.map(([identifier, value]) =>
 				errors.try(
 					qti.processResponse(qtiItemId, {
 						responseIdentifier: identifier,
-						value: String(value) // Ensure value is a string
+						value: String(value)
 					})
 				)
 			)
 		)
 
-		// Check for any failed API calls
 		const anyErrors = results.some((r) => r.error)
 		if (anyErrors) {
 			const failedResponses = results.filter((r) => r.error)
@@ -132,32 +173,40 @@ export async function processQuestionResponse(
 			throw errors.new("qti response processing failed for multi-input question")
 		}
 
-		// The entire question is correct only if ALL individual responses are correct.
-		isCorrect = results.every((r) => r.data && r.data.score > 0)
-
+		const isAllCorrect = results.every((r) => r.data && r.data.score > 0)
 		logger.info("multi-input question processing complete", {
 			qtiItemId,
-			isCorrect,
+			isCorrect: isAllCorrect,
 			individualScores: results.map((r, idx) => ({
 				identifier: responseEntries[idx]?.[0],
 				score: r.data?.score
 			}))
 		})
-	} else {
-		// Single response or array response (multi-select)
-		const qtiResult = await errors.try(qti.processResponse(qtiItemId, { responseIdentifier, value: selectedResponse }))
-		if (qtiResult.error) {
-			logger.error("qti response processing failed", { error: qtiResult.error, qtiItemId })
-			throw errors.wrap(qtiResult.error, "qti response processing")
-		}
 
-		isCorrect = qtiResult.data.score > 0
+		return {
+			isCorrect: isAllCorrect,
+			score: isAllCorrect ? 1 : 0,
+			feedback: isAllCorrect ? "Correct!" : "Not quite right. Try again."
+		} as const
 	}
 
-	// External per-question logging and finalize removed
+	// Single response or array response (multi-select)
+	if (!allowedIds.has(responseIdentifier)) {
+		logger.error("undeclared response identifier for single response", {
+			qtiItemId,
+			responseIdentifier,
+			allowedIdentifiers: Array.from(allowedIds)
+		})
+		throw errors.new("undeclared response identifier")
+	}
 
-	// For fill-in-the-blank questions, we don't have a single score/feedback
-	// Return a simplified response
+	const qtiResult = await errors.try(qti.processResponse(qtiItemId, { responseIdentifier, value: selectedResponse }))
+	if (qtiResult.error) {
+		logger.error("qti response processing failed", { error: qtiResult.error, qtiItemId })
+		throw errors.wrap(qtiResult.error, "qti response processing")
+	}
+
+	const isCorrect = qtiResult.data.score > 0
 	return {
 		isCorrect,
 		score: isCorrect ? 1 : 0,
@@ -250,31 +299,82 @@ export async function submitAnswer(
 	}
 
 	// Process the response to determine correctness
+	/**
+	 * IMPORTANT: Temporary compatibility with AE Studios' OTI/QTI service
+	 *
+	 * See note in `processQuestionResponse` above. The same migration work applies
+	 * here when we remove reliance on provider JSON and parse `rawXml` instead
+	 * to obtain declared response identifiers and cardinalities.
+	 */
 	let isCorrect = false
+
+	// Fetch authoritative response declarations to validate identifiers
+	/**
+	 * IMPORTANT: Temporary compatibility with AE Studios' OTI/QTI service
+	 *
+	 * We currently rely on the provider's JSON representation of assessment items
+	 * (e.g., `responseDeclarations` on the GET /assessment-items/:id response) to
+	 * derive the set of declared response identifiers for validation and filtering.
+	 * This is necessary to harden against the iframe/player emitting undeclared
+	 * identifiers (e.g., a stray "RESPONSE").
+	 *
+	 * TODO(migration): When we migrate off the current AE Studios implementation
+	 * of OTI/QTI, REWRITE this logic to parse the raw XML (`rawXml`) directly
+	 * to extract response declarations, their identifiers, cardinalities, and
+	 * base types. Do not depend on provider-specific JSON shapes. The XML parse
+	 * must be the single source of truth to avoid vendor lock-in and drift.
+	 *
+	 * Migration acceptance criteria:
+	 * - Parse <qti-response-declaration> nodes from XML and compute `allowedIds`
+	 * - Respect record vs single/multiple/ordered cardinality for how we submit
+	 * - Keep unknown identifiers strictly rejected (no fallbacks)
+	 * - Preserve the behavior documented by tests in
+	 *   `tests/actions/assessment/response-filtering.test.ts`
+	 */
+	const itemResult = await errors.try(qti.getAssessmentItem(questionId))
+	if (itemResult.error) {
+		logger.error("failed to get qti assessment item for submit", { error: itemResult.error, questionId })
+		throw errors.wrap(itemResult.error, "qti get assessment item")
+	}
+	const declarations = itemResult.data.responseDeclarations ?? []
+	const allowedIds = new Set(declarations.map((d) => d.identifier))
+	if (allowedIds.size === 0) {
+		logger.error("qti item has no response declarations", { questionId })
+		throw errors.new("qti item: no response declarations")
+	}
 
 	// Handle fill-in-the-blank questions with multiple responses
 	if (typeof responseValue === "object" && !Array.isArray(responseValue) && responseValue !== null) {
-		// This is a fill-in-the-blank question with multiple inputs.
-		const responseEntries = Object.entries(responseValue)
+		const originalEntries = Object.entries(responseValue)
+		const responseEntries = originalEntries.filter(([id]) => allowedIds.has(id))
 
 		logger.info("processing multi-input question", {
 			qtiItemId: questionId,
 			responseCount: responseEntries.length,
-			responseIdentifiers: responseEntries.map(([id]) => id)
+			responseIdentifiers: responseEntries.map(([id]) => id),
+			ignoredIdentifiers: originalEntries.filter(([id]) => !allowedIds.has(id)).map(([id]) => id)
 		})
+
+		if (responseEntries.length === 0) {
+			logger.error("no declared response identifiers present in selected response", {
+				qtiItemId: questionId,
+				allowedIdentifiers: Array.from(allowedIds),
+				originalIdentifiers: originalEntries.map(([id]) => id)
+			})
+			throw errors.new("no declared response identifiers")
+		}
 
 		const results = await Promise.all(
 			responseEntries.map(([identifier, value]) =>
 				errors.try(
 					qti.processResponse(questionId, {
 						responseIdentifier: identifier,
-						value: String(value) // Ensure value is a string
+						value: String(value)
 					})
 				)
 			)
 		)
 
-		// Check for any failed API calls
 		const anyErrors = results.some((r) => r.error)
 		if (anyErrors) {
 			const failedResponses = results.filter((r) => r.error)
@@ -302,6 +402,15 @@ export async function submitAnswer(
 		})
 	} else {
 		// Single response or array response (multi-select)
+		if (!allowedIds.has(responseIdentifier)) {
+			logger.error("undeclared response identifier for single response", {
+				qtiItemId: questionId,
+				responseIdentifier,
+				allowedIdentifiers: Array.from(allowedIds)
+			})
+			throw errors.new("undeclared response identifier")
+		}
+
 		const qtiResult = await errors.try(qti.processResponse(questionId, { responseIdentifier, value: responseValue }))
 		if (qtiResult.error) {
 			logger.error("qti response processing failed", { error: qtiResult.error, qtiItemId: questionId })
