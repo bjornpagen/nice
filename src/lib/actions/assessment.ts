@@ -625,9 +625,7 @@ export const getNextAttemptNumber = attempt.getNext
  * @param onerosterAssessmentSourcedId - The OneRoster assessment resource sourcedId
  * @returns Whether the user is already proficient (true) or not (false)
  */
-export async function checkExistingProficiency(
-	onerosterAssessmentSourcedId: string
-): Promise<boolean> {
+export async function checkExistingProficiency(onerosterAssessmentSourcedId: string): Promise<boolean> {
 	const { userId } = await auth()
 	if (!userId) {
 		logger.error("checkExistingProficiency failed: user not authenticated")

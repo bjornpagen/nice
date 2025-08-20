@@ -112,6 +112,143 @@ export async function accumulateCaliperWatchTime(
 	}
 }
 
+// Build server-side actor/context for Caliper events
+async function buildCaliperPayload(
+	onerosterUserSourcedId: string,
+	onerosterVideoResourceSourcedId: string,
+	videoTitle: string,
+	courseInfo: { subjectSlug: string; courseSlug: string }
+) {
+	if (!isSubjectSlug(courseInfo.subjectSlug)) {
+		logger.error("caliper payload: invalid subject slug", { subjectSlug: courseInfo.subjectSlug })
+		throw errors.new("invalid subject slug")
+	}
+
+	const { userId: clerkUserId } = await auth()
+	if (!clerkUserId) {
+		logger.error("caliper payload: user not authenticated")
+		throw errors.new("user not authenticated")
+	}
+
+	const userResult = await errors.try((await clerkClient()).users.getUser(clerkUserId))
+	if (userResult.error) {
+		logger.error("caliper payload: get user", { error: userResult.error })
+		throw errors.wrap(userResult.error, "caliper user fetch")
+	}
+	const userEmail = userResult.data.emailAddresses[0]?.emailAddress
+	if (!userEmail) {
+		logger.error("caliper payload: missing user email", { clerkUserId })
+		throw errors.new("user email required")
+	}
+
+	const normalizedResourceId = extractResourceIdFromCompoundId(onerosterVideoResourceSourcedId)
+	const activityId = normalizeCaliperId(normalizedResourceId)
+
+	const actor = {
+		id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${onerosterUserSourcedId}`,
+		type: "TimebackUser" as const,
+		email: userEmail
+	}
+	const context = {
+		id: `${process.env.NEXT_PUBLIC_APP_DOMAIN}/${courseInfo.subjectSlug}/${courseInfo.courseSlug}`,
+		type: "TimebackActivityContext" as const,
+		subject: CALIPER_SUBJECT_MAPPING[courseInfo.subjectSlug],
+		app: { name: "Nice Academy" },
+		course: { name: courseInfo.courseSlug },
+		activity: { name: videoTitle, id: activityId }
+	}
+
+	return { actor, context }
+}
+
+// Server-only partial finalize: send only unreported delta and persist reported total
+export async function finalizeCaliperPartialTimeSpent(
+	clientUserSourcedId: string,
+	onerosterVideoResourceSourcedId: string,
+	videoTitle: string,
+	courseInfo: { subjectSlug: string; courseSlug: string }
+): Promise<void> {
+	const { userId } = await auth()
+	if (!userId) {
+		logger.error("caliper partial finalize: user not authenticated")
+		throw errors.new("user not authenticated")
+	}
+	const serverSourcedId = await getCurrentUserSourcedId(userId)
+	if (clientUserSourcedId !== serverSourcedId) {
+		logger.error("caliper partial finalize: sourcedId mismatch", { clientUserSourcedId, serverSourcedId })
+		throw errors.new("unauthorized sourcedId")
+	}
+
+	const state = await getCaliperVideoWatchState(serverSourcedId, onerosterVideoResourceSourcedId)
+	if (!state) {
+		logger.debug("caliper partial finalize: no state found; skipping", {
+			user: serverSourcedId,
+			videoId: onerosterVideoResourceSourcedId
+		})
+		return
+	}
+	if (state.finalizedAt) {
+		logger.debug("caliper partial finalize: already finalized; skipping", {
+			user: serverSourcedId,
+			videoId: onerosterVideoResourceSourcedId
+		})
+		return
+	}
+
+	const alreadyReported = state.reportedWatchTimeSeconds !== undefined ? state.reportedWatchTimeSeconds : 0
+	const deltaToReport = Math.max(0, state.cumulativeWatchTimeSeconds - alreadyReported)
+	if (deltaToReport <= 0) {
+		logger.debug("caliper partial finalize: no new delta; skipping", {
+			user: serverSourcedId,
+			videoId: onerosterVideoResourceSourcedId
+		})
+		return
+	}
+
+	const { actor, context } = await buildCaliperPayload(
+		serverSourcedId,
+		onerosterVideoResourceSourcedId,
+		videoTitle,
+		courseInfo
+	)
+
+	logger.info("caliper partial finalize: sending delta", {
+		videoId: onerosterVideoResourceSourcedId,
+		user: serverSourcedId,
+		delta: Math.floor(deltaToReport)
+	})
+
+	const sendResult = await errors.try(sendCaliperTimeSpentEvent(actor, context, Math.floor(deltaToReport)))
+	if (sendResult.error) {
+		logger.error("caliper partial finalize: failed to send", { error: sendResult.error })
+		throw errors.wrap(sendResult.error, "caliper partial timespent")
+	}
+
+	const newState: typeof state & { reportedWatchTimeSeconds: number } = {
+		...state,
+		reportedWatchTimeSeconds: alreadyReported + deltaToReport,
+		lastServerSyncAt: new Date().toISOString()
+	}
+	const setStateResult = await errors.try(
+		setCaliperVideoWatchState(serverSourcedId, onerosterVideoResourceSourcedId, newState)
+	)
+	if (setStateResult.error) {
+		logger.error("CRITICAL: caliper partial finalize: event sent but failed to persist state", {
+			videoId: onerosterVideoResourceSourcedId,
+			user: serverSourcedId,
+			reportedDelta: deltaToReport,
+			error: setStateResult.error
+		})
+		return
+	}
+
+	logger.info("caliper partial finalize: reported delta and updated state", {
+		videoId: onerosterVideoResourceSourcedId,
+		user: serverSourcedId,
+		reportedWatchTimeSeconds: newState.reportedWatchTimeSeconds
+	})
+}
+
 export async function finalizeCaliperTimeSpentEvent(
 	onerosterUserSourcedId: string,
 	onerosterVideoResourceSourcedId: string,
@@ -145,50 +282,39 @@ export async function finalizeCaliperTimeSpentEvent(
 		return
 	}
 
-	const userResult = await errors.try((await clerkClient()).users.getUser(clerkUserId))
-	if (userResult.error) {
-		logger.error("caliper finalize: get user", { error: userResult.error })
-		const cleanup = await errors.try(redis.del(lockKey))
-		if (cleanup.error) {
-			logger.error("caliper finalize: del lock after user error", { error: cleanup.error })
+	const alreadyReported = state.reportedWatchTimeSeconds !== undefined ? state.reportedWatchTimeSeconds : 0
+	const deltaToReport = Math.max(0, state.cumulativeWatchTimeSeconds - alreadyReported)
+
+	const { actor, context } = await buildCaliperPayload(
+		onerosterUserSourcedId,
+		onerosterVideoResourceSourcedId,
+		videoTitle,
+		courseInfo
+	)
+
+	if (deltaToReport > 0) {
+		logger.info("caliper finalize: sending timespent", {
+			videoId: onerosterVideoResourceSourcedId,
+			user: onerosterUserSourcedId,
+			delta: Math.floor(deltaToReport)
+		})
+		const sendResult = await errors.try(sendCaliperTimeSpentEvent(actor, context, Math.floor(deltaToReport)))
+		if (sendResult.error) {
+			logger.error("caliper finalize: failed to send timespent", { error: sendResult.error })
+			const cleanup = await errors.try(redis.del(lockKey))
+			if (cleanup.error) {
+				logger.error("caliper finalize: del lock after send error", { error: cleanup.error })
+			}
+			logger.error("caliper finalize: throwing after send error")
+			throw errors.wrap(sendResult.error, "caliper timespent send")
 		}
-		logger.error("caliper finalize: throwing after user fetch error", { error: userResult.error })
-		throw errors.wrap(userResult.error, "caliper user fetch")
 	}
-	const userEmail = userResult.data.emailAddresses[0]?.emailAddress
-	if (!userEmail) {
-		logger.error("caliper finalize: missing user email", { clerkUserId })
-		throw errors.new("user email required")
+
+	const finalState: typeof state & { reportedWatchTimeSeconds: number; finalizedAt: string } = {
+		...state,
+		reportedWatchTimeSeconds: alreadyReported + deltaToReport,
+		finalizedAt: new Date().toISOString()
 	}
-	if (!isSubjectSlug(courseInfo.subjectSlug)) {
-		logger.error("caliper finalize: invalid subject slug", { subjectSlug: courseInfo.subjectSlug })
-		throw errors.new("invalid subject slug")
-	}
-	const normalizedResourceId = extractResourceIdFromCompoundId(onerosterVideoResourceSourcedId)
-	const activityId = normalizeCaliperId(normalizedResourceId)
-	const actor = {
-		id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${onerosterUserSourcedId}`,
-		type: "TimebackUser" as const,
-		email: userEmail
-	}
-	const context = {
-		id: `${process.env.NEXT_PUBLIC_APP_DOMAIN}/${courseInfo.subjectSlug}/${courseInfo.courseSlug}`,
-		type: "TimebackActivityContext" as const,
-		subject: CALIPER_SUBJECT_MAPPING[courseInfo.subjectSlug],
-		app: { name: "Nice Academy" },
-		course: { name: courseInfo.courseSlug },
-		activity: { name: videoTitle, id: activityId }
-	}
-	logger.info("caliper finalize: sending timespent", {
-		videoId: onerosterVideoResourceSourcedId,
-		user: onerosterUserSourcedId
-	})
-	await sendCaliperTimeSpentEvent(actor, context, Math.floor(state.cumulativeWatchTimeSeconds))
-	logger.info("caliper finalize: sent timespent", {
-		videoId: onerosterVideoResourceSourcedId,
-		user: onerosterUserSourcedId
-	})
-	const finalState = { ...state, finalizedAt: new Date().toISOString() }
 	await setCaliperVideoWatchState(onerosterUserSourcedId, onerosterVideoResourceSourcedId, finalState)
 	const delResult = await errors.try(redis.del(lockKey))
 	if (delResult.error) {

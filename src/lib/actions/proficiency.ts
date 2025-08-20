@@ -4,12 +4,12 @@ import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
+import { getCurrentUserSourcedId } from "@/lib/authorization"
 import { oneroster, qti } from "@/lib/clients"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import { calculateProficiencyScore } from "@/lib/proficiency/core"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 import { assertPercentageInteger } from "@/lib/utils/score"
-import { getCurrentUserSourcedId } from "@/lib/authorization"
 
 interface ExercisePerformance {
 	exerciseId: string

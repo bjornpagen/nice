@@ -11,7 +11,9 @@ export const CaliperVideoWatchStateSchema = z.object({
 	lastKnownPositionSeconds: z.number().nonnegative(),
 	canonicalDurationSeconds: z.number().positive().nullable(),
 	finalizedAt: z.string().datetime().nullable(),
-	lastServerSyncAt: z.string().datetime().nullable()
+	lastServerSyncAt: z.string().datetime().nullable(),
+	// total already reported to analytics (optional for back-compat)
+	reportedWatchTimeSeconds: z.number().nonnegative().optional()
 })
 
 type CaliperVideoWatchState = z.infer<typeof CaliperVideoWatchStateSchema>
@@ -52,12 +54,16 @@ export async function getCaliperVideoWatchState(
 		logger.error("validate caliper video state", { error: validation.error, key })
 		throw errors.wrap(validation.error, "validate caliper video state")
 	}
+	const state = validation.data
 	const expireResult = await errors.try(redis.expire(key, CALIPER_VIDEO_STATE_TTL_SECONDS))
 	if (expireResult.error) {
 		logger.error("redis expire", { error: expireResult.error, key })
 		throw errors.wrap(expireResult.error, "redis expire caliper video state")
 	}
-	return validation.data
+	return {
+		...state,
+		reportedWatchTimeSeconds: state.reportedWatchTimeSeconds !== undefined ? state.reportedWatchTimeSeconds : 0
+	}
 }
 
 export async function setCaliperVideoWatchState(
@@ -70,7 +76,12 @@ export async function setCaliperVideoWatchState(
 		throw errors.new("persistence service unavailable")
 	}
 	const key = getCaliperVideoStateKey(userId, videoId)
-	const validation = CaliperVideoWatchStateSchema.safeParse(state)
+	// Enforce default before write
+	const incoming: CaliperVideoWatchState = {
+		...state,
+		reportedWatchTimeSeconds: state.reportedWatchTimeSeconds !== undefined ? state.reportedWatchTimeSeconds : 0
+	}
+	const validation = CaliperVideoWatchStateSchema.safeParse(incoming)
 	if (!validation.success) {
 		logger.error("invalid caliper video state input", { error: validation.error })
 		throw errors.wrap(validation.error, "invalid caliper video state")
