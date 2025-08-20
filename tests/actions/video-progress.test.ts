@@ -28,7 +28,14 @@ mock.module("@/lib/data/fetchers/oneroster", () => ({
 	...actualOnerosterFetchers,
 	getAllCoursesBySlug: (slug: string) => mockGetAllCoursesBySlug(slug),
 	getClass: (_id: string) => Promise.resolve(null),
-	getActiveEnrollmentsForUser: (_u: string) => Promise.resolve([])
+	getActiveEnrollmentsForUser: (_u: string) =>
+		Promise.resolve([
+			{
+				status: "active",
+				sourcedId: "enr_1",
+				class: { sourcedId: "nice_class_1", course: { sourcedId: "course_1" } }
+			}
+		])
 }))
 
 mock.module("@/lib/cache", () => ({

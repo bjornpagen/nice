@@ -113,6 +113,7 @@ export async function updateVideoProgress(
 		throw errors.new("user not authenticated")
 	}
 	const onerosterUserSourcedId = await getCurrentUserSourcedId(userId)
+
 	if (duration <= 0) {
 		logger.warn("video progress tracking skipped", {
 			onerosterVideoResourceSourcedId,

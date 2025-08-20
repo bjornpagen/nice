@@ -17,6 +17,7 @@ import type {
 import { extractResourceIdFromCompoundId, normalizeCaliperId } from "@/lib/caliper/utils"
 import { caliper } from "@/lib/clients"
 import { type NiceCaliperActor, type NiceCaliperContext, sendBankedXpAwardedEvent } from "@/lib/ports/analytics"
+import { getCurrentUserSourcedId } from "@/lib/authorization"
 
 const SENSOR_ID = env.NEXT_PUBLIC_APP_DOMAIN
 
@@ -44,6 +45,13 @@ export async function sendCaliperActivityCompletedEvent(
 	if (!userId) {
 		logger.error("sendCaliperActivityCompletedEvent failed: user not authenticated")
 		throw errors.new("user not authenticated")
+	}
+	const derivedUserId = await getCurrentUserSourcedId(userId)
+	const providedActorId = actor?.id ?? ""
+	const providedUserId = providedActorId.split("/").pop()
+	if (providedUserId !== derivedUserId) {
+		logger.error("caliper actor mismatch", { expectedUserId: derivedUserId, providedActorId })
+		throw errors.new("caliper actor mismatch")
 	}
 	logger.info("sending caliper activity completed event", {
 		actorId: actor.id,
@@ -124,6 +132,13 @@ export async function sendCaliperTimeSpentEvent(
 		logger.error("sendCaliperTimeSpentEvent failed: user not authenticated")
 		throw errors.new("user not authenticated")
 	}
+	const derivedUserId = await getCurrentUserSourcedId(userId)
+	const providedActorId = actor?.id ?? ""
+	const providedUserId = providedActorId.split("/").pop()
+	if (providedUserId !== derivedUserId) {
+		logger.error("caliper actor mismatch", { expectedUserId: derivedUserId, providedActorId })
+		throw errors.new("caliper actor mismatch")
+	}
 	logger.info("sending caliper time spent event", { actorId: actor.id, activityId: context.id, durationInSeconds })
 
 	// Use the new utility to normalize the activity ID.
@@ -180,6 +195,13 @@ export async function sendCaliperBankedXpAwardedEvent(
 	if (!userId) {
 		logger.error("sendCaliperBankedXpAwardedEvent failed: user not authenticated")
 		throw errors.new("user not authenticated")
+	}
+	const derivedUserId = await getCurrentUserSourcedId(userId)
+	const providedActorId = actor?.id ?? ""
+	const providedUserId = providedActorId.split("/").pop()
+	if (providedUserId !== derivedUserId) {
+		logger.error("caliper actor mismatch", { expectedUserId: derivedUserId, providedActorId })
+		throw errors.new("caliper actor mismatch")
 	}
 	const correlationId = randomUUID()
 	logger.info("sending caliper banked xp awarded event", {
