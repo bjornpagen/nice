@@ -1,20 +1,200 @@
 "use server"
 
-import { auth } from "@clerk/nextjs/server"
+import { auth, clerkClient } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { sendCaliperActivityCompletedEvent, sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { updateProficiencyFromAssessment } from "@/lib/actions/proficiency"
+import { getCurrentUserSourcedId } from "@/lib/authorization"
 import * as cacheUtils from "@/lib/cache"
 import { invalidateCache } from "@/lib/cache"
+import { extractResourceIdFromCompoundId, normalizeCaliperId } from "@/lib/caliper/utils"
 import { oneroster } from "@/lib/clients"
-import { VIDEO_COMPLETION_THRESHOLD_PERCENT } from "@/lib/constants/progress"
+import { VIDEO_COMPLETION_THRESHOLD_PERCENT, VIDEO_COMPLETION_THRESHOLD_RATIO } from "@/lib/constants/progress"
+import { CALIPER_SUBJECT_MAPPING, isSubjectSlug } from "@/lib/constants/subjects"
 import { getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
+import { redis } from "@/lib/redis"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 import { assertPercentageInteger, coercePercentageInteger } from "@/lib/utils/score"
+// Caliper additive tracking imports
+import { getCaliperFinalizationLockKey, getCaliperVideoWatchState, setCaliperVideoWatchState } from "@/lib/video-cache"
 // ADDED: Import the new XP service.
 import { awardXpForAssessment } from "@/lib/xp/service"
-import { getCurrentUserSourcedId } from "@/lib/authorization"
+
+// duplicate import removed below
+
+const CALIPER_ACCUMULATION_CADENCE_SECONDS = 10
+const CALIPER_MAX_DELTA_PER_SYNC = CALIPER_ACCUMULATION_CADENCE_SECONDS * 3
+const CALIPER_DURATION_TOLERANCE = 5
+const CALIPER_MAX_GROWTH_FACTOR_VS_WALLTIME = 1.5
+
+export async function accumulateCaliperWatchTime(
+	clientUserSourcedId: string,
+	onerosterVideoResourceSourcedId: string,
+	sessionDeltaSeconds: number,
+	currentPositionSeconds: number,
+	durationSeconds: number,
+	videoTitle: string,
+	courseInfo: { subjectSlug: string; courseSlug: string }
+) {
+	const { userId } = await auth()
+	if (!userId) {
+		logger.error("caliper accumulate: user not authenticated")
+		throw errors.new("user not authenticated")
+	}
+	const serverSourcedId = await getCurrentUserSourcedId(userId)
+	if (clientUserSourcedId !== serverSourcedId) {
+		logger.error("caliper accumulate: sourcedId mismatch", { clientUserSourcedId, serverSourcedId })
+		throw errors.new("unauthorized sourcedId")
+	}
+
+	if (sessionDeltaSeconds < 0 || !Number.isFinite(sessionDeltaSeconds)) {
+		logger.warn("caliper accumulate: invalid session delta", { sessionDeltaSeconds, max: CALIPER_MAX_DELTA_PER_SYNC })
+		return
+	}
+
+	// Do not hard-cap per sync; rely on wall-time guard with a small leeway
+
+	const now = new Date()
+	const currentState = (await getCaliperVideoWatchState(serverSourcedId, onerosterVideoResourceSourcedId)) ?? {
+		cumulativeWatchTimeSeconds: 0,
+		lastKnownPositionSeconds: 0,
+		canonicalDurationSeconds: null,
+		finalizedAt: null,
+		lastServerSyncAt: null
+	}
+
+	if (currentState.finalizedAt) return
+
+	const canonicalDuration = currentState.canonicalDurationSeconds ?? durationSeconds
+	if (Math.abs(durationSeconds - canonicalDuration) > CALIPER_DURATION_TOLERANCE) {
+		logger.warn("caliper accumulate: duration mismatch, retaining canonical", { durationSeconds, canonicalDuration })
+	}
+
+	let effectiveDelta = sessionDeltaSeconds
+	if (currentState.lastServerSyncAt) {
+		const sinceMs = now.getTime() - new Date(currentState.lastServerSyncAt).getTime()
+		const allowed = (sinceMs / 1000) * CALIPER_MAX_GROWTH_FACTOR_VS_WALLTIME
+		const SMALL_LEEWAY_SECONDS = 5
+		const guardAllowed = Math.max(allowed, SMALL_LEEWAY_SECONDS)
+
+		const nearCompletion =
+			canonicalDuration > 0 && currentPositionSeconds / canonicalDuration >= VIDEO_COMPLETION_THRESHOLD_RATIO
+
+		if (nearCompletion) {
+			// Allow enough to reach near-end for finalize, but avoid overshooting to duration exactly
+			const remainingToNinetyNine = Math.max(
+				0,
+				Math.max(0, canonicalDuration - 1) - currentState.cumulativeWatchTimeSeconds
+			)
+			if (effectiveDelta > guardAllowed && remainingToNinetyNine > 0) {
+				effectiveDelta = Math.min(effectiveDelta, remainingToNinetyNine)
+			}
+		} else if (effectiveDelta > guardAllowed) {
+			logger.warn("caliper accumulate: delta exceeds wall-time guard; clamping", { sessionDeltaSeconds, allowed })
+			effectiveDelta = Math.max(0, guardAllowed)
+		}
+	}
+
+	const newCumulative = Math.min(currentState.cumulativeWatchTimeSeconds + effectiveDelta, canonicalDuration)
+	const newState = {
+		...currentState,
+		cumulativeWatchTimeSeconds: newCumulative,
+		lastKnownPositionSeconds: Math.max(0, currentPositionSeconds),
+		canonicalDurationSeconds: canonicalDuration,
+		lastServerSyncAt: now.toISOString()
+	}
+
+	await setCaliperVideoWatchState(serverSourcedId, onerosterVideoResourceSourcedId, newState)
+
+	if (canonicalDuration > 0 && newCumulative / canonicalDuration >= VIDEO_COMPLETION_THRESHOLD_RATIO) {
+		await finalizeCaliperTimeSpentEvent(serverSourcedId, onerosterVideoResourceSourcedId, videoTitle, courseInfo)
+	}
+}
+
+export async function finalizeCaliperTimeSpentEvent(
+	onerosterUserSourcedId: string,
+	onerosterVideoResourceSourcedId: string,
+	videoTitle: string,
+	courseInfo: { subjectSlug: string; courseSlug: string }
+) {
+	if (!redis) {
+		logger.error("caliper finalize: redis unavailable")
+		throw errors.new("persistence service unavailable")
+	}
+	const { userId: clerkUserId } = await auth()
+	if (!clerkUserId) {
+		logger.error("caliper finalize: user not authenticated")
+		throw errors.new("user not authenticated")
+	}
+	const lockKey = getCaliperFinalizationLockKey(onerosterUserSourcedId, onerosterVideoResourceSourcedId)
+	const lockSet = await errors.try(redis.set(lockKey, "1", { EX: 30, NX: true }))
+	if (lockSet.error) {
+		logger.error("caliper finalize: set lock", { error: lockSet.error })
+		throw errors.wrap(lockSet.error, "caliper finalize lock")
+	}
+	if (!lockSet.data) {
+		return
+	}
+	const state = await getCaliperVideoWatchState(onerosterUserSourcedId, onerosterVideoResourceSourcedId)
+	if (!state || state.finalizedAt) {
+		const cleanup = await errors.try(redis.del(lockKey))
+		if (cleanup.error) {
+			logger.error("caliper finalize: del lock after no-op", { error: cleanup.error })
+		}
+		return
+	}
+
+	const userResult = await errors.try((await clerkClient()).users.getUser(clerkUserId))
+	if (userResult.error) {
+		logger.error("caliper finalize: get user", { error: userResult.error })
+		const cleanup = await errors.try(redis.del(lockKey))
+		if (cleanup.error) {
+			logger.error("caliper finalize: del lock after user error", { error: cleanup.error })
+		}
+		logger.error("caliper finalize: throwing after user fetch error", { error: userResult.error })
+		throw errors.wrap(userResult.error, "caliper user fetch")
+	}
+	const userEmail = userResult.data.emailAddresses[0]?.emailAddress
+	if (!userEmail) {
+		logger.error("caliper finalize: missing user email", { clerkUserId })
+		throw errors.new("user email required")
+	}
+	if (!isSubjectSlug(courseInfo.subjectSlug)) {
+		logger.error("caliper finalize: invalid subject slug", { subjectSlug: courseInfo.subjectSlug })
+		throw errors.new("invalid subject slug")
+	}
+	const normalizedResourceId = extractResourceIdFromCompoundId(onerosterVideoResourceSourcedId)
+	const activityId = normalizeCaliperId(normalizedResourceId)
+	const actor = {
+		id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${onerosterUserSourcedId}`,
+		type: "TimebackUser" as const,
+		email: userEmail
+	}
+	const context = {
+		id: `${process.env.NEXT_PUBLIC_APP_DOMAIN}/${courseInfo.subjectSlug}/${courseInfo.courseSlug}`,
+		type: "TimebackActivityContext" as const,
+		subject: CALIPER_SUBJECT_MAPPING[courseInfo.subjectSlug],
+		app: { name: "Nice Academy" },
+		course: { name: courseInfo.courseSlug },
+		activity: { name: videoTitle, id: activityId }
+	}
+	logger.info("caliper finalize: sending timespent", {
+		videoId: onerosterVideoResourceSourcedId,
+		user: onerosterUserSourcedId
+	})
+	await sendCaliperTimeSpentEvent(actor, context, Math.floor(state.cumulativeWatchTimeSeconds))
+	logger.info("caliper finalize: sent timespent", {
+		videoId: onerosterVideoResourceSourcedId,
+		user: onerosterUserSourcedId
+	})
+	const finalState = { ...state, finalizedAt: new Date().toISOString() }
+	await setCaliperVideoWatchState(onerosterUserSourcedId, onerosterVideoResourceSourcedId, finalState)
+	const delResult = await errors.try(redis.del(lockKey))
+	if (delResult.error) {
+		logger.error("caliper finalize: del lock", { error: delResult.error })
+	}
+}
 
 /**
  * Tracks that a user has viewed an article by creating a "completed"
@@ -518,12 +698,7 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 			sessionResultCount: sessionResults.length
 		})
 		const proficiencyResult = await errors.try(
-			updateProficiencyFromAssessment(
-				onerosterComponentResourceSourcedId,
-				attemptNumber,
-				sessionResults,
-				courseId
-			)
+			updateProficiencyFromAssessment(onerosterComponentResourceSourcedId, attemptNumber, sessionResults, courseId)
 		)
 		if (proficiencyResult.error) {
 			logger.error("failed to update proficiency from assessment", {

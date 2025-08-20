@@ -11,7 +11,7 @@ import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/
 import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { Button } from "@/components/ui/button"
 import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
-import { getVideoProgress, updateVideoProgress } from "@/lib/actions/tracking"
+import { accumulateCaliperWatchTime, finalizeCaliperTimeSpentEvent, getVideoProgress, updateVideoProgress } from "@/lib/actions/tracking"
 import { VIDEO_COMPLETION_THRESHOLD_PERCENT, VIDEO_COMPLETION_THRESHOLD_RATIO } from "@/lib/constants/progress"
 import { CALIPER_SUBJECT_MAPPING, type CaliperSubject, isSubjectSlug } from "@/lib/constants/subjects"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
@@ -55,6 +55,8 @@ export function Content({
 	const savedProgressRef = React.useRef<{ percentComplete: number } | null>(null)
 	// Show a custom initial play overlay instead of YouTube's default
 	const [showInitialPlayOverlay, setShowInitialPlayOverlay] = React.useState<boolean>(true)
+	// Track last server accumulation time while playing
+	const lastAccumulateAtRef = React.useRef<number | null>(null)
 
 	// Local UI state for read-only time display
 	const [elapsedSeconds, setElapsedSeconds] = React.useState<number>(0)
@@ -308,18 +310,79 @@ export function Content({
 					if (percentComplete >= VIDEO_COMPLETION_THRESHOLD_RATIO) {
 						setCurrentResourceCompleted(true)
 					}
+
+					// Accumulate watch time on server for robust finalize on navigate/unmount
+					if (!lastAccumulateAtRef.current) {
+						// Initialize clock when we detect active playback
+						lastAccumulateAtRef.current = Date.now()
+					} else {
+						const sinceMs = Date.now() - lastAccumulateAtRef.current
+						const deltaSeconds = Math.floor(sinceMs / 1000)
+						if (deltaSeconds > 0) {
+						void accumulateCaliperWatchTime(
+							onerosterUserSourcedId,
+							video.id,
+							deltaSeconds,
+							currentTime,
+							duration,
+							video.title,
+							{ subjectSlug: params.subject, courseSlug: params.course }
+						)
+						lastAccumulateAtRef.current = Date.now()
+						}
+					}
 				}
 			}
 		}, 3000) // Sync progress every 3 seconds
 
 		return () => clearInterval(intervalId)
-	}, [user, video.id, params.subject, params.course, setCurrentResourceCompleted])
+	}, [user, video.id, video.title, params.subject, params.course, setCurrentResourceCompleted])
 
 	// Cleanup: send cumulative event when component unmounts
 	React.useEffect(() => {
 		return () => {
 			// Prevent duplicate sends
 			if (hasSentFinalEventRef.current) return
+
+			// If we already hit completion threshold in-session, finalize on server to avoid unload aborts
+			if (hasTriggeredCompletionSideEffectsRef.current) {
+				let onerosterUserSourcedId: string | undefined
+				if (user?.publicMetadata) {
+					const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+					if (metadataValidation.success) {
+						onerosterUserSourcedId = metadataValidation.data.sourceId
+					}
+				}
+				if (onerosterUserSourcedId) {
+					// Flush a last small accumulation delta if any clock is running
+					if (lastAccumulateAtRef.current) {
+						const sinceMs = Date.now() - lastAccumulateAtRef.current
+						const deltaSeconds = Math.floor(sinceMs / 1000)
+						if (deltaSeconds > 0) {
+							const player = playerRef.current
+							const currentTime = player && typeof player.getCurrentTime === "function" ? player.getCurrentTime() : 0
+							const duration = player && typeof player.getDuration === "function" ? player.getDuration() : 0
+							if (duration > 0) {
+								void accumulateCaliperWatchTime(
+									onerosterUserSourcedId,
+									video.id,
+									deltaSeconds,
+									currentTime,
+									duration,
+									video.title,
+									{ subjectSlug: params.subject, courseSlug: params.course }
+								)
+							}
+						}
+					}
+					void finalizeCaliperTimeSpentEvent(onerosterUserSourcedId, video.id, video.title, {
+						subjectSlug: params.subject,
+						courseSlug: params.course
+					})
+					hasSentFinalEventRef.current = true
+					return
+				}
+			}
 
 			// Calculate final watch time
 			let finalWatchTime = totalWatchTimeRef.current
@@ -452,6 +515,7 @@ export function Content({
 				// Started playing
 				watchStartTimeRef.current = new Date()
 				isPlayingRef.current = true
+				lastAccumulateAtRef.current = Date.now()
 			}
 		}
 		// Paused, ended, or any other state
@@ -463,6 +527,7 @@ export function Content({
 			}
 			isPlayingRef.current = false
 			watchStartTimeRef.current = null
+			lastAccumulateAtRef.current = null
 
 			// If video ended (state 0), send the cumulative event
 			if (playerState === 0) {
