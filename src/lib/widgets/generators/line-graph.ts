@@ -69,8 +69,8 @@ export const LineGraphPropsSchema = z
 			.object({
 				label: z.string().describe("The label for the horizontal axis (e.g., 'Month')."),
 				categories: z
-					.array(z.string())
-					.describe("An array of labels for the x-axis categories (e.g., ['Jan', 'Feb', 'Mar']).")
+					.array(z.string().min(1, "tick label cannot be empty"))
+					.describe("Complete array of tick labels for ALL x-axis positions. Each position must have a meaningful label (e.g., ['January', 'February', 'March', 'April']). Array length must match data series length.")
 			})
 			.strict(),
 		yAxis: createYAxisSchema(),

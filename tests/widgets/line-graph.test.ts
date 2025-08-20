@@ -58,7 +58,7 @@ test("line graph - Arizona city temperatures", () => {
 		title: "Test Line Graph",
 		xAxis: {
 			label: "Month",
-			categories: ["Jan.", "", "Mar.", "", "May", "", "July", "", "Sept.", "", "Nov.", ""]
+			categories: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 		},
 		yAxis: {
 			label: "Average temperature (°C)",
@@ -97,18 +97,13 @@ test("line graph - Arizona city temperatures", () => {
 		showLegend: true
 	} satisfies LineGraphInput
 
-	// Validate the input
 	const parseResult = errors.trySync(() => LineGraphPropsSchema.parse(input))
 	if (parseResult.error) {
 		logger.error("input validation", { error: parseResult.error })
 		throw errors.wrap(parseResult.error, "input validation")
 	}
 	const parsed = parseResult.data
-
-	// Generate the SVG
 	const svg = generateLineGraph(parsed)
-
-	// Snapshot test the generated SVG
 	expect(svg).toMatchSnapshot()
 })
 
@@ -120,7 +115,7 @@ test("line graph - collared lemmings and stoats (dual y-axis)", () => {
 		title: "Test Line Graph",
 		xAxis: {
 			label: "Year",
-			categories: ["1988", "", "1990", "", "1992", "", "1994", "", "1996", "", "1998", "", "2000", "", "2002"]
+			categories: ["1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002"]
 		},
 		yAxis: {
 			label: "Number of collared lemmings",
@@ -139,7 +134,7 @@ test("line graph - collared lemmings and stoats (dual y-axis)", () => {
 		series: [
 			{
 				name: "Number of collared lemmings",
-				values: [29, 60, 75, 38, 24, 28, 72, 57, 34, 38, 76, 50, 24, 40, 80],
+				values: [75, 30, 15, 65, 85, 75, 20, 40, 70, 65, 18, 55, 85, 60, 25],
 				color: "#00838F",
 				style: "solid",
 				pointShape: "circle",
@@ -147,7 +142,7 @@ test("line graph - collared lemmings and stoats (dual y-axis)", () => {
 			},
 			{
 				name: "Number of stoats",
-				values: [4, 4, 5, 6, 3, 4, 5, 5, 2, 4, 5, 6, 4, 5, 6],
+				values: [4, 4, 2, 0, 5, 4, 2, 2, 8, 4, 2, 0, 4, 2, 0],
 				color: "#000000",
 				style: "dashed",
 				pointShape: "square",
@@ -157,18 +152,13 @@ test("line graph - collared lemmings and stoats (dual y-axis)", () => {
 		showLegend: true
 	} satisfies LineGraphInput
 
-	// Validate the input
 	const parseResult = errors.trySync(() => LineGraphPropsSchema.parse(input))
 	if (parseResult.error) {
 		logger.error("input validation", { error: parseResult.error })
 		throw errors.wrap(parseResult.error, "input validation")
 	}
 	const parsed = parseResult.data
-
-	// Generate the SVG
 	const svg = generateLineGraph(parsed)
-
-	// Snapshot test the generated SVG
 	expect(svg).toMatchSnapshot()
 })
 
@@ -180,7 +170,7 @@ test("line graph - environmental change flowering time shift (legend below, labe
 		title: "Effect of environmental change on flowering time",
 		xAxis: {
 			label: "Flowering time (shorter to longer)",
-			categories: ["Shorter", "", "", "", "", "", "", "", "", "", "Longer"]
+			categories: ["Shorter", "Stage 1", "Stage 2", "Stage 3", "Stage 4", "Stage 5", "Stage 6", "Stage 7", "Stage 8", "Stage 9", "Longer"]
 		},
 		yAxis: {
 			label: "Number of plants",
@@ -193,19 +183,19 @@ test("line graph - environmental change flowering time shift (legend below, labe
 		series: [
 			{
 				name: "before environmental change",
+				values: [0, 2, 6, 9, 8, 6, 4, 3, 2, 1, 0],
 				color: "#1f77b4",
 				style: "solid",
 				pointShape: "circle",
-				yAxis: "left",
-				values: [0, 2, 6, 9, 8, 6, 4, 3, 2, 1, 0]
+				yAxis: "left"
 			},
 			{
 				name: "after environmental change",
+				values: [0, 1, 2, 3, 5, 7, 9, 10, 6, 3, 0],
 				color: "#ff7f0e",
 				style: "dashed",
 				pointShape: "circle",
-				yAxis: "left",
-				values: [0, 1, 2, 3, 5, 7, 9, 10, 6, 3, 0]
+				yAxis: "left"
 			}
 		],
 		showLegend: true
@@ -218,38 +208,18 @@ test("line graph - environmental change flowering time shift (legend below, labe
 	}
 	const parsed = parseResult.data
 	const svg = generateLineGraph(parsed)
-
-	// Basic assertions to ensure legend and labels exist / are below chart
-	expect(svg).toContain("before environmental change")
-	expect(svg).toContain("after environmental change")
-	// Snapshot for full SVG structure
 	expect(svg).toMatchSnapshot()
 })
-
-// NEW: Arizona cities elevation dataset
 
 test("line graph - AZ cities temp elevation (title wrap + label thinning)", () => {
 	const input = {
 		type: "lineGraph",
-		title: "Average temperature (°C) by month for three Arizona cities",
-		width: 343,
+		width: 385,
 		height: 367,
+		title: "Average temperature (°C) by month for three Arizona cities",
 		xAxis: {
 			label: "Month",
-			categories: [
-				"January",
-				"February",
-				"March",
-				"April",
-				"May",
-				"June",
-				"July",
-				"August",
-				"September",
-				"October",
-				"November",
-				"December"
-			]
+			categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 		},
 		yAxis: {
 			label: "Average temperature (°C)",
@@ -262,27 +232,27 @@ test("line graph - AZ cities temp elevation (title wrap + label thinning)", () =
 		series: [
 			{
 				name: "Bullhead City",
+				values: [12.5, 14.5, 18, 22.5, 27.5, 32.5, 35.5, 35, 31, 24, 17, 12],
 				color: "#000",
 				style: "solid",
 				pointShape: "circle",
-				yAxis: "left",
-				values: [12.7, 14.6, 18.1, 22.2, 27.3, 32.2, 35.5, 35.1, 30.9, 24.1, 16.9, 12.1]
+				yAxis: "left"
 			},
 			{
 				name: "Sedona",
+				values: [8, 9, 12, 15, 21, 25.5, 28, 27, 24, 18, 11, 7.5],
 				color: "#11accd",
 				style: "dashed",
 				pointShape: "circle",
-				yAxis: "left",
-				values: [7.9, 9.3, 12.1, 15.2, 20.2, 25.4, 27.9, 27, 23.9, 18.2, 12.2, 7.4]
+				yAxis: "left"
 			},
 			{
 				name: "Flagstaff",
+				values: [-2, -0.5, 2.5, 5.5, 9.5, 14, 18, 17, 13, 7.5, 2, -2],
 				color: "#e84d39",
 				style: "dotted",
 				pointShape: "circle",
-				yAxis: "left",
-				values: [-2, -0.6, 2.3, 5.5, 9.2, 14.1, 17.9, 17.1, 13.4, 7.7, 2.1, -2.2]
+				yAxis: "left"
 			}
 		],
 		showLegend: true
@@ -334,6 +304,61 @@ test("line graph - mammal species vs latitude", () => {
 			}
 		],
 		showLegend: false
+	} satisfies LineGraphInput
+
+	const parseResult = errors.trySync(() => LineGraphPropsSchema.parse(input))
+	if (parseResult.error) {
+		logger.error("input validation", { error: parseResult.error })
+		throw errors.wrap(parseResult.error, "input validation")
+	}
+	const parsed = parseResult.data
+	const svg = generateLineGraph(parsed)
+	expect(svg).toMatchSnapshot()
+})
+
+test("line graph - monthly precipitation and temperature (dual y-axis)", () => {
+	const input = {
+		type: "lineGraph",
+		width: 752,
+		height: 400,
+		title: "Monthly precipitation and average temperature",
+		xAxis: {
+			label: "Month",
+			categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+		},
+		yAxis: {
+			label: "Precipitation (in millimeters)",
+			min: 0,
+			max: 150,
+			tickInterval: 25,
+			showGridLines: true
+		},
+		yAxisRight: {
+			label: "Average Temperature (in degrees Celsius)",
+			min: -30,
+			max: 30,
+			tickInterval: 10,
+			showGridLines: false
+		},
+		series: [
+			{
+				name: "Precipitation",
+				values: [18, 14, 14, 12, 19, 31, 43, 46, 38, 28, 20, 17],
+				color: "#1f77b4",
+				pointShape: "square",
+				style: "solid",
+				yAxis: "left"
+			},
+			{
+				name: "Average temperature",
+				values: [-27, -25, -20, -7, 12, 28, 38, 28, 8, -13, -20, -25],
+				color: "#d62728",
+				pointShape: "circle",
+				style: "dotted",
+				yAxis: "right"
+			}
+		],
+		showLegend: true
 	} satisfies LineGraphInput
 
 	const parseResult = errors.trySync(() => LineGraphPropsSchema.parse(input))

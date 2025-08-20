@@ -82,7 +82,7 @@ export const HistogramPropsSchema = z
 			.array(z.number())
 			.min(2)
 			.describe(
-				"Numeric boundary markers along the x-axis. Bars are drawn between consecutive separators. Only these separators are tick-labeled. Must be strictly increasing."
+				"Complete array of ALL numeric boundary markers for x-axis tick labels. Bars are drawn between consecutive separators. Each separator value becomes a tick label (e.g., [0, 5, 10, 15, 20]). Must be strictly increasing sequence."
 			),
 		bins: z
 			.array(Bin)

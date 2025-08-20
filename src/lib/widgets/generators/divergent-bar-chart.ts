@@ -19,7 +19,7 @@ export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data
 // Defines the data for a single bar in the chart
 const DataPointSchema = z
 	.object({
-		category: z.string().describe("The label for this category on the x-axis (e.g., '1st', '5th')."),
+		category: z.string().min(1, "category label cannot be empty").describe("The category name displayed as x-axis tick label (e.g., '1st Century', '5th Century', '10th Century'). Each bar position must have a meaningful label."),
 		value: z
 			.number()
 			.describe("The numerical value. Positive values are drawn above the zero line, negative values below.")
@@ -42,7 +42,7 @@ export const DivergentBarChartPropsSchema = z
 			})
 			.strict()
 			.describe("Configuration for the vertical axis."),
-		data: z.array(DataPointSchema).describe("Array of data points to display."),
+		data: z.array(DataPointSchema).describe("Complete array of ALL data points to display as bars. Each bar must have a meaningful category label for proper x-axis tick labeling."),
 		positiveBarColor: z
 			.string()
 			.regex(CSS_COLOR_PATTERN, "invalid css color")

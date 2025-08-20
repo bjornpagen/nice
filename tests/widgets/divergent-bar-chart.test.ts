@@ -18,7 +18,7 @@ test("divergent bar chart - sea level change by century", () => {
 			max: 14,
 			tickInterval: 2
 		},
-		// Labels placed to match the screenshot styling: only specific centuries labeled
+		// Complete century data with meaningful labels for all positions
 		data: [
 			{ category: "1st", value: 1.8 },
 			{ category: "2nd", value: 2.6 },

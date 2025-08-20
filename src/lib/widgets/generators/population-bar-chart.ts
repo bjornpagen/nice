@@ -19,7 +19,7 @@ export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data
 // Defines the data for a single category's count (e.g., yearly elk count)
 const PopulationBarDataPointSchema = z
 	.object({
-		label: z.string().describe("The category label for the bar (e.g., year '1990')."),
+		label: z.string().min(1, "bar label cannot be empty").describe("The category label displayed as x-axis tick label for this bar (e.g., '1990', '1995', '2000'). Must be meaningful text."),
 		value: z.number().min(0).describe("The non-negative value represented by the bar.")
 	})
 	.strict()
@@ -48,12 +48,12 @@ export const PopulationBarChartPropsSchema = z
 		xAxisLabel: z.string().describe("The label for the horizontal axis (e.g., 'Year')."),
 		yAxis: YAxisOptionsSchema.describe("Configuration for the vertical axis including scale and labels."),
 		xAxisVisibleLabels: z
-			.array(z.string())
-			.describe("If empty, all x-axis labels render. If non-empty, only these labels will render."),
+			.array(z.string().min(1, "visible label cannot be empty"))
+			.describe("Optional subset of x-axis labels to display when spacing is limited. Each string must be a meaningful label from the data array (e.g., ['1990', '1995', '2000']). If empty, automatic text-width-aware spacing applies."),
 		data: z
 			.array(PopulationBarDataPointSchema)
 			.describe(
-				"Array of data points to display. Each point represents one category. Order determines left-to-right positioning."
+				"Complete array of ALL data points to display. Each point must have a meaningful label for x-axis tick labeling. Order determines left-to-right positioning."
 			),
 		barColor: z
 			.string()
