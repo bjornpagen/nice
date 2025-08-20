@@ -10,8 +10,7 @@ export const PeriodicTableWidgetPropsSchema = z
 			.describe(
 				"required alternative text describing the image for accessibility. this should be descriptive and meaningful."
 			),
-		width: z.number().min(300).nullable().describe("optional width for the image in pixels."),
-		height: z.number().min(300).nullable().describe("optional height for the image in pixels."),
+		// Only caption is configurable; width/height are not exposed
 		caption: z
 			.string()
 			.nullable()
@@ -8256,12 +8255,11 @@ const PERIODIC_TABLE_SVG = `
 const PERIODIC_TABLE_SVG_BASE64 = Buffer.from(PERIODIC_TABLE_SVG).toString("base64")
 
 export const generatePeriodicTable: WidgetGenerator<typeof PeriodicTableWidgetPropsSchema> = (props) => {
-	const { alt, width, height, caption } = props
+	const { alt, caption } = props
 
 	const containerStyles = "display: inline-block; text-align: center;"
-	const imgStyles = ["display: block;", width ? `width: ${width}px;` : "", height ? `height: ${height}px;` : ""]
-		.filter(Boolean)
-		.join(" ")
+	// Always use default intrinsic SVG sizing; do not allow external width/height overrides
+	const imgStyles = "display: block;"
 	const captionStyles = "font-size: 0.9em; color: #555; margin-top: 4px;"
 
 	const dataUrl = `data:image/svg+xml;base64,${PERIODIC_TABLE_SVG_BASE64}`
