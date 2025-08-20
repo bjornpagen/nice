@@ -615,7 +615,8 @@ describe("Assessment Finalization Edge Cases", () => {
 
 		// Act & Assert
 		await expect(finalizeAssessment(defaultOptions)).rejects.toThrow("user not authenticated")
-		expect(mockMarkAssessmentFinalizationFailed).toHaveBeenCalled()
+		// Auth failure occurs before we have identity; we should not attempt to mark finalization failure
+		expect(mockMarkAssessmentFinalizationFailed).not.toHaveBeenCalled()
 		expect(gradebookSpy).not.toHaveBeenCalled()
 	})
 })
