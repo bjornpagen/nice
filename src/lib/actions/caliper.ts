@@ -5,6 +5,7 @@ import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { env } from "@/env"
+import { getCurrentUserSourcedId } from "@/lib/authorization"
 // REMOVED: No longer needs streak, xp, or oneroster clients/utils.
 import type {
 	CaliperEnvelope,
@@ -17,7 +18,6 @@ import type {
 import { extractResourceIdFromCompoundId, normalizeCaliperId } from "@/lib/caliper/utils"
 import { caliper } from "@/lib/clients"
 import { type NiceCaliperActor, type NiceCaliperContext, sendBankedXpAwardedEvent } from "@/lib/ports/analytics"
-import { getCurrentUserSourcedId } from "@/lib/authorization"
 
 const SENSOR_ID = env.NEXT_PUBLIC_APP_DOMAIN
 

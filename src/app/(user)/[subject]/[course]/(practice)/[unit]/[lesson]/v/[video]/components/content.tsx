@@ -10,15 +10,20 @@ import YouTube, { type YouTubePlayer } from "react-youtube"
 import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
 import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { Button } from "@/components/ui/button"
-import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
-import { accumulateCaliperWatchTime, finalizeCaliperTimeSpentEvent, getVideoProgress, updateVideoProgress } from "@/lib/actions/tracking"
+import {
+	accumulateCaliperWatchTime,
+	finalizeCaliperPartialTimeSpent,
+	finalizeCaliperTimeSpentEvent,
+	getVideoProgress,
+	updateVideoProgress
+} from "@/lib/actions/tracking"
 import { VIDEO_COMPLETION_THRESHOLD_PERCENT, VIDEO_COMPLETION_THRESHOLD_RATIO } from "@/lib/constants/progress"
 import { CALIPER_SUBJECT_MAPPING, type CaliperSubject, isSubjectSlug } from "@/lib/constants/subjects"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { VideoPageData } from "@/lib/types/page"
 
 // Helper function to map URL subjects to Caliper enum values using centralized mapping
-function mapSubjectToCaliperSubject(subject: string): CaliperSubject {
+function _mapSubjectToCaliperSubject(subject: string): CaliperSubject {
 	return isSubjectSlug(subject) ? CALIPER_SUBJECT_MAPPING[subject] : "None"
 }
 
@@ -139,34 +144,12 @@ export function Content({
 			}
 		}
 
-		if (sourceId && user) {
-			const userEmail = user.primaryEmailAddress?.emailAddress
-			if (!userEmail) {
-				logger.error("video tracking user email required", { userId: user.id })
-				throw errors.new("video tracking: user email required for caliper event")
-			}
-
-			const actor = {
-				id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${sourceId}`,
-				type: "TimebackUser" as const,
-				email: userEmail
-			}
-
-			const context = {
-				id: `${process.env.NEXT_PUBLIC_APP_DOMAIN}/${params.subject}/${params.course}/${params.unit}/${params.lesson}/v/${params.video}`,
-				type: "TimebackActivityContext" as const,
-				subject: mapSubjectToCaliperSubject(params.subject),
-				app: { name: "Nice Academy" },
-				course: { name: params.course },
-				activity: {
-					name: video.title,
-					id: video.id
-				},
-				process: false
-			}
-
-			// Send cumulative time event for video
-			void sendCaliperTimeSpentEvent(actor, context, Math.floor(finalWatchTime))
+		if (sourceId) {
+			// Server-built partial finalize to report only delta
+			void finalizeCaliperPartialTimeSpent(sourceId, video.id, video.title, {
+				subjectSlug: params.subject,
+				courseSlug: params.course
+			})
 			// Mark video as completed locally to enable Continue
 			setCurrentResourceCompleted(true)
 			hasSentFinalEventRef.current = true
@@ -319,16 +302,16 @@ export function Content({
 						const sinceMs = Date.now() - lastAccumulateAtRef.current
 						const deltaSeconds = Math.floor(sinceMs / 1000)
 						if (deltaSeconds > 0) {
-						void accumulateCaliperWatchTime(
-							onerosterUserSourcedId,
-							video.id,
-							deltaSeconds,
-							currentTime,
-							duration,
-							video.title,
-							{ subjectSlug: params.subject, courseSlug: params.course }
-						)
-						lastAccumulateAtRef.current = Date.now()
+							void accumulateCaliperWatchTime(
+								onerosterUserSourcedId,
+								video.id,
+								deltaSeconds,
+								currentTime,
+								duration,
+								video.title,
+								{ subjectSlug: params.subject, courseSlug: params.course }
+							)
+							lastAccumulateAtRef.current = Date.now()
 						}
 					}
 				}
@@ -404,38 +387,15 @@ export function Content({
 				}
 			}
 
-			if (sourceId && user) {
-				const userEmail = user.primaryEmailAddress?.emailAddress
-				if (!userEmail) {
-					logger.error("video tracking user email required", { userId: user.id })
-					throw errors.new("video tracking: user email required for caliper event")
-				}
-
-				const actor = {
-					id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${sourceId}`,
-					type: "TimebackUser" as const,
-					email: userEmail
-				}
-
-				const context = {
-					id: `${process.env.NEXT_PUBLIC_APP_DOMAIN}/${params.subject}/${params.course}/${params.unit}/${params.lesson}/v/${params.video}`,
-					type: "TimebackActivityContext" as const,
-					subject: mapSubjectToCaliperSubject(params.subject),
-					app: { name: "Nice Academy" },
-					course: { name: params.course },
-					activity: {
-						name: video.title,
-						id: video.id
-					},
-					process: false
-				}
-
-				// Send cumulative time event
-				void sendCaliperTimeSpentEvent(actor, context, Math.floor(finalWatchTime))
+			if (sourceId) {
+				void finalizeCaliperPartialTimeSpent(sourceId, video.id, video.title, {
+					subjectSlug: params.subject,
+					courseSlug: params.course
+				})
 				hasSentFinalEventRef.current = true
 			}
 		}
-	}, [user, video.title, video.id, params.subject, params.course, params.unit, params.lesson, params.video])
+	}, [user, video.title, video.id, params.subject, params.course])
 
 	// Keyboard gating while locked: prevent seek keys until unlocked or course-wide unlock
 	React.useEffect(() => {
@@ -641,8 +601,9 @@ export function Content({
 						<div className="flex space-x-8">
 							<button
 								type="button"
-								className={`pb-4 px-1 font-medium text-base transition-colors relative ${activeTab === "about" ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
-									}`}
+								className={`pb-4 px-1 font-medium text-base transition-colors relative ${
+									activeTab === "about" ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
+								}`}
 								onClick={() => setActiveTab("about")}
 							>
 								About
@@ -660,8 +621,9 @@ export function Content({
 							{false && (
 								<button
 									type="button"
-									className={`pb-4 px-1 font-medium text-base transition-colors relative ${activeTab === "transcript" ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
-										}`}
+									className={`pb-4 px-1 font-medium text-base transition-colors relative ${
+										activeTab === "transcript" ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
+									}`}
 									onClick={() => setActiveTab("transcript")}
 								>
 									Transcript
