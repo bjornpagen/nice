@@ -10,7 +10,6 @@ import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
 import { applyQtiSelectionAndOrdering } from "@/lib/qti-selection"
 import { formatResourceTitleForDisplay } from "@/lib/utils/format-resource-title"
 
-// Normalize slugs that may include an ID prefix like "x123:real-slug" to just "real-slug"
 function normalizeKhanSlug(slug: string): string {
 	const colonIndex = slug.indexOf(":")
 	if (colonIndex >= 0) {

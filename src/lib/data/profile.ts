@@ -21,7 +21,6 @@ export interface UnitProficiency {
 	totalExercises: number
 }
 
-// Helper function to remove "Nice Academy - " prefix from course titles
 function removeNiceAcademyPrefix(title: string): string {
 	const prefix = "Nice Academy - "
 	if (title.startsWith(prefix)) {
