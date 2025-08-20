@@ -19,7 +19,6 @@ ignore_patterns:
   - "src/lib/widgets/**"
   - "src/lib/qti-generation/**"
   - "src/lib/qti-validation/**"
-  - "src/lib/types/**"
   - "scripts/**"
   - "src/inngest/**"
 priority_rules:
