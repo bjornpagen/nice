@@ -43,7 +43,11 @@ export const UrlImageWidgetPropsSchema = z
 	)
 
 export const generateUrlImage: WidgetGenerator<typeof UrlImageWidgetPropsSchema> = (props) => {
-	const { url, alt, width, height, caption } = props
+	const { url, alt, width, height, caption: _caption } = props
+	// Temporarily disable caption rendering: we deliberately do not render captions right now.
+	// We still accept the field in the schema, but force it to be ignored at generation time
+	// to reduce downstream processing and minimize blast radius. Similar to attribution.
+	const caption: string | null = null
 	// Note: attribution is intentionally not destructured or rendered
 	// The attribution field exists in the schema to encourage LLMs to separate
 	// attribution/source info from the caption, but we don't display it
