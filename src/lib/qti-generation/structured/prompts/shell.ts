@@ -640,7 +640,7 @@ ${perseusJson}
     "title": "Temperature table duplicated inputs (negative)",
     "body": [
       { "type": "paragraph", "content": [{ "type": "text", "content": "Several students tested how the temperature changed when dissolving different solids in the same amount of water. The substances they tested were NH4Cl, MgSO4, and CaCl2." }] },
-      { "type": "paragraph", "content": [{ "type": "text", "content": "Only one student kept track of everyone’s data. Unfortunately, their lab notebook got wet, and some of the labels were damaged." }] },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Only one student kept track of everyone's data. Unfortunately, their lab notebook got wet, and some of the labels were damaged." }] },
       { "type": "blockSlot", "slotId": "image_1" },
       { "type": "paragraph", "content": [{ "type": "text", "content": "Use the data provided to identify the reactant and the amount that caused each temperature change. Each option is only used once." }] },
       { "type": "blockSlot", "slotId": "react_temp_table" },
@@ -1213,6 +1213,49 @@ When Perseus contains interactive widgets that require drawing, plotting, or man
 }
 \`\`\`
 **Critical:** All four widget slots are declared in the \`widgets\` array, but only \`coordinate_plane_empty\` and \`graph_choice\` appear in the body. The three choice widgets will be embedded in the interaction's choices.
+
+**Choice-Level Table Visuals — Reserve Table Widgets for Choices (Do NOT render as paragraphs):**
+
+**WRONG (shell shape incorrect — missing predeclared per-choice table widgets in \`widgets\`; tables implied in choices but not reserved here):**
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Three groups of students carried out an experiment about photosynthesis." }] },
+    { "type": "paragraph", "content": [{ "type": "text", "content": "First, the students submerged Elodea plants in a beaker of water mixed with baking soda (Figure 1). Then, they placed the beaker directly under a lamp." }] },
+    { "type": "blockSlot", "slotId": "image_1" },
+    { "type": "paragraph", "content": [{ "type": "text", "content": "With the lamp off, the students counted how many bubbles rose from the plants. After a three-minute observation period, each group recorded its results." }] },
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Next, the students turned on the lamp. For three minutes, they again counted and recorded the number of bubbles they saw rise from the plants." }] },
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Based on your knowledge of photosynthesis, which data table shows the most likely results?" }] },
+    { "type": "blockSlot", "slotId": "choice_interaction" }
+  ],
+  "widgets": ["image_1"],
+  "interactions": ["choice_interaction"]
+}
+\`\`\`
+
+**CORRECT (reserve three table widget slots for the choice visuals; declare them in \`widgets\` but DO NOT place them in the body):**
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Three groups of students carried out an experiment about photosynthesis." }] },
+    { "type": "paragraph", "content": [{ "type": "text", "content": "First, the students submerged Elodea plants in a beaker of water mixed with baking soda (Figure 1). Then, they placed the beaker directly under a lamp." }] },
+    { "type": "blockSlot", "slotId": "image_1" },
+    { "type": "paragraph", "content": [{ "type": "text", "content": "With the lamp off, the students counted how many bubbles rose from the plants. After a three-minute observation period, each group recorded its results." }] },
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Next, the students turned on the lamp. For three minutes, they again counted and recorded the number of bubbles they saw rise from the plants." }] },
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Based on your knowledge of photosynthesis, which data table shows the most likely results?" }] },
+    { "type": "blockSlot", "slotId": "choice_interaction" }
+  ],
+  "widgets": [
+    "image_1",
+    "table_choice_a",
+    "table_choice_b",
+    "table_choice_c"
+  ],
+  "interactions": ["choice_interaction"]
+}
+\`\`\`
+
+**Explanation:** Each choice contains a visual data table. Tables are ALWAYS widgets. The shell must predeclare per-choice table widget identifiers (e.g., \`table_choice_a\`, \`table_choice_b\`, \`table_choice_c\`) in the \`widgets\` array and must NOT place them in the \`body\`. These reserved widget handles are used later by the interaction generation shot to embed the tables inside the choice options.
 
 **5. Explanation Widgets - BANNED:**
 Perseus 'explanation' or 'definition' widgets MUST be inlined as text, not turned into slots.
