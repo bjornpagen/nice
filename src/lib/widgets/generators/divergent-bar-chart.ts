@@ -12,6 +12,7 @@ import {
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
+import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -122,10 +123,10 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	// Close group before rendering y-axis label
 	svg += "</g>" 
 	
-	// Y-axis label using standard global coordinate system (like other science widgets)
+	// Y-axis label with wrapping
 	const globalYAxisLabelX = yAxisLabelX
 	const globalYAxisLabelY = margin.top + chartHeight / 2
-	svg += `<text x="${globalYAxisLabelX}" y="${globalYAxisLabelY}" class="axis-label" transform="rotate(-90, ${globalYAxisLabelX}, ${globalYAxisLabelY})">${abbreviateMonth(yAxis.label)}</text>`
+	svg += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), globalYAxisLabelX, globalYAxisLabelY, chartHeight)
 	includeText(ext, globalYAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
 	
 	// X-axis label (global coordinates)

@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
 
 const AnnotationSchema = z.object({
 	year: z.number().describe("The year on the x-axis that the annotation arrow should point to."),
@@ -185,7 +186,7 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 	// Axis Labels
 	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 10}" class="axis-label">${xAxisLabel}</text>`
 	includeText(ext, margin.left + chartWidth / 2, xAxisLabel, "middle", 7)
-	svg += `<text x="${margin.left - 50}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 50}, ${margin.top + chartHeight / 2})">${yAxisLabel}</text>`
+	svg += renderRotatedWrappedYAxisLabel(yAxisLabel, margin.left - 50, margin.top + chartHeight / 2, chartHeight)
 	includeText(ext, margin.left - 50, yAxisLabel, "middle", 7)
 
 	// Data Line
@@ -200,7 +201,7 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 
 		// Fixed position in upper left area
 		const textX = margin.left + 40
-		const textY = margin.top + 40 + index * 60 // Stack multiple annotations vertically
+		const textY = margin.top + 40 + index * 60
 
 		// Draw arrow from text to target point on curve
 		svg += `<line x1="${textX}" y1="${textY + 20}" x2="${targetX}" y2="${targetY}" stroke="black" stroke-width="1.5" marker-end="url(#co2-arrow)"/>`

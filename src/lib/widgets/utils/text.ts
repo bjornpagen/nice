@@ -59,6 +59,30 @@ export function renderWrappedText(
 }
 
 /**
+ * Renders a Y-axis label that wraps to fit the chart height and is rotated -90 degrees around (x, yCenter).
+ * The wrapping width is derived from the available chart height.
+ */
+export function renderRotatedWrappedYAxisLabel(
+  text: string,
+  x: number,
+  yCenter: number,
+  chartHeightPx: number,
+  className = "axis-label",
+  lineHeight = "1.1em",
+  approxCharWidthPx = 8,
+  paddingPx = 10
+): string {
+  const maxWrappedWidth = Math.max(20, chartHeightPx - 2 * paddingPx)
+  let wrapped = renderWrappedText(text, x, yCenter, className, lineHeight, maxWrappedWidth, approxCharWidthPx)
+  // Inject rotation transform with pivot
+  wrapped = wrapped.replace(
+    "<text ",
+    `<text transform="rotate(-90, ${x}, ${yCenter})" `
+  )
+  return wrapped
+}
+
+/**
  * Strip common Markdown/HTML syntax to produce safe plaintext for widget fields.
  *
  * Goals:

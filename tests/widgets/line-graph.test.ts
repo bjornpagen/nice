@@ -6,6 +6,50 @@ import { generateLineGraph, LineGraphPropsSchema } from "@/lib/widgets/generator
 
 type LineGraphInput = z.input<typeof LineGraphPropsSchema>
 
+test("line graph - wraps long y-axis label (photosynthesis)", () => {
+	const input = {
+		type: "lineGraph",
+		width: 600,
+		height: 350,
+		title: "Time of day vs. carbon dioxide assimilation",
+		xAxis: {
+			label: "Time of day (hour)",
+			categories: ["0", "3", "6", "9", "12", "15", "18", "21", "24"]
+		},
+		yAxis: {
+			label: "carbon dioxide assimilation (micromoles per square meter per second)",
+			min: 0,
+			max: 35,
+			tickInterval: 5,
+			showGridLines: true
+		},
+		yAxisRight: null,
+		series: [
+			{
+				name: "Carbon dioxide assimilation",
+				color: "#1f77b4",
+				style: "dashed",
+				pointShape: "circle",
+				yAxis: "left",
+				values: [0, 0, 0, 20, 32, 26, 0, 0, 0]
+			}
+		],
+		showLegend: false
+	} satisfies LineGraphInput
+
+	const parseResult = errors.trySync(() => LineGraphPropsSchema.parse(input))
+	if (parseResult.error) {
+		logger.error("input validation", { error: parseResult.error })
+		throw errors.wrap(parseResult.error, "input validation")
+	}
+	const parsed = parseResult.data
+	const svg = generateLineGraph(parsed)
+	// Ensure the y-axis label is rotated and wraps
+	expect(svg).toContain("transform=\"rotate(-90")
+	expect(svg).toMatch(/<tspan x=\"\d+\" dy=\"1.1em\">/) // at least one wrapped line
+	expect(svg).toMatchSnapshot()
+})
+
 test("line graph - Arizona city temperatures", () => {
 	const input = {
 		type: "lineGraph",

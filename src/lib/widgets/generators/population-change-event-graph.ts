@@ -2,6 +2,7 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { calculateYAxisLayout, computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
 
 // Factory helpers to avoid schema reuse and $ref generation
 function createPointSchema() {
@@ -22,8 +23,8 @@ function createSegmentSchema() {
 export const PopulationChangeEventGraphPropsSchema = z
 	.object({
 		type: z.literal("populationChangeEventGraph"),
-		width: z.number().min(300).describe("Total width of the SVG in pixels (e.g., 400, 500)."),
-		height: z.number().min(300).describe("Total height of the SVG in pixels (e.g., 400, 350)."),
+		width: z.number().positive().describe("Total width of the SVG in pixels (e.g., 400, 500)."),
+		height: z.number().positive().describe("Total height of the SVG in pixels (e.g., 400, 350)."),
 		xAxisLabel: z.string().describe("The label for the horizontal axis (e.g., 'Time')."),
 		yAxisLabel: z.string().describe("The label for the vertical axis (e.g., 'Deer population size')."),
 		xAxisMin: z.number().describe("The minimum value for the x-axis. This should typically be 0 for time-based data."),
@@ -106,7 +107,7 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 	svg += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${width - padding.right}" y2="${xAxisY}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
 
 	// Axis Labels (closer to axes)
-	svg += `<text x="${yAxisLabelX}" y="${padding.top + chartHeight / 2}" text-anchor="middle" transform="rotate(-90, ${yAxisLabelX}, ${padding.top + chartHeight / 2})">${yAxisLabel}</text>`
+	svg += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisLabelX, padding.top + chartHeight / 2, chartHeight)
 	includeText(ext, yAxisLabelX, yAxisLabel, "middle", 7)
 	svg += `<text x="${padding.left + chartWidth / 2}" y="${xAxisY + 30}" text-anchor="middle">${xAxisLabel}</text>`
 	includeText(ext, padding.left + chartWidth / 2, xAxisLabel, "middle", 7)

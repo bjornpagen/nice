@@ -16,7 +16,7 @@ import {
 	initExtents,
 	wrapInClippedGroup
 } from "@/lib/widgets/utils/layout"
-import { renderWrappedText } from "@/lib/widgets/utils/text"
+import { renderWrappedText, renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
 
 // Defines a single data point on the scatter plot
 const ScatterPointSchema = z
@@ -432,7 +432,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	}
 	svg += `<text x="${pad.left + chartWidth / 2}" y="${height - pad.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
 	includeText(ext, pad.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
-	svg += `<text x="${yAxisLabelX}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${pad.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
+	svg += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), yAxisLabelX, pad.top + chartHeight / 2, chartHeight)
 	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
 
 	// Render line overlays - linear lines don't need clipping, curves do

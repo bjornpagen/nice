@@ -2,6 +2,7 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
 
 // Factory functions to avoid schema instance reuse which causes $ref in JSON Schema
 function createPointSchema() {
@@ -93,7 +94,7 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 	svg += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${width - padding.right}" y2="${xAxisY}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
 
 	// Axis Labels
-	svg += `<text x="${yAxisX - 20}" y="${padding.top + chartHeight / 2}" text-anchor="middle" transform="rotate(-90, ${yAxisX - 20}, ${padding.top + chartHeight / 2})">${yAxisLabel}</text>`
+	svg += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisX - 20, padding.top + chartHeight / 2, chartHeight)
 	includeText(ext, yAxisX - 20, yAxisLabel, "middle", 7)
 	svg += `<text x="${padding.left + chartWidth / 2}" y="${xAxisY + 40}" text-anchor="middle">${xAxisLabel}</text>`
 	includeText(ext, padding.left + chartWidth / 2, xAxisLabel, "middle", 7)

@@ -11,7 +11,7 @@ import {
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
-import { renderWrappedText } from "@/lib/widgets/utils/text"
+import { renderWrappedText, renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
 
 const PointSchema = z.object({
 	x: z.number().describe("The x-coordinate (horizontal value) of the data point."),
@@ -154,7 +154,12 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 
 	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
 	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
-	svg += `<text x="${yAxisLabelX}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
+	svg += renderRotatedWrappedYAxisLabel(
+		abbreviateMonth(yAxis.label),
+		yAxisLabelX,
+		margin.top + chartHeight / 2,
+		chartHeight
+	)
 	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
 
 	// X-axis ticks with text-width-aware label selection

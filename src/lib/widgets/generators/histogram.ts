@@ -3,8 +3,16 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
-import { calculateTextAwareLabelSelection, calculateTitleLayout, calculateXAxisLayout, calculateYAxisLayout } from "@/lib/widgets/utils/layout"
-import { renderWrappedText } from "@/lib/widgets/utils/text"
+import {
+	calculateTextAwareLabelSelection,
+	calculateTitleLayout,
+	calculateXAxisLayout,
+	calculateYAxisLayout,
+	initExtents,
+	includeText,
+	computeDynamicWidth
+} from "@/lib/widgets/utils/layout"
+import { renderWrappedText, renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
 
 const Bin = z
 	.object({
@@ -132,19 +140,28 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	const binWidth = chartWidth / bins.length
 	const averageCharWidthPx = 7
 
+	const ext = initExtents(width)
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg +=
 		"<style>.axis-label { font-size: 14px; font-weight: bold; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; } .x-tick { font-size: 11px; }</style>"
 
 	const maxTextWidth = width - 60
 	svg += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", maxTextWidth, 8)
+	includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
 
 	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="#333333"/>` // Y-axis
 	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="#333333"/>` // X-axis
 
 	// Axis Labels
 	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
-	svg += `<text x="${yAxisLabelX}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
+	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
+	svg += renderRotatedWrappedYAxisLabel(
+		abbreviateMonth(yAxis.label),
+		yAxisLabelX,
+		margin.top + chartHeight / 2,
+		chartHeight
+	)
+	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
 
 	// Y ticks and labels
 	const yTickInterval = yAxis.tickInterval
@@ -176,6 +193,9 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		svg += `<text class="x-tick" x="${labelX}" y="${labelY}" fill="#333333" text-anchor="middle">${sep}</text>`
 	})
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }
