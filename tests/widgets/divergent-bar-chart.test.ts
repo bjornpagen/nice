@@ -113,3 +113,52 @@ test("divergent bar chart - auto label thinning prevents overcrowding determinis
 	// Ensure first category present for determinism
 	expect(svg).toContain(">1st<")
 })
+
+test("divergent bar chart - sea level by century (QA payload)", () => {
+	const input = {
+		type: "divergentBarChart",
+		width: 374,
+		height: 300,
+		xAxisLabel: "Century",
+		yAxis: {
+			label: "Change in sea level (cm)",
+			min: -6,
+			max: 14,
+			tickInterval: 2
+		},
+		data: [
+			{ value: 1.5, category: "1st" },
+			{ value: 2.5, category: "2nd" },
+			{ value: -0.2, category: "3rd" },
+			{ value: 2.5, category: "4th" },
+			{ value: -3.5, category: "5th" },
+			{ value: 1, category: "6th" },
+			{ value: 3, category: "7th" },
+			{ value: -4, category: "8th" },
+			{ value: 0.2, category: "9th" },
+			{ value: 3, category: "10th" },
+			{ value: -6, category: "11th" },
+			{ value: -1.5, category: "12th" },
+			{ value: -0.5, category: "13th" },
+			{ value: -1, category: "14th" },
+			{ value: 3.5, category: "15th" },
+			{ value: 2, category: "16th" },
+			{ value: -3.5, category: "17th" },
+			{ value: -2, category: "18th" },
+			{ value: -0.2, category: "19th" },
+			{ value: 14, category: "20th" }
+		],
+		positiveBarColor: "#01d1c1",
+		negativeBarColor: "#208170",
+		gridColor: "#999999"
+	} satisfies DivergentBarChartInput
+
+	const parseResult = errors.trySync(() => DivergentBarChartPropsSchema.parse(input))
+	if (parseResult.error) {
+		logger.error("input validation", { error: parseResult.error })
+		throw errors.wrap(parseResult.error, "input validation")
+	}
+	const parsed = parseResult.data
+	const svg = generateDivergentBarChart(parsed)
+	expect(svg).toMatchSnapshot()
+})

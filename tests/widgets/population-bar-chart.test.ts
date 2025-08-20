@@ -136,3 +136,36 @@ test("population bar chart - bird population 2010-2015", () => {
 	const svg = generatePopulationBarChart(parsed)
 	expect(svg).toMatchSnapshot()
 })
+
+test("population bar chart - aftershocks 4 weeks", () => {
+	const input = {
+		type: "populationBarChart",
+		width: 300,
+		height: 300,
+		xAxisLabel: "Week",
+		yAxis: {
+			label: "Number of aftershocks",
+			min: 0,
+			max: 160,
+			tickInterval: 10
+		},
+		xAxisVisibleLabels: [],
+		data: [
+			{ label: "1", value: 140 },
+			{ label: "2", value: 60 },
+			{ label: "3", value: 30 },
+			{ label: "4", value: 20 }
+		],
+		barColor: "#ff92c6",
+		gridColor: "#cccccc"
+	} satisfies PopulationBarChartInput
+
+	const validation = PopulationBarChartPropsSchema.safeParse(input)
+	if (!validation.success) {
+		logger.error("input validation", { error: validation.error })
+		throw errors.wrap(validation.error, "input validation")
+	}
+	const parsed = validation.data
+	const svg = generatePopulationBarChart(parsed)
+	expect(svg).toMatchSnapshot()
+})

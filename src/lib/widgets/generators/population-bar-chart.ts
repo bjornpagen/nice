@@ -3,13 +3,14 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateXAxisLayout,
 	calculateYAxisLayout,
 	computeDynamicWidth,
 	includeText,
-	initExtents
+	initExtents,
+	calculateTextAwareLabelSelection
 } from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
 
@@ -128,13 +129,11 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 		svg += `<text x="-10" y="${y + 5}" class="tick-label" text-anchor="end">${t}</text>`
 	}
 
-	// Bars, X-axis ticks, and X-axis labels
-	// Determine deterministic subset of x-axis labels when not explicitly provided
+	// Compute bar centers and text-aware label selection for auto thinning
+	const barCenters = chartData.map((_, i) => i * barWidth + barWidth / 2)
+	const candidateLabels = chartData.map(d => abbreviateMonth(d.label))
+	const selectedTextAware = calculateTextAwareLabelSelection(candidateLabels, barCenters, chartWidth)
 	const visibleLabelSet = new Set<string>(xAxisVisibleLabels)
-	const minLabelSpacingPx = 50
-	const allIndices = Array.from({ length: chartData.length }, (_, idx) => idx)
-	// The .filter() call is no longer needed as 'label' is a required string.
-	const selectedLabelIndices = computeLabelSelection(chartData.length, allIndices, chartWidth, minLabelSpacingPx)
 
 	chartData.forEach((d, i) => {
 		const barHeight = d.value * scaleY
@@ -154,7 +153,7 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 		// X-axis label (conditionally rendered)
 		const useAutoThinning = xAxisVisibleLabels.length === 0
 		const labelText = d.label
-		const shouldShowLabel = useAutoThinning ? selectedLabelIndices.has(i) : visibleLabelSet.has(labelText)
+		const shouldShowLabel = useAutoThinning ? selectedTextAware.has(i) : visibleLabelSet.has(labelText)
 		if (shouldShowLabel) {
 			svg += `<text x="${labelX}" y="${chartHeight + 20}" class="tick-label" text-anchor="middle">${abbreviateMonth(labelText)}</text>`
 		}
