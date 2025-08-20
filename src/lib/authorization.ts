@@ -1,4 +1,4 @@
-import { auth, clerkClient } from "@clerk/nextjs/server"
+import { clerkClient } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { and, eq } from "drizzle-orm"
@@ -11,23 +11,23 @@ import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
  * Gets the OneRoster sourcedId for the currently authenticated user.
  * This is the unified way to get user sourcedId from Clerk session.
  *
+ * @param clerkId The Clerk user ID to resolve to a OneRoster sourcedId
  * @returns The user's OneRoster sourcedId
- * @throws Error if user is not authenticated or not synced with OneRoster
+ * @throws Error if clerkId is missing or the user is not synced with OneRoster
  */
-export async function getCurrentUserSourcedId(): Promise<string> {
-	const { userId: clerkUserId } = await auth()
-	if (!clerkUserId) {
-		logger.error("user not authenticated")
-		throw errors.new("user not authenticated")
+export async function getCurrentUserSourcedId(clerkId: string): Promise<string> {
+	if (!clerkId) {
+		logger.error("clerkId is required to get user sourcedId")
+		throw errors.new("clerkId is required")
 	}
 
 	const clerk = await clerkClient()
-	const user = await clerk.users.getUser(clerkUserId)
+	const user = await clerk.users.getUser(clerkId)
 	const metadata = parseUserPublicMetadata(user.publicMetadata)
 	const onerosterUserSourcedId = metadata.sourceId
 
 	if (!onerosterUserSourcedId) {
-		logger.error("user not synced with OneRoster", { clerkUserId })
+		logger.error("user not synced with OneRoster", { clerkId })
 		throw errors.new("user not synced with OneRoster")
 	}
 

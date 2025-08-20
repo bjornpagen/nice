@@ -87,7 +87,7 @@ export async function processQuestionResponse(
 		logger.error("processQuestionResponse failed: user not authenticated")
 		throw errors.new("user not authenticated")
 	}
-	const onerosterUserSourcedId = await getCurrentUserSourcedId()
+	const onerosterUserSourcedId = await getCurrentUserSourcedId(userId)
 	logger.debug("processing question response", {
 		qtiItemId,
 		responseIdentifier,
@@ -230,7 +230,7 @@ export async function getOrCreateAssessmentState(onerosterResourceSourcedId: str
 		logger.error("getOrCreateAssessmentState failed: user not authenticated")
 		throw errors.new("user not authenticated")
 	}
-	const onerosterUserSourcedId = await getCurrentUserSourcedId()
+	const onerosterUserSourcedId = await getCurrentUserSourcedId(userId)
 
 	const attemptNumber = await getNextAttemptNumber(onerosterUserSourcedId, onerosterResourceSourcedId)
 	const existingState = await getAssessmentState(onerosterUserSourcedId, onerosterResourceSourcedId, attemptNumber)
@@ -283,7 +283,7 @@ export async function submitAnswer(
 		logger.error("submitAnswer failed: user not authenticated")
 		throw errors.new("user not authenticated")
 	}
-	const onerosterUserSourcedId = await getCurrentUserSourcedId()
+	const onerosterUserSourcedId = await getCurrentUserSourcedId(userId)
 
 	const attemptNumber = await getNextAttemptNumber(onerosterUserSourcedId, onerosterResourceSourcedId)
 	const state = await getAssessmentState(onerosterUserSourcedId, onerosterResourceSourcedId, attemptNumber)
@@ -471,7 +471,7 @@ export async function skipQuestion(
 		logger.error("skipQuestion failed: user not authenticated")
 		throw errors.new("user not authenticated")
 	}
-	const onerosterUserSourcedId = await getCurrentUserSourcedId()
+	const onerosterUserSourcedId = await getCurrentUserSourcedId(userId)
 	const attemptNumber = await getNextAttemptNumber(onerosterUserSourcedId, onerosterResourceSourcedId)
 	const state = await getAssessmentState(onerosterUserSourcedId, onerosterResourceSourcedId, attemptNumber)
 	if (!state) {
@@ -543,7 +543,7 @@ export async function reportQuestion(
 		logger.error("reportQuestion failed: user not authenticated")
 		throw errors.new("user not authenticated")
 	}
-	const onerosterUserSourcedId = await getCurrentUserSourcedId()
+	const onerosterUserSourcedId = await getCurrentUserSourcedId(userId)
 	const attemptNumber = await getNextAttemptNumber(onerosterUserSourcedId, onerosterResourceSourcedId)
 
 	const currentState = await getAssessmentState(onerosterUserSourcedId, onerosterResourceSourcedId, attemptNumber)
@@ -721,7 +721,12 @@ export async function finalizeAssessment(options: {
 	contentType: "Exercise" | "Quiz" | "Test" | "CourseChallenge"
 }) {
 	const correlationId = randomUUID()
-	const onerosterUserSourcedId = await getCurrentUserSourcedId()
+	const { userId: clerkUserId } = await auth()
+	if (!clerkUserId) {
+		logger.error("finalize assessment: user not authenticated", { correlationId })
+		throw errors.new("user not authenticated")
+	}
+	const onerosterUserSourcedId = await getCurrentUserSourcedId(clerkUserId)
 	const attemptNumber = await getNextAttemptNumber(onerosterUserSourcedId, options.onerosterResourceSourcedId)
 
 	const state = await getAssessmentState(onerosterUserSourcedId, options.onerosterResourceSourcedId, attemptNumber)
@@ -936,7 +941,7 @@ export async function flagQuestionAsReported(questionId: string, report: string)
 		throw errors.new("user not authenticated")
 	}
 
-	const userSourcedId = await getCurrentUserSourcedId()
+	const userSourcedId = await getCurrentUserSourcedId(clerkUserId)
 
 	const isAuthorized = await isUserAuthorizedForQuestion(userSourcedId, questionId)
 	if (!isAuthorized) {
@@ -998,7 +1003,7 @@ export async function startNewAssessmentAttempt(onerosterResourceSourcedId: stri
 		logger.error("startNewAssessmentAttempt failed: user not authenticated")
 		throw errors.new("user not authenticated")
 	}
-	const onerosterUserSourcedId = await getCurrentUserSourcedId()
+	const onerosterUserSourcedId = await getCurrentUserSourcedId(userId)
 	const attemptNumber = await getNextAttemptNumber(onerosterUserSourcedId, onerosterResourceSourcedId)
 
 	const existingState = await getAssessmentState(onerosterUserSourcedId, onerosterResourceSourcedId, attemptNumber)
