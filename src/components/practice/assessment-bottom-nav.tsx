@@ -130,7 +130,6 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 							isComplete={isComplete}
 							currentQuestion={currentQuestion}
 							totalQuestions={totalQuestions}
-							onReset={onReset}
 						/>
 
 						<RightSection
@@ -221,13 +220,11 @@ function CenterSection({
 	isComplete,
 	currentQuestion,
 	totalQuestions,
-	onReset
 }: {
 	isStartScreen?: boolean
 	isComplete?: boolean
 	currentQuestion?: number
 	totalQuestions?: number
-	onReset?: () => void
 }) {
 	if (isStartScreen || isComplete || !currentQuestion || !totalQuestions) {
 		return <div className="flex-1" />
@@ -257,33 +254,6 @@ function CenterSection({
 
 	return (
 		<div className="flex-1 flex flex-row gap-4 items-center justify-center">
-			<Button variant="ghost" asChild>
-				<AlertDialog>
-					<AlertDialogTrigger>
-						<RotateCcw className="w-4 h-4 scale-x-[-1] text-blue-600 hover:cursor-pointer hover:underline hover:text-blue-600" />
-					</AlertDialogTrigger>
-					<AlertDialogContent className="bg-white text-blue-600">
-						<AlertDialogHeader>
-							<AlertDialogTitle>Would you like to start over?</AlertDialogTitle>
-						</AlertDialogHeader>
-						<AlertDialogDescription>
-							You can no longer reach "Proficient" on this attempt. You can keep going or start over.
-						</AlertDialogDescription>
-						<AlertDialogFooter>
-							<AlertDialogAction
-								onClick={onReset}
-								className="bg-white text-blue-600 hover:cursor-pointer hover:bg-white hover:underline"
-							>
-								Start over
-							</AlertDialogAction>
-							<AlertDialogCancel className="bg-blue-600 text-white hover:cursor-pointer hover:bg-blue-600 hover:text-white hover:ring-1 hover:ring-blue-600 hover:ring-offset-1">
-								Keep going
-							</AlertDialogCancel>
-						</AlertDialogFooter>
-					</AlertDialogContent>
-				</AlertDialog>
-			</Button>
-
 			<p className="text-sm font-medium">
 				{currentQuestion} of {totalQuestions}
 			</p>
