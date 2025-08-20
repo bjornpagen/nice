@@ -193,7 +193,7 @@ test("scatter plot - foraminifera species vs sea surface temperature", () => {
 		logger.error("parsing failed", { error: parseResult.error })
 		throw errors.wrap(parseResult.error, "schema parsing")
 	}
-	
+
 	const validation = parseResult.data
 	if (!validation.success) {
 		logger.error("input validation failed", { error: validation.error })

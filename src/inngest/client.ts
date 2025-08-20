@@ -306,9 +306,6 @@ const events = {
 	"migration/hardcoded.science.qti.upload": {
 		data: z.object({})
 	},
-	"migration/hardcoded.science.clear-xml-for-science-widgets": {
-		data: z.object({})
-	},
 
 	// ✅ ADDED: New, explicitly namespaced events for the HISTORY course pipeline
 	"migration/hardcoded.history.items.perseus-to-qti": {

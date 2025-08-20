@@ -63,23 +63,20 @@ export function renderWrappedText(
  * The wrapping width is derived from the available chart height.
  */
 export function renderRotatedWrappedYAxisLabel(
-  text: string,
-  x: number,
-  yCenter: number,
-  chartHeightPx: number,
-  className = "axis-label",
-  lineHeight = "1.1em",
-  approxCharWidthPx = 8,
-  paddingPx = 10
+	text: string,
+	x: number,
+	yCenter: number,
+	chartHeightPx: number,
+	className = "axis-label",
+	lineHeight = "1.1em",
+	approxCharWidthPx = 8,
+	paddingPx = 10
 ): string {
-  const maxWrappedWidth = Math.max(20, chartHeightPx - 2 * paddingPx)
-  let wrapped = renderWrappedText(text, x, yCenter, className, lineHeight, maxWrappedWidth, approxCharWidthPx)
-  // Inject rotation transform with pivot
-  wrapped = wrapped.replace(
-    "<text ",
-    `<text transform="rotate(-90, ${x}, ${yCenter})" `
-  )
-  return wrapped
+	const maxWrappedWidth = Math.max(20, chartHeightPx - 2 * paddingPx)
+	let wrapped = renderWrappedText(text, x, yCenter, className, lineHeight, maxWrappedWidth, approxCharWidthPx)
+	// Inject rotation transform with pivot
+	wrapped = wrapped.replace("<text ", `<text transform="rotate(-90, ${x}, ${yCenter})" `)
+	return wrapped
 }
 
 /**
@@ -139,7 +136,7 @@ export function stripMarkdownToPlaintext(input: string): string {
 	text = text.replace(/<\/?[^>]+>/g, "")
 
 	// Unescape common backslash-escaped punctuation used by markdown
-	text = text.replace(/\\([\\`*_{}\[\]()#+\-.!>])/g, "$1")
+	text = text.replace(/\\([\\`*_{}[\]()#+\-.!>])/g, "$1")
 
 	// Collapse whitespace
 	text = text.replace(/\u00A0/g, " ") // nbsp

@@ -2,7 +2,7 @@ import { expect, test } from "bun:test"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import type { z } from "zod"
-import { generateCoordinatePlane, CoordinatePlaneComprehensivePropsSchema } from "@/lib/widgets/generators"
+import { CoordinatePlaneComprehensivePropsSchema, generateCoordinatePlane } from "@/lib/widgets/generators"
 
 type CoordinatePlaneInput = z.input<typeof CoordinatePlaneComprehensivePropsSchema>
 
@@ -39,7 +39,7 @@ test("coordinate plane - kinetic energy vs mass", () => {
 		logger.error("parsing failed", { error: parseResult.error })
 		throw errors.wrap(parseResult.error, "schema parsing")
 	}
-	
+
 	const validation = parseResult.data
 	if (!validation.success) {
 		logger.error("input validation failed", { error: validation.error })

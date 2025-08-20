@@ -3,7 +3,6 @@ import { inngest } from "@/inngest/client"
 // Import QTI workers
 import { clearAllAssessmentItemData } from "@/inngest/functions/clear-all-assessment-item-data"
 import { helloWorld } from "@/inngest/functions/hello"
-import { orchestrateHardcodedScienceClearXmlForScienceWidgets } from "@/inngest/functions/migrations/clear-science-xml-for-science-widgets"
 import { orchestrateHardcodedHistoryItemMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-item-migration"
 import { orchestrateHardcodedHistoryOnerosterIngestion } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-oneroster-ingestion"
 import { orchestrateHardcodedHistoryQAReview } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-qa-review"
@@ -87,7 +86,6 @@ export const { GET, POST, PUT } = serve({
 		orchestrateHardcodedScienceOnerosterIngestion,
 		orchestrateHardcodedScienceQtiGenerateUndifferentiated,
 		orchestrateHardcodedScienceQtiUpload,
-		orchestrateHardcodedScienceClearXmlForScienceWidgets,
 		orchestrateHardcodedScienceQAReview,
 		orchestrateHardcodedMathQAReview,
 		orchestrateHardcodedHistoryQAReview,

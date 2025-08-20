@@ -2,17 +2,17 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateTextAwareLabelSelection,
 	calculateTitleLayout,
 	calculateXAxisLayout,
 	calculateYAxisLayout,
-	initExtents,
+	computeDynamicWidth,
 	includeText,
-	computeDynamicWidth
+	initExtents
 } from "@/lib/widgets/utils/layout"
-import { renderWrappedText, renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
+import { renderRotatedWrappedYAxisLabel, renderWrappedText } from "@/lib/widgets/utils/text"
 
 const Bin = z
 	.object({
@@ -138,7 +138,7 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	const maxFreq = yAxis.max
 	const scaleY = chartHeight / maxFreq
 	const binWidth = chartWidth / bins.length
-	const averageCharWidthPx = 7
+	const _averageCharWidthPx = 7
 
 	const ext = initExtents(width)
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
@@ -182,7 +182,7 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	// Compute boundary tick labels from numeric separators
 	// X-axis ticks with text-width-aware label selection
 	const tickPositions = separators.map((_, i) => margin.left + i * binWidth)
-	const tickLabels = separators.map(sep => String(sep))
+	const tickLabels = separators.map((sep) => String(sep))
 	const selected = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartWidth)
 
 	// Render non-rotated x-axis labels centered at separators

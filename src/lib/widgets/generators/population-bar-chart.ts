@@ -5,12 +5,12 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
+	calculateTextAwareLabelSelection,
 	calculateXAxisLayout,
 	calculateYAxisLayout,
 	computeDynamicWidth,
 	includeText,
-	initExtents,
-	calculateTextAwareLabelSelection
+	initExtents
 } from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
 
@@ -40,10 +40,7 @@ export const PopulationBarChartPropsSchema = z
 		type: z
 			.literal("populationBarChart")
 			.describe("Identifies this as a bar chart styled like the elk population example."),
-		width: z
-			.number()
-			.min(300)
-			.describe("Total width of the chart in pixels including margins and labels (e.g., 600)."),
+		width: z.number().min(300).describe("Total width of the chart in pixels including margins and labels (e.g., 600)."),
 		height: z
 			.number()
 			.min(300)
@@ -131,7 +128,7 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 
 	// Compute bar centers and text-aware label selection for auto thinning
 	const barCenters = chartData.map((_, i) => i * barWidth + barWidth / 2)
-	const candidateLabels = chartData.map(d => abbreviateMonth(d.label))
+	const candidateLabels = chartData.map((d) => abbreviateMonth(d.label))
 	const selectedTextAware = calculateTextAwareLabelSelection(candidateLabels, barCenters, chartWidth)
 	const visibleLabelSet = new Set<string>(xAxisVisibleLabels)
 
@@ -163,7 +160,7 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 
 	// Global coordinates for axis labels with proper pivot to avoid clipping
 	const globalXAxisLabelX = margin.left + chartWidth / 2
-	const globalXAxisLabelY = height - margin.bottom + xAxisTitleY
+	const _globalXAxisLabelY = height - margin.bottom + xAxisTitleY
 	includeText(ext, globalXAxisLabelX, abbreviateMonth(xAxisLabel), "middle", 7)
 
 	const globalYAxisLabelX = yAxisLabelX

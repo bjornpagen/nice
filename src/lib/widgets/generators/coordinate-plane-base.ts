@@ -346,7 +346,7 @@ export function generateCoordinatePlaneBase(
 		xTickValues.push(t)
 	}
 	const selectedXTicks = calculateIntersectionAwareTicks(xTickValues, true)
-	
+
 	xTickValues.forEach((t, i) => {
 		if (t === 0) return // Skip origin
 		const x = toSvgX(t)
@@ -357,14 +357,14 @@ export function generateCoordinatePlaneBase(
 			includeText(ext, x, label, "middle", 7)
 		}
 	})
-	
-	// Y-axis ticks and labels with intersection collision avoidance  
+
+	// Y-axis ticks and labels with intersection collision avoidance
 	const yTickValues: number[] = []
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		yTickValues.push(t)
 	}
 	const selectedYTicks = calculateIntersectionAwareTicks(yTickValues, false)
-	
+
 	yTickValues.forEach((t, i) => {
 		if (t === 0) return // Skip origin
 		const y = toSvgY(t)

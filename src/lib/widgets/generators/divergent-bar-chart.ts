@@ -3,7 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateTextAwareLabelSelection,
 	calculateXAxisLayout,
@@ -119,26 +119,26 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 
 	// X-axis label (using group-relative coordinates)
 	svg += `<text x="${chartWidth / 2}" y="${chartHeight + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
-	
+
 	// Close group before rendering y-axis label
-	svg += "</g>" 
-	
+	svg += "</g>"
+
 	// Y-axis label with wrapping
 	const globalYAxisLabelX = yAxisLabelX
 	const globalYAxisLabelY = margin.top + chartHeight / 2
 	svg += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), globalYAxisLabelX, globalYAxisLabelY, chartHeight)
 	includeText(ext, globalYAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
-	
+
 	// X-axis label (global coordinates)
 	const globalXAxisLabelX = margin.left + chartWidth / 2
-	const globalXAxisLabelY = height - margin.bottom + xAxisTitleY
+	const _globalXAxisLabelY = height - margin.bottom + xAxisTitleY
 	includeText(ext, globalXAxisLabelX, abbreviateMonth(xAxisLabel), "middle", 7)
-	
+
 	// Reopen group for remaining chart elements
 	svg += `<g transform="translate(${margin.left},${margin.top})">`
 
 	// Text-width-aware label selection for visual uniformity
-	const barLabels = chartData.map(d => abbreviateMonth(d.category))
+	const barLabels = chartData.map((d) => abbreviateMonth(d.category))
 	const barPositions = chartData.map((_, i) => i * barWidth + barWidth / 2)
 	const selectedLabelIndices = calculateTextAwareLabelSelection(barLabels, barPositions, chartWidth)
 

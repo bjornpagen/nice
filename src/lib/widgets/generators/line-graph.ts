@@ -3,7 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateRightYAxisLayout,
 	calculateTextAwareLabelSelection,
@@ -14,7 +14,7 @@ import {
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
-import { renderWrappedText, renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
+import { renderRotatedWrappedYAxisLabel, renderWrappedText } from "@/lib/widgets/utils/text"
 
 export const ErrMismatchedDataLength = errors.new("series data must have the same length as x-axis categories")
 
@@ -179,9 +179,9 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	{
 		// Text-width-aware label selection for better spacing
 		const positions = xAxis.categories.map((_, i) => toSvgX(i))
-		const abbreviatedLabels = xAxis.categories.map(cat => abbreviateMonth(cat))
+		const abbreviatedLabels = xAxis.categories.map((cat) => abbreviateMonth(cat))
 		const selected = calculateTextAwareLabelSelection(abbreviatedLabels, positions, chartWidth)
-		
+
 		xAxis.categories.forEach((cat, i) => {
 			if (!cat) return
 			const x = toSvgX(i)

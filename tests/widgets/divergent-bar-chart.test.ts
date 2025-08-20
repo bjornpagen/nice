@@ -39,7 +39,7 @@ test("divergent bar chart - sea level change by century", () => {
 			{ category: "17th", value: -3.5 },
 			{ category: "18th", value: -2.1 },
 			{ category: "19th", value: -0.2 },
-			{ category: "20th", value: 13.8 },
+			{ category: "20th", value: 13.8 }
 		],
 		positiveBarColor: "#00CFCB",
 		negativeBarColor: "#0B6A6A",

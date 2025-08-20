@@ -3,7 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { abbreviateMonth, computeLabelSelection } from "@/lib/widgets/utils/labels"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateLineLegendLayout,
 	calculateTextAwareLabelSelection,
@@ -16,7 +16,7 @@ import {
 	initExtents,
 	wrapInClippedGroup
 } from "@/lib/widgets/utils/layout"
-import { renderWrappedText, renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
+import { renderRotatedWrappedYAxisLabel, renderWrappedText } from "@/lib/widgets/utils/text"
 
 // Defines a single data point on the scatter plot
 const ScatterPointSchema = z
@@ -354,13 +354,13 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
 	const { titleY, topMargin } = calculateTitleLayout(title, width - 60)
-	
+
 	// Calculate line legend layout for dedicated label area
 	const lineCount = lines.length
 	const basePadRight = 30
 	const { requiredRightMargin } = calculateLineLegendLayout(lineCount, 0, 0) // chartRight/chartTop calculated after padding
 	const rightMargin = lineCount > 0 ? requiredRightMargin : basePadRight
-	
+
 	const pad = { top: topMargin, right: rightMargin, bottom: bottomMargin, left: leftMargin }
 	const chartWidth = width - pad.left - pad.right
 	const chartHeight = height - pad.top - pad.bottom
@@ -374,7 +374,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	const toSvgX = (val: number) => pad.left + (val - xAxis.min) * scaleX
 	const toSvgY = (val: number) => height - pad.bottom - (val - yAxis.min) * scaleY
 
-	const clamp = (value: number, min: number, max: number) => {
+	const _clamp = (value: number, min: number, max: number) => {
 		if (value < min) return min
 		if (value > max) return max
 		return value
@@ -415,9 +415,9 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		tickValues.push(t)
 		tickPositions.push(toSvgX(t))
 	}
-	const tickLabels = tickValues.map(t => String(t))
+	const tickLabels = tickValues.map((t) => String(t))
 	const selected = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartWidth)
-	
+
 	tickValues.forEach((t, i) => {
 		const x = toSvgX(t)
 		svg += `<line x1="${x}" y1="${height - pad.bottom}" x2="${x}" y2="${height - pad.bottom + 5}" stroke="black"/>`
@@ -432,13 +432,18 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	}
 	svg += `<text x="${pad.left + chartWidth / 2}" y="${height - pad.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
 	includeText(ext, pad.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
-	svg += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), yAxisLabelX, pad.top + chartHeight / 2, chartHeight)
+	svg += renderRotatedWrappedYAxisLabel(
+		abbreviateMonth(yAxis.label),
+		yAxisLabelX,
+		pad.top + chartHeight / 2,
+		chartHeight
+	)
 	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
 
 	// Render line overlays - linear lines don't need clipping, curves do
 	let linearLineContent = ""
 	let curveLineContent = ""
-	
+
 	for (const line of lines) {
 		if (line.type === "bestFit") {
 			if (line.method === "linear") {
@@ -503,33 +508,33 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 			}
 		}
 	}
-	
+
 	// Render linear lines without clipping (they're already bounded)
 	svg += linearLineContent
-	
+
 	// Render curves with clipping (they can extend to infinity)
 	if (curveLineContent) {
 		svg += wrapInClippedGroup("chartArea", curveLineContent)
 	}
-	
+
 	// Render line labels in dedicated legend area to prevent conflicts
 	if (lines.length > 0) {
 		const chartRight = pad.left + chartWidth
 		const { legendAreaX, legendStartY, legendSpacing } = calculateLineLegendLayout(lines.length, chartRight, pad.top)
-		
+
 		for (let i = 0; i < lines.length; i++) {
 			const line = lines[i]
 			if (!line) continue
-			
+
 			const legendY = legendStartY + i * legendSpacing
 			const lineStartX = legendAreaX
 			const lineEndX = legendAreaX + 20
 			const lineCenterY = legendY - 3
-			
+
 			// Draw small line sample with same style as the actual line
 			const styleStr = styleAttrs(line.style)
 			svg += `<line x1="${lineStartX}" y1="${lineCenterY}" x2="${lineEndX}" y2="${lineCenterY}"${styleStr}/>`
-			
+
 			// Label positioned after the line sample
 			svg += `<text x="${lineEndX + 5}" y="${legendY}" fill="black" text-anchor="start">${abbreviateMonth(line.label)}</text>`
 			includeText(ext, lineEndX + 5, abbreviateMonth(line.label), "start", 7)

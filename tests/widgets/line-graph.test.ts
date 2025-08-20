@@ -45,8 +45,8 @@ test("line graph - wraps long y-axis label (photosynthesis)", () => {
 	const parsed = parseResult.data
 	const svg = generateLineGraph(parsed)
 	// Ensure the y-axis label is rotated and wraps
-	expect(svg).toContain("transform=\"rotate(-90")
-	expect(svg).toMatch(/<tspan x=\"\d+\" dy=\"1.1em\">/) // at least one wrapped line
+	expect(svg).toContain('transform="rotate(-90')
+	expect(svg).toMatch(/<tspan x="\d+" dy="1.1em">/) // at least one wrapped line
 	expect(svg).toMatchSnapshot()
 })
 
@@ -308,7 +308,7 @@ test("line graph - mammal species vs latitude", () => {
 			label: "Latitude (in degrees)",
 			categories: [
 				"0 degrees",
-				"10 degrees south", 
+				"10 degrees south",
 				"20 degrees south",
 				"30 degrees south",
 				"40 degrees south",

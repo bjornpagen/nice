@@ -266,22 +266,22 @@ export function calculateTitleLayout(
  * @returns Object with legend positioning and required right margin
  */
 export function calculateLineLegendLayout(
-	lineCount: number,
+	_lineCount: number,
 	chartRight: number,
 	chartTop: number,
 	legendSpacing = 18
 ): {
-	legendAreaX: number;
-	legendStartY: number;
-	legendSpacing: number;
-	requiredRightMargin: number;
+	legendAreaX: number
+	legendStartY: number
+	legendSpacing: number
+	requiredRightMargin: number
 } {
 	const legendPadding = 15 // Space between chart and legend
 	const maxLabelWidth = 80 // Estimated max width for line labels
 	const legendAreaX = chartRight + legendPadding
 	const legendStartY = chartTop + 10 // Small offset from chart top
 	const requiredRightMargin = legendPadding + maxLabelWidth + 10 // Extra buffer
-	
+
 	return {
 		legendAreaX,
 		legendStartY,
@@ -310,7 +310,7 @@ export function calculateTextAwareLabelSelection(
 	if (labels.length === 0 || positions.length === 0) {
 		return new Set<number>()
 	}
-	
+
 	if (labels.length !== positions.length) {
 		logger.error("label and position arrays must have same length", {
 			labelsLength: labels.length,
@@ -318,62 +318,62 @@ export function calculateTextAwareLabelSelection(
 		})
 		throw errors.new("label and position arrays must have same length")
 	}
-	
+
 	// Calculate estimated width for each label
-	const labelWidths = labels.map(label => label.length * avgCharWidthPx)
-	
+	const labelWidths = labels.map((label) => label.length * avgCharWidthPx)
+
 	// Find indices that have actual content (non-empty labels)
 	const nonEmptyIndices = labels
 		.map((label, i) => ({ index: i, hasContent: label.trim() !== "" }))
-		.filter(item => item.hasContent)
-		.map(item => item.index)
-	
+		.filter((item) => item.hasContent)
+		.map((item) => item.index)
+
 	if (nonEmptyIndices.length === 0) {
 		return new Set<number>()
 	}
-	
+
 	// Check if all labels can fit without overlap
 	let allLabelsCanFit = true
 	for (let i = 1; i < nonEmptyIndices.length; i++) {
 		const currentIdx = nonEmptyIndices[i]
-		const prevIdx = nonEmptyIndices[i-1]
-		
+		const prevIdx = nonEmptyIndices[i - 1]
+
 		if (currentIdx === undefined || prevIdx === undefined) continue
-		
+
 		const currentPos = positions[currentIdx]
 		const prevPos = positions[prevIdx]
 		const currentWidth = labelWidths[currentIdx]
 		const prevWidth = labelWidths[prevIdx]
-		
-		if (currentPos === undefined || prevPos === undefined || 
-			currentWidth === undefined || prevWidth === undefined) continue
-		
+
+		if (currentPos === undefined || prevPos === undefined || currentWidth === undefined || prevWidth === undefined)
+			continue
+
 		// Calculate minimum spacing needed between these two labels
-		const prevRightEdge = prevPos + (prevWidth / 2)
-		const currentLeftEdge = currentPos - (currentWidth / 2)
+		const prevRightEdge = prevPos + prevWidth / 2
+		const currentLeftEdge = currentPos - currentWidth / 2
 		const actualSpacing = currentLeftEdge - prevRightEdge
-		
+
 		if (actualSpacing < paddingPx) {
 			allLabelsCanFit = false
 			break
 		}
 	}
-	
+
 	if (allLabelsCanFit) {
 		// All labels fit with adequate spacing
 		return new Set(nonEmptyIndices)
 	}
-	
+
 	// Labels would clash - use uniform intermittent pattern
 	// Calculate how many labels can reasonably fit
 	const maxLabelWidth = Math.max(...labelWidths)
 	const approximateLabelsPerChart = Math.floor(chartWidthPx / (maxLabelWidth + paddingPx))
 	const targetCount = Math.max(1, Math.min(approximateLabelsPerChart, nonEmptyIndices.length))
-	
+
 	// Select uniform spacing from available labels
 	const step = Math.max(1, Math.ceil(nonEmptyIndices.length / targetCount))
 	const uniformIndices = nonEmptyIndices.filter((_, i) => i % step === 0)
-	
+
 	return new Set(uniformIndices)
 }
 
@@ -385,30 +385,27 @@ export function calculateTextAwareLabelSelection(
  * @param isXAxis - Whether this is the x-axis (affects collision logic)
  * @returns Set of indices indicating which ticks should have labels
  */
-export function calculateIntersectionAwareTicks(
-	tickValues: number[],
-	isXAxis: boolean
-): Set<number> {
+export function calculateIntersectionAwareTicks(tickValues: number[], _isXAxis: boolean): Set<number> {
 	const labeledIndices = new Set<number>()
-	
+
 	// Find the first negative value (closest to intersection)
 	let firstNegativeIndex = -1
 	for (let i = 0; i < tickValues.length; i++) {
 		const value = tickValues[i]
 		if (value === undefined) continue
-		
+
 		// Skip origin (standard behavior)
 		if (value === 0) continue
-		
+
 		// Skip first negative to avoid intersection collision
 		if (value < 0 && firstNegativeIndex === -1) {
 			firstNegativeIndex = i
 			continue // Skip this one
 		}
-		
+
 		// Label all other values
 		labeledIndices.add(i)
 	}
-	
+
 	return labeledIndices
 }
