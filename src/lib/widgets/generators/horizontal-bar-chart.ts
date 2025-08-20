@@ -22,8 +22,8 @@ const BarDataSchema = z
 export const HorizontalBarChartPropsSchema = z
 	.object({
 		type: z.literal("horizontalBarChart"),
-		width: z.number().min(300).describe("Total width of the chart in pixels (e.g., 600)."),
-		height: z.number().min(300).describe("Total height of the chart in pixels (e.g., 400)."),
+		width: z.number().positive().describe("Total width of the chart in pixels (e.g., 600)."),
+		height: z.number().positive().describe("Total height of the chart in pixels (e.g., 400)."),
 		xAxis: z
 			.object({
 				label: z

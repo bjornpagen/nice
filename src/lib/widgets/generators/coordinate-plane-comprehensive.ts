@@ -24,13 +24,13 @@ export const CoordinatePlaneComprehensivePropsSchema = z
 			.describe("Identifies this as a comprehensive coordinate plane widget with full geometric features."),
 		width: z
 			.number()
-			.min(300)
+			.positive()
 			.describe(
 				"Total width of the coordinate plane in pixels including axes and labels (e.g., 500, 600, 400). Larger values provide more plotting space."
 			),
 		height: z
 			.number()
-			.min(300)
+			.positive()
 			.describe(
 				"Total height of the coordinate plane in pixels including axes and labels (e.g., 500, 600, 400). Usually equal to width for square aspect ratio."
 			),

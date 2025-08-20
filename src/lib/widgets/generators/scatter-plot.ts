@@ -121,13 +121,13 @@ export const ScatterPlotPropsSchema = z
 			.describe("Identifies this as a scatter plot widget for displaying bivariate data relationships."),
 		width: z
 			.number()
-			.min(300)
+			.positive()
 			.describe(
 				"Total width of the plot in pixels including margins and labels (e.g., 600, 700, 500). Larger values show more detail."
 			),
 		height: z
 			.number()
-			.min(300)
+			.positive()
 			.describe(
 				"Total height of the plot in pixels including margins and labels (e.g., 400, 500, 350). Often 2/3 of width for good proportions."
 			),

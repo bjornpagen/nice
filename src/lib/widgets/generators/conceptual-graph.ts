@@ -26,8 +26,8 @@ function createHighlightPointSchema() {
 export const ConceptualGraphPropsSchema = z
 	.object({
 		type: z.literal("conceptualGraph"),
-		width: z.number().min(300).describe("Total width of the SVG in pixels (e.g., 400, 500)."),
-		height: z.number().min(300).describe("Total height of the SVG in pixels (e.g., 400, 500)."),
+		width: z.number().positive().describe("Total width of the SVG in pixels (e.g., 400, 500)."),
+		height: z.number().positive().describe("Total height of the SVG in pixels (e.g., 400, 500)."),
 		xAxisLabel: z.string().describe("The label for the horizontal axis (e.g., 'Time')."),
 		yAxisLabel: z.string().describe("The label for the vertical axis (e.g., 'Frog population size')."),
 		curvePoints: z

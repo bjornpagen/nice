@@ -30,8 +30,8 @@ const DataPointSchema = z
 export const DivergentBarChartPropsSchema = z
 	.object({
 		type: z.literal("divergentBarChart"),
-		width: z.number().min(300).describe("Total width of the chart in pixels (e.g., 600)."),
-		height: z.number().min(300).describe("Total height of the chart in pixels (e.g., 400)."),
+		width: z.number().positive().describe("Total width of the chart in pixels (e.g., 600)."),
+		height: z.number().positive().describe("Total height of the chart in pixels (e.g., 400)."),
 		xAxisLabel: z.string().describe("The label for the horizontal axis (e.g., 'Century')."),
 		yAxis: z
 			.object({

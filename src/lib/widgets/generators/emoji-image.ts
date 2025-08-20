@@ -13,7 +13,7 @@ export const EmojiImagePropsSchema = z
 			),
 		size: z
 			.number()
-			.min(300)
+			.positive()
 			.max(512)
 			.describe(
 				"Size of the emoji in pixels (both width and height). Controls the font size and SVG dimensions (e.g., 48, 64, 100, 32). Larger sizes show more detail. Max 512."
