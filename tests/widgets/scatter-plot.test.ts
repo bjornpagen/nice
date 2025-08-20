@@ -10,7 +10,7 @@ test("scatter plot - acceleration vs mass with trend", () => {
 	const input = {
 		type: "scatterPlot",
 		width: 407,
-		height: 290,
+		height: 300,
 		title: "Acceleration vs. Mass",
 		xAxis: {
 			label: "Mass (kg)",
@@ -71,7 +71,7 @@ test("scatter plot - bacterial population growth with exponential trend", () => 
 	const input = {
 		type: "scatterPlot",
 		width: 407,
-		height: 290,
+		height: 300,
 		title: "Bacterial Population Growth",
 		xAxis: {
 			label: "Time (hours)",

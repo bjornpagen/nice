@@ -60,7 +60,7 @@ test("divergent bar chart - auto label thinning prevents overcrowding determinis
 	const input = {
 		type: "divergentBarChart",
 		width: 374,
-		height: 267,
+		height: 300,
 		xAxisLabel: "Century",
 		yAxis: {
 			label: "Change in sea level (cm)",

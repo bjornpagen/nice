@@ -8,7 +8,7 @@ test("histogram - tomato production per plant", () => {
 	const input = {
 		type: "histogram",
 		width: 310,
-		height: 280,
+		height: 300,
 		title: "Tomato production per plant",
 		xAxis: { label: "number of tomatoes produced" },
 		yAxis: {

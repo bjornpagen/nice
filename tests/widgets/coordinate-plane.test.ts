@@ -10,7 +10,7 @@ test("coordinate plane - kinetic energy vs mass", () => {
 	const input = {
 		type: "coordinatePlane",
 		width: 363,
-		height: 288,
+		height: 300,
 		xAxis: {
 			label: "mass (kg)",
 			min: -1.8,

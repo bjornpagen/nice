@@ -20,8 +20,8 @@ export const UrlImageWidgetPropsSchema = z
 			.describe(
 				"Required alternative text describing the image for accessibility. Plaintext only; no markdown or HTML."
 			),
-		width: z.number().positive().nullable().describe("Optional width for the image in pixels."),
-		height: z.number().positive().nullable().describe("Optional height for the image in pixels."),
+		width: z.number().min(300).nullable().describe("Optional width for the image in pixels."),
+		height: z.number().min(300).nullable().describe("Optional height for the image in pixels."),
 		caption: z
 			.string()
 			.nullable()

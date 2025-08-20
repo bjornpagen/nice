@@ -123,8 +123,8 @@ test("conceptual graph - frog population size", () => {
 test("conceptual graph - wolf population lowest competition", () => {
 	const input = {
 		type: "conceptualGraph",
-		width: 260,
-		height: 260,
+		width: 300,
+		height: 300,
 		xAxisLabel: "Time",
 		yAxisLabel: "Wolf population size",
 		curvePoints: [

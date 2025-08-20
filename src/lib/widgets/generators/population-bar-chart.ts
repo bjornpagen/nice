@@ -40,11 +40,11 @@ export const PopulationBarChartPropsSchema = z
 			.describe("Identifies this as a bar chart styled like the elk population example."),
 		width: z
 			.number()
-			.positive()
+			.min(300)
 			.describe("Total width of the chart in pixels including margins and labels (e.g., 600)."),
 		height: z
 			.number()
-			.positive()
+			.min(300)
 			.describe("Total height of the chart in pixels including title and axis labels (e.g., 400)."),
 		xAxisLabel: z.string().describe("The label for the horizontal axis (e.g., 'Year')."),
 		yAxis: YAxisOptionsSchema.describe("Configuration for the vertical axis including scale and labels."),

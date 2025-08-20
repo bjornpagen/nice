@@ -890,7 +890,7 @@ test("does not remove instruction-augmented body question - zinc pieces vs conce
 				alt: "irregularly shaped chunks of silvery-grey zinc metal ",
 				url: "https://cdn.kastatic.org/ka-content-images/96db70681a015a8d299513e780cb965ba88a4287.jpg",
 				width: 353,
-				height: 270,
+				height: 300,
 				caption: "Large chunks of zinc metal",
 				attribution: '"Zinc-sample" by Benjah-bmm27. Public Domain.'
 			},
@@ -1096,7 +1096,7 @@ test("does not remove instruction-augmented body question - stirred vs cooled tr
 				alt: "Continuously stirring a reaction mixture",
 				url: "https://cdn.kastatic.org/ka-content-images/ef43d00e9a5d843b3d8ee18f5206b7674ed760cb.gif",
 				width: 350,
-				height: 231,
+				height: 300,
 				caption: "Continuously stirring a reaction mixture",
 				attribution: "Khan Academy"
 			},
@@ -1303,7 +1303,7 @@ test("dedupes paraphrased prompt - pure substances particle diagrams", () => {
 				alt: "Two types of particles: one type consists of two red spheres attached to each other, and the second type consists of single pink spheres.",
 				url: "https://cdn.kastatic.org/ka-content-images/e4461e542dae08f2320432899f6fcf5c10904a25.png",
 				width: 320,
-				height: 200,
+				height: 300,
 				caption: "Sample with two particle types: diatomic red pairs and single pink spheres.",
 				attribution: "Image courtesy of Khan Academy."
 			},
@@ -1312,7 +1312,7 @@ test("dedupes paraphrased prompt - pure substances particle diagrams", () => {
 				alt: "A crystal with repeating purple and red spheres arranged in a 1:1 ratio.",
 				url: "https://cdn.kastatic.org/ka-content-images/ff13b54c6e5612a91b9159451373850a2790dcd4.png",
 				width: 320,
-				height: 200,
+				height: 300,
 				caption: "Crystalline lattice showing alternating purple and red spheres in a 1:1 pattern.",
 				attribution: "Sodium bromide crystal structure rendering; public domain."
 			},
@@ -1321,7 +1321,7 @@ test("dedupes paraphrased prompt - pure substances particle diagrams", () => {
 				alt: "Green diatomic molecules; each consists of two green spheres connected to each other.",
 				url: "https://cdn.kastatic.org/ka-content-images/2ce2c30ea6cee965835267b3163e05b73e37f8ac.png",
 				width: 320,
-				height: 200,
+				height: 300,
 				caption: "Sample of green diatomic molecules, each made of two connected green spheres.",
 				attribution: "Image courtesy of Khan Academy."
 			},
@@ -1330,7 +1330,7 @@ test("dedupes paraphrased prompt - pure substances particle diagrams", () => {
 				alt: "Three types of particles: one type consists of two red spheres attached to each other; the second type consists of large purple spheres; the third type consists of tiny pink spheres.",
 				url: "https://cdn.kastatic.org/ka-content-images/a7d2f5587b0e20be9619a940046ba8d245175b13.png",
 				width: 320,
-				height: 200,
+				height: 300,
 				caption: "Sample with three particle types: red diatomic pairs, large purple spheres, and tiny pink spheres.",
 				attribution: "Image courtesy of Khan Academy."
 			}

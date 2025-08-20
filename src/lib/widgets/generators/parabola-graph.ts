@@ -28,8 +28,8 @@ function createAxisOptionsSchema() {
 export const ParabolaGraphPropsSchema = z
 	.object({
 		type: z.literal("parabolaGraph"),
-		width: z.number().positive().describe("Total width of the SVG in pixels."),
-		height: z.number().positive().describe("Total height of the SVG in pixels."),
+		width: z.number().min(300).describe("Total width of the SVG in pixels."),
+		height: z.number().min(300).describe("Total height of the SVG in pixels."),
 		xAxis: createAxisOptionsSchema(),
 		yAxis: createAxisOptionsSchema(),
 		parabola: z

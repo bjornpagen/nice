@@ -10,7 +10,7 @@ test("area graph - U.S. energy consumption by source (wrapping title)", () => {
 	const input = {
 		type: "areaGraph",
 		width: 369,
-		height: 299,
+		height: 300,
 		title: "U.S. energy consumption by source (1776 to 2021)",
 		xAxis: {
 			label: "Year",

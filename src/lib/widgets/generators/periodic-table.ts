@@ -10,8 +10,8 @@ export const PeriodicTableWidgetPropsSchema = z
 			.describe(
 				"required alternative text describing the image for accessibility. this should be descriptive and meaningful."
 			),
-		width: z.number().positive().nullable().describe("optional width for the image in pixels."),
-		height: z.number().positive().nullable().describe("optional height for the image in pixels."),
+		width: z.number().min(300).nullable().describe("optional width for the image in pixels."),
+		height: z.number().min(300).nullable().describe("optional height for the image in pixels."),
 		caption: z
 			.string()
 			.nullable()

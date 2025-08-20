@@ -37,11 +37,11 @@ export const PieChartWidgetPropsSchema = z
 			.describe("Identifies this as a pie chart widget for showing part-to-whole relationships."),
 		width: z
 			.number()
-			.positive()
+			.min(300)
 			.describe("Total nominal width of the chart area in pixels. The SVG may expand horizontally to fit labels."),
 		height: z
 			.number()
-			.positive()
+			.min(300)
 			.describe("Total height of the SVG container in pixels. This height will be divided among the stacked charts."),
 		charts: z
 			.array(PieChartDataSchema)

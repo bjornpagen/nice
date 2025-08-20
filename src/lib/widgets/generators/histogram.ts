@@ -25,13 +25,13 @@ export const HistogramPropsSchema = z
 			.describe("Identifies this as a histogram widget for displaying frequency distributions."),
 		width: z
 			.number()
-			.positive()
+			.min(300)
 			.describe(
 				"Total width of the histogram in pixels including margins (e.g., 500, 600, 400). Wider charts prevent label overlap."
 			),
 		height: z
 			.number()
-			.positive()
+			.min(300)
 			.describe(
 				"Total height of the histogram in pixels including title and labels (e.g., 400, 350, 500). Taller charts show frequencies more clearly."
 			),

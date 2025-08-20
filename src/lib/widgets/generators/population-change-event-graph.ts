@@ -22,8 +22,8 @@ function createSegmentSchema() {
 export const PopulationChangeEventGraphPropsSchema = z
 	.object({
 		type: z.literal("populationChangeEventGraph"),
-		width: z.number().positive().describe("Total width of the SVG in pixels (e.g., 400, 500)."),
-		height: z.number().positive().describe("Total height of the SVG in pixels (e.g., 400, 350)."),
+		width: z.number().min(300).describe("Total width of the SVG in pixels (e.g., 400, 500)."),
+		height: z.number().min(300).describe("Total height of the SVG in pixels (e.g., 400, 350)."),
 		xAxisLabel: z.string().describe("The label for the horizontal axis (e.g., 'Time')."),
 		yAxisLabel: z.string().describe("The label for the vertical axis (e.g., 'Deer population size')."),
 		xAxisMin: z.number().describe("The minimum value for the x-axis. This should typically be 0 for time-based data."),

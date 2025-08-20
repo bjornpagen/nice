@@ -106,7 +106,7 @@ test("population bar chart - bird population 2010-2015", () => {
 	const input = {
 		type: "populationBarChart",
 		width: 360,
-		height: 270,
+		height: 300,
 		xAxisLabel: "Year",
 		yAxis: {
 			label: "Number of birds",

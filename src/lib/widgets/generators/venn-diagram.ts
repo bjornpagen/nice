@@ -36,13 +36,13 @@ export const VennDiagramPropsSchema = z
 			.describe("Identifies this as a Venn diagram widget for visualizing set relationships and overlaps."),
 		width: z
 			.number()
-			.positive()
+			.min(300)
 			.describe(
 				"Total width of the diagram in pixels (e.g., 400, 500, 350). Must accommodate both circles, labels, and outside region."
 			),
 		height: z
 			.number()
-			.positive()
+			.min(300)
 			.describe(
 				"Total height of the diagram in pixels (e.g., 300, 400, 250). Should provide balanced proportions with width."
 			),

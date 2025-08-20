@@ -21,8 +21,8 @@ const PointSchema = z.object({
 export const AreaGraphPropsSchema = z
 	.object({
 		type: z.literal("areaGraph"),
-		width: z.number().positive().describe("Total width of the SVG in pixels (e.g., 600, 500)."),
-		height: z.number().positive().describe("Total height of the SVG in pixels (e.g., 400, 350)."),
+		width: z.number().min(300).describe("Total width of the SVG in pixels (e.g., 600, 500)."),
+		height: z.number().min(300).describe("Total height of the SVG in pixels (e.g., 400, 350)."),
 		title: z.string().describe("The main title displayed above the graph."),
 		xAxis: z
 			.object({

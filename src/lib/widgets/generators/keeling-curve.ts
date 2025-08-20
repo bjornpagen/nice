@@ -10,8 +10,8 @@ const AnnotationSchema = z.object({
 export const KeelingCurvePropsSchema = z
 	.object({
 		type: z.literal("keelingCurve"),
-		width: z.number().positive().describe("Total width of the SVG in pixels."),
-		height: z.number().positive().describe("Total height of the SVG in pixels."),
+		width: z.number().min(300).describe("Total width of the SVG in pixels."),
+		height: z.number().min(300).describe("Total height of the SVG in pixels."),
 		xAxisLabel: z.string().describe("Label for the horizontal axis."),
 		yAxisLabel: z.string().describe("Label for the vertical axis, including units."),
 		annotations: z
