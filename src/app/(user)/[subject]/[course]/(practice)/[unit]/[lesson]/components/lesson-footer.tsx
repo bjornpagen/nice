@@ -209,7 +209,7 @@ export function LessonFooter({ coursePromise, progressPromise }: LessonFooterPro
 
 		const trackNavigationAsync = async () => {
 			const result = await errors.try(
-				trackArticleView(onerosterUserSourcedId, currentResourceId, {
+				trackArticleView(currentResourceId, {
 					subjectSlug,
 					courseSlug
 				})

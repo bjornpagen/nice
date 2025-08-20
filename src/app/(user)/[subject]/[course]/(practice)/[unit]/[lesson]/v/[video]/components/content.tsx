@@ -188,7 +188,7 @@ export function Content({
 			}
 
 			if (onerosterUserSourcedId) {
-				const result = await errors.try(getVideoProgress(onerosterUserSourcedId, video.id))
+				const result = await errors.try(getVideoProgress(video.id))
 				if (result.error) {
 					// Note: Failed to load video progress, starting from beginning
 					return
@@ -247,13 +247,8 @@ export function Content({
 								}
 								if (onerosterUserSourcedId) {
 									async function markCompleteNow() {
-										const userIdForProgress =
-											typeof onerosterUserSourcedId === "string" ? onerosterUserSourcedId : undefined
-										if (!userIdForProgress) {
-											return
-										}
 										const result = await errors.try(
-											updateVideoProgress(userIdForProgress, video.id, clampedTime, snappedDuration, {
+											updateVideoProgress(video.id, clampedTime, snappedDuration, {
 												subjectSlug: params.subject,
 												courseSlug: params.course
 											})
@@ -303,7 +298,7 @@ export function Content({
 
 				if (duration > 0) {
 					// Existing OneRoster progress update (fire-and-forget)
-					void updateVideoProgress(onerosterUserSourcedId, video.id, currentTime, duration, {
+					void updateVideoProgress(video.id, currentTime, duration, {
 						subjectSlug: params.subject,
 						courseSlug: params.course
 					})
@@ -402,8 +397,8 @@ export function Content({
 			"J",
 			"l",
 			"L",
-			".",
-			","
+			",",
+			"."
 		])
 		const onKeyDown = (e: KeyboardEvent) => {
 			if (blockedKeys.has(e.key)) {
@@ -581,9 +576,8 @@ export function Content({
 						<div className="flex space-x-8">
 							<button
 								type="button"
-								className={`pb-4 px-1 font-medium text-base transition-colors relative ${
-									activeTab === "about" ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
-								}`}
+								className={`pb-4 px-1 font-medium text-base transition-colors relative ${activeTab === "about" ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
+									}`}
 								onClick={() => setActiveTab("about")}
 							>
 								About
@@ -601,9 +595,8 @@ export function Content({
 							{false && (
 								<button
 									type="button"
-									className={`pb-4 px-1 font-medium text-base transition-colors relative ${
-										activeTab === "transcript" ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
-									}`}
+									className={`pb-4 px-1 font-medium text-base transition-colors relative ${activeTab === "transcript" ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
+										}`}
 									onClick={() => setActiveTab("transcript")}
 								>
 									Transcript

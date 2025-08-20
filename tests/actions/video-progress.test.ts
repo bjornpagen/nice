@@ -51,7 +51,7 @@ mock.module("@clerk/nextjs/server", () => ({
 		users: {
 			getUser: () =>
 				Promise.resolve({
-					publicMetadata: {},
+					publicMetadata: { sourceId: "test_source_id" },
 					emailAddresses: [{ emailAddress: "test@example.com" }]
 				})
 		}
@@ -76,7 +76,7 @@ describe("updateVideoProgress - scoring and status", () => {
 			Promise.resolve({ score: 10, scoreStatus: "partially graded" })
 		)
 
-		await tracking.updateVideoProgress("u1", "video_1", 30, 120, { subjectSlug: "math", courseSlug: "alg" })
+		await tracking.updateVideoProgress("video_1", 30, 120, { subjectSlug: "math", courseSlug: "alg" })
 
 		expect(mockPutResult).toHaveBeenCalled()
 		const payload = JSON.parse(JSON.stringify(mockPutResult.mock.calls[0]?.[1]))
@@ -86,7 +86,7 @@ describe("updateVideoProgress - scoring and status", () => {
 
 		// cache invalidation
 		expect(mockGetAllCoursesBySlug).toHaveBeenCalledWith("alg")
-		expect(mockInvalidateCache).toHaveBeenCalledWith(userProgressByCourse("u1", "course_1"))
+		expect(mockInvalidateCache).toHaveBeenCalledWith(userProgressByCourse("test_source_id", "course_1"))
 	})
 
 	test("marks complete at threshold with score 100 and fully graded", async () => {
@@ -96,7 +96,7 @@ describe("updateVideoProgress - scoring and status", () => {
 		const duration = 100
 		const currentTime = Math.ceil((VIDEO_COMPLETION_THRESHOLD_PERCENT / 100) * duration)
 
-		await tracking.updateVideoProgress("u2", "video_2", currentTime, duration, {
+		await tracking.updateVideoProgress("video_2", currentTime, duration, {
 			subjectSlug: "science",
 			courseSlug: "bio"
 		})
@@ -109,7 +109,7 @@ describe("updateVideoProgress - scoring and status", () => {
 	test("proceeds with completion even if existing result fetch fails", async () => {
 		mockGetResult.mockImplementationOnce((_id: string) => Promise.reject(errors.new("network")))
 
-		await tracking.updateVideoProgress("u3", "video_3", 100, 100, { subjectSlug: "math", courseSlug: "geo" })
+		await tracking.updateVideoProgress("video_3", 100, 100, { subjectSlug: "math", courseSlug: "geo" })
 
 		expect(mockPutResult).toHaveBeenCalled()
 		const payload = JSON.parse(JSON.stringify(mockPutResult.mock.calls[0]?.[1]))
@@ -122,7 +122,7 @@ describe("updateVideoProgress - scoring and status", () => {
 			Promise.resolve({ score: 90, scoreStatus: "partially graded" })
 		)
 
-		await tracking.updateVideoProgress("u4", "video_4", 10, 100, { subjectSlug: "math", courseSlug: "pre" })
+		await tracking.updateVideoProgress("video_4", 10, 100, { subjectSlug: "math", courseSlug: "pre" })
 
 		const payload = JSON.parse(JSON.stringify(mockPutResult.mock.calls[0]?.[1]))
 		expect(payload?.result?.score).toBe(90)
@@ -133,7 +133,7 @@ describe("updateVideoProgress - scoring and status", () => {
 	test("preserves fully graded status once completed", async () => {
 		mockGetResult.mockImplementationOnce((_id: string) => Promise.resolve({ score: 98, scoreStatus: "fully graded" }))
 
-		await tracking.updateVideoProgress("u5", "video_5", 80, 100, { subjectSlug: "math", courseSlug: "calc" })
+		await tracking.updateVideoProgress("video_5", 80, 100, { subjectSlug: "math", courseSlug: "calc" })
 
 		const payload = JSON.parse(JSON.stringify(mockPutResult.mock.calls[0]?.[1]))
 		expect(payload?.result?.score).toBe(98)
@@ -141,13 +141,13 @@ describe("updateVideoProgress - scoring and status", () => {
 	})
 
 	test("skips update when duration <= 0", async () => {
-		await tracking.updateVideoProgress("u6", "video_6", 10, 0, { subjectSlug: "math", courseSlug: "alg" })
+		await tracking.updateVideoProgress("video_6", 10, 0, { subjectSlug: "math", courseSlug: "alg" })
 		expect(mockPutResult).not.toHaveBeenCalled()
 	})
 
 	test("skips update when existing score unknown and not completion", async () => {
 		mockGetResult.mockImplementationOnce((_id: string) => Promise.reject(errors.new("network")))
-		await tracking.updateVideoProgress("u7", "video_7", 10, 100, { subjectSlug: "math", courseSlug: "alg" })
+		await tracking.updateVideoProgress("video_7", 10, 100, { subjectSlug: "math", courseSlug: "alg" })
 		expect(mockPutResult).not.toHaveBeenCalled()
 	})
 })
@@ -157,7 +157,7 @@ describe("getVideoProgress - reading", () => {
 		mockGetResult.mockImplementationOnce((_id: string) =>
 			Promise.resolve({ score: 63, scoreStatus: "partially graded" })
 		)
-		const res = await tracking.getVideoProgress("u8", "video_8")
+		const res = await tracking.getVideoProgress("video_8")
 		expect(res).not.toBeNull()
 		expect(res?.percentComplete).toBe(63)
 		expect(res?.currentTime).toBe(0)
@@ -165,7 +165,7 @@ describe("getVideoProgress - reading", () => {
 
 	test("returns null when no result found", async () => {
 		mockGetResult.mockImplementationOnce((_id: string) => Promise.reject(errors.new("not found")))
-		const res = await tracking.getVideoProgress("u9", "video_9")
+		const res = await tracking.getVideoProgress("video_9")
 		expect(res).toBeNull()
 	})
 })

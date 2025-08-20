@@ -72,12 +72,12 @@ export function Content({
 			userEmail = user.primaryEmailAddress?.emailAddress
 		}
 
-		if (onerosterUserSourcedId && article.id) {
+		if (article.id) {
 			// Track article view on mount and refresh route so server-fetched progress updates immediately
 			const trackArticleAsync = async () => {
 				beginProgressUpdate(article.id)
 				const result = await errors.try(
-					trackArticleView(onerosterUserSourcedId, article.id, {
+					trackArticleView(article.id, {
 						subjectSlug: params.subject,
 						courseSlug: params.course
 					})

@@ -626,7 +626,6 @@ export const getNextAttemptNumber = attempt.getNext
  * @returns Whether the user is already proficient (true) or not (false)
  */
 export async function checkExistingProficiency(
-	onerosterUserSourcedId: string,
 	onerosterAssessmentSourcedId: string
 ): Promise<boolean> {
 	const { userId } = await auth()
@@ -634,6 +633,7 @@ export async function checkExistingProficiency(
 		logger.error("checkExistingProficiency failed: user not authenticated")
 		throw errors.new("user not authenticated")
 	}
+	const onerosterUserSourcedId = await getCurrentUserSourcedId(userId)
 	logger.info("checking existing proficiency", {
 		onerosterUserSourcedId,
 		onerosterAssessmentSourcedId

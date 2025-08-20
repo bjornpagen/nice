@@ -9,6 +9,7 @@ import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import { calculateProficiencyScore } from "@/lib/proficiency/core"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 import { assertPercentageInteger } from "@/lib/utils/score"
+import { getCurrentUserSourcedId } from "@/lib/authorization"
 
 interface ExercisePerformance {
 	exerciseId: string
@@ -35,7 +36,6 @@ interface QuestionResult {
  * @param onerosterCourseSourcedId - The sourcedId of the course for cache invalidation.
  */
 export async function updateProficiencyFromAssessment(
-	onerosterUserSourcedId: string,
 	onerosterComponentResourceSourcedId: string,
 	attemptNumber: number,
 	sessionResults: QuestionResult[],
@@ -46,6 +46,7 @@ export async function updateProficiencyFromAssessment(
 		logger.error("updateProficiencyFromAssessment failed: user not authenticated")
 		throw errors.new("user not authenticated")
 	}
+	const onerosterUserSourcedId = await getCurrentUserSourcedId(userId)
 	logger.info("starting granular proficiency analysis from session results", {
 		onerosterUserSourcedId,
 		onerosterComponentResourceSourcedId,
@@ -274,7 +275,6 @@ export async function updateProficiencyFromAssessment(
 					score: assertPercentageInteger(proficiencyScore, "proficiency score"),
 					correctAnswers: performance.correctCount,
 					totalQuestions: performance.totalCount,
-					onerosterUserSourcedId,
 					onerosterCourseSourcedId
 				})
 			)

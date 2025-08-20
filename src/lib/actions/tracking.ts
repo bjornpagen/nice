@@ -14,6 +14,7 @@ import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 import { assertPercentageInteger, coercePercentageInteger } from "@/lib/utils/score"
 // ADDED: Import the new XP service.
 import { awardXpForAssessment } from "@/lib/xp/service"
+import { getCurrentUserSourcedId } from "@/lib/authorization"
 
 /**
  * Tracks that a user has viewed an article by creating a "completed"
@@ -25,7 +26,6 @@ import { awardXpForAssessment } from "@/lib/xp/service"
  * @param courseInfo - Slugs to identify the course for cache invalidation.
  */
 export async function trackArticleView(
-	onerosterUserSourcedId: string,
 	onerosterArticleResourceSourcedId: string,
 	courseInfo: { subjectSlug: string; courseSlug: string }
 ) {
@@ -34,6 +34,7 @@ export async function trackArticleView(
 		logger.error("trackArticleView failed: user not authenticated")
 		throw errors.new("user not authenticated")
 	}
+	const onerosterUserSourcedId = await getCurrentUserSourcedId(userId)
 	logger.info("tracking article view", { onerosterUserSourcedId, onerosterArticleResourceSourcedId })
 
 	// The line item sourcedId is the resource sourcedId + '_ali'
@@ -101,7 +102,6 @@ export async function trackArticleView(
  * @param courseInfo - Slugs to identify the course for cache invalidation.
  */
 export async function updateVideoProgress(
-	onerosterUserSourcedId: string,
 	onerosterVideoResourceSourcedId: string,
 	currentTime: number,
 	duration: number,
@@ -112,6 +112,7 @@ export async function updateVideoProgress(
 		logger.error("updateVideoProgress failed: user not authenticated")
 		throw errors.new("user not authenticated")
 	}
+	const onerosterUserSourcedId = await getCurrentUserSourcedId(userId)
 	if (duration <= 0) {
 		logger.warn("video progress tracking skipped", {
 			onerosterVideoResourceSourcedId,
@@ -248,7 +249,6 @@ interface AssessmentCompletionOptions {
 	score: number
 	correctAnswers: number
 	totalQuestions: number
-	onerosterUserSourcedId: string
 	onerosterCourseSourcedId: string
 	metadata?: {
 		masteredUnits: number
@@ -285,6 +285,7 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 		logger.error("user not authenticated")
 		throw errors.new("user not authenticated")
 	}
+	const onerosterUserSourcedId = await getCurrentUserSourcedId(clerkUserId)
 
 	// Destructure all options for clarity
 	const {
@@ -292,7 +293,6 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 		score: assessmentScore,
 		correctAnswers: assessmentCorrectAnswers,
 		totalQuestions: assessmentTotalQuestions,
-		onerosterUserSourcedId: userId,
 		onerosterCourseSourcedId: courseId,
 		metadata: assessmentMetadata,
 		contentType,
@@ -327,7 +327,7 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 
 	// Step 2: Save the raw assessment result to OneRoster
 	const onerosterLineItemSourcedId = getAssessmentLineItemId(resourceId)
-	const baseResultSourcedId = `nice_${userId}_${onerosterLineItemSourcedId}`
+	const baseResultSourcedId = `nice_${onerosterUserSourcedId}_${onerosterLineItemSourcedId}`
 	const onerosterResultSourcedId =
 		isInteractiveAssessment && attemptNumber && attemptNumber > 0
 			? `${baseResultSourcedId}_attempt_${attemptNumber}`
@@ -339,7 +339,7 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 		// 3a. Use the new XP Service to calculate final XP
 		const xpResult = await errors.try(
 			awardXpForAssessment({
-				userSourcedId: userId,
+				userSourcedId: onerosterUserSourcedId,
 				assessmentResourceId: resourceId,
 				componentResourceId: onerosterComponentResourceSourcedId ?? resourceId,
 				courseSourcedId: courseId,
@@ -419,7 +419,7 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 	const resultPayload = {
 		result: {
 			assessmentLineItem: { sourcedId: onerosterLineItemSourcedId, type: "assessmentLineItem" as const },
-			student: { sourcedId: userId, type: "user" as const },
+			student: { sourcedId: onerosterUserSourcedId, type: "user" as const },
 			scoreStatus: "fully graded" as const,
 			scoreDate: new Date().toISOString(),
 			score: finalScore,
@@ -438,7 +438,7 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 	}
 
 	// Step 5: Invalidate Cache
-	const cacheKey = cacheUtils.userProgressByCourse(userId, courseId)
+	const cacheKey = cacheUtils.userProgressByCourse(onerosterUserSourcedId, courseId)
 	await invalidateCache(cacheKey)
 	logger.info("invalidated user progress cache", { cacheKey })
 
@@ -468,7 +468,7 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 
 		if (mappedSubject && course) {
 			const actor = {
-				id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${userId}`,
+				id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${onerosterUserSourcedId}`,
 				type: "TimebackUser" as const,
 				email: userEmail
 			}
@@ -518,7 +518,6 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 		})
 		const proficiencyResult = await errors.try(
 			updateProficiencyFromAssessment(
-				userId,
 				onerosterComponentResourceSourcedId,
 				attemptNumber,
 				sessionResults,
@@ -549,7 +548,6 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
  * @returns The last watched position in seconds, or null if no progress found
  */
 export async function getVideoProgress(
-	onerosterUserSourcedId: string,
 	onerosterVideoResourceSourcedId: string
 ): Promise<{ currentTime: number; percentComplete: number } | null> {
 	const { userId } = await auth()
@@ -557,6 +555,7 @@ export async function getVideoProgress(
 		logger.error("getVideoProgress failed: user not authenticated")
 		throw errors.new("user not authenticated")
 	}
+	const onerosterUserSourcedId = await getCurrentUserSourcedId(userId)
 	logger.debug("fetching video progress", {
 		onerosterUserSourcedId,
 		onerosterVideoResourceSourcedId

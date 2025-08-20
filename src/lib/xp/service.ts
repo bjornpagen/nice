@@ -39,9 +39,7 @@ export async function awardXpForAssessment(options: AwardXpOptions): Promise<XpC
 	})
 
 	// 1. Prevent XP farming by checking for existing proficiency.
-	const proficiencyResult = await errors.try(
-		checkExistingProficiency(options.userSourcedId, options.assessmentResourceId)
-	)
+	const proficiencyResult = await errors.try(checkExistingProficiency(options.assessmentResourceId))
 	if (proficiencyResult.error) {
 		logger.error("proficiency check failed", { error: proficiencyResult.error })
 		throw errors.wrap(proficiencyResult.error, "proficiency check")
