@@ -219,7 +219,7 @@ function CenterSection({
 	isStartScreen,
 	isComplete,
 	currentQuestion,
-	totalQuestions,
+	totalQuestions
 }: {
 	isStartScreen?: boolean
 	isComplete?: boolean

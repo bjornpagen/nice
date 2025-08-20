@@ -11,9 +11,19 @@ export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data
 // Defines the data and styling for a single bar in the chart
 const BarDataSchema = z
 	.object({
-		category: z.string().min(1, "category name cannot be empty").describe("The category name displayed on the y-axis as a tick label (e.g., 'Lamb', 'Beef', 'Chicken'). Must be meaningful text."),
+		category: z
+			.string()
+			.min(1, "category name cannot be empty")
+			.describe(
+				"The category name displayed on the y-axis as a tick label (e.g., 'Lamb', 'Beef', 'Chicken'). Must be meaningful text."
+			),
 		value: z.number().positive().describe("The numerical value determining the bar's length."),
-		label: z.string().min(1, "value label cannot be empty").describe("The text label displaying the bar's value next to the bar (e.g., '184.8 m²', '45.3 kg'). Must show the actual value with units."),
+		label: z
+			.string()
+			.min(1, "value label cannot be empty")
+			.describe(
+				"The text label displaying the bar's value next to the bar (e.g., '184.8 m²', '45.3 kg'). Must show the actual value with units."
+			),
 		color: z.string().regex(CSS_COLOR_PATTERN, "invalid css color").describe("CSS color for this specific bar.")
 	})
 	.strict()
@@ -35,7 +45,11 @@ export const HorizontalBarChartPropsSchema = z
 			})
 			.strict()
 			.describe("Configuration for the horizontal value axis."),
-		data: z.array(BarDataSchema).describe("Complete array of ALL data bars to display, ordered from top to bottom. Each bar must have a meaningful category name and value label."),
+		data: z
+			.array(BarDataSchema)
+			.describe(
+				"Complete array of ALL data bars to display, ordered from top to bottom. Each bar must have a meaningful category name and value label."
+			),
 		gridColor: z
 			.string()
 			.regex(CSS_COLOR_PATTERN, "invalid css color")

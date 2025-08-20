@@ -58,7 +58,20 @@ test("line graph - Arizona city temperatures", () => {
 		title: "Test Line Graph",
 		xAxis: {
 			label: "Month",
-			categories: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+			categories: [
+				"January",
+				"February",
+				"March",
+				"April",
+				"May",
+				"June",
+				"July",
+				"August",
+				"September",
+				"October",
+				"November",
+				"December"
+			]
 		},
 		yAxis: {
 			label: "Average temperature (°C)",
@@ -115,7 +128,23 @@ test("line graph - collared lemmings and stoats (dual y-axis)", () => {
 		title: "Test Line Graph",
 		xAxis: {
 			label: "Year",
-			categories: ["1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002"]
+			categories: [
+				"1988",
+				"1989",
+				"1990",
+				"1991",
+				"1992",
+				"1993",
+				"1994",
+				"1995",
+				"1996",
+				"1997",
+				"1998",
+				"1999",
+				"2000",
+				"2001",
+				"2002"
+			]
 		},
 		yAxis: {
 			label: "Number of collared lemmings",
@@ -170,7 +199,19 @@ test("line graph - environmental change flowering time shift (legend below, labe
 		title: "Effect of environmental change on flowering time",
 		xAxis: {
 			label: "Flowering time (shorter to longer)",
-			categories: ["Shorter", "Stage 1", "Stage 2", "Stage 3", "Stage 4", "Stage 5", "Stage 6", "Stage 7", "Stage 8", "Stage 9", "Longer"]
+			categories: [
+				"Shorter",
+				"Stage 1",
+				"Stage 2",
+				"Stage 3",
+				"Stage 4",
+				"Stage 5",
+				"Stage 6",
+				"Stage 7",
+				"Stage 8",
+				"Stage 9",
+				"Longer"
+			]
 		},
 		yAxis: {
 			label: "Number of plants",

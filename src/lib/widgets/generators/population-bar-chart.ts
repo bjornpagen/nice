@@ -19,7 +19,12 @@ export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data
 // Defines the data for a single category's count (e.g., yearly elk count)
 const PopulationBarDataPointSchema = z
 	.object({
-		label: z.string().min(1, "bar label cannot be empty").describe("The category label displayed as x-axis tick label for this bar (e.g., '1990', '1995', '2000'). Must be meaningful text."),
+		label: z
+			.string()
+			.min(1, "bar label cannot be empty")
+			.describe(
+				"The category label displayed as x-axis tick label for this bar (e.g., '1990', '1995', '2000'). Must be meaningful text."
+			),
 		value: z.number().min(0).describe("The non-negative value represented by the bar.")
 	})
 	.strict()
@@ -40,7 +45,10 @@ export const PopulationBarChartPropsSchema = z
 		type: z
 			.literal("populationBarChart")
 			.describe("Identifies this as a bar chart styled like the elk population example."),
-		width: z.number().positive().describe("Total width of the chart in pixels including margins and labels (e.g., 600)."),
+		width: z
+			.number()
+			.positive()
+			.describe("Total width of the chart in pixels including margins and labels (e.g., 600)."),
 		height: z
 			.number()
 			.positive()
@@ -49,7 +57,9 @@ export const PopulationBarChartPropsSchema = z
 		yAxis: YAxisOptionsSchema.describe("Configuration for the vertical axis including scale and labels."),
 		xAxisVisibleLabels: z
 			.array(z.string().min(1, "visible label cannot be empty"))
-			.describe("Optional subset of x-axis labels to display when spacing is limited. Each string must be a meaningful label from the data array (e.g., ['1990', '1995', '2000']). If empty, automatic text-width-aware spacing applies."),
+			.describe(
+				"Optional subset of x-axis labels to display when spacing is limited. Each string must be a meaningful label from the data array (e.g., ['1990', '1995', '2000']). If empty, automatic text-width-aware spacing applies."
+			),
 		data: z
 			.array(PopulationBarDataPointSchema)
 			.describe(

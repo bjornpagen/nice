@@ -7,7 +7,12 @@ import { renderWrappedText } from "@/lib/widgets/utils/text"
 // Defines a single slice within a pie chart.
 const SliceSchema = z
 	.object({
-		label: z.string().min(1, "slice label cannot be empty").describe("The descriptive name for this slice displayed in chart labels (e.g., 'Habitable Land', 'Ocean Water', 'Fresh Water'). Must be meaningful text."),
+		label: z
+			.string()
+			.min(1, "slice label cannot be empty")
+			.describe(
+				"The descriptive name for this slice displayed in chart labels (e.g., 'Habitable Land', 'Ocean Water', 'Fresh Water'). Must be meaningful text."
+			),
 		value: z
 			.number()
 			.positive()
@@ -25,7 +30,12 @@ const SliceSchema = z
 const PieChartDataSchema = z
 	.object({
 		title: z.string().describe("The title displayed above this specific pie chart."),
-		slices: z.array(SliceSchema).min(1).describe("Complete array of ALL slice objects that make up this pie chart. Each slice must have a meaningful label for proper chart legends and annotations.")
+		slices: z
+			.array(SliceSchema)
+			.min(1)
+			.describe(
+				"Complete array of ALL slice objects that make up this pie chart. Each slice must have a meaningful label for proper chart legends and annotations."
+			)
 	})
 	.strict()
 
