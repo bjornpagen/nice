@@ -606,6 +606,12 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								logger.error("CRITICAL: Missing youtubeId for video", { contentId: content.id, slug: content.slug })
 								throw errors.new("video metadata: youtubeId is required for interactive video resource")
 							}
+							// XP calculation: round to nearest minute (>= 7:30 => 8xp), no fallbacks
+							if (typeof videoData.duration !== "number") {
+								logger.error("CRITICAL: Missing duration for video", { contentId: content.id, slug: content.slug })
+								throw errors.new("video metadata: duration is required for interactive video resource")
+							}
+							const computedVideoXp = Math.max(1, Math.round(videoData.duration / 60))
 							metadata = {
 								...metadata,
 								type: "interactive",
@@ -614,7 +620,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								launchUrl: `${appDomain}${metadata.path}/v/${content.slug}`,
 								url: `${appDomain}${metadata.path}/v/${content.slug}`,
 								khanYoutubeId: videoData.youtubeId,
-								xp: videoData?.duration ? Math.ceil(videoData.duration / 60) : 0
+								xp: computedVideoXp
 							}
 						} else if (lc.contentType === "Exercise") {
 							const exerciseQuestionCount = exerciseQuestionCountMap.get(content.id)
