@@ -38,6 +38,26 @@ mock.module("@/lib/cache", () => ({
 	redisCache: async <T>(cb: () => Promise<T>, _keys: (string | number)[], _opts: { revalidate: number | false }) => cb()
 }))
 
+// Mock Clerk
+mock.module("@clerk/nextjs/server", () => ({
+	auth: () => Promise.resolve({ userId: "test_user_id" }),
+	currentUser: () =>
+		Promise.resolve({
+			id: "test_user_id",
+			publicMetadata: { sourceId: "test_source_id" },
+			emailAddresses: [{ emailAddress: "test@example.com" }]
+		}),
+	clerkClient: () => ({
+		users: {
+			getUser: () =>
+				Promise.resolve({
+					publicMetadata: {},
+					emailAddresses: [{ emailAddress: "test@example.com" }]
+				})
+		}
+	})
+}))
+
 // Import after mocks
 const tracking = await import("@/lib/actions/tracking")
 const { VIDEO_COMPLETION_THRESHOLD_PERCENT } = await import("@/lib/constants/progress")

@@ -1,6 +1,7 @@
 "use server"
 
 import { randomUUID } from "node:crypto"
+import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { env } from "@/env"
@@ -39,6 +40,11 @@ export async function sendCaliperActivityCompletedEvent(
 	},
 	finalXp: number // CHANGED: Now accepts a final XP value.
 ) {
+	const { userId } = await auth()
+	if (!userId) {
+		logger.error("sendCaliperActivityCompletedEvent failed: user not authenticated")
+		throw errors.new("user not authenticated")
+	}
 	logger.info("sending caliper activity completed event", {
 		actorId: actor.id,
 		activityId: context.id,
@@ -113,6 +119,11 @@ export async function sendCaliperTimeSpentEvent(
 	context: TimebackActivityContext,
 	durationInSeconds: number
 ) {
+	const { userId } = await auth()
+	if (!userId) {
+		logger.error("sendCaliperTimeSpentEvent failed: user not authenticated")
+		throw errors.new("user not authenticated")
+	}
 	logger.info("sending caliper time spent event", { actorId: actor.id, activityId: context.id, durationInSeconds })
 
 	// Use the new utility to normalize the activity ID.
@@ -165,6 +176,11 @@ export async function sendCaliperBankedXpAwardedEvent(
 	context: NiceCaliperContext,
 	awardedXp: number
 ) {
+	const { userId } = await auth()
+	if (!userId) {
+		logger.error("sendCaliperBankedXpAwardedEvent failed: user not authenticated")
+		throw errors.new("user not authenticated")
+	}
 	const correlationId = randomUUID()
 	logger.info("sending caliper banked xp awarded event", {
 		actorId: actor.id,

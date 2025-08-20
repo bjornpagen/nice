@@ -29,6 +29,11 @@ export async function trackArticleView(
 	onerosterArticleResourceSourcedId: string,
 	courseInfo: { subjectSlug: string; courseSlug: string }
 ) {
+	const { userId } = await auth()
+	if (!userId) {
+		logger.error("trackArticleView failed: user not authenticated")
+		throw errors.new("user not authenticated")
+	}
 	logger.info("tracking article view", { onerosterUserSourcedId, onerosterArticleResourceSourcedId })
 
 	// The line item sourcedId is the resource sourcedId + '_ali'
@@ -102,6 +107,11 @@ export async function updateVideoProgress(
 	duration: number,
 	courseInfo: { subjectSlug: string; courseSlug: string }
 ): Promise<void> {
+	const { userId } = await auth()
+	if (!userId) {
+		logger.error("updateVideoProgress failed: user not authenticated")
+		throw errors.new("user not authenticated")
+	}
 	if (duration <= 0) {
 		logger.warn("video progress tracking skipped", {
 			onerosterVideoResourceSourcedId,
@@ -542,6 +552,11 @@ export async function getVideoProgress(
 	onerosterUserSourcedId: string,
 	onerosterVideoResourceSourcedId: string
 ): Promise<{ currentTime: number; percentComplete: number } | null> {
+	const { userId } = await auth()
+	if (!userId) {
+		logger.error("getVideoProgress failed: user not authenticated")
+		throw errors.new("user not authenticated")
+	}
 	logger.debug("fetching video progress", {
 		onerosterUserSourcedId,
 		onerosterVideoResourceSourcedId

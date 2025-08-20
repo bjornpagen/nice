@@ -1,6 +1,6 @@
 "use server"
 
-import { currentUser } from "@clerk/nextjs/server"
+import { auth, currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { revalidatePath } from "next/cache"
@@ -314,6 +314,11 @@ function mapFromOneRosterSubjects(onerosterSubjects: string[]): string {
 }
 
 export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCoursesForExplore[]> {
+	const { userId } = await auth()
+	if (!userId) {
+		logger.error("getOneRosterCoursesForExplore failed: user not authenticated")
+		throw errors.new("user not authenticated")
+	}
 	logger.info("fetching explore dropdown data from oneroster api", { orgId: ONEROSTER_ORG_ID })
 
 	const [classesResult, coursesResult] = await Promise.all([

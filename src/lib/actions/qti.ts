@@ -1,5 +1,6 @@
 "use server"
 
+import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { qti } from "@/lib/clients"
@@ -22,6 +23,11 @@ export async function processQtiResponse(
 	identifier: string,
 	response: ProcessResponseInput
 ): Promise<CheckAnswerResult> {
+	const { userId } = await auth()
+	if (!userId) {
+		logger.error("processQtiResponse failed: user not authenticated")
+		throw errors.new("user not authenticated")
+	}
 	logger.info("server action: processing qti response", { identifier })
 
 	const result = await errors.try(qti.processResponse(identifier, response))

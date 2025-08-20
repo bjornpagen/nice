@@ -19,9 +19,9 @@ ignore_patterns:
   - "src/lib/widgets/**"
   - "src/lib/qti-generation/**"
   - "src/lib/qti-validation/**"
-  - "src/app/**"
   - "src/lib/types/**"
   - "scripts/**"
+  - "src/inngest/**"
 priority_rules:
   - score: 99
     pattern: "^rules/"

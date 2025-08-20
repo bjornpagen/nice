@@ -1,5 +1,6 @@
 "use server"
 
+import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
@@ -40,6 +41,11 @@ export async function updateProficiencyFromAssessment(
 	sessionResults: QuestionResult[],
 	onerosterCourseSourcedId: string
 ) {
+	const { userId } = await auth()
+	if (!userId) {
+		logger.error("updateProficiencyFromAssessment failed: user not authenticated")
+		throw errors.new("user not authenticated")
+	}
 	logger.info("starting granular proficiency analysis from session results", {
 		onerosterUserSourcedId,
 		onerosterComponentResourceSourcedId,
