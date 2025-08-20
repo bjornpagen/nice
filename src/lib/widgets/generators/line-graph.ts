@@ -139,7 +139,27 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	// Left Y-axis
 	svg += `<g class="axis y-axis-left">`
 	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>`
-	svg += `<text x="${yAxisLabelX}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
+	{
+		// Wrap y-axis label to fit within chart height when rotated
+		const yCenter = margin.top + chartHeight / 2
+		const maxWrappedWidth = Math.max(20, chartHeight - 20) // pre-rotation width = post-rotation height
+		let wrapped = renderWrappedText(
+			abbreviateMonth(yAxis.label),
+			yAxisLabelX,
+			yCenter,
+			"axis-label",
+			"1.1em",
+			maxWrappedWidth,
+			8
+		)
+		// Inject rotation pivot on the text element
+		wrapped = wrapped.replace(
+			"<text ",
+			`<text transform="rotate(-90, ${yAxisLabelX}, ${yCenter})" `
+		)
+		svg += wrapped
+		includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
+	}
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = toSvgYLeft(t)
 		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
