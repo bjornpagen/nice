@@ -742,6 +742,16 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 					khanLessonType = undefined
 				}
 
+				// Compute canonical practice path including last lesson slug for this unit
+				const lastLessonInUnit = unitLessons[unitLessons.length - 1]
+				if (!lastLessonInUnit) {
+					logger.error("assessment launch url: no lessons in unit", { unitId: unit.id, unitSlug: unit.slug })
+					throw errors.new("assessment launch url: no lessons in unit")
+				}
+				const lastLessonSlug = lastLessonInUnit.slug
+				const assessmentPathSegment = assessment.type === "Quiz" ? "quiz" : "test"
+				const canonicalAssessmentPath = `${appDomain}/${subjectSlug}/${course.slug}/${unit.slug}/${lastLessonSlug}/${assessmentPathSegment}/${normalizeKhanSlug(assessment.slug)}`
+
 				onerosterPayload.resources.push({
 					sourcedId: assessmentSourcedId,
 					status: "active",
@@ -754,15 +764,9 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 					metadata: {
 						type: "interactive",
 						toolProvider: "Nice Academy",
-						// Launch URL routes to redirect pages which resolve canonical paths
-						launchUrl:
-							assessment.type === "Quiz"
-								? `${appDomain}/${subjectSlug}/${course.slug}/${unit.slug}/quiz/${normalizeKhanSlug(assessment.slug)}`
-								: `${appDomain}/${subjectSlug}/${course.slug}/${unit.slug}/test/${normalizeKhanSlug(assessment.slug)}`,
-						url:
-							assessment.type === "Quiz"
-								? `${appDomain}/${subjectSlug}/${course.slug}/${unit.slug}/quiz/${normalizeKhanSlug(assessment.slug)}`
-								: `${appDomain}/${subjectSlug}/${course.slug}/${unit.slug}/test/${normalizeKhanSlug(assessment.slug)}`,
+						// Launch URL points directly to canonical path including last lesson slug
+						launchUrl: canonicalAssessmentPath,
+						url: canonicalAssessmentPath,
 						// Keep Nice-controlled hints for our app (optional)
 						khanActivityType: assessment.type,
 						khanLessonType,
