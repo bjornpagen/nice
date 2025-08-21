@@ -2,8 +2,16 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { checkExistingProficiency } from "@/lib/actions/assessment"
 import { updateStreak } from "@/lib/actions/streak"
-import { awardBankedXpForExercise } from "@/lib/xp/bank"
+import {
+	caliperAggregatedTimeForResources,
+	caliperBankedXpForResources,
+	caliperEventsByActor,
+	caliperTimeSpentForResources,
+	invalidateCache
+} from "@/lib/cache"
+import { awardBankedXpForExercise, findEligiblePassiveResourcesForExercise } from "@/lib/xp/bank"
 import { calculateAssessmentXp, type XpCalculationResult } from "@/lib/xp/core"
+import { constructActorId } from "@/lib/utils/actor-id"
 
 interface AwardXpOptions {
 	userSourcedId: string
@@ -77,6 +85,41 @@ export async function awardXpForAssessment(options: AwardXpOptions): Promise<XpC
 
 	// 3. Process XP Bank for exercises if the user achieved mastery.
 	if (options.isExercise && assessmentXpResult.finalXp > 0 && accuracy >= 80) {
+		// --- START OF NEW CACHE INVALIDATION LOGIC ---
+		const identificationResult = await errors.try(
+			findEligiblePassiveResourcesForExercise({
+				exerciseResourceSourcedId: options.assessmentResourceId,
+				onerosterCourseSourcedId: options.courseSourcedId,
+				onerosterUserSourcedId: options.userSourcedId
+			})
+		)
+
+		if (identificationResult.error) {
+			logger.error("failed to identify passive resources for cache invalidation", {
+				error: identificationResult.error,
+				assessmentId: options.componentResourceId,
+				userId: options.userSourcedId
+			})
+		} else {
+			const eligibleResources = identificationResult.data
+			if (eligibleResources.length > 0) {
+				const actorId = constructActorId(options.userSourcedId)
+				const resourceIds = eligibleResources.map((r) => r.sourcedId)
+
+				const keysToInvalidate = [
+					caliperEventsByActor(actorId),
+					caliperTimeSpentForResources(actorId, resourceIds),
+					caliperAggregatedTimeForResources(actorId, resourceIds),
+					// IMPORTANT: final compute key matches compute-layer hash of sourcedId:expectedXp
+					caliperBankedXpForResources(actorId, eligibleResources)
+				]
+
+				await invalidateCache(keysToInvalidate)
+				logger.info("invalidated related caliper caches before xp banking", { keyCount: keysToInvalidate.length })
+			}
+		}
+
+		// Now, call the banking function to calculate and award with fresh data.
 		const xpBankResult = await errors.try(
 			awardBankedXpForExercise({
 				exerciseResourceSourcedId: options.assessmentResourceId,
@@ -84,6 +127,7 @@ export async function awardXpForAssessment(options: AwardXpOptions): Promise<XpC
 				onerosterCourseSourcedId: options.courseSourcedId
 			})
 		)
+		// --- END OF NEW CACHE INVALIDATION LOGIC ---
 
 		if (xpBankResult.error) {
 			logger.error("failed to process xp bank", {
@@ -91,7 +135,6 @@ export async function awardXpForAssessment(options: AwardXpOptions): Promise<XpC
 				assessmentId: options.componentResourceId,
 				userId: options.userSourcedId
 			})
-			// Continue with just the assessment XP if bank processing fails.
 		} else {
 			bankedXp = xpBankResult.data.bankedXp
 			finalXp += bankedXp

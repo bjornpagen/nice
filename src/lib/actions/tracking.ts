@@ -14,6 +14,7 @@ import { VIDEO_COMPLETION_THRESHOLD_PERCENT, VIDEO_COMPLETION_THRESHOLD_RATIO } 
 import { CALIPER_SUBJECT_MAPPING, isSubjectSlug } from "@/lib/constants/subjects"
 import { getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
 import { redis } from "@/lib/redis"
+import { constructActorId } from "@/lib/utils/actor-id"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 import { assertPercentageInteger, coercePercentageInteger } from "@/lib/utils/score"
 // Caliper additive tracking imports
@@ -145,7 +146,7 @@ async function buildCaliperPayload(
 	const activityId = normalizeCaliperId(normalizedResourceId)
 
 	const actor = {
-		id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${onerosterUserSourcedId}`,
+		id: constructActorId(onerosterUserSourcedId),
 		type: "TimebackUser" as const,
 		email: userEmail
 	}
@@ -775,7 +776,7 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 
 		if (mappedSubject && course) {
 			const actor = {
-				id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${onerosterUserSourcedId}`,
+				id: constructActorId(onerosterUserSourcedId),
 				type: "TimebackUser" as const,
 				email: userEmail
 			}

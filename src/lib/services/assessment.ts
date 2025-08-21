@@ -8,6 +8,7 @@ import * as gradebook from "@/lib/ports/gradebook"
 import * as cache from "@/lib/services/cache"
 import * as proficiency from "@/lib/services/proficiency"
 import * as streak from "@/lib/services/streak"
+import { constructActorId } from "@/lib/utils/actor-id"
 import { generateResultSourcedId } from "@/lib/utils/assessment-identifiers"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 import { calculateAssessmentXp } from "@/lib/xp/core"
@@ -144,7 +145,7 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 		} else {
 			// Build Caliper actor (legacy shape)
 			const actor = {
-				id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${userId}`,
+				id: constructActorId(userId),
 				type: "TimebackUser" as const,
 				email: command.userEmail
 			}

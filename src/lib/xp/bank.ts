@@ -10,57 +10,34 @@ import { CALIPER_SUBJECT_MAPPING, isSubjectSlug } from "@/lib/constants/subjects
 import { calculateBankedXpForResources } from "@/lib/data/fetchers/caliper"
 import type { Resource } from "@/lib/oneroster"
 import * as gradebook from "@/lib/ports/gradebook"
+import { constructActorId, extractUserSourcedId } from "@/lib/utils/actor-id"
 import { generateResultSourcedId } from "@/lib/utils/assessment-identifiers"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 
 /**
- * Calculates banked XP for an exercise boundary. Mirrors quiz-based banking but
- * uses the nearest previous Exercise in the same unit as the window start.
- *
- * Window: all passive resources (interactive Articles/Videos with positive xp)
- * whose component sortOrder is strictly between the previous Exercise and the
- * current Exercise within the same unit.
+ * A pure function to identify the window of passive resources (videos, articles)
+ * between the previous exercise and the current one. This function performs NO writes
+ * and is safe to call for identification purposes before cache invalidation.
  */
-export async function awardBankedXpForExercise(params: {
+export async function findEligiblePassiveResourcesForExercise(params: {
 	exerciseResourceSourcedId: string
-	onerosterUserSourcedId: string
 	onerosterCourseSourcedId: string
-}): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
-	logger.info("calculating banked xp for exercise", {
-		exerciseResourceSourcedId: params.exerciseResourceSourcedId,
-		userSourcedId: params.onerosterUserSourcedId
-	})
+	onerosterUserSourcedId: string
+}): Promise<Array<{ sourcedId: string; expectedXp: number }>> {
+	const { exerciseResourceSourcedId } = params
+	logger.info("identifying eligible passive resources for exercise", { exerciseResourceSourcedId })
 
-	// Normalize possible compound IDs and URI user ids
-	const exerciseResourceId = extractResourceIdFromCompoundId(params.exerciseResourceSourcedId)
+	const exerciseResourceId = extractResourceIdFromCompoundId(exerciseResourceSourcedId)
 
-	let userId: string
-	if (params.onerosterUserSourcedId.includes("/")) {
-		const parsed = params.onerosterUserSourcedId.split("/").pop()
-		if (!parsed) {
-			logger.error("CRITICAL: Failed to parse user ID from sourced ID", {
-				userSourcedId: params.onerosterUserSourcedId,
-				expectedFormat: "https://api.../users/{id}"
-			})
-			throw errors.new("invalid user sourced ID format")
-		}
-		userId = parsed
-	} else {
-		userId = params.onerosterUserSourcedId
-	}
-
-	// 1. Find the exercise's component resource to get unit and position
-	const exerciseCrResult = await errors.try(
+	const componentResourceResult = await errors.try(
 		oneroster.getAllComponentResources({ filter: `resource.sourcedId='${exerciseResourceId}' AND status='active'` })
 	)
-	if (exerciseCrResult.error) {
-		logger.error("exercise component resource fetch failed", { error: exerciseCrResult.error, exerciseResourceId })
-		throw errors.wrap(exerciseCrResult.error, "exercise component resource fetch")
+	if (componentResourceResult.error) {
+		throw errors.wrap(componentResourceResult.error, "exercise component resource fetch")
 	}
-	const exerciseComponentResource = exerciseCrResult.data[0]
+	const exerciseComponentResource = componentResourceResult.data[0]
 	if (!exerciseComponentResource) {
-		logger.warn("could not find component resource for exercise", { exerciseResourceId })
-		return { bankedXp: 0, awardedResourceIds: [] }
+		return []
 	}
 	// Determine the unit id from the exercise's courseComponent (lesson) → parent unit
 	const lessonComponentId = exerciseComponentResource.courseComponent.sourcedId
@@ -79,8 +56,7 @@ export async function awardBankedXpForExercise(params: {
 	const exerciseSortOrder = exerciseComponentResource.sortOrder
 
 	if (!parentUnitId) {
-		logger.warn("unable to resolve parent unit for exercise", { lessonComponentId })
-		return { bankedXp: 0, awardedResourceIds: [] }
+		return []
 	}
 
 	// 2. List all lessons in the unit (for recursive CR lookup)
@@ -141,7 +117,7 @@ export async function awardBankedXpForExercise(params: {
 	// 4. Fetch resource metadata for detection and filtering
 	const allResourceIds = componentResources.map((cr) => cr.resourceId)
 	if (allResourceIds.length === 0) {
-		return { bankedXp: 0, awardedResourceIds: [] }
+		return []
 	}
 	const allResourcesResult = await errors.try(
 		oneroster.getAllResources({ filter: `sourcedId@'${allResourceIds.join(",")}' AND status='active'` })
@@ -224,7 +200,7 @@ export async function awardBankedXpForExercise(params: {
 	})
 
 	if (candidateResourceIds.length === 0) {
-		return { bankedXp: 0, awardedResourceIds: [] }
+		return []
 	}
 
 	// 7. Build passive resources list with expected XP
@@ -238,13 +214,14 @@ export async function awardBankedXpForExercise(params: {
 
 	// 7b. Dedupe: exclude resources already banked for this user
 	if (passiveResources.length === 0) {
-		return { bankedXp: 0, awardedResourceIds: [] }
+		return []
 	}
 
 	logger.info("checking existing results for bank dedupe", {
 		candidateCount: passiveResources.length
 	})
 
+	const userId = extractUserSourcedId(params.onerosterUserSourcedId)
 	const eligibilityChecks = await Promise.all(
 		passiveResources.map(async (resource) => {
 			const resultSourcedId = generateResultSourcedId(userId, resource.sourcedId, false)
@@ -277,20 +254,56 @@ export async function awardBankedXpForExercise(params: {
 		filteredCount: passiveResources.length - eligibleResources.length
 	})
 
+	return eligibleResources
+}
+
+/**
+ * Calculates and awards banked XP for an exercise. This function now assumes
+ * that the necessary caches have already been invalidated by the caller.
+ */
+export async function awardBankedXpForExercise(params: {
+	exerciseResourceSourcedId: string
+	onerosterUserSourcedId: string
+	onerosterCourseSourcedId: string
+}): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
+	// Normalize using shared utility to avoid string parsing divergence
+	const userId = extractUserSourcedId(params.onerosterUserSourcedId)
+
+	// 1. identify eligible resources using the new pure function (already deduped)
+	const eligibleResources = await findEligiblePassiveResourcesForExercise({
+		exerciseResourceSourcedId: params.exerciseResourceSourcedId,
+		onerosterCourseSourcedId: params.onerosterCourseSourcedId,
+		onerosterUserSourcedId: params.onerosterUserSourcedId
+	})
+
 	if (eligibleResources.length === 0) {
 		return { bankedXp: 0, awardedResourceIds: [] }
 	}
 
-	// 8. Calculate XP using time-spent policy
-	let totalBankedXp = 0
-	const awardedResourceIds: string[] = []
-	const actorId = `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${userId}`
+	// 2. Use the new standardized utility to construct the actorId.
+	const actorId = constructActorId(userId)
+
+	// 3. Calculate XP using time-spent policy with fresh data.
 	const bankResult = await calculateBankedXpForResources(actorId, eligibleResources)
-	totalBankedXp += bankResult.bankedXp
-	awardedResourceIds.push(...bankResult.awardedResourceIds)
+	const { bankedXp, awardedResourceIds } = bankResult
+
+	// Get resource metadata for saving results and sending Caliper events
+	const exerciseResourceId = extractResourceIdFromCompoundId(params.exerciseResourceSourcedId)
+	const allResourceIds = eligibleResources.map(r => r.sourcedId)
+	const allResourcesResult = await errors.try(
+		oneroster.getAllResources({ filter: `sourcedId@'${allResourceIds.join(",")}' AND status='active'` })
+	)
+	if (allResourcesResult.error) {
+		logger.error("failed to fetch resource metadata for results", { error: allResourcesResult.error })
+		throw errors.wrap(allResourcesResult.error, "resource metadata fetch")
+	}
+	const resourceMap = new Map<string, Resource>()
+	for (const resource of allResourcesResult.data) {
+		resourceMap.set(resource.sourcedId, resource)
+	}
 
 	logger.info("calculated total banked xp", {
-		totalBankedXp,
+		bankedXp,
 		awardedResourceCount: awardedResourceIds.length
 	})
 
@@ -342,11 +355,11 @@ export async function awardBankedXpForExercise(params: {
 						const subjectSlug = String(resource.metadata?.khanSubjectSlug ?? "")
 						const mappedSubject = isSubjectSlug(subjectSlug) ? CALIPER_SUBJECT_MAPPING[subjectSlug] : "None"
 						const awardedXp = typeof resource.metadata?.xp === "number" ? resource.metadata.xp : 0
-						const actor = {
-							id: `${env.TIMEBACK_ONEROSTER_SERVER_URL}/ims/oneroster/rostering/v1p2/users/${userId}`,
-							type: "TimebackUser" as const,
-							email: user.email
-						}
+											const actor = {
+						id: constructActorId(userId),
+						type: "TimebackUser" as const,
+						email: user.email
+					}
 						const context = {
 							id: `${env.NEXT_PUBLIC_APP_DOMAIN}/resources/${resource.sourcedId}`,
 							type: "TimebackActivityContext" as const,
@@ -372,7 +385,7 @@ export async function awardBankedXpForExercise(params: {
 		}
 	}
 
-	return { bankedXp: totalBankedXp, awardedResourceIds }
+	return { bankedXp, awardedResourceIds }
 }
 
 /**
@@ -386,20 +399,7 @@ export async function getBankedXpBreakdownForQuiz(
 ): Promise<{ articleXp: number; videoXp: number }> {
 	logger.info("computing banked xp breakdown for quiz", { quizResourceId, userSourcedId })
 
-	let userId: string
-	if (userSourcedId.includes("/")) {
-		const parsed = userSourcedId.split("/").pop()
-		if (!parsed) {
-			logger.error("CRITICAL: Failed to parse user ID from sourced ID", {
-				userSourcedId,
-				expectedFormat: "https://api.../users/{id}"
-			})
-			throw errors.new("invalid user sourced ID format")
-		}
-		userId = parsed
-	} else {
-		userId = userSourcedId
-	}
+	const userId = extractUserSourcedId(userSourcedId)
 
 	// 1. Locate quiz component resource to derive unit and sort order context
 	const quizCrResult = await errors.try(
@@ -532,7 +532,7 @@ export async function getBankedXpBreakdownForQuiz(
 	}
 
 	// 5. Calculate banked XP separately for articles and videos
-	const actorId = `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${userId}`
+	const actorId = constructActorId(userId)
 	let articleXp = 0
 	let videoXp = 0
 

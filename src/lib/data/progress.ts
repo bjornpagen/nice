@@ -10,6 +10,7 @@ import { oneroster } from "@/lib/clients"
 import { getAllEventsForUser } from "@/lib/data/fetchers/caliper"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { Activity } from "@/lib/types/domain"
+import { constructActorId } from "@/lib/utils/actor-id"
 import { getResourceIdFromLineItem } from "@/lib/utils/assessment-line-items"
 // ADDED: Import the new utility functions
 import { isInteractiveAttemptResult, isPassiveContentResult } from "@/lib/utils/assessment-results"
@@ -293,9 +294,7 @@ export async function fetchProgressPageData(): Promise<ProgressPageData> {
 		return { activities: [], exerciseMinutes: 0, totalLearningMinutes: 0, totalXpEarned: 0 }
 	}
 
-	const actorId = `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${metadata.sourceId}`
-
-	// CHANGED: Use the new fetcher instead of direct caliper client call
+	const actorId = constructActorId(metadata.sourceId)
 	const eventsResult = await errors.try(getAllEventsForUser(actorId))
 	if (eventsResult.error) {
 		logger.error("failed to fetch caliper events", { actorId, error: eventsResult.error })

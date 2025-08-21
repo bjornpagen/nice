@@ -166,4 +166,49 @@ export function userProgressByCourse(userId: string, onerosterCourseSourcedId: s
 	return createCacheKey(base)
 }
 
+/**
+ * Generates a cache key for a user's raw Caliper events.
+ * @param actorId The full OneRoster user URI (e.g., "https://.../users/some-id").
+ */
+export function caliperEventsByActor(actorId: string): string {
+	return createCacheKey(["caliper-getAllEventsForUser", actorId])
+}
+
+/**
+ * Generates a cache key for filtered TimeSpent events for a set of resources.
+ * @param actorId The full OneRoster user URI.
+ * @param resourceIds The array of resource sourcedIds.
+ */
+export function caliperTimeSpentForResources(actorId: string, resourceIds: string[]): string {
+	const resourceIdsHash = [...resourceIds].sort().join(",")
+	return createCacheKey(["caliper-getTimeSpentEventsForResources", actorId, resourceIdsHash])
+}
+
+/**
+ * Generates a cache key for aggregated time spent data for a set of resources.
+ * @param actorId The full OneRoster user URI.
+ * @param resourceIds The array of resource sourcedIds.
+ */
+export function caliperAggregatedTimeForResources(actorId: string, resourceIds: string[]): string {
+	const resourceIdsHash = [...resourceIds].sort().join(",")
+	return createCacheKey(["caliper-getAggregatedTimeSpentByResource", actorId, resourceIdsHash])
+}
+
+/**
+ * Generates a cache key for final banked XP compute for a set of resources.
+ * IMPORTANT: This MUST include expectedXp in the hash to match the compute-layer cache key.
+ * @param actorId The full OneRoster user URI.
+ * @param passiveResources The array of { sourcedId, expectedXp } for the eligible resources.
+ */
+export function caliperBankedXpForResources(
+	actorId: string,
+	passiveResources: Array<{ sourcedId: string; expectedXp: number }>
+): string {
+	const resourcesHash = passiveResources
+		.map((r) => `${r.sourcedId}:${r.expectedXp}`)
+		.sort()
+		.join(",")
+	return createCacheKey(["caliper-calculateBankedXpForResources", actorId, resourcesHash])
+}
+
 // Future cache key generators can be added here following the same pattern

@@ -10,6 +10,7 @@ import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
 import type { Lesson, ProfileCourse, Quiz, Unit, UnitTest } from "@/lib/types/domain"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
+import { constructActorId } from "@/lib/utils/actor-id"
 import { getResourceIdFromLineItem } from "@/lib/utils/assessment-line-items"
 import type { ClassReadSchemaType } from "../oneroster"
 
@@ -784,7 +785,7 @@ export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData>
 	const [subjects, userCourses] = await Promise.all([subjectsPromise, userCoursesPromise])
 
 	// Fetch XP data for each course in parallel
-	const actorId = `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${sourceId}`
+	const actorId = constructActorId(sourceId)
 
 	logger.info("fetching XP data for user courses", {
 		userId: user.id,
