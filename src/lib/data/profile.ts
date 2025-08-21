@@ -499,12 +499,17 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 					const unitLessons = lessonsByUnitSourcedId.get(unit.id) || []
 					const unitAssessments: TempAssessment[] = []
 
-					// Find resources for this unit and its lessons
-					const unitComponentResources = courseComponentResources.filter(
-						(cr) =>
-							cr.courseComponent.sourcedId === unit.id ||
-							unitLessons.some((lesson) => lesson.id === cr.courseComponent.sourcedId)
-					)
+					// Find resources for this unit, its lessons, and its child components (quizzes/tests)
+					// Build a set of all child component IDs under this unit (lessons and assessment components)
+					const unitChildComponentIds = new Set<string>([
+						...unitLessons.map((l) => l.id),
+						...courseComponents.filter((c) => c.parent && c.parent.sourcedId === unit.id).map((c) => c.sourcedId)
+					])
+
+					const unitComponentResources = courseComponentResources.filter((cr) => {
+						const componentId = cr.courseComponent.sourcedId
+						return componentId === unit.id || unitChildComponentIds.has(componentId)
+					})
 
 					// Process each resource
 					for (const componentResource of unitComponentResources) {
@@ -518,25 +523,24 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 
 						// Check if this is an assessable resource (exercise, quiz, or test)
 						if (resourceMetadata.khanActivityType === "UnitTest" || resourceMetadata.khanActivityType === "Quiz") {
-							if (componentResource.courseComponent.sourcedId === unit.id) {
-								// This is a unit-level assessment
-								if (resourceMetadata.khanActivityType === "UnitTest") {
-									unitAssessments.push({
-										type: "UnitTest",
-										id: resource.sourcedId,
-										title: resource.title,
-										path: "", // Will be set later
-										sortOrder: componentResource.sortOrder
-									})
-								} else if (resourceMetadata.khanActivityType === "Quiz") {
-									unitAssessments.push({
-										type: "Quiz",
-										id: resource.sourcedId,
-										title: resource.title,
-										path: "", // Will be set later
-										sortOrder: componentResource.sortOrder
-									})
-								}
+							// With the new structure, quizzes/tests live under their own components (children of the unit)
+							// Since unitComponentResources already scopes to the unit and its children, we can add directly
+							if (resourceMetadata.khanActivityType === "UnitTest") {
+								unitAssessments.push({
+									type: "UnitTest",
+									id: resource.sourcedId,
+									title: resource.title,
+									path: "", // Will be set later
+									sortOrder: componentResource.sortOrder
+								})
+							} else if (resourceMetadata.khanActivityType === "Quiz") {
+								unitAssessments.push({
+									type: "Quiz",
+									id: resource.sourcedId,
+									title: resource.title,
+									path: "", // Will be set later
+									sortOrder: componentResource.sortOrder
+								})
 							}
 						} else if (resourceMetadata.khanActivityType === "Exercise") {
 							// This is a lesson-level exercise

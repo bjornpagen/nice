@@ -143,7 +143,7 @@ export async function fetchCoursePageData(
 				children: [] // Initialize children array
 			})
 		} else {
-			// This is a lesson or assessment - we'll determine type later when we process resources
+			// This is a child component (could be lesson or assessment - we'll filter later)
 			const parentSourcedId = component.parent.sourcedId
 			if (!lessonsByUnitSourcedId.has(parentSourcedId)) {
 				lessonsByUnitSourcedId.set(parentSourcedId, [])
@@ -167,7 +167,7 @@ export async function fetchCoursePageData(
 			}
 
 			lessonsByUnitSourcedId.get(parentSourcedId)?.push({
-				type: "Lesson", // Add missing type property
+				type: "Lesson", // Default type - will be filtered later
 				id: component.sourcedId,
 				slug: componentMetadata.khanSlug,
 				title: component.title,
@@ -300,68 +300,123 @@ export async function fetchCoursePageData(
 
 	// Build units with children
 	const unitsWithChildren: Unit[] = units.map((unit) => {
-		const unitLessons = lessonsByUnitSourcedId.get(unit.id) || []
-		const unitResources = resourcesByComponentSourcedId.get(unit.id) || []
+		const allUnitChildren = lessonsByUnitSourcedId.get(unit.id) || []
 
 		const unitAssessments: (Quiz | UnitTest)[] = []
+		const assessmentComponentIds = new Set<string>()
 
-		// Find assessments from unit resources
-		for (const resource of unitResources) {
-			// Validate resource metadata with Zod
-			const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
-			if (!resourceMetadataResult.success) {
-				logger.error("invalid resource metadata", {
-					resourceSourcedId: resource.sourcedId,
-					error: resourceMetadataResult.error
-				})
-				throw errors.new("invalid resource metadata")
-			}
-			const resourceMetadata = resourceMetadataResult.data
+		// NEW: Find quiz/unit test components that are children of this unit
+		const unitChildComponents = allComponents.filter((component) => component.parent?.sourcedId === unit.id)
 
-			if (resourceMetadata.khanActivityType === "Quiz" || resourceMetadata.khanActivityType === "UnitTest") {
-				const assessmentType = resourceMetadata.khanActivityType
-
-				// Find the component resource to get sortOrder
-				const componentResource = componentResources.find(
-					(cr) => cr.courseComponent.sourcedId === unit.id && cr.resource.sourcedId === resource.sourcedId
-				)
-
-				if (!componentResource) {
-					logger.error("component resource not found for assessment", {
+		// Determine a canonical lesson slug to embed in assessment paths (practice route requires a lesson)
+		const lessonLikeChildComponents = unitChildComponents.filter((child) => {
+			const childResources = resourcesByComponentSourcedId.get(child.sourcedId) || []
+			for (const resource of childResources) {
+				const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
+				if (!resourceMetadataResult.success) {
+					logger.error("invalid resource metadata while determining lesson slug", {
 						resourceSourcedId: resource.sourcedId,
-						unitSourcedId: unit.id
+						error: resourceMetadataResult.error
 					})
-					throw errors.new(`component resource not found for assessment ${resource.sourcedId}`)
+					throw errors.wrap(resourceMetadataResult.error, "invalid resource metadata")
 				}
+				const mt = resourceMetadataResult.data
+				if (mt.khanActivityType === "Quiz" || mt.khanActivityType === "UnitTest") {
+					return false
+				}
+			}
+			return true
+		})
 
-				// Determine the URL path segment for the assessment type
-				let pathSegment: string
-				switch (assessmentType) {
-					case "Quiz":
-						pathSegment = "quiz"
-						break
-					case "UnitTest":
-						pathSegment = "test"
-						break
-					default:
-						logger.error("unknown assessment type", { assessmentType })
-						throw errors.new(`unknown assessment type: ${assessmentType}`)
-				}
+		let lastLessonSlugForUnit: string | undefined
+		if (lessonLikeChildComponents.length > 0) {
+			const sortedLessonComponents = [...lessonLikeChildComponents].sort(
+				(a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0)
+			)
+			const lastIndex = sortedLessonComponents.length - 1
+			if (lastIndex < 0) {
+				logger.error("no lesson components found for unit while determining assessment path", {
+					unitSourcedId: unit.id
+				})
+				throw errors.new("assessment path: no lesson components found")
+			}
+			const lastLessonComponent = sortedLessonComponents[lastIndex]
+			if (!lastLessonComponent) {
+				logger.error("no lesson components found for unit while determining assessment path", {
+					unitSourcedId: unit.id
+				})
+				throw errors.new("assessment path: no lesson components found")
+			}
+			const lessonMetaResult = ComponentMetadataSchema.safeParse(lastLessonComponent.metadata)
+			if (!lessonMetaResult.success) {
+				logger.error("invalid lesson component metadata for assessment path", {
+					lessonComponentSourcedId: lastLessonComponent.sourcedId,
+					error: lessonMetaResult.error
+				})
+				throw errors.wrap(lessonMetaResult.error, "invalid lesson component metadata")
+			}
+			lastLessonSlugForUnit = lessonMetaResult.data.khanSlug
+		}
 
-				const assessment: Quiz | UnitTest = {
-					id: resource.sourcedId,
-					type: assessmentType,
-					slug: resourceMetadata.khanSlug,
-					title: resource.title,
-					description: resourceMetadata.khanDescription,
-					path: `/${params.subject}/${params.course}/${unit.slug}/${pathSegment}/${resourceMetadata.khanSlug}`,
-					questions: [], // Questions are not needed on the course page
-					ordering: componentResource.sortOrder,
-					xp: resourceMetadata.xp || 0 // Use XP from metadata or default to 0
+		// Process each child component to find assessments
+		for (const childComponent of unitChildComponents) {
+			// Get resources for this child component
+			const childResources = resourcesByComponentSourcedId.get(childComponent.sourcedId) || []
+
+			// Check if this child component has a quiz or unit test resource
+			for (const resource of childResources) {
+				// Validate resource metadata with Zod
+				const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
+				if (!resourceMetadataResult.success) {
+					logger.error("invalid resource metadata", {
+						resourceSourcedId: resource.sourcedId,
+						error: resourceMetadataResult.error
+					})
+					throw errors.new("invalid resource metadata")
 				}
-				unitAssessments.push(assessment)
+				const resourceMetadata = resourceMetadataResult.data
+
+				if (resourceMetadata.khanActivityType === "Quiz" || resourceMetadata.khanActivityType === "UnitTest") {
+					const assessmentType = resourceMetadata.khanActivityType
+
+					// Determine the URL path segment for the assessment type
+					let pathSegment: string
+					switch (assessmentType) {
+						case "Quiz":
+							pathSegment = "quiz"
+							break
+						case "UnitTest":
+							pathSegment = "test"
+							break
+						default:
+							logger.error("unknown assessment type", { assessmentType })
+							throw errors.new(`unknown assessment type: ${assessmentType}`)
+					}
+
+					if (!lastLessonSlugForUnit) {
+						logger.error("missing lesson slug for assessment path", { unitSourcedId: unit.id })
+						throw errors.new("assessment path: missing lesson slug")
+					}
+
+					const assessment: Quiz | UnitTest = {
+						id: resource.sourcedId,
+						type: assessmentType,
+						slug: resourceMetadata.khanSlug,
+						title: resource.title,
+						description: resourceMetadata.khanDescription,
+						path: `/${params.subject}/${params.course}/${unit.slug}/${lastLessonSlugForUnit}/${pathSegment}/${resourceMetadata.khanSlug}`,
+						questions: [], // Questions are not needed on the course page
+						ordering: childComponent.sortOrder, // Use the component's sortOrder
+						xp: resourceMetadata.xp || 0 // Use XP from metadata or default to 0
+					}
+					unitAssessments.push(assessment)
+					assessmentComponentIds.add(childComponent.sourcedId) // Track this as an assessment component
+				}
 			}
 		}
+
+		// Filter out assessment components from lessons
+		const unitLessons = allUnitChildren.filter((child) => !assessmentComponentIds.has(child.id))
 
 		// Process lessons with their content
 		const lessonsWithContent: Lesson[] = unitLessons.map((lesson) => {
@@ -538,30 +593,13 @@ export async function fetchCoursePageData(
 			})
 		}
 
-		// Add assessments with their sort orders from component resources
+		// Add assessments with their sort orders from components (since they are now course components)
 		for (const assessment of unitAssessments) {
-			// Find the componentResource entry for this assessment
-			const componentResource = componentResources.find(
-				(cr) => cr.courseComponent.sourcedId === unit.id && cr.resource.sourcedId === assessment.id
-			)
-			if (!componentResource) {
-				logger.error("assessment component resource not found", {
-					assessmentSourcedId: assessment.id,
-					unitSourcedId: unit.id
-				})
-				throw errors.new("assessment component resource missing")
-			}
-			if (typeof componentResource.sortOrder !== "number") {
-				logger.error("assessment component resource missing sortOrder", {
-					assessmentSourcedId: assessment.id,
-					sortOrder: componentResource.sortOrder
-				})
-				throw errors.new("assessment component resource missing required sortOrder")
-			}
+			// Assessments are already populated with correct sortOrder from childComponent.sortOrder
 			childrenWithOrders.push({
 				child: assessment,
-				sortOrder: componentResource.sortOrder,
-				source: "resource"
+				sortOrder: assessment.ordering, // We already set this from childComponent.sortOrder
+				source: "component" // Changed from "resource" since assessments are now components
 			})
 		}
 

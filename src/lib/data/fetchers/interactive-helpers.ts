@@ -89,6 +89,10 @@ export async function findComponentResource(resourceSourcedId: string): Promise<
 /**
  * Finds the ComponentResource that links a resource to a specific parent component (unit/lesson).
  * Used for Quiz, UnitTest, and Exercise resources that need context-aware lookup.
+ *
+ * For exercises: Finds component resource where courseComponent is the lesson (parentComponentSourcedId)
+ * For quizzes/unit tests: Finds component resource where courseComponent's parent is the unit (parentComponentSourcedId)
+ *
  * @internal
  */
 export async function findComponentResourceWithContext(
@@ -100,13 +104,59 @@ export async function findComponentResourceWithContext(
 		logger.error("failed to fetch component resources", { error: allComponentResourcesResult.error })
 		throw errors.wrap(allComponentResourcesResult.error, "fetch component resources")
 	}
-	const componentResource = allComponentResourcesResult.data.find(
+
+	// First try direct match (for exercises where component is the lesson)
+	let componentResource = allComponentResourcesResult.data.find(
 		(cr) => cr.resource.sourcedId === resourceSourcedId && cr.courseComponent.sourcedId === parentComponentSourcedId
 	)
+
+	// If not found, it might be a quiz/unit test with new structure
+	// where the component is the assessment itself, not the unit
+	if (!componentResource) {
+		// Import the function to get course components by parent
+		const { getCourseComponentsByParentId } = await import("@/lib/data/fetchers/oneroster")
+
+		// Get all components that are children of the parent (unit)
+		const childComponentsResult = await errors.try(getCourseComponentsByParentId(parentComponentSourcedId))
+		if (childComponentsResult.error) {
+			logger.error("failed to fetch child components", {
+				error: childComponentsResult.error,
+				parentComponentSourcedId
+			})
+			throw errors.wrap(childComponentsResult.error, "fetch child components")
+		}
+
+		// Find component resources for this resource
+		const candidateComponentResources = allComponentResourcesResult.data.filter(
+			(cr) => cr.resource.sourcedId === resourceSourcedId
+		)
+
+		// Check if any of the candidate component resources point to a component that's a child of our parent
+		for (const cr of candidateComponentResources) {
+			const isChildOfParent = childComponentsResult.data.some(
+				(component) => component.sourcedId === cr.courseComponent.sourcedId
+			)
+
+			if (isChildOfParent) {
+				componentResource = cr
+				logger.debug("found component resource via parent relationship", {
+					resourceSourcedId,
+					componentResourceSourcedId: cr.sourcedId,
+					courseComponentSourcedId: cr.courseComponent.sourcedId,
+					parentComponentSourcedId
+				})
+				break
+			}
+		}
+	}
+
 	if (!componentResource) {
 		logger.error("could not find componentResource link for resource with context", {
 			resourceSourcedId,
-			parentComponentSourcedId
+			parentComponentSourcedId,
+			totalComponentResources: allComponentResourcesResult.data.length,
+			candidatesFound: allComponentResourcesResult.data.filter((cr) => cr.resource.sourcedId === resourceSourcedId)
+				.length
 		})
 		notFound()
 	}

@@ -496,7 +496,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				status: "active",
 				title: unitTest.title,
 				componentResource: {
-					sourcedId: `nice_${unit.id}_${unitTest.id}`
+					sourcedId: `nice_${unitTest.id}_${unitTest.id}`
 				},
 				course: {
 					sourcedId: `nice_${course.id}`
@@ -515,7 +515,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				status: "active",
 				title: quiz.title,
 				componentResource: {
-					sourcedId: `nice_${unit.id}_${quiz.id}`
+					sourcedId: `nice_${quiz.id}_${quiz.id}`
 				},
 				course: {
 					sourcedId: `nice_${course.id}`
@@ -777,13 +777,30 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				resourceSet.add(assessmentSourcedId)
 			}
 
-			onerosterPayload.componentResources.push({
-				sourcedId: `nice_${unit.id}_${assessment.id}`,
+			// Create an intermediate course component for the quiz/unit test
+			onerosterPayload.courseComponents.push({
+				sourcedId: `nice_${assessment.id}`,
 				status: "active",
 				title: assessment.title,
-				courseComponent: { sourcedId: `nice_${unit.id}`, type: "courseComponent" },
+				course: { sourcedId: `nice_${course.id}`, type: "course" },
+				parent: { sourcedId: `nice_${unit.id}`, type: "courseComponent" },
+				sortOrder: assessment.ordering,
+				metadata: {
+					khanId: assessment.id,
+					khanSlug: assessment.slug,
+					khanTitle: assessment.title,
+					khanDescription: assessment.description
+				}
+			})
+
+			// Now link the resource to the new course component instead of directly to the unit
+			onerosterPayload.componentResources.push({
+				sourcedId: `nice_${assessment.id}_${assessment.id}`,
+				status: "active",
+				title: assessment.title,
+				courseComponent: { sourcedId: `nice_${assessment.id}`, type: "courseComponent" },
 				resource: { sourcedId: assessmentSourcedId, type: "resource" },
-				sortOrder: assessment.ordering
+				sortOrder: 0
 			})
 
 			// Note: Unit-level assessments are Quiz or UnitTest; exercises are represented as lesson content.

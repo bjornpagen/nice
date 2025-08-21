@@ -33,6 +33,7 @@ export async function findEligiblePassiveResourcesForExercise(params: {
 		oneroster.getAllComponentResources({ filter: `resource.sourcedId='${exerciseResourceId}' AND status='active'` })
 	)
 	if (componentResourceResult.error) {
+		logger.error("exercise component resource fetch failed", { error: componentResourceResult.error })
 		throw errors.wrap(componentResourceResult.error, "exercise component resource fetch")
 	}
 	const exerciseComponentResource = componentResourceResult.data[0]
@@ -288,8 +289,7 @@ export async function awardBankedXpForExercise(params: {
 	const { bankedXp, awardedResourceIds } = bankResult
 
 	// Get resource metadata for saving results and sending Caliper events
-	const exerciseResourceId = extractResourceIdFromCompoundId(params.exerciseResourceSourcedId)
-	const allResourceIds = eligibleResources.map(r => r.sourcedId)
+	const allResourceIds = eligibleResources.map((r) => r.sourcedId)
 	const allResourcesResult = await errors.try(
 		oneroster.getAllResources({ filter: `sourcedId@'${allResourceIds.join(",")}' AND status='active'` })
 	)
@@ -355,11 +355,11 @@ export async function awardBankedXpForExercise(params: {
 						const subjectSlug = String(resource.metadata?.khanSubjectSlug ?? "")
 						const mappedSubject = isSubjectSlug(subjectSlug) ? CALIPER_SUBJECT_MAPPING[subjectSlug] : "None"
 						const awardedXp = typeof resource.metadata?.xp === "number" ? resource.metadata.xp : 0
-											const actor = {
-						id: constructActorId(userId),
-						type: "TimebackUser" as const,
-						email: user.email
-					}
+						const actor = {
+							id: constructActorId(userId),
+							type: "TimebackUser" as const,
+							email: user.email
+						}
 						const context = {
 							id: `${env.NEXT_PUBLIC_APP_DOMAIN}/resources/${resource.sourcedId}`,
 							type: "TimebackActivityContext" as const,
