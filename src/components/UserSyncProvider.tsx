@@ -1,37 +1,60 @@
 "use client"
 
-import { useUser } from "@clerk/nextjs"
+import { useClerk, useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
+import { useRouter } from "next/navigation"
 import * as React from "react"
+import { toast } from "sonner"
 import { syncUserWithOneRoster } from "@/lib/actions/user-sync"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 
 export function UserSyncProvider({ children }: { children: React.ReactNode }) {
-	const { isLoaded, isSignedIn, user } = useUser()
-	const hasSynced = React.useRef(false)
+	const { user, isLoaded } = useUser()
+	const { signOut } = useClerk()
+	const router = useRouter()
+
+	// ensure the sync logic only runs once per session
+	const hasAttemptedSyncRef = React.useRef(false)
 
 	React.useEffect(() => {
-		if (!isLoaded || !isSignedIn || !user || hasSynced.current) return
+		if (!isLoaded) return
+		if (!user) return
+		if (hasAttemptedSyncRef.current) return
 
-		const syncUser = async () => {
-			// Always call the server action to handle OneRoster sync
-			// This ensures roles are always up-to-date, even for existing users
+		const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata || {})
+		const needsSync = !metadataValidation.success || !metadataValidation.data.sourceId
+		if (!needsSync) return
+
+		hasAttemptedSyncRef.current = true
+
+		const performSync = async () => {
 			const result = await errors.try(syncUserWithOneRoster())
 			if (result.error) {
-				// Log error but don't throw - sync can be retried later
-				// Error is already logged in the server action
+				const err = result.error
+				if (err instanceof Error && err.message === "user not provisioned in oneroster") {
+					toast.error("Please create an account with TimeBack Education first.", {
+						action: {
+							label: "Get Started",
+							onClick: () => {
+								window.location.href = "https://timebackeducation.com"
+							}
+						}
+					})
+					await signOut()
+					router.push("/login")
+					return
+				}
+				toast.error("An error occurred during account setup. Please try again later.")
+				await signOut()
+				router.push("/login")
 				return
 			}
 
-			if (result.data.success) {
-				// Refresh user data to get updated metadata
-				await user.reload()
-				hasSynced.current = true
-			}
+			router.refresh()
 		}
 
-		void syncUser()
-	}, [isLoaded, isSignedIn, user])
+		void performSync()
+	}, [isLoaded, user, signOut, router])
 
-	// Always render children to maintain consistent hook calls
 	return <>{children}</>
 }

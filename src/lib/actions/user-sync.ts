@@ -1,6 +1,4 @@
 "use server"
-
-import { randomUUID } from "node:crypto"
 import { clerkClient, currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
@@ -23,8 +21,8 @@ export type SyncUserResponse = z.infer<typeof SyncResponseSchema>
  * This action will:
  * 1. Check if the user already has a sourceId (already synced)
  * 2. Look up the user in OneRoster by email
- * 3. Create a new user in OneRoster if not found
- * 4. Update the user's Clerk metadata with the sourceId
+ * 3. If the user is not found in OneRoster, deny access (throw)
+ * 4. If found, update the user's Clerk metadata with the sourceId and roles
  *
  * @returns {Promise<SyncUserResponse>} The sync result including sourceId if successful
  */
@@ -38,8 +36,7 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 
 	const clerkId = user.id
 	const email = user.emailAddresses[0]?.emailAddress
-	const firstName = user.firstName || ""
-	const lastName = user.lastName || ""
+	// names are not required for OneRoster lookup; avoid capturing unused values
 
 	if (!email) {
 		logger.error("CRITICAL: User has no email address", { clerkId })
@@ -163,83 +160,36 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 	// Check if user exists in OneRoster
 	const onerosterUserResult = await errors.try(oneroster.getUsersByEmail(email))
 	if (onerosterUserResult.error) {
-		logger.warn("failed to get user from oneroster, proceeding without sourceid", {
+		logger.error("failed to get user from oneroster during sync", {
 			userId: clerkId,
 			error: onerosterUserResult.error
 		})
-		// Don't fail the sync, just proceed without sourceId
-	} else if (onerosterUserResult.data) {
-		// User exists in OneRoster
-		publicMetadataPayload.sourceId = onerosterUserResult.data.sourcedId
-		// Store roles from OneRoster in Clerk metadata
-		publicMetadataPayload.roles = onerosterUserResult.data.roles.map((role) => ({
-			roleType: role.roleType,
-			role: role.role,
-			org: {
-				sourcedId: role.org.sourcedId,
-				type: role.org.type
-			},
-			userProfile: role.userProfile,
-			beginDate: role.beginDate,
-			endDate: role.endDate
-		}))
-		logger.info("successfully fetched sourceid and roles from oneroster", {
-			userId: clerkId,
-			sourceId: onerosterUserResult.data.sourcedId,
-			roleCount: publicMetadataPayload.roles.length
-		})
-	} else {
-		// Create new user in OneRoster (same logic as webhook and route)
-		logger.info("user not found in oneroster, creating a new one", { userId: clerkId, email })
-		const newSourcedId = randomUUID()
-
-		const defaultRole = {
-			roleType: "primary" as const,
-			role: "student" as const,
-			org: {
-				sourcedId: "f251f08b-61de-4ffa-8ff3-3e56e1d75a60"
-			}
-		}
-
-		const newUserPayload = {
-			sourcedId: newSourcedId,
-			status: "active" as const,
-			enabledUser: true,
-			givenName: firstName,
-			familyName: lastName,
-			email: email,
-			roles: [defaultRole]
-		}
-
-		const createUserResult = await errors.try(oneroster.createUser(newUserPayload))
-		if (createUserResult.error) {
-			logger.warn("failed to create new user in oneroster, proceeding without sourceid", {
-				userId: clerkId,
-				error: createUserResult.error
-			})
-		} else {
-			publicMetadataPayload.sourceId = newSourcedId
-			// Store the default role in Clerk metadata for new users
-			publicMetadataPayload.roles = [
-				{
-					roleType: defaultRole.roleType,
-					role: defaultRole.role,
-					org: {
-						sourcedId: defaultRole.org.sourcedId,
-						type: undefined
-					},
-					userProfile: undefined,
-					beginDate: null,
-					endDate: null
-				}
-			]
-			logger.info("successfully created new user in oneroster and assigned sourceid with default role", {
-				userId: clerkId,
-				sourceId: newSourcedId,
-				roleCount: publicMetadataPayload.roles.length
-			})
-		}
+		throw errors.wrap(onerosterUserResult.error, "failed to query OneRoster")
 	}
+
+	if (!onerosterUserResult.data) {
+		logger.warn("User not found in OneRoster. Denying access.", { userId: clerkId, email })
+		throw errors.new("user not provisioned in oneroster")
+	}
+
+	// User exists in OneRoster - proceed to set sourceId and roles
+	publicMetadataPayload.sourceId = onerosterUserResult.data.sourcedId
+	publicMetadataPayload.roles = onerosterUserResult.data.roles.map((role) => ({
+		roleType: role.roleType,
+		role: role.role,
+		org: {
+			sourcedId: role.org.sourcedId,
+			type: role.org.type
+		},
+		userProfile: role.userProfile,
+		beginDate: role.beginDate,
+		endDate: role.endDate
+	}))
+	logger.info("successfully fetched sourceid and roles from oneroster", {
+		userId: clerkId,
+		sourceId: onerosterUserResult.data.sourcedId,
+		roleCount: publicMetadataPayload.roles.length
+	})
 
 	// Update Clerk metadata
 	const clerk = await clerkClient()
