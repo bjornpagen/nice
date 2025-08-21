@@ -10,11 +10,12 @@
  *
  * Types: resources, courses, courseComponents, componentResources,
  *        classes, users, enrollments, assessmentLineItems, assessmentResults,
- *        assessmentItems, assessmentStimuli, assessmentTests, all
+ *        assessmentItems, assessmentStimuli, assessmentTests, all-oneroster, all-qti
  *
  * Examples:
  *   bun run src/scripts/atom-bomb-wipe.ts courses "test-"
- *   bun run src/scripts/atom-bomb-wipe.ts all "demo-" --delete
+ *   bun run src/scripts/atom-bomb-wipe.ts all-oneroster "demo-" --delete
+ *   bun run src/scripts/atom-bomb-wipe.ts all-qti "test-" --delete
  */
 //bloo
 import * as readline from "node:readline/promises"
@@ -38,7 +39,8 @@ const EntityTypeSchema = z.enum([
 	"assessmentItems",
 	"assessmentStimuli",
 	"assessmentTests",
-	"all"
+	"all-oneroster",
+	"all-qti"
 ])
 type EntityType = z.infer<typeof EntityTypeSchema>
 
@@ -125,7 +127,7 @@ function filterByExactPrefix<T extends { sourcedId: string }>(items: T[], prefix
 }
 
 // Handler implementations
-const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
+const handlers: Record<Exclude<EntityType, "all-oneroster" | "all-qti">, EntityHandler> = {
 	resources: {
 		type: "resources",
 		name: "Resources",
@@ -485,7 +487,10 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 	}
 }
 
-async function fetchEntities(entityType: Exclude<EntityType, "all">, prefix: string): Promise<Entity[]> {
+async function fetchEntities(
+	entityType: Exclude<EntityType, "all-oneroster" | "all-qti">,
+	prefix: string
+): Promise<Entity[]> {
 	const handler = handlers[entityType]
 	logger.debug("fetching entities", { type: handler.name, prefix })
 
@@ -522,9 +527,9 @@ async function confirmDeletion(count: number, typeName: string): Promise<boolean
 }
 
 async function executeWipe(entityType: EntityType, prefix: string, shouldDelete: boolean, skipConfirmation = false) {
-	// Handle "all" type by recursing through each type
-	if (entityType === "all") {
-		logger.info("executing full wipe", { prefix })
+	// Handle "all-oneroster" and "all-qti" types by recursing through each type
+	if (entityType === "all-oneroster" || entityType === "all-qti") {
+		logger.info("executing batch wipe", { entityType, prefix })
 
 		// For delete mode with "all", ask for confirmation once upfront
 		if (shouldDelete && !skipConfirmation) {
@@ -534,13 +539,8 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 
 			process.stdout.write("\n🔍 Scanning for entities to delete...\n")
 
-			// CRITICAL: This array defines the canonical order for entity types
-			// Entities are always grouped by type and displayed in this exact order
-			const allTypes: Exclude<EntityType, "all">[] = [
-				// QTI Objects (delete tests first as they reference items/stimuli)
-				"assessmentTests",
-				"assessmentItems",
-				"assessmentStimuli",
+			// Define types based on which command was used
+			const onerosterTypes: Exclude<EntityType, "all-oneroster" | "all-qti">[] = [
 				// OneRoster Objects (delete dependencies first)
 				"enrollments",
 				"assessmentResults",
@@ -552,6 +552,17 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 				"courses",
 				"users"
 			]
+
+			const qtiTypes: Exclude<EntityType, "all-oneroster" | "all-qti">[] = [
+				// QTI Objects (delete tests first as they reference items/stimuli)
+				"assessmentTests",
+				"assessmentItems",
+				"assessmentStimuli"
+			]
+
+			// CRITICAL: This array defines the canonical order for entity types
+			// Entities are always grouped by type and displayed in this exact order
+			const allTypes = entityType === "all-oneroster" ? onerosterTypes : qtiTypes
 
 			// Fetch all entity counts in parallel
 			const countPromises = allTypes.map(async (type) => ({
@@ -615,14 +626,8 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 		}
 
 		// For list mode or if confirmation was already done
-		// CRITICAL: This array defines the canonical order for displaying entity types
-		// - For listing: ensures stable grouping and output order
-		// - For deletion: respects dependency order (dependents before dependencies)
-		const allTypes: Exclude<EntityType, "all">[] = [
-			// QTI Objects (delete tests first as they reference items/stimuli)
-			"assessmentTests",
-			"assessmentItems",
-			"assessmentStimuli",
+		// Define types based on which command was used
+		const onerosterTypes: Exclude<EntityType, "all-oneroster" | "all-qti">[] = [
 			// OneRoster Objects (delete dependencies first)
 			"enrollments",
 			"assessmentResults",
@@ -634,6 +639,18 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 			"courses",
 			"users"
 		]
+
+		const qtiTypes: Exclude<EntityType, "all-oneroster" | "all-qti">[] = [
+			// QTI Objects (delete tests first as they reference items/stimuli)
+			"assessmentTests",
+			"assessmentItems",
+			"assessmentStimuli"
+		]
+
+		// CRITICAL: This array defines the canonical order for displaying entity types
+		// - For listing: ensures stable grouping and output order
+		// - For deletion: respects dependency order (dependents before dependencies)
+		const allTypes = entityType === "all-oneroster" ? onerosterTypes : qtiTypes
 
 		// In list mode, fetch all types in parallel first
 		if (!shouldDelete) {
@@ -799,9 +816,10 @@ async function main() {
 		process.stderr.write(
 			"Usage: atom-bomb-wipe <type> <prefix> [--delete]\n\n" +
 				"Types:\n" +
-				"  resources, courses, courseComponents, componentResources,\n" +
-				"  classes, users, enrollments, assessmentLineItems, assessmentResults,\n" +
-				"  assessmentItems, assessmentStimuli, assessmentTests, all\n"
+				"  OneRoster: resources, courses, courseComponents, componentResources,\n" +
+				"             classes, users, enrollments, assessmentLineItems, assessmentResults\n" +
+				"  QTI: assessmentItems, assessmentStimuli, assessmentTests\n" +
+				"  Batch: all-oneroster (all OneRoster types), all-qti (all QTI types)\n"
 		)
 		process.exit(1)
 	}
