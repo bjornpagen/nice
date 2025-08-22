@@ -3580,6 +3580,229 @@ export const compareNegativeDecimalVsRootInlineChoice: AssessmentItemInput = {
 	responseDeclarations: [{ correct: ">", baseType: "string", identifier: "RESPONSE", cardinality: "single" }]
 }
 
+export const reactionRateChangesTable: AssessmentItemInput = {
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{
+					type: "text",
+					content: "Different situations call for chemical reactions that release energy quickly, such as an explosion, or slowly, such as a hand warmer."
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			content: [
+				{
+					type: "text",
+					content: "To control how quickly energy is released or absorbed, we can make adjustments to change how fast the reaction occurs."
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			content: [
+				{
+					type: "text",
+					content: "Complete the table to show how the reaction rate is typically affected by each change."
+				}
+			]
+		},
+		{
+			type: "blockSlot",
+			slotId: "reaction_rate_table"
+		}
+	],
+	title: "How changes affect the reaction rate",
+	widgets: {
+		reaction_rate_table: {
+			data: [
+				[
+					{
+						type: "inline",
+						content: [
+							{
+								type: "text",
+								content: "Stir the reactants"
+							}
+						]
+					},
+					{
+						type: "dropdown",
+						choices: [
+							{
+								content: [
+									{
+										type: "text",
+										content: "increase"
+									}
+								],
+								identifier: "INCREASE"
+							},
+							{
+								content: [
+									{
+										type: "text",
+										content: "decrease"
+									}
+								],
+								identifier: "DECREASE"
+							}
+						],
+						shuffle: false,
+						responseIdentifier: "dropdown_1"
+					}
+				],
+				[
+					{
+						type: "inline",
+						content: [
+							{
+								type: "text",
+								content: "Heat the reactants"
+							}
+						]
+					},
+					{
+						type: "dropdown",
+						choices: [
+							{
+								content: [
+									{
+										type: "text",
+										content: "increase"
+									}
+								],
+								identifier: "INCREASE"
+							},
+							{
+								content: [
+									{
+										type: "text",
+										content: "decrease"
+									}
+								],
+								identifier: "DECREASE"
+							}
+						],
+						shuffle: false,
+						responseIdentifier: "dropdown_2"
+					}
+				],
+				[
+					{
+						type: "inline",
+						content: [
+							{
+								type: "text",
+								content: "Decrease the concentration of the reactants"
+							}
+						]
+					},
+					{
+						type: "dropdown",
+						choices: [
+							{
+								content: [
+									{
+										type: "text",
+										content: "increase"
+									}
+								],
+								identifier: "INCREASE"
+							},
+							{
+								content: [
+									{
+										type: "text",
+										content: "decrease"
+									}
+								],
+								identifier: "DECREASE"
+							}
+						],
+						shuffle: false,
+						responseIdentifier: "dropdown_3"
+					}
+				]
+			],
+			type: "dataTable",
+			title: "How changes affect the reaction rate",
+			footer: null,
+			columns: [
+				{
+					key: "change",
+					label: [
+						{
+							type: "text",
+							content: "Change"
+						}
+					],
+					isNumeric: false
+				},
+				{
+					key: "effect",
+					label: [
+						{
+							type: "text",
+							content: "Effect on rate"
+						}
+					],
+					isNumeric: false
+				}
+			],
+			rowHeaderKey: "change"
+		}
+	},
+	feedback: {
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content: "Correct! Stirring and heating increase the frequency of effective collisions, so they increase the reaction rate. Decreasing concentration reduces collisions and decreases the rate."
+					}
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content: "Not quite. Stirring and heating bring reactant particles into contact more often, which increases collisions and speeds up the reaction. Lowering the concentration leads to fewer collisions, which slows the reaction."
+					}
+				]
+			}
+		]
+	},
+	identifier: "reaction-rate-changes-table",
+	interactions: {},
+	responseDeclarations: [
+		{
+			correct: "increase",
+			baseType: "string",
+			identifier: "dropdown_1",
+			cardinality: "single"
+		},
+		{
+			correct: "increase",
+			baseType: "string",
+			identifier: "dropdown_2",
+			cardinality: "single"
+		},
+		{
+			correct: "decrease",
+			baseType: "string",
+			identifier: "dropdown_3",
+			cardinality: "single"
+		}
+	]
+}
+
 export const allExamples: AssessmentItemInput[] = [
 	probabilityNotPurpleSpinner,
 	linearModelEquationPrediction,
@@ -3609,5 +3832,6 @@ export const allExamples: AssessmentItemInput[] = [
 	gustaveStepsPerMile,
 	compareNegativeDecimalVsRootInlineChoice,
 	reactantAmountsTemperatureTableWithDropdowns,
-	attractRepelCompletionTable
+	attractRepelCompletionTable,
+	reactionRateChangesTable
 ]
