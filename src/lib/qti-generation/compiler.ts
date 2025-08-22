@@ -936,6 +936,89 @@ function enforceNoPipesInTopLevelFeedback(item: AssessmentItem): void {
 	if (item.feedback?.incorrect) checkBlocks(item.feedback.incorrect)
 }
 
+function enforceIdentifierOnlyMatching(item: AssessmentItem): void {
+    // Build allowed identifiers per responseIdentifier from interactions and dataTable dropdowns
+    const allowed: Record<string, Set<string>> = {}
+    const ensureSet = (id: string): Set<string> => (allowed[id] ??= new Set<string>())
+
+    // Interactions: inlineChoice, choice, order
+    if (item.interactions) {
+        for (const [interactionId, interaction] of Object.entries(item.interactions)) {
+            if (!interaction) continue
+            if (
+                interaction.type === "inlineChoiceInteraction" ||
+                interaction.type === "choiceInteraction" ||
+                interaction.type === "orderInteraction"
+            ) {
+                const responseId = (interaction as any).responseIdentifier
+                const seenCI = new Set<string>()
+                for (const choice of (interaction as any).choices ?? []) {
+                    const ident = String((choice as any).identifier)
+                    const key = ident.toLowerCase()
+                    if (seenCI.has(key)) {
+                        logger.error("duplicate choice identifiers", { interactionId, identifier: ident })
+                        throw errors.new("duplicate choice identifiers")
+                    }
+                    seenCI.add(key)
+                    ensureSet(responseId).add(ident)
+                }
+            }
+        }
+    }
+
+    // Widgets: dataTable dropdown cells
+    if (item.widgets) {
+        for (const [widgetId, widget] of Object.entries(item.widgets)) {
+            if (!widget || (widget as any).type !== "dataTable") continue
+            const rows: any[][] = Array.isArray((widget as any).data) ? ((widget as any).data as any[][]) : []
+            for (const row of rows) {
+                if (!Array.isArray(row)) continue
+                for (const cell of row) {
+                    if (!cell || cell.type !== "dropdown") continue
+                    const responseId: string = String(cell.responseIdentifier)
+                    const seen = new Set<string>()
+                    for (const ch of cell.choices ?? []) {
+                        const ident = String(ch.identifier)
+                        const key = ident.toLowerCase()
+                        if (seen.has(key)) {
+                            logger.error("duplicate dropdown identifiers in dataTable", { widgetId, identifier: ident })
+                            throw errors.new("duplicate choice identifiers")
+                        }
+                        seen.add(key)
+                        ensureSet(responseId).add(ident)
+                    }
+                }
+            }
+        }
+    }
+
+    // Validate response declarations for any responseIdentifier with allowed set
+    for (const decl of item.responseDeclarations) {
+        if (!decl) continue
+        const set = allowed[decl.identifier]
+        if (!set) continue
+        if (decl.baseType !== "identifier") {
+            logger.error("dropdown responses must use identifier baseType", { responseIdentifier: decl.identifier })
+            throw errors.new("identifier baseType required")
+        }
+        const inSet = (v: string): boolean => set.has(v)
+        if (Array.isArray(decl.correct)) {
+            for (const v of decl.correct) {
+                if (typeof v !== "string" || !inSet(v)) {
+                    logger.error("correct identifier not present in choices", { responseIdentifier: decl.identifier, value: v })
+                    throw errors.new("correct identifier not present in choices")
+                }
+            }
+        } else {
+            const v: any = decl.correct
+            if (typeof v !== "string" || !inSet(v)) {
+                logger.error("correct identifier not present in choices", { responseIdentifier: decl.identifier, value: v })
+                throw errors.new("correct identifier not present in choices")
+            }
+        }
+    }
+}
+
 export function compile(itemData: AssessmentItemInput): string {
 	// Step 0: Build widget mapping prior to schema enforcement
 	const widgetMapping: Record<string, string> = {}
@@ -998,8 +1081,8 @@ export function compile(itemData: AssessmentItemInput): string {
 	enforceNoPipesInTopLevelFeedback(enforcedItem)
 	enforceNoCaretsInTopLevelFeedback(enforcedItem)
 
-	// Normalize choice identifiers now that we have strong types
-	normalizeChoiceIdentifiersInPlace(enforcedItem)
+	// Enforce identifier-only matching; no ad-hoc rewriting
+	enforceIdentifierOnlyMatching(enforcedItem)
 
 	const slots = new Map<string, string>()
 

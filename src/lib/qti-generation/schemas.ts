@@ -4,6 +4,9 @@ import { z } from "zod"
 import { typedSchemas } from "@/lib/widgets/generators"
 import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
 
+// Safe identifier pattern: strictly alphanumeric and underscores, starting with letter or underscore
+const SAFE_IDENTIFIER_REGEX = /^[A-Za-z_][A-Za-z0-9_]*$/
+
 // LEVEL 2: INLINE CONTENT (for paragraphs, prompts, etc.)
 // Factory functions to create fresh schema instances (avoids $ref in JSON Schema)
 function createInlineContentItemSchema() {
@@ -102,7 +105,10 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 
 	const InlineChoiceSchema = z
 		.object({
-			identifier: z.string().describe("Unique identifier for this inline choice option."),
+			identifier: z
+				.string()
+				.regex(SAFE_IDENTIFIER_REGEX, "invalid identifier: must match [A-Za-z_][A-Za-z0-9._-]*")
+				.describe("Unique identifier for this inline choice option."),
 			content: createInlineContentSchema().describe("The inline content displayed in the dropdown menu.")
 		})
 		.strict()
@@ -111,13 +117,19 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 	const ChoiceInteractionSchema = z
 		.object({
 			type: z.literal("choiceInteraction").describe("Identifies this as a multiple choice interaction."),
-			responseIdentifier: z.string().describe("Links this interaction to its response declaration for scoring."),
+			responseIdentifier: z
+				.string()
+				.regex(SAFE_IDENTIFIER_REGEX, "invalid response identifier")
+				.describe("Links this interaction to its response declaration for scoring."),
 			prompt: createInlineContentSchema().describe("The question or instruction presented to the user."),
 			choices: z
 				.array(
 					z
 						.object({
-							identifier: z.string().describe("Unique identifier for this choice option, used for response matching."),
+							identifier: z
+								.string()
+								.regex(SAFE_IDENTIFIER_REGEX, "invalid identifier: must match [A-Za-z_][A-Za-z0-9._-]*")
+								.describe("Unique identifier for this choice option, used for response matching."),
 							content: createBlockContentSchema().describe(
 								"Rich content for this choice option, supporting text, math, and embedded widgets."
 							),
@@ -140,8 +152,13 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 	const InlineChoiceInteractionSchema = z
 		.object({
 			type: z.literal("inlineChoiceInteraction").describe("Identifies this as an inline dropdown interaction."),
-			responseIdentifier: z.string().describe("Links this interaction to its response declaration for scoring."),
-			choices: z.array(InlineChoiceSchema).describe("Array of options available in the dropdown menu."),
+			responseIdentifier: z
+				.string()
+				.regex(SAFE_IDENTIFIER_REGEX, "invalid response identifier")
+				.describe("Links this interaction to its response declaration for scoring."),
+			choices: z
+				.array(InlineChoiceSchema)
+				.describe("Array of options available in the dropdown menu."),
 			shuffle: z.literal(true).describe("Whether to randomize dropdown options. Always true to ensure fairness.")
 		})
 		.strict()
@@ -215,7 +232,10 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 
 	const ResponseDeclarationSchema = z
 		.object({
-			identifier: z.string().describe("Unique ID linking an interaction to this response declaration."),
+			identifier: z
+				.string()
+				.regex(SAFE_IDENTIFIER_REGEX, "invalid response identifier")
+				.describe("Unique ID linking an interaction to this response declaration."),
 			cardinality: z
 				.enum(["single", "multiple", "ordered"])
 				.describe("Defines response structure: single value, multiple values, or ordered sequence."),

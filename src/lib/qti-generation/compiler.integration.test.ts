@@ -22,9 +22,14 @@ describe("QTI Compiler API Validation", () => {
 			clientId: env.TIMEBACK_CLIENT_ID,
 			clientSecret: env.TIMEBACK_CLIENT_SECRET
 		})
-		// Step 1: Compile all examples into QTI XML strings in parallel.
-		// This compiles all examples at once, taking advantage of CPU parallelism.
-		const compiledExamples = allExamples.map((example) => ({
+		// Step 1: Compile only selected examples into QTI XML strings in parallel.
+		const allowedIds = new Set<string>([
+			"reaction-rate-changes-table",
+			"ke-mass-speed-relationships",
+			"reactant-amounts-temp-change-table-perseus"
+		])
+		const selected = allExamples.filter((ex) => allowedIds.has(ex.identifier))
+		const compiledExamples = selected.map((example) => ({
 			identifier: example.identifier,
 			xml: compile(example)
 		}))

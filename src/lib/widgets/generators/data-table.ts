@@ -69,6 +69,7 @@ function createTableCellSchema() {
 							.object({
 								identifier: z
 									.string()
+									.regex(/^[A-Za-z_][A-Za-z0-9_]*$/, "invalid identifier: only alphanumeric and underscores, starting with letter or underscore")
 									.describe("Unique identifier for this choice, used in the QTI identifier attribute."),
 								content: createInlineContentSchema().describe("Inline content to display for this choice.")
 							})

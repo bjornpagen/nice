@@ -3783,20 +3783,20 @@ export const reactionRateChangesTable: AssessmentItemInput = {
 	interactions: {},
 	responseDeclarations: [
 		{
-			correct: "increase",
-			baseType: "string",
+			correct: "INCREASE",
+			baseType: "identifier",
 			identifier: "dropdown_1",
 			cardinality: "single"
 		},
 		{
-			correct: "increase",
-			baseType: "string",
+			correct: "INCREASE",
+			baseType: "identifier",
 			identifier: "dropdown_2",
 			cardinality: "single"
 		},
 		{
-			correct: "decrease",
-			baseType: "string",
+			correct: "DECREASE",
+			baseType: "identifier",
 			identifier: "dropdown_3",
 			cardinality: "single"
 		}
@@ -4041,7 +4041,7 @@ export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
 							content: "one-fourth"
 						}
 					],
-					identifier: "one-fourth"
+					identifier: "one_fourth"
 				},
 				{
 					content: [
@@ -4050,7 +4050,7 @@ export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
 							content: "one-half"
 						}
 					],
-					identifier: "one-half"
+					identifier: "one_half"
 				},
 				{
 					content: [
@@ -4059,7 +4059,7 @@ export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
 							content: "two times"
 						}
 					],
-					identifier: "two times"
+					identifier: "two_times"
 				},
 				{
 					content: [
@@ -4068,7 +4068,7 @@ export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
 							content: "four times"
 						}
 					],
-					identifier: "four times"
+					identifier: "four_times"
 				}
 			],
 			shuffle: true,
@@ -4084,7 +4084,7 @@ export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
 							content: "one-fourth"
 						}
 					],
-					identifier: "one-fourth"
+					identifier: "one_fourth"
 				},
 				{
 					content: [
@@ -4093,7 +4093,7 @@ export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
 							content: "one-half"
 						}
 					],
-					identifier: "one-half"
+					identifier: "one_half"
 				},
 				{
 					content: [
@@ -4102,7 +4102,7 @@ export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
 							content: "two times"
 						}
 					],
-					identifier: "two times"
+					identifier: "two_times"
 				},
 				{
 					content: [
@@ -4111,7 +4111,7 @@ export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
 							content: "four times"
 						}
 					],
-					identifier: "four times"
+					identifier: "four_times"
 				}
 			],
 			shuffle: true,
@@ -4121,25 +4121,25 @@ export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
 	responseDeclarations: [
 		{
 			correct: "linear",
-			baseType: "string",
+			baseType: "identifier",
 			identifier: "dropdown_1",
 			cardinality: "single"
 		},
 		{
-			correct: "one-half",
-			baseType: "string",
+			correct: "one_half",
+			baseType: "identifier",
 			identifier: "dropdown_3",
 			cardinality: "single"
 		},
 		{
 			correct: "nonlinear",
-			baseType: "string",
+			baseType: "identifier",
 			identifier: "dropdown_2",
 			cardinality: "single"
 		},
 		{
-			correct: "one-fourth",
-			baseType: "string",
+			correct: "one_fourth",
+			baseType: "identifier",
 			identifier: "dropdown_5",
 			cardinality: "single"
 		}
@@ -4213,9 +4213,9 @@ export const reactantAmountsTempChangeTablePerseus: AssessmentItemInput = {
 					{
 						type: "dropdown",
 						choices: [
-							{ content: [{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "-3.2 °C" },
-							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }], identifier: "+2.0 °C" },
-							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "+4.2 °C" }
+							{ content: [{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "NEG_3_2_C" },
+							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }], identifier: "POS_2_0_C" },
+							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "POS_4_2_C" }
 						],
 						shuffle: false,
 						responseIdentifier: "dropdown_13"
@@ -4228,7 +4228,7 @@ export const reactantAmountsTempChangeTablePerseus: AssessmentItemInput = {
 						choices: [
 							{ content: [{ type: "math", mathml: "<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>" }], identifier: "NaC2H3O2" },
 							{ content: [{ type: "math", mathml: "<mrow><mi>K</mi><mi>O</mi><mi>H</mi></mrow>" }], identifier: "KOH" },
-							{ content: [{ type: "math", mathml: "<mrow><mi>Ba</mi><msub><mrow><mo>(</mo><mi>OH</mi><mo>)</mo></mrow><mn>2</mn></msub></mrow>" }], identifier: "Ba(OH)2" }
+							{ content: [{ type: "math", mathml: "<mrow><mi>Ba</mi><msub><mrow><mo>(</mo><mi>OH</mi><mo>)</mo></mrow><mn>2</mn></msub></mrow>" }], identifier: "BaOH2" }
 						],
 						shuffle: false,
 						responseIdentifier: "dropdown_9"
@@ -4237,9 +4237,9 @@ export const reactantAmountsTempChangeTablePerseus: AssessmentItemInput = {
 					{
 						type: "dropdown",
 						choices: [
-							{ content: [{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "-3.2 °C" },
-							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }], identifier: "+2.0 °C" },
-							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "+4.2 °C" }
+							{ content: [{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "NEG_3_2_C" },
+							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }], identifier: "POS_2_0_C" },
+							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "POS_4_2_C" }
 						],
 						shuffle: false,
 						responseIdentifier: "dropdown_12"
@@ -4252,7 +4252,7 @@ export const reactantAmountsTempChangeTablePerseus: AssessmentItemInput = {
 						choices: [
 							{ content: [{ type: "math", mathml: "<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>" }], identifier: "NaC2H3O2" },
 							{ content: [{ type: "math", mathml: "<mrow><mi>K</mi><mi>O</mi><mi>H</mi></mrow>" }], identifier: "KOH" },
-							{ content: [{ type: "math", mathml: "<mrow><mi>Ba</mi><msub><mrow><mo>(</mo><mi>OH</mi><mo>)</mo></mrow><mn>2</mn></msub></mrow>" }], identifier: "Ba(OH)2" }
+							{ content: [{ type: "math", mathml: "<mrow><mi>Ba</mi><msub><mrow><mo>(</mo><mi>OH</mi><mo>)</mo></mrow><mn>2</mn></msub></mrow>" }], identifier: "BaOH2" }
 						],
 						shuffle: false,
 						responseIdentifier: "dropdown_10"
@@ -4261,9 +4261,9 @@ export const reactantAmountsTempChangeTablePerseus: AssessmentItemInput = {
 					{
 						type: "dropdown",
 						choices: [
-							{ content: [{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "-3.2 °C" },
-							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }], identifier: "+2.0 °C" },
-							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "+4.2 °C" }
+							{ content: [{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "NEG_3_2_C" },
+							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }], identifier: "POS_2_0_C" },
+							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "POS_4_2_C" }
 						],
 						shuffle: false,
 						responseIdentifier: "dropdown_11"
@@ -4319,11 +4319,11 @@ export const reactantAmountsTempChangeTablePerseus: AssessmentItemInput = {
 	identifier: "reactant-amounts-temp-change-table-perseus",
 	interactions: {},
 	responseDeclarations: [
-		{ correct: "-3.2 °C", baseType: "string", identifier: "dropdown_13", cardinality: "single" },
-		{ correct: "+4.2 °C", baseType: "string", identifier: "dropdown_12", cardinality: "single" },
-		{ correct: "+2.0 °C", baseType: "string", identifier: "dropdown_11", cardinality: "single" },
-		{ correct: "KOH", baseType: "string", identifier: "dropdown_9", cardinality: "single" },
-		{ correct: "Ba(OH)2", baseType: "string", identifier: "dropdown_10", cardinality: "single" }
+		{ correct: "NEG_3_2_C", baseType: "identifier", identifier: "dropdown_13", cardinality: "single" },
+		{ correct: "POS_4_2_C", baseType: "identifier", identifier: "dropdown_12", cardinality: "single" },
+		{ correct: "POS_2_0_C", baseType: "identifier", identifier: "dropdown_11", cardinality: "single" },
+		{ correct: "KOH", baseType: "identifier", identifier: "dropdown_9", cardinality: "single" },
+		{ correct: "BaOH2", baseType: "identifier", identifier: "dropdown_10", cardinality: "single" }
 	]
 }
 

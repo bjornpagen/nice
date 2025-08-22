@@ -5,22 +5,7 @@ import { isTerminatingFraction, tryApproximatePiProduct } from "./helpers"
 import type { AssessmentItem } from "./schemas"
 
 export function compileResponseDeclarations(decls: AssessmentItem["responseDeclarations"]): string {
-	// Guardrail: ensure identifier-base declarations use choice identifiers, not labels
-	for (const decl of decls) {
-		if (decl.baseType === "identifier") {
-			const correctValues = Array.isArray(decl.correct) ? decl.correct : [decl.correct]
-			const offending = correctValues.filter((v): v is string => typeof v === "string" && /\s/.test(v))
-			if (offending.length > 0) {
-				logger.error("identifier response contains non-identifier values", {
-					responseIdentifier: decl.identifier,
-					offending
-				})
-				throw errors.new(
-					`response '${decl.identifier}' expects choice identifier(s); found label-like value(s): [${offending.join(", ")}]`
-				)
-			}
-		}
-	}
+	// Identifier linkage is validated earlier; proceed to emit declarations
 
 	// Pre-process declarations to add equivalent numeric mappings.
 	return decls
