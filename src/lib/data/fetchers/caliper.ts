@@ -259,7 +259,7 @@ export async function calculateBankedXpForResources(
 		for (const resource of passiveResources) {
 			const secondsSpent = timeSpentMap.get(resource.sourcedId) || 0
 
-			const minutesSpent = secondsSpent > 0 ? Math.ceil(secondsSpent / 60) : 0
+			const minutesSpent = secondsSpent > 0 ? Math.round(secondsSpent / 60) : 0
 
 			// Defensive cap: never award more than the resource's expected XP
 			const awardedXp = Math.min(minutesSpent, resource.expectedXp)
