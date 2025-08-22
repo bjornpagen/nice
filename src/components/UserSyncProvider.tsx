@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import * as React from "react"
 import { toast } from "sonner"
 import { syncUserWithOneRoster } from "@/lib/actions/user-sync"
+import { ErrUserNotProvisionedInOneRoster } from "@/lib/actions/user-sync-errors"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 
 export function UserSyncProvider({ children }: { children: React.ReactNode }) {
@@ -30,8 +31,19 @@ export function UserSyncProvider({ children }: { children: React.ReactNode }) {
 		const performSync = async () => {
 			const result = await errors.try(syncUserWithOneRoster())
 			if (result.error) {
-				const err = result.error
-				if (err instanceof Error && err.message === "user not provisioned in oneroster") {
+				// Debug logging to see what's happening
+				// console.log("UserSyncProvider error details:", {
+				// 	errorMessage: result.error.message,
+				// 	errorName: result.error.name,
+				// 	errorConstructor: result.error.constructor.name,
+				// 	expectedMessage: ErrUserNotProvisionedInOneRoster.message,
+				// 	isMatch: errors.is(result.error, ErrUserNotProvisionedInOneRoster),
+				// 	stackCheck: result.error.stack?.includes("user-sync-errors.ts")
+				// })
+				
+				// Check for specific "user not provisioned" error using errors.is()
+				if (result.error.message === ErrUserNotProvisionedInOneRoster.message) {
+					// console.log("UserSyncProvider: Showing TimeBack Education toast")
 					toast.error("Please create an account with TimeBack Education first.", {
 						action: {
 							label: "Get Started",
@@ -44,6 +56,8 @@ export function UserSyncProvider({ children }: { children: React.ReactNode }) {
 					router.push("/login")
 					return
 				}
+				// Handle all other sync errors
+				// console.log("UserSyncProvider: Showing generic error toast")
 				toast.error("An error occurred during account setup. Please try again later.")
 				await signOut()
 				router.push("/login")
