@@ -4146,6 +4146,187 @@ export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
 	]
 }
 
+export const reactantAmountsTempChangeTablePerseus: AssessmentItemInput = {
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "Several students tested how the temperature changed when dissolving different solids in the same amount of water. The substances they tested were " },
+				{ type: "math", mathml: "<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>" },
+				{ type: "text", content: ", " },
+				{ type: "math", mathml: "<mrow><mi>K</mi><mi>O</mi><mi>H</mi></mrow>" },
+				{ type: "text", content: ", and " },
+				{ type: "math", mathml: "<mrow><mi>Ba</mi><msub><mrow><mo>(</mo><mi>OH</mi><mo>)</mo></mrow><mn>2</mn></msub></mrow>" },
+				{ type: "text", content: "." }
+			]
+		},
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "Only one student kept track of everyone's data. Unfortunately, their lab notebook got wet, and some of the labels were damaged." }
+			]
+		},
+		{
+			type: "blockSlot",
+			slotId: "image_1"
+		},
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "Use the data provided to identify the reactant and amount that caused each temperature change. Each option is only used once." }
+			]
+		},
+		{
+			type: "blockSlot",
+			slotId: "react_temp_table"
+		}
+	],
+	title: "Identify reactants and amounts from temperature changes",
+	widgets: {
+		image_1: {
+			alt: "A diagram of the lab setup, including a flask with liquid and a thermometer inside, and a solid powder being poured in. Another flask is tipped over and has spilled onto a notebook on the lab desk.",
+			url: "https://cdn.kastatic.org/ka-content-images/7bebb0e8fd90795225d76add80eb4c2d9d7d4f0d.jpg",
+			type: "urlImage",
+			width: 372,
+			height: 209,
+			caption: null,
+			attribution: "Created with Chemix"
+		},
+		react_temp_table: {
+			data: [
+				[
+					{ type: "inline", content: [{ type: "text", content: "A" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>4.0</mn>" }, { type: "text", content: " grams" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>1.6</mn><mo>°</mo><mi>C</mi>" }] }
+				],
+				[
+					{ type: "inline", content: [{ type: "text", content: "B" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mrow><mi>K</mi><mi>O</mi><mi>H</mi></mrow>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>3.0</mn>" }, { type: "text", content: " grams" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>+</mo><mn>2.1</mn><mo>°</mo><mi>C</mi>" }] }
+				],
+				[
+					{ type: "inline", content: [{ type: "text", content: "C" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>8.0</mn>" }, { type: "text", content: " grams" }] },
+					{
+						type: "dropdown",
+						choices: [
+							{ content: [{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "-3.2 °C" },
+							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }], identifier: "+2.0 °C" },
+							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "+4.2 °C" }
+						],
+						shuffle: false,
+						responseIdentifier: "dropdown_13"
+					}
+				],
+				[
+					{ type: "inline", content: [{ type: "text", content: "D" }] },
+					{
+						type: "dropdown",
+						choices: [
+							{ content: [{ type: "math", mathml: "<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>" }], identifier: "NaC2H3O2" },
+							{ content: [{ type: "math", mathml: "<mrow><mi>K</mi><mi>O</mi><mi>H</mi></mrow>" }], identifier: "KOH" },
+							{ content: [{ type: "math", mathml: "<mrow><mi>Ba</mi><msub><mrow><mo>(</mo><mi>OH</mi><mo>)</mo></mrow><mn>2</mn></msub></mrow>" }], identifier: "Ba(OH)2" }
+						],
+						shuffle: false,
+						responseIdentifier: "dropdown_9"
+					},
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>6.0</mn>" }, { type: "text", content: " grams" }] },
+					{
+						type: "dropdown",
+						choices: [
+							{ content: [{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "-3.2 °C" },
+							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }], identifier: "+2.0 °C" },
+							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "+4.2 °C" }
+						],
+						shuffle: false,
+						responseIdentifier: "dropdown_12"
+					}
+				],
+				[
+					{ type: "inline", content: [{ type: "text", content: "E" }] },
+					{
+						type: "dropdown",
+						choices: [
+							{ content: [{ type: "math", mathml: "<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>" }], identifier: "NaC2H3O2" },
+							{ content: [{ type: "math", mathml: "<mrow><mi>K</mi><mi>O</mi><mi>H</mi></mrow>" }], identifier: "KOH" },
+							{ content: [{ type: "math", mathml: "<mrow><mi>Ba</mi><msub><mrow><mo>(</mo><mi>OH</mi><mo>)</mo></mrow><mn>2</mn></msub></mrow>" }], identifier: "Ba(OH)2" }
+						],
+						shuffle: false,
+						responseIdentifier: "dropdown_10"
+					},
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>2.0</mn>" }, { type: "text", content: " grams" }] },
+					{
+						type: "dropdown",
+						choices: [
+							{ content: [{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "-3.2 °C" },
+							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }], identifier: "+2.0 °C" },
+							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "+4.2 °C" }
+						],
+						shuffle: false,
+						responseIdentifier: "dropdown_11"
+					}
+				]
+			],
+			type: "dataTable",
+			title: "Experiment data",
+			footer: null,
+			columns: [
+				{ key: "experiment", label: [{ type: "text", content: "Experiment" }], isNumeric: false },
+				{ key: "reactant", label: [{ type: "text", content: "Reactant" }], isNumeric: false },
+				{ key: "amount", label: [{ type: "text", content: "Amount of reactant" }], isNumeric: false },
+				{ key: "temp_change", label: [{ type: "text", content: "Temperature change" }], isNumeric: false }
+			],
+			rowHeaderKey: "experiment"
+		}
+	},
+	feedback: {
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Correct! You used the patterns in the data to match each unknown entry." }
+				]
+			},
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Experiment C has twice the amount of sodium acetate as experiment A, so its temperature change is twice as large and negative: " },
+					{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" },
+					{ type: "text", content: ". Experiment D corresponds to " },
+					{ type: "math", mathml: "<mrow><mi>K</mi><mi>O</mi><mi>H</mi></mrow>" },
+					{ type: "text", content: " with a temperature increase of " },
+					{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" },
+					{ type: "text", content: ", and experiment E corresponds to " },
+					{ type: "math", mathml: "<mrow><mi>Ba</mi><msub><mrow><mo>(</mo><mi>OH</mi><mo>)</mo></mrow><mn>2</mn></msub></mrow>" },
+					{ type: "text", content: " with a temperature increase of " },
+					{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" },
+					{ type: "text", content: "." }
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Not quite. First, decide which reactions are endothermic (temperature decreases) and which are exothermic (temperature increases). Then use how the amount changes (for example, twice as much) to match proportional changes in temperature." }
+				]
+			}
+		]
+	},
+	identifier: "reactant-amounts-temp-change-table-perseus",
+	interactions: {},
+	responseDeclarations: [
+		{ correct: "-3.2 °C", baseType: "string", identifier: "dropdown_13", cardinality: "single" },
+		{ correct: "+4.2 °C", baseType: "string", identifier: "dropdown_12", cardinality: "single" },
+		{ correct: "+2.0 °C", baseType: "string", identifier: "dropdown_11", cardinality: "single" },
+		{ correct: "KOH", baseType: "string", identifier: "dropdown_9", cardinality: "single" },
+		{ correct: "Ba(OH)2", baseType: "string", identifier: "dropdown_10", cardinality: "single" }
+	]
+}
+
 export const allExamples: AssessmentItemInput[] = [
 	probabilityNotPurpleSpinner,
 	linearModelEquationPrediction,
@@ -4177,5 +4358,6 @@ export const allExamples: AssessmentItemInput[] = [
 	reactantAmountsTemperatureTableWithDropdowns,
 	attractRepelCompletionTable,
 	reactionRateChangesTable,
-	kineticEnergyMassSpeedRelationships
+	kineticEnergyMassSpeedRelationships,
+	reactantAmountsTempChangeTablePerseus
 ]
