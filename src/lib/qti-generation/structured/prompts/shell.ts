@@ -826,12 +826,175 @@ ${perseusJson}
   \`\`\`
 - **Response Declarations**:
   - The 'question.answers' from Perseus must be used to create the \`responseDeclarations\`.
+  - **BASE TYPE FOR ENUMERATED CHOICES — MANDATORY**:
+    - For ANY interaction with enumerated options — \`inlineChoiceInteraction\` (dropdowns), \`choiceInteraction\`, and \`orderInteraction\` — and for dropdown cells inside data tables, the \`baseType\` MUST be \`"identifier"\`.
+    - The \`correct\` value(s) MUST be the choice \`identifier\`(s) defined in the corresponding interaction (or table-cell dropdown), not labels, not numbers, not math content.
+    - Never use \`"string"\`, \`"integer"\`, or \`"float"\` as \`baseType\` for these enumerated interactions.
+    - Identifiers must be safe tokens (letters, digits, underscores), no spaces. Example patterns: \`A\`, \`B\`, \`C\`, \`one_half\`, \`POS_2_0_C\`.
+
+  WRONG (dropdown uses string baseType and label-like "correct"):
+  \`\`\`json
+  {
+    "responseDeclarations": [
+      { "identifier": "dropdown_1", "cardinality": "single", "baseType": "string", "correct": "increase" }
+    ],
+    "interactions": {
+      "dropdown_1": {
+        "type": "inlineChoiceInteraction",
+        "responseIdentifier": "dropdown_1",
+        "choices": [
+          { "identifier": "INCREASE", "content": [{ "type": "text", "content": "increase" }] },
+          { "identifier": "DECREASE", "content": [{ "type": "text", "content": "decrease" }] }
+        ],
+        "shuffle": true
+      }
+    }
+  }
+  \`\`\`
+
+  CORRECT (dropdown uses identifier baseType and identifier "correct"):
+  \`\`\`json
+  {
+    "responseDeclarations": [
+      { "identifier": "dropdown_1", "cardinality": "single", "baseType": "identifier", "correct": "INCREASE" }
+    ],
+    "interactions": {
+      "dropdown_1": {
+        "type": "inlineChoiceInteraction",
+        "responseIdentifier": "dropdown_1",
+        "choices": [
+          { "identifier": "INCREASE", "content": [{ "type": "text", "content": "increase" }] },
+          { "identifier": "DECREASE", "content": [{ "type": "text", "content": "decrease" }] }
+        ],
+        "shuffle": true
+      }
+    }
+  }
+  \`\`\`
+
+  WRONG (choiceInteraction uses string baseType and label "correct"):
+  \`\`\`json
+  {
+    "responseDeclarations": [
+      { "identifier": "choice_interaction", "cardinality": "single", "baseType": "string", "correct": "one-half" }
+    ],
+    "interactions": {
+      "choice_interaction": {
+        "type": "choiceInteraction",
+        "responseIdentifier": "choice_interaction",
+        "prompt": [{ "type": "text", "content": "Select the best answer." }],
+        "choices": [
+          { "identifier": "one_half", "content": [{ "type": "paragraph", "content": [{ "type": "text", "content": "one-half" }] }] },
+          { "identifier": "one_fourth", "content": [{ "type": "paragraph", "content": [{ "type": "text", "content": "one-fourth" }] }] }
+        ],
+        "shuffle": true,
+        "minChoices": 1,
+        "maxChoices": 1
+      }
+    }
+  }
+  \`\`\`
+
+  CORRECT (choiceInteraction uses identifier baseType and identifier "correct"):
+  \`\`\`json
+  {
+    "responseDeclarations": [
+      { "identifier": "choice_interaction", "cardinality": "single", "baseType": "identifier", "correct": "one_half" }
+    ],
+    "interactions": {
+      "choice_interaction": {
+        "type": "choiceInteraction",
+        "responseIdentifier": "choice_interaction",
+        "prompt": [{ "type": "text", "content": "Select the best answer." }],
+        "choices": [
+          { "identifier": "one_half", "content": [{ "type": "paragraph", "content": [{ "type": "text", "content": "one-half" }] }] },
+          { "identifier": "one_fourth", "content": [{ "type": "paragraph", "content": [{ "type": "text", "content": "one-fourth" }] }] }
+        ],
+        "shuffle": true,
+        "minChoices": 1,
+        "maxChoices": 1
+      }
+    }
+  }
+  \`\`\`
+
+  WRONG (dataTable dropdown cells defined, but baseType is string and "correct" uses labels):
+  \`\`\`json
+  {
+    "widgets": {
+      "react_temp_table": {
+        "type": "dataTable",
+        "data": [
+          [
+            {
+              "type": "dropdown",
+              "responseIdentifier": "dropdown_11",
+              "choices": [
+                { "identifier": "POS_2_0_C", "content": [{ "type": "math", "mathml": "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }] },
+                { "identifier": "POS_4_2_C", "content": [{ "type": "math", "mathml": "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }] }
+              ],
+              "shuffle": false
+            }
+          ]
+        ]
+      }
+    },
+    "responseDeclarations": [
+      { "identifier": "dropdown_11", "cardinality": "single", "baseType": "string", "correct": "+2.0 °C" }
+    ]
+  }
+  \`\`\`
+
+  CORRECT (baseType is identifier and "correct" is one of the cell choice identifiers):
+  \`\`\`json
+  {
+    "widgets": {
+      "react_temp_table": {
+        "type": "dataTable",
+        "data": [
+          [
+            {
+              "type": "dropdown",
+              "responseIdentifier": "dropdown_11",
+              "choices": [
+                { "identifier": "POS_2_0_C", "content": [{ "type": "math", "mathml": "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }] },
+                { "identifier": "POS_4_2_C", "content": [{ "type": "math", "mathml": "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }] }
+              ],
+              "shuffle": false
+            }
+          ]
+        ]
+      }
+    },
+    "responseDeclarations": [
+      { "identifier": "dropdown_11", "cardinality": "single", "baseType": "identifier", "correct": "POS_2_0_C" }
+    ]
+  }
+  \`\`\`
+
+  WRONG (orderInteraction with string baseType and label list for "correct"):
+  \`\`\`json
+  {
+    "responseDeclarations": [
+      { "identifier": "order_interaction", "cardinality": "ordered", "baseType": "string", "correct": ["A first", "B second", "C third"] }
+    ]
+  }
+  \`\`\`
+
+  CORRECT (orderInteraction with identifier baseType and identifiers list for "correct"):
+  \`\`\`json
+  {
+    "responseDeclarations": [
+      { "identifier": "order_interaction", "cardinality": "ordered", "baseType": "identifier", "correct": ["A", "B", "C"] }
+    ]
+  }
+  \`\`\`
   - **Numeric Answers Rule**: For text entry interactions, if the correct answer is a decimal that can be represented as a simple fraction (e.g., 0.5, 0.25), the 'correct' value in the response declaration should be a string representing that fraction (e.g., "1/2", "1/4"). This is to avoid forcing students to type decimals.
   - **Cardinality Selection Rule**: 
-    * Use "single" for most choice interactions (select one answer)
-    * Use "multiple" for interactions allowing multiple selections
-    * Use "ordered" ONLY when the sequence of choices matters (e.g., ranking, arranging steps)
-    * For ordering/sequencing tasks, ALWAYS use cardinality "ordered" to enable proper sequence validation
+   * Use "single" for most choice interactions (select one answer)
+   * Use "multiple" for interactions allowing multiple selections
+   * Use "ordered" ONLY when the sequence of choices matters (e.g., ranking, arranging steps)
+   * For ordering/sequencing tasks, ALWAYS use cardinality "ordered" to enable proper sequence validation
 - **Metadata**: Include all required assessment metadata: 'identifier', 'title', 'responseDeclarations', and 'feedback'.
 
 Return ONLY the JSON object for the assessment shell.
