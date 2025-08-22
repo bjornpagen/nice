@@ -1,4 +1,5 @@
 import { currentUser } from "@clerk/nextjs/server"
+import { connection } from "next/server"
 import * as React from "react"
 import { CourseLockStatusProvider } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
 import { fetchCoursePageData } from "@/lib/data/course"
@@ -27,13 +28,15 @@ function CourseLockStatusWrapper({
 }
 
 // Course-wide layout that provides lock status context for both overview and practice pages
-export default function CourseLayout({
+export default async function CourseLayout({
 	params,
 	children
 }: {
 	params: Promise<{ subject: string; course: string }>
 	children: React.ReactNode
 }) {
+	// Opt into dynamic rendering to prevent prerendering issues with currentUser() and OneRoster API calls
+	await connection()
 	// Normalize params to handle encoded characters
 	const normalizedParamsPromise = normalizeParams(params)
 

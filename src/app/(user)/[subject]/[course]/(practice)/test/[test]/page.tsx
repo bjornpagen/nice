@@ -1,5 +1,6 @@
 import { currentUser } from "@clerk/nextjs/server"
 import * as logger from "@superbuilders/slog"
+import { connection } from "next/server"
 import * as React from "react"
 import { fetchCourseChallengePage_LayoutData, fetchCourseChallengePage_TestData } from "@/lib/data/assessment"
 import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
@@ -10,11 +11,13 @@ import { normalizeParams } from "@/lib/utils"
 import { ChallengeLayout } from "./components/challenge-layout"
 import { Content } from "./components/content"
 
-export default function CourseChallengePage({
+export default async function CourseChallengePage({
 	params
 }: {
 	params: Promise<{ subject: string; course: string; test: string }>
 }) {
+	// Opt into dynamic rendering to prevent prerendering issues with currentUser() and OneRoster API calls
+	await connection()
 	const normalizedParamsPromise = normalizeParams(params)
 	const userPromise = currentUser()
 	const layoutDataPromise: Promise<CourseChallengeLayoutData> = normalizedParamsPromise.then(
