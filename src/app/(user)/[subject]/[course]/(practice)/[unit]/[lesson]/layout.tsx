@@ -1,7 +1,6 @@
 import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { connection } from "next/server"
 import type * as React from "react"
 import { LessonLayout } from "@/app/(user)/[subject]/[course]/(practice)/[unit]/[lesson]/components/lesson-layout"
 import { fetchCoursePageData } from "@/lib/data/course"
@@ -12,16 +11,14 @@ import type { LessonLayoutData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
 import { assertNoEncodedColons, normalizeParams } from "@/lib/utils"
 
-// Force dynamic rendering to prevent prerendering issues with currentUser() and OneRoster API calls
-export default async function Layout({
+// The layout component is NOT async. It orchestrates promises and renders immediately.
+export default function Layout({
 	params,
 	children
 }: {
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string }>
 	children: React.ReactNode
 }) {
-	// Opt into dynamic rendering to prevent prerendering issues
-	await connection()
 	// Normalize params to handle encoded characters
 	const normalizedParamsPromise = normalizeParams(params)
 

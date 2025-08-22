@@ -1,6 +1,5 @@
 import { currentUser } from "@clerk/nextjs/server"
 import * as logger from "@superbuilders/slog"
-import { connection } from "next/server"
 import * as React from "react"
 import { Content } from "@/app/(user)/[subject]/[course]/(overview)/[unit]/components/content"
 import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
@@ -9,10 +8,8 @@ import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { UnitPageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
 
-// Force dynamic rendering to prevent prerendering issues with currentUser() and OneRoster API calls
-export default async function UnitPage({ params }: { params: Promise<{ subject: string; course: string; unit: string }> }) {
-	// Opt into dynamic rendering to ensure external fetches occur during request lifecycle
-	await connection()
+// ✅ CORRECT: Non-async Server Component following RSC patterns
+export default function UnitPage({ params }: { params: Promise<{ subject: string; course: string; unit: string }> }) {
 	// Normalize params to handle encoded characters
 	const normalizedParamsPromise = normalizeParams(params)
 
