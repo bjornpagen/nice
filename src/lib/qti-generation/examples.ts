@@ -3803,6 +3803,349 @@ export const reactionRateChangesTable: AssessmentItemInput = {
 	]
 }
 
+export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{
+					type: "text",
+					content: "A moving object's kinetic energy is related to its mass and speed."
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			content: [
+				{
+					type: "text",
+					content: "The relationship between kinetic energy and mass for an object with constant speed is modeled by the graph below."
+				}
+			]
+		},
+		{
+			type: "blockSlot",
+			slotId: "image_2"
+		},
+		{
+			type: "paragraph",
+			content: [
+				{
+					type: "text",
+					content: "The relationship between kinetic energy and speed for an object with constant mass is modeled by the graph below."
+				}
+			]
+		},
+		{
+			type: "blockSlot",
+			slotId: "image_3"
+		},
+		{
+			type: "paragraph",
+			content: [
+				{
+					type: "text",
+					content: "Use the patterns on the graphs to complete the statements."
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			content: [
+				{
+					type: "text",
+					content: "• The relationship between kinetic energy and mass is "
+				},
+				{
+					type: "inlineSlot",
+					slotId: "dropdown_1"
+				},
+				{
+					type: "text",
+					content: ". If an object's mass is cut in half while its speed stays the same, its kinetic energy becomes "
+				},
+				{
+					type: "inlineSlot",
+					slotId: "dropdown_3"
+				},
+				{
+					type: "text",
+					content: " its original value."
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			content: [
+				{
+					type: "text",
+					content: "• The relationship between kinetic energy and speed is "
+				},
+				{
+					type: "inlineSlot",
+					slotId: "dropdown_2"
+				},
+				{
+					type: "text",
+					content: ". If an object's speed is cut in half while its mass stays the same, its kinetic energy becomes "
+				},
+				{
+					type: "inlineSlot",
+					slotId: "dropdown_5"
+				},
+				{
+					type: "text",
+					content: " its original value."
+				}
+			]
+		}
+	],
+	title: "Kinetic energy relationships with mass and speed",
+	widgets: {
+		image_2: {
+			type: "conceptualGraph",
+			width: 200,
+			height: 191,
+			curveColor: "#333333",
+			xAxisLabel: "mass",
+			yAxisLabel: "kinetic energy",
+			curvePoints: [
+				{ x: 0, y: 0 },
+				{ x: 10, y: 10 }
+			],
+			highlightPoints: [],
+			highlightPointColor: "#555555",
+			highlightPointRadius: 4
+		},
+		image_3: {
+			type: "conceptualGraph",
+			width: 200,
+			height: 195,
+			curveColor: "#333333",
+			xAxisLabel: "speed",
+			yAxisLabel: "kinetic energy",
+			curvePoints: [
+				{ x: 0, y: 0 },
+				{ x: 2, y: 0.4 },
+				{ x: 4, y: 1.6 },
+				{ x: 6, y: 3.6 },
+				{ x: 8, y: 6.4 },
+				{ x: 10, y: 10 }
+			],
+			highlightPoints: [],
+			highlightPointColor: "#555555",
+			highlightPointRadius: 4
+		}
+	},
+	feedback: {
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content: "Correct! The mass–kinetic energy relationship is linear, so halving the mass (at constant speed) halves the kinetic energy."
+					}
+				]
+			},
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content: "The speed–kinetic energy relationship is nonlinear (quadratic), so halving the speed (at constant mass) reduces the kinetic energy to one-fourth of its original value."
+					}
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content: "Not quite. On the first graph, the straight line shows a linear pattern: when mass is scaled by a factor, kinetic energy scales by the same factor at constant speed."
+					}
+				]
+			},
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content: "On the second graph, the curved shape indicates a nonlinear (quadratic) pattern: when speed is halved, kinetic energy becomes one-fourth of its original value at constant mass."
+					}
+				]
+			}
+		]
+	},
+	identifier: "ke-mass-speed-relationships",
+	interactions: {
+		dropdown_1: {
+			type: "inlineChoiceInteraction",
+			choices: [
+				{
+					content: [
+						{
+							type: "text",
+							content: "linear"
+						}
+					],
+					identifier: "linear"
+				},
+				{
+					content: [
+						{
+							type: "text",
+							content: "nonlinear"
+						}
+					],
+					identifier: "nonlinear"
+				}
+			],
+			shuffle: true,
+			responseIdentifier: "dropdown_1"
+		},
+		dropdown_2: {
+			type: "inlineChoiceInteraction",
+			choices: [
+				{
+					content: [
+						{
+							type: "text",
+							content: "linear"
+						}
+					],
+					identifier: "linear"
+				},
+				{
+					content: [
+						{
+							type: "text",
+							content: "nonlinear"
+						}
+					],
+					identifier: "nonlinear"
+				}
+			],
+			shuffle: true,
+			responseIdentifier: "dropdown_2"
+		},
+		dropdown_3: {
+			type: "inlineChoiceInteraction",
+			choices: [
+				{
+					content: [
+						{
+							type: "text",
+							content: "one-fourth"
+						}
+					],
+					identifier: "one-fourth"
+				},
+				{
+					content: [
+						{
+							type: "text",
+							content: "one-half"
+						}
+					],
+					identifier: "one-half"
+				},
+				{
+					content: [
+						{
+							type: "text",
+							content: "two times"
+						}
+					],
+					identifier: "two times"
+				},
+				{
+					content: [
+						{
+							type: "text",
+							content: "four times"
+						}
+					],
+					identifier: "four times"
+				}
+			],
+			shuffle: true,
+			responseIdentifier: "dropdown_3"
+		},
+		dropdown_5: {
+			type: "inlineChoiceInteraction",
+			choices: [
+				{
+					content: [
+						{
+							type: "text",
+							content: "one-fourth"
+						}
+					],
+					identifier: "one-fourth"
+				},
+				{
+					content: [
+						{
+							type: "text",
+							content: "one-half"
+						}
+					],
+					identifier: "one-half"
+				},
+				{
+					content: [
+						{
+							type: "text",
+							content: "two times"
+						}
+					],
+					identifier: "two times"
+				},
+				{
+					content: [
+						{
+							type: "text",
+							content: "four times"
+						}
+					],
+					identifier: "four times"
+				}
+			],
+			shuffle: true,
+			responseIdentifier: "dropdown_5"
+		}
+	},
+	responseDeclarations: [
+		{
+			correct: "linear",
+			baseType: "string",
+			identifier: "dropdown_1",
+			cardinality: "single"
+		},
+		{
+			correct: "one-half",
+			baseType: "string",
+			identifier: "dropdown_3",
+			cardinality: "single"
+		},
+		{
+			correct: "nonlinear",
+			baseType: "string",
+			identifier: "dropdown_2",
+			cardinality: "single"
+		},
+		{
+			correct: "one-fourth",
+			baseType: "string",
+			identifier: "dropdown_5",
+			cardinality: "single"
+		}
+	]
+}
+
 export const allExamples: AssessmentItemInput[] = [
 	probabilityNotPurpleSpinner,
 	linearModelEquationPrediction,
@@ -3833,5 +4176,6 @@ export const allExamples: AssessmentItemInput[] = [
 	compareNegativeDecimalVsRootInlineChoice,
 	reactantAmountsTemperatureTableWithDropdowns,
 	attractRepelCompletionTable,
-	reactionRateChangesTable
+	reactionRateChangesTable,
+	kineticEnergyMassSpeedRelationships
 ]

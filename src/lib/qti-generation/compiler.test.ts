@@ -6,7 +6,9 @@ import type { AssessmentItemInput } from "./schemas"
 describe("QTI Compiler", () => {
 	// Dynamic tests generated from unified examples
 	for (const example of allExamples) {
-		test.skip(`should correctly compile ${example.identifier}`, () => {
+		const shouldSkip = example.identifier !== "ke-mass-speed-relationships"
+		const testFn = shouldSkip ? test.skip : test
+		testFn(`should correctly compile ${example.identifier}`, () => {
 			const compiledXml = compile(example)
 			expect(compiledXml).toMatchSnapshot()
 			expect(compiledXml).toContain(`identifier="${example.identifier}"`)
