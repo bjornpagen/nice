@@ -17,7 +17,6 @@ ignore_patterns:
   - "**/__snapshots__/**"
   - "docs/**"
   - "src/lib/widgets/**"
-  - "src/lib/qti-generation/**"
   - "src/lib/qti-validation/**"
   - "scripts/**"
   - "src/inngest/**"

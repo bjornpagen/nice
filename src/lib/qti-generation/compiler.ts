@@ -58,6 +58,8 @@ function normalizeChoiceIdentifiersInPlace(item: AssessmentItem): void {
 	const responseIdToMap: Record<string, Record<string, string>> = {}
 	// responseIdentifier → mapping of simple label text to normalized id (for inlineChoice string-based answers)
 	const responseIdToLabelMap: Record<string, Record<string, string>> = {}
+	// responseIdentifier → case-insensitive label map (lowercased, collapsed whitespace) to normalized id
+	const responseIdToLabelMapCI: Record<string, Record<string, string>> = {}
 
 	for (const interaction of Object.values(item.interactions)) {
 		// Only interactions with choices are relevant
@@ -77,6 +79,8 @@ function normalizeChoiceIdentifiersInPlace(item: AssessmentItem): void {
 		if (interaction.type === "inlineChoiceInteraction") {
 			const responseId = interaction.responseIdentifier
 			const labelMap: Record<string, string> = {}
+			const labelMapCI: Record<string, string> = {}
+			const normalizeCaseKey = (s: string): string => s.toLowerCase().replace(/\s+/g, " ").trim()
 			const extractInlineText = (inline: import("./schemas").InlineContent): string => {
 				let text = ""
 				for (const part of inline) {
@@ -117,11 +121,28 @@ function normalizeChoiceIdentifiersInPlace(item: AssessmentItem): void {
 					: normalizeIdentifier(originalId, fallbackPrefix, idx, used)
 				mapping[originalId] = normalized
 				const labelText = extractInlineText(choice.content)
-				if (labelText) labelMap[labelText] = normalized
+				if (labelText) {
+					labelMap[labelText] = normalized
+					const key = normalizeCaseKey(labelText)
+					if (key !== "") {
+						const existing = labelMapCI[key]
+						if (existing && existing !== normalized) {
+							logger.error("inline choice labels collide case-insensitively", {
+								responseIdentifier: responseId,
+								key,
+								existingIdentifier: existing,
+								newIdentifier: normalized
+							})
+							throw errors.new("ambiguous inline choice labels after case fold")
+						}
+						labelMapCI[key] = normalized
+					}
+				}
 				choice.identifier = normalized
 			})
 			responseIdToMap[responseId] = mapping
 			responseIdToLabelMap[responseId] = labelMap
+			responseIdToLabelMapCI[responseId] = labelMapCI
 			continue
 		}
 
@@ -136,6 +157,87 @@ function normalizeChoiceIdentifiersInPlace(item: AssessmentItem): void {
 			choice.identifier = normalized
 		})
 		responseIdToMap[responseId] = mapping
+	}
+
+	// Also normalize identifiers and build label maps for inline dropdowns embedded in dataTable widgets
+	if (item.widgets) {
+		for (const widget of Object.values(item.widgets)) {
+			if (!widget || (widget as any).type !== "dataTable") continue
+			const table = widget as any
+			const rows: any[][] = Array.isArray(table.data) ? table.data : []
+			for (const row of rows) {
+				if (!Array.isArray(row)) continue
+				for (const cell of row) {
+					if (!cell || cell.type !== "dropdown") continue
+					const used = new Set<string>()
+					const mapping: Record<string, string> = {}
+					const labelMap: Record<string, string> = {}
+					const labelMapCI: Record<string, string> = {}
+					const normalizeCaseKey = (s: string): string => s.toLowerCase().replace(/\s+/g, " ").trim()
+					const extractInlineText = (inline: InlineContent): string => {
+						let text = ""
+						for (const part of inline) {
+							if (part.type === "text") {
+								text += part.content
+								continue
+							}
+							if (part.type === "math") {
+								const math = part.mathml
+								const moMatches = Array.from(math.matchAll(/<mo[^>]*>([\s\S]*?)<\/mo>/g)).map((m) => m[1] ?? "")
+								let extracted = ""
+								if (moMatches.length > 0) {
+									extracted = moMatches.join(" ")
+								} else {
+									extracted = math.replace(/<[^>]+>/g, " ")
+								}
+								extracted = extracted
+									.replace(/&lt;/g, "<")
+									.replace(/&gt;/g, ">")
+									.replace(/&amp;/g, "&")
+									.replace(/&le;|&#8804;|&#x2264;/gi, "≤")
+									.replace(/&ge;|&#8805;|&#x2265;/gi, "≥")
+									.replace(/&equals;|&#61;/gi, "=")
+								text += extracted
+							}
+						}
+						return text.replace(/\s+/g, " ").trim()
+					}
+
+					const responseId: string = String(cell.responseIdentifier)
+					const choices: any[] = Array.isArray(cell.choices) ? cell.choices : []
+					choices.forEach((choice, idx) => {
+						if (!choice) return
+						const originalId = String(choice.identifier)
+						const normalized = VALID_IDENTIFIER_REGEX.test(originalId)
+							? normalizeIdentifier(originalId, "IC", idx, used)
+							: normalizeIdentifier(originalId, "IC", idx, used)
+						mapping[originalId] = normalized
+						const labelText = extractInlineText(choice.content ?? [])
+						if (labelText) {
+							labelMap[labelText] = normalized
+							const key = normalizeCaseKey(labelText)
+							if (key !== "") {
+								const existing = labelMapCI[key]
+								if (existing && existing !== normalized) {
+									logger.error("inline choice labels collide case-insensitively", {
+										responseIdentifier: responseId,
+										key,
+										existingIdentifier: existing,
+										newIdentifier: normalized
+									})
+									throw errors.new("ambiguous inline choice labels after case fold")
+								}
+								labelMapCI[key] = normalized
+							}
+						}
+						choice.identifier = normalized
+					})
+					responseIdToMap[responseId] = mapping
+					responseIdToLabelMap[responseId] = labelMap
+					responseIdToLabelMapCI[responseId] = labelMapCI
+				}
+			}
+		}
 	}
 
 	for (const decl of item.responseDeclarations) {
@@ -165,6 +267,7 @@ function normalizeChoiceIdentifiersInPlace(item: AssessmentItem): void {
 	for (const decl of item.responseDeclarations) {
 		if (!decl) continue
 		const labelMap = responseIdToLabelMap[decl.identifier]
+		const labelMapCI = responseIdToLabelMapCI[decl.identifier]
 		const idMap = responseIdToMap[decl.identifier]
 		if (!labelMap && !idMap) continue
 		if (decl.baseType !== "string") continue
@@ -173,6 +276,12 @@ function normalizeChoiceIdentifiersInPlace(item: AssessmentItem): void {
 			// Prefer exact original-id mapping, then label mapping
 			if (idMap?.[val]) return idMap[val]
 			if (labelMap?.[val]) return labelMap[val]
+			// Try case-insensitive label match if unambiguous
+			if (labelMapCI) {
+				const key = val.toLowerCase().replace(/\s+/g, " ").trim()
+				const mapped = key ? labelMapCI[key] : undefined
+				if (mapped) return mapped
+			}
 			// not mappable → fail fast
 			logger.error("string response value not mappable to choice identifier", {
 				responseIdentifier: decl.identifier,
