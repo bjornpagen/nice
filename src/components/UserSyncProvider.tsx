@@ -31,34 +31,14 @@ export function UserSyncProvider({ children }: { children: React.ReactNode }) {
 		const performSync = async () => {
 			const result = await errors.try(syncUserWithOneRoster())
 			if (result.error) {
-				// Debug logging to see what's happening
-				// console.log("UserSyncProvider error details:", {
-				// 	errorMessage: result.error.message,
-				// 	errorName: result.error.name,
-				// 	errorConstructor: result.error.constructor.name,
-				// 	expectedMessage: ErrUserNotProvisionedInOneRoster.message,
-				// 	isMatch: errors.is(result.error, ErrUserNotProvisionedInOneRoster),
-				// 	stackCheck: result.error.stack?.includes("user-sync-errors.ts")
-				// })
-				
-				// Check for specific "user not provisioned" error using errors.is()
-				if (result.error.message === ErrUserNotProvisionedInOneRoster.message) {
-					// console.log("UserSyncProvider: Showing TimeBack Education toast")
-					toast.error("Please create an account with TimeBack Education first.", {
-						action: {
-							label: "Get Started",
-							onClick: () => {
-								window.location.href = "https://timebackeducation.com"
-							}
+				toast.error("Please create an account with TimeBack Education first, or try again later.", {
+					action: {
+						label: "Get Started",
+						onClick: () => {
+							window.location.href = "https://timebackeducation.com"
 						}
-					})
-					await signOut()
-					router.push("/login")
-					return
-				}
-				// Handle all other sync errors
-				// console.log("UserSyncProvider: Showing generic error toast")
-				toast.error("An error occurred during account setup. Please try again later.")
+					}
+				})
 				await signOut()
 				router.push("/login")
 				return
