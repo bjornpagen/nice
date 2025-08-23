@@ -20,6 +20,13 @@ import {
 	stripXmlComments
 } from "./xml-fixes"
 
+// NEW: Custom error for duplicate response identifiers
+export const ErrDuplicateResponseIdentifier = errors.new("duplicate response identifier")
+// NEW: Custom error for duplicate choice identifiers within a single interaction/dropdown
+export const ErrDuplicateChoiceIdentifier = errors.new("duplicate choice identifiers")
+// NEW: Custom error for invalid rowHeaderKey in dataTable
+export const ErrInvalidRowHeaderKey = errors.new("invalid dataTable rowHeaderKey")
+
 
 
 
@@ -655,7 +662,23 @@ function enforceNoPipesInTopLevelFeedback(item: AssessmentItem): void {
 function enforceIdentifierOnlyMatching(item: AssessmentItem): void {
     // Build allowed identifiers per responseIdentifier from interactions and dataTable dropdowns
     const allowed: Record<string, Set<string>> = {}
-    const ensureSet = (id: string): Set<string> => (allowed[id] ??= new Set<string>())
+    // NEW: Map to track which interaction/widget owns each responseIdentifier
+    const responseIdOwners = new Map<string, string>();
+
+    const ensureSet = (id: string, ownerId: string): Set<string> => {
+        // NEW: Check for duplicate responseIdentifier across different interactions/widgets
+        const existingOwner = responseIdOwners.get(id);
+        if (existingOwner && existingOwner !== ownerId) {
+            logger.error("duplicate response identifier found across multiple interactions or widgets", { 
+                responseIdentifier: id,
+                firstOwner: existingOwner,
+                secondOwner: ownerId
+            });
+            throw ErrDuplicateResponseIdentifier;
+        }
+        responseIdOwners.set(id, ownerId);
+        return (allowed[id] ??= new Set<string>());
+    }
 
     // Interactions: inlineChoice, choice, order
     if (item.interactions) {
@@ -667,16 +690,16 @@ function enforceIdentifierOnlyMatching(item: AssessmentItem): void {
                 interaction.type === "orderInteraction"
             ) {
                 const responseId = (interaction as any).responseIdentifier
-                const seenCI = new Set<string>()
+                const seenIdentifiers = new Set<string>() // NEW: Check for case-sensitive duplicates within THIS interaction's choices
                 for (const choice of (interaction as any).choices ?? []) {
                     const ident = String((choice as any).identifier)
-                    const key = ident.toLowerCase()
-                    if (seenCI.has(key)) {
-                        logger.error("duplicate choice identifiers", { interactionId, identifier: ident })
-                        throw errors.new("duplicate choice identifiers")
+                    // REMOVED: .toLowerCase() - now case-sensitive
+                    if (seenIdentifiers.has(ident)) {
+                        logger.error("duplicate choice identifiers within interaction (case-sensitive)", { interactionId, identifier: ident })
+                        throw ErrDuplicateChoiceIdentifier;
                     }
-                    seenCI.add(key)
-                    ensureSet(responseId).add(ident)
+                    seenIdentifiers.add(ident)
+                    ensureSet(responseId, interactionId).add(ident)
                 }
             }
         }
@@ -686,22 +709,42 @@ function enforceIdentifierOnlyMatching(item: AssessmentItem): void {
     if (item.widgets) {
         for (const [widgetId, widget] of Object.entries(item.widgets)) {
             if (!widget || (widget as any).type !== "dataTable") continue
-            const rows: any[][] = Array.isArray((widget as any).data) ? ((widget as any).data as any[][]) : []
+
+            const dataTable = widget as any; // Cast for easier access to dataTable properties
+
+            // NEW: Check rowHeaderKey referential integrity
+            if (dataTable.rowHeaderKey !== null && typeof dataTable.rowHeaderKey === 'string') {
+                const columnKeys = new Set(dataTable.columns.map((col: any) => col.key));
+                if (!columnKeys.has(dataTable.rowHeaderKey)) {
+                    logger.error("dataTable rowHeaderKey references non-existent column", {
+                        widgetId,
+                        rowHeaderKey: dataTable.rowHeaderKey,
+                        availableColumnKeys: Array.from(columnKeys)
+                    });
+                    throw ErrInvalidRowHeaderKey;
+                }
+            }
+
+            const rows: any[][] = Array.isArray(dataTable.data) ? (dataTable.data as any[][]) : []
             for (const row of rows) {
                 if (!Array.isArray(row)) continue
                 for (const cell of row) {
                     if (!cell || cell.type !== "dropdown") continue
                     const responseId: string = String(cell.responseIdentifier)
-                    const seen = new Set<string>()
+                    // NEW: Check for duplicate responseIdentifier *globally* for this dropdown cell
+                    // This ensureSet call will throw if responseId is already used by another interaction/widget.
+                    const choiceSetForResponseId = ensureSet(responseId, `${widgetId}_cell_${responseId}`); 
+                    
+                    const seenIdentifiers = new Set<string>() // NEW: Check for case-sensitive duplicates within THIS dropdown's choices
                     for (const ch of cell.choices ?? []) {
                         const ident = String(ch.identifier)
-                        const key = ident.toLowerCase()
-                        if (seen.has(key)) {
-                            logger.error("duplicate dropdown identifiers in dataTable", { widgetId, identifier: ident })
-                            throw errors.new("duplicate choice identifiers")
+                        // REMOVED: .toLowerCase() - now case-sensitive
+                        if (seenIdentifiers.has(ident)) {
+                            logger.error("duplicate dropdown identifiers in dataTable cell (case-sensitive)", { widgetId, responseIdentifier: responseId, identifier: ident })
+                            throw ErrDuplicateChoiceIdentifier;
                         }
-                        seen.add(key)
-                        ensureSet(responseId).add(ident)
+                        seenIdentifiers.add(ident)
+                        choiceSetForResponseId.add(ident)
                     }
                 }
             }
@@ -712,24 +755,28 @@ function enforceIdentifierOnlyMatching(item: AssessmentItem): void {
     for (const decl of item.responseDeclarations) {
         if (!decl) continue
         const set = allowed[decl.identifier]
-        if (!set) continue
+        if (!set) {
+            // This case means a responseDeclaration exists but no interaction/widget
+            // uses its responseIdentifier. This is caught earlier in pre-validator.ts.
+            continue;
+        }
         if (decl.baseType !== "identifier") {
             logger.error("dropdown responses must use identifier baseType", { responseIdentifier: decl.identifier })
-            throw errors.new("identifier baseType required")
+            throw errors.new("identifier baseType required");
         }
         const inSet = (v: string): boolean => set.has(v)
         if (Array.isArray(decl.correct)) {
             for (const v of decl.correct) {
                 if (typeof v !== "string" || !inSet(v)) {
                     logger.error("correct identifier not present in choices", { responseIdentifier: decl.identifier, value: v })
-                    throw errors.new("correct identifier not present in choices")
+                    throw errors.new("correct identifier not present in choices");
                 }
             }
         } else {
             const v: any = decl.correct
             if (typeof v !== "string" || !inSet(v)) {
                 logger.error("correct identifier not present in choices", { responseIdentifier: decl.identifier, value: v })
-                throw errors.new("correct identifier not present in choices")
+                throw errors.new("correct identifier not present in choices");
             }
         }
     }
@@ -798,6 +845,8 @@ export function compile(itemData: AssessmentItemInput): string {
 	enforceNoCaretsInTopLevelFeedback(enforcedItem)
 
 	// Enforce identifier-only matching; no ad-hoc rewriting
+	// This function now includes checks for duplicate responseIdentifiers and choice Identifiers,
+	// as well as rowHeaderKey validation for dataTables.
 	enforceIdentifierOnlyMatching(enforcedItem)
 
 	const slots = new Map<string, string>()

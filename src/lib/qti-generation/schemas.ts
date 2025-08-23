@@ -3,9 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import { typedSchemas } from "@/lib/widgets/generators"
 import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
-
-// Safe identifier pattern: strictly alphanumeric and underscores, starting with letter or underscore
-export const SAFE_IDENTIFIER_REGEX = /^[A-Za-z_][A-Za-z0-9_]*$/
+import { SAFE_IDENTIFIER_REGEX } from "./qti-constants"
 
 // LEVEL 2: INLINE CONTENT (for paragraphs, prompts, etc.)
 // Factory functions to create fresh schema instances (avoids $ref in JSON Schema)
