@@ -5,7 +5,7 @@ import { typedSchemas } from "@/lib/widgets/generators"
 import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
 
 // Safe identifier pattern: strictly alphanumeric and underscores, starting with letter or underscore
-const SAFE_IDENTIFIER_REGEX = /^[A-Za-z_][A-Za-z0-9_]*$/
+export const SAFE_IDENTIFIER_REGEX = /^[A-Za-z_][A-Za-z0-9_]*$/
 
 // LEVEL 2: INLINE CONTENT (for paragraphs, prompts, etc.)
 // Factory functions to create fresh schema instances (avoids $ref in JSON Schema)

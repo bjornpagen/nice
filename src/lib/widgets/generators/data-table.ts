@@ -3,6 +3,8 @@ import { renderInlineContent } from "@/lib/qti-generation/content-renderer"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
 import { escapeXmlAttribute, sanitizeXmlAttributeValue } from "@/lib/xml-utils"
+// Import the SAFE_IDENTIFIER_REGEX for consistent enforcement
+import { SAFE_IDENTIFIER_REGEX } from "@/lib/qti-generation/schemas"
 
 // Factory function to create inline content schema - avoids $ref in OpenAI JSON schema
 function createInlineContentSchema() {
@@ -49,7 +51,10 @@ function createTableCellSchema() {
 		z
 			.object({
 				type: z.literal("input"),
-				responseIdentifier: z.string().describe("The QTI response identifier for this input field."),
+				responseIdentifier: z
+					.string()
+					.regex(SAFE_IDENTIFIER_REGEX, "invalid response identifier: must match [A-Za-z_][A-Za-z0-9_]*")
+					.describe("The QTI response identifier for this input field."),
 				expectedLength: z
 					.number()
 					.nullable()
@@ -61,6 +66,7 @@ function createTableCellSchema() {
 				type: z.literal("dropdown"),
 				responseIdentifier: z
 					.string()
+					.regex(SAFE_IDENTIFIER_REGEX, "invalid response identifier: must match [A-Za-z_][A-Za-z0-9_]*")
 					.describe("The QTI response identifier for this inline choice (dropdown) interaction."),
 				shuffle: z.boolean().describe("If true, the dropdown choices will be shuffled."),
 				choices: z
@@ -69,7 +75,7 @@ function createTableCellSchema() {
 							.object({
 								identifier: z
 									.string()
-									.regex(/^[A-Za-z_][A-Za-z0-9_]*$/, "invalid identifier: only alphanumeric and underscores, starting with letter or underscore")
+									.regex(SAFE_IDENTIFIER_REGEX, "invalid identifier: must match [A-Za-z_][A-Za-z0-9_]*")
 									.describe("Unique identifier for this choice, used in the QTI identifier attribute."),
 								content: createInlineContentSchema().describe("Inline content to display for this choice.")
 							})
