@@ -107,7 +107,7 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 		.object({
 			identifier: z
 				.string()
-				.regex(SAFE_IDENTIFIER_REGEX, "invalid identifier: must match [A-Za-z_][A-Za-z0-9._-]*")
+				.regex(SAFE_IDENTIFIER_REGEX, "invalid identifier: must match [A-Za-z_][A-Za-z0-9_]*")
 				.describe("Unique identifier for this inline choice option."),
 			content: createInlineContentSchema().describe("The inline content displayed in the dropdown menu.")
 		})
@@ -128,7 +128,7 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 						.object({
 							identifier: z
 								.string()
-								.regex(SAFE_IDENTIFIER_REGEX, "invalid identifier: must match [A-Za-z_][A-Za-z0-9._-]*")
+								.regex(SAFE_IDENTIFIER_REGEX, "invalid identifier: must match [A-Za-z_][A-Za-z0-9_]*")
 								.describe("Unique identifier for this choice option, used for response matching."),
 							content: createBlockContentSchema().describe(
 								"Rich content for this choice option, supporting text, math, and embedded widgets."
@@ -167,7 +167,10 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 	const TextEntryInteractionSchema = z
 		.object({
 			type: z.literal("textEntryInteraction").describe("Identifies this as a text input interaction."),
-			responseIdentifier: z.string().describe("Links this interaction to its response declaration for scoring."),
+			responseIdentifier: z
+				.string()
+				.regex(SAFE_IDENTIFIER_REGEX, "invalid response identifier")
+				.describe("Links this interaction to its response declaration for scoring."),
 			expectedLength: z.number().int().nullable().describe("Optional hint for expected answer length in characters.")
 		})
 		.strict()
@@ -176,7 +179,10 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 	const OrderInteractionSchema = z
 		.object({
 			type: z.literal("orderInteraction").describe("Identifies this as an ordering/sequencing interaction."),
-			responseIdentifier: z.string().describe("Links this interaction to its response declaration for scoring."),
+			responseIdentifier: z
+				.string()
+				.regex(SAFE_IDENTIFIER_REGEX, "invalid response identifier")
+				.describe("Links this interaction to its response declaration for scoring."),
 			prompt: createInlineContentSchema().describe(
 				"Explicit instructions for arranging items that MUST: (1) name the sort property (e.g., density, size, value), (2) state the sort direction using unambiguous phrases like 'least to greatest' or 'greatest to least', and (3) include the axis phrase '(top to bottom)' to match the enforced vertical orientation."
 			),
@@ -184,7 +190,10 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 				.array(
 					z
 						.object({
-							identifier: z.string().describe("Unique identifier for this choice option, used for response matching."),
+							identifier: z
+								.string()
+								.regex(SAFE_IDENTIFIER_REGEX, "invalid identifier: must match [A-Za-z_][A-Za-z0-9_]*")
+								.describe("Unique identifier for this choice option, used for response matching."),
 							content: createBlockContentSchema().describe("Rich content for this orderable item."),
 							feedback: createInlineContentSchema().nullable().describe("Optional feedback shown for this item.")
 						})
