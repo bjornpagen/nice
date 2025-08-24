@@ -45,6 +45,18 @@ function normalizeResourceIdFromActivityId(activityId: string | undefined): stri
 }
 
 /**
+ * Banking-specific minute bucketing:
+ * - 0–19s => 0 minutes
+ * - 20–29s => 1 minute
+ * - otherwise standard rounding: round(seconds / 60)
+ */
+function computeBankingMinutes(seconds: number): number {
+	if (seconds <= 0) return 0
+	if (seconds >= 20 && seconds < 30) return 1
+	return Math.round(seconds / 60)
+}
+
+/**
  * Filters events to only include TimeSpent events for specific resource IDs
  */
 function filterTimeSpentEventsByResources(
@@ -182,7 +194,7 @@ export async function getAggregatedTimeSpentByResource(actorId: string, resource
 		const timeSpentSummary = Object.fromEntries(
 			Array.from(aggregatedTime.entries()).map(([resourceId, seconds]) => [
 				resourceId,
-				{ seconds, minutes: Math.round(seconds / 60) }
+				{ seconds, minutes: computeBankingMinutes(seconds) }
 			])
 		)
 
@@ -258,7 +270,7 @@ export async function calculateBankedXpForResources(
 		for (const resource of passiveResources) {
 			const secondsSpent = timeSpentMap.get(resource.sourcedId) || 0
 
-			const minutesSpent = secondsSpent > 0 ? Math.round(secondsSpent / 60) : 0
+			const minutesSpent = computeBankingMinutes(secondsSpent)
 
 			// Defensive cap: never award more than the resource's expected XP
 			const awardedXp = Math.min(minutesSpent, resource.expectedXp)
