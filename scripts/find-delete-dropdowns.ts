@@ -1,10 +1,25 @@
 #!/usr/bin/env bun
+/**
+ * Script to find and optionally delete questions with dropdown interactions.
+ * 
+ * Usage:
+ *   bun run scripts/find-delete-dropdowns.ts           # Dry run - shows count only
+ *   bun run scripts/find-delete-dropdowns.ts --delete  # Actually deletes the data
+ *   bun run scripts/find-delete-dropdowns.ts --urls    # Outputs QTI URLs only
+ * 
+ * Options:
+ *   --delete  Nullifies structuredJson and XML for questions with dropdowns
+ *   --urls    Outputs newline-separated list of QTI assessment item URLs
+ * 
+ * Note: --delete and --urls cannot be used together.
+ */
 import * as readline from "node:readline/promises"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { db } from "@/db"
 import { niceQuestions } from "@/db/schemas/nice"
 import { eq, isNotNull } from "drizzle-orm"
+import { env } from "@/env"
 
 // --- Constants ---
 const CONFIRMATION = "YES, I AM ABSOLUTELY SURE"
@@ -187,7 +202,27 @@ async function deleteQuestionData(questionId: string, dryRun: boolean): Promise<
 async function main() {
 	const args = process.argv.slice(2)
 	const shouldDelete = args.includes("--delete")
-	const dryRun = !shouldDelete
+	const shouldOutputUrls = args.includes("--urls")
+	const dryRun = !shouldDelete && !shouldOutputUrls
+
+	// Validate mutually exclusive options
+	if (shouldDelete && shouldOutputUrls) {
+		process.stderr.write("Error: --delete and --urls cannot be used together.\n")
+		process.exit(1)
+	}
+
+	// If --urls is specified, handle it separately
+	if (shouldOutputUrls) {
+		const questionsToProcess = await fetchQuestionsWithDropdowns()
+		
+		// Output URLs only, one per line
+		for (const question of questionsToProcess) {
+			const url = `${env.NEXT_PUBLIC_QTI_ASSESSMENT_ITEM_PLAYER_URL}/nice_${question.id}`
+			process.stdout.write(`${url}\n`)
+		}
+		
+		return
+	}
 
 	logger.info("starting dropdown scan", { mode: dryRun ? "dry-run" : "delete" })
 
@@ -205,6 +240,7 @@ async function main() {
 		logger.info("dry run complete", { questionsFound: questionsToProcess.length })
 		process.stdout.write("\nThis was a DRY RUN. No changes were made.\n")
 		process.stdout.write("To perform deletion, re-run with the --delete flag.\n")
+		process.stdout.write("To get URLs only, re-run with the --urls flag.\n")
 		return
 	}
 
