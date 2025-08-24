@@ -6,12 +6,14 @@
  *   bun run scripts/find-delete-dropdowns.ts           # Dry run - shows count only
  *   bun run scripts/find-delete-dropdowns.ts --delete  # Actually deletes the data
  *   bun run scripts/find-delete-dropdowns.ts --urls    # Outputs QTI URLs only
+ *   bun run scripts/find-delete-dropdowns.ts --dump    # Outputs all XML content
  * 
  * Options:
  *   --delete  Nullifies structuredJson and XML for questions with dropdowns
  *   --urls    Outputs newline-separated list of QTI assessment item URLs
+ *   --dump    Outputs all XML content for questions with dropdowns
  * 
- * Note: --delete and --urls cannot be used together.
+ * Note: Options cannot be combined.
  */
 import * as readline from "node:readline/promises"
 import * as errors from "@superbuilders/errors"
@@ -203,11 +205,18 @@ async function main() {
 	const args = process.argv.slice(2)
 	const shouldDelete = args.includes("--delete")
 	const shouldOutputUrls = args.includes("--urls")
-	const dryRun = !shouldDelete && !shouldOutputUrls
+	const shouldDump = args.includes("--dump")
+	const dryRun = !shouldDelete && !shouldOutputUrls && !shouldDump
+
+	// Suppress logging for --urls and --dump to keep stdout clean
+	if (shouldOutputUrls || shouldDump) {
+		logger.setDefaultLogLevel(logger.ERROR + 1) // Suppress all logs
+	}
 
 	// Validate mutually exclusive options
-	if (shouldDelete && shouldOutputUrls) {
-		process.stderr.write("Error: --delete and --urls cannot be used together.\n")
+	const activeFlags = [shouldDelete, shouldOutputUrls, shouldDump].filter(Boolean)
+	if (activeFlags.length > 1) {
+		process.stderr.write("Error: Options --delete, --urls, and --dump cannot be used together.\n")
 		process.exit(1)
 	}
 
@@ -220,6 +229,36 @@ async function main() {
 			const url = `${env.NEXT_PUBLIC_QTI_ASSESSMENT_ITEM_PLAYER_URL}/nice_${question.id}`
 			process.stdout.write(`${url}\n`)
 		}
+		
+		return
+	}
+
+	// If --dump is specified, output all XML content
+	if (shouldDump) {
+		const questionsToProcess = await fetchQuestionsWithDropdowns()
+		
+		// Write progress to stderr to avoid polluting stdout
+		process.stderr.write(`Found ${questionsToProcess.length} questions with dropdowns\n`)
+		
+		let outputCount = 0
+		let skippedCount = 0
+		
+		// Output XML content for each question
+		for (const question of questionsToProcess) {
+			if (question.xml) {
+				process.stdout.write(question.xml)
+				// Add a newline if the XML doesn't end with one
+				if (!question.xml.endsWith("\n")) {
+					process.stdout.write("\n")
+				}
+				outputCount++
+			} else {
+				skippedCount++
+			}
+		}
+		
+		// Report completion to stderr
+		process.stderr.write(`Dumped ${outputCount} XML documents (${skippedCount} questions had no XML)\n`)
 		
 		return
 	}
@@ -241,6 +280,7 @@ async function main() {
 		process.stdout.write("\nThis was a DRY RUN. No changes were made.\n")
 		process.stdout.write("To perform deletion, re-run with the --delete flag.\n")
 		process.stdout.write("To get URLs only, re-run with the --urls flag.\n")
+		process.stdout.write("To dump all XML content, re-run with the --dump flag.\n")
 		return
 	}
 
