@@ -12,15 +12,17 @@
  *   bun run scripts/find-delete-dropdowns.ts --invalid         # newline-separated question IDs with issues
  *   bun run scripts/find-delete-dropdowns.ts --invalid-urls    # newline-separated URLs for those IDs
  *   bun run scripts/find-delete-dropdowns.ts --invalid-report  # JSON report of issues per question
+ *   bun run scripts/find-delete-dropdowns.ts --invalid-delete  # Delete xml and structuredJson for invalid questions
  */
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { db } from "@/db"
 import { niceQuestions } from "@/db/schemas/nice"
-import { isNotNull } from "drizzle-orm"
+import { eq, inArray, isNotNull } from "drizzle-orm"
 import { env } from "@/env"
 import { SAFE_IDENTIFIER_REGEX } from "@/lib/qti-generation/qti-constants"
 import { XMLParser } from "fast-xml-parser"
+import * as readline from "node:readline/promises"
 
 // --- Types ---
 
@@ -318,11 +320,12 @@ async function main() {
 	const outputInvalidIds = args.includes("--invalid")
 	const outputInvalidUrls = args.includes("--invalid-urls")
 	const outputInvalidReport = args.includes("--invalid-report")
-	const active = [outputInvalidIds, outputInvalidUrls, outputInvalidReport].filter(Boolean)
+	const outputInvalidDelete = args.includes("--invalid-delete")
+	const active = [outputInvalidIds, outputInvalidUrls, outputInvalidReport, outputInvalidDelete].filter(Boolean)
 
 	if (active.length !== 1) {
 		process.stderr.write(
-			"Error: specify exactly one of --invalid, --invalid-urls, or --invalid-report\n"
+			"Error: specify exactly one of --invalid, --invalid-urls, --invalid-report, or --invalid-delete\n"
 		)
 		process.exit(1)
 	}
@@ -356,6 +359,74 @@ async function main() {
 	if (outputInvalidReport) {
 		const report = results.map((r) => ({ id: r.id, issueCount: r.issues.length, issues: r.issues }))
 		process.stdout.write(`${JSON.stringify(report, null, 2)}\n`)
+		return
+	}
+
+	if (outputInvalidDelete) {
+		// Re-enable logging for interactive mode
+		logger.setDefaultLogLevel(logger.INFO)
+
+		const invalidIds = results.map((r) => r.id)
+		const totalQuestions = rows.length
+		const invalidCount = invalidIds.length
+		const percentage = ((invalidCount / totalQuestions) * 100).toFixed(2)
+
+		// Show analytics
+		logger.info("invalid dropdown questions found", {
+			total: totalQuestions,
+			invalid: invalidCount,
+			percentage: `${percentage}%`
+		})
+
+		if (invalidCount === 0) {
+			logger.info("no invalid questions to delete")
+			return
+		}
+
+		// Show confirmation prompt
+		const rl = readline.createInterface({
+			input: process.stdin,
+			output: process.stdout
+		})
+
+		const confirmResult = await errors.try(
+			rl.question(
+				`\nThis will clear the xml and structuredJson columns for ${invalidCount} questions.\n` +
+				`Are you sure you want to proceed? (yes/no): `
+			)
+		)
+		rl.close()
+
+		if (confirmResult.error) {
+			logger.error("failed to read user input", { error: confirmResult.error })
+			throw errors.wrap(confirmResult.error, "user input")
+		}
+
+		const answer = confirmResult.data.toLowerCase().trim()
+		if (answer !== "yes" && answer !== "y") {
+			logger.info("operation cancelled")
+			return
+		}
+
+		// Perform the deletion
+		logger.info("clearing xml and structuredJson for invalid questions", { count: invalidCount })
+
+		const updateResult = await errors.try(
+			db
+				.update(niceQuestions)
+				.set({
+					xml: null,
+					structuredJson: null
+				})
+				.where(inArray(niceQuestions.id, invalidIds))
+		)
+
+		if (updateResult.error) {
+			logger.error("failed to update questions", { error: updateResult.error })
+			throw errors.wrap(updateResult.error, "database update")
+		}
+
+		logger.info("successfully cleared data for invalid questions", { count: invalidCount })
 		return
 	}
 }

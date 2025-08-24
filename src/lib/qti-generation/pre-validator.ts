@@ -237,6 +237,15 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, logger: l
 					for (const choice of interaction.choices) {
 						validateInlineContent(choice.content, `interaction[${key}].choice[${choice.identifier}]`, logger)
 					}
+					// Guard: every inlineChoiceInteraction must have a matching response declaration
+					const decl = item.responseDeclarations.find((d) => d.identifier === interaction.responseIdentifier)
+					if (!decl) {
+						logger.error("missing inlineChoice response declaration", {
+							interactionKey: key,
+							responseIdentifier: interaction.responseIdentifier
+						})
+						throw errors.new("missing inlinechoice response declaration")
+					}
 					break
 				}
 				case "choiceInteraction": {
@@ -332,6 +341,18 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, logger: l
 	// Validate each response declaration has a corresponding interaction responseIdentifier
 	// or an embedded input within a widget (e.g., dataTable input cells)
 	if (item.responseDeclarations.length > 0) {
+		// Guard: identifier base-type with single cardinality must have exactly one correct value
+		for (const decl of item.responseDeclarations) {
+			if (decl.baseType === "identifier" && decl.cardinality === "single") {
+				if (Array.isArray(decl.correct) && decl.correct.length > 1) {
+					logger.error("single cardinality has multiple correct identifiers", {
+						responseIdentifier: decl.identifier,
+						count: decl.correct.length
+					})
+					throw errors.new("single cardinality requires one correct identifier")
+				}
+			}
+		}
 		const interactionResponseIds = new Set<string>()
 		if (item.interactions) {
 			for (const interaction of Object.values(item.interactions)) {
