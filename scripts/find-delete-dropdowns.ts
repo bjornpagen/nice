@@ -1,356 +1,366 @@
 #!/usr/bin/env bun
 /**
- * Script to find and optionally delete questions with dropdown interactions.
- * 
- * Usage:
- *   bun run scripts/find-delete-dropdowns.ts           # Dry run - shows count only
- *   bun run scripts/find-delete-dropdowns.ts --delete  # Actually deletes the data
- *   bun run scripts/find-delete-dropdowns.ts --urls    # Outputs QTI URLs only
- *   bun run scripts/find-delete-dropdowns.ts --dump    # Outputs all XML content
- * 
- * Options:
- *   --delete  Nullifies structuredJson and XML for questions with dropdowns
- *   --urls    Outputs newline-separated list of QTI assessment item URLs
- *   --dump    Outputs all XML content for questions with dropdowns
- * 
- * Note: Options cannot be combined.
+ * Dropdown Identifier Validator (XML-based)
+ *
+ * Scans FINAL QTI XML (not structuredJson) to find ONLY invalid dropdowns and mapping issues:
+ * - inline-choice identifier attributes that do not match SAFE_IDENTIFIER_REGEX
+ * - qti-response-declaration correct values that do not match SAFE_IDENTIFIER_REGEX
+ * - missing qti-response-declaration for each inline-choice-interaction response-identifier
+ * - qti-response-processing qti-match variable/correct identifiers that do not match SAFE_IDENTIFIER_REGEX
+ *
+ * Usage (flags are mutually exclusive):
+ *   bun run scripts/find-delete-dropdowns.ts --invalid         # newline-separated question IDs with issues
+ *   bun run scripts/find-delete-dropdowns.ts --invalid-urls    # newline-separated URLs for those IDs
+ *   bun run scripts/find-delete-dropdowns.ts --invalid-report  # JSON report of issues per question
  */
-import * as readline from "node:readline/promises"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { db } from "@/db"
 import { niceQuestions } from "@/db/schemas/nice"
-import { eq, isNotNull } from "drizzle-orm"
+import { isNotNull } from "drizzle-orm"
 import { env } from "@/env"
+import { SAFE_IDENTIFIER_REGEX } from "@/lib/qti-generation/qti-constants"
+import { XMLParser } from "fast-xml-parser"
 
-// --- Constants ---
-const CONFIRMATION = "YES, I AM ABSOLUTELY SURE"
-const INDENT_SPACES = "  "
+// --- Types ---
 
-// --- Helper Functions ---
+type IssueKind =
+	| "choiceIdentifier"
+	| "correctIdentifier"
+	| "missingDeclaration"
+	| "duplicateChoiceIdentifier"
+	| "correctNotInChoices"
+	| "dropdownMatchMissing"
+	| "dropdownMatchMismatched"
+	| "dropdownBaseType"
+	| "singleCardinalityMultipleCorrect"
 
-/**
- * Recursively checks if the given JSON object contains any dropdown interactions.
- * This includes top-level inlineChoiceInteractions or dropdowns inside dataTable widgets.
- * @param json The structured JSON object (AssessmentItemInput).
- * @returns true if any dropdown is found, false otherwise.
- */
-function hasDropdowns(json: any): boolean {
-	if (typeof json !== "object" || json === null) {
-		return false
+interface Issue {
+	kind: IssueKind
+	responseIdentifier: string
+	value?: string
+	path: string
+}
+
+interface QuestionIssues {
+	id: string
+	issues: Issue[]
+}
+
+// --- XML Helpers ---
+
+function asArray<T>(val: T | T[] | undefined | null): T[] {
+	if (val === undefined || val === null) return []
+	return Array.isArray(val) ? val : [val]
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+	return typeof value === "object" && value !== null
+}
+
+function getAttr(node: unknown, name: string): string | undefined {
+	if (!isRecord(node)) return undefined
+	const key = "@_" + name
+	const v = (node as any)[key]
+	return typeof v === "string" ? v : undefined
+}
+
+function getText(node: unknown): string {
+	if (typeof node === "string") return node
+	if (!isRecord(node)) return ""
+	const t = (node as any)["#text"]
+	return typeof t === "string" ? t : ""
+}
+
+// --- Validator (XML) ---
+
+const xmlParser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "@_", allowBooleanAttributes: true })
+
+function validateXml(xml: string): Issue[] {
+	const issues: Issue[] = []
+	if (typeof xml !== "string" || xml.trim() === "") return issues
+
+	const parseResult = errors.trySync(() => xmlParser.parse(xml))
+	if (parseResult.error) {
+		logger.error("xml parse", { error: parseResult.error })
+		// On parse error, we cannot validate further; return no issues for this item
+		return issues
+	}
+	const root = parseResult.data
+	if (!isRecord(root)) return issues
+
+	const item = (root as any)["qti-assessment-item"]
+	if (!isRecord(item)) return issues
+
+	// First collect declaration identifiers (for missingDeclaration checks)
+	const declIdSet = new Set<string>()
+	const declarations = asArray((item as any)["qti-response-declaration"]) as Array<Record<string, unknown>>
+	for (const decl of declarations) {
+		if (!isRecord(decl)) continue
+		const rid = getAttr(decl, "identifier")
+		if (rid) declIdSet.add(rid)
 	}
 
-	// Check for top-level inlineChoiceInteraction in 'interactions'
-	if (json.interactions && typeof json.interactions === "object") {
-		for (const key in json.interactions) {
-			const interaction = json.interactions[key]
-			if (interaction && typeof interaction === "object" && interaction.type === "inlineChoiceInteraction") {
-				return true
-			}
-		}
-	}
-
-	// Check for dropdowns inside 'widgets'
-	if (json.widgets && typeof json.widgets === "object") {
-		for (const key in json.widgets) {
-			const widget = json.widgets[key]
-			if (widget && typeof widget === "object" && widget.type === "dataTable") {
-				// Check data rows
-				if (Array.isArray(widget.data)) {
-					for (const row of widget.data) {
-						if (Array.isArray(row)) {
-							for (const cell of row) {
-								if (cell && typeof cell === "object" && cell.type === "dropdown") {
-									return true
-								}
+	// Validate inline choice interactions and choice identifiers; collect used response ids and choice sets
+	const itemBody = (item as any)["qti-item-body"]
+	const choiceSetByRespId = new Map<string, Set<string>>()
+	const choiceTextSetByRespId = new Map<string, Set<string>>()
+	const usedRespIdSet = new Set<string>()
+	const visitNode = (node: unknown) => {
+		if (!isRecord(node)) return
+		for (const [key, val] of Object.entries(node)) {
+			if (key === "qti-inline-choice-interaction") {
+				const interactions = asArray(val as any)
+				for (let idx = 0; idx < interactions.length; idx++) {
+					const inter = interactions[idx]
+					if (!isRecord(inter)) continue
+					const respId = getAttr(inter, "response-identifier") || ""
+					if (respId) usedRespIdSet.add(respId)
+					// Missing declaration check (only for dropdowns)
+					if (respId && !declIdSet.has(respId)) {
+						issues.push({
+							kind: "missingDeclaration",
+							responseIdentifier: respId,
+							path: `qti-inline-choice-interaction[${idx}][response-identifier=${respId}]`
+						})
+					}
+					// Choice identifiers and texts
+					const choices = asArray((inter as any)["qti-inline-choice"]) as Array<Record<string, unknown>>
+					const seen = new Set<string>()
+					for (let c = 0; c < choices.length; c++) {
+						const ch = choices[c]
+						const ident = getAttr(ch, "identifier") || ""
+						if (!SAFE_IDENTIFIER_REGEX.test(ident)) {
+							issues.push({
+								kind: "choiceIdentifier",
+								responseIdentifier: respId,
+								value: ident,
+								path: `qti-inline-choice-interaction[${idx}].qti-inline-choice[${c}][identifier=${ident}]`
+							})
+						}
+						if (seen.has(ident)) {
+							issues.push({
+								kind: "duplicateChoiceIdentifier",
+								responseIdentifier: respId,
+								value: ident,
+								path: `qti-inline-choice-interaction[${idx}].qti-inline-choice[${c}][identifier=${ident}]`
+							})
+						}
+						seen.add(ident)
+						if (respId) {
+							const idSet = choiceSetByRespId.get(respId) ?? new Set<string>()
+							idSet.add(ident)
+							choiceSetByRespId.set(respId, idSet)
+							const txt = getText(ch).trim()
+							if (txt !== "") {
+								const textSet = choiceTextSetByRespId.get(respId) ?? new Set<string>()
+								textSet.add(txt)
+								choiceTextSetByRespId.set(respId, textSet)
 							}
 						}
 					}
 				}
-				// Check footer rows
-				if (Array.isArray(widget.footer)) {
-					for (const cell of widget.footer) {
-						if (cell && typeof cell === "object" && cell.type === "dropdown") {
-							return true
-						}
-					}
+			} else if (isRecord(val)) {
+				visitNode(val)
+			} else if (Array.isArray(val)) {
+				for (const child of val) visitNode(child)
+			}
+		}
+	}
+	visitNode(itemBody)
+
+	// Now validate declarations ONLY for identifiers used by dropdowns
+	const declCorrectById = new Map<string, string[]>()
+	for (const decl of declarations) {
+		if (!isRecord(decl)) continue
+		const rid = getAttr(decl, "identifier")
+		if (!rid || !usedRespIdSet.has(rid)) continue
+		const baseType = getAttr(decl, "base-type") || ""
+		if (baseType !== "identifier") {
+			issues.push({
+				kind: "dropdownBaseType",
+				responseIdentifier: rid,
+				value: baseType,
+				path: `qti-response-declaration[${rid}][base-type=${baseType}]`
+			})
+			// Skip further checks for non-identifier base types
+			continue
+		}
+		if (baseType === "identifier") {
+			const correctResp = (decl as any)["qti-correct-response"]
+			if (!isRecord(correctResp)) continue
+			const values = asArray((correctResp as any)["qti-value"]) as Array<string | Record<string, unknown>>
+			// Cardinality check: single must not have multiple correct values
+			const cardinality = getAttr(decl, "cardinality") || ""
+			if (cardinality === "single" && values.length > 1) {
+				issues.push({
+					kind: "singleCardinalityMultipleCorrect",
+					responseIdentifier: rid,
+					path: `qti-response-declaration[${rid}].qti-correct-response`
+				})
+			}
+			const corr: string[] = []
+			for (let i = 0; i < values.length; i++) {
+				const v = values[i]
+				const str = typeof v === "string" ? v : undefined
+				if (typeof str === "string" && !SAFE_IDENTIFIER_REGEX.test(str)) {
+					issues.push({
+						kind: "correctIdentifier",
+						responseIdentifier: rid,
+						value: str,
+						path: `qti-response-declaration[${rid}].qti-correct-response.qti-value[${i}]`
+					})
 				}
+				if (typeof str === "string") corr.push(str)
+			}
+			declCorrectById.set(rid, corr)
+		}
+	}
+
+	// Ensure each correct value exists among the gathered choices for its responseIdentifier (identifier base-type)
+	for (const [rid, corrects] of declCorrectById.entries()) {
+		const set = choiceSetByRespId.get(rid)
+		if (!set) continue
+		for (let i = 0; i < corrects.length; i++) {
+			const v = corrects[i]
+			if (typeof v !== "string" || !set.has(v)) {
+				issues.push({
+					kind: "correctNotInChoices",
+					responseIdentifier: rid,
+					value: v,
+					path: `qti-response-declaration[${rid}].qti-correct-response.qti-value[${i}]`
+				})
 			}
 		}
 	}
 
-	return false // No dropdowns found
-}
-
-/**
- * Helper function to format objects for display in the console.
- * Copied and adapted from atom-bomb-wipe.ts for self-containment.
- */
-function formatObject(obj: unknown, indentLevel = 0): string {
-	const spaces = INDENT_SPACES.repeat(indentLevel)
-
-	if (obj === null) {
-		return `${spaces}null`
-	}
-	if (obj === undefined) {
-		return `${spaces}undefined`
-	}
-
-	if (typeof obj !== "object") {
-		return `${spaces}${JSON.stringify(obj)}`
-	}
-
-	if (Array.isArray(obj)) {
-		if (obj.length === 0) return `${spaces}[]`
-		const formattedItems = obj.map((item) => formatObject(item, indentLevel + 1)).join(",\n")
-		return `${spaces}[\n${formattedItems}\n${spaces}]`
-	}
-
-	const entries = Object.entries(obj)
-	if (entries.length === 0) return `${spaces}{}`
-
-	const lines = entries.map(([key, value]) => {
-		if (typeof value === "object" && value !== null && Object.keys(value as object).length > 0) {
-			return `${spaces}${INDENT_SPACES}${key}:\n${formatObject(value, indentLevel + 2)}`
+	// Dropdown-only response-processing sanity check: verify qti-match/qti-map-response reference dropdown response ids
+	const responseProcessing = (item as any)["qti-response-processing"]
+	const matchPairs: Array<{ variableId: string; correctId: string }> = []
+	const mapResponseIds = new Set<string>()
+	const visitProcessing = (node: unknown) => {
+		if (!isRecord(node)) return
+		for (const [key, val] of Object.entries(node)) {
+			if (key === "qti-match") {
+				const matches = asArray(val as any)
+				for (const match of matches) {
+					if (!isRecord(match)) continue
+					const variable = (match as any)["qti-variable"]
+					const correct = (match as any)["qti-correct"]
+					const varId = isRecord(variable) ? getAttr(variable, "identifier") || "" : ""
+					const corId = isRecord(correct) ? getAttr(correct, "identifier") || "" : ""
+					matchPairs.push({ variableId: varId, correctId: corId })
+				}
+			} else if (key === "qti-map-response") {
+				const maps = asArray(val as any)
+				for (const mr of maps) {
+					if (!isRecord(mr)) continue
+					const id = getAttr(mr, "identifier") || ""
+					if (id) mapResponseIds.add(id)
+				}
+			} else if (isRecord(val)) {
+				visitProcessing(val)
+			} else if (Array.isArray(val)) {
+				for (const child of val) visitProcessing(child)
+			}
 		}
-		return `${spaces}${INDENT_SPACES}${key}: ${JSON.stringify(value)}`
-	})
+	}
+	visitProcessing(responseProcessing)
 
-	return `${spaces}{\n${lines.join(",\n")}\n${spaces}}`
+	for (const rid of usedRespIdSet) {
+		const okPair = matchPairs.some((p) => p.variableId === rid && p.correctId === rid)
+		if (okPair || mapResponseIds.has(rid)) continue
+		const varOnly = matchPairs.find((p) => p.variableId === rid && p.correctId !== rid)
+		const corOnly = matchPairs.find((p) => p.correctId === rid && p.variableId !== rid)
+		if (varOnly || corOnly) {
+			const wrong = varOnly ? varOnly.correctId : corOnly ? corOnly.variableId : ""
+			issues.push({
+				kind: "dropdownMatchMismatched",
+				responseIdentifier: rid,
+				value: wrong,
+				path: "qti-response-processing.qti-match"
+			})
+			continue
+		}
+		issues.push({
+			kind: "dropdownMatchMissing",
+			responseIdentifier: rid,
+			path: "qti-response-processing"
+		})
+	}
+
+	return issues
 }
 
-/**
- * Asks for user confirmation before performing a destructive action.
- * Copied and adapted from atom-bomb-wipe.ts for self-containment.
- */
-async function confirmAction(count: number): Promise<boolean> {
-	const rl = readline.createInterface({
-		input: process.stdin,
-		output: process.stdout
-	})
+// --- Data access ---
 
-	process.stdout.write(
-		"\n🚨 DANGER ZONE 🚨\n" +
-			`This will PERMANENTLY NULLIFY structuredJson and XML for ${count} questions.\n` +
-			"There is NO UNDO.\n\n" +
-			`Type "${CONFIRMATION}" to proceed:\n> `
-	)
-
-	const answer = await rl.question("")
-	rl.close()
-
-	return answer === CONFIRMATION
-}
-
-/**
- * Fetches questions from the database and filters them for dropdown interactions.
- * @returns An array of questions found with dropdowns.
- */
-async function fetchQuestionsWithDropdowns(): Promise<
-	Array<{ id: string; structuredJson: any; xml: string | null }>
-> {
-	logger.info("fetching questions with structuredJson")
-
-	const allQuestions = await db
+async function fetchQuestions(): Promise<Array<{ id: string; xml: string | null }>> {
+	const selResult = await errors.try(
+		db
 		.select({
 			id: niceQuestions.id,
-			structuredJson: niceQuestions.structuredJson,
-			xml: niceQuestions.xml,
+				xml: niceQuestions.xml
 		})
 		.from(niceQuestions)
-		.where(isNotNull(niceQuestions.structuredJson))
-
-	logger.debug("filtering for dropdowns", { totalQuestions: allQuestions.length })
-
-	const dropdownQuestions = allQuestions.filter((q) => hasDropdowns(q.structuredJson))
-
-	logger.info("dropdown scan complete", {
-		scanned: allQuestions.length,
-		found: dropdownQuestions.length
-	})
-
-	return dropdownQuestions
-}
-
-/**
- * Updates the database to nullify structuredJson and xml for a given question.
- * @param questionId The ID of the question to update.
- * @param dryRun If true, only logs the action without performing the update.
- */
-async function deleteQuestionData(questionId: string, dryRun: boolean): Promise<void> {
-	if (dryRun) {
-		logger.debug("dry run: would nullify", { questionId })
-		return
-	}
-
-	const result = await errors.try(
-		db
-			.update(niceQuestions)
-			.set({ structuredJson: null, xml: null })
-			.where(eq(niceQuestions.id, questionId))
+			.where(isNotNull(niceQuestions.xml))
 	)
-
-	if (result.error) {
-		logger.error("failed to nullify question data", { questionId, error: result.error })
-		throw errors.wrap(result.error, `failed to nullify data for question ${questionId}`)
+	if (selResult.error) {
+		logger.error("query execution", { error: selResult.error })
+		throw errors.wrap(selResult.error, "query execution")
 	}
-
-	logger.debug("nullified question data", { questionId })
+	return selResult.data as Array<{ id: string; xml: string | null }>
 }
 
-/**
- * Main script execution logic.
- */
+// --- CLI ---
+
 async function main() {
 	const args = process.argv.slice(2)
-	const shouldDelete = args.includes("--delete")
-	const shouldOutputUrls = args.includes("--urls")
-	const shouldDump = args.includes("--dump")
-	const dryRun = !shouldDelete && !shouldOutputUrls && !shouldDump
+	const outputInvalidIds = args.includes("--invalid")
+	const outputInvalidUrls = args.includes("--invalid-urls")
+	const outputInvalidReport = args.includes("--invalid-report")
+	const active = [outputInvalidIds, outputInvalidUrls, outputInvalidReport].filter(Boolean)
 
-	// Suppress logging for --urls and --dump to keep stdout clean
-	if (shouldOutputUrls || shouldDump) {
-		logger.setDefaultLogLevel(logger.ERROR + 1) // Suppress all logs
-	}
-
-	// Validate mutually exclusive options
-	const activeFlags = [shouldDelete, shouldOutputUrls, shouldDump].filter(Boolean)
-	if (activeFlags.length > 1) {
-		process.stderr.write("Error: Options --delete, --urls, and --dump cannot be used together.\n")
+	if (active.length !== 1) {
+		process.stderr.write(
+			"Error: specify exactly one of --invalid, --invalid-urls, or --invalid-report\n"
+		)
 		process.exit(1)
 	}
 
-	// If --urls is specified, handle it separately
-	if (shouldOutputUrls) {
-		const questionsToProcess = await fetchQuestionsWithDropdowns()
-		
-		// Output URLs only, one per line
-		for (const question of questionsToProcess) {
-			const url = `${env.NEXT_PUBLIC_QTI_ASSESSMENT_ITEM_PLAYER_URL}/nice_${question.id}`
+	// Suppress logs to keep stdout clean in output modes
+	logger.setDefaultLogLevel(logger.ERROR + 1)
+
+	const rows = await fetchQuestions()
+	const results: QuestionIssues[] = []
+	for (const row of rows) {
+		if (!row.xml) continue
+		const issues = validateXml(row.xml)
+		if (issues.length > 0) {
+			results.push({ id: row.id, issues })
+		}
+	}
+
+	if (outputInvalidIds) {
+		for (const r of results) process.stdout.write(`${r.id}\n`)
+		return
+	}
+
+	if (outputInvalidUrls) {
+		for (const r of results) {
+			const url = `${env.NEXT_PUBLIC_QTI_ASSESSMENT_ITEM_PLAYER_URL}/nice_${r.id}`
 			process.stdout.write(`${url}\n`)
 		}
-		
 		return
 	}
 
-	// If --dump is specified, output all XML content
-	if (shouldDump) {
-		const questionsToProcess = await fetchQuestionsWithDropdowns()
-		
-		// Write progress to stderr to avoid polluting stdout
-		process.stderr.write(`Found ${questionsToProcess.length} questions with dropdowns\n`)
-		
-		let outputCount = 0
-		let skippedCount = 0
-		
-		// Output XML content for each question
-		for (const question of questionsToProcess) {
-			if (question.xml) {
-				process.stdout.write(question.xml)
-				// Add a newline if the XML doesn't end with one
-				if (!question.xml.endsWith("\n")) {
-					process.stdout.write("\n")
-				}
-				outputCount++
-			} else {
-				skippedCount++
-			}
-		}
-		
-		// Report completion to stderr
-		process.stderr.write(`Dumped ${outputCount} XML documents (${skippedCount} questions had no XML)\n`)
-		
+	if (outputInvalidReport) {
+		const report = results.map((r) => ({ id: r.id, issueCount: r.issues.length, issues: r.issues }))
+		process.stdout.write(`${JSON.stringify(report, null, 2)}\n`)
 		return
-	}
-
-	logger.info("starting dropdown scan", { mode: dryRun ? "dry-run" : "delete" })
-
-	const questionsToProcess = await fetchQuestionsWithDropdowns()
-
-	if (questionsToProcess.length === 0) {
-		logger.info("no dropdown questions found")
-		process.stdout.write("\nNo questions with dropdown interactions found.\n")
-		return
-	}
-
-	process.stdout.write(`\n✅ Found ${questionsToProcess.length} questions with dropdown interactions\n`)
-
-	if (dryRun) {
-		logger.info("dry run complete", { questionsFound: questionsToProcess.length })
-		process.stdout.write("\nThis was a DRY RUN. No changes were made.\n")
-		process.stdout.write("To perform deletion, re-run with the --delete flag.\n")
-		process.stdout.write("To get URLs only, re-run with the --urls flag.\n")
-		process.stdout.write("To dump all XML content, re-run with the --dump flag.\n")
-		return
-	}
-
-	const confirmed = await confirmAction(questionsToProcess.length)
-	if (!confirmed) {
-		logger.info("deletion aborted by user")
-		process.stdout.write("Aborted deletion.\n")
-		return
-	}
-
-	logger.info("starting deletion", { count: questionsToProcess.length })
-	process.stdout.write("\n💣 Nullifying structuredJson and XML data...\n")
-	process.stdout.write(`  🚀 Launching ${questionsToProcess.length} parallel updates...\n`)
-
-	const updatePromises = questionsToProcess.map(async (q) => {
-		const result = await errors.try(deleteQuestionData(q.id, false))
-		return {
-			questionId: q.id,
-			success: !result.error,
-			error: result.error,
-		}
-	})
-
-	const results = await Promise.allSettled(updatePromises)
-
-	let successCount = 0
-	let failedCount = 0
-	const failures: Array<{ questionId: string; error: unknown }> = []
-
-	for (const result of results) {
-		if (result.status === "fulfilled") {
-			const updateResult = result.value
-			if (updateResult.success) {
-				successCount++
-			} else {
-				failedCount++
-				failures.push({
-					questionId: updateResult.questionId,
-					error: updateResult.error,
-				})
-			}
-		} else {
-			failedCount++
-			logger.error("unexpected promise rejection during update", { reason: result.reason })
-		}
-	}
-
-	logger.info("deletion complete", { 
-		success: successCount, 
-		failed: failedCount,
-		total: questionsToProcess.length 
-	})
-	
-	process.stdout.write(`\nDropdown Wipe Complete:\n`)
-	process.stdout.write(`  ✅ Nullified: ${successCount}\n`)
-	process.stdout.write(`  ❌ Failed: ${failedCount}\n`)
-
-	if (failures.length > 0) {
-		process.stdout.write("\nFailed nullifications:\n")
-		for (const failure of failures) {
-			process.stdout.write(`  ❌ ${failure.questionId}\n`)
-			logger.error("nullification failed", {
-				questionId: failure.questionId,
-				error: failure.error,
-			})
-		}
 	}
 }
 
-// Execute main function
+// Execute
 const result = await errors.try(main())
 if (result.error) {
 	logger.error("fatal script error", { error: result.error })
