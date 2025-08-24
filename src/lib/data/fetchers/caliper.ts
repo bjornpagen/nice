@@ -178,11 +178,11 @@ export async function getAggregatedTimeSpentByResource(actorId: string, resource
 		const timeSpentEvents = await getTimeSpentEventsForResources(actorId, resourceIds)
 		const aggregatedTime = aggregateTimeSpentByResource(timeSpentEvents)
 
-		// Convert Map to object for better logging
+		// Convert Map to object for better logging (use same rounding as award logic)
 		const timeSpentSummary = Object.fromEntries(
 			Array.from(aggregatedTime.entries()).map(([resourceId, seconds]) => [
 				resourceId,
-				{ seconds, minutes: Math.ceil(seconds / 60) }
+				{ seconds, minutes: Math.round(seconds / 60) }
 			])
 		)
 
@@ -253,8 +253,7 @@ export async function calculateBankedXpForResources(
 			awardedXp: number
 		}> = []
 
-		// Spec-compliant policy: award Full expected XP when engagement meets a completion threshold,
-		// otherwise award 0. Do not scale awarded XP by actual minutes.
+		// Policy: compute partial award using rounded minutes and cap by expected XP.
 
 		for (const resource of passiveResources) {
 			const secondsSpent = timeSpentMap.get(resource.sourcedId) || 0

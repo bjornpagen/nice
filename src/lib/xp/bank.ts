@@ -286,7 +286,7 @@ export async function awardBankedXpForExercise(params: {
 
 	// 3. Calculate XP using time-spent policy with fresh data.
 	const bankResult = await calculateBankedXpForResources(actorId, eligibleResources)
-	const { bankedXp, awardedResourceIds } = bankResult
+	const { bankedXp, awardedResourceIds, detailedResults } = bankResult
 
 	// Get resource metadata for saving results and sending Caliper events
 	const allResourceIds = eligibleResources.map((r) => r.sourcedId)
@@ -307,10 +307,21 @@ export async function awardBankedXpForExercise(params: {
 		awardedResourceCount: awardedResourceIds.length
 	})
 
+	// Build lookup for computed awarded XP per resource
+	const awardedXpByResourceId = new Map<string, number>()
+	for (const item of detailedResults) {
+		awardedXpByResourceId.set(item.resourceId, item.awardedXp)
+	}
+
 	// 9. Save banked XP to individual assessmentResults for each awarded resource
 	for (const resourceId of awardedResourceIds) {
 		const resource = resourceMap.get(resourceId)
 		if (resource) {
+			const computedAwardedXp = awardedXpByResourceId.get(resourceId)
+			if (computedAwardedXp === undefined) {
+				logger.error("missing computed awarded xp for resource", { resourceId })
+				throw errors.new("banked xp: missing awarded xp for resource")
+			}
 			const resultSourcedId = generateResultSourcedId(userId, resourceId, false)
 			const lineItemId = getAssessmentLineItemId(resourceId)
 			const metadata = {
@@ -318,7 +329,7 @@ export async function awardBankedXpForExercise(params: {
 				totalQuestions: 1,
 				correctQuestions: 1,
 				accuracy: 100,
-				xp: typeof resource.metadata?.xp === "number" ? resource.metadata.xp : 0,
+				xp: computedAwardedXp,
 				multiplier: 1.0,
 				completedAt: new Date().toISOString(),
 				courseSourcedId: params.onerosterCourseSourcedId,
@@ -354,7 +365,7 @@ export async function awardBankedXpForExercise(params: {
 					} else {
 						const subjectSlug = String(resource.metadata?.khanSubjectSlug ?? "")
 						const mappedSubject = isSubjectSlug(subjectSlug) ? CALIPER_SUBJECT_MAPPING[subjectSlug] : "None"
-						const awardedXp = typeof resource.metadata?.xp === "number" ? resource.metadata.xp : 0
+						const awardedXp = computedAwardedXp
 						const actor = {
 							id: constructActorId(userId),
 							type: "TimebackUser" as const,
