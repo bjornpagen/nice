@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation"
 import * as React from "react"
 import { toast } from "sonner"
 import { syncUserWithOneRoster } from "@/lib/actions/user-sync"
-import { ErrUserNotProvisionedInOneRoster } from "@/lib/actions/user-sync-errors"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 
 export function UserSyncProvider({ children }: { children: React.ReactNode }) {
@@ -23,7 +22,10 @@ export function UserSyncProvider({ children }: { children: React.ReactNode }) {
 		if (hasAttemptedSyncRef.current) return
 
 		const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata || {})
-		const needsSync = !metadataValidation.success || !metadataValidation.data.sourceId
+		const needsSync =
+			!metadataValidation.success ||
+			!metadataValidation.data.sourceId ||
+			(metadataValidation.data.roles?.length ?? 0) === 0
 		if (!needsSync) return
 
 		hasAttemptedSyncRef.current = true
