@@ -2,6 +2,7 @@ import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import { inngest } from "@/inngest/client"
 import { oneroster } from "@/lib/clients"
+import { ONEROSTER_CONCURRENCY_KEY, ONEROSTER_CONCURRENCY_LIMIT } from "@/lib/constants/oneroster"
 
 // Define the Zod schema for the line item payload
 const AssessmentLineItemSchema = z.object({
@@ -28,8 +29,8 @@ const EventDataSchema = z.object({
 export const ingestAssessmentLineItems = inngest.createFunction(
 	{
 		id: "ingest-assessment-line-items",
-		name: "Ingest Assessment Line Items Hierarchically"
-		// No concurrency limit - unlimited parallel processing!
+		name: "Ingest Assessment Line Items Hierarchically",
+		concurrency: { limit: ONEROSTER_CONCURRENCY_LIMIT, key: ONEROSTER_CONCURRENCY_KEY }
 	},
 	{ event: "oneroster/assessment-line-items.ingest" },
 	async ({ event, step, logger }) => {

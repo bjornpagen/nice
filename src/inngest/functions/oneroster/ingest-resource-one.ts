@@ -6,11 +6,13 @@ import { inngest } from "@/inngest/client"
 import { oneroster } from "@/lib/clients"
 import type { Resource } from "@/lib/oneroster"
 import { ErrOneRosterNotFound } from "@/lib/oneroster"
+import { ONEROSTER_CONCURRENCY_KEY, ONEROSTER_CONCURRENCY_LIMIT } from "@/lib/constants/oneroster"
 
 export const ingestResourceOne = inngest.createFunction(
 	{
 		id: "ingest-resource-one",
-		name: "Ingest One OneRoster Resource"
+		name: "Ingest One OneRoster Resource",
+		concurrency: { limit: ONEROSTER_CONCURRENCY_LIMIT, key: ONEROSTER_CONCURRENCY_KEY }
 	},
 	{ event: "oneroster/resource.ingest.one" },
 	async ({ event, logger }) => {

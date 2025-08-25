@@ -4,11 +4,13 @@ import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { oneroster } from "@/lib/clients"
 import { ErrOneRosterNotFound } from "@/lib/oneroster"
+import { ONEROSTER_CONCURRENCY_KEY, ONEROSTER_CONCURRENCY_LIMIT } from "@/lib/constants/oneroster"
 
 export const ingestCourse = inngest.createFunction(
 	{
 		id: "ingest-course",
-		name: "Ingest OneRoster Course"
+		name: "Ingest OneRoster Course",
+		concurrency: { limit: ONEROSTER_CONCURRENCY_LIMIT, key: ONEROSTER_CONCURRENCY_KEY }
 	},
 	{ event: "oneroster/course.ingest.one" },
 	async ({ event, step, logger }) => {
