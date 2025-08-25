@@ -58,28 +58,30 @@ export function calculateAssessmentXp(
 	let multiplier = 0
 	let reason = ""
 
+	// Attempt decay: 1st = 1.0x, 2nd = 0.5x, 3rd = 0.25x, 4th+ = 0x
+	let attemptFactor = 0
 	if (attemptNumber === 1) {
-		if (accuracy === 100) {
-			multiplier = BONUS_MULTIPLIER
-			reason = "First attempt: 100% accuracy bonus"
-		} else if (accuracy >= MASTERY_THRESHOLD) {
-			multiplier = 1.0
-			reason = "First attempt: mastery achieved"
-		} else {
-			multiplier = 0
-			reason = "First attempt: below mastery threshold"
-		}
+		attemptFactor = 1.0
+	} else if (attemptNumber === 2) {
+		attemptFactor = 0.5
+	} else if (attemptNumber === 3) {
+		attemptFactor = 0.25
 	} else {
-		if (accuracy === 100) {
-			multiplier = 1.0
-			reason = `Attempt ${attemptNumber}: 100% accuracy`
-		} else if (accuracy >= MASTERY_THRESHOLD) {
-			multiplier = 0.5
-			reason = `Attempt ${attemptNumber}: mastery achieved (reduced XP)`
-		} else {
-			multiplier = 0
-			reason = `Attempt ${attemptNumber}: below mastery threshold`
-		}
+		attemptFactor = 0
+	}
+
+	if (attemptFactor === 0) {
+		multiplier = 0
+		reason = `Attempt ${attemptNumber}: no xp`
+	} else if (accuracy === 100) {
+		multiplier = BONUS_MULTIPLIER * attemptFactor
+		reason = `Attempt ${attemptNumber}: 100% accuracy with attempt decay`
+	} else if (accuracy >= MASTERY_THRESHOLD) {
+		multiplier = 1.0 * attemptFactor
+		reason = `Attempt ${attemptNumber}: mastery achieved with attempt decay`
+	} else {
+		multiplier = 0
+		reason = `Attempt ${attemptNumber}: below mastery threshold`
 	}
 
 	const finalXp = Math.round(baseXp * multiplier)
