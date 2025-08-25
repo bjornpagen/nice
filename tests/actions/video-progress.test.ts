@@ -5,7 +5,7 @@ import * as errors from "@superbuilders/errors"
 const mockGetResult = mock((_id: string) => Promise.resolve({}))
 const mockPutResult = mock((_id: string, _payload: unknown) => Promise.resolve({}))
 const mockGetAllCoursesBySlug = mock((_slug: string) => Promise.resolve([{ sourcedId: "course_1" }]))
-const mockInvalidateCache = mock((_key: string) => Promise.resolve())
+const mockInvalidateCache = mock((_keys: string[]) => Promise.resolve())
 
 // Provide stable cache key generation used by tracking.ts
 function userProgressByCourse(userId: string, courseId: string): string {
@@ -40,7 +40,7 @@ mock.module("@/lib/data/fetchers/oneroster", () => ({
 
 mock.module("@/lib/cache", () => ({
 	userProgressByCourse,
-	invalidateCache: (key: string) => mockInvalidateCache(key),
+	invalidateCache: (keys: string[]) => mockInvalidateCache(keys),
 	// Provide redisCache passthrough to satisfy modules that import it during the suite
 	redisCache: async <T>(cb: () => Promise<T>, _keys: (string | number)[], _opts: { revalidate: number | false }) => cb()
 }))
@@ -93,7 +93,7 @@ describe("updateVideoProgress - scoring and status", () => {
 
 		// cache invalidation
 		expect(mockGetAllCoursesBySlug).toHaveBeenCalledWith("alg")
-		expect(mockInvalidateCache).toHaveBeenCalledWith(userProgressByCourse("test_source_id", "course_1"))
+		expect(mockInvalidateCache).toHaveBeenCalledWith([userProgressByCourse("test_source_id", "course_1")])
 	})
 
 	test("marks complete at threshold with score 100 and fully graded", async () => {
