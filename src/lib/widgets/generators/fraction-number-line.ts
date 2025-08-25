@@ -11,17 +11,13 @@ const Tick = z
 			),
 		topLabel: z
 			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"Label displayed above the tick mark (e.g., '0', '1/2', '1 1/2', '2.25', null). Null shows no top label. Often shows fractions."
+				"Label displayed above the tick mark (e.g., '0', '1/2', '1 1/2', '2.25'). To show no label, use an empty string."
 			),
 		bottomLabel: z
 			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"Label displayed below the tick mark (e.g., '0', '2/4', '6/4', null). Null shows no bottom label. Often shows equivalent fractions."
+				"Label displayed below the tick mark (e.g., '0', '2/4', '6/4'). To show no label, use an empty string."
 			),
 		isMajor: z
 			.boolean()
@@ -172,10 +168,10 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 		const x = toSvgX(tick.value)
 		const tickHeight = tick.isMajor ? 8 : 4
 		svg += `<line x1="${x}" y1="${yPosAxis - tickHeight}" x2="${x}" y2="${yPosAxis + tickHeight}" stroke="black" stroke-width="1.5"/>`
-		if (tick.topLabel !== null) {
+		if (tick.topLabel !== "") {
 			svg += `<text x="${x}" y="${yPosAxis - 15}" class="label-top" text-anchor="middle">${tick.topLabel}</text>`
 		}
-		if (tick.bottomLabel !== null) {
+		if (tick.bottomLabel !== "") {
 			svg += `<text x="${x}" y="${yPosAxis + 25}" class="label-bottom" text-anchor="middle">${tick.bottomLabel}</text>`
 		}
 	}

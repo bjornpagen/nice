@@ -11,10 +11,8 @@ const BarDataSchema = z
 	.object({
 		label: z
 			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"The category name displayed below this bar on the x-axis (e.g., 'January', 'Apples', null). Null shows no label."
+				"The category name displayed below this bar on the x-axis (e.g., 'January', 'Apples')."
 			),
 		value: z.number().describe("The numerical value determining the bar's height. Can be positive or negative."),
 		state: z
@@ -149,7 +147,9 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 		} else {
 			svg += `<rect x="${x + xOffset}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="none" stroke="${barColor}" stroke-width="2" stroke-dasharray="4"/>`
 		}
-		svg += `<text x="${x + barWidth / 2}" y="${height - margin.bottom + 15}" fill="black" text-anchor="middle">${d.label}</text>`
+		if (d.label !== "") {
+			svg += `<text x="${x + barWidth / 2}" y="${height - margin.bottom + 15}" fill="black" text-anchor="middle">${d.label}</text>`
+		}
 	})
 
 	svg += "</svg>"

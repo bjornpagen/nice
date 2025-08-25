@@ -9,10 +9,8 @@ const Tick = z
 			.describe("Position of this tick mark on the number line (e.g., 0, 0.5, 1, 1.5). Must be between min and max."),
 		label: z
 			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"Text label for this tick (e.g., '0', '1/2', '1', '1 1/2', null). Null shows tick without label. Can show fractions or mixed numbers."
+				"Text label for this tick (e.g., '0', '1/2', '1', '1 1/2'). To show no label, use an empty string."
 			),
 		isMajor: z
 			.boolean()
@@ -112,7 +110,7 @@ export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof Number
 		const x = toSvgX(t.value)
 		const tickHeight = t.isMajor ? 8 : 4
 		svg += `<line x1="${x}" y1="${yPos - tickHeight}" x2="${x}" y2="${yPos + tickHeight}" stroke="#333333"/>`
-		if (t.label !== null) {
+		if (t.label !== "") {
 			svg += `<text x="${x}" y="${yPos + 25}" fill="#333333" text-anchor="middle">${t.label}</text>`
 		}
 	}

@@ -37,10 +37,8 @@ const SpecialTick = z
 			),
 		label: z
 			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
-				"Custom label for this tick position (e.g., 'π', '√2', '2½', 'e', null). Replaces the numeric label. Null uses default numeric label. Plaintext only; no markdown or HTML."
+				"Custom label for this tick position (e.g., 'π', '√2', '2½', 'e'). Replaces the numeric label."
 			)
 	})
 	.strict()
@@ -141,7 +139,9 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 		}
 		// Special Labels
 		for (const s of specialTickLabels) {
-			svg += `<text x="${toSvgX(s.value)}" y="${yPos + 25}" fill="black" text-anchor="middle" font-weight="bold">${s.label}</text>`
+			if (s.label !== "") {
+				svg += `<text x="${toSvgX(s.value)}" y="${yPos + 25}" fill="black" text-anchor="middle" font-weight="bold">${s.label}</text>`
+			}
 		}
 		for (const p of points) {
 			const cx = toSvgX(p.value)
@@ -189,7 +189,9 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 		}
 		// Special Labels
 		for (const s of specialTickLabels) {
-			svg += `<text x="${xPos - 15}" y="${toSvgY(s.value) + 4}" fill="black" text-anchor="end" font-weight="bold">${s.label}</text>`
+			if (s.label !== "") {
+				svg += `<text x="${xPos - 15}" y="${toSvgY(s.value) + 4}" fill="black" text-anchor="end" font-weight="bold">${s.label}</text>`
+			}
 		}
 		for (const p of points) {
 			const cy = toSvgY(p.value)
