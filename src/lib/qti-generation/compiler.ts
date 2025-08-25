@@ -671,7 +671,10 @@ function enforceIdentifierOnlyMatching(item: AssessmentItem): void {
 			throw ErrDuplicateResponseIdentifier
 		}
 		responseIdOwners.set(id, ownerId)
-		return (allowed[id] ??= new Set<string>())
+		if (!allowed[id]) {
+			allowed[id] = new Set<string>()
+		}
+		return allowed[id]
 	}
 
 	// Interactions: inlineChoice, choice, order
@@ -683,10 +686,22 @@ function enforceIdentifierOnlyMatching(item: AssessmentItem): void {
 				interaction.type === "choiceInteraction" ||
 				interaction.type === "orderInteraction"
 			) {
-				const responseId = (interaction as any).responseIdentifier
+				if (
+					!("responseIdentifier" in interaction) ||
+					typeof interaction.responseIdentifier !== "string" ||
+					interaction.responseIdentifier.trim() === ""
+				) {
+					logger.error("missing responseIdentifier in interaction", { interactionId })
+					throw errors.new("missing responseidentifier")
+				}
+				const responseId = interaction.responseIdentifier
 				const seenIdentifiers = new Set<string>() // NEW: Check for case-sensitive duplicates within THIS interaction's choices
-				for (const choice of (interaction as any).choices ?? []) {
-					const ident = String((choice as any).identifier)
+				if (!("choices" in interaction) || !Array.isArray(interaction.choices)) {
+					logger.error("invalid choices array in interaction", { interactionId })
+					throw errors.new("invalid choices array")
+				}
+				for (const choice of interaction.choices) {
+					const ident = String("identifier" in choice ? choice.identifier : "")
 					// REMOVED: .toLowerCase() - now case-sensitive
 					if (seenIdentifiers.has(ident)) {
 						logger.error("duplicate choice identifiers within interaction (case-sensitive)", {
@@ -705,13 +720,13 @@ function enforceIdentifierOnlyMatching(item: AssessmentItem): void {
 	// Widgets: dataTable dropdown cells
 	if (item.widgets) {
 		for (const [widgetId, widget] of Object.entries(item.widgets)) {
-			if (!widget || (widget as any).type !== "dataTable") continue
+			if (!widget || widget.type !== "dataTable") continue
 
-			const dataTable = widget as any // Cast for easier access to dataTable properties
+			const dataTable = widget
 
 			// NEW: Check rowHeaderKey referential integrity
 			if (dataTable.rowHeaderKey !== null && typeof dataTable.rowHeaderKey === "string") {
-				const columnKeys = new Set(dataTable.columns.map((col: any) => col.key))
+				const columnKeys = new Set(dataTable.columns.map((col: { key: string }) => col.key))
 				if (!columnKeys.has(dataTable.rowHeaderKey)) {
 					logger.error("dataTable rowHeaderKey references non-existent column", {
 						widgetId,
@@ -722,7 +737,7 @@ function enforceIdentifierOnlyMatching(item: AssessmentItem): void {
 				}
 			}
 
-			const rows: any[][] = Array.isArray(dataTable.data) ? (dataTable.data as any[][]) : []
+			const rows = Array.isArray(dataTable.data) ? dataTable.data : []
 			for (const row of rows) {
 				if (!Array.isArray(row)) continue
 				for (const cell of row) {
@@ -774,7 +789,7 @@ function enforceIdentifierOnlyMatching(item: AssessmentItem): void {
 				}
 			}
 		} else {
-			const v: any = decl.correct
+			const v = decl.correct
 			if (typeof v !== "string" || !inSet(v)) {
 				logger.error("correct identifier not present in choices", { responseIdentifier: decl.identifier, value: v })
 				throw errors.new("correct identifier not present in choices")

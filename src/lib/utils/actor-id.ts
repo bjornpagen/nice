@@ -1,3 +1,5 @@
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { env } from "@/env"
 
 /**
@@ -9,9 +11,17 @@ import { env } from "@/env"
 export function extractUserSourcedId(input: string): string {
 	if (input.startsWith("http")) {
 		const idx = input.lastIndexOf("/users/")
-		if (idx === -1) throw new Error("invalid actor URI: missing /users/")
+		if (idx === -1) {
+			const err = errors.new("invalid actor uri: missing /users/")
+			logger.error("invalid actor uri", { input, error: err })
+			throw err
+		}
 		const id = input.slice(idx + "/users/".length)
-		if (!id) throw new Error("invalid actor URI: empty user id")
+		if (!id) {
+			const err = errors.new("invalid actor uri: empty user id")
+			logger.error("invalid actor uri", { input, error: err })
+			throw err
+		}
 		return id
 	}
 	return input

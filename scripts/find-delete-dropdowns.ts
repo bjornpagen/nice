@@ -63,14 +63,14 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 function getAttr(node: unknown, name: string): string | undefined {
 	if (!isRecord(node)) return undefined
 	const key = `@_${name}`
-	const v = (node as any)[key]
+	const v = node[key]
 	return typeof v === "string" ? v : undefined
 }
 
 function getText(node: unknown): string {
 	if (typeof node === "string") return node
 	if (!isRecord(node)) return ""
-	const t = (node as any)["#text"]
+	const t = node["#text"]
 	return typeof t === "string" ? t : ""
 }
 
@@ -91,20 +91,20 @@ function validateXml(xml: string): Issue[] {
 	const root = parseResult.data
 	if (!isRecord(root)) return issues
 
-	const item = (root as any)["qti-assessment-item"]
+	const item = root["qti-assessment-item"]
 	if (!isRecord(item)) return issues
 
 	// First collect declaration identifiers (for missingDeclaration checks)
 	const declIdSet = new Set<string>()
-	const declarations = asArray((item as any)["qti-response-declaration"]) as Array<Record<string, unknown>>
-	for (const decl of declarations) {
+	const declarationsNodes = asArray(isRecord(item) ? item["qti-response-declaration"] : undefined)
+	for (const decl of declarationsNodes) {
 		if (!isRecord(decl)) continue
 		const rid = getAttr(decl, "identifier")
 		if (rid) declIdSet.add(rid)
 	}
 
 	// Validate inline choice interactions and choice identifiers; collect used response ids and choice sets
-	const itemBody = (item as any)["qti-item-body"]
+	const itemBody = item["qti-item-body"]
 	const choiceSetByRespId = new Map<string, Set<string>>()
 	const choiceTextSetByRespId = new Map<string, Set<string>>()
 	const usedRespIdSet = new Set<string>()
@@ -112,7 +112,7 @@ function validateXml(xml: string): Issue[] {
 		if (!isRecord(node)) return
 		for (const [key, val] of Object.entries(node)) {
 			if (key === "qti-inline-choice-interaction") {
-				const interactions = asArray(val as any)
+				const interactions = asArray(val)
 				for (let idx = 0; idx < interactions.length; idx++) {
 					const inter = interactions[idx]
 					if (!isRecord(inter)) continue
@@ -127,10 +127,10 @@ function validateXml(xml: string): Issue[] {
 						})
 					}
 					// Choice identifiers and texts
-					const choices = asArray((inter as any)["qti-inline-choice"]) as Array<Record<string, unknown>>
+					const choicesUnknown = asArray(inter["qti-inline-choice"])
 					const seen = new Set<string>()
-					for (let c = 0; c < choices.length; c++) {
-						const ch = choices[c]
+					for (let c = 0; c < choicesUnknown.length; c++) {
+						const ch = choicesUnknown[c]
 						const ident = getAttr(ch, "identifier") || ""
 						if (!SAFE_IDENTIFIER_REGEX.test(ident)) {
 							issues.push({
@@ -173,7 +173,7 @@ function validateXml(xml: string): Issue[] {
 
 	// Now validate declarations ONLY for identifiers used by dropdowns
 	const declCorrectById = new Map<string, string[]>()
-	for (const decl of declarations) {
+	for (const decl of declarationsNodes) {
 		if (!isRecord(decl)) continue
 		const rid = getAttr(decl, "identifier")
 		if (!rid || !usedRespIdSet.has(rid)) continue
@@ -189,12 +189,12 @@ function validateXml(xml: string): Issue[] {
 			continue
 		}
 		if (baseType === "identifier") {
-			const correctResp = (decl as any)["qti-correct-response"]
+			const correctResp = decl["qti-correct-response"]
 			if (!isRecord(correctResp)) continue
-			const values = asArray((correctResp as any)["qti-value"]) as Array<string | Record<string, unknown>>
+			const valuesUnknown = asArray(correctResp["qti-value"])
 			// Cardinality check: single must not have multiple correct values
 			const cardinality = getAttr(decl, "cardinality") || ""
-			if (cardinality === "single" && values.length > 1) {
+			if (cardinality === "single" && valuesUnknown.length > 1) {
 				issues.push({
 					kind: "singleCardinalityMultipleCorrect",
 					responseIdentifier: rid,
@@ -202,8 +202,8 @@ function validateXml(xml: string): Issue[] {
 				})
 			}
 			const corr: string[] = []
-			for (let i = 0; i < values.length; i++) {
-				const v = values[i]
+			for (let i = 0; i < valuesUnknown.length; i++) {
+				const v = valuesUnknown[i]
 				const str = typeof v === "string" ? v : undefined
 				if (typeof str === "string" && !SAFE_IDENTIFIER_REGEX.test(str)) {
 					issues.push({
@@ -237,24 +237,24 @@ function validateXml(xml: string): Issue[] {
 	}
 
 	// Dropdown-only response-processing sanity check: verify qti-match/qti-map-response reference dropdown response ids
-	const responseProcessing = (item as any)["qti-response-processing"]
+	const responseProcessing = item["qti-response-processing"]
 	const matchPairs: Array<{ variableId: string; correctId: string }> = []
 	const mapResponseIds = new Set<string>()
 	const visitProcessing = (node: unknown) => {
 		if (!isRecord(node)) return
 		for (const [key, val] of Object.entries(node)) {
 			if (key === "qti-match") {
-				const matches = asArray(val as any)
+				const matches = asArray(val)
 				for (const match of matches) {
 					if (!isRecord(match)) continue
-					const variable = (match as any)["qti-variable"]
-					const correct = (match as any)["qti-correct"]
+					const variable = match["qti-variable"]
+					const correct = match["qti-correct"]
 					const varId = isRecord(variable) ? getAttr(variable, "identifier") || "" : ""
 					const corId = isRecord(correct) ? getAttr(correct, "identifier") || "" : ""
 					matchPairs.push({ variableId: varId, correctId: corId })
 				}
 			} else if (key === "qti-map-response") {
-				const maps = asArray(val as any)
+				const maps = asArray(val)
 				for (const mr of maps) {
 					if (!isRecord(mr)) continue
 					const id = getAttr(mr, "identifier") || ""
@@ -275,7 +275,12 @@ function validateXml(xml: string): Issue[] {
 		const varOnly = matchPairs.find((p) => p.variableId === rid && p.correctId !== rid)
 		const corOnly = matchPairs.find((p) => p.correctId === rid && p.variableId !== rid)
 		if (varOnly || corOnly) {
-			const wrong = varOnly ? varOnly.correctId : corOnly ? corOnly.variableId : ""
+			let wrong = ""
+			if (varOnly) {
+				wrong = varOnly.correctId
+			} else if (corOnly) {
+				wrong = corOnly.variableId
+			}
 			issues.push({
 				kind: "dropdownMatchMismatched",
 				responseIdentifier: rid,
@@ -310,7 +315,8 @@ async function fetchQuestions(): Promise<Array<{ id: string; xml: string | null 
 		logger.error("query execution", { error: selResult.error })
 		throw errors.wrap(selResult.error, "query execution")
 	}
-	return selResult.data as Array<{ id: string; xml: string | null }>
+	// selResult.data is already typed by the explicit select, avoid 'as' cast
+	return selResult.data
 }
 
 // --- CLI ---

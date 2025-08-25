@@ -33,12 +33,26 @@ type StructuredJson = {
 	widgets?: Record<string, UrlImageWidget | { type?: string } | undefined> | null
 }
 
+function hasProp<K extends PropertyKey>(obj: unknown, prop: K): obj is Record<K, unknown> {
+	return typeof obj === "object" && obj !== null && prop in obj
+}
+
+function isStructuredJson(value: unknown): value is StructuredJson {
+	if (!value || typeof value !== "object") return false
+	// widgets may be missing or null; that's acceptable
+	return !hasProp(value, "widgets") || value.widgets === null || typeof value.widgets === "object"
+}
+
+function isUrlImageWidget(value: unknown): value is UrlImageWidget {
+	return typeof value === "object" && value !== null && hasProp(value, "type") && value.type === "urlImage"
+}
+
 function hasUrlImage(structured: unknown): boolean {
-	if (!structured || typeof structured !== "object") return false
-	const s = structured as StructuredJson
-	if (!s.widgets || typeof s.widgets !== "object") return false
-	for (const value of Object.values(s.widgets)) {
-		if (value && typeof value === "object" && (value as { type?: string }).type === "urlImage") {
+	if (!isStructuredJson(structured)) return false
+	const widgets = structured.widgets
+	if (!widgets || typeof widgets !== "object") return false
+	for (const value of Object.values(widgets)) {
+		if (isUrlImageWidget(value)) {
 			return true
 		}
 	}
@@ -184,8 +198,8 @@ function removeCaptionsByStructuredJson(
 	let widgetIndex = -1
 	for (const widget of Object.values(widgets)) {
 		widgetIndex++
-		if (!widget || (widget as { type?: string }).type !== "urlImage") continue
-		const w = widget as UrlImageWidget
+		if (!isUrlImageWidget(widget)) continue
+		const w = widget
 
 		// Compute both normalized and raw caption candidates
 		const normalizedCaption = normalizeCaption(w.caption)
@@ -201,7 +215,13 @@ function removeCaptionsByStructuredJson(
 		const normalizedCaptionDiv = normalizedCaption ? buildCaptionDiv(normalizedCaption) : null
 		const rawCaptionDiv = rawCaptionCandidate ? buildCaptionDiv(rawCaptionCandidate) : null
 		const alt = normalizeAlt(w.alt)
-		const combinedSnippet = `${buildImgTag(w.url, alt, w.width, w.height)}${normalizedCaption ?? rawCaptionCandidate ?? ""}`
+		let combinedCaptionPart = ""
+		if (normalizedCaption !== null) {
+			combinedCaptionPart = normalizedCaption
+		} else if (rawCaptionCandidate !== null) {
+			combinedCaptionPart = rawCaptionCandidate
+		}
+		const combinedSnippet = `${buildImgTag(w.url, alt, w.width, w.height)}${combinedCaptionPart}`
 
 		// Search forward for the caption div that belongs to this widget by verifying preceding img src
 		const escapedSrc = `src="${escapeXmlAttribute(w.url)}"`
@@ -218,10 +238,18 @@ function removeCaptionsByStructuredJson(
 			if (idxNorm === -1 && idxRaw === -1) break
 			if (idxNorm !== -1 && (idxRaw === -1 || idxNorm <= idxRaw)) {
 				idxCaption = idxNorm
-				usedCaptionDiv = normalizedCaptionDiv!
+				if (normalizedCaptionDiv === null) {
+					logger.error("normalized caption div missing", { idxNorm })
+					throw errors.new("invalid caption div state")
+				}
+				usedCaptionDiv = normalizedCaptionDiv
 			} else {
 				idxCaption = idxRaw
-				usedCaptionDiv = rawCaptionDiv!
+				if (rawCaptionDiv === null) {
+					logger.error("raw caption div missing", { idxRaw })
+					throw errors.new("invalid caption div state")
+				}
+				usedCaptionDiv = rawCaptionDiv
 			}
 			imgStart = working.lastIndexOf("<img", idxCaption)
 			if (imgStart === -1) {
@@ -290,7 +318,7 @@ function removeCaptionsByStructuredJson(
 					widget: {
 						url: w.url,
 						alt,
-						caption: (normalizedCaption ?? rawCaptionCandidate)!,
+						caption: combinedCaptionPart,
 						width: w.width,
 						height: w.height
 					},
@@ -346,11 +374,19 @@ async function main() {
 	let questionsWithCaption = 0
 
 	for (let i = 0; i < targets.length; i++) {
-		const row = targets[i]!
+		const row = targets[i]
+		if (!row) continue
 		if (!row.xml) continue
 		processed++
 
-		const widgets = (row.structuredJson as StructuredJson | null)?.widgets ?? {}
+		let widgets: Record<string, UrlImageWidget | { type?: string } | undefined> = {}
+		if (
+			isStructuredJson(row.structuredJson) &&
+			row.structuredJson.widgets &&
+			typeof row.structuredJson.widgets === "object"
+		) {
+			widgets = row.structuredJson.widgets
+		}
 		const { updatedXml, removedCount, expectedRemovals, failure } = removeCaptionsByStructuredJson(row.xml, widgets)
 		if (expectedRemovals > 0) questionsWithCaption++
 		totalExpectedRemovals += expectedRemovals

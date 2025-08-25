@@ -31,7 +31,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 function getAttr(node: unknown, name: string): string | undefined {
 	if (!isRecord(node)) return undefined
 	const key = `@_${name}`
-	const v = (node as any)[key]
+	const v = node[key]
 	return typeof v === "string" ? v : undefined
 }
 
@@ -51,19 +51,19 @@ function hasMultipleStringMappings(xml: string): boolean {
 
 	const root = parseResult.data
 	if (!isRecord(root)) return false
-	const item = (root as any)["qti-assessment-item"]
+	const item = root["qti-assessment-item"]
 	if (!isRecord(item)) return false
 
-	const declarations = asArray((item as any)["qti-response-declaration"]) as Array<Record<string, unknown>>
-	for (const decl of declarations) {
+	const declarationsUnknown = asArray(isRecord(item) ? item["qti-response-declaration"] : undefined)
+	for (const decl of declarationsUnknown) {
 		if (!isRecord(decl)) continue
 		const baseType = getAttr(decl, "base-type") || ""
 		if (baseType !== "string") continue
 
-		const mapping = (decl as any)["qti-mapping"]
+		const mapping = decl["qti-mapping"]
 		if (!mapping || !isRecord(mapping)) continue
-		const entries = asArray((mapping as any)["qti-map-entry"]) as Array<Record<string, unknown>>
-		if (entries.length > 1) return true
+		const entriesUnknown = asArray(mapping["qti-map-entry"])
+		if (entriesUnknown.length > 1) return true
 	}
 
 	return false
@@ -85,7 +85,7 @@ async function fetchQuestions(): Promise<Array<{ id: string; xml: string | null 
 		logger.error("query execution", { error: selResult.error })
 		throw errors.wrap(selResult.error, "query execution")
 	}
-	return selResult.data as Array<{ id: string; xml: string | null }>
+	return selResult.data
 }
 
 // --- CLI ---
