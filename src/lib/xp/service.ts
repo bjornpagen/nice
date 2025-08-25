@@ -116,6 +116,10 @@ export async function awardXpForAssessment(options: AwardXpOptions): Promise<XpC
 
 				await invalidateCache(keysToInvalidate)
 				logger.info("invalidated related caliper caches before xp banking", { keyCount: keysToInvalidate.length })
+
+                // Give Caliper a brief moment to ingest freshly-sent events
+                // before computing banked XP. This avoids race conditions without altering logic.
+                await new Promise((resolve) => setTimeout(resolve, 1500))
 			}
 		}
 

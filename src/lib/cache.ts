@@ -116,22 +116,43 @@ export async function redisCache<T>(
  * @param keys A single cache key or array of cache keys to invalidate
  */
 export async function invalidateCache(keys: string | string[]): Promise<void> {
-	if (!redis || !redis.isReady) {
-		logger.warn("redis not available for cache invalidation", { keys })
-		return
-	}
+    // Snapshot and narrow redis client locally to avoid non-null assertions
+    const clientRef = redis
+    if (!clientRef || !clientRef.isReady) {
+        logger.warn("redis not available for cache invalidation", { keys })
+        return
+    }
 
 	const keysToDelete = Array.isArray(keys) ? keys : [keys]
 	if (keysToDelete.length === 0) return
 
-	const delResult = await errors.try(redis.del(keysToDelete))
-	if (delResult.error) {
-		logger.error("failed to invalidate cache", { keys: keysToDelete, error: delResult.error })
-		// Don't throw - cache invalidation failure shouldn't break the app
-		return
-	}
+    // Delete keys; when multiple, delete sequentially and sum results to avoid type issues
+    const client = clientRef
+    let deleted = 0
+    if (keysToDelete.length === 1) {
+        const singleKey = keysToDelete[0]
+        if (singleKey === undefined) {
+            logger.warn("invalidateCache called with empty key array")
+            return
+        }
+        const result = await errors.try(client.del(singleKey))
+        if (result.error) {
+            logger.error("failed to invalidate cache", { keys: keysToDelete, error: result.error })
+            return
+        }
+        deleted = result.data ?? 0
+    } else {
+        const results = await Promise.all(keysToDelete.map((k) => errors.try(client.del(k))))
+        for (const r of results) {
+            if (r.error) {
+                logger.error("failed to invalidate cache (partial)", { error: r.error })
+                continue
+            }
+            deleted += r.data ?? 0
+        }
+    }
 
-	logger.info("cache invalidated", { keys: keysToDelete, deleted: delResult.data })
+    logger.info("cache invalidated", { keys: keysToDelete, deleted })
 }
 
 /**

@@ -221,32 +221,23 @@ export function Content({
 							// Unlock controls in-session without re-initializing the player
 							setArePlayerControlsEnabled(true)
 							// Trigger a one-time immediate server update and refresh so Continue unlocks promptly
-							if (!hasTriggeredCompletionSideEffectsRef.current) {
+                            if (!hasTriggeredCompletionSideEffectsRef.current) {
 								hasTriggeredCompletionSideEffectsRef.current = true
-								let onerosterUserSourcedId: string | undefined
-								if (user?.publicMetadata) {
-									const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-									if (metadataValidation.success) {
-										onerosterUserSourcedId = metadataValidation.data.sourceId
-									}
-								}
-								if (onerosterUserSourcedId) {
-									async function markCompleteNow() {
-										const result = await errors.try(
-											updateVideoProgress(video.id, clampedTime, snappedDuration, {
-												subjectSlug: params.subject,
-												courseSlug: params.course
-											})
-										)
-										if (result.error) {
-											logger.error("failed to mark video complete", { error: result.error })
-										} else if (!hasRefreshedForCompletionRef.current) {
-											hasRefreshedForCompletionRef.current = true
-											router.refresh()
-										}
-									}
-									void markCompleteNow()
-								}
+                                async function markCompleteNow() {
+                                    const result = await errors.try(
+                                        updateVideoProgress(video.id, clampedTime, snappedDuration, {
+                                            subjectSlug: params.subject,
+                                            courseSlug: params.course
+                                        })
+                                    )
+                                    if (result.error) {
+                                        logger.error("failed to mark video complete", { error: result.error })
+                                    } else if (!hasRefreshedForCompletionRef.current) {
+                                        hasRefreshedForCompletionRef.current = true
+                                        router.refresh()
+                                    }
+                                }
+                                void markCompleteNow()
 							}
 						}
 					}
