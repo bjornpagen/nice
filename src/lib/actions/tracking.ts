@@ -384,7 +384,7 @@ export async function trackArticleView(
 	} else {
 		const onerosterCourseSourcedId = courseResult.data[0].sourcedId
 		const cacheKey = cacheUtils.userProgressByCourse(onerosterUserSourcedId, onerosterCourseSourcedId)
-		await invalidateCache(cacheKey)
+		await invalidateCache([cacheKey])
 		logger.info("invalidated user progress cache", { cacheKey })
 	}
 
@@ -537,7 +537,7 @@ export async function updateVideoProgress(
 	} else {
 		const onerosterCourseSourcedId = courseResult.data[0].sourcedId
 		const cacheKey = cacheUtils.userProgressByCourse(onerosterUserSourcedId, onerosterCourseSourcedId)
-		await invalidateCache(cacheKey)
+		await invalidateCache([cacheKey])
 		logger.info("invalidated user progress cache", { cacheKey })
 	}
 
@@ -747,7 +747,7 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 
 	// Step 5: Invalidate Cache
 	const cacheKey = cacheUtils.userProgressByCourse(onerosterUserSourcedId, courseId)
-	await invalidateCache(cacheKey)
+	await invalidateCache([cacheKey])
 	logger.info("invalidated user progress cache", { cacheKey })
 
 	logger.info("successfully saved assessment result", {

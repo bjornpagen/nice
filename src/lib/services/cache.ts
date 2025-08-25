@@ -12,5 +12,5 @@ import { invalidateCache, userProgressByCourse } from "@/lib/cache"
  */
 export async function invalidateUserCourseProgress(userSourcedId: string, courseSourcedId: string): Promise<void> {
 	const cacheKey = userProgressByCourse(userSourcedId, courseSourcedId)
-	await invalidateCache(cacheKey)
+	await invalidateCache([cacheKey])
 }

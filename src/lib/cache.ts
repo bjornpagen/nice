@@ -113,9 +113,9 @@ export async function redisCache<T>(
  * Invalidates one or more cache entries by deleting them from Redis.
  * Used in server actions when data is mutated.
  *
- * @param keys A single cache key or array of cache keys to invalidate
+ * @param keys An array of cache keys to invalidate
  */
-export async function invalidateCache(keys: string | string[]): Promise<void> {
+export async function invalidateCache(keys: string[]): Promise<void> {
     // Snapshot and narrow redis client locally to avoid non-null assertions
     const clientRef = redis
     if (!clientRef || !clientRef.isReady) {
@@ -123,26 +123,26 @@ export async function invalidateCache(keys: string | string[]): Promise<void> {
         return
     }
 
-	const keysToDelete = Array.isArray(keys) ? keys : [keys]
-	if (keysToDelete.length === 0) return
+	
+	if (keys.length === 0) return
 
     // Delete keys; when multiple, delete sequentially and sum results to avoid type issues
     const client = clientRef
     let deleted = 0
-    if (keysToDelete.length === 1) {
-        const singleKey = keysToDelete[0]
+    if (keys.length === 1) {
+        const singleKey = keys[0]
         if (singleKey === undefined) {
-            logger.warn("invalidateCache called with empty key array")
+            logger.warn("invalidateCache called with an array containing an undefined key")
             return
         }
         const result = await errors.try(client.del(singleKey))
         if (result.error) {
-            logger.error("failed to invalidate cache", { keys: keysToDelete, error: result.error })
+            logger.error("failed to invalidate cache", { keys, error: result.error })
             return
         }
         deleted = result.data ?? 0
     } else {
-        const results = await Promise.all(keysToDelete.map((k) => errors.try(client.del(k))))
+        const results = await Promise.all(keys.map((k) => errors.try(client.del(k))))
         for (const r of results) {
             if (r.error) {
                 logger.error("failed to invalidate cache (partial)", { error: r.error })
@@ -152,7 +152,7 @@ export async function invalidateCache(keys: string | string[]): Promise<void> {
         }
     }
 
-    logger.info("cache invalidated", { keys: keysToDelete, deleted })
+    logger.info("cache invalidated", { keys, deleted })
 }
 
 /**
