@@ -125,16 +125,31 @@ const renderWrappedText_local = (
 export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (props) => {
 	const { width, height, title, xAxis, yAxis, dataPoints, bottomArea, topArea, boundaryLine } = props
 
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
-	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const { titleY, topMargin } = calculateTitleLayout(title, width - 60, 60) // Keep 60px minimum for area graphs
-	const margin = { top: topMargin, right: 20, bottom: bottomMargin, left: leftMargin }
-	const chartWidth = width - margin.left - margin.right
-	const chartHeight = height - margin.top - margin.bottom
+	// --- MODIFICATION START ---
+	// The core layout calculations must be re-ordered. We must calculate vertical
+	// margins first to determine chartHeight, which is now a required input for calculateYAxisLayout.
 
-	if (chartHeight <= 0 || chartWidth <= 0) {
+	// 1. Calculate vertical margins first.
+	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
+	const { titleY, topMargin } = calculateTitleLayout(title, width - 60, 60)
+	const marginWithoutLeft = { top: topMargin, right: 20, bottom: bottomMargin } // Defer left margin
+
+	// 2. Calculate chartHeight based on vertical margins.
+	const chartHeight = height - marginWithoutLeft.top - marginWithoutLeft.bottom
+	if (chartHeight <= 0) {
 		return `<svg width="${width}" height="${height}"></svg>`
 	}
+
+	// 3. Now, calculate Y-axis layout using the determined chartHeight.
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis, chartHeight)
+	const margin = { ...marginWithoutLeft, left: leftMargin }
+
+	// 4. Calculate chartWidth with the final left margin.
+	const chartWidth = width - margin.left - margin.right
+	if (chartWidth <= 0) {
+		return `<svg width="${width}" height="${height}"></svg>`
+	}
+	// --- MODIFICATION END ---
 
 	const toSvgX = (val: number) => margin.left + ((val - xAxis.min) / (xAxis.max - xAxis.min)) * chartWidth
 	const toSvgY = (val: number) => height - margin.bottom - ((val - yAxis.min) / (yAxis.max - yAxis.min)) * chartHeight

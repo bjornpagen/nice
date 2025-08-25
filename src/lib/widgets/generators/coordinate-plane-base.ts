@@ -286,18 +286,30 @@ export function generateCoordinatePlaneBase(
 	showQuadrantLabels = false,
 	points: PlotPoint[] = []
 ): CoordinatePlaneBase {
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
+	// Calculate vertical margins first to determine chartHeight
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const pad = { top: 30, right: 30, bottom: bottomMargin, left: leftMargin }
-	const chartWidth = width - pad.left - pad.right
-	const chartHeight = height - pad.top - pad.bottom
-
-	if (chartWidth <= 0 || chartHeight <= 0 || xAxis.min >= xAxis.max || yAxis.min >= yAxis.max) {
-		logger.error("invalid chart dimensions or axis range", { width, height, chartWidth, chartHeight, xAxis, yAxis })
+	const padWithoutLeft = { top: 30, right: 30, bottom: bottomMargin }
+	
+	// Calculate chartHeight based on vertical margins
+	const chartHeight = height - padWithoutLeft.top - padWithoutLeft.bottom
+	
+	if (chartHeight <= 0 || xAxis.min >= xAxis.max || yAxis.min >= yAxis.max) {
+		logger.error("invalid chart dimensions or axis range", { width, height, chartHeight, xAxis, yAxis })
 		throw errors.wrap(
 			ErrInvalidDimensions,
 			`width: ${width}, height: ${height}, xAxis range: ${xAxis.min}-${xAxis.max}, yAxis range: ${yAxis.min}-${yAxis.max}`
 		)
+	}
+	
+	// Now calculate Y-axis layout using the determined chartHeight
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis, chartHeight)
+	const pad = { ...padWithoutLeft, left: leftMargin }
+	
+	// Calculate chartWidth with the final left margin
+	const chartWidth = width - pad.left - pad.right
+	if (chartWidth <= 0) {
+		logger.error("invalid chart width", { width, chartWidth })
+		throw errors.wrap(ErrInvalidDimensions, `width: ${width}, chartWidth: ${chartWidth}`)
 	}
 
 	const scaleX = chartWidth / (xAxis.max - xAxis.min)

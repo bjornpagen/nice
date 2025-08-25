@@ -149,3 +149,56 @@ export function stripMarkdownToPlaintext(input: string): string {
 
 	return text
 }
+
+/**
+ * Estimates the final dimensions (width and height) of a text element after wrapping.
+ * This function simulates the wrapping logic of `renderWrappedText` without rendering SVG,
+ * allowing layout utilities to predict the bounding box of text.
+ *
+ * @returns An object with the total height and maximum width of the wrapped text.
+ */
+export function estimateWrappedTextDimensions(
+	text: string,
+	maxWidthPx: number,
+	fontSize = 16,
+	lineHeight = 1.1,
+	approxCharWidthPx = 8
+): { height: number; maxWidth: number } {
+	let lines: string[] = []
+	const titlePattern = /^(.*)\s+(\(.+\))$/
+	const m = text.match(titlePattern)
+
+	if (m?.[1] && m[2] && text.length > 36) {
+		lines = [m[1].trim(), m[2].trim()]
+	} else {
+		const estimated = text.length * approxCharWidthPx
+		if (maxWidthPx && estimated > maxWidthPx) {
+			const words = text.split(/\s+/).filter(Boolean)
+			if (words.length > 1) {
+				const wordWidths = words.map((w) => w.length * approxCharWidthPx)
+				const total = wordWidths.reduce((a, b) => a + b, 0) + (words.length - 1) * approxCharWidthPx
+				const target = total / 2
+				let acc = 0
+				let splitIdx = 1
+				for (let i = 0; i < words.length - 1; i++) {
+					const w = wordWidths[i] ?? 0
+					acc += w + approxCharWidthPx
+					if (acc >= target) {
+						splitIdx = i + 1
+						break
+					}
+				}
+				lines = [words.slice(0, splitIdx).join(" "), words.slice(splitIdx).join(" ")]
+			} else {
+				lines = [text]
+			}
+		} else {
+			lines = [text]
+		}
+	}
+
+	const totalHeight = lines.length * fontSize * lineHeight
+	const maxWidth = Math.max(...lines.map((line) => line.length * approxCharWidthPx))
+
+	return { height: totalHeight, maxWidth }
+}

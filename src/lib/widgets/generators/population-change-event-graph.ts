@@ -78,8 +78,14 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 
 	// Create a mock yAxis object for the utility
 	const mockYAxis = { min: yAxisMin, max: yAxisMax, tickInterval: (yAxisMax - yAxisMin) / 5, label: yAxisLabel }
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(mockYAxis)
-	const padding = { top: 40, right: 40, bottom: 80, left: leftMargin }
+	
+	// Calculate vertical paddings first to determine chartHeight
+	const paddingWithoutLeft = { top: 40, right: 40, bottom: 80 }
+	const chartHeight = height - paddingWithoutLeft.top - paddingWithoutLeft.bottom
+	
+	// Now calculate Y-axis layout using the determined chartHeight
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(mockYAxis, chartHeight)
+	const padding = { ...paddingWithoutLeft, left: leftMargin }
 
 	// Use the explicitly provided axis ranges
 	const minX = xAxisMin
@@ -88,7 +94,6 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 	const paddedMaxY = yAxisMax
 
 	const chartWidth = width - padding.left - padding.right
-	const chartHeight = height - padding.top - padding.bottom
 
 	const scaleX = chartWidth / (maxX - minX || 1)
 	const scaleY = chartHeight / (paddedMaxY - paddedMinY || 1)

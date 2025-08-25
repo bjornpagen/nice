@@ -351,7 +351,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		}
 	}
 	// Use the same robust coordinate plane logic from generateCoordinatePlane
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
+	// Calculate vertical margins first to determine chartHeight
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
 	const { titleY, topMargin } = calculateTitleLayout(title, width - 60)
 
@@ -361,11 +361,21 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	const { requiredRightMargin } = calculateLineLegendLayout(lineCount, 0, 0) // chartRight/chartTop calculated after padding
 	const rightMargin = lineCount > 0 ? requiredRightMargin : basePadRight
 
-	const pad = { top: topMargin, right: rightMargin, bottom: bottomMargin, left: leftMargin }
-	const chartWidth = width - pad.left - pad.right
-	const chartHeight = height - pad.top - pad.bottom
+	// Calculate chartHeight based on vertical margins
+	const padWithoutLeft = { top: topMargin, right: rightMargin, bottom: bottomMargin }
+	const chartHeight = height - padWithoutLeft.top - padWithoutLeft.bottom
+	
+	if (chartHeight <= 0 || xAxis.min >= xAxis.max || yAxis.min >= yAxis.max) {
+		return `<svg width="${width}" height="${height}"></svg>`
+	}
 
-	if (chartWidth <= 0 || chartHeight <= 0 || xAxis.min >= xAxis.max || yAxis.min >= yAxis.max) {
+	// Now calculate Y-axis layout using the determined chartHeight
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis, chartHeight)
+	const pad = { ...padWithoutLeft, left: leftMargin }
+
+	// Calculate chartWidth with the final left margin
+	const chartWidth = width - pad.left - pad.right
+	if (chartWidth <= 0) {
 		return `<svg width="${width}" height="${height}"></svg>`
 	}
 

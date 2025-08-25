@@ -59,13 +59,22 @@ export type ParabolaGraphProps = z.infer<typeof ParabolaGraphPropsSchema>
 export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSchema> = (props) => {
 	const { width, height, xAxis, yAxis, parabola } = props
 
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
+	// Calculate vertical margins first to determine chartHeight
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const margin = { top: 20, right: 20, bottom: bottomMargin, left: leftMargin }
+	const marginWithoutLeft = { top: 20, right: 20, bottom: bottomMargin }
+	
+	// Calculate chartHeight based on vertical margins
+	const chartHeight = height - marginWithoutLeft.top - marginWithoutLeft.bottom
+	
+	if (chartHeight <= 0) return `<svg width="${width}" height="${height}"></svg>`
+	
+	// Now calculate Y-axis layout using the determined chartHeight
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis, chartHeight)
+	const margin = { ...marginWithoutLeft, left: leftMargin }
+	
+	// Calculate chartWidth with the final left margin
 	const chartWidth = width - margin.left - margin.right
-	const chartHeight = height - margin.top - margin.bottom
-
-	if (chartHeight <= 0 || chartWidth <= 0) return `<svg width="${width}" height="${height}"></svg>`
+	if (chartWidth <= 0) return `<svg width="${width}" height="${height}"></svg>`
 
 	const toSvgX = (val: number) => margin.left + ((val - xAxis.min) / (xAxis.max - xAxis.min)) * chartWidth
 	const toSvgY = (val: number) => height - margin.bottom - ((val - yAxis.min) / (yAxis.max - yAxis.min)) * chartHeight

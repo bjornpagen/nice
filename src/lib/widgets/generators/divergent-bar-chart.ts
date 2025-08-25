@@ -78,15 +78,15 @@ export type DivergentBarChartProps = z.infer<typeof DivergentBarChartPropsSchema
 export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChartPropsSchema> = (data) => {
 	const { width, height, xAxisLabel, yAxis, data: chartData, positiveBarColor, negativeBarColor, gridColor } = data
 
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
+	// Calculate vertical margins first to determine chartHeight
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const margin = { top: 20, right: 20, bottom: bottomMargin, left: leftMargin }
-	const chartWidth = width - margin.left - margin.right
-	const chartHeight = height - margin.top - margin.bottom
-
-	if (chartHeight <= 0 || chartWidth <= 0 || chartData.length === 0 || yAxis.min >= yAxis.max) {
+	const marginWithoutLeft = { top: 20, right: 20, bottom: bottomMargin }
+	
+	// Calculate chartHeight based on vertical margins
+	const chartHeight = height - marginWithoutLeft.top - marginWithoutLeft.bottom
+	
+	if (chartHeight <= 0 || chartData.length === 0 || yAxis.min >= yAxis.max) {
 		logger.error("invalid chart dimensions or data for divergent bar chart", {
-			chartWidth,
 			chartHeight,
 			dataLength: chartData.length,
 			yAxis
@@ -95,6 +95,17 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 			ErrInvalidDimensions,
 			"chart dimensions must be positive, data must not be empty, and y-axis min must be less than max."
 		)
+	}
+	
+	// Now calculate Y-axis layout using the determined chartHeight
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis, chartHeight)
+	const margin = { ...marginWithoutLeft, left: leftMargin }
+	
+	// Calculate chartWidth with the final left margin
+	const chartWidth = width - margin.left - margin.right
+	if (chartWidth <= 0) {
+		logger.error("invalid chart width for divergent bar chart", { chartWidth })
+		throw errors.wrap(ErrInvalidDimensions, "chart width must be positive.")
 	}
 
 	const yRange = yAxis.max - yAxis.min

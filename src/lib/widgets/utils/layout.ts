@@ -1,5 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { estimateWrappedTextDimensions } from "@/lib/widgets/utils/text"
 
 export type Extents = { minX: number; maxX: number }
 
@@ -50,11 +51,10 @@ export function computeDynamicWidth(
 
 /**
  * Calculates the required left margin and Y-axis title position for a chart.
+ * This version is robust to long, wrapping Y-axis labels.
+ *
  * @param yAxis - The Y-axis configuration object.
- * @param yAxis.max - The maximum value on the axis.
- * @param yAxis.min - The minimum value on the axis.
- * @param yAxis.tickInterval - The interval between ticks.
- * @param yAxis.label - The text label for the axis.
+ * @param chartHeightPx - The available height for the chart area, used to calculate wrapping.
  * @param titlePadding - Optional spacing between tick labels and title (default: 20px)
  * @returns An object containing the calculated `leftMargin` and `yAxisLabelX` position.
  */
@@ -65,26 +65,36 @@ export function calculateYAxisLayout(
 		tickInterval: number
 		label: string
 	},
+	chartHeightPx: number, // NEW: chartHeightPx is now required
 	titlePadding = 20
 ): { leftMargin: number; yAxisLabelX: number } {
-	const AVG_CHAR_WIDTH_PX = 8 // Estimated width for an average character
+	const AVG_CHAR_WIDTH_PX = 8
 	const TICK_LENGTH = 5
-	const LABEL_PADDING = 10 // Space between ticks and labels
-	const AXIS_TITLE_HEIGHT = 16 // Font size of the title
+	const LABEL_PADDING = 10
+	const AXIS_TITLE_FONT_SIZE = 16
 
-	let maxLabelWidth = 0
-
-	// Determine the longest tick label string
+	// 1. Calculate width needed for tick labels
+	let maxTickLabelWidth = 0
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const label = String(t)
-		const estimatedWidth = label.length * AVG_CHAR_WIDTH_PX
-		if (estimatedWidth > maxLabelWidth) {
-			maxLabelWidth = estimatedWidth
-		}
+		maxTickLabelWidth = Math.max(maxTickLabelWidth, label.length * AVG_CHAR_WIDTH_PX)
 	}
 
-	const leftMargin = TICK_LENGTH + LABEL_PADDING + maxLabelWidth + titlePadding + AXIS_TITLE_HEIGHT
-	const yAxisLabelX = AXIS_TITLE_HEIGHT / 2 // Position title at the far left of the margin
+	// 2. Calculate the effective width of the rotated, wrapped axis label
+	const { height: wrappedLabelHeight } = estimateWrappedTextDimensions(
+		yAxis.label,
+		chartHeightPx, // The wrapping constraint is the chart's height
+		AXIS_TITLE_FONT_SIZE
+	)
+
+	// 3. The required space is the greater of the two, plus padding
+	const spaceForTickLabels = TICK_LENGTH + LABEL_PADDING + maxTickLabelWidth
+	const spaceForAxisLabel = titlePadding + wrappedLabelHeight
+
+	const leftMargin = Math.max(spaceForTickLabels, spaceForAxisLabel)
+
+	// Position the axis label's rotation point at the very left edge of the margin
+	const yAxisLabelX = wrappedLabelHeight / 2 // Centered within its own required space
 
 	return { leftMargin, yAxisLabelX }
 }

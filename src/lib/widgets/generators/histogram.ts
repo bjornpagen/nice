@@ -124,14 +124,26 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	}
 	// Create a mock yAxis with min for the layout calculation (histogram y-axis always starts at 0)
 	const mockYAxis = { ...yAxis, min: 0 }
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(mockYAxis)
+	
+	// Calculate vertical margins first to determine chartHeight
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
 	const { titleY, topMargin } = calculateTitleLayout(title, width - 60)
-	const margin = { top: topMargin, right: 20, bottom: bottomMargin, left: leftMargin }
+	const marginWithoutLeft = { top: topMargin, right: 20, bottom: bottomMargin }
+	
+	// Calculate chartHeight based on vertical margins
+	const chartHeight = height - marginWithoutLeft.top - marginWithoutLeft.bottom
+	
+	if (chartHeight <= 0 || bins.length === 0) {
+		return `<svg width="${width}" height="${height}"></svg>`
+	}
+	
+	// Now calculate Y-axis layout using the determined chartHeight
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(mockYAxis, chartHeight)
+	const margin = { ...marginWithoutLeft, left: leftMargin }
+	
+	// Calculate chartWidth with the final left margin
 	const chartWidth = width - margin.left - margin.right
-	const chartHeight = height - margin.top - margin.bottom
-
-	if (chartHeight <= 0 || chartWidth <= 0 || bins.length === 0) {
+	if (chartWidth <= 0) {
 		return `<svg width="${width}" height="${height}"></svg>`
 	}
 

@@ -108,15 +108,25 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 
 	const legendItemHeight = 18
 	const legendHeight = showLegend ? series.length * legendItemHeight + 12 : 0
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis)
-	const { rightMargin, rightYAxisLabelX } = calculateRightYAxisLayout(yAxisRight)
+	
+	// Calculate vertical margins first to determine chartHeight
 	const { bottomMargin: xAxisBottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
 	const { titleY, topMargin } = calculateTitleLayout(title, width - 60)
-	const margin = { top: topMargin, right: rightMargin, bottom: xAxisBottomMargin + legendHeight, left: leftMargin }
+	const { rightMargin, rightYAxisLabelX } = calculateRightYAxisLayout(yAxisRight)
+	
+	// Calculate chartHeight based on vertical margins
+	const marginWithoutLeft = { top: topMargin, right: rightMargin, bottom: xAxisBottomMargin + legendHeight }
+	const chartHeight = height - marginWithoutLeft.top - marginWithoutLeft.bottom
+	
+	if (chartHeight <= 0) return `<svg width="${width}" height="${height}"></svg>`
+	
+	// Now calculate Y-axis layout using the determined chartHeight
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis, chartHeight)
+	const margin = { ...marginWithoutLeft, left: leftMargin }
+	
+	// Calculate chartWidth with the final left margin
 	const chartWidth = width - margin.left - margin.right
-	const chartHeight = height - margin.top - margin.bottom
-
-	if (chartHeight <= 0 || chartWidth <= 0) return `<svg width="${width}" height="${height}"></svg>`
+	if (chartWidth <= 0) return `<svg width="${width}" height="${height}"></svg>`
 
 	// Y-axis scaling functions
 	const scaleYLeft = chartHeight / (yAxis.max - yAxis.min)
