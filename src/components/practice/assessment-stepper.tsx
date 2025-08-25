@@ -1076,7 +1076,61 @@ export function AssessmentStepper({
 			return
 		}
 		setServerState(result.data.state)
-		setVisibleQuestionIndex(result.data.state.currentQuestionIndex)
+		const nextIndex = result.data.state.currentQuestionIndex
+		// If skipping advanced past the last question, finalize immediately
+		if (nextIndex >= questions.length) {
+			setIsFinalizing(true)
+			beginProgressUpdate(onerosterResourceSourcedId)
+			const resultFinalize = await errors.try(
+				finalizeAssessment({
+					onerosterResourceSourcedId,
+					onerosterComponentResourceSourcedId,
+					onerosterCourseSourcedId,
+					expectedXp,
+					assessmentTitle,
+					assessmentPath,
+					unitData,
+					contentType
+				})
+			)
+			if (resultFinalize.error) {
+				setIsFinalizing(false)
+				endProgressUpdate(onerosterResourceSourcedId)
+				toast.error("Could not save final result. Please retry.")
+				return
+			}
+			const finalSummaryData = resultFinalize.data
+			setSummaryData({
+				score: finalSummaryData.score,
+				correctAnswersCount: finalSummaryData.correctAnswersCount,
+				totalQuestions: finalSummaryData.totalQuestions,
+				xpPenaltyInfo: finalSummaryData.xpPenaltyInfo
+					? {
+							penaltyXp: typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number" ? finalSummaryData.xpPenaltyInfo.penaltyXp : 0,
+							reason: typeof finalSummaryData.xpPenaltyInfo.reason === "string" ? finalSummaryData.xpPenaltyInfo.reason : "Unknown penalty reason",
+							avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
+					  }
+					: undefined
+			})
+			const score = finalSummaryData.score
+			const calculateProficiency = () => {
+				if (score >= 100) return "proficient" as const
+				if (score >= 70) return "familiar" as const
+				return "attempted" as const
+			}
+			const proficiencyLevel = calculateProficiency()
+			setProgressForResource(onerosterResourceSourcedId, { completed: true, score, proficiency: proficiencyLevel })
+			const currentSlug = (assessmentPath || "").split("/").pop()
+			if (currentSlug) {
+				setProgressForResource(currentSlug, { completed: true, score, proficiency: proficiencyLevel })
+			}
+			endProgressUpdate(onerosterResourceSourcedId)
+			setIsFinalizationComplete(true)
+			setIsFinalizing(false)
+			setShowSummary(true)
+			return
+		}
+		setVisibleQuestionIndex(nextIndex)
 
 		// Per-question state reset is handled by the useEffect watching visibleQuestionIndex
 	}
@@ -1133,7 +1187,61 @@ export function AssessmentStepper({
 		// Update the state based on the atomic response from the server
 		if (result.data.state) {
 			setServerState(result.data.state)
-			setVisibleQuestionIndex(result.data.state.currentQuestionIndex)
+			const nextIndex = result.data.state.currentQuestionIndex
+			// If reporting advanced past the last question, finalize immediately
+			if (nextIndex >= questions.length) {
+				setIsFinalizing(true)
+				beginProgressUpdate(onerosterResourceSourcedId)
+				const resultFinalize = await errors.try(
+					finalizeAssessment({
+						onerosterResourceSourcedId,
+						onerosterComponentResourceSourcedId,
+						onerosterCourseSourcedId,
+						expectedXp,
+						assessmentTitle,
+						assessmentPath,
+						unitData,
+						contentType
+					})
+				)
+				if (resultFinalize.error) {
+					setIsFinalizing(false)
+					endProgressUpdate(onerosterResourceSourcedId)
+					toast.error("Could not save final result. Please retry.")
+					return
+				}
+				const finalSummaryData = resultFinalize.data
+				setSummaryData({
+					score: finalSummaryData.score,
+					correctAnswersCount: finalSummaryData.correctAnswersCount,
+					totalQuestions: finalSummaryData.totalQuestions,
+					xpPenaltyInfo: finalSummaryData.xpPenaltyInfo
+						? {
+								penaltyXp: typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number" ? finalSummaryData.xpPenaltyInfo.penaltyXp : 0,
+								reason: typeof finalSummaryData.xpPenaltyInfo.reason === "string" ? finalSummaryData.xpPenaltyInfo.reason : "Unknown penalty reason",
+								avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
+						  }
+						: undefined
+				})
+				const score = finalSummaryData.score
+				const calculateProficiency = () => {
+					if (score >= 100) return "proficient" as const
+					if (score >= 70) return "familiar" as const
+					return "attempted" as const
+				}
+				const proficiencyLevel = calculateProficiency()
+				setProgressForResource(onerosterResourceSourcedId, { completed: true, score, proficiency: proficiencyLevel })
+				const currentSlug = (assessmentPath || "").split("/").pop()
+				if (currentSlug) {
+					setProgressForResource(currentSlug, { completed: true, score, proficiency: proficiencyLevel })
+				}
+				endProgressUpdate(onerosterResourceSourcedId)
+				setIsFinalizationComplete(true)
+				setIsFinalizing(false)
+				setShowSummary(true)
+				return
+			}
+			setVisibleQuestionIndex(nextIndex)
 
 			// Per-question state reset is handled by the useEffect watching visibleQuestionIndex
 		} else {
