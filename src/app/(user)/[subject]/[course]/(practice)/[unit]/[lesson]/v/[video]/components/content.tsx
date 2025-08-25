@@ -221,23 +221,23 @@ export function Content({
 							// Unlock controls in-session without re-initializing the player
 							setArePlayerControlsEnabled(true)
 							// Trigger a one-time immediate server update and refresh so Continue unlocks promptly
-                            if (!hasTriggeredCompletionSideEffectsRef.current) {
+							if (!hasTriggeredCompletionSideEffectsRef.current) {
 								hasTriggeredCompletionSideEffectsRef.current = true
-                                async function markCompleteNow() {
-                                    const result = await errors.try(
-                                        updateVideoProgress(video.id, clampedTime, snappedDuration, {
-                                            subjectSlug: params.subject,
-                                            courseSlug: params.course
-                                        })
-                                    )
-                                    if (result.error) {
-                                        logger.error("failed to mark video complete", { error: result.error })
-                                    } else if (!hasRefreshedForCompletionRef.current) {
-                                        hasRefreshedForCompletionRef.current = true
-                                        router.refresh()
-                                    }
-                                }
-                                void markCompleteNow()
+								async function markCompleteNow() {
+									const result = await errors.try(
+										updateVideoProgress(video.id, clampedTime, snappedDuration, {
+											subjectSlug: params.subject,
+											courseSlug: params.course
+										})
+									)
+									if (result.error) {
+										logger.error("failed to mark video complete", { error: result.error })
+									} else if (!hasRefreshedForCompletionRef.current) {
+										hasRefreshedForCompletionRef.current = true
+										router.refresh()
+									}
+								}
+								void markCompleteNow()
 							}
 						}
 					}
@@ -246,7 +246,7 @@ export function Content({
 		}, 1000)
 
 		return () => clearInterval(intervalId)
-	}, [setCurrentResourceCompleted, user?.publicMetadata, params.subject, params.course, video.id, router.refresh])
+	}, [setCurrentResourceCompleted, params.subject, params.course, video.id, router.refresh])
 
 	// Track progress periodically for OneRoster (separate from UI timer)
 	React.useEffect(() => {

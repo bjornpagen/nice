@@ -67,7 +67,7 @@ function escapeXmlText(text: string): string {
 	return sanitizeXmlAttributeValue(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
 }
 
-const CONTAINER_STYLE = "display: inline-block; text-align: center;"
+const _CONTAINER_STYLE = "display: inline-block; text-align: center;"
 const IMG_BASE_STYLE = "display: block;"
 const CAPTION_STYLE = "font-size: 0.9em; color: #333; margin-top: 8px;"
 
@@ -121,7 +121,6 @@ function findContainerBounds(xml: string, containerStart: number): { start: numb
 			depth--
 			i = nextClose + 6
 			if (depth === 0) return { start: containerStart, end: i }
-			continue
 		}
 	}
 	return null
@@ -212,7 +211,7 @@ function removeCaptionsByStructuredJson(
 		let imgStart = -1
 		let usedCaptionDiv = ""
 		let containerStart = -1
-		let containerEnd = -1
+		let _containerEnd = -1
 		while (!found) {
 			const idxNorm = normalizedCaptionDiv ? working.indexOf(normalizedCaptionDiv, searchFrom) : -1
 			const idxRaw = rawCaptionDiv ? working.indexOf(rawCaptionDiv, searchFrom) : -1
@@ -236,7 +235,7 @@ function removeCaptionsByStructuredJson(
 				searchFrom = idxCaption + 1
 				continue
 			}
-			const imgTagSlice = working.slice(imgStart, (imgEnd === imgEndSlash ? imgEnd + 2 : imgEnd + 1))
+			const imgTagSlice = working.slice(imgStart, imgEnd === imgEndSlash ? imgEnd + 2 : imgEnd + 1)
 			if (imgTagSlice.indexOf(escapedSrc) === -1) {
 				searchFrom = idxCaption + 1
 				continue
@@ -252,9 +251,14 @@ function removeCaptionsByStructuredJson(
 				searchFrom = idxCaption + 1
 				continue
 			}
-			containerEnd = bounds.end
+			_containerEnd = bounds.end
 			const imgTagEndPos = imgEnd === imgEndSlash ? imgEnd + 2 : imgEnd + 1
-			if (imgStart < bounds.start || imgTagEndPos > bounds.end || idxCaption < bounds.start || idxCaption + usedCaptionDiv.length > bounds.end) {
+			if (
+				imgStart < bounds.start ||
+				imgTagEndPos > bounds.end ||
+				idxCaption < bounds.start ||
+				idxCaption + usedCaptionDiv.length > bounds.end
+			) {
 				searchFrom = idxCaption + 1
 				continue
 			}
@@ -265,7 +269,9 @@ function removeCaptionsByStructuredJson(
 			const presence = {
 				hasContainer: findNearestUrlImageContainerStart(working, working.length) !== -1,
 				hasImgExact: working.indexOf(buildImgTag(w.url, alt, w.width, w.height)) !== -1,
-				hasCaptionExact: (normalizedCaptionDiv ? working.indexOf(normalizedCaptionDiv) !== -1 : false) || (rawCaptionDiv ? working.indexOf(rawCaptionDiv) !== -1 : false),
+				hasCaptionExact:
+					(normalizedCaptionDiv ? working.indexOf(normalizedCaptionDiv) !== -1 : false) ||
+					(rawCaptionDiv ? working.indexOf(rawCaptionDiv) !== -1 : false),
 				hasCaptionExactNormalized: normalizedCaptionDiv ? working.indexOf(normalizedCaptionDiv) !== -1 : false,
 				hasCaptionExactRaw: rawCaptionDiv ? working.indexOf(rawCaptionDiv) !== -1 : false,
 				idxContainer: findNearestUrlImageContainerStart(working, working.length),
@@ -278,7 +284,18 @@ function removeCaptionsByStructuredJson(
 				updatedXml: working,
 				removedCount,
 				expectedRemovals,
-				failure: { widgetIndex, expectedSnippet: combinedSnippet, widget: { url: w.url, alt, caption: (normalizedCaption ?? rawCaptionCandidate)!, width: w.width, height: w.height }, presence }
+				failure: {
+					widgetIndex,
+					expectedSnippet: combinedSnippet,
+					widget: {
+						url: w.url,
+						alt,
+						caption: (normalizedCaption ?? rawCaptionCandidate)!,
+						width: w.width,
+						height: w.height
+					},
+					presence
+				}
 			}
 		}
 
@@ -418,5 +435,3 @@ if (result.error) {
 	process.exit(1)
 }
 process.exit(0)
-
-

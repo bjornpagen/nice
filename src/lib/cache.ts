@@ -116,43 +116,42 @@ export async function redisCache<T>(
  * @param keys An array of cache keys to invalidate
  */
 export async function invalidateCache(keys: string[]): Promise<void> {
-    // Snapshot and narrow redis client locally to avoid non-null assertions
-    const clientRef = redis
-    if (!clientRef || !clientRef.isReady) {
-        logger.warn("redis not available for cache invalidation", { keys })
-        return
-    }
+	// Snapshot and narrow redis client locally to avoid non-null assertions
+	const clientRef = redis
+	if (!clientRef || !clientRef.isReady) {
+		logger.warn("redis not available for cache invalidation", { keys })
+		return
+	}
 
-	
 	if (keys.length === 0) return
 
-    // Delete keys; when multiple, delete sequentially and sum results to avoid type issues
-    const client = clientRef
-    let deleted = 0
-    if (keys.length === 1) {
-        const singleKey = keys[0]
-        if (singleKey === undefined) {
-            logger.warn("invalidateCache called with an array containing an undefined key")
-            return
-        }
-        const result = await errors.try(client.del(singleKey))
-        if (result.error) {
-            logger.error("failed to invalidate cache", { keys, error: result.error })
-            return
-        }
-        deleted = result.data ?? 0
-    } else {
-        const results = await Promise.all(keys.map((k) => errors.try(client.del(k))))
-        for (const r of results) {
-            if (r.error) {
-                logger.error("failed to invalidate cache (partial)", { error: r.error })
-                continue
-            }
-            deleted += r.data ?? 0
-        }
-    }
+	// Delete keys; when multiple, delete sequentially and sum results to avoid type issues
+	const client = clientRef
+	let deleted = 0
+	if (keys.length === 1) {
+		const singleKey = keys[0]
+		if (singleKey === undefined) {
+			logger.warn("invalidateCache called with an array containing an undefined key")
+			return
+		}
+		const result = await errors.try(client.del(singleKey))
+		if (result.error) {
+			logger.error("failed to invalidate cache", { keys, error: result.error })
+			return
+		}
+		deleted = result.data ?? 0
+	} else {
+		const results = await Promise.all(keys.map((k) => errors.try(client.del(k))))
+		for (const r of results) {
+			if (r.error) {
+				logger.error("failed to invalidate cache (partial)", { error: r.error })
+				continue
+			}
+			deleted += r.data ?? 0
+		}
+	}
 
-    logger.info("cache invalidated", { keys, deleted })
+	logger.info("cache invalidated", { keys, deleted })
 }
 
 /**

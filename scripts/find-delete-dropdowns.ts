@@ -1,4 +1,5 @@
 #!/usr/bin/env bun
+import * as readline from "node:readline/promises"
 /**
  * Dropdown Identifier Validator (XML-based)
  *
@@ -16,13 +17,12 @@
  */
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { inArray, isNotNull } from "drizzle-orm"
+import { XMLParser } from "fast-xml-parser"
 import { db } from "@/db"
 import { niceQuestions } from "@/db/schemas/nice"
-import { eq, inArray, isNotNull } from "drizzle-orm"
 import { env } from "@/env"
 import { SAFE_IDENTIFIER_REGEX } from "@/lib/qti-generation/qti-constants"
-import { XMLParser } from "fast-xml-parser"
-import * as readline from "node:readline/promises"
 
 // --- Types ---
 
@@ -62,7 +62,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function getAttr(node: unknown, name: string): string | undefined {
 	if (!isRecord(node)) return undefined
-	const key = "@_" + name
+	const key = `@_${name}`
 	const v = (node as any)[key]
 	return typeof v === "string" ? v : undefined
 }
@@ -299,11 +299,11 @@ function validateXml(xml: string): Issue[] {
 async function fetchQuestions(): Promise<Array<{ id: string; xml: string | null }>> {
 	const selResult = await errors.try(
 		db
-		.select({
-			id: niceQuestions.id,
+			.select({
+				id: niceQuestions.id,
 				xml: niceQuestions.xml
-		})
-		.from(niceQuestions)
+			})
+			.from(niceQuestions)
 			.where(isNotNull(niceQuestions.xml))
 	)
 	if (selResult.error) {
@@ -392,7 +392,7 @@ async function main() {
 		const confirmResult = await errors.try(
 			rl.question(
 				`\nThis will clear the xml and structuredJson columns for ${invalidCount} questions.\n` +
-				`Are you sure you want to proceed? (yes/no): `
+					"Are you sure you want to proceed? (yes/no): "
 			)
 		)
 		rl.close()

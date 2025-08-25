@@ -3587,7 +3587,8 @@ export const reactionRateChangesTable: AssessmentItemInput = {
 			content: [
 				{
 					type: "text",
-					content: "Different situations call for chemical reactions that release energy quickly, such as an explosion, or slowly, such as a hand warmer."
+					content:
+						"Different situations call for chemical reactions that release energy quickly, such as an explosion, or slowly, such as a hand warmer."
 				}
 			]
 		},
@@ -3596,7 +3597,8 @@ export const reactionRateChangesTable: AssessmentItemInput = {
 			content: [
 				{
 					type: "text",
-					content: "To control how quickly energy is released or absorbed, we can make adjustments to change how fast the reaction occurs."
+					content:
+						"To control how quickly energy is released or absorbed, we can make adjustments to change how fast the reaction occurs."
 				}
 			]
 		},
@@ -3762,7 +3764,8 @@ export const reactionRateChangesTable: AssessmentItemInput = {
 				content: [
 					{
 						type: "text",
-						content: "Correct! Stirring and heating increase the frequency of effective collisions, so they increase the reaction rate. Decreasing concentration reduces collisions and decreases the rate."
+						content:
+							"Correct! Stirring and heating increase the frequency of effective collisions, so they increase the reaction rate. Decreasing concentration reduces collisions and decreases the rate."
 					}
 				]
 			}
@@ -3773,7 +3776,8 @@ export const reactionRateChangesTable: AssessmentItemInput = {
 				content: [
 					{
 						type: "text",
-						content: "Not quite. Stirring and heating bring reactant particles into contact more often, which increases collisions and speeds up the reaction. Lowering the concentration leads to fewer collisions, which slows the reaction."
+						content:
+							"Not quite. Stirring and heating bring reactant particles into contact more often, which increases collisions and speeds up the reaction. Lowering the concentration leads to fewer collisions, which slows the reaction."
 					}
 				]
 			}
@@ -3819,7 +3823,8 @@ export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
 			content: [
 				{
 					type: "text",
-					content: "The relationship between kinetic energy and mass for an object with constant speed is modeled by the graph below."
+					content:
+						"The relationship between kinetic energy and mass for an object with constant speed is modeled by the graph below."
 				}
 			]
 		},
@@ -3832,7 +3837,8 @@ export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
 			content: [
 				{
 					type: "text",
-					content: "The relationship between kinetic energy and speed for an object with constant mass is modeled by the graph below."
+					content:
+						"The relationship between kinetic energy and speed for an object with constant mass is modeled by the graph below."
 				}
 			]
 		},
@@ -3944,7 +3950,8 @@ export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
 				content: [
 					{
 						type: "text",
-						content: "Correct! The mass–kinetic energy relationship is linear, so halving the mass (at constant speed) halves the kinetic energy."
+						content:
+							"Correct! The mass–kinetic energy relationship is linear, so halving the mass (at constant speed) halves the kinetic energy."
 					}
 				]
 			},
@@ -3953,7 +3960,8 @@ export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
 				content: [
 					{
 						type: "text",
-						content: "The speed–kinetic energy relationship is nonlinear (quadratic), so halving the speed (at constant mass) reduces the kinetic energy to one-fourth of its original value."
+						content:
+							"The speed–kinetic energy relationship is nonlinear (quadratic), so halving the speed (at constant mass) reduces the kinetic energy to one-fourth of its original value."
 					}
 				]
 			}
@@ -3964,7 +3972,8 @@ export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
 				content: [
 					{
 						type: "text",
-						content: "Not quite. On the first graph, the straight line shows a linear pattern: when mass is scaled by a factor, kinetic energy scales by the same factor at constant speed."
+						content:
+							"Not quite. On the first graph, the straight line shows a linear pattern: when mass is scaled by a factor, kinetic energy scales by the same factor at constant speed."
 					}
 				]
 			},
@@ -3973,7 +3982,8 @@ export const kineticEnergyMassSpeedRelationships: AssessmentItemInput = {
 				content: [
 					{
 						type: "text",
-						content: "On the second graph, the curved shape indicates a nonlinear (quadratic) pattern: when speed is halved, kinetic energy becomes one-fourth of its original value at constant mass."
+						content:
+							"On the second graph, the curved shape indicates a nonlinear (quadratic) pattern: when speed is halved, kinetic energy becomes one-fourth of its original value at constant mass."
 					}
 				]
 			}
@@ -4151,19 +4161,34 @@ export const reactantAmountsTempChangeTablePerseus: AssessmentItemInput = {
 		{
 			type: "paragraph",
 			content: [
-				{ type: "text", content: "Several students tested how the temperature changed when dissolving different solids in the same amount of water. The substances they tested were " },
-				{ type: "math", mathml: "<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>" },
+				{
+					type: "text",
+					content:
+						"Several students tested how the temperature changed when dissolving different solids in the same amount of water. The substances they tested were "
+				},
+				{
+					type: "math",
+					mathml:
+						"<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>"
+				},
 				{ type: "text", content: ", " },
 				{ type: "math", mathml: "<mrow><mi>K</mi><mi>O</mi><mi>H</mi></mrow>" },
 				{ type: "text", content: ", and " },
-				{ type: "math", mathml: "<mrow><mi>Ba</mi><msub><mrow><mo>(</mo><mi>OH</mi><mo>)</mo></mrow><mn>2</mn></msub></mrow>" },
+				{
+					type: "math",
+					mathml: "<mrow><mi>Ba</mi><msub><mrow><mo>(</mo><mi>OH</mi><mo>)</mo></mrow><mn>2</mn></msub></mrow>"
+				},
 				{ type: "text", content: "." }
 			]
 		},
 		{
 			type: "paragraph",
 			content: [
-				{ type: "text", content: "Only one student kept track of everyone's data. Unfortunately, their lab notebook got wet, and some of the labels were damaged." }
+				{
+					type: "text",
+					content:
+						"Only one student kept track of everyone's data. Unfortunately, their lab notebook got wet, and some of the labels were damaged."
+				}
 			]
 		},
 		{
@@ -4173,7 +4198,11 @@ export const reactantAmountsTempChangeTablePerseus: AssessmentItemInput = {
 		{
 			type: "paragraph",
 			content: [
-				{ type: "text", content: "Use the data provided to identify the reactant and amount that caused each temperature change. Each option is only used once." }
+				{
+					type: "text",
+					content:
+						"Use the data provided to identify the reactant and amount that caused each temperature change. Each option is only used once."
+				}
 			]
 		},
 		{
@@ -4196,26 +4225,71 @@ export const reactantAmountsTempChangeTablePerseus: AssessmentItemInput = {
 			data: [
 				[
 					{ type: "inline", content: [{ type: "text", content: "A" }] },
-					{ type: "inline", content: [{ type: "math", mathml: "<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>" }] },
-					{ type: "inline", content: [{ type: "math", mathml: "<mn>4.0</mn>" }, { type: "text", content: " grams" }] },
+					{
+						type: "inline",
+						content: [
+							{
+								type: "math",
+								mathml:
+									"<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>"
+							}
+						]
+					},
+					{
+						type: "inline",
+						content: [
+							{ type: "math", mathml: "<mn>4.0</mn>" },
+							{ type: "text", content: " grams" }
+						]
+					},
 					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>1.6</mn><mo>°</mo><mi>C</mi>" }] }
 				],
 				[
 					{ type: "inline", content: [{ type: "text", content: "B" }] },
 					{ type: "inline", content: [{ type: "math", mathml: "<mrow><mi>K</mi><mi>O</mi><mi>H</mi></mrow>" }] },
-					{ type: "inline", content: [{ type: "math", mathml: "<mn>3.0</mn>" }, { type: "text", content: " grams" }] },
+					{
+						type: "inline",
+						content: [
+							{ type: "math", mathml: "<mn>3.0</mn>" },
+							{ type: "text", content: " grams" }
+						]
+					},
 					{ type: "inline", content: [{ type: "math", mathml: "<mo>+</mo><mn>2.1</mn><mo>°</mo><mi>C</mi>" }] }
 				],
 				[
 					{ type: "inline", content: [{ type: "text", content: "C" }] },
-					{ type: "inline", content: [{ type: "math", mathml: "<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>" }] },
-					{ type: "inline", content: [{ type: "math", mathml: "<mn>8.0</mn>" }, { type: "text", content: " grams" }] },
+					{
+						type: "inline",
+						content: [
+							{
+								type: "math",
+								mathml:
+									"<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>"
+							}
+						]
+					},
+					{
+						type: "inline",
+						content: [
+							{ type: "math", mathml: "<mn>8.0</mn>" },
+							{ type: "text", content: " grams" }
+						]
+					},
 					{
 						type: "dropdown",
 						choices: [
-							{ content: [{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "NEG_3_2_C" },
-							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }], identifier: "POS_2_0_C" },
-							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "POS_4_2_C" }
+							{
+								content: [{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }],
+								identifier: "NEG_3_2_C"
+							},
+							{
+								content: [{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }],
+								identifier: "POS_2_0_C"
+							},
+							{
+								content: [{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }],
+								identifier: "POS_4_2_C"
+							}
 						],
 						shuffle: false,
 						responseIdentifier: "dropdown_13"
@@ -4226,20 +4300,53 @@ export const reactantAmountsTempChangeTablePerseus: AssessmentItemInput = {
 					{
 						type: "dropdown",
 						choices: [
-							{ content: [{ type: "math", mathml: "<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>" }], identifier: "NaC2H3O2" },
+							{
+								content: [
+									{
+										type: "math",
+										mathml:
+											"<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>"
+									}
+								],
+								identifier: "NaC2H3O2"
+							},
 							{ content: [{ type: "math", mathml: "<mrow><mi>K</mi><mi>O</mi><mi>H</mi></mrow>" }], identifier: "KOH" },
-							{ content: [{ type: "math", mathml: "<mrow><mi>Ba</mi><msub><mrow><mo>(</mo><mi>OH</mi><mo>)</mo></mrow><mn>2</mn></msub></mrow>" }], identifier: "BaOH2" }
+							{
+								content: [
+									{
+										type: "math",
+										mathml:
+											"<mrow><mi>Ba</mi><msub><mrow><mo>(</mo><mi>OH</mi><mo>)</mo></mrow><mn>2</mn></msub></mrow>"
+									}
+								],
+								identifier: "BaOH2"
+							}
 						],
 						shuffle: false,
 						responseIdentifier: "dropdown_9"
 					},
-					{ type: "inline", content: [{ type: "math", mathml: "<mn>6.0</mn>" }, { type: "text", content: " grams" }] },
+					{
+						type: "inline",
+						content: [
+							{ type: "math", mathml: "<mn>6.0</mn>" },
+							{ type: "text", content: " grams" }
+						]
+					},
 					{
 						type: "dropdown",
 						choices: [
-							{ content: [{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "NEG_3_2_C" },
-							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }], identifier: "POS_2_0_C" },
-							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "POS_4_2_C" }
+							{
+								content: [{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }],
+								identifier: "NEG_3_2_C"
+							},
+							{
+								content: [{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }],
+								identifier: "POS_2_0_C"
+							},
+							{
+								content: [{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }],
+								identifier: "POS_4_2_C"
+							}
 						],
 						shuffle: false,
 						responseIdentifier: "dropdown_12"
@@ -4250,20 +4357,53 @@ export const reactantAmountsTempChangeTablePerseus: AssessmentItemInput = {
 					{
 						type: "dropdown",
 						choices: [
-							{ content: [{ type: "math", mathml: "<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>" }], identifier: "NaC2H3O2" },
+							{
+								content: [
+									{
+										type: "math",
+										mathml:
+											"<mrow><mi>Na</mi><msub><mi>C</mi><mn>2</mn></msub><msub><mi>H</mi><mn>3</mn></msub><msub><mi>O</mi><mn>2</mn></msub></mrow>"
+									}
+								],
+								identifier: "NaC2H3O2"
+							},
 							{ content: [{ type: "math", mathml: "<mrow><mi>K</mi><mi>O</mi><mi>H</mi></mrow>" }], identifier: "KOH" },
-							{ content: [{ type: "math", mathml: "<mrow><mi>Ba</mi><msub><mrow><mo>(</mo><mi>OH</mi><mo>)</mo></mrow><mn>2</mn></msub></mrow>" }], identifier: "BaOH2" }
+							{
+								content: [
+									{
+										type: "math",
+										mathml:
+											"<mrow><mi>Ba</mi><msub><mrow><mo>(</mo><mi>OH</mi><mo>)</mo></mrow><mn>2</mn></msub></mrow>"
+									}
+								],
+								identifier: "BaOH2"
+							}
 						],
 						shuffle: false,
 						responseIdentifier: "dropdown_10"
 					},
-					{ type: "inline", content: [{ type: "math", mathml: "<mn>2.0</mn>" }, { type: "text", content: " grams" }] },
+					{
+						type: "inline",
+						content: [
+							{ type: "math", mathml: "<mn>2.0</mn>" },
+							{ type: "text", content: " grams" }
+						]
+					},
 					{
 						type: "dropdown",
 						choices: [
-							{ content: [{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "NEG_3_2_C" },
-							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }], identifier: "POS_2_0_C" },
-							{ content: [{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }], identifier: "POS_4_2_C" }
+							{
+								content: [{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }],
+								identifier: "NEG_3_2_C"
+							},
+							{
+								content: [{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" }],
+								identifier: "POS_2_0_C"
+							},
+							{
+								content: [{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" }],
+								identifier: "POS_4_2_C"
+							}
 						],
 						shuffle: false,
 						responseIdentifier: "dropdown_11"
@@ -4286,21 +4426,26 @@ export const reactantAmountsTempChangeTablePerseus: AssessmentItemInput = {
 		correct: [
 			{
 				type: "paragraph",
-				content: [
-					{ type: "text", content: "Correct! You used the patterns in the data to match each unknown entry." }
-				]
+				content: [{ type: "text", content: "Correct! You used the patterns in the data to match each unknown entry." }]
 			},
 			{
 				type: "paragraph",
 				content: [
-					{ type: "text", content: "Experiment C has twice the amount of sodium acetate as experiment A, so its temperature change is twice as large and negative: " },
+					{
+						type: "text",
+						content:
+							"Experiment C has twice the amount of sodium acetate as experiment A, so its temperature change is twice as large and negative: "
+					},
 					{ type: "math", mathml: "<mo>-</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" },
 					{ type: "text", content: ". Experiment D corresponds to " },
 					{ type: "math", mathml: "<mrow><mi>K</mi><mi>O</mi><mi>H</mi></mrow>" },
 					{ type: "text", content: " with a temperature increase of " },
 					{ type: "math", mathml: "<mo>+</mo><mn>4.2</mn><mo>°</mo><mi>C</mi>" },
 					{ type: "text", content: ", and experiment E corresponds to " },
-					{ type: "math", mathml: "<mrow><mi>Ba</mi><msub><mrow><mo>(</mo><mi>OH</mi><mo>)</mo></mrow><mn>2</mn></msub></mrow>" },
+					{
+						type: "math",
+						mathml: "<mrow><mi>Ba</mi><msub><mrow><mo>(</mo><mi>OH</mi><mo>)</mo></mrow><mn>2</mn></msub></mrow>"
+					},
 					{ type: "text", content: " with a temperature increase of " },
 					{ type: "math", mathml: "<mo>+</mo><mn>2.0</mn><mo>°</mo><mi>C</mi>" },
 					{ type: "text", content: "." }
@@ -4311,7 +4456,11 @@ export const reactantAmountsTempChangeTablePerseus: AssessmentItemInput = {
 			{
 				type: "paragraph",
 				content: [
-					{ type: "text", content: "Not quite. First, decide which reactions are endothermic (temperature decreases) and which are exothermic (temperature increases). Then use how the amount changes (for example, twice as much) to match proportional changes in temperature." }
+					{
+						type: "text",
+						content:
+							"Not quite. First, decide which reactions are endothermic (temperature decreases) and which are exothermic (temperature increases). Then use how the amount changes (for example, twice as much) to match proportional changes in temperature."
+					}
 				]
 			}
 		]

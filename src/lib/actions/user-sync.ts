@@ -4,17 +4,17 @@ import { clerkClient, currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
+import {
+	ErrClerkMetadataUpdateFailed,
+	ErrInputValidationFailed,
+	ErrInvalidEmailFormat,
+	ErrOneRosterQueryFailed,
+	ErrUserEmailRequired,
+	ErrUserNotAuthenticated,
+	ErrUserNotProvisionedInOneRoster
+} from "@/lib/actions/user-sync-errors"
 import { oneroster } from "@/lib/clients"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
-import {
-	ErrUserNotAuthenticated,
-	ErrUserEmailRequired,
-	ErrInvalidEmailFormat,
-	ErrUserNotProvisionedInOneRoster,
-	ErrOneRosterQueryFailed,
-	ErrClerkMetadataUpdateFailed,
-	ErrInputValidationFailed
-} from "@/lib/actions/user-sync-errors"
 
 // Response schema for the sync action
 const SyncResponseSchema = z.object({
@@ -38,14 +38,14 @@ export type SyncUserResponse = z.infer<typeof SyncResponseSchema>
  */
 export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 	logger.debug("starting user sync with oneroster")
-	
+
 	// Get the authenticated user
 	const user = await currentUser()
 	if (!user) {
 		logger.error("user not authenticated - no current user found")
 		throw ErrUserNotAuthenticated
 	}
-	
+
 	logger.debug("authenticated user found", { clerkId: user.id })
 
 	const clerkId = user.id
@@ -53,13 +53,13 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 	// names are not required for OneRoster lookup; avoid capturing unused values
 
 	if (!email) {
-		logger.error("CRITICAL: User has no email address", { 
-			clerkId, 
-			emailAddressesCount: user.emailAddresses.length 
+		logger.error("CRITICAL: User has no email address", {
+			clerkId,
+			emailAddressesCount: user.emailAddresses.length
 		})
 		throw ErrUserEmailRequired
 	}
-	
+
 	logger.debug("user email found", { clerkId, email })
 
 	// Extract nickname from email (same logic as webhook)
@@ -76,12 +76,12 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 	const nickname = emailParts[0]
 
 	// Check if user already has sourceId (already synced)
-	logger.debug("checking existing user metadata", { 
-		clerkId, 
+	logger.debug("checking existing user metadata", {
+		clerkId,
 		hasPublicMetadata: !!user.publicMetadata,
 		metadataKeys: user.publicMetadata ? Object.keys(user.publicMetadata) : []
 	})
-	
+
 	const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata || {})
 	if (!metadataValidation.success) {
 		logger.debug("user metadata validation failed, proceeding with fresh sync", {
@@ -89,7 +89,7 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 			validationError: metadataValidation.error
 		})
 	}
-	
+
 	if (metadataValidation.success && metadataValidation.data.sourceId) {
 		// User already has sourceId, but we still need to update roles
 		logger.info("user already synced with oneroster, updating roles", {
@@ -139,9 +139,9 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 			}
 
 			// Update Clerk metadata with latest roles
-			logger.debug("updating clerk metadata with latest roles", { 
-				clerkId, 
-				updatedRoleCount: updatedMetadata.roles.length 
+			logger.debug("updating clerk metadata with latest roles", {
+				clerkId,
+				updatedRoleCount: updatedMetadata.roles.length
 			})
 			const clerk = await clerkClient()
 			const updateResult = await errors.try(
@@ -189,9 +189,9 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 		}
 	}
 
-	logger.info("syncing user to oneroster - fresh sync required", { 
-		clerkId, 
-		email, 
+	logger.info("syncing user to oneroster - fresh sync required", {
+		clerkId,
+		email,
 		nickname,
 		hasExistingMetadata: metadataValidation.success
 	})
@@ -207,8 +207,8 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 		roles: []
 	})
 	if (!payloadValidation.success) {
-		logger.error("metadata payload validation failed", { 
-			error: payloadValidation.error, 
+		logger.error("metadata payload validation failed", {
+			error: payloadValidation.error,
 			clerkId,
 			nickname
 		})
@@ -229,8 +229,8 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 	}
 
 	if (!onerosterUserResult.data) {
-		logger.warn("CRITICAL: User not found in OneRoster during fresh sync - denying access", { 
-			userId: clerkId, 
+		logger.warn("CRITICAL: User not found in OneRoster during fresh sync - denying access", {
+			userId: clerkId,
 			email,
 			nickname,
 			queryResponse: "no user data returned"
@@ -245,7 +245,7 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 		onerosterSourceId: onerosterUserResult.data.sourcedId,
 		onerosterRoleCount: onerosterUserResult.data.roles.length
 	})
-	
+
 	publicMetadataPayload.sourceId = onerosterUserResult.data.sourcedId
 	publicMetadataPayload.roles = onerosterUserResult.data.roles.map((role) => ({
 		roleType: role.roleType,
@@ -258,7 +258,7 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 		beginDate: role.beginDate,
 		endDate: role.endDate
 	}))
-	
+
 	logger.info("successfully fetched sourceid and roles from oneroster", {
 		userId: clerkId,
 		email,
@@ -267,8 +267,8 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 	})
 
 	// Update Clerk metadata
-	logger.debug("updating clerk with fresh user metadata", { 
-		clerkId, 
+	logger.debug("updating clerk with fresh user metadata", {
+		clerkId,
 		sourceId: publicMetadataPayload.sourceId,
 		finalRoleCount: publicMetadataPayload.roles.length
 	})
@@ -285,8 +285,8 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 		throw ErrClerkMetadataUpdateFailed
 	}
 
-	logger.info("user metadata initialized successfully - fresh sync completed", { 
-		clerkId, 
+	logger.info("user metadata initialized successfully - fresh sync completed", {
+		clerkId,
 		nickname,
 		sourceId: publicMetadataPayload.sourceId,
 		finalRoleCount: publicMetadataPayload.roles.length

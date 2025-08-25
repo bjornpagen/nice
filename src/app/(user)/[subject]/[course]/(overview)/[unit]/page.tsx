@@ -10,7 +10,11 @@ import type { UnitPageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
 
 // Force dynamic rendering to prevent prerendering issues with currentUser() and OneRoster API calls
-export default async function UnitPage({ params }: { params: Promise<{ subject: string; course: string; unit: string }> }) {
+export default async function UnitPage({
+	params
+}: {
+	params: Promise<{ subject: string; course: string; unit: string }>
+}) {
 	// Opt into dynamic rendering to ensure external fetches occur during request lifecycle
 	await connection()
 	// Normalize params to handle encoded characters

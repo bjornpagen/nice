@@ -1,5 +1,3 @@
-import * as errors from "@superbuilders/errors"
-import * as logger from "@superbuilders/slog"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 import { isTerminatingFraction, tryApproximatePiProduct } from "./helpers"
 import type { AssessmentItem } from "./schemas"

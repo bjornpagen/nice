@@ -1,6 +1,11 @@
 import { describe, expect, test } from "bun:test"
 import * as errors from "@superbuilders/errors"
-import { compile, ErrDuplicateResponseIdentifier, ErrDuplicateChoiceIdentifier, ErrInvalidRowHeaderKey } from "./compiler"
+import {
+	compile,
+	ErrDuplicateChoiceIdentifier,
+	ErrDuplicateResponseIdentifier,
+	ErrInvalidRowHeaderKey
+} from "./compiler"
 import { allExamples } from "./examples"
 import type { AssessmentItemInput } from "./schemas"
 
@@ -123,9 +128,7 @@ describe("QTI Compiler Robustness Checks", () => {
 		const item: AssessmentItemInput = {
 			identifier: "duplicate-response-id-table-dropdowns",
 			title: "Duplicate Response ID in Data Table Dropdowns",
-			responseDeclarations: [
-				{ identifier: "dropdown_1", cardinality: "single", baseType: "identifier", correct: "A" }
-			],
+			responseDeclarations: [{ identifier: "dropdown_1", cardinality: "single", baseType: "identifier", correct: "A" }],
 			widgets: {
 				table_1: {
 					type: "dataTable",
@@ -148,9 +151,13 @@ describe("QTI Compiler Robustness Checks", () => {
 					footer: null
 				}
 			},
-			body: [{ type: "blockSlot", slotId: "table_1" }, { type: "paragraph", content: [{ type: "inlineSlot", slotId: "dropdown_1" }] }], // Reference in body for a top-level inlineChoiceInteraction
+			body: [
+				{ type: "blockSlot", slotId: "table_1" },
+				{ type: "paragraph", content: [{ type: "inlineSlot", slotId: "dropdown_1" }] }
+			], // Reference in body for a top-level inlineChoiceInteraction
 			interactions: {
-				dropdown_1: { // This interaction uses the same responseIdentifier
+				dropdown_1: {
+					// This interaction uses the same responseIdentifier
 					type: "inlineChoiceInteraction",
 					responseIdentifier: "dropdown_1",
 					shuffle: true,
@@ -161,23 +168,21 @@ describe("QTI Compiler Robustness Checks", () => {
 				}
 			},
 			feedback: { correct: [], incorrect: [] }
-		};
-
-		const result = errors.trySync(() => compile(item));
-		expect(result.error).toBeInstanceOf(Error);
-		if (result.error) {
-			expect(errors.is(result.error, ErrDuplicateResponseIdentifier)).toBe(true);
-			expect(result.error.message).toContain("duplicate response identifier");
 		}
-	});
+
+		const result = errors.trySync(() => compile(item))
+		expect(result.error).toBeInstanceOf(Error)
+		if (result.error) {
+			expect(errors.is(result.error, ErrDuplicateResponseIdentifier)).toBe(true)
+			expect(result.error.message).toContain("duplicate response identifier")
+		}
+	})
 
 	test("should throw for non-unique choice.identifier (case-sensitive) within a single dataTable dropdown", () => {
 		const item: AssessmentItemInput = {
 			identifier: "non-unique-choice-id-table-dropdown",
 			title: "Non-Unique Choice ID in Data Table Dropdown",
-			responseDeclarations: [
-				{ identifier: "dropdown_1", cardinality: "single", baseType: "identifier", correct: "A" }
-			],
+			responseDeclarations: [{ identifier: "dropdown_1", cardinality: "single", baseType: "identifier", correct: "A" }],
 			widgets: {
 				table_1: {
 					type: "dataTable",
@@ -203,59 +208,59 @@ describe("QTI Compiler Robustness Checks", () => {
 			body: [{ type: "blockSlot", slotId: "table_1" }],
 			interactions: {},
 			feedback: { correct: [], incorrect: [] }
-		};
-
-		const result = errors.trySync(() => compile(item));
-		expect(result.error).toBeInstanceOf(Error);
-		if (result.error) {
-			expect(errors.is(result.error, ErrDuplicateChoiceIdentifier)).toBe(true);
-			expect(result.error.message).toContain("duplicate choice identifiers");
 		}
-	});
 
-    test("should NOT throw for case-different but valid choice.identifier within a single dataTable dropdown", () => {
-        const item: AssessmentItemInput = {
-            identifier: "case-different-choice-id-table-dropdown",
-            title: "Case-Different Choice ID in Data Table Dropdown",
-            responseDeclarations: [
-                { identifier: "dropdown_1", cardinality: "single", baseType: "identifier", correct: "A" }
-            ],
-            widgets: {
-                table_1: {
-                    type: "dataTable",
-                    title: null,
-                    columns: [{ key: "col1", label: [{ type: "text", content: "Col 1" }], isNumeric: false }],
-                    data: [
-                        [
-                            {
-                                type: "dropdown",
-                                responseIdentifier: "dropdown_1",
-                                shuffle: false,
-                                choices: [
-                                    { identifier: "A", content: [{ type: "text", content: "Option A" }] },
-                                    { identifier: "a", content: [{ type: "text", content: "Option a" }] } // Valid - case-sensitive
-                                ]
-                            }
-                        ]
-                    ],
-                    rowHeaderKey: null,
-                    footer: null
-                }
-            },
-            body: [{ type: "blockSlot", slotId: "table_1" }],
-            interactions: {},
-            feedback: { correct: [], incorrect: [] }
-        };
+		const result = errors.trySync(() => compile(item))
+		expect(result.error).toBeInstanceOf(Error)
+		if (result.error) {
+			expect(errors.is(result.error, ErrDuplicateChoiceIdentifier)).toBe(true)
+			expect(result.error.message).toContain("duplicate choice identifiers")
+		}
+	})
 
-        const result = errors.trySync(() => compile(item));
-        expect(result.error).toBeUndefined(); // Should compile successfully
-    });
+	test("should NOT throw for case-different but valid choice.identifier within a single dataTable dropdown", () => {
+		const item: AssessmentItemInput = {
+			identifier: "case-different-choice-id-table-dropdown",
+			title: "Case-Different Choice ID in Data Table Dropdown",
+			responseDeclarations: [{ identifier: "dropdown_1", cardinality: "single", baseType: "identifier", correct: "A" }],
+			widgets: {
+				table_1: {
+					type: "dataTable",
+					title: null,
+					columns: [{ key: "col1", label: [{ type: "text", content: "Col 1" }], isNumeric: false }],
+					data: [
+						[
+							{
+								type: "dropdown",
+								responseIdentifier: "dropdown_1",
+								shuffle: false,
+								choices: [
+									{ identifier: "A", content: [{ type: "text", content: "Option A" }] },
+									{ identifier: "a", content: [{ type: "text", content: "Option a" }] } // Valid - case-sensitive
+								]
+							}
+						]
+					],
+					rowHeaderKey: null,
+					footer: null
+				}
+			},
+			body: [{ type: "blockSlot", slotId: "table_1" }],
+			interactions: {},
+			feedback: { correct: [], incorrect: [] }
+		}
+
+		const result = errors.trySync(() => compile(item))
+		expect(result.error).toBeUndefined() // Should compile successfully
+	})
 
 	test("should throw for invalid rowHeaderKey in dataTable", () => {
 		const item: AssessmentItemInput = {
 			identifier: "invalid-row-header-key-table",
 			title: "Invalid Row Header Key in Data Table",
-			responseDeclarations: [{ identifier: "text_response", cardinality: "single", baseType: "string", correct: "test" }],
+			responseDeclarations: [
+				{ identifier: "text_response", cardinality: "single", baseType: "string", correct: "test" }
+			],
 			widgets: {
 				table_1: {
 					type: "dataTable",
@@ -264,12 +269,20 @@ describe("QTI Compiler Robustness Checks", () => {
 						{ key: "col1", label: [{ type: "text", content: "Column 1" }], isNumeric: false },
 						{ key: "col2", label: [{ type: "text", content: "Column 2" }], isNumeric: false }
 					],
-					data: [[{ type: "inline", content: [{ type: "text", content: "data1" }] }, { type: "inline", content: [{ type: "text", content: "data2" }] }]],
+					data: [
+						[
+							{ type: "inline", content: [{ type: "text", content: "data1" }] },
+							{ type: "inline", content: [{ type: "text", content: "data2" }] }
+						]
+					],
 					rowHeaderKey: "nonExistentKey", // References a key not in columns
 					footer: null
 				}
 			},
-			body: [{ type: "blockSlot", slotId: "table_1" }, { type: "paragraph", content: [{ type: "inlineSlot", slotId: "text_input" }] }],
+			body: [
+				{ type: "blockSlot", slotId: "table_1" },
+				{ type: "paragraph", content: [{ type: "inlineSlot", slotId: "text_input" }] }
+			],
 			interactions: {
 				text_input: {
 					type: "textEntryInteraction",
@@ -278,21 +291,23 @@ describe("QTI Compiler Robustness Checks", () => {
 				}
 			},
 			feedback: { correct: [], incorrect: [] }
-		};
-
-		const result = errors.trySync(() => compile(item));
-		expect(result.error).toBeInstanceOf(Error);
-		if (result.error) {
-			expect(errors.is(result.error, ErrInvalidRowHeaderKey)).toBe(true);
-			expect(result.error.message).toContain("invalid dataTable rowHeaderKey");
 		}
-	});
+
+		const result = errors.trySync(() => compile(item))
+		expect(result.error).toBeInstanceOf(Error)
+		if (result.error) {
+			expect(errors.is(result.error, ErrInvalidRowHeaderKey)).toBe(true)
+			expect(result.error.message).toContain("invalid dataTable rowHeaderKey")
+		}
+	})
 
 	test("should not throw when rowHeaderKey is null in dataTable", () => {
 		const item: AssessmentItemInput = {
 			identifier: "null-row-header-key-table",
 			title: "Null Row Header Key in Data Table",
-			responseDeclarations: [{ identifier: "text_response", cardinality: "single", baseType: "string", correct: "test" }],
+			responseDeclarations: [
+				{ identifier: "text_response", cardinality: "single", baseType: "string", correct: "test" }
+			],
 			widgets: {
 				table_1: {
 					type: "dataTable",
@@ -301,12 +316,20 @@ describe("QTI Compiler Robustness Checks", () => {
 						{ key: "col1", label: [{ type: "text", content: "Column 1" }], isNumeric: false },
 						{ key: "col2", label: [{ type: "text", content: "Column 2" }], isNumeric: false }
 					],
-					data: [[{ type: "inline", content: [{ type: "text", content: "data1" }] }, { type: "inline", content: [{ type: "text", content: "data2" }] }]],
+					data: [
+						[
+							{ type: "inline", content: [{ type: "text", content: "data1" }] },
+							{ type: "inline", content: [{ type: "text", content: "data2" }] }
+						]
+					],
 					rowHeaderKey: null, // Null is allowed and should not throw
 					footer: null
 				}
 			},
-			body: [{ type: "blockSlot", slotId: "table_1" }, { type: "paragraph", content: [{ type: "inlineSlot", slotId: "text_input" }] }],
+			body: [
+				{ type: "blockSlot", slotId: "table_1" },
+				{ type: "paragraph", content: [{ type: "inlineSlot", slotId: "text_input" }] }
+			],
 			interactions: {
 				text_input: {
 					type: "textEntryInteraction",
@@ -315,9 +338,9 @@ describe("QTI Compiler Robustness Checks", () => {
 				}
 			},
 			feedback: { correct: [], incorrect: [] }
-		};
+		}
 
-		const result = errors.trySync(() => compile(item));
-		expect(result.error).toBeUndefined(); // Should compile successfully
-	});
+		const result = errors.trySync(() => compile(item))
+		expect(result.error).toBeUndefined() // Should compile successfully
+	})
 })

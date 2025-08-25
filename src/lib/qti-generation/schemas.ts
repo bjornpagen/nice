@@ -154,9 +154,7 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 				.string()
 				.regex(SAFE_IDENTIFIER_REGEX, "invalid response identifier")
 				.describe("Links this interaction to its response declaration for scoring."),
-			choices: z
-				.array(InlineChoiceSchema)
-				.describe("Array of options available in the dropdown menu."),
+			choices: z.array(InlineChoiceSchema).describe("Array of options available in the dropdown menu."),
 			shuffle: z.literal(true).describe("Whether to randomize dropdown options. Always true to ensure fairness.")
 		})
 		.strict()
