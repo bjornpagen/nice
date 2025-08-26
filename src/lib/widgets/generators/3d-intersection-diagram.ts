@@ -1,6 +1,11 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import {
+	computeDynamicWidth,
+	includePointX,
+	initExtents,
+} from "@/lib/widgets/utils/layout"
 
 // Defines the properties for a rectangular prism solid
 const RectangularPrismDataSchema = z
@@ -175,7 +180,9 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 	const { width, height, solid, plane, viewOptions } = props
 	const { projectionAngle, intersectionColor, showHiddenEdges } = viewOptions
 
-	const padding = 40
+	const margin = { top: 20, right: 20, bottom: 20, left: 20 }
+	const chartWidth = width - margin.left - margin.right
+	const chartHeight = height - margin.top - margin.bottom
 	let vertices: Point3D[] = []
 	let edges: Edge[] = []
 	let solidHeight = 0
@@ -365,10 +372,10 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 	const minY = Math.min(...projected.map((p) => p.y))
 	const maxY = Math.max(...projected.map((p) => p.y))
 
-	const scale = Math.min((width - padding * 2) / (maxX - minX), (height - padding * 2) / (maxY - minY))
+	const scale = Math.min(chartWidth / (maxX - minX), chartHeight / (maxY - minY))
 	const toSvg = (p: { x: number; y: number }) => ({
-		x: width / 2 + (p.x - (minX + maxX) / 2) * scale,
-		y: height / 2 - (p.y - (minY + maxY) / 2) * scale
+		x: margin.left + chartWidth / 2 + (p.x - (minX + maxX) / 2) * scale,
+		y: margin.top + chartHeight / 2 - (p.y - (minY + maxY) / 2) * scale
 	})
 
 	// 3. Define the Plane and Calculate Intersection Points
@@ -436,7 +443,9 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 	}
 
 	// 5. Generate SVG String
+	const ext = initExtents(width) // Initialize extents tracking
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	
 	const solidStroke = 'stroke="black" stroke-width="1.5"'
 	const hiddenStroke = `${solidStroke} stroke-dasharray="4 3"`
 
@@ -449,6 +458,9 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 			if (!proj1 || !proj2) continue
 			const p1 = toSvg(proj1)
 			const p2 = toSvg(proj2)
+			// Track extents of all points
+			includePointX(ext, p1.x)
+			includePointX(ext, p2.x)
 			svg += `<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" ${hiddenStroke}/>`
 		}
 	}
@@ -461,6 +473,9 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 		if (!proj1 || !proj2) continue
 		const p1 = toSvg(proj1)
 		const p2 = toSvg(proj2)
+		// Track extents of all points
+		includePointX(ext, p1.x)
+		includePointX(ext, p2.x)
 		svg += `<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" ${solidStroke}/>`
 	}
 
@@ -469,12 +484,18 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 		const pointsStr = sortedIntersectionPoints
 			.map((p) => {
 				const svgP = toSvg(project(p))
+				// Track extents of intersection points
+				includePointX(ext, svgP.x)
 				return `${svgP.x},${svgP.y}`
 			})
 			.join(" ")
 		svg += `<polygon points="${pointsStr}" fill="${intersectionColor}" stroke="black" stroke-width="2"/>`
 	}
 
+	// Apply dynamic width at the end
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 20)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 // Defines a line segment, such as a radius or a diameter.
 const SegmentSchema = z
@@ -225,6 +226,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 	const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(value, max))
 	const PADDING = 15
 
+	const ext = initExtents(width) // NEW: Initialize extents tracking
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	const r = radius * scale
 
@@ -279,13 +281,18 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 		}
 		default: {
 			svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="2"/>`
+			includePointX(ext, cx - r)
+			includePointX(ext, cx + r)
 			break
 		}
 	}
 
 	// The inner circle is only drawn for the main "circle" shape.
 	if (shape === "circle" && innerRadius) {
-		svg += `<circle cx="${cx}" cy="${cy}" r="${innerRadius * scale}" fill="white" stroke="black" stroke-width="2"/>`
+		const rInner = innerRadius * scale
+		svg += `<circle cx="${cx}" cy="${cy}" r="${rInner}" fill="white" stroke="black" stroke-width="2"/>`
+		includePointX(ext, cx - rInner)
+		includePointX(ext, cx + rInner)
 	}
 
 	// Arcs are drawn on top of the main shape.
@@ -302,6 +309,8 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 				const finalX = clamp(labelPos.x, PADDING, width - PADDING)
 				const finalY = clamp(labelPos.y, PADDING, height - PADDING)
 				svg += `<text x="${finalX}" y="${finalY}" font-size="14px" font-weight="bold" fill="#333" text-anchor="middle" dominant-baseline="middle">${arc.label}</text>`
+				// NEW: Track arc label extents
+				includeText(ext, finalX, arc.label, "middle", 7)
 			}
 		}
 	}
@@ -334,6 +343,8 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 				const finalX = clamp(mid.x + offsetX, PADDING, width - PADDING)
 				const finalY = clamp(mid.y + offsetY, PADDING, height - PADDING)
 				svg += `<text x="${finalX}" y="${finalY}" font-size="13px" fill="#333" text-anchor="middle" dominant-baseline="middle">${seg.label}</text>`
+				// NEW: Track segment label extents
+				includeText(ext, finalX, seg.label, "middle", 7)
 			}
 		}
 	}
@@ -345,8 +356,14 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 	if (areaLabel !== null) {
 		const yOffset = -10
 		svg += `<text x="${cx}" y="${cy + yOffset}" font-size="16px" font-weight="bold" fill="#333" text-anchor="middle" dominant-baseline="middle">${areaLabel}</text>`
+		// NEW: Track area label extents
+		includeText(ext, cx, areaLabel, "middle", 8)
 	}
 
+	// NEW: Apply dynamic width and viewBox at the end
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

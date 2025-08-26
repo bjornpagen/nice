@@ -3,6 +3,17 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import {
+	calculateTextAwareLabelSelection,
+	calculateTitleLayout,
+	calculateXAxisLayout,
+	calculateYAxisLayout,
+	computeDynamicWidth,
+	includeText,
+	initExtents
+} from "@/lib/widgets/utils/layout"
+import { renderRotatedWrappedYAxisLabel, renderWrappedText } from "@/lib/widgets/utils/text"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -12,7 +23,7 @@ const BarDataSchema = z
 		label: z
 			.string()
 			.describe(
-				"The category name displayed below this bar on the x-axis (e.g., 'January', 'Apples')."
+				"The category name displayed below this bar on the x-axis (e.g., 'January', 'Apples'). Use empty string \"\" to hide label."
 			),
 		value: z.number().describe("The numerical value determining the bar's height. Can be positive or negative."),
 		state: z
@@ -90,11 +101,21 @@ export type BarChartProps = z.infer<typeof BarChartPropsSchema>
  */
 export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (data) => {
 	const { width, height, title, xAxisLabel, yAxis, data: chartData, barColor } = data
-	const margin = { top: 40, right: 20, bottom: 50, left: 50 }
+	
+	// MODIFIED: Replace static margin with dynamic layout calculations
+	const { titleY, topMargin } = calculateTitleLayout(title ?? undefined, width - 60)
+	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true)
+	const chartHeight = height - topMargin - bottomMargin
+	if (chartHeight <= 0) return `<svg width="${width}" height="${height}"></svg>`
+	
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout({
+		...yAxis,
+		label: yAxis.label ?? ""
+	}, chartHeight)
+	const margin = { top: topMargin, right: 20, bottom: bottomMargin, left: leftMargin }
 	const chartWidth = width - margin.left - margin.right
-	const chartHeight = height - margin.top - margin.bottom
-
-	if (chartHeight <= 0 || chartWidth <= 0 || chartData.length === 0) {
+	
+	if (chartWidth <= 0 || chartData.length === 0) {
 		logger.error("invalid chart dimensions or data for bar chart", {
 			chartWidth,
 			chartHeight,
@@ -106,35 +127,50 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 		)
 	}
 
-	const maxValue = yAxis.max
-	const scaleY = chartHeight / (maxValue - yAxis.min)
+	const scaleY = chartHeight / (yAxis.max - yAxis.min)
 	const barWidth = chartWidth / chartData.length
-	const barPadding = 0.2 // 20% of bar width is padding
+	const barPadding = 0.2
 
+	const ext = initExtents(width) // NEW: Initialize extents tracking
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
-	svg +=
-		"<style>.axis-label { font-size: 14px; font-weight: bold; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
+	svg += "<style>.axis-label { font-size: 14px; font-weight: bold; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
-	if (title !== null) svg += `<text x="${width / 2}" y="${margin.top / 2}" class="title">${title}</text>`
+	// MODIFIED: Use wrapped text for title
+	if (title !== null) {
+		svg += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", width - 60, 8)
+		includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
+	}
 
-	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>` // Y-axis
-	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>` // X-axis
+	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>`
+	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>`
 
-	// Axis Labels
-	if (xAxisLabel !== null)
-		svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 10}" class="axis-label">${xAxisLabel}</text>`
-	if (yAxis.label !== null)
-		svg += `<text x="${margin.left - 30}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 30}, ${margin.top + chartHeight / 2})">${yAxis.label}</text>`
+	// MODIFIED: Use dynamic positioning and new renderers
+	if (xAxisLabel !== null) {
+		const labelX = margin.left + chartWidth / 2
+		const labelY = height - margin.bottom + xAxisTitleY
+		svg += `<text x="${labelX}" y="${labelY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
+		includeText(ext, labelX, abbreviateMonth(xAxisLabel), "middle", 7)
+	}
+	if (yAxis.label !== null) {
+		const yCenter = margin.top + chartHeight / 2
+		svg += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), yAxisLabelX, yCenter, chartHeight)
+		includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
+	}
 
 	// Y ticks and grid lines
-	for (let t = yAxis.min; t <= maxValue; t += yAxis.tickInterval) {
+	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = height - margin.bottom - (t - yAxis.min) * scaleY
 		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
 		svg += `<text x="${margin.left - 10}" y="${y + 4}" fill="black" text-anchor="end">${t}</text>`
+		includeText(ext, margin.left - 10, String(t), "end", 7)
 		svg += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#ccc" stroke-dasharray="2"/>`
 	}
 
-	// Bars and X-axis labels
+	// MODIFIED: Bars and text-aware X-axis labels
+	const xTickPositions = chartData.map((_, i) => margin.left + i * barWidth + barWidth / 2)
+	const xTickLabels = chartData.map((d) => abbreviateMonth(d.label))
+	const selectedXLabels = calculateTextAwareLabelSelection(xTickLabels, xTickPositions, chartWidth)
+
 	chartData.forEach((d, i) => {
 		const barHeight = d.value * scaleY
 		const x = margin.left + i * barWidth
@@ -147,11 +183,18 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 		} else {
 			svg += `<rect x="${x + xOffset}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="none" stroke="${barColor}" stroke-width="2" stroke-dasharray="4"/>`
 		}
-		if (d.label !== "") {
-			svg += `<text x="${x + barWidth / 2}" y="${height - margin.bottom + 15}" fill="black" text-anchor="middle">${d.label}</text>`
-		}
+		
+			if (d.label !== "" && selectedXLabels.has(i)) {
+		const labelX = x + barWidth / 2
+		svg += `<text x="${labelX}" y="${height - margin.bottom + 15}" fill="black" text-anchor="middle">${d.label}</text>`
+		includeText(ext, labelX, d.label, "middle", 7)
+	}
 	})
 
+	// NEW: Apply dynamic width at the end
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

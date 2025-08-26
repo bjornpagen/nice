@@ -3,6 +3,12 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import {
+	calculateTextAwareLabelSelection,
+	computeDynamicWidth,
+	includeText,
+	initExtents,
+} from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidRange = errors.new("min must be less than max")
 
@@ -41,8 +47,9 @@ export type AbsoluteValueNumberLineProps = z.infer<typeof AbsoluteValueNumberLin
 export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteValueNumberLinePropsSchema> = (data) => {
 	const { width, height, min, max, tickInterval, value, highlightColor, showDistanceLabel } = data
 	const absValue = Math.abs(value)
-	const padding = { top: 30, right: 20, bottom: 30, left: 20 }
-	const chartWidth = width - padding.left - padding.right
+	
+	const margin = { top: 30, right: 20, bottom: 30, left: 20 }
+	const chartWidth = width - margin.left - margin.right
 
 	if (min >= max) {
 		logger.error("invalid range for absolute value number line", { min, max })
@@ -50,21 +57,35 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	}
 
 	const scale = chartWidth / (max - min)
-	const toSvgX = (val: number) => padding.left + (val - min) * scale
-	const yPos = height - padding.bottom
+	const toSvgX = (val: number) => margin.left + (val - min) * scale
+	const yPos = height - margin.bottom
 
 	const zeroPos = toSvgX(0)
 	const valuePos = toSvgX(value)
 
+	const ext = initExtents(width) // Initialize extents tracking
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
-	svg += `<line x1="${padding.left}" y1="${yPos}" x2="${width - padding.right}" y2="${yPos}" stroke="black" stroke-width="1.5"/>`
+	
+	svg += `<line x1="${margin.left}" y1="${yPos}" x2="${width - margin.right}" y2="${yPos}" stroke="black" stroke-width="1.5"/>`
 
-	// Ticks and labels
+	// Ticks and labels with text-aware selection
+	const tickValues: number[] = []
+	const tickPositions: number[] = []
 	for (let t = min; t <= max; t += tickInterval) {
+		tickValues.push(t)
+		tickPositions.push(toSvgX(t))
+	}
+	const tickLabels = tickValues.map(String)
+	const selectedLabels = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartWidth, 8, 5)
+	
+	tickValues.forEach((t, i) => {
 		const x = toSvgX(t)
 		svg += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="black" stroke-width="1"/>`
-		svg += `<text x="${x}" y="${yPos + 20}" fill="black" text-anchor="middle">${t}</text>`
-	}
+		if (selectedLabels.has(i)) {
+			svg += `<text x="${x}" y="${yPos + 20}" fill="black" text-anchor="middle">${t}</text>`
+			includeText(ext, x, String(t), "middle", 8)
+		}
+	})
 
 	// Distance highlight
 	svg += `<line x1="${zeroPos}" y1="${yPos}" x2="${valuePos}" y2="${yPos}" stroke="${highlightColor}" stroke-width="4" stroke-linecap="round"/>`
@@ -72,11 +93,17 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	// Distance label
 	if (showDistanceLabel) {
 		const labelX = (zeroPos + valuePos) / 2
-		svg += `<text x="${labelX}" y="${yPos - 15}" fill="black" text-anchor="middle" font-weight="bold">|${value}| = ${absValue}</text>`
+		const labelText = `|${value}| = ${absValue}`
+		svg += `<text x="${labelX}" y="${yPos - 15}" fill="black" text-anchor="middle" font-weight="bold">${labelText}</text>`
+		includeText(ext, labelX, labelText, "middle", 8)
 	}
 
 	svg += `<circle cx="${valuePos}" cy="${yPos}" r="5" fill="${highlightColor}" stroke="black" stroke-width="1"/>`
 
+	// Apply dynamic width at the end
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

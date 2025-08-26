@@ -4,7 +4,12 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { calculateXAxisLayout } from "@/lib/widgets/utils/layout"
+import {
+	calculateXAxisLayout,
+	computeDynamicWidth,
+	includeText,
+	initExtents
+} from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -86,6 +91,7 @@ export const generateHorizontalBarChart: WidgetGenerator<typeof HorizontalBarCha
 	const barHeight = chartHeight / chartData.length
 	const barPadding = 0.4 // 40% of bar height is padding
 
+	const ext = initExtents(width) // NEW: Initialize extents tracking
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="serif">`
 	svg +=
 		"<style>.axis-label { font-size: 1.1em; font-weight: bold; text-anchor: middle; } .tick-label { font-size: 1.1em; } .category-label { font-size: 1.1em; } .value-label { font-size: 1.1em; } </style>"
@@ -100,13 +106,16 @@ export const generateHorizontalBarChart: WidgetGenerator<typeof HorizontalBarCha
 		svg += `<line x1="${x}" y1="0" x2="${x}" y2="${chartHeight}" stroke="${gridColor}" stroke-width="1.5"/>`
 		svg += `<line x1="${x}" y1="${chartHeight}" x2="${x}" y2="${chartHeight + 5}" stroke="black" stroke-width="1.5"/>`
 		svg += `<text x="${x}" y="${chartHeight + 20}" class="tick-label" text-anchor="middle">${t}</text>`
+		includeText(ext, margin.left + x, String(t), "middle") // NEW: Track extents
 	}
 
 	// Y-axis line
 	svg += `<line x1="0" y1="0" x2="0" y2="${chartHeight}" stroke="black" stroke-width="2"/>`
 
 	// X-Axis Label
+	const xAxisLabelX = margin.left + chartWidth / 2
 	svg += `<text x="${chartWidth / 2}" y="${chartHeight + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
+	includeText(ext, xAxisLabelX, abbreviateMonth(xAxis.label), "middle") // NEW: Track extents
 
 	// Bars, Y-axis categories, and value labels
 	chartData.forEach((d, i) => {
@@ -119,15 +128,26 @@ export const generateHorizontalBarChart: WidgetGenerator<typeof HorizontalBarCha
 		svg += `<rect x="0" y="${y}" width="${barLength}" height="${innerBarHeight}" fill="${d.color}"/>`
 
 		// Y-axis category label
-		svg += `<text x="-10" y="${y + innerBarHeight / 2}" class="category-label" text-anchor="end" dominant-baseline="middle">${abbreviateMonth(d.category)}</text>`
+		const categoryLabelX = -10
+		svg += `<text x="${categoryLabelX}" y="${y + innerBarHeight / 2}" class="category-label" text-anchor="end" dominant-baseline="middle">${abbreviateMonth(d.category)}</text>`
+		includeText(ext, margin.left + categoryLabelX, abbreviateMonth(d.category), "end") // NEW: Track extents
+		
 		// Tick mark for category
 		svg += `<line x1="0" y1="${y + innerBarHeight / 2}" x2="-5" y2="${y + innerBarHeight / 2}" stroke="black" stroke-width="1.5"/>`
 
 		// Value label
-		svg += `<text x="${barLength + 5}" y="${y + innerBarHeight / 2}" class="value-label" text-anchor="start" dominant-baseline="middle">${abbreviateMonth(d.label)}</text>`
+		const valueLabelX = barLength + 5
+		svg += `<text x="${valueLabelX}" y="${y + innerBarHeight / 2}" class="value-label" text-anchor="start" dominant-baseline="middle">${abbreviateMonth(d.label)}</text>`
+		includeText(ext, margin.left + valueLabelX, abbreviateMonth(d.label), "start") // NEW: Track extents
 	})
 
 	svg += "</g>" // Close chartBody group
+	
+	// NEW: Apply dynamic width at the end
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
+	
 	svg += "</svg>"
 	return svg
 }

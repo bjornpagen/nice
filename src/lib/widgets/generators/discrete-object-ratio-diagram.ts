@@ -1,5 +1,8 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { calculateTitleLayout } from "@/lib/widgets/utils/layout"
+import { renderWrappedText } from "@/lib/widgets/utils/text"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 
 // Defines a type of object to be rendered
 const ObjectTypeSchema = z
@@ -70,7 +73,11 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 	data
 ) => {
 	const { width, height, objects, layout, title } = data
-	const padding = { top: 40, right: 20, bottom: 20, left: 20 }
+	
+	// Use dynamic layout for title and top margin
+	const { titleY, topMargin } = calculateTitleLayout(title ?? undefined, width - 40)
+	const padding = { top: topMargin, right: 20, bottom: 20, left: 20 }
+	
 	const chartWidth = width - padding.left - padding.right
 	const chartHeight = height - padding.top - padding.bottom
 
@@ -85,8 +92,9 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 
 	svg += `<rect x="${containerX}" y="${containerY}" width="${containerWidth}" height="${containerHeight}" fill="#fafafa" stroke="#e0e0e0" stroke-width="2" rx="8" ry="8"/>`
 
+	// Use renderWrappedText for the title
 	if (title !== null) {
-		svg += `<text x="${width / 2}" y="${padding.top / 2}" fill="#333333" text-anchor="middle" font-weight="bold">${title}</text>`
+		svg += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", width - 40, 8)
 	}
 
 	const iconSize = 28 // Larger for better emoji visibility

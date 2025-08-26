@@ -3,6 +3,13 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import {
+	calculateXAxisLayout,
+	computeDynamicWidth,
+	includeText,
+	initExtents
+} from "@/lib/widgets/utils/layout"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 
 export const ErrInvalidRange = errors.new("axis min must be less than axis max")
 
@@ -116,11 +123,15 @@ export type BoxPlotProps = z.infer<typeof BoxPlotPropsSchema>
  */
 export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data) => {
 	const { width, height, axis, summary, boxColor, medianColor } = data
-	const margin = { top: 20, right: 20, bottom: 65, left: 20 }
+	
+	// MODIFIED: Use dynamic layout for bottom margin
+	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true, 15) // has tick labels, less padding
+	const margin = { top: 20, right: 20, bottom: bottomMargin, left: 20 }
+	
 	const plotHeight = height - margin.top - margin.bottom
 	const chartWidth = width - margin.left - margin.right
 	const yCenter = margin.top + plotHeight / 2
-
+	
 	if (axis.min >= axis.max) {
 		logger.error("invalid axis range for box plot", { axisMin: axis.min, axisMax: axis.max })
 		throw errors.wrap(ErrInvalidRange, `axis.min (${axis.min}) must be less than axis.max (${axis.max})`)
@@ -135,18 +146,25 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 	const q3Pos = toSvgX(summary.q3)
 	const maxPos = toSvgX(summary.max)
 
+	const ext = initExtents(width) // NEW: Initialize extents tracking
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 
-	const axisY = margin.top + plotHeight + 20
+	// MODIFIED: Use dynamic axisY and label positioning
+	const axisY = height - margin.bottom
 	svg += `<line x1="${margin.left}" y1="${axisY}" x2="${width - margin.right}" y2="${axisY}" stroke="black"/>`
 	if (axis.label && axis.label !== "") {
-		svg += `<text x="${width / 2}" y="${height - 5}" fill="black" text-anchor="middle" font-size="14">${axis.label}</text>`
+		const labelX = margin.left + chartWidth / 2
+		const labelY = height - margin.bottom + xAxisTitleY
+		svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" font-size="14">${abbreviateMonth(axis.label)}</text>`
+		includeText(ext, labelX, abbreviateMonth(axis.label), "middle", 7)
 	}
+	
 	// Draw tick marks and labels
 	for (const t of axis.tickLabels) {
 		const pos = toSvgX(t)
 		svg += `<line x1="${pos}" y1="${axisY - 5}" x2="${pos}" y2="${axisY + 5}" stroke="black"/>`
 		svg += `<text x="${pos}" y="${axisY + 20}" fill="black" text-anchor="middle">${t}</text>`
+		includeText(ext, pos, String(t), "middle", 7)
 	}
 
 	// Box plot elements
@@ -161,6 +179,10 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 
 	svg += `<line x1="${medianPos}" y1="${yCenter - plotHeight / 2}" x2="${medianPos}" y2="${yCenter + plotHeight / 2}" stroke="${medianColor}" stroke-width="2"/>`
 
+	// NEW: Apply dynamic width at the end
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

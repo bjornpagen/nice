@@ -3,6 +3,14 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import {
+	calculateTextAwareLabelSelection,
+	calculateXAxisLayout,
+	computeDynamicWidth,
+	includeText,
+	initExtents
+} from "@/lib/widgets/utils/layout"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
 
@@ -100,7 +108,11 @@ export type DotPlotProps = z.infer<typeof DotPlotPropsSchema>
  */
 export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data) => {
 	const { width, height, axis, data: plotData, dotColor, dotRadius } = data
-	const margin = { top: 20, right: 20, bottom: 60, left: 20 }
+	
+	// MODIFIED: Use dynamic layout for bottom margin
+	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true)
+	const margin = { top: 20, right: 20, bottom: bottomMargin, left: 20 }
+
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 	const axisY = height - margin.bottom
@@ -120,6 +132,7 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	const scale = chartWidth / (axis.max - axis.min)
 	const toSvgX = (val: number) => margin.left + (val - axis.min) * scale
 
+	const ext = initExtents(width) // NEW: Initialize extents tracking
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 
 	// Axis line
@@ -127,30 +140,34 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 
 	// Axis label
 	if (axis.label !== null) {
-		svg += `<text x="${width / 2}" y="${height - 15}" fill="black" text-anchor="middle" font-size="14">${axis.label}</text>`
+		svg += `<text x="${width / 2}" y="${height - margin.bottom + xAxisTitleY}" fill="black" text-anchor="middle" font-size="14">${abbreviateMonth(axis.label)}</text>`
+		includeText(ext, width / 2, abbreviateMonth(axis.label), "middle", 7)
 	}
 
-	// Ticks and tick labels
-	// Dynamically thin tick labels to prevent overlap when ticks are very dense (e.g., interval = 0.1)
-	const tickPixelStep = scale * axis.tickInterval
-	const minLabelSpacingPx = 28 // approx width needed per label at font-size 12
-	const labelEvery = Math.max(1, Math.ceil(minLabelSpacingPx / tickPixelStep))
-
+	// MODIFIED: Replace manual thinning with text-aware selection
+	const tickValues: number[] = []
+	const tickPositions: number[] = []
+	for (let t = axis.min; t <= axis.max + 1e-9; t += axis.tickInterval) {
+		tickValues.push(t)
+		tickPositions.push(toSvgX(t))
+	}
+	
 	// Determine decimal places for formatting based on tickInterval
 	const intervalStr = String(axis.tickInterval)
 	const decimals = intervalStr.includes(".") ? (intervalStr.split(".")[1] ?? "").length : 0
-	let i = 0
-	for (let t = axis.min; t <= axis.max + 1e-9; t += axis.tickInterval) {
+	
+	const tickLabels = tickValues.map((t) => t.toFixed(decimals))
+	const selectedLabels = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartWidth, 10, 18) // more padding for numbers
+
+	tickValues.forEach((t, i) => {
 		const x = toSvgX(t)
 		svg += `<line x1="${x}" y1="${axisY - 5}" x2="${x}" y2="${axisY + 5}" stroke="black"/>`
-		// Only render label if spacing allows, but always include min and max labels
-		const isEndpoint = Math.abs(t - axis.min) < 1e-9 || Math.abs(t - axis.max) < 1e-9
-		if (isEndpoint || i % labelEvery === 0) {
+		if (selectedLabels.has(i)) {
 			const label = t.toFixed(decimals)
 			svg += `<text x="${x}" y="${axisY + 20}" fill="black" text-anchor="middle">${label}</text>`
+			includeText(ext, x, label, "middle", 7)
 		}
-		i++
-	}
+	})
 
 	const dotDiameter = dotRadius * 2
 	const dotSpacing = 2 // Vertical space between dots
@@ -165,6 +182,10 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 		}
 	}
 
+	// NEW: Apply dynamic width at the end
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

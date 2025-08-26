@@ -1,6 +1,11 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import {
+	computeDynamicWidth,
+	includeText,
+	initExtents,
+} from "@/lib/widgets/utils/layout"
 
 // Utility function to find intersection point of two lines
 // Line 1: from point1 to point2, Line 2: from point3 to point4
@@ -171,7 +176,8 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 	const vbWidth = maxX - minX + 2 * padding
 	const vbHeight = maxY - minY + 2 * padding
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="${vbX} ${vbY} ${vbWidth} ${vbHeight}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const ext = initExtents(width) // Initialize extents tracking
+	let svg = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 
 	const pointMap = new Map(points.map((p) => [p.id, p]))
 
@@ -273,6 +279,8 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			const labelX = vertex.x + labelRadius * Math.cos(midAngle)
 			const labelY = vertex.y + labelRadius * Math.sin(midAngle)
 			svg += `<text x="${labelX}" y="${labelY}" fill="black" stroke="white" stroke-width="0.3" paint-order="stroke fill" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="500">${angle.label}</text>`
+			// Track angle label extents
+			includeText(ext, labelX, angle.label, "middle", 7)
 		}
 	}
 
@@ -283,6 +291,7 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 		} else {
 			svg += `<circle cx="${point.x}" cy="${point.y}" r="4" fill="black"/>`
 		}
+		includeText(ext, point.x, "", "middle") // Track point location
 		if (point.label !== null) {
 			// Smart label positioning: avoid rays emanating from this point
 			const raysFromPoint = rays.filter((ray) => ray.from === point.id)
@@ -335,10 +344,17 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 				const textX = point.x + labelDistance * Math.cos(bestAngle)
 				const textY = point.y + labelDistance * Math.sin(bestAngle)
 				svg += `<text x="${textX}" y="${textY}" fill="black" font-size="16" font-weight="bold">${point.label}</text>`
+				// Track vertex label extents
+				includeText(ext, textX, point.label, "middle", 8)
 			}
 		}
 	}
 
-	svg += "</svg>"
+	// Apply dynamic width and viewBox at the end
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
+	const finalSVG = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	
+	// Rebuild SVG with correct viewBox
+	svg = finalSVG + svg.substring(svg.indexOf(">") + 1)
 	return svg
 }
