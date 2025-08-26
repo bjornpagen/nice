@@ -30,9 +30,36 @@ export function LessonSection({
 	// CORRECT: Find the index of the first unlocked exercise.
 	const firstUnlockedExerciseIndex = exercises.findIndex((exercise) => resourceLockStatus[exercise.id] !== true)
 
+	// Compute lesson title link target:
+	// 1) first unlocked and uncompleted resource
+	// 2) else first unlocked resource
+	// 3) else first resource in lesson
+	let lessonTargetPath = lesson.path
+	if (lesson.children.length > 0) {
+		const firstUncompletedUnlocked = lesson.children.find((child) => {
+			const isLocked = resourceLockStatus[child.id] === true
+			if (isLocked) {
+				return false
+			}
+			const progress = progressMap.get(child.id)
+			return !progress?.completed
+		})
+
+		let target = firstUncompletedUnlocked
+		if (!target) {
+			target = lesson.children.find((child) => resourceLockStatus[child.id] !== true)
+		}
+		if (!target) {
+			target = lesson.children[0]
+		}
+		if (target) {
+			lessonTargetPath = target.path
+		}
+	}
+
 	return (
 		<Section>
-			<Link href={lesson.path} className="font-bold text-gray-900 mb-2 text-md hover:underline">
+			<Link href={lessonTargetPath} className="font-bold text-gray-900 mb-2 text-md hover:underline">
 				{capitalize(lesson.title)}
 			</Link>
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
