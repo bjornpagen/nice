@@ -4,9 +4,7 @@ import { createClient } from "redis"
 import { env } from "@/env"
 
 declare global {
-	// eslint-disable-next-line no-var
 	var redisClient: ReturnType<typeof createClient> | undefined
-	// eslint-disable-next-line no-var
 	var redisConnectionPromise: Promise<void> | undefined
 }
 
