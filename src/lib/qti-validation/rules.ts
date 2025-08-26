@@ -4,6 +4,7 @@ import { qti } from "@/lib/clients"
 import { ErrQtiNotFound } from "@/lib/qti"
 import { QTI_INTERACTION_TAGS } from "@/lib/qti-generation/valid-tags"
 import { escapeXmlAttribute, extractQtiStimulusBodyContent } from "@/lib/xml-utils"
+import { ghettoValidateItem, ghettoValidateTest } from "@/lib/qti-validation/ghetto"
 
 type ValidationContext = {
 	id: string
@@ -738,16 +739,33 @@ async function upsertAndCleanupStimulus(identifier: string, xml: string, context
  * This serves as the ultimate "ground truth" validation pass.
  */
 export async function validateWithQtiApi(xml: string, context: ValidationContext): Promise<void> {
-	const { logger } = context
-	const tempIdentifier = `nice-tmp_${context.id}`
+	const { logger, id, rootTag } = context
 
-	if (context.rootTag === "qti-assessment-item") {
-		await upsertAndCleanupItem(tempIdentifier, xml, context)
-	} else if (context.rootTag === "qti-assessment-stimulus") {
+	if (rootTag === "qti-assessment-item") {
+		const result = await ghettoValidateItem(xml, id)
+		if (!result.success) {
+			logger.error("qti api validation failed", { error: result.error, identifier: id })
+			if (result.error instanceof Error) {
+				throw errors.wrap(result.error, "qti api validation failed")
+			}
+			throw errors.new("qti api validation failed")
+		}
+	} else if (rootTag === "qti-assessment-test") {
+		const result = await ghettoValidateTest(xml, id)
+		if (!result.success) {
+			logger.error("qti api validation failed", { error: result.error, identifier: id })
+			if (result.error instanceof Error) {
+				throw errors.wrap(result.error, "qti api validation failed")
+			}
+			throw errors.new("qti api validation failed")
+		}
+	} else if (rootTag === "qti-assessment-stimulus") {
+		// Stimulus validation remains unchanged, using the existing upsertAndCleanupStimulus
+		const tempIdentifier = `nice-tmp_${id}`
 		await upsertAndCleanupStimulus(tempIdentifier, xml, context)
 	} else {
-		logger.error("unsupported root tag for api validation", { rootTag: context.rootTag })
-		throw errors.new(`unsupported root tag for api validation: ${context.rootTag}`)
+		logger.error("unsupported root tag for api validation", { rootTag })
+		throw errors.new(`unsupported root tag for api validation: ${rootTag}`)
 	}
 }
 

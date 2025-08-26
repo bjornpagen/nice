@@ -6,10 +6,9 @@ import { z } from "zod"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { qti } from "@/lib/clients"
 import { HARDCODED_HISTORY_COURSE_IDS } from "@/lib/constants/course-mapping"
 import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
-import { ErrQtiNotFound } from "@/lib/qti"
+import { ghettoValidateItem } from "@/lib/qti-validation/ghetto"
 import { buildDeterministicKBuckets } from "@/lib/utils/k-bucketing"
 import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
 
@@ -153,6 +152,7 @@ export const orchestrateHardcodedHistoryQtiGenerateUndifferentiated = inngest.cr
 
 				const items: AssessmentItem[] = []
 				const skippedItems: Array<{ item: AssessmentItem; error?: unknown }> = []
+
 				for (let i = 0; i < itemsUnvalidated.length; i += VALIDATION_BATCH_SIZE) {
 					const batch = itemsUnvalidated.slice(i, i + VALIDATION_BATCH_SIZE)
 					logger.debug("ghetto-validate batch starting", {
@@ -163,42 +163,8 @@ export const orchestrateHardcodedHistoryQtiGenerateUndifferentiated = inngest.cr
 
 					const batchResults = await Promise.all(
 						batch.map(async (item) => {
-							const tempIdentifier = `nice_${item.metadata.khanId}`
-							const payload = {
-								identifier: tempIdentifier,
-								xml: item.xml,
-								metadata: { temp: true, sourceId: item.metadata.khanId }
-							}
-
-							const updateResult = await errors.try(qti.updateAssessmentItem(payload))
-							if (updateResult.error) {
-								if (errors.is(updateResult.error, ErrQtiNotFound)) {
-									const createResult = await errors.try(qti.createAssessmentItem(payload))
-									if (createResult.error) {
-										logger.error("ghetto-validate create failed", {
-											identifier: tempIdentifier,
-											error: createResult.error
-										})
-										return { success: false, item, error: createResult.error }
-									}
-								} else {
-									logger.error("ghetto-validate update failed", {
-										identifier: tempIdentifier,
-										error: updateResult.error
-									})
-									return { success: false, item, error: updateResult.error }
-								}
-							}
-
-							const deleteResult = await errors.try(qti.deleteAssessmentItem(tempIdentifier))
-							if (deleteResult.error) {
-								logger.warn("failed to clean up temp validation item", {
-									identifier: tempIdentifier,
-									error: deleteResult.error
-								})
-							}
-
-							return { success: true, item }
+							const result = await ghettoValidateItem(item.xml, `nice_${item.metadata.khanId}`)
+							return { ...result, item }
 						})
 					)
 
@@ -206,7 +172,11 @@ export const orchestrateHardcodedHistoryQtiGenerateUndifferentiated = inngest.cr
 						if (result.success) {
 							items.push(result.item)
 						} else {
-							skippedItems.push(result)
+							skippedItems.push({ item: result.item, error: result.error })
+							logger.warn("skipping invalid qti item after ghetto-validate", {
+								questionId: result.item.metadata.khanId,
+								error: result.error
+							})
 						}
 					}
 
@@ -216,12 +186,6 @@ export const orchestrateHardcodedHistoryQtiGenerateUndifferentiated = inngest.cr
 				}
 
 				const skippedItemsCount = skippedItems.length
-				for (const result of skippedItems) {
-					logger.warn("skipping invalid qti item after ghetto-validate", {
-						questionId: result.item.metadata.khanId,
-						error: result.error
-					})
-				}
 
 				const stimuli = allArticles.map((a) => {
 					if (!a.xml) {

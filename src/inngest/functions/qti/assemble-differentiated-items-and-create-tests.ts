@@ -8,11 +8,10 @@ import { z } from "zod"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { qti } from "@/lib/clients"
 import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
-import { ErrQtiNotFound } from "@/lib/qti"
+import { ghettoValidateItem, ghettoValidateTest } from "@/lib/qti-validation/ghetto"
 import { buildDeterministicKBuckets } from "@/lib/utils/k-bucketing"
-import { escapeXmlAttribute } from "@/lib/xml-utils"
+import { escapeXmlAttribute, extractIdentifier } from "@/lib/xml-utils"
 
 // ✅ ADD: Configurable constants for batched validation to avoid overwhelming the QTI API.
 const VALIDATION_BATCH_SIZE = 20
@@ -106,35 +105,20 @@ export const assembleDifferentiatedItemsAndCreateTests = inngest.createFunction(
 				const batch = parsedItems.slice(i, i + VALIDATION_BATCH_SIZE)
 				const batchResults = await Promise.all(
 					batch.map(async (item) => {
-						// Extract the actual identifier from the XML
-						const idMatch = item.xml.match(/identifier="([^"]+)"/)
-						if (!idMatch || !idMatch[1]) {
-							logger.error("could not extract identifier from xml", { khanId: item.metadata.khanId })
+						const identifier = extractIdentifier(item.xml, "qti-assessment-item")
+						if (!identifier) {
 							return { success: false, item, error: errors.new("missing identifier in xml") }
 						}
-						const actualIdentifier = idMatch[1]
-
-						const payload = {
-							identifier: actualIdentifier,
-							xml: item.xml,
-							metadata: { temp: true, sourceId: item.metadata.khanId }
-						}
-						const updateResult = await errors.try(qti.updateAssessmentItem(payload))
-						if (updateResult.error) {
-							if (errors.is(updateResult.error, ErrQtiNotFound)) {
-								const createResult = await errors.try(qti.createAssessmentItem(payload))
-								if (createResult.error) return { success: false, item, error: createResult.error }
-							} else {
-								return { success: false, item, error: updateResult.error }
-							}
-						}
-						await errors.try(qti.deleteAssessmentItem(actualIdentifier))
-						return { success: true, item }
+						const result = await ghettoValidateItem(item.xml, identifier)
+						return { ...result, item }
 					})
 				)
 				for (const result of batchResults) {
-					if (result.success) assessmentItems.push(result.item)
-					else skippedItems.push(result)
+					if (result.success) {
+						assessmentItems.push(result.item)
+					} else {
+						skippedItems.push({ item: result.item, error: result.error })
+					}
 				}
 				if (i + VALIDATION_BATCH_SIZE < parsedItems.length) {
 					await new Promise((resolve) => setTimeout(resolve, VALIDATION_DELAY_MS))
@@ -545,29 +529,8 @@ ${sectionsXml}
 
 				const batchResults = await Promise.all(
 					batch.map(async (test) => {
-						const identifier = `nice_${test.id}`
-						// Upsert test
-						const updateResult = await errors.try(qti.updateAssessmentTest(identifier, test.xml))
-						if (updateResult.error) {
-							if (errors.is(updateResult.error, ErrQtiNotFound)) {
-								const createResult = await errors.try(qti.createAssessmentTest(test.xml))
-								if (createResult.error) {
-									logger.error("ghetto-validate create failed", { identifier, error: createResult.error })
-									return { success: false, test, error: createResult.error }
-								}
-							} else {
-								logger.error("ghetto-validate update failed", { identifier, error: updateResult.error })
-								return { success: false, test, error: updateResult.error }
-							}
-						}
-
-						// Delete immediately
-						const deleteResult = await errors.try(qti.deleteAssessmentTest(identifier))
-						if (deleteResult.error) {
-							logger.warn("failed to clean up temp validation item", { identifier, error: deleteResult.error })
-						}
-
-						return { success: true, test }
+						const result = await ghettoValidateTest(test.xml, `nice_${test.id}`)
+						return { ...result, test }
 					})
 				)
 
@@ -575,20 +538,17 @@ ${sectionsXml}
 					if (result.success) {
 						validatedTests.push(result.test)
 					} else {
-						skippedTests.push(result)
+						skippedTests.push({ test: result.test, error: result.error })
+						logger.warn("skipping invalid qti test after ghetto-validate", {
+							testId: `nice_${result.test.id}`,
+							error: result.error
+						})
 					}
 				}
 
 				if (i + VALIDATION_BATCH_SIZE < testCandidates.length) {
 					await new Promise((resolve) => setTimeout(resolve, VALIDATION_DELAY_MS))
 				}
-			}
-
-			for (const result of skippedTests) {
-				logger.warn("skipping invalid qti test after ghetto-validate", {
-					testId: `nice_${result.test.id}`,
-					error: result.error
-				})
 			}
 
 			const assessmentTests = validatedTests.map((t) => t.xml)
