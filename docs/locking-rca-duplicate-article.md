@@ -163,4 +163,61 @@ Together, these produce the observed symptom: attempting to progress from Unit 2
 
 No prescriptive fixes are included per request. This document is limited to root cause analysis.
 
+#### Reproduction Tests (Failing by Design)
+
+Two failing tests have been added to codify the bug:
+
+1) Lesson 2 article appears locked despite its immediate predecessor being complete
+
+```182:209:tests/locks/duplicate-article-across-units.test.ts
+test("Lesson 2 article should be unlocked after preceding complete, but duplicate later overwrites to locked (expected failing)", () => {
+	const course = makeCourseWhereLesson2ArticleAppearsLocked()
+	// Only prior video completed; later duplicate occurrence has an incomplete predecessor
+	const progress = new Map<string, AssessmentProgress>([["vid-u2-l2-1", { completed: true }]])
+	const lock = buildResourceLockStatus(course, progress, true)
+	// Intuitive expectation (per-placement): unlocked
+	// Actual under current logic: locked due to last-write-wins on shared id
+	expect(lock["nice_x218d1e03bb2ccb6a"]).toBe(false)
+})
+```
+
+2) Unit 2 test remains locked even after completing the article once at lesson 2
+
+```94:111:tests/locks/duplicate-article-across-units.test.ts
+test("Completing the shared article in lesson 2 should unlock unit test, but later duplicate incomplete keeps it locked (expected failing)", () => {
+	const course = makeCourseWithDuplicateArticleSameUnit()
+	const progress = new Map<string, AssessmentProgress>([["nice_x218d1e03bb2ccb6a", { completed: true }]])
+	const lock = buildResourceLockStatus(course, progress, true)
+	// Intuitive expectation: unit test unlocked
+	// Actual: locked because previousComplete becomes false near the end due to the later duplicate
+	expect(lock["u2-test"]).toBe(false)
+})
+```
+
+Both tests fail under the current logic, confirming:
+- Shared resource ids across placements cause last-write-wins for lock state
+- Global ordering can turn later incomplete predecessors into locks for earlier placements sharing the same id
+
+#### Dataset Cross-References
+
+The duplicated article resource and its multiple componentResource links:
+
+```605:626:data/middle-school-earth-and-space-science/oneroster/resources.json
+"sourcedId": "nice_x218d1e03bb2ccb6a",
+"title": "Activity: What happens during a solar or lunar eclipse?",
+"metadata": { "khanActivityType": "Article", ... }
+```
+
+```339:350:data/middle-school-earth-and-space-science/oneroster/componentResources.json
+"resource": { "sourcedId": "nice_x218d1e03bb2ccb6a" },
+"courseComponent": { "sourcedId": "nice_xc946d8db4ebd130f" },
+"sortOrder": 0
+```
+
+```1095:1106:data/middle-school-earth-and-space-science/oneroster/componentResources.json
+"resource": { "sourcedId": "nice_x218d1e03bb2ccb6a" },
+"courseComponent": { "sourcedId": "nice_x4bcda8255d71a229" },
+"sortOrder": 0
+```
+
 
