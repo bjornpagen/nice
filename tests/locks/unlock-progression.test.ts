@@ -7,6 +7,7 @@ type AssessmentProgress = { completed: boolean; score?: number }
 function makeCourse(): Course {
 	const lesson: Lesson = {
 		id: "lesson-1",
+		componentResourceSourcedId: "lesson-1", // Use lesson id for tests
 		type: "Lesson",
 		ordering: 1,
 		slug: "l1",
@@ -17,6 +18,7 @@ function makeCourse(): Course {
 		children: [
 			{
 				id: "video-1",
+				componentResourceSourcedId: "cr-lesson-1-video-1", // Unique per placement
 				type: "Video",
 				ordering: 1,
 				slug: "v1",
@@ -28,6 +30,7 @@ function makeCourse(): Course {
 			},
 			{
 				id: "exercise-1",
+				componentResourceSourcedId: "cr-lesson-1-exercise-1", // Unique per placement
 				type: "Exercise",
 				ordering: 2,
 				slug: "e1",
@@ -43,6 +46,7 @@ function makeCourse(): Course {
 
 	const quiz: Quiz = {
 		id: "quiz-1",
+		componentResourceSourcedId: "quiz-1", // Use quiz id for tests
 		type: "Quiz",
 		ordering: 2,
 		slug: "q1",
@@ -65,6 +69,7 @@ function makeCourse(): Course {
 
 	const challenge: CourseChallenge = {
 		id: "challenge-1",
+		componentResourceSourcedId: "challenge-1", // Use challenge id for tests
 		type: "CourseChallenge",
 		ordering: 999,
 		slug: "cc1",
@@ -91,7 +96,7 @@ describe("Resource unlocking delegation and threshold", () => {
 		const course = makeCourse()
 		const progress = new Map<string, AssessmentProgress>()
 		const lock = buildResourceLockStatus(course, progress, true)
-		expect(lock["video-1"]).toBe(false)
+		expect(lock["cr-lesson-1-video-1"]).toBe(false)
 	})
 
 	test("Next item remains locked when assessment score < threshold (79%): relies on server-provided progress", () => {
@@ -129,8 +134,8 @@ describe("Resource unlocking delegation and threshold", () => {
 		const course = makeCourse()
 		const progress = new Map<string, AssessmentProgress>()
 		const lock = buildResourceLockStatus(course, progress, false)
-		expect(lock["video-1"]).toBe(false)
-		expect(lock["exercise-1"]).toBe(false)
+		expect(lock["cr-lesson-1-video-1"]).toBe(false)
+		expect(lock["cr-lesson-1-exercise-1"]).toBe(false)
 		expect(lock["quiz-1"]).toBe(false)
 	})
 
@@ -139,7 +144,7 @@ describe("Resource unlocking delegation and threshold", () => {
 		const progress = new Map<string, AssessmentProgress>([])
 		const lock = buildResourceLockStatus(course, progress, true)
 		// With no progress, exercise is locked because previous video not completed
-		expect(lock["exercise-1"]).toBe(true)
+		expect(lock["cr-lesson-1-exercise-1"]).toBe(true)
 	})
 
 	test("Non-assessment items depend on completed flag: completed video unlocks exercise", () => {
@@ -147,7 +152,7 @@ describe("Resource unlocking delegation and threshold", () => {
 		const progress = new Map<string, AssessmentProgress>([["video-1", { completed: true }]])
 		const lock = buildResourceLockStatus(course, progress, true)
 		// Video complete -> exercise unlocked (regardless of exercise score)
-		expect(lock["exercise-1"]).toBe(false)
+		expect(lock["cr-lesson-1-exercise-1"]).toBe(false)
 	})
 
 	test("Assessment with missing score does NOT unlock next (requires numeric score)", () => {

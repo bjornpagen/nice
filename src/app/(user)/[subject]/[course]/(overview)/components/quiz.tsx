@@ -18,7 +18,7 @@ export function QuizSection({
 	resourceLockStatus: Record<string, boolean>
 	progress?: AssessmentProgress
 }) {
-	const isLocked = resourceLockStatus[quiz.id] === true
+	const isLocked = resourceLockStatus[quiz.componentResourceSourcedId] === true
 	const hasTaken = Boolean(progress && (progress.completed || typeof progress.score === "number"))
 	const percentage = typeof progress?.score === "number" ? Math.round(progress.score) : undefined
 

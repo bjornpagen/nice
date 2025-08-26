@@ -15,7 +15,15 @@ export default async function VideoPage({
 	// Opt into dynamic rendering to ensure external fetches occur during request lifecycle
 	await connection()
 	const normalizedParamsPromise = normalizeParams(params)
-	const videoPromise: Promise<VideoPageData> = normalizedParamsPromise.then(fetchVideoPageData)
+	const videoPromise: Promise<VideoPageData> = normalizedParamsPromise.then((normalizedParams) => 
+		fetchVideoPageData({
+			video: normalizedParams.video,
+			lesson: normalizedParams.lesson,
+			unit: normalizedParams.unit,
+			subject: normalizedParams.subject,
+			course: normalizedParams.course
+		})
+	)
 
 	return (
 		<React.Suspense fallback={<div className="p-8">Loading video...</div>}>

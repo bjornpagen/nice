@@ -30,6 +30,7 @@ export interface LessonLayoutData {
 // Data for the /.../a/[article] page
 export interface ArticlePageData {
 	id: string
+	componentResourceSourcedId: string
 	title: string
 	xp: number
 }
@@ -37,6 +38,7 @@ export interface ArticlePageData {
 // Data for the /.../v/[video] page
 export interface VideoPageData {
 	id: string
+	componentResourceSourcedId: string
 	title: string
 	description: string
 	youtubeId: string

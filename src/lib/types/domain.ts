@@ -10,6 +10,7 @@ export interface Question {
 /** Base interface for a node in the content hierarchy. */
 export interface ContentNode {
 	id: string
+	componentResourceSourcedId: string // The unique identifier for the lock
 	slug: string
 	title: string
 	description: string

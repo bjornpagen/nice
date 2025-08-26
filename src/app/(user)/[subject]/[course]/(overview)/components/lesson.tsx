@@ -28,7 +28,7 @@ export function LessonSection({
 	const exercises = lesson.children.filter((child): child is ExerciseInfo => child.type === "Exercise")
 
 	// CORRECT: Find the index of the first unlocked exercise.
-	const firstUnlockedExerciseIndex = exercises.findIndex((exercise) => resourceLockStatus[exercise.id] !== true)
+	const firstUnlockedExerciseIndex = exercises.findIndex((exercise) => resourceLockStatus[exercise.componentResourceSourcedId] !== true)
 
 	// Compute lesson title link target:
 	// 1) first unlocked and uncompleted resource
@@ -37,7 +37,7 @@ export function LessonSection({
 	let lessonTargetPath = lesson.path
 	if (lesson.children.length > 0) {
 		const firstUncompletedUnlocked = lesson.children.find((child) => {
-			const isLocked = resourceLockStatus[child.id] === true
+			const isLocked = resourceLockStatus[child.componentResourceSourcedId] === true
 			if (isLocked) {
 				return false
 			}
@@ -47,7 +47,7 @@ export function LessonSection({
 
 		let target = firstUncompletedUnlocked
 		if (!target) {
-			target = lesson.children.find((child) => resourceLockStatus[child.id] !== true)
+			target = lesson.children.find((child) => resourceLockStatus[child.componentResourceSourcedId] !== true)
 		}
 		if (!target) {
 			target = lesson.children[0]
@@ -68,7 +68,7 @@ export function LessonSection({
 					<div className="space-y-3">
 						{learningContent.length > 0 ? (
 							learningContent.map((item) => {
-								const isLocked = resourceLockStatus[item.id] === true
+								const isLocked = resourceLockStatus[item.componentResourceSourcedId] === true
 								if (isLocked) {
 									return <LockedItem key={`${lesson.id}-locked-${item.id}`} title={item.title} />
 								}
@@ -92,7 +92,7 @@ export function LessonSection({
 						<span className="text-gray-500 text-sm mb-4 block">Practice</span>
 						<div className="space-y-3">
 							{exercises.map((exercise, index) => {
-								const isLocked = resourceLockStatus[exercise.id] === true
+								const isLocked = resourceLockStatus[exercise.componentResourceSourcedId] === true
 								if (isLocked) {
 									return <LockedItem key={`${lesson.id}-locked-exercise-${exercise.id}`} title={exercise.title} />
 								}

@@ -14,7 +14,13 @@ import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/typ
 import { assertNoEncodedColons } from "@/lib/utils"
 import { fetchLessonLayoutData } from "./lesson"
 
-export async function fetchArticlePageData(params: { article: string }): Promise<ArticlePageData> {
+export async function fetchArticlePageData(params: {
+	article: string
+	lesson: string
+	unit: string
+	subject: string
+	course: string
+}): Promise<ArticlePageData> {
 	// dynamic opt-in is handled at the page level
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.article, "fetchArticlePageData article parameter")
@@ -30,6 +36,9 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 	if (!resource) {
 		notFound()
 	}
+
+	const layoutData = await fetchLessonLayoutData(params)
+	const componentResource = await findComponentResourceWithContext(resource.sourcedId, layoutData.lessonData.id)
 
 	// Validate resource metadata with Zod. THIS IS THE CRITICAL PATTERN.
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
@@ -63,6 +72,7 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 
 	return {
 		id: resource.sourcedId,
+		componentResourceSourcedId: componentResource.sourcedId,
 		title: resource.title,
 		xp: resourceMetadataResult.data.xp
 	}
@@ -117,7 +127,13 @@ export async function fetchExercisePageData(params: {
 	}
 }
 
-export async function fetchVideoPageData(params: { video: string }): Promise<VideoPageData> {
+export async function fetchVideoPageData(params: {
+	video: string
+	lesson: string
+	unit: string
+	subject: string
+	course: string
+}): Promise<VideoPageData> {
 	// dynamic opt-in is handled at the page level
 	logger.info("fetchVideoPageData called", { params })
 	// Defensive check: middleware should have normalized URLs
@@ -133,6 +149,9 @@ export async function fetchVideoPageData(params: { video: string }): Promise<Vid
 	if (!resource) {
 		notFound()
 	}
+
+	const layoutData = await fetchLessonLayoutData(params)
+	const componentResource = await findComponentResourceWithContext(resource.sourcedId, layoutData.lessonData.id)
 
 	// Validate resource metadata with Zod. THIS IS THE CRITICAL PATTERN.
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
@@ -173,6 +192,7 @@ export async function fetchVideoPageData(params: { video: string }): Promise<Vid
 
 	return {
 		id: resource.sourcedId,
+		componentResourceSourcedId: componentResource.sourcedId,
 		title: resource.title,
 		description: resourceMetadataResult.data.khanDescription,
 		youtubeId,

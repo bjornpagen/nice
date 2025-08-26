@@ -141,7 +141,7 @@ export function Content({
 					<div className="break-inside-avoid">
 						<CourseChallenge
 							path={course.challenges[0].path}
-							isLocked={resourceLockStatus[course.challenges[0].id] !== false}
+							isLocked={resourceLockStatus[course.challenges[0].componentResourceSourcedId] !== false}
 						/>
 					</div>
 				)}

@@ -169,6 +169,7 @@ export async function fetchCoursePageData(
 			lessonsByUnitSourcedId.get(parentSourcedId)?.push({
 				type: "Lesson", // Default type - will be filtered later
 				id: component.sourcedId,
+				componentResourceSourcedId: component.sourcedId, // For lessons, use the component sourcedId as the lock key
 				slug: componentMetadata.khanSlug,
 				title: component.title,
 				description: componentMetadata.khanDescription,
@@ -379,6 +380,21 @@ export async function fetchCoursePageData(
 				if (resourceMetadata.khanActivityType === "Quiz" || resourceMetadata.khanActivityType === "UnitTest") {
 					const assessmentType = resourceMetadata.khanActivityType
 
+					// Find the componentResource to get the sourcedId
+					const componentResource = componentResources.find(
+						(cr) =>
+							cr.courseComponent.sourcedId === childComponent.sourcedId && cr.resource.sourcedId === resource.sourcedId
+					)
+					if (!componentResource) {
+						logger.error("component resource not found for assessment", {
+							childComponentSourcedId: childComponent.sourcedId,
+							resourceSourcedId: resource.sourcedId
+						})
+						throw errors.new(
+							`component resource not found for assessment ${childComponent.sourcedId} resource ${resource.sourcedId}`
+						)
+					}
+
 					// Determine the URL path segment for the assessment type
 					let pathSegment: string
 					switch (assessmentType) {
@@ -400,6 +416,7 @@ export async function fetchCoursePageData(
 
 					const assessment: Quiz | UnitTest = {
 						id: resource.sourcedId,
+						componentResourceSourcedId: componentResource.sourcedId,
 						type: assessmentType,
 						slug: resourceMetadata.khanSlug,
 						title: resource.title,
@@ -480,6 +497,7 @@ export async function fetchCoursePageData(
 
 					videos.push({
 						id: resource.sourcedId,
+						componentResourceSourcedId: componentResource.sourcedId,
 						title: resource.title,
 						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonComponentMeta.data.khanSlug}/v/${resourceMetadata.khanSlug}`, // Construct path from slugs
 						slug: resourceMetadata.khanSlug,
@@ -505,6 +523,7 @@ export async function fetchCoursePageData(
 					articles.push({
 						type: "Article",
 						id: resource.sourcedId,
+						componentResourceSourcedId: componentResource.sourcedId,
 						title: resource.title,
 						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonComponentMeta.data.khanSlug}/a/${resourceMetadata.khanSlug}`, // Construct path from slugs
 						slug: resourceMetadata.khanSlug,
@@ -540,6 +559,7 @@ export async function fetchCoursePageData(
 					exercises.push({
 						type: "Exercise",
 						id: resource.sourcedId,
+						componentResourceSourcedId: componentResource.sourcedId,
 						title: resource.title,
 						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonComponentMeta.data.khanSlug}/e/${resourceMetadata.khanSlug}`, // Construct path from slugs
 						slug: resourceMetadata.khanSlug,
@@ -668,6 +688,7 @@ export async function fetchCoursePageData(
 
 				const challenge: CourseChallenge = {
 					id: resourceMetadata.khanId,
+					componentResourceSourcedId: cr.sourcedId,
 					type: "CourseChallenge" as const,
 					title: resourceMetadata.khanTitle,
 					slug: resourceMetadata.khanSlug,

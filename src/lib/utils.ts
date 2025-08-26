@@ -130,13 +130,13 @@ export function getFirstResourceIdForUnit(unit: Unit): string {
 			const sortedLessonChildren: LessonChild[] = [...unitChild.children].sort((a, b) => a.ordering - b.ordering)
 			const first = sortedLessonChildren[0]
 			if (first) {
-				return first.id
+				return first.componentResourceSourcedId
 			}
 			// Empty lesson, continue scanning next unit child
 			continue
 		}
 		// For non-lesson unit children (Quiz/UnitTest), the child itself is actionable
-		return unitChild.id
+		return unitChild.componentResourceSourcedId
 	}
 
 	// If we reach here, the unit has no actionable resources
@@ -153,7 +153,7 @@ export function buildResourceLockStatus(
 	const lock: Record<string, boolean> = {}
 	if (!lockingEnabled) {
 		for (const r of ordered) {
-			lock[r.id] = false
+			lock[r.componentResourceSourcedId] = false
 		}
 		return lock
 	}
@@ -169,7 +169,7 @@ export function buildResourceLockStatus(
 			currentComplete = progress?.completed === true
 		}
 		// Locked only when the previous resource is incomplete AND the current one itself is not completed
-		lock[r.id] = !previousComplete && !currentComplete
+		lock[r.componentResourceSourcedId] = !previousComplete && !currentComplete
 		previousComplete = currentComplete
 	}
 	return lock

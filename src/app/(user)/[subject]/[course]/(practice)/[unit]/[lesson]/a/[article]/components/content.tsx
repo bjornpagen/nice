@@ -31,7 +31,7 @@ export function Content({
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
 	const { setProgressForResource, beginProgressUpdate, endProgressUpdate } = useLessonProgress()
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
-	const isLocked = resourceLockStatus[article.id] === true
+	const isLocked = resourceLockStatus[article.componentResourceSourcedId] === true
 	const parsed = ClerkUserPublicMetadataSchema.safeParse(user?.publicMetadata)
 	const canUnlockAll = parsed.success && parsed.data.roles.some((r) => r.role !== "student")
 

@@ -11,7 +11,7 @@ import type { UnitTestPageData } from "@/lib/types/page"
 export function Content({ testPromise }: { testPromise: Promise<UnitTestPageData> }) {
 	const { test, questions, layoutData } = React.use(testPromise)
 	const { resourceLockStatus } = useCourseLockStatus()
-	const isLocked = resourceLockStatus[test.id] === true
+	const isLocked = resourceLockStatus[test.componentResourceSourcedId] === true
 	const [hasStarted, setHasStarted] = React.useState(false)
 	const [retakeKey, setRetakeKey] = React.useState(0)
 

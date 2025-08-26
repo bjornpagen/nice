@@ -18,7 +18,7 @@ export function UnitTestSection({
 	resourceLockStatus: Record<string, boolean>
 	progress?: AssessmentProgress
 }) {
-	const isLocked = resourceLockStatus[test.id] === true
+	const isLocked = resourceLockStatus[test.componentResourceSourcedId] === true
 	const hasTaken = Boolean(progress && (progress.completed || typeof progress.score === "number"))
 	const percentage = typeof progress?.score === "number" ? Math.round(progress.score) : undefined
 

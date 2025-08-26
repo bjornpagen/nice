@@ -5,6 +5,7 @@ import type { LessonChild, UnitChild } from "@/lib/types/domain"
 
 type ProficiencyItem = {
 	id: string
+	componentResourceSourcedId: string
 	variant: ProficiencyIconVariant
 	path: string
 	title: string
@@ -41,6 +42,7 @@ export function Progress({
 
 					return {
 						id: exercise.id,
+						componentResourceSourcedId: exercise.componentResourceSourcedId,
 						variant,
 						path: exercise.path,
 						title: exercise.title,
@@ -53,6 +55,7 @@ export function Progress({
 			return [
 				{
 					id: child.id,
+					componentResourceSourcedId: child.componentResourceSourcedId,
 					variant: "quiz",
 					path: child.path,
 					title: child.title,
@@ -65,6 +68,7 @@ export function Progress({
 			return [
 				{
 					id: child.id,
+					componentResourceSourcedId: child.componentResourceSourcedId,
 					variant: "unit-test",
 					path: child.path,
 					title: child.title,
@@ -83,7 +87,7 @@ export function Progress({
 	return (
 		<div className="flex items-center gap-1 flex-wrap max-w-full overflow-visible">
 			{items.map((item) => {
-				const isLocked = resourceLockStatus[item.id] === true
+				const isLocked = resourceLockStatus[item.componentResourceSourcedId] === true
 				const content = (
 					<ProficiencyIcon variant={item.variant} isLocked={isLocked}>
 						<h2 className="text-md font-bold text-gray-800 capitalize">
@@ -97,14 +101,14 @@ export function Progress({
 
 				if (isLocked) {
 					return (
-						<div key={item.id} className="inline-flex items-center flex-shrink-0 cursor-not-allowed">
+						<div key={item.componentResourceSourcedId} className="inline-flex items-center flex-shrink-0 cursor-not-allowed">
 							{content}
 						</div>
 					)
 				}
 
 				return (
-					<Link key={item.id} href={item.path} className="inline-flex items-center flex-shrink-0">
+					<Link key={item.componentResourceSourcedId} href={item.path} className="inline-flex items-center flex-shrink-0">
 						{content}
 					</Link>
 				)

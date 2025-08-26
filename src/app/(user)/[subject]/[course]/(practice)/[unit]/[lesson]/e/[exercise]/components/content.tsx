@@ -13,7 +13,7 @@ import type { ExercisePageData } from "@/lib/types/page"
 export function Content({ exercisePromise }: { exercisePromise: Promise<ExercisePageData> }) {
 	const { exercise, questions, layoutData } = React.use(exercisePromise)
 	const { resourceLockStatus } = useCourseLockStatus()
-	const isLocked = resourceLockStatus[exercise.id] === true
+	const isLocked = resourceLockStatus[exercise.componentResourceSourcedId] === true
 	const [hasStarted, setHasStarted] = React.useState(false)
 	const [retakeKey, setRetakeKey] = React.useState(0)
 

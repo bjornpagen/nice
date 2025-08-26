@@ -16,7 +16,15 @@ export default async function ArticlePage({
 	// Normalize URLs by replacing %3A with : (for Khan Academy IDs)
 	const normalizedParamsPromise = normalizeParams(params)
 
-	const articlePromise: Promise<ArticlePageData> = normalizedParamsPromise.then(fetchArticlePageData)
+	const articlePromise: Promise<ArticlePageData> = normalizedParamsPromise.then((normalizedParams) => 
+		fetchArticlePageData({
+			article: normalizedParams.article,
+			lesson: normalizedParams.lesson,
+			unit: normalizedParams.unit,
+			subject: normalizedParams.subject,
+			course: normalizedParams.course
+		})
+	)
 
 	return (
 		<React.Suspense fallback={<div className="p-8">Loading article...</div>}>

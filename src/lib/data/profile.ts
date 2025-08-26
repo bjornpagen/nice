@@ -483,6 +483,7 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 						lessonsByUnitSourcedId.get(parentSourcedId)?.push({
 							type: "Lesson",
 							id: component.sourcedId,
+							componentResourceSourcedId: component.sourcedId, // For lessons in profile, use component sourcedId
 							slug: componentMetadata.khanSlug,
 							title: component.title,
 							description: componentMetadata.khanDescription,
@@ -575,6 +576,7 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 							const lesson: Lesson = {
 								type: "Lesson",
 								id: child.id,
+								componentResourceSourcedId: child.id, // For profile lessons, use lesson id
 								slug: child.slug,
 								title: child.title,
 								description: child.description,
@@ -583,6 +585,7 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 								children: child.children.map(({ sortOrder: _, ...exercise }) => ({
 									type: exercise.type,
 									id: exercise.id,
+									componentResourceSourcedId: exercise.id, // For profile exercises, use exercise id
 									title: exercise.title,
 									path: exercise.path,
 									slug: "", // Not needed for proficiency calculation
@@ -600,6 +603,7 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 							const quiz: Quiz = {
 								type: "Quiz",
 								id: child.id,
+								componentResourceSourcedId: child.id, // For profile quizzes, use quiz id
 								title: child.title,
 								path: child.path,
 								slug: "",
@@ -615,6 +619,7 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 						const unitTest: UnitTest = {
 							type: "UnitTest",
 							id: child.id,
+							componentResourceSourcedId: child.id, // For profile unit tests, use test id
 							title: child.title,
 							path: child.path,
 							slug: "",

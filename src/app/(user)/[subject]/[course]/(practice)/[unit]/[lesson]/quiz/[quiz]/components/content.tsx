@@ -11,7 +11,7 @@ import type { QuizPageData } from "@/lib/types/page"
 export function Content({ quizPromise }: { quizPromise: Promise<QuizPageData> }) {
 	const { quiz, questions, layoutData } = React.use(quizPromise)
 	const { resourceLockStatus } = useCourseLockStatus()
-	const isLocked = resourceLockStatus[quiz.id] === true
+	const isLocked = resourceLockStatus[quiz.componentResourceSourcedId] === true
 	const [hasStarted, setHasStarted] = React.useState(false)
 	const [retakeKey, setRetakeKey] = React.useState(0)
 
