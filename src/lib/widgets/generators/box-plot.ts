@@ -7,6 +7,7 @@ import {
 	calculateXAxisLayout,
 	computeDynamicWidth,
 	includeText,
+	includePointX,
 	initExtents
 } from "@/lib/widgets/utils/layout"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
@@ -174,6 +175,10 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 
 	svg += `<line x1="${minPos}" y1="${yCenter - 10}" x2="${minPos}" y2="${yCenter + 10}" stroke="black"/>`
 	svg += `<line x1="${maxPos}" y1="${yCenter - 10}" x2="${maxPos}" y2="${yCenter + 10}" stroke="black"/>`
+
+	// Add tracking for the min/max whisker positions
+	includePointX(ext, minPos)
+	includePointX(ext, maxPos)
 
 	svg += `<rect x="${q1Pos}" y="${yCenter - plotHeight / 2}" width="${q3Pos - q1Pos}" height="${plotHeight}" fill="${boxColor}" stroke="black"/>`
 

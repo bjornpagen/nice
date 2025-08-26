@@ -62,10 +62,10 @@ export const generatePolygonGraph: WidgetGenerator<typeof PolygonGraphPropsSchem
 	let content = ""
 
 	// Render polygons first (background)
-	content += renderPolygons(polygons, base.pointMap, base.toSvgX, base.toSvgY)
+	content += renderPolygons(polygons, base.pointMap, base.toSvgX, base.toSvgY, base.ext)
 
 	// Render points last (foreground)
-	content += renderPoints(points, base.toSvgX, base.toSvgY)
+	content += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
 
 	return `${base.svg}${content}</svg>`
 }

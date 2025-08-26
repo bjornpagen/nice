@@ -8,6 +8,7 @@ import {
 	calculateXAxisLayout,
 	computeDynamicWidth,
 	includeText,
+	includePointX,
 	initExtents
 } from "@/lib/widgets/utils/layout"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
@@ -175,6 +176,8 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	for (const dp of plotData) {
 		if (dp.count > 0) {
 			const x = toSvgX(dp.value)
+			// Track the horizontal position of the dot stack
+			includePointX(ext, x)
 			for (let i = 0; i < dp.count; i++) {
 				const y = axisY - dotRadius - baseOffset - i * (dotDiameter + dotSpacing)
 				svg += `<circle cx="${x}" cy="${y}" r="${dotRadius}" fill="${dotColor}"/>`

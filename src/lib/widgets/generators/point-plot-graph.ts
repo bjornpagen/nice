@@ -53,7 +53,7 @@ export const generatePointPlotGraph: WidgetGenerator<typeof PointPlotGraphPropsS
 
 	const base = generateCoordinatePlaneBase(width, height, xAxis, yAxis, showQuadrantLabels, points)
 
-	let content = renderPoints(points, base.toSvgX, base.toSvgY)
+	let content = renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
 
 	return `${base.svg}${content}</svg>`
 }

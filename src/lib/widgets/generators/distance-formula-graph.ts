@@ -62,10 +62,10 @@ export const generateDistanceFormulaGraph: WidgetGenerator<typeof DistanceFormul
 	let content = ""
 
 	// Render distances first (background)
-	content += renderDistances(distances, base.pointMap, base.toSvgX, base.toSvgY)
+	content += renderDistances(distances, base.pointMap, base.toSvgX, base.toSvgY, base.ext)
 
 	// Render points last (foreground)
-	content += renderPoints(points, base.toSvgX, base.toSvgY)
+	content += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
 
 	return `${base.svg}${content}</svg>`
 }

@@ -63,11 +63,11 @@ export const generateLineEquationGraph: WidgetGenerator<typeof LineEquationGraph
 	let content = ""
 
 	// Render lines first (background) - clip to prevent extending beyond chart bounds
-	const lineContent = renderLines(lines, xAxis, yAxis, base.toSvgX, base.toSvgY)
+	const lineContent = renderLines(lines, xAxis, yAxis, base.toSvgX, base.toSvgY, base.ext)
 	content += wrapInClippedGroup("chartArea", lineContent)
 
 	// Render points last (foreground)
-	content += renderPoints(points, base.toSvgX, base.toSvgY)
+	content += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
 
 	return `${base.svg}${content}</svg>`
 }

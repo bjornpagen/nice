@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { initExtents, includePointX, includeText, computeDynamicWidth } from "@/lib/widgets/utils/layout"
 
 // Defines a 2D coordinate point for a vertex
 const PointSchema = z
@@ -198,17 +199,10 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 	if (vertices.length === 0) return `<svg width="${width}" height="${height}" />`
 
 	const padding = 20
-	const minX = Math.min(...vertices.map((v) => v.x))
-	const maxX = Math.max(...vertices.map((v) => v.x))
-	const minY = Math.min(...vertices.map((v) => v.y))
-	const maxY = Math.max(...vertices.map((v) => v.y))
-
-	const vbX = minX - padding
-	const vbY = minY - padding
-	const vbWidth = maxX - minX + 2 * padding
-	const vbHeight = maxY - minY + 2 * padding
-
-	let svg = `<svg width="${width}" height="${height}" viewBox="${vbX} ${vbY} ${vbWidth} ${vbHeight}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">`
+	
+	// Initialize extent tracking
+	const ext = initExtents(width)
+	let svgContent = "" // Use a temporary string for the SVG body
 
 	// Shaded regions (drawn first to be in the background)
 	for (const region of shadedRegions) {
@@ -220,12 +214,13 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 			.map((i) => {
 				const vertex = vertices[i]
 				if (!vertex) return ""
+				includePointX(ext, vertex.x) // Track vertex
 				return `${vertex.x},${vertex.y}`
 			})
 			.filter(Boolean)
 			.join(" ")
 
-		svg += `<polygon points="${regionPoints}" fill="${region.fillColor}" stroke="none"/>`
+		svgContent += `<polygon points="${regionPoints}" fill="${region.fillColor}" stroke="none"/>`
 	}
 
 	// Outer boundary
@@ -233,16 +228,17 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		.map((i) => {
 			const vertex = vertices[i]
 			if (!vertex) return ""
+			includePointX(ext, vertex.x) // Track vertex
 			return `${vertex.x},${vertex.y}`
 		})
 		.filter(Boolean)
 		.join(" ")
-	svg += `<polygon points="${outerPoints}" fill="none" stroke="black" stroke-width="2"/>`
+	svgContent += `<polygon points="${outerPoints}" fill="none" stroke="black" stroke-width="2"/>`
 
 	// Outer boundary labels
 	for (let i = 0; i < outerBoundary.length; i++) {
 		const label = outerBoundaryLabels[i]
-		if (!label || label.text === "") continue
+		if (!label || label.text === null || label.text === "") continue
 
 		const fromIndex = outerBoundary[i]
 		const toIndex = outerBoundary[(i + 1) % outerBoundary.length]
@@ -289,7 +285,8 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		const labelX = midX + perpX * label.offset
 		const labelY = midY + perpY * label.offset
 
-		svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="bold">${label.text}</text>`
+		svgContent += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="bold">${label.text}</text>`
+		includeText(ext, labelX, label.text, "middle") // Track label
 	}
 
 	// Internal segments
@@ -298,7 +295,10 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		const to = vertices[s.toVertexIndex]
 		if (!from || !to) continue
 		const dash = s.style === "dashed" ? ' stroke-dasharray="4 2"' : ""
-		svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="black" stroke-width="1.5"${dash}/>`
+		// Track segment endpoints
+		includePointX(ext, from.x)
+		includePointX(ext, to.x)
+		svgContent += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="black" stroke-width="1.5"${dash}/>`
 		if (s.label !== null) {
 			const midX = (from.x + to.x) / 2
 			const midY = (from.y + to.y) / 2
@@ -306,13 +306,15 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 			const angle = Math.atan2(to.y - from.y, to.x - from.x)
 			const offsetX = -Math.sin(angle) * 5
 			const offsetY = Math.cos(angle) * 5
-			svg += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #f0f0f0; stroke-width: 3px; stroke-linejoin: round;">${s.label}</text>`
+			svgContent += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #f0f0f0; stroke-width: 3px; stroke-linejoin: round;">${s.label}</text>`
+			includeText(ext, midX + offsetX, s.label, "middle") // Track label
 		}
 	}
 
 	// Region labels
 	for (const l of regionLabels) {
-		svg += `<text x="${l.position.x}" y="${l.position.y}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="bold">${l.text}</text>`
+		svgContent += `<text x="${l.position.x}" y="${l.position.y}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="bold">${l.text}</text>`
+		includeText(ext, l.position.x, l.text, "middle") // Track label
 	}
 
 	// Right-angle markers
@@ -335,7 +337,7 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		const u2x = v2x / mag2
 		const u2y = v2y / mag2
 
-		const markerSize = Math.min(vbWidth, vbHeight) * 0.05 // Relative size
+		const markerSize = 10 // Fixed size instead of relative
 		const p1x = corner.x + u1x * markerSize
 		const p1y = corner.y + u1y * markerSize
 		const p2x = corner.x + u2x * markerSize
@@ -343,9 +345,17 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		const p3x = corner.x + (u1x + u2x) * markerSize
 		const p3y = corner.y + (u1y + u2y) * markerSize
 
-		svg += `<path d="M ${p1x} ${p1y} L ${p3x} ${p3y} L ${p2x} ${p2y}" fill="none" stroke="black" stroke-width="1.5"/>`
+		// Track right angle marker points
+		includePointX(ext, p1x)
+		includePointX(ext, p2x)
+		includePointX(ext, p3x)
+		svgContent += `<path d="M ${p1x} ${p1y} L ${p3x} ${p3y} L ${p2x} ${p2y}" fill="none" stroke="black" stroke-width="1.5"/>`
 	}
 
+	// Compute dynamic width and create final SVG
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">`
+	svg += svgContent
 	svg += "</svg>"
 	return svg
 }

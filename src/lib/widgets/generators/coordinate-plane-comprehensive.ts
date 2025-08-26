@@ -104,28 +104,28 @@ export const generateCoordinatePlaneComprehensive: WidgetGenerator<typeof Coordi
 
 	// 1. Polygons (background shapes)
 	if (polygons.length > 0) {
-		content += renderPolygons(polygons, base.pointMap, base.toSvgX, base.toSvgY)
+		content += renderPolygons(polygons, base.pointMap, base.toSvgX, base.toSvgY, base.ext)
 	}
 
 	// 2. Distance visualizations (middle layer)
 	if (distances.length > 0) {
-		content += renderDistances(distances, base.pointMap, base.toSvgX, base.toSvgY)
+		content += renderDistances(distances, base.pointMap, base.toSvgX, base.toSvgY, base.ext)
 	}
 
 	// 3. Lines (middle-front layer) - clip to prevent extending beyond chart bounds
 	if (lines.length > 0) {
-		const lineContent = renderLines(lines, xAxis, yAxis, base.toSvgX, base.toSvgY)
+		const lineContent = renderLines(lines, xAxis, yAxis, base.toSvgX, base.toSvgY, base.ext)
 		content += wrapInClippedGroup("chartArea", lineContent)
 	}
 
 	// 4. Polylines/function plots (front layer)
 	if (polylines.length > 0) {
-		content += renderPolylines(polylines, base.toSvgX, base.toSvgY)
+		content += renderPolylines(polylines, base.toSvgX, base.toSvgY, base.ext)
 	}
 
 	// 5. Points (topmost layer - always visible)
 	if (points.length > 0) {
-		content += renderPoints(points, base.toSvgX, base.toSvgY)
+		content += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
 	}
 
 	return `${base.svg}${content}</svg>`

@@ -237,7 +237,7 @@ export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTrans
 	}
 
 	// 5. Render points
-	content += renderPoints(points, base.toSvgX, base.toSvgY)
+	content += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
 
 	return `${base.svg}${content}</svg>`
 }

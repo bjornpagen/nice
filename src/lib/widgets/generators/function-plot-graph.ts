@@ -62,10 +62,10 @@ export const generateFunctionPlotGraph: WidgetGenerator<typeof FunctionPlotGraph
 	let content = ""
 
 	// Render polylines first (background)
-	content += renderPolylines(polylines, base.toSvgX, base.toSvgY)
+	content += renderPolylines(polylines, base.toSvgX, base.toSvgY, base.ext)
 
 	// Render points last (foreground) - for highlighting key points on the functions
-	content += renderPoints(points, base.toSvgX, base.toSvgY)
+	content += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
 
 	return `${base.svg}${content}</svg>`
 }

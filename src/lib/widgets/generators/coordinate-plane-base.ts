@@ -10,7 +10,9 @@ import {
 	computeDynamicWidth,
 	createChartClipPath,
 	includeText,
-	initExtents
+	includePointX,
+	initExtents,
+	type Extents
 } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
@@ -272,6 +274,7 @@ export interface CoordinatePlaneBase {
 	width: number
 	height: number
 	pointMap: Map<string, PlotPoint>
+	ext: Extents
 }
 
 /**
@@ -406,7 +409,7 @@ export function generateCoordinatePlaneBase(
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 
-	return { svg, toSvgX, toSvgY, width: dynamicWidth, height, pointMap }
+	return { svg, toSvgX, toSvgY, width: dynamicWidth, height, pointMap, ext }
 }
 
 /**
@@ -419,7 +422,8 @@ export function generateCoordinatePlaneBase(
 export function renderPoints(
 	points: PlotPoint[],
 	toSvgX: (v: number) => number,
-	toSvgY: (v: number) => number
+	toSvgY: (v: number) => number,
+	ext: Extents
 ): string {
 	let pointsSvg = ""
 	if (!points) return ""
@@ -431,6 +435,9 @@ export function renderPoints(
 		const stroke = p.color
 		pointsSvg += `<circle cx="${px}" cy="${py}" r="4" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`
 		pointsSvg += `<text x="${px + 6}" y="${py - 6}" fill="black">${abbreviateMonth(p.label)}</text>`
+		// Add tracking for the point and its label
+		includePointX(ext, px)
+		includeText(ext, px + 6, abbreviateMonth(p.label), "start")
 	}
 	return pointsSvg
 }
@@ -443,7 +450,8 @@ export function renderLines(
 	xAxis: AxisOptions,
 	yAxis: AxisOptions,
 	toSvgX: (v: number) => number,
-	toSvgY: (v: number) => number
+	toSvgY: (v: number) => number,
+	ext: Extents
 ): string {
 	let linesSvg = ""
 	if (!lines) return ""
@@ -484,6 +492,9 @@ export function renderLines(
 		const x2Svg = isVertical && verticalX !== null ? toSvgX(verticalX) : toSvgX(xAxis.max)
 
 		linesSvg += `<line x1="${x1Svg}" y1="${toSvgY(y1)}" x2="${x2Svg}" y2="${toSvgY(y2)}" stroke="${l.color}" stroke-width="2"${dash}/>`
+		// Add tracking for the line endpoints
+		includePointX(ext, x1Svg)
+		includePointX(ext, x2Svg)
 	}
 
 	return linesSvg
@@ -496,7 +507,8 @@ export function renderPolygons(
 	polygons: Polygon[],
 	pointMap: Map<string, PlotPoint>,
 	toSvgX: (v: number) => number,
-	toSvgY: (v: number) => number
+	toSvgY: (v: number) => number,
+	ext: Extents
 ): string {
 	let polygonsSvg = ""
 	if (!polygons) return ""
@@ -508,6 +520,9 @@ export function renderPolygons(
 				return pt ? { x: toSvgX(pt.x), y: toSvgY(pt.y) } : null
 			})
 			.filter((pt): pt is { x: number; y: number } => pt !== null)
+
+		// Add tracking for each vertex of the polygon
+		polyPoints.forEach(pt => includePointX(ext, pt.x));
 
 		const polyPointsStr = polyPoints.map((pt) => `${pt.x},${pt.y}`).join(" ")
 
@@ -529,6 +544,8 @@ export function renderPolygons(
 				const labelY = bottomY + 20
 
 				polygonsSvg += `<text x="${labelX}" y="${labelY}" fill="${poly.strokeColor}" text-anchor="middle" font-size="14" font-weight="500">${abbreviateMonth(poly.label)}</text>`
+				// Add tracking for the polygon label
+				includeText(ext, labelX, abbreviateMonth(poly.label), "middle")
 			}
 		}
 	}
@@ -543,7 +560,8 @@ export function renderDistances(
 	distances: Distance[],
 	pointMap: Map<string, PlotPoint>,
 	toSvgX: (v: number) => number,
-	toSvgY: (v: number) => number
+	toSvgY: (v: number) => number,
+	ext: Extents
 ): string {
 	let distancesSvg = ""
 	if (!distances) return ""
@@ -562,6 +580,9 @@ export function renderDistances(
 
 		// Hypotenuse
 		distancesSvg += `<line x1="${p1Svg.x}" y1="${p1Svg.y}" x2="${p2Svg.x}" y2="${p2Svg.y}" ${stroke}${dash}/>`
+		// Add tracking for the distance endpoints
+		includePointX(ext, p1Svg.x)
+		includePointX(ext, p2Svg.x)
 
 		if (dist.showLegs) {
 			// Horizontal and Vertical Legs
@@ -581,12 +602,15 @@ export function renderDistances(
 export function renderPolylines(
 	polylines: Polyline[],
 	toSvgX: (v: number) => number,
-	toSvgY: (v: number) => number
+	toSvgY: (v: number) => number,
+	ext: Extents
 ): string {
 	let polylinesSvg = ""
 	if (!polylines) return ""
 
 	for (const polyline of polylines) {
+		// Track all points in the polyline
+		polyline.points.forEach(p => includePointX(ext, toSvgX(p.x)))
 		const pointsStr = polyline.points.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
 
 		if (pointsStr) {
