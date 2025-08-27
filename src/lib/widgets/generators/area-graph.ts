@@ -42,11 +42,7 @@ export const AreaGraphPropsSchema = z
 				min: z.number().describe("The minimum value for the y-axis scale."),
 				max: z.number().describe("The maximum value for the y-axis scale."),
 				tickInterval: z.number().positive().describe("The numeric interval between labeled tick marks on the y-axis."),
-				tickFormat: z
-					.string()
-					.nullable()
-					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-					.describe("A suffix to add to y-axis tick labels (e.g., '%'). Null for no suffix."),
+				// REMOVED: tickFormat field is no longer supported.
 				showGridLines: z.boolean().describe("If true, displays horizontal grid lines for the y-axis.")
 			})
 			.strict(),
@@ -156,8 +152,9 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = toSvgY(t)
 		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black" stroke-width="2"/>`
-		svg += `<text x="${margin.left - 10}" y="${y + 5}" text-anchor="end">${t}${yAxis.tickFormat || ""}</text>`
-		includeText(ext, margin.left - 10, `${t}${yAxis.tickFormat || ""}`, "end", 7)
+		// CHANGED: Removed concatenation of `yAxis.tickFormat`.
+		svg += `<text x="${margin.left - 10}" y="${y + 5}" text-anchor="end">${t}</text>`
+		includeText(ext, margin.left - 10, `${t}`, "end", 7)
 		if (yAxis.showGridLines && t > yAxis.min) {
 			svg += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#e0e0e0"/>`
 		}

@@ -167,6 +167,32 @@ export function calculateRightYAxisLayout(
 }
 
 /**
+ * NEW: Calculates the required left margin for a horizontal bar chart's categorical Y-axis.
+ * It measures the actual category labels to ensure the margin is always sufficient.
+ *
+ * @param yAxisLabels - An array of the string labels for the Y-axis categories.
+ * @param labelPadding - Optional spacing between the axis line and the labels (default: 10px).
+ * @returns An object containing the calculated `leftMargin`.
+ */
+export function calculateHorizontalBarChartYAxisLayout(
+	yAxisLabels: string[],
+	labelPadding = 10
+): { leftMargin: number } {
+	const AVG_CHAR_WIDTH_PX = 8; // Consistent average character width for estimation.
+	
+	// 1. Find the maximum width required for any of the category labels.
+	const maxTickLabelWidth = yAxisLabels.reduce((maxWidth, label) => {
+		const estimatedWidth = label.length * AVG_CHAR_WIDTH_PX;
+		return Math.max(maxWidth, estimatedWidth);
+	}, 0);
+
+	// 2. The left margin is the sum of the space for the longest label and its padding.
+	const leftMargin = maxTickLabelWidth + labelPadding;
+
+	return { leftMargin };
+}
+
+/**
  * Generates SVG clipPath definition for constraining chart elements to the plot area.
  * This prevents lines, curves, and other chart elements from extending beyond the chart boundaries.
  * @param clipId - Unique identifier for the clipPath element

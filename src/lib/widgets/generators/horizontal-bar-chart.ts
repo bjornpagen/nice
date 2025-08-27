@@ -7,6 +7,8 @@ import { PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateXAxisLayout,
+	// ADDED: Import the new layout helper.
+	calculateHorizontalBarChartYAxisLayout,
 	computeDynamicWidth,
 	includePointX,
 	includeText,
@@ -75,8 +77,19 @@ export type HorizontalBarChartProps = z.infer<typeof HorizontalBarChartPropsSche
 export const generateHorizontalBarChart: WidgetGenerator<typeof HorizontalBarChartPropsSchema> = (data) => {
 	const { width, height, xAxis, data: chartData, gridColor } = data
 
+	// --- MODIFIED SECTION START ---
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const margin = { top: PADDING, right: 80, bottom: bottomMargin, left: 100 }
+
+	// 1. Extract category labels for measurement.
+	const yAxisLabels = chartData.map(d => d.category);
+	
+	// 2. Calculate the left margin dynamically based on the labels.
+	const { leftMargin } = calculateHorizontalBarChartYAxisLayout(yAxisLabels);
+	
+	// 3. Construct the margin object with the dynamic left margin.
+	const margin = { top: PADDING, right: 80, bottom: bottomMargin, left: leftMargin }
+	// --- MODIFIED SECTION END ---
+
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 

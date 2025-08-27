@@ -23,7 +23,6 @@ test("area graph - U.S. energy consumption by source (wrapping title)", () => {
 			min: 0,
 			max: 100,
 			tickInterval: 10,
-			tickFormat: "%",
 			showGridLines: true
 		},
 		dataPoints: [
