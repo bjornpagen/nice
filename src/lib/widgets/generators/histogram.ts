@@ -9,6 +9,7 @@ import {
 	calculateXAxisLayout,
 	calculateYAxisLayout,
 	computeDynamicWidth,
+	includePointX,
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
@@ -181,6 +182,7 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		const y = height - margin.bottom - t * scaleY
 		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="#333333"/>`
 		svg += `<text x="${margin.left - 10}" y="${y + 4}" fill="#333333" text-anchor="end">${t}</text>`
+		includeText(ext, margin.left - 10, String(t), "end", 7) // MODIFICATION: Add this line
 	}
 
 	// Bins
@@ -188,6 +190,11 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		const barHeight = b.frequency * scaleY
 		const x = margin.left + i * binWidth
 		const y = height - margin.bottom - barHeight
+		
+		// Track the horizontal extent of the bar
+		includePointX(ext, x)
+		includePointX(ext, x + binWidth)
+		
 		svg += `<rect x="${x}" y="${y}" width="${binWidth}" height="${barHeight}" fill="#6495ED" stroke="#333333"/>`
 	})
 
@@ -203,6 +210,8 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		const labelX = margin.left + i * binWidth
 		const labelY = height - margin.bottom + 28
 		svg += `<text class="x-tick" x="${labelX}" y="${labelY}" fill="#333333" text-anchor="middle">${sep}</text>`
+		// Track the x-axis tick label
+		includeText(ext, labelX, String(sep), "middle", 6)
 	})
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)

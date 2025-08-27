@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includePointX, initExtents } from "@/lib/widgets/utils/layout"
 
 const Item = z
 	.object({
@@ -127,12 +128,12 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 		return `<svg width="${width}" height="${height}" />`
 	}
 
-	// --- Layout Calculations ---
 	const padding = { top: 10, right: 10, bottom: 10, left: 10 }
 	const chartWidth = width - padding.left - padding.right
 	const chartHeight = height - padding.top - padding.bottom
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">`
+	const ext = initExtents(width)
+	let svgContent = ""
 
 	if (layout === "grouped") {
 		// --- Grouped Layout Logic ---
@@ -184,10 +185,13 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 			const cx = padding.left + col * cellWidth + cellWidth / 2
 			const cy = padding.top + row * cellHeight + cellHeight / 2
 
+			includePointX(ext, cx - iconRadiusX)
+			includePointX(ext, cx + iconRadiusX)
+
 			const fill = item.style === "filled" ? item.color : "none"
 			const stroke = item.color
 
-			svg += `<ellipse cx="${cx}" cy="${cy}" rx="${iconRadiusX}" ry="${iconRadiusY}" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`
+			svgContent += `<ellipse cx="${cx}" cy="${cy}" rx="${iconRadiusX}" ry="${iconRadiusY}" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`
 		}
 
 		// Draw boxes
@@ -199,7 +203,9 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 				const y = padding.top + startRow * cellHeight - boxPadding / 2
 				const boxWidth = (endCol - startCol + 1) * cellWidth + boxPadding
 				const boxHeight = (endRow - startRow + 1) * cellHeight + boxPadding
-				svg += `<rect x="${x}" y="${y}" width="${boxWidth}" height="${boxHeight}" fill="none" stroke="black" stroke-width="2"/>`
+				includePointX(ext, x)
+				includePointX(ext, x + boxWidth)
+				svgContent += `<rect x="${x}" y="${y}" width="${boxWidth}" height="${boxHeight}" fill="none" stroke="black" stroke-width="2"/>`
 			}
 
 			// Draw outer box first (so it appears behind inner box)
@@ -237,13 +243,16 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 			const cx = padding.left + col * cellWidth + cellWidth / 2
 			const cy = padding.top + row * cellHeight + cellHeight / 2
 
+			includePointX(ext, cx - iconRadiusX)
+			includePointX(ext, cx + iconRadiusX)
+
 			const item = flatItems[i]
 			if (!item) continue
 
 			const fill = item.style === "filled" ? item.color : "none"
 			const stroke = item.color
 
-			svg += `<ellipse cx="${cx}" cy="${cy}" rx="${iconRadiusX}" ry="${iconRadiusY}" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`
+			svgContent += `<ellipse cx="${cx}" cy="${cy}" rx="${iconRadiusX}" ry="${iconRadiusY}" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`
 		}
 
 		// Helper function to draw a box based on grid cell coordinates
@@ -253,7 +262,9 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 			const y = padding.top + startRow * cellHeight + boxPadding / 2
 			const boxWidth = (endCol - startCol + 1) * cellWidth - boxPadding
 			const boxHeight = (endRow - startRow + 1) * cellHeight - boxPadding
-			svg += `<rect x="${x}" y="${y}" width="${boxWidth}" height="${boxHeight}" fill="none" stroke="black" stroke-width="2"/>`
+			includePointX(ext, x)
+			includePointX(ext, x + boxWidth)
+			svgContent += `<rect x="${x}" y="${y}" width="${boxWidth}" height="${boxHeight}" fill="none" stroke="black" stroke-width="2"/>`
 		}
 
 		// 2. Render Partition Boxes
@@ -289,6 +300,9 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 		}
 	}
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg">`
+	svg += svgContent
 	svg += "</svg>"
 	return svg
 }

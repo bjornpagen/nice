@@ -1,6 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { calculateTitleLayout } from "@/lib/widgets/utils/layout"
+import { calculateTitleLayout, computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 
@@ -81,6 +81,9 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 	const chartWidth = width - padding.left - padding.right
 	const chartHeight = height - padding.top - padding.bottom
 
+	const ext = initExtents(width)
+	let svgContent = ""
+
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
 
 	// Add a clean background container with rounded corners and subtle border
@@ -90,11 +93,14 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 	const containerWidth = chartWidth + 2 * containerPadding
 	const containerHeight = chartHeight + 2 * containerPadding
 
-	svg += `<rect x="${containerX}" y="${containerY}" width="${containerWidth}" height="${containerHeight}" fill="#fafafa" stroke="#e0e0e0" stroke-width="2" rx="8" ry="8"/>`
+	let containerRect = `<rect x="${containerX}" y="${containerY}" width="${containerWidth}" height="${containerHeight}" fill="#fafafa" stroke="#e0e0e0" stroke-width="2" rx="8" ry="8"/>`
 
 	// Use renderWrappedText for the title
+	let titleContent = ""
 	if (title !== null) {
-		svg += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", width - 40, 8)
+		titleContent = renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", width - 40, 8)
+		// Track the title text
+		includeText(ext, width / 2, abbreviateMonth(title), "middle", 8)
 	}
 
 	const iconSize = 28 // Larger for better emoji visibility
@@ -103,6 +109,8 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 
 	// Function to draw emojis with better positioning
 	const drawIcon = (x: number, y: number, emoji: string) => {
+		includePointX(ext, x)
+		includePointX(ext, x + iconSize)
 		const fontSize = iconSize * 0.9 // Better emoji sizing
 		return `<text x="${x + iconSize / 2}" y="${y + iconSize / 2}" font-size="${fontSize}" text-anchor="middle" dominant-baseline="central">${emoji}</text>`
 	}
@@ -117,7 +125,7 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 					currentX = padding.left
 					currentY += step
 				}
-				svg += drawIcon(currentX, currentY, obj.emoji)
+				svgContent += drawIcon(currentX, currentY, obj.emoji)
 				currentX += step
 			}
 		}
@@ -135,12 +143,18 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 					currentX = startX
 					currentY += step
 				}
-				svg += drawIcon(currentX, currentY, obj.emoji)
+				svgContent += drawIcon(currentX, currentY, obj.emoji)
 				currentX += step
 			}
 		}
 	}
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+
+	svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
+	svg += containerRect
+	svg += titleContent
+	svg += svgContent
 	svg += "</svg>"
 	return svg
 }

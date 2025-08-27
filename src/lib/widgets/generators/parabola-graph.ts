@@ -8,6 +8,7 @@ import {
 	calculateXAxisLayout,
 	calculateYAxisLayout,
 	computeDynamicWidth,
+	includePointX,
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
@@ -146,6 +147,8 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 		const x = xAxis.min + (i / steps) * (xAxis.max - xAxis.min)
 		const y = a * (x - h) * (x - h) + k
 		if (x >= 0 && y >= 0) {
+			// Track the x-extent of the parabola point
+			includePointX(ext, toSvgX(x))
 			pointsStr += `${toSvgX(x)},${toSvgY(y)} `
 		}
 	}

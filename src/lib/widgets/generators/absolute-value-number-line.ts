@@ -6,6 +6,7 @@ import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import {
 	calculateTextAwareLabelSelection,
 	computeDynamicWidth,
+	includePointX,
 	includeText,
 	initExtents,
 } from "@/lib/widgets/utils/layout"
@@ -66,6 +67,9 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	const ext = initExtents(width) // Initialize extents tracking
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	
+	// Track the main line endpoints
+	includePointX(ext, margin.left)
+	includePointX(ext, width - margin.right)
 	svg += `<line x1="${margin.left}" y1="${yPos}" x2="${width - margin.right}" y2="${yPos}" stroke="black" stroke-width="1.5"/>`
 
 	// Ticks and labels with text-aware selection
@@ -80,6 +84,7 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	
 	tickValues.forEach((t, i) => {
 		const x = toSvgX(t)
+		includePointX(ext, x)
 		svg += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="black" stroke-width="1"/>`
 		if (selectedLabels.has(i)) {
 			svg += `<text x="${x}" y="${yPos + 20}" fill="black" text-anchor="middle">${t}</text>`
@@ -88,6 +93,8 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	})
 
 	// Distance highlight
+	includePointX(ext, zeroPos)
+	includePointX(ext, valuePos)
 	svg += `<line x1="${zeroPos}" y1="${yPos}" x2="${valuePos}" y2="${yPos}" stroke="${highlightColor}" stroke-width="4" stroke-linecap="round"/>`
 
 	// Distance label
@@ -98,6 +105,7 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 		includeText(ext, labelX, labelText, "middle", 8)
 	}
 
+	includePointX(ext, valuePos)
 	svg += `<circle cx="${valuePos}" cy="${yPos}" r="5" fill="${highlightColor}" stroke="black" stroke-width="1"/>`
 
 	// Apply dynamic width at the end

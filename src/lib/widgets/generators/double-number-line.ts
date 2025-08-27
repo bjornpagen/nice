@@ -6,6 +6,7 @@ import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	computeDynamicWidth,
 	includeText,
+	includePointX,
 	initExtents
 } from "@/lib/widgets/utils/layout"
 
@@ -121,6 +122,10 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 	let svg = `<svg width="${width}" height="${adjustedHeight}" viewBox="0 0 ${width} ${adjustedHeight}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg += "<style>.line-label { font-size: 14px; font-weight: bold; text-anchor: middle; }</style>"
 
+	// Track the horizontal bounds of the lines
+	includePointX(ext, padding.horizontal)
+	includePointX(ext, width - padding.horizontal)
+
 	// Top line
 	svg += `<line x1="${padding.horizontal}" y1="${topY}" x2="${width - padding.horizontal}" y2="${topY}" stroke="#333333"/>`
 	if (topLine.label !== null) {
@@ -132,6 +137,7 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 	}
 	topLine.ticks.forEach((t, i) => {
 		const x = padding.horizontal + i * tickSpacing
+		includePointX(ext, x) // Track tick position
 		svg += `<line x1="${x}" y1="${topY - TICK_MARK_HEIGHT}" x2="${x}" y2="${topY + TICK_MARK_HEIGHT}" stroke="#333333"/>`
 		const labelText = String(t)
 		const labelY = topY + TOP_LINE_TICK_LABEL_Y_OFFSET
@@ -150,6 +156,7 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 	}
 	bottomLine.ticks.forEach((t, i) => {
 		const x = padding.horizontal + i * tickSpacing
+		includePointX(ext, x) // Track tick position
 		svg += `<line x1="${x}" y1="${bottomY - TICK_MARK_HEIGHT}" x2="${x}" y2="${bottomY + TICK_MARK_HEIGHT}" stroke="#333333"/>`
 		const labelText = String(t)
 		const labelY = bottomY + BOTTOM_LINE_TICK_LABEL_Y_OFFSET

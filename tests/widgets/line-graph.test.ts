@@ -46,7 +46,7 @@ test("line graph - wraps long y-axis label (photosynthesis)", () => {
 	const svg = generateLineGraph(parsed)
 	// Ensure the y-axis label is rotated and wraps
 	expect(svg).toContain('transform="rotate(-90')
-	expect(svg).toMatch(/<tspan x="\d+" dy="1.1em">/) // at least one wrapped line
+	expect(svg).toMatch(/<tspan x="[\d.]+" dy="1.1em">/) // at least one wrapped line
 	expect(svg).toMatchSnapshot()
 })
 

@@ -1,6 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
 
 const AnnotationSchema = z.object({
@@ -190,6 +190,10 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 	includeText(ext, margin.left - 50, yAxisLabel, "middle", 7)
 
 	// Data Line
+	// Track the x-extents of all data points
+	CO2_DATA.forEach((p) => {
+		includePointX(ext, toSvgX(p.year))
+	})
 	const pointsStr = CO2_DATA.map((p) => `${toSvgX(p.year)},${toSvgY(p.ppm)}`).join(" ")
 	svg += `<polyline points="${pointsStr}" fill="none" stroke="black" stroke-width="2.5"/>`
 

@@ -11,6 +11,7 @@ import {
 	calculateXAxisLayout,
 	calculateYAxisLayout,
 	computeDynamicWidth,
+	includePointX,
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
@@ -211,6 +212,11 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	for (const s of series) {
 		const toSvgY = s.yAxis === "right" ? toSvgYRight : toSvgYLeft
 		const pointsStr = s.values.map((v, i) => `${toSvgX(i)},${toSvgY(v)}`).join(" ")
+
+		// Track the x-extents of all points in the series
+		s.values.forEach((_, i) => {
+			includePointX(ext, toSvgX(i))
+		})
 
 		let dasharray = ""
 		if (s.style === "dashed") dasharray = 'stroke-dasharray="8 4"'

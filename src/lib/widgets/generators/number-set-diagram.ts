@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includeText, includePointX, initExtents } from "@/lib/widgets/utils/layout"
 
 function createStyleSchema() {
 	return z
@@ -71,6 +72,8 @@ export type NumberSetDiagramProps = z.infer<typeof NumberSetDiagramPropsSchema>
  */
 export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPropsSchema> = (data) => {
 	const { width, height, sets } = data
+	
+	const ext = initExtents(width)
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
 	svg +=
@@ -87,33 +90,48 @@ export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPr
 	const irrationalRy = height * 0.3
 
 	// Rational Numbers (outermost of the nested set)
+	includePointX(ext, mainCenterX - rationalRx)
+	includePointX(ext, mainCenterX + rationalRx)
 	svg += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${rationalRx}" ry="${rationalRy}" fill="${sets.rational.color}" stroke="black" />`
 	if (sets.rational.label !== null) {
 		svg += `<text x="${mainCenterX}" y="${mainCenterY - rationalRy + 20}" class="set-label">${sets.rational.label}</text>`
+		includeText(ext, mainCenterX, sets.rational.label, "middle", 7)
 	}
 
 	// Integer Numbers
 	const integerRx = rationalRx * 0.7
 	const integerRy = rationalRy * 0.7
+	includePointX(ext, mainCenterX - integerRx)
+	includePointX(ext, mainCenterX + integerRx)
 	svg += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${integerRx}" ry="${integerRy}" fill="${sets.integer.color}" stroke="black" />`
 	if (sets.integer.label !== null) {
 		svg += `<text x="${mainCenterX}" y="${mainCenterY - integerRy + (rationalRy - integerRy) / 2}" class="set-label">${sets.integer.label}</text>`
+		includeText(ext, mainCenterX, sets.integer.label, "middle", 7)
 	}
 
 	// Whole Numbers
 	const wholeRx = integerRx * 0.6
 	const wholeRy = integerRy * 0.6
+	includePointX(ext, mainCenterX - wholeRx)
+	includePointX(ext, mainCenterX + wholeRx)
 	svg += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${wholeRx}" ry="${wholeRy}" fill="${sets.whole.color}" stroke="black" />`
 	if (sets.whole.label !== null) {
 		svg += `<text x="${mainCenterX}" y="${mainCenterY}" class="set-label">${sets.whole.label}</text>`
+		includeText(ext, mainCenterX, sets.whole.label, "middle", 7)
 	}
 
 	// Irrational Numbers (separate)
+	includePointX(ext, irrationalCenterX - irrationalRx)
+	includePointX(ext, irrationalCenterX + irrationalRx)
 	svg += `<ellipse cx="${irrationalCenterX}" cy="${irrationalCenterY}" rx="${irrationalRx}" ry="${irrationalRy}" fill="${sets.irrational.color}" stroke="black" />`
 	if (sets.irrational.label !== null) {
 		svg += `<text x="${irrationalCenterX}" y="${irrationalCenterY}" class="set-label">${sets.irrational.label}</text>`
+		includeText(ext, irrationalCenterX, sets.irrational.label, "middle", 7)
 	}
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const KAArc = z
 	.object({
@@ -140,21 +141,59 @@ export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof Pentago
 
 	const { width, height, pentagonPoints, intersectionLines, khanArcs } = data
 
-	// Calculate viewBox with padding
-	const allX = pentagonPoints.map((p) => p.x)
-	const allY = pentagonPoints.map((p) => p.y)
-	const minX = Math.min(...allX)
-	const maxX = Math.max(...allX)
-	const minY = Math.min(...allY)
-	const maxY = Math.max(...allY)
+	// Initialize extents
+	const ext = initExtents(width)
 
-	const padding = Math.max((maxX - minX) * 0.1, (maxY - minY) * 0.1, 20)
-	const viewBoxX = minX - padding
-	const viewBoxY = minY - padding
-	const viewBoxWidth = maxX - minX + 2 * padding
-	const viewBoxHeight = maxY - minY + 2 * padding
+	// Track all pentagon vertices
+	for (const point of pentagonPoints) {
+		includePointX(ext, point.x)
+	}
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	// Track intersection line endpoints
+	for (const line of intersectionLines) {
+		const fromPoint = pentagonPoints.find((p) => p.id === line.from)
+		const toPoint = pentagonPoints.find((p) => p.id === line.to)
+
+		if (!fromPoint) {
+			logger.error("pentagon diagram point not found", { pointId: line.from, line })
+			throw errors.new(`point not found: ${line.from}`)
+		}
+		if (!toPoint) {
+			logger.error("pentagon diagram point not found", { pointId: line.to, line })
+			throw errors.new(`point not found: ${line.to}`)
+		}
+
+		includePointX(ext, fromPoint.x)
+		includePointX(ext, toPoint.x)
+	}
+
+	// Track arc endpoints and labels
+	for (const arc of khanArcs) {
+		// Track arc start point
+		includePointX(ext, arc.startX)
+		
+		// Track arc end point
+		const arcEndX = arc.startX + arc.endDeltaX
+		includePointX(ext, arcEndX)
+
+		// Track label position if label exists
+		if (arc.label) {
+			const arcCenterX = arc.startX + arc.endDeltaX / 2
+			const arcCenterY = arc.startY + arc.endDeltaY / 2
+			
+			const perpX = -arc.endDeltaY / Math.sqrt(arc.endDeltaX * arc.endDeltaX + arc.endDeltaY * arc.endDeltaY)
+			const labelOffset = arc.rx + 8
+			const labelX = arcCenterX + perpX * labelOffset
+			
+			includeText(ext, labelX, arc.label, "middle", 7)
+		}
+	}
+
+	// Compute dynamic width and viewBox
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+
+	// Start building SVG with computed dimensions
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 
 	// Draw pentagon perimeter
 	for (let i = 0; i < pentagonPoints.length; i++) {
@@ -174,13 +213,9 @@ export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof Pentago
 		const fromPoint = pentagonPoints.find((p) => p.id === line.from)
 		const toPoint = pentagonPoints.find((p) => p.id === line.to)
 
-		if (!fromPoint) {
-			logger.error("pentagon diagram point not found", { pointId: line.from, line })
-			throw errors.new(`point not found: ${line.from}`)
-		}
-		if (!toPoint) {
-			logger.error("pentagon diagram point not found", { pointId: line.to, line })
-			throw errors.new(`point not found: ${line.to}`)
+		if (!fromPoint || !toPoint) {
+			// Already validated above
+			continue
 		}
 
 		svg += `<line x1="${fromPoint.x}" y1="${fromPoint.y}" x2="${toPoint.x}" y2="${toPoint.y}" stroke="black" stroke-width="2"/>`

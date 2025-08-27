@@ -1,5 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 // Defines a dimension label for an edge or a face area
 const DimensionLabel = z
@@ -154,7 +155,8 @@ export type PolyhedronDiagramProps = z.infer<typeof PolyhedronDiagramPropsSchema
 export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagramPropsSchema> = (data) => {
 	const { width, height, shape, labels, diagonals, shadedFace, showHiddenEdges } = data
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const ext = initExtents(width)
+	let svgContent = ""
 
 	switch (shape.type) {
 		case "rectangularPrism": {
@@ -178,6 +180,9 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 				{ x: x_offset + l, y: y_offset - h - l * 0.5 } // 7: back top left
 			]
 
+			// Track all vertices
+			p.forEach(vertex => includePointX(ext, vertex.x))
+
 			const faces = {
 				front_face: { points: [p[0], p[1], p[2], p[3]], color: "rgba(255,0,0,0.2)" },
 				top_face: { points: [p[3], p[2], p[6], p[7]], color: "rgba(0,0,255,0.2)" },
@@ -199,14 +204,14 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 
 			// Draw hidden elements first
 			if (showHiddenEdges) {
-				if (p[0] && p[4]) svg += `<line x1="${p[0].x}" y1="${p[0].y}" x2="${p[4].x}" y2="${p[4].y}" ${hidden} />`
-				if (p[4] && p[5]) svg += `<line x1="${p[4].x}" y1="${p[4].y}" x2="${p[5].x}" y2="${p[5].y}" ${hidden} />`
-				if (p[4] && p[7]) svg += `<line x1="${p[4].x}" y1="${p[4].y}" x2="${p[7].x}" y2="${p[7].y}" ${hidden} />`
+				if (p[0] && p[4]) svgContent += `<line x1="${p[0].x}" y1="${p[0].y}" x2="${p[4].x}" y2="${p[4].y}" ${hidden} />`
+				if (p[4] && p[5]) svgContent += `<line x1="${p[4].x}" y1="${p[4].y}" x2="${p[5].x}" y2="${p[5].y}" ${hidden} />`
+				if (p[4] && p[7]) svgContent += `<line x1="${p[4].x}" y1="${p[4].y}" x2="${p[7].x}" y2="${p[7].y}" ${hidden} />`
 			}
 			// Draw visible faces and edges
-			svg += getFaceSvg("front_face")
-			svg += getFaceSvg("top_face")
-			svg += getFaceSvg("side_face")
+			svgContent += getFaceSvg("front_face")
+			svgContent += getFaceSvg("top_face")
+			svgContent += getFaceSvg("side_face")
 
 			// --- Render Diagonals ---
 			for (const d of diagonals) {
@@ -221,7 +226,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 					lineStyle += ' stroke-dasharray="2 3"'
 				}
 
-				svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
+				svgContent += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
 
 				if (d.label) {
 					const midX = (from.x + to.x) / 2
@@ -229,17 +234,30 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 					const angle = Math.atan2(to.y - from.y, to.x - from.x)
 					const offsetX = -Math.sin(angle) * 10
 					const offsetY = Math.cos(angle) * 10
-					svg += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
+					svgContent += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
+					includeText(ext, midX + offsetX, d.label, "middle")
 				}
 			}
 
 			for (const lab of labels) {
-				if (lab.target === "height" && p[0])
-					svg += `<text x="${p[0].x - 10}" y="${p[0].y - h / 2}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
-				if (lab.target === "width" && p[0])
-					svg += `<text x="${p[0].x + w / 2}" y="${p[0].y + 15}" text-anchor="middle">${lab.text}</text>`
-				if (lab.target === "length" && p[1])
-					svg += `<text x="${p[1].x + l / 2}" y="${p[1].y - l * 0.25 + 10}" text-anchor="middle" transform="skewX(-25)">${lab.text}</text>`
+				if (lab.target === "height" && p[0]) {
+					const textX = p[0].x - 10
+					const textY = p[0].y - h / 2
+					svgContent += `<text x="${textX}" y="${textY}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
+					includeText(ext, textX, lab.text, "end")
+				}
+				if (lab.target === "width" && p[0]) {
+					const textX = p[0].x + w / 2
+					const textY = p[0].y + 15
+					svgContent += `<text x="${textX}" y="${textY}" text-anchor="middle">${lab.text}</text>`
+					includeText(ext, textX, lab.text, "middle")
+				}
+				if (lab.target === "length" && p[1]) {
+					const textX = p[1].x + l / 2
+					const textY = p[1].y - l * 0.25 + 10
+					svgContent += `<text x="${textX}" y="${textY}" text-anchor="middle" transform="skewX(-25)">${lab.text}</text>`
+					includeText(ext, textX, lab.text, "middle")
+				}
 			}
 			break
 		}
@@ -265,6 +283,9 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 				{ x: x_offset + w / 2 + l, y: y_offset - hScaled - l * 0.5 } // 5: back top
 			]
 
+			// Track all vertices
+			p.forEach(vertex => includePointX(ext, vertex.x))
+
 			// Define faces for triangular prism
 			const faces = {
 				front_face: { points: [p[0], p[1], p[2]], color: "rgba(255,0,0,0.2)" },
@@ -289,16 +310,16 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			// Draw hidden edges first
 			if (showHiddenEdges) {
 				// Hidden back triangle edges
-				if (p[3] && p[4]) svg += `<line x1="${p[3].x}" y1="${p[3].y}" x2="${p[4].x}" y2="${p[4].y}" ${hidden} />`
-				if (p[3] && p[5]) svg += `<line x1="${p[3].x}" y1="${p[3].y}" x2="${p[5].x}" y2="${p[5].y}" ${hidden} />`
-				if (p[4] && p[5]) svg += `<line x1="${p[4].x}" y1="${p[4].y}" x2="${p[5].x}" y2="${p[5].y}" ${hidden} />`
+				if (p[3] && p[4]) svgContent += `<line x1="${p[3].x}" y1="${p[3].y}" x2="${p[4].x}" y2="${p[4].y}" ${hidden} />`
+				if (p[3] && p[5]) svgContent += `<line x1="${p[3].x}" y1="${p[3].y}" x2="${p[5].x}" y2="${p[5].y}" ${hidden} />`
+				if (p[4] && p[5]) svgContent += `<line x1="${p[4].x}" y1="${p[4].y}" x2="${p[5].x}" y2="${p[5].y}" ${hidden} />`
 			}
 
 			// Draw visible faces
-			svg += drawFace("bottom_face")
-			svg += drawFace("side_face_left")
-			svg += drawFace("side_face_right")
-			svg += drawFace("front_face")
+			svgContent += drawFace("bottom_face")
+			svgContent += drawFace("side_face_left")
+			svgContent += drawFace("side_face_right")
+			svgContent += drawFace("front_face")
 
 			// Draw diagonals if specified
 			for (const d of diagonals) {
@@ -313,7 +334,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 					lineStyle += ' stroke-dasharray="2 3"'
 				}
 
-				svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
+				svgContent += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
 
 				if (d.label) {
 					const midX = (from.x + to.x) / 2
@@ -321,18 +342,28 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 					const angle = Math.atan2(to.y - from.y, to.x - from.x)
 					const offsetX = -Math.sin(angle) * 10
 					const offsetY = Math.cos(angle) * 10
-					svg += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
+					svgContent += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
+					includeText(ext, midX + offsetX, d.label, "middle")
 				}
 			}
 
 			// Draw labels
 			for (const lab of labels) {
 				if (lab.target === "base" && p[0] && p[1]) {
-					svg += `<text x="${(p[0].x + p[1].x) / 2}" y="${p[0].y + 15}" text-anchor="middle">${lab.text}</text>`
+					const textX = (p[0].x + p[1].x) / 2
+					const textY = p[0].y + 15
+					svgContent += `<text x="${textX}" y="${textY}" text-anchor="middle">${lab.text}</text>`
+					includeText(ext, textX, lab.text, "middle")
 				} else if (lab.target === "height" && p[0] && p[2]) {
-					svg += `<text x="${p[0].x - 10}" y="${(p[0].y + p[2].y) / 2}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
+					const textX = p[0].x - 10
+					const textY = (p[0].y + p[2].y) / 2
+					svgContent += `<text x="${textX}" y="${textY}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
+					includeText(ext, textX, lab.text, "end")
 				} else if (lab.target === "length" && p[1] && p[4]) {
-					svg += `<text x="${(p[1].x + p[4].x) / 2}" y="${(p[1].y + p[4].y) / 2 + 15}" text-anchor="middle">${lab.text}</text>`
+					const textX = (p[1].x + p[4].x) / 2
+					const textY = (p[1].y + p[4].y) / 2 + 15
+					svgContent += `<text x="${textX}" y="${textY}" text-anchor="middle">${lab.text}</text>`
+					includeText(ext, textX, lab.text, "middle")
 				}
 			}
 			break
@@ -356,6 +387,9 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 				{ x: x_offset + l, y: y_offset - l * 0.5 }, // 3: base back left
 				{ x: x_offset + w / 2 + l / 2, y: y_offset - h - l * 0.25 } // 4: apex
 			]
+
+			// Track all vertices
+			p.forEach(vertex => includePointX(ext, vertex.x))
 
 			// Define faces
 			const faces = {
@@ -382,21 +416,21 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			// Draw hidden edges first
 			if (showHiddenEdges) {
 				// Hidden base edges
-				if (p[0] && p[3]) svg += `<line x1="${p[0].x}" y1="${p[0].y}" x2="${p[3].x}" y2="${p[3].y}" ${hidden} />`
-				if (p[3] && p[2]) svg += `<line x1="${p[3].x}" y1="${p[3].y}" x2="${p[2].x}" y2="${p[2].y}" ${hidden} />`
+				if (p[0] && p[3]) svgContent += `<line x1="${p[0].x}" y1="${p[0].y}" x2="${p[3].x}" y2="${p[3].y}" ${hidden} />`
+				if (p[3] && p[2]) svgContent += `<line x1="${p[3].x}" y1="${p[3].y}" x2="${p[2].x}" y2="${p[2].y}" ${hidden} />`
 				// Hidden edge from back left base to apex
-				if (p[3] && p[4]) svg += `<line x1="${p[3].x}" y1="${p[3].y}" x2="${p[4].x}" y2="${p[4].y}" ${hidden} />`
+				if (p[3] && p[4]) svgContent += `<line x1="${p[3].x}" y1="${p[3].y}" x2="${p[4].x}" y2="${p[4].y}" ${hidden} />`
 			}
 
 			// Draw visible faces
-			svg += drawFace("front_face")
-			svg += drawFace("right_face")
-			svg += drawFace("left_face")
+			svgContent += drawFace("front_face")
+			svgContent += drawFace("right_face")
+			svgContent += drawFace("left_face")
 
 			// Draw visible edges that aren't part of filled faces (or are drawn on top)
-			if (p[0] && p[1]) svg += `<line x1="${p[0].x}" y1="${p[0].y}" x2="${p[1].x}" y2="${p[1].y}" ${solid} />`
-			if (p[1] && p[2]) svg += `<line x1="${p[1].x}" y1="${p[1].y}" x2="${p[2].x}" y2="${p[2].y}" ${solid} />`
-			if (p[2] && p[4]) svg += `<line x1="${p[2].x}" y1="${p[2].y}" x2="${p[4].x}" y2="${p[4].y}" ${solid} />`
+			if (p[0] && p[1]) svgContent += `<line x1="${p[0].x}" y1="${p[0].y}" x2="${p[1].x}" y2="${p[1].y}" ${solid} />`
+			if (p[1] && p[2]) svgContent += `<line x1="${p[1].x}" y1="${p[1].y}" x2="${p[2].x}" y2="${p[2].y}" ${solid} />`
+			if (p[2] && p[4]) svgContent += `<line x1="${p[2].x}" y1="${p[2].y}" x2="${p[4].x}" y2="${p[4].y}" ${solid} />`
 
 			// Draw diagonals if specified
 			for (const d of diagonals) {
@@ -411,7 +445,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 					lineStyle += ' stroke-dasharray="2 3"'
 				}
 
-				svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
+				svgContent += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
 
 				if (d.label) {
 					const midX = (from.x + to.x) / 2
@@ -419,23 +453,33 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 					const angle = Math.atan2(to.y - from.y, to.x - from.x)
 					const offsetX = -Math.sin(angle) * 10
 					const offsetY = Math.cos(angle) * 10
-					svg += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
+					svgContent += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
+					includeText(ext, midX + offsetX, d.label, "middle")
 				}
 			}
 
 			// Draw labels
 			for (const lab of labels) {
 				if (lab.target === "baseWidth" && p[0] && p[1]) {
-					svg += `<text x="${(p[0].x + p[1].x) / 2}" y="${p[0].y + 15}" text-anchor="middle">${lab.text}</text>`
+					const textX = (p[0].x + p[1].x) / 2
+					const textY = p[0].y + 15
+					svgContent += `<text x="${textX}" y="${textY}" text-anchor="middle">${lab.text}</text>`
+					includeText(ext, textX, lab.text, "middle")
 				} else if (lab.target === "baseLength" && p[1] && p[2]) {
-					svg += `<text x="${(p[1].x + p[2].x) / 2}" y="${(p[1].y + p[2].y) / 2 + 15}" text-anchor="middle">${lab.text}</text>`
+					const textX = (p[1].x + p[2].x) / 2
+					const textY = (p[1].y + p[2].y) / 2 + 15
+					svgContent += `<text x="${textX}" y="${textY}" text-anchor="middle">${lab.text}</text>`
+					includeText(ext, textX, lab.text, "middle")
 				} else if (lab.target === "height" && p[4]) {
 					// Draw height line from base center to apex
 					if (p[0] && p[2]) {
 						const baseCenterX = (p[0].x + p[2].x) / 2
 						const baseCenterY = (p[0].y + p[2].y) / 2
-						svg += `<line x1="${baseCenterX}" y1="${baseCenterY}" x2="${p[4].x}" y2="${p[4].y}" stroke="gray" stroke-width="1" stroke-dasharray="2 2" />`
-						svg += `<text x="${baseCenterX - 10}" y="${(baseCenterY + p[4].y) / 2}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
+						svgContent += `<line x1="${baseCenterX}" y1="${baseCenterY}" x2="${p[4].x}" y2="${p[4].y}" stroke="gray" stroke-width="1" stroke-dasharray="2 2" />`
+						const textX = baseCenterX - 10
+						const textY = (baseCenterY + p[4].y) / 2
+						svgContent += `<text x="${textX}" y="${textY}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
+						includeText(ext, textX, lab.text, "end")
 					}
 				}
 			}
@@ -474,6 +518,9 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			// Build vertex array
 			const p = [frontLeft, frontRight, backVertex, apex]
 
+			// Track all vertices
+			p.forEach(vertex => includePointX(ext, vertex.x))
+
 			// Define faces
 			const faces = {
 				base_face: { points: [p[0], p[1], p[2]], color: "rgba(255,255,0,0.2)" }, // bottom triangular base
@@ -498,22 +545,22 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			// Draw hidden edges first
 			if (showHiddenEdges) {
 				// Edges of the base triangle that might be hidden or partially hidden from front view
-				if (p[0] && p[2]) svg += `<line x1="${p[0].x}" y1="${p[0].y}" x2="${p[2].x}" y2="${p[2].y}" ${hidden} />` // Back-left base edge
-				if (p[1] && p[2]) svg += `<line x1="${p[1].x}" y1="${p[1].y}" x2="${p[2].x}" y2="${p[2].y}" ${hidden} />` // Back-right base edge
+				if (p[0] && p[2]) svgContent += `<line x1="${p[0].x}" y1="${p[0].y}" x2="${p[2].x}" y2="${p[2].y}" ${hidden} />` // Back-left base edge
+				if (p[1] && p[2]) svgContent += `<line x1="${p[1].x}" y1="${p[1].y}" x2="${p[2].x}" y2="${p[2].y}" ${hidden} />` // Back-right base edge
 				// Edge from the back base vertex to the apex
-				if (p[2] && p[3]) svg += `<line x1="${p[2].x}" y1="${p[2].y}" x2="${p[3].x}" y2="${p[3].y}" ${hidden} />`
+				if (p[2] && p[3]) svgContent += `<line x1="${p[2].x}" y1="${p[2].y}" x2="${p[3].x}" y2="${p[3].y}" ${hidden} />`
 			}
 
 			// Draw faces (order matters for overlapping with semi-transparent fills)
-			svg += drawFace("base_face")
-			svg += drawFace("front_face")
-			svg += drawFace("right_face")
-			svg += drawFace("left_face")
+			svgContent += drawFace("base_face")
+			svgContent += drawFace("front_face")
+			svgContent += drawFace("right_face")
+			svgContent += drawFace("left_face")
 
 			// Draw visible edges that are not covered by faces (front base edge, and edges to apex)
-			if (p[0] && p[1]) svg += `<line x1="${p[0].x}" y1="${p[0].y}" x2="${p[1].x}" y2="${p[1].y}" ${solid} />` // Front base edge
-			if (p[0] && p[3]) svg += `<line x1="${p[0].x}" y1="${p[0].y}" x2="${p[3].x}" y2="${p[3].y}" ${solid} />` // Front-left edge to apex
-			if (p[1] && p[3]) svg += `<line x1="${p[1].x}" y1="${p[1].y}" x2="${p[3].x}" y2="${p[3].y}" ${solid} />` // Front-right edge to apex
+			if (p[0] && p[1]) svgContent += `<line x1="${p[0].x}" y1="${p[0].y}" x2="${p[1].x}" y2="${p[1].y}" ${solid} />` // Front base edge
+			if (p[0] && p[3]) svgContent += `<line x1="${p[0].x}" y1="${p[0].y}" x2="${p[3].x}" y2="${p[3].y}" ${solid} />` // Front-left edge to apex
+			if (p[1] && p[3]) svgContent += `<line x1="${p[1].x}" y1="${p[1].y}" x2="${p[3].x}" y2="${p[3].y}" ${solid} />` // Front-right edge to apex
 
 			// Draw diagonals if specified
 			for (const d of diagonals) {
@@ -528,7 +575,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 					lineStyle += ' stroke-dasharray="2 3"'
 				}
 
-				svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
+				svgContent += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
 
 				if (d.label) {
 					const midX = (from.x + to.x) / 2
@@ -536,7 +583,8 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 					const angle = Math.atan2(to.y - from.y, to.x - from.x)
 					const offsetX = -Math.sin(angle) * 10
 					const offsetY = Math.cos(angle) * 10
-					svg += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
+					svgContent += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
+					includeText(ext, midX + offsetX, d.label, "middle")
 				}
 			}
 
@@ -544,26 +592,40 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			for (const lab of labels) {
 				if (lab.target === "baseLength" && p[0] && p[1]) {
 					// Label for the base triangle's 'b' (front edge)
-					svg += `<text x="${(p[0].x + p[1].x) / 2}" y="${p[0].y + 15}" text-anchor="middle">${lab.text}</text>`
+					const textX = (p[0].x + p[1].x) / 2
+					const textY = p[0].y + 15
+					svgContent += `<text x="${textX}" y="${textY}" text-anchor="middle">${lab.text}</text>`
+					includeText(ext, textX, lab.text, "middle")
 				} else if (lab.target === "baseHeight" && p[0] && p[1] && p[2]) {
 					// Label for the base triangle's 'h' (perpendicular height/depth)
 					// Draw a guide line from midpoint of front base to back vertex
 					const mid_p0_p1_x = (p[0].x + p[1].x) / 2
 					const mid_p0_p1_y = (p[0].y + p[1].y) / 2
-					svg += `<line x1="${mid_p0_p1_x}" y1="${mid_p0_p1_y}" x2="${p[2].x}" y2="${p[2].y}" stroke="gray" stroke-width="1" stroke-dasharray="2 2" />`
-					svg += `<text x="${(mid_p0_p1_x + p[2].x) / 2 + 10}" y="${(mid_p0_p1_y + p[2].y) / 2}" text-anchor="start" dominant-baseline="middle">${lab.text}</text>`
+					svgContent += `<line x1="${mid_p0_p1_x}" y1="${mid_p0_p1_y}" x2="${p[2].x}" y2="${p[2].y}" stroke="gray" stroke-width="1" stroke-dasharray="2 2" />`
+					const textX = (mid_p0_p1_x + p[2].x) / 2 + 10
+					const textY = (mid_p0_p1_y + p[2].y) / 2
+					svgContent += `<text x="${textX}" y="${textY}" text-anchor="start" dominant-baseline="middle">${lab.text}</text>`
+					includeText(ext, textX, lab.text, "start")
 				} else if (lab.target === "height" && p[0] && p[1] && p[2] && p[3]) {
 					// Label for pyramid height
 					// Draw height line from base centroid to apex
 					const base_centroid_x_for_label = (p[0].x + p[1].x + p[2].x) / 3
 					const base_centroid_y_for_label = (p[0].y + p[1].y + p[2].y) / 3
-					svg += `<line x1="${base_centroid_x_for_label}" y1="${base_centroid_y_for_label}" x2="${p[3].x}" y2="${p[3].y}" stroke="gray" stroke-width="1" stroke-dasharray="2 2" />`
-					svg += `<text x="${base_centroid_x_for_label - 10}" y="${(base_centroid_y_for_label + p[3].y) / 2}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
+					svgContent += `<line x1="${base_centroid_x_for_label}" y1="${base_centroid_y_for_label}" x2="${p[3].x}" y2="${p[3].y}" stroke="gray" stroke-width="1" stroke-dasharray="2 2" />`
+					const textX = base_centroid_x_for_label - 10
+					const textY = (base_centroid_y_for_label + p[3].y) / 2
+					svgContent += `<text x="${textX}" y="${textY}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
+					includeText(ext, textX, lab.text, "end")
 				}
 			}
 			break
 		}
 	}
+	// Final assembly with dynamic width
+	const padding = 30
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	svg += svgContent
 	svg += "</svg>"
 	return svg
 }

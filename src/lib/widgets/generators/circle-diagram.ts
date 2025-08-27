@@ -242,6 +242,9 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 		for (const sector of sectors) {
 			const start = pointOnCircle(sector.startAngle, r)
 			const end = pointOnCircle(sector.endAngle, r)
+			// Track sector endpoints
+			includePointX(ext, start.x)
+			includePointX(ext, end.x)
 			const angleDiff = Math.abs(sector.endAngle - sector.startAngle)
 			const largeArcFlag = angleDiff > 180 ? 1 : 0
 			const pathData = `M ${cx},${cy} L ${start.x},${start.y} A ${r},${r} 0 ${largeArcFlag} 1 ${end.x},${end.y} Z`
@@ -265,6 +268,9 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 			const endAngle = 180 + rotation
 			const start = pointOnCircle(startAngle, r)
 			const end = pointOnCircle(endAngle, r)
+			// Track semicircle endpoints
+			includePointX(ext, start.x)
+			includePointX(ext, end.x)
 			const pathData = `M ${start.x},${start.y} A ${r},${r} 0 0 1 ${end.x},${end.y} Z`
 			svg += `<path d="${pathData}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="2"/>`
 			break
@@ -275,6 +281,10 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 			const endAngle = 90 + rotation
 			const start = pointOnCircle(startAngle, r)
 			const end = pointOnCircle(endAngle, r)
+			// Track quarter-circle endpoints and center
+			includePointX(ext, cx)
+			includePointX(ext, start.x)
+			includePointX(ext, end.x)
 			const pathData = `M ${cx},${cy} L ${start.x},${start.y} A ${r},${r} 0 0 1 ${end.x},${end.y} Z`
 			svg += `<path d="${pathData}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="2"/>`
 			break
@@ -300,6 +310,9 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 		for (const arc of arcs) {
 			const start = pointOnCircle(arc.startAngle, r)
 			const end = pointOnCircle(arc.endAngle, r)
+			// Track arc endpoints
+			includePointX(ext, start.x)
+			includePointX(ext, end.x)
 			const largeArcFlag = Math.abs(arc.endAngle - arc.startAngle) > 180 ? 1 : 0
 			const pathData = `M ${start.x},${start.y} A ${r},${r} 0 ${largeArcFlag} 1 ${end.x},${end.y}`
 			svg += `<path d="${pathData}" fill="none" stroke="${arc.strokeColor}" stroke-width="3"/>`
@@ -330,6 +343,10 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 				lineStart.y = cy
 			}
 
+			// Track segment endpoints
+			includePointX(ext, lineStart.x)
+			includePointX(ext, lineEnd.x)
+			
 			svg += `<line x1="${lineStart.x}" y1="${lineStart.y}" x2="${lineEnd.x}" y2="${lineEnd.y}" stroke="${seg.color}" stroke-width="2"/>`
 
 			if (seg.label) {

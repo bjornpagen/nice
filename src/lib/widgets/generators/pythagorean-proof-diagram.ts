@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includeText, includePointX, initExtents } from "@/lib/widgets/utils/layout"
 
 function createSideSquareSchema() {
 	return z
@@ -100,6 +101,8 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	const v_a_end = { x: offsetX, y: offsetY + sb } // End of horizontal leg 'a'
 	const v_b_end = { x: offsetX + sa, y: offsetY } // End of vertical leg 'b'
 
+	const ext = initExtents(width)
+	
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
 	svg +=
 		"<style>.area-label { font-size: 16px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; } .side-label { font-size: 14px; text-anchor: middle; dominant-baseline: middle; } .grid-line { stroke: #888888; stroke-width: 0.5; opacity: 0.5; }</style>"
@@ -159,6 +162,12 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	const perpVec = { x: hypVec.y, y: -hypVec.x } // outward perpendicular vector (flipped to other side)
 	const v_c1 = { x: v_b_end.x + perpVec.x, y: v_b_end.y + perpVec.y }
 	const v_c2 = { x: v_a_end.x + perpVec.x, y: v_a_end.y + perpVec.y }
+
+	includePointX(ext, v_a_end.x)
+	includePointX(ext, v_b_end.x)
+	includePointX(ext, v_c1.x)
+	includePointX(ext, v_c2.x)
+
 	svg += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_b_end.x},${v_b_end.y} ${v_c1.x},${v_c1.y} ${v_c2.x},${v_c2.y}" fill="${squareC.color}" stroke="#333333" stroke-width="1"/>`
 
 	// Add grid lines for square C
@@ -166,41 +175,64 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 
 	const centerC = { x: (v_a_end.x + v_c1.x) / 2, y: (v_a_end.y + v_c1.y) / 2 }
 	svg += `<text x="${centerC.x}" y="${centerC.y}" class="area-label">${squareC.area}</text>`
+	includeText(ext, centerC.x, String(squareC.area), "middle", 7)
 	if (squareC.sideLabel) {
 		const midHyp = { x: (v_a_end.x + v_b_end.x) / 2, y: (v_a_end.y + v_b_end.y) / 2 }
 		// Place "c" label on the hypotenuse side of the triangle
 		svg += `<text x="${midHyp.x}" y="${midHyp.y - 10}" class="side-label">${squareC.sideLabel}</text>`
+		includeText(ext, midHyp.x, squareC.sideLabel, "middle", 7)
 	}
 
 	// --- Square B (on leg 'b') ---
-	svg += `<rect x="${v_right.x}" y="${v_b_end.y}" width="${sb}" height="${sb}" fill="${squareB.color}" stroke="#333333" stroke-width="1"/>`
+	const rectB_x = v_right.x
+	const rectB_y = v_b_end.y
+	includePointX(ext, rectB_x)
+	includePointX(ext, rectB_x + sb)
+
+	svg += `<rect x="${rectB_x}" y="${rectB_y}" width="${sb}" height="${sb}" fill="${squareB.color}" stroke="#333333" stroke-width="1"/>`
 
 	// Add grid lines for square B
 	svg += generateRectangularGrid(v_right.x, v_b_end.y, sb, sb, b)
 
 	const centerB = { x: v_right.x + sb / 2, y: v_b_end.y + sb / 2 }
 	svg += `<text x="${centerB.x}" y="${centerB.y}" class="area-label">${squareB.area}</text>`
+	includeText(ext, centerB.x, String(squareB.area), "middle", 7)
 	if (squareB.sideLabel) {
 		const midB = { x: (v_right.x + v_b_end.x) / 2, y: (v_right.y + v_b_end.y) / 2 }
 		svg += `<text x="${midB.x + 10}" y="${midB.y}" class="side-label">${squareB.sideLabel}</text>`
+		includeText(ext, midB.x + 10, squareB.sideLabel, "middle", 7)
 	}
 
 	// --- Square A (on leg 'a') ---
-	svg += `<rect x="${v_a_end.x}" y="${v_a_end.y}" width="${sa}" height="${sa}" fill="${squareA.color}" stroke="#333333" stroke-width="1"/>`
+	const rectA_x = v_a_end.x
+	const rectA_y = v_a_end.y
+	includePointX(ext, rectA_x)
+	includePointX(ext, rectA_x + sa)
+
+	svg += `<rect x="${rectA_x}" y="${rectA_y}" width="${sa}" height="${sa}" fill="${squareA.color}" stroke="#333333" stroke-width="1"/>`
 
 	// Add grid lines for square A
 	svg += generateRectangularGrid(v_a_end.x, v_a_end.y, sa, sa, a)
 
 	const centerA = { x: v_a_end.x + sa / 2, y: v_a_end.y + sa / 2 }
 	svg += `<text x="${centerA.x}" y="${centerA.y}" class="area-label">${squareA.area}</text>`
+	includeText(ext, centerA.x, String(squareA.area), "middle", 7)
 	if (squareA.sideLabel) {
 		const midA = { x: (v_right.x + v_a_end.x) / 2, y: (v_right.y + v_a_end.y) / 2 }
 		svg += `<text x="${midA.x}" y="${midA.y + 10}" class="side-label">${squareA.sideLabel}</text>`
+		includeText(ext, midA.x, squareA.sideLabel, "middle", 7)
 	}
 
 	// --- Central Triangle (drawn on top) ---
+	includePointX(ext, v_a_end.x)
+	includePointX(ext, v_right.x)
+	includePointX(ext, v_b_end.x)
+
 	svg += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_right.x},${v_right.y} ${v_b_end.x},${v_b_end.y}" fill="#FAFAFA" stroke="#333333" stroke-width="2"/>`
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

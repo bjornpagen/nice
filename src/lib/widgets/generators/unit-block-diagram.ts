@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includePointX, initExtents } from "@/lib/widgets/utils/layout"
 
 export const UnitBlockDiagramPropsSchema = z
 	.object({
@@ -70,6 +71,8 @@ export const generateUnitBlockDiagram: WidgetGenerator<typeof UnitBlockDiagramPr
 	const svgWidth = blocksPerRow * blockWidth + (blocksPerRow - 1) * gap
 	const svgHeight = numRows * blockHeight + (numRows - 1) * gap
 
+	const ext = initExtents(svgWidth)
+	
 	let svg = `<svg width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}" xmlns="http://www.w3.org/2000/svg">`
 
 	for (let b = 0; b < totalBlocks; b++) {
@@ -77,6 +80,10 @@ export const generateUnitBlockDiagram: WidgetGenerator<typeof UnitBlockDiagramPr
 		const blockCol = b % blocksPerRow
 		const bx = blockCol * (blockWidth + gap)
 		const by = blockRow * (blockHeight + gap)
+		
+		// Track the horizontal extent of the block
+		includePointX(ext, bx)
+		includePointX(ext, bx + blockWidth)
 
 		const cellW = blockWidth / 10
 		const cellH = blockHeight / 10
@@ -91,6 +98,9 @@ export const generateUnitBlockDiagram: WidgetGenerator<typeof UnitBlockDiagramPr
 		svg += `<rect x="${bx}" y="${by}" width="${blockWidth}" height="${blockHeight}" fill="none" stroke="black" stroke-width="1"/>`
 	}
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, svgHeight, 10)
+	svg = svg.replace(`width="${svgWidth}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${svgWidth} ${svgHeight}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${svgHeight}"`)
 	svg += "</svg>"
 	return svg
 }

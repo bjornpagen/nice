@@ -1,5 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 export const EmojiImagePropsSchema = z
 	.object({
@@ -33,18 +34,28 @@ export type EmojiImageProps = z.infer<typeof EmojiImagePropsSchema>
 export const generateEmojiImage: WidgetGenerator<typeof EmojiImagePropsSchema> = (data) => {
 	const { emoji, size } = data
 
-	// Calculate dimensions
-	const totalHeight = size
-	const totalWidth = size
+	// MODIFICATION START
+	// Use dynamic width calculation instead of fixed size.
+	const ext = initExtents(size)
+	const cx = size / 2
+	const cy = size / 2
 
-	let svg = `<svg width="${totalWidth}" height="${totalHeight}" viewBox="0 0 ${totalWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg">`
+	// Track the emoji text for accurate width calculation.
+	// Emojis are treated as single characters, but their rendered width can vary.
+	// Using a larger font size estimate for avgCharWidthPx.
+	includeText(ext, cx, emoji, "middle", size * 0.9)
+
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, size, size * 0.1) // 10% padding
+
+	let svg = `<svg width="${dynamicWidth}" height="${size}" viewBox="${vbMinX} 0 ${dynamicWidth} ${size}" xmlns="http://www.w3.org/2000/svg">`
 
 	// Center the emoji in the available space
 	const emojiY = size * 0.85 // Adjust for emoji baseline
 
 	// Render the emoji
-	svg += `<text x="${totalWidth / 2}" y="${emojiY}" font-size="${size * 0.9}" text-anchor="middle" dominant-baseline="middle">${emoji}</text>`
+	svg += `<text x="${cx}" y="${emojiY}" font-size="${size * 0.9}" text-anchor="middle" dominant-baseline="middle">${emoji}</text>`
 
 	svg += "</svg>"
 	return svg
+	// MODIFICATION END
 }

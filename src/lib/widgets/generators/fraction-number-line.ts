@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const Tick = z
 	.object({
@@ -145,6 +146,9 @@ export type FractionNumberLineProps = z.infer<typeof FractionNumberLinePropsSche
 export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLinePropsSchema> = (props) => {
 	const { width, height, min, max, ticks, segments, model } = props
 
+	// Initialize extents tracking
+	const ext = initExtents(width)
+
 	const padding = { top: 80, right: 20, bottom: 40, left: 20 }
 	const chartWidth = width - padding.left - padding.right
 	const yPosAxis = height - padding.bottom - 20
@@ -156,7 +160,48 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 	const scale = chartWidth / (max - min)
 	const toSvgX = (val: number) => padding.left + (val - min) * scale
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	// Track number line endpoints
+	includePointX(ext, padding.left)
+	includePointX(ext, width - padding.right)
+
+	// Track tick positions and labels
+	for (const tick of ticks) {
+		const x = toSvgX(tick.value)
+		includePointX(ext, x)
+		
+		if (tick.topLabel !== "") {
+			includeText(ext, x, tick.topLabel, "middle", 6)
+		}
+		if (tick.bottomLabel !== "") {
+			includeText(ext, x, tick.bottomLabel, "middle", 7)
+		}
+	}
+
+	// Track segment endpoints
+	for (const segment of segments) {
+		const startX = toSvgX(segment.start)
+		const endX = toSvgX(segment.end)
+		includePointX(ext, startX)
+		includePointX(ext, endX)
+	}
+
+	// Track model bar boundaries and label
+	if (model !== null) {
+		// Track the left and right edges of the model bar
+		includePointX(ext, padding.left)
+		includePointX(ext, padding.left + chartWidth)
+		
+		// Track bracket label if present
+		if (model.bracketLabel !== "") {
+			includeText(ext, width / 2, model.bracketLabel, "middle", 7)
+		}
+	}
+
+	// Compute dynamic width
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	
+	// Build SVG with computed dimensions
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg +=
 		"<style>.label-top { font-size: 11px; } .label-bottom { font-weight: bold; } .model-label { font-size: 13px; font-weight: bold; }</style>"
 
@@ -203,6 +248,7 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 		}
 
 		// Render cell borders on top for a clean look
+		currentX = padding.left
 		for (let i = 0; i < model.totalCells; i++) {
 			svg += `<rect x="${currentX}" y="${modelY}" width="${cellWidth}" height="${modelHeight}" fill="none" stroke="black" stroke-width="2"/>`
 			currentX += cellWidth

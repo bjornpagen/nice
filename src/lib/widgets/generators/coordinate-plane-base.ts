@@ -268,10 +268,10 @@ function formatPiLabel(value: number): string {
 // --- CORE GENERATION LOGIC ---
 
 export interface CoordinatePlaneBase {
-	svg: string
+	svgBody: string // Changed from 'svg'
 	toSvgX: (val: number) => number
 	toSvgY: (val: number) => number
-	width: number
+	width: number // This is now the initial width, not dynamic
 	height: number
 	pointMap: Map<string, PlotPoint>
 	ext: Extents
@@ -279,7 +279,7 @@ export interface CoordinatePlaneBase {
 
 /**
  * Internal utility to generate the foundational SVG coordinate plane.
- * @returns An object containing the base SVG string, scaling functions, and point map.
+ * @returns An object containing the base SVG body string, scaling functions, and point map.
  */
 export function generateCoordinatePlaneBase(
 	width: number,
@@ -328,32 +328,30 @@ export function generateCoordinatePlaneBase(
 	const pointMap = new Map(points.map((pt) => [pt.id, pt]))
 
 	const ext = initExtents(width)
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
-	svg +=
-		"<style>.axis-label { font-size: 14px; text-anchor: middle; } .quadrant-label { font-size: 18px; fill: #ccc; text-anchor: middle; dominant-baseline: middle; }</style>"
+	let svgBody = `<style>.axis-label { font-size: 14px; text-anchor: middle; } .quadrant-label { font-size: 18px; fill: #ccc; text-anchor: middle; dominant-baseline: middle; }</style>`
 
 	// Add clipping path for chart area to prevent lines from extending beyond bounds
-	svg += createChartClipPath("chartArea", pad.left, pad.top, chartWidth, chartHeight)
+	svgBody += createChartClipPath("chartArea", pad.left, pad.top, chartWidth, chartHeight)
 
 	// Grid lines
 	if (xAxis.showGridLines) {
 		for (let t = xAxis.min; t <= xAxis.max; t += xAxis.tickInterval) {
 			if (t === 0) continue
 			const x = toSvgX(t)
-			svg += `<line x1="${x}" y1="${pad.top}" x2="${x}" y2="${height - pad.bottom}" stroke="#eee" stroke-width="1"/>`
+			svgBody += `<line x1="${x}" y1="${pad.top}" x2="${x}" y2="${height - pad.bottom}" stroke="#eee" stroke-width="1"/>`
 		}
 	}
 	if (yAxis.showGridLines) {
 		for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 			if (t === 0) continue
 			const y = toSvgY(t)
-			svg += `<line x1="${pad.left}" y1="${y}" x2="${width - pad.right}" y2="${y}" stroke="#eee" stroke-width="1"/>`
+			svgBody += `<line x1="${pad.left}" y1="${y}" x2="${width - pad.right}" y2="${y}" stroke="#eee" stroke-width="1"/>`
 		}
 	}
 
 	// Axes
-	svg += `<line x1="${pad.left}" y1="${zeroY}" x2="${width - pad.right}" y2="${zeroY}" stroke="black" stroke-width="1.5"/>`
-	svg += `<line x1="${zeroX}" y1="${pad.top}" x2="${zeroX}" y2="${height - pad.bottom}" stroke="black" stroke-width="1.5"/>`
+	svgBody += `<line x1="${pad.left}" y1="${zeroY}" x2="${width - pad.right}" y2="${zeroY}" stroke="black" stroke-width="1.5"/>`
+	svgBody += `<line x1="${zeroX}" y1="${pad.top}" x2="${zeroX}" y2="${height - pad.bottom}" stroke="black" stroke-width="1.5"/>`
 
 	// X-axis ticks and labels with intersection collision avoidance
 	const xTickValues: number[] = []
@@ -365,10 +363,10 @@ export function generateCoordinatePlaneBase(
 	xTickValues.forEach((t, i) => {
 		if (t === 0) return // Skip origin
 		const x = toSvgX(t)
-		svg += `<line x1="${x}" y1="${zeroY - 4}" x2="${x}" y2="${zeroY + 4}" stroke="black"/>`
+		svgBody += `<line x1="${x}" y1="${zeroY - 4}" x2="${x}" y2="${zeroY + 4}" stroke="black"/>`
 		if (selectedXTicks.has(i)) {
 			const label = formatPiLabel(t)
-			svg += `<text x="${x}" y="${zeroY + 15}" fill="black" text-anchor="middle">${label}</text>`
+			svgBody += `<text x="${x}" y="${zeroY + 15}" fill="black" text-anchor="middle">${label}</text>`
 			includeText(ext, x, label, "middle", 7)
 		}
 	})
@@ -383,33 +381,34 @@ export function generateCoordinatePlaneBase(
 	yTickValues.forEach((t, i) => {
 		if (t === 0) return // Skip origin
 		const y = toSvgY(t)
-		svg += `<line x1="${zeroX - 4}" y1="${y}" x2="${zeroX + 4}" y2="${y}" stroke="black"/>`
+		svgBody += `<line x1="${zeroX - 4}" y1="${y}" x2="${zeroX + 4}" y2="${y}" stroke="black"/>`
 		if (selectedYTicks.has(i)) {
 			const label = formatPiLabel(t)
-			svg += `<text x="${zeroX - 8}" y="${y + 4}" fill="black" text-anchor="end">${label}</text>`
+			svgBody += `<text x="${zeroX - 8}" y="${y + 4}" fill="black" text-anchor="end">${label}</text>`
 			includeText(ext, zeroX - 8, label, "end", 7)
 		}
 	})
 
 	// Axis labels
-	svg += `<text x="${pad.left + chartWidth / 2}" y="${height - pad.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
+	svgBody += `<text x="${pad.left + chartWidth / 2}" y="${height - pad.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
 	includeText(ext, pad.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
-	svg += `<text x="${yAxisLabelX}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${pad.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
+	svgBody += `<text x="${yAxisLabelX}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${pad.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
 	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
 
 	// Quadrant labels
 	if (showQuadrantLabels) {
-		svg += `<text x="${zeroX + chartWidth / 4}" y="${zeroY - chartHeight / 4}" class="quadrant-label">I</text>`
-		svg += `<text x="${zeroX - chartWidth / 4}" y="${zeroY - chartHeight / 4}" class="quadrant-label">II</text>`
-		svg += `<text x="${zeroX - chartWidth / 4}" y="${zeroY + chartHeight / 4}" class="quadrant-label">III</text>`
-		svg += `<text x="${zeroX + chartWidth / 4}" y="${zeroY + chartHeight / 4}" class="quadrant-label">IV</text>`
+		svgBody += `<text x="${zeroX + chartWidth / 4}" y="${zeroY - chartHeight / 4}" class="quadrant-label">I</text>`
+		svgBody += `<text x="${zeroX - chartWidth / 4}" y="${zeroY - chartHeight / 4}" class="quadrant-label">II</text>`
+		svgBody += `<text x="${zeroX - chartWidth / 4}" y="${zeroY + chartHeight / 4}" class="quadrant-label">III</text>`
+		svgBody += `<text x="${zeroX + chartWidth / 4}" y="${zeroY + chartHeight / 4}" class="quadrant-label">IV</text>`
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
+	// --- REMOVED ---
+	// const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	// svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	// svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 
-	return { svg, toSvgX, toSvgY, width: dynamicWidth, height, pointMap, ext }
+	return { svgBody, toSvgX, toSvgY, width, height, pointMap, ext }
 }
 
 /**

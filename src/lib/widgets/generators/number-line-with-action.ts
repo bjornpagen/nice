@@ -1,5 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const Label = z
 	.object({
@@ -105,6 +106,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 	if (min >= max) return `<svg width="${width}" height="${height}"></svg>`
 	const scale = lineLength / (max - min)
 
+	const ext = initExtents(width)
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg += `<defs><marker id="action-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#333333"/></marker></defs>`
 
@@ -113,14 +115,18 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 		const toSvgX = (val: number) => padding + (val - min) * scale
 
 		// Axis and Ticks
+		includePointX(ext, padding)
+		includePointX(ext, width - padding)
 		svg += `<line x1="${padding}" y1="${yPos}" x2="${width - padding}" y2="${yPos}" stroke="#333333" stroke-width="2"/>`
 		for (let t = min; t <= max; t += tickInterval) {
 			const x = toSvgX(t)
+			includePointX(ext, x)
 			svg += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="#333333"/>`
 			// Draw default numeric labels if no custom label exists for this position
 			const hasCustomLabel = customLabels.some((label) => label.value === t)
 			if (!hasCustomLabel) {
 				svg += `<text x="${x}" y="${yPos + 20}" fill="#333333" text-anchor="middle" font-size="10">${t}</text>`
+				includeText(ext, x, String(t), "middle", 7)
 			}
 		}
 
@@ -128,10 +134,12 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 		for (const label of customLabels) {
 			const x = toSvgX(label.value)
 			svg += `<text x="${x}" y="${yPos + 20}" fill="#333333" text-anchor="middle" font-weight="bold">${label.text}</text>`
+			includeText(ext, x, label.text, "middle", 7)
 		}
 
 		// Start value marker
 		const startX = toSvgX(startValue)
+		includePointX(ext, startX)
 		svg += `<circle cx="${startX}" cy="${yPos}" r="3" fill="#007ACC" stroke="#005999" stroke-width="1"/>`
 
 		// Action arrows - sequential with stacked labels
@@ -155,12 +163,18 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 
 			// Arrow label
 			svg += `<text x="${midX}" y="${controlY - 5}" fill="#007ACC" text-anchor="middle" font-size="10" font-weight="bold">${action.label}</text>`
+			includeText(ext, midX, action.label, "middle", 7)
+			includePointX(ext, actionStartX)
+			includePointX(ext, actionEndX)
+			// Track the arc control point (peak of the curve)
+			includePointX(ext, midX)
 
 			currentValue += action.delta
 		}
 
 		// Final value marker
 		const finalX = toSvgX(currentValue)
+		includePointX(ext, finalX)
 		svg += `<circle cx="${finalX}" cy="${yPos}" r="3" fill="#FF6B35" stroke="#CC5429" stroke-width="1"/>`
 	} else {
 		// Vertical orientation
@@ -168,6 +182,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 		const toSvgY = (val: number) => height - padding - (val - min) * scale
 
 		// Axis and Ticks
+		includePointX(ext, xPos)
 		svg += `<line x1="${xPos}" y1="${padding}" x2="${xPos}" y2="${height - padding}" stroke="#333333" stroke-width="2"/>`
 		for (let t = min; t <= max; t += tickInterval) {
 			const y = toSvgY(t)
@@ -175,14 +190,18 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			// Draw default numeric labels if no custom label exists for this position
 			const hasCustomLabel = customLabels.some((label) => label.value === t)
 			if (!hasCustomLabel) {
-				svg += `<text x="${xPos - 10}" y="${y + 4}" fill="#333333" text-anchor="end" font-size="10">${t}</text>`
+				const labelX = xPos - 10
+				svg += `<text x="${labelX}" y="${y + 4}" fill="#333333" text-anchor="end" font-size="10">${t}</text>`
+				includeText(ext, labelX, String(t), "end", 7)
 			}
 		}
 
 		// Custom Labels
 		for (const label of customLabels) {
 			const y = toSvgY(label.value)
-			svg += `<text x="${xPos - 10}" y="${y + 4}" fill="#333333" text-anchor="end" font-weight="bold">${label.text}</text>`
+			const labelX = xPos - 10
+			svg += `<text x="${labelX}" y="${y + 4}" fill="#333333" text-anchor="end" font-weight="bold">${label.text}</text>`
+			includeText(ext, labelX, label.text, "end", 7)
 		}
 
 		// Start value marker
@@ -209,7 +228,11 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			svg += `<path d="M ${arrowX} ${actionStartY} Q ${controlX} ${midY} ${arrowX} ${actionEndY}" fill="none" stroke="#007ACC" stroke-width="1.5" marker-end="url(#action-arrow)"/>`
 
 			// Arrow label (rotated for vertical layout)
-			svg += `<text x="${controlX + 5}" y="${midY}" fill="#007ACC" text-anchor="middle" font-size="10" font-weight="bold" transform="rotate(-90, ${controlX + 5}, ${midY})">${action.label}</text>`
+			const labelX = controlX + 5
+			svg += `<text x="${labelX}" y="${midY}" fill="#007ACC" text-anchor="middle" font-size="10" font-weight="bold" transform="rotate(-90, ${labelX}, ${midY})">${action.label}</text>`
+			includeText(ext, labelX, action.label, "middle", 7)
+			includePointX(ext, arrowX)
+			includePointX(ext, controlX)
 
 			currentValue += action.delta
 		}
@@ -219,6 +242,9 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 		svg += `<circle cx="${xPos}" cy="${finalY}" r="3" fill="#FF6B35" stroke="#CC5429" stroke-width="1"/>`
 	}
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

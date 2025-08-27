@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includePointX, includeText, initExtents, type Extents } from "@/lib/widgets/utils/layout"
 
 function createRectSchema() {
 	return z
@@ -103,14 +104,14 @@ export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSlider
 	// Calculate scale to fit the largest shape within the allocated areas
 	const scale = Math.min(shapeWidth / maxWidth, rowHeight / maxHeight)
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
-	svg += "<style>.label { font-size: 14px; font-weight: bold; } .sub-label { font-size: 12px; fill: #555; }</style>"
+	const ext = initExtents(width)
+	let svgContent = "<style>.label { font-size: 14px; font-weight: bold; } .sub-label { font-size: 12px; fill: #555; }</style>"
 
 	/**
 	 * Helper function to draw a single row (e.g., for Shape A) containing
 	 * the "Before" shape, an arrow, and the "After" shape.
 	 */
-	const drawShapeGroup = (shape: ScaleCopiesSliderProps["shapeA"], yOffset: number): string => {
+	const drawShapeGroup = (shape: ScaleCopiesSliderProps["shapeA"], yOffset: number, ext: Extents): string => {
 		let groupSvg = ""
 
 		// --- Before Shape ---
@@ -118,8 +119,12 @@ export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSlider
 		const beforeH = shape.before.height * scale
 		const beforeX = padding.left + (shapeWidth - beforeW) / 2 // Center within its column
 		const beforeY = yOffset + (rowHeight - beforeH) / 2 // Center within its row
+		includePointX(ext, beforeX)
+		includePointX(ext, beforeX + beforeW)
 		groupSvg += `<rect x="${beforeX}" y="${beforeY}" width="${beforeW}" height="${beforeH}" fill="${shape.color}" stroke="#333" stroke-width="1"/>`
-		groupSvg += `<text x="${padding.left + shapeWidth / 2}" y="${yOffset + rowHeight + 15}" text-anchor="middle" class="sub-label">Before</text>`
+		const beforeLabelX = padding.left + shapeWidth / 2
+		includeText(ext, beforeLabelX, "Before", "middle")
+		groupSvg += `<text x="${beforeLabelX}" y="${yOffset + rowHeight + 15}" text-anchor="middle" class="sub-label">Before</text>`
 
 		// --- Arrow ---
 		const arrowXStart = padding.left + shapeWidth + 5
@@ -133,24 +138,34 @@ export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSlider
 		const afterH = shape.after.height * scale
 		const afterX = padding.left + shapeWidth + colGap + (shapeWidth - afterW) / 2 // Center
 		const afterY = yOffset + (rowHeight - afterH) / 2 // Center
+		includePointX(ext, afterX)
+		includePointX(ext, afterX + afterW)
 		groupSvg += `<rect x="${afterX}" y="${afterY}" width="${afterW}" height="${afterH}" fill="${shape.color}" stroke="#333" stroke-width="1"/>`
-		groupSvg += `<text x="${padding.left + shapeWidth + colGap + shapeWidth / 2}" y="${yOffset + rowHeight + 15}" text-anchor="middle" class="sub-label">After</text>`
+		const afterLabelX = padding.left + shapeWidth + colGap + shapeWidth / 2
+		includeText(ext, afterLabelX, "After", "middle")
+		groupSvg += `<text x="${afterLabelX}" y="${yOffset + rowHeight + 15}" text-anchor="middle" class="sub-label">After</text>`
 
 		// --- Main Row Label (only if label exists) ---
 		if (shape.label !== null) {
-			groupSvg += `<text x="${width / 2}" y="${yOffset - 8}" text-anchor="middle" class="label">${shape.label}</text>`
+			const labelX = width / 2
+			includeText(ext, labelX, shape.label, "middle")
+			groupSvg += `<text x="${labelX}" y="${yOffset - 8}" text-anchor="middle" class="label">${shape.label}</text>`
 		}
 
 		return groupSvg
 	}
 
 	// Draw Shape A group in the top half
-	svg += drawShapeGroup(shapeA, padding.top)
+	svgContent += drawShapeGroup(shapeA, padding.top, ext)
 
 	// Draw Shape B group in the bottom half
 	const shapeB_Y_Offset = padding.top + rowHeight + rowGap
-	svg += drawShapeGroup(shapeB, shapeB_Y_Offset)
+	svgContent += drawShapeGroup(shapeB, shapeB_Y_Offset, ext)
 
+	// Final assembly with dynamic width
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding.left)
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	svg += svgContent
 	svg += "</svg>"
 	return svg
 }

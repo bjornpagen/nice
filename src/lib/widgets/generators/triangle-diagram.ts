@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const Point = z
 	.object({
@@ -191,6 +192,9 @@ export type TriangleDiagramProps = z.infer<typeof TriangleDiagramPropsSchema>
 export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramPropsSchema> = (props) => {
 	const { width, height, points, sides, angles, internalLines, shadedRegions } = props
 
+	// Initialize extents tracking
+	const ext = initExtents(width)
+
 	if (points.length < 3) {
 		logger.error("triangle diagram insufficient points", { pointCount: points.length })
 		throw errors.new("triangle requires at least 3 points")
@@ -223,11 +227,22 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 			.map((id) => pointMap.get(id))
 			.filter((p): p is NonNullable<typeof p> => p !== undefined)
 		if (regionPoints.length < 3) continue
+		
+		// Track shaded region vertices
+		regionPoints.forEach((p) => {
+			includePointX(ext, p.x)
+		})
+		
 		const pointsStr = regionPoints.map((p) => `${p.x},${p.y}`).join(" ")
 		svg += `<polygon points="${pointsStr}" fill="${region.color}" stroke="none"/>`
 	}
 
 	// Layer 2: Main Triangle Outline (assumes first 3 points form the main triangle)
+	// Track main triangle vertices
+	points.slice(0, 3).forEach((p) => {
+		includePointX(ext, p.x)
+	})
+	
 	const mainTrianglePoints = points
 		.slice(0, 3)
 		.map((p) => `${p.x},${p.y}`)
@@ -239,6 +254,11 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 		const from = pointMap.get(line.from)
 		const to = pointMap.get(line.to)
 		if (!from || !to) continue
+		
+		// Track internal line endpoints
+		includePointX(ext, from.x)
+		includePointX(ext, to.x)
+		
 		let dash = ""
 		if (line.style === "dashed") {
 			dash = 'stroke-dasharray="4 3"'
@@ -321,12 +341,23 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 				const m2y = vertex.y + u2y * markerSize
 				const m3x = vertex.x + (u1x + u2x) * markerSize
 				const m3y = vertex.y + (u1y + u2y) * markerSize
+				
+				// Track right angle marker vertices
+				includePointX(ext, m1x)
+				includePointX(ext, m2x)
+				includePointX(ext, m3x)
+				
 				svg += `<path d="M ${m1x} ${m1y} L ${m3x} ${m3y} L ${m2x} ${m2y}" fill="none" stroke="black" stroke-width="2"/>`
 			} else {
 				const arcStartX = vertex.x + scaledArcRadius * Math.cos(startAngle)
 				const arcStartY = vertex.y + scaledArcRadius * Math.sin(startAngle)
 				const arcEndX = vertex.x + scaledArcRadius * Math.cos(endAngle)
 				const arcEndY = vertex.y + scaledArcRadius * Math.sin(endAngle)
+				
+				// Track angle arc endpoints
+				includePointX(ext, arcStartX)
+				includePointX(ext, arcEndX)
+				
 				let angleDiff = endAngle - startAngle
 				if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI
 				if (angleDiff < -Math.PI) angleDiff += 2 * Math.PI
@@ -377,6 +408,10 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 
 			const labelX = vertex.x + labelRadius * Math.cos(labelAngle)
 			const labelY = vertex.y + labelRadius * Math.sin(labelAngle)
+			
+			// Track angle label
+			includeText(ext, labelX, angle.label, "middle", 14)
+			
 			svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle">${angle.label}</text>`
 		}
 	}
@@ -421,7 +456,13 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 				perpY = -perpY
 			}
 
-			svg += `<text x="${midX + perpX * labelOffset}" y="${midY + perpY * labelOffset}" fill="black" text-anchor="middle" dominant-baseline="middle">${side.label}</text>`
+			const labelX = midX + perpX * labelOffset
+			const labelY = midY + perpY * labelOffset
+			
+			// Track side label
+			includeText(ext, labelX, side.label, "middle", 14)
+			
+			svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle">${side.label}</text>`
 		}
 		if (side.tickMarks > 0) {
 			const tickSize = 6
@@ -434,6 +475,11 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 				const t1y = midY + (dy / len) * tickOffset - ny * (tickSize / 2)
 				const t2x = midX + (dx / len) * tickOffset + nx * (tickSize / 2)
 				const t2y = midY + (dy / len) * tickOffset + ny * (tickSize / 2)
+				
+				// Track tick mark endpoints
+				includePointX(ext, t1x)
+				includePointX(ext, t2x)
+				
 				svg += `<line x1="${t1x}" y1="${t1y}" x2="${t2x}" y2="${t2y}" stroke="black" stroke-width="2"/>`
 			}
 		}
@@ -441,14 +487,31 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 
 	// Layer 6: Points and their labels (drawn last to be on top)
 	for (const point of points) {
+		// Track point position
+		includePointX(ext, point.x)
+		
 		svg += `<circle cx="${point.x}" cy="${point.y}" r="4" fill="black"/>`
 		if (point.label) {
 			const textX = point.x + 8
 			const textY = point.y - 8
+			
+			// Track point label
+			includeText(ext, textX, point.label, "start", 16)
+			
 			svg += `<text x="${textX}" y="${textY}" fill="black" font-size="16" font-weight="bold">${point.label}</text>`
 		}
 	}
 
 	svg += "</svg>"
+	
+	// Apply dynamic width calculation
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
+	
+	// Update SVG with dynamic width and viewBox
+	svg = svg.replace(
+		`width="${width}" height="${height}" viewBox="${minX} ${minY} ${maxX - minX} ${maxY - minY}"`,
+		`width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} ${minY} ${dynamicWidth} ${maxY - minY}"`
+	)
+	
 	return svg
 }

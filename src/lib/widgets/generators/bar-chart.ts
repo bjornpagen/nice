@@ -9,6 +9,7 @@ import {
 	calculateXAxisLayout,
 	calculateYAxisLayout,
 	computeDynamicWidth,
+	includePointX,
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
@@ -177,11 +178,16 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 		const y = height - margin.bottom - barHeight
 		const innerBarWidth = barWidth * (1 - barPadding)
 		const xOffset = (barWidth - innerBarWidth) / 2
+		const barX = x + xOffset // New variable for clarity
+
+		// Track the horizontal extent of the bar
+		includePointX(ext, barX)
+		includePointX(ext, barX + innerBarWidth)
 
 		if (d.state === "normal") {
-			svg += `<rect x="${x + xOffset}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="${barColor}"/>`
+			svg += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="${barColor}"/>`
 		} else {
-			svg += `<rect x="${x + xOffset}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="none" stroke="${barColor}" stroke-width="2" stroke-dasharray="4"/>`
+			svg += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="none" stroke="${barColor}" stroke-width="2" stroke-dasharray="4"/>`
 		}
 		
 			if (d.label !== "" && selectedXLabels.has(i)) {

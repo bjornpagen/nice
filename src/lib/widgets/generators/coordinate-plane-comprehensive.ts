@@ -15,7 +15,7 @@ import {
 	renderPolylines
 } from "@/lib/widgets/generators/coordinate-plane-base"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { wrapInClippedGroup } from "@/lib/widgets/utils/layout"
+import { computeDynamicWidth, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 
 export const CoordinatePlaneComprehensivePropsSchema = z
 	.object({
@@ -97,36 +97,34 @@ export const generateCoordinatePlaneComprehensive: WidgetGenerator<typeof Coordi
 ) => {
 	const { width, height, xAxis, yAxis, showQuadrantLabels, points, lines, polygons, distances, polylines } = props
 
+	// 1. Call the base generator and get the body content and extents object
 	const base = generateCoordinatePlaneBase(width, height, xAxis, yAxis, showQuadrantLabels, points)
 	let content = ""
 
-	// Render in proper z-order (background to foreground):
-
-	// 1. Polygons (background shapes)
+	// 2. Render elements in order, passing the extents object to each helper
 	if (polygons.length > 0) {
 		content += renderPolygons(polygons, base.pointMap, base.toSvgX, base.toSvgY, base.ext)
 	}
-
-	// 2. Distance visualizations (middle layer)
 	if (distances.length > 0) {
 		content += renderDistances(distances, base.pointMap, base.toSvgX, base.toSvgY, base.ext)
 	}
-
-	// 3. Lines (middle-front layer) - clip to prevent extending beyond chart bounds
 	if (lines.length > 0) {
 		const lineContent = renderLines(lines, xAxis, yAxis, base.toSvgX, base.toSvgY, base.ext)
 		content += wrapInClippedGroup("chartArea", lineContent)
 	}
-
-	// 4. Polylines/function plots (front layer)
 	if (polylines.length > 0) {
 		content += renderPolylines(polylines, base.toSvgX, base.toSvgY, base.ext)
 	}
-
-	// 5. Points (topmost layer - always visible)
 	if (points.length > 0) {
 		content += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
 	}
 
-	return `${base.svg}${content}</svg>`
+	// 3. Compute final width and assemble the complete SVG
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, 10)
+	let finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	finalSvg += base.svgBody
+	finalSvg += content
+	finalSvg += `</svg>`
+
+	return finalSvg
 }

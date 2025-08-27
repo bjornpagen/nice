@@ -1,5 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const Cylinder = z
 	.object({
@@ -103,6 +104,9 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 
 	const padding = 30 // Increased padding for labels and dimension lines
 	const labelSpace = labels.length > 0 ? 40 : 0 // Extra space for external labels
+	
+	const ext = initExtents(width)
+	
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
 	svg += `<defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black" /></marker></defs>`
 
@@ -118,6 +122,11 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		const cx = width / 2
 		const topY = (height - h) / 2
 		const bottomY = topY + h
+
+		// --- ADDED ---
+		includePointX(ext, cx - r)
+		includePointX(ext, cx + r)
+		// --- END ADDED ---
 
 		// Side lines
 		svg += `<line x1="${cx - r}" y1="${topY}" x2="${cx - r}" y2="${bottomY}" stroke="black" stroke-width="2"/>`
@@ -136,12 +145,14 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 				svg += `<line x1="${cx}" y1="${bottomY}" x2="${cx + r}" y2="${bottomY}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
 				const textY = Math.min(bottomY + 18, height - 10) // Ensure text stays within bounds
 				svg += `<text x="${cx + r / 2}" y="${textY}" fill="black" text-anchor="middle">${l.text}</text>`
+				includeText(ext, cx + r / 2, String(l.text), "middle", 7)
 			}
 			if (l.target === "height") {
 				// External line with arrows for height
 				const lineX = Math.min(cx + r + 15, width - 50) // Ensure it stays within bounds
 				svg += `<line x1="${lineX}" y1="${topY}" x2="${lineX}" y2="${bottomY}" stroke="black" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
 				svg += `<text x="${lineX + 10}" y="${height / 2}" fill="black" dominant-baseline="middle">${l.text}</text>`
+				includeText(ext, lineX + 10, String(l.text), "start", 7)
 			}
 		}
 	} else if (shape.type === "cone") {
@@ -153,6 +164,11 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		const cx = width / 2
 		const apexY = (height - h) / 2
 		const baseY = apexY + h
+
+		// --- ADDED ---
+		includePointX(ext, cx - r)
+		includePointX(ext, cx + r)
+		// --- END ADDED ---
 
 		// Generator lines
 		svg += `<line x1="${cx - r}" y1="${baseY}" x2="${cx}" y2="${apexY}" stroke="black" stroke-width="2"/>`
@@ -168,6 +184,7 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 				svg += `<line x1="${cx}" y1="${baseY}" x2="${cx + r}" y2="${baseY}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
 				const textY = Math.min(baseY + 18, height - 10) // Ensure text stays within bounds
 				svg += `<text x="${cx + r / 2}" y="${textY}" fill="black" text-anchor="middle">${l.text}</text>`
+				includeText(ext, cx + r / 2, String(l.text), "middle", 7)
 			}
 			if (l.target === "height") {
 				// Dashed line from apex to center for height
@@ -176,6 +193,7 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 				const indicatorSize = Math.min(10, r * 0.2)
 				svg += `<path d="M ${cx + indicatorSize} ${baseY} L ${cx + indicatorSize} ${baseY - indicatorSize} L ${cx} ${baseY - indicatorSize}" fill="none" stroke="black" stroke-width="1"/>`
 				svg += `<text x="${cx - 10}" y="${height / 2}" fill="black" text-anchor="end" dominant-baseline="middle">${l.text}</text>`
+				includeText(ext, cx - 10, String(l.text), "end", 7)
 			}
 		}
 	} else if (shape.type === "sphere") {
@@ -185,6 +203,11 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 
 		const cx = width / 2
 		const cy = height / 2
+
+		// --- ADDED ---
+		includePointX(ext, cx - r)
+		includePointX(ext, cx + r)
+		// --- END ADDED ---
 
 		// Main sphere outline
 		svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="rgba(220, 220, 220, 0.4)" stroke="black" stroke-width="2"/>`
@@ -198,10 +221,14 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 				// Dashed line from center to circumference for radius
 				svg += `<line x1="${cx}" y1="${cy}" x2="${cx + r}" y2="${cy}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
 				svg += `<text x="${cx + r / 2}" y="${cy - 10}" fill="black" text-anchor="middle">${l.text}</text>`
+				includeText(ext, cx + r / 2, String(l.text), "middle", 7)
 			}
 		}
 	}
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

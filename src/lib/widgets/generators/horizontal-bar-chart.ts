@@ -7,6 +7,7 @@ import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateXAxisLayout,
 	computeDynamicWidth,
+	includePointX,
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
@@ -123,6 +124,10 @@ export const generateHorizontalBarChart: WidgetGenerator<typeof HorizontalBarCha
 		const innerBarHeight = barHeight * (1 - barPadding)
 		const yOffset = (barHeight - innerBarHeight) / 2
 		const y = i * barHeight + yOffset
+
+		// Track the bar from its start (0) to its end (barLength) in chart coordinates
+		includePointX(ext, margin.left)
+		includePointX(ext, margin.left + barLength)
 
 		// Bar
 		svg += `<rect x="0" y="${y}" width="${barLength}" height="${innerBarHeight}" fill="${d.color}"/>`

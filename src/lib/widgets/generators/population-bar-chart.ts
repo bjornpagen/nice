@@ -9,6 +9,7 @@ import {
 	calculateXAxisLayout,
 	calculateYAxisLayout,
 	computeDynamicWidth,
+	includePointX,
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
@@ -145,6 +146,7 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 		svg += `<line x1="0" y1="${y}" x2="${chartWidth}" y2="${y}" stroke="${gridColor}" stroke-width="1"/>`
 		// Tick label
 		svg += `<text x="-10" y="${y + 5}" class="tick-label" text-anchor="end">${t}</text>`
+		includeText(ext, margin.left - 10, String(t), "end", 7) // MODIFICATION: Add this line
 	}
 
 	// Compute bar centers and text-aware label selection for auto thinning
@@ -159,9 +161,14 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 		const y = chartHeight - barHeight
 		const innerBarWidth = barWidth * (1 - barPadding)
 		const xOffset = (barWidth - innerBarWidth) / 2
+		const barX = x + xOffset
+
+		// Track the horizontal extent of the bar
+		includePointX(ext, margin.left + barX)
+		includePointX(ext, margin.left + barX + innerBarWidth)
 
 		// Bar
-		svg += `<rect x="${x + xOffset}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="${barColor}"/>`
+		svg += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="${barColor}"/>`
 
 		const labelX = x + barWidth / 2
 
@@ -174,6 +181,8 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 		const shouldShowLabel = useAutoThinning ? selectedTextAware.has(i) : visibleLabelSet.has(labelText)
 		if (shouldShowLabel) {
 			svg += `<text x="${labelX}" y="${chartHeight + 20}" class="tick-label" text-anchor="middle">${abbreviateMonth(labelText)}</text>`
+			// Track the x-axis tick label
+			includeText(ext, margin.left + labelX, abbreviateMonth(labelText), "middle", 7)
 		}
 	})
 

@@ -1,7 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { calculateYAxisLayout, computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { calculateYAxisLayout, computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
 
 // Factory helpers to avoid schema reuse and $ref generation
@@ -119,12 +119,20 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 
 	// Before Curve
 	if (beforeSegment.points.length > 0) {
+		// Track the x-extents of all points in the before segment
+		beforeSegment.points.forEach((p) => {
+			includePointX(ext, toSvgX(p.x))
+		})
 		const beforePointsStr = beforeSegment.points.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
 		svg += `<polyline points="${beforePointsStr}" fill="none" stroke="${beforeSegment.color}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`
 	}
 
 	// After Curve
 	if (afterSegment.points.length > 0) {
+		// Track the x-extents of all points in the after segment
+		afterSegment.points.forEach((p) => {
+			includePointX(ext, toSvgX(p.x))
+		})
 		const afterPointsStr = afterSegment.points.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
 		svg += `<polyline points="${afterPointsStr}" fill="none" stroke="${afterSegment.color}" stroke-width="3" stroke-dasharray="8 6" stroke-linejoin="round" stroke-linecap="round"/>`
 	}

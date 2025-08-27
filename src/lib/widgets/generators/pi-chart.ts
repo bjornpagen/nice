@@ -2,6 +2,12 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
+import {
+	computeDynamicWidth,
+	includePointX,
+	includeText,
+	initExtents
+} from "@/lib/widgets/utils/layout"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 // Defines a single slice within a pie chart.
@@ -83,11 +89,8 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 	const chartAreaWidth = width
 	const chartAreaHeight = (height - (numCharts - 1) * spacing) / numCharts
 
-	// Track global extents of drawn content to expand viewBox/width as needed
-	let minX = 0
-	let maxX = width
-	const avgCharWidth = 7 // rough monospace-ish estimate at 14px font
-	const padding = 10
+	// Initialize extents tracker
+	const ext = initExtents(width)
 
 	for (let index = 0; index < charts.length; index++) {
 		const chart = charts[index]
@@ -105,6 +108,8 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 		// Draw title (width-aware wrapping)
 		const maxTextWidth = chartAreaWidth - 40
 		content += renderWrappedText(abbreviateMonth(chart.title), cx, titleY, "title", "1.1em", maxTextWidth, 8)
+		// Track title extents
+		includeText(ext, cx, abbreviateMonth(chart.title), "middle", 8)
 
 		const totalValue = chart.slices.reduce((sum, slice) => sum + slice.value, 0)
 		let startAngle = -90 // Start from the top
@@ -122,6 +127,10 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 		}
 		const labelsRight: LabelInfo[] = []
 		const labelsLeft: LabelInfo[] = []
+
+		// Track the pie circle itself
+		includePointX(ext, cx - radius)
+		includePointX(ext, cx + radius)
 
 		for (const slice of chart.slices) {
 			const percentage = (slice.value / totalValue) * 100
@@ -220,25 +229,17 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 			content += `<polyline class="leader" points="${item.startX},${item.startY} ${elbowX},${elbowY} ${endX},${endY}" />`
 			content += `<text x="${textX}" y="${textY}" text-anchor="${textAnchor}" class="label-text">${item.text}</text>`
 
-			// Update global x extents using rough text width estimate
-			const approxTextWidth = item.text.length * avgCharWidth
-			if (textAnchor === "start") {
-				minX = Math.min(minX, textX)
-				maxX = Math.max(maxX, textX + approxTextWidth)
-			} else {
-				minX = Math.min(minX, textX - approxTextWidth)
-				maxX = Math.max(maxX, textX)
-			}
+			// Track label extents
+			includeText(ext, textX, item.text, textAnchor, 7)
 		}
 
 		for (const item of placedRight) drawLabel(item)
 		for (const item of placedLeft) drawLabel(item)
 	}
 
-	// Compute dynamic width and viewBox to include any overflow regions; ignore provided width if needed
-	const vbMinX = Math.min(0, Math.floor(minX - padding))
-	const vbMaxX = Math.max(width, Math.ceil(maxX + padding))
-	const dynamicWidth = vbMaxX - vbMinX
+	// Compute dynamic width and viewBox using shared utility
+	const padding = 10
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
 
 	const svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">${styleTag}${content}</svg>`
 	return svg

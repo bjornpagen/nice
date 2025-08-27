@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 function createShapeSchema() {
 	const shape = z
@@ -213,6 +214,9 @@ export type TransformationDiagramProps = z.infer<typeof TransformationDiagramPro
 export const generateTransformationDiagram: WidgetGenerator<typeof TransformationDiagramPropsSchema> = (props) => {
 	const { width, height, preImage, transformation, additionalPoints } = props
 
+	// Initialize extents tracking
+	const ext = initExtents(width)
+
 	// Validation now handled by schema; preImage already guaranteed to have >=3 vertices and matching labels
 
 	// 1. Use a fixed, predictable coordinate system
@@ -347,6 +351,11 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	const toSvgY = (y: number) => svgCenterY - (y - dataCenterY) * scale // Flip Y axis
 
 	const drawPolygon = (shape: TransformationDiagramProps["preImage"], isImage: boolean) => {
+		// Track polygon vertices
+		shape.vertices.forEach((p) => {
+			includePointX(ext, toSvgX(p.x))
+		})
+		
 		const pointsStr = shape.vertices.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
 		const strokeWidth = isImage ? 2.5 : 2
 
@@ -357,6 +366,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			const centroid = calculateCentroid(shape.vertices)
 			const svgCentroidX = toSvgX(centroid.x)
 			const svgCentroidY = toSvgY(centroid.y)
+			includeText(ext, svgCentroidX, shape.label, "middle", 14)
 			polySvg += `<text x="${svgCentroidX}" y="${svgCentroidY}" text-anchor="middle" dominant-baseline="middle" font-size="14px" font-weight="600" fill="#333">${shape.label}</text>`
 		}
 
@@ -367,6 +377,10 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		line: { from: { x: number; y: number }; to: { x: number; y: number }; style: string; color: string },
 		hasArrow: boolean
 	) => {
+		// Track line endpoints
+		includePointX(ext, toSvgX(line.from.x))
+		includePointX(ext, toSvgX(line.to.x))
+		
 		let strokeDash = ""
 		if (line.style === "dashed") {
 			strokeDash = 'stroke-dasharray="8 6"'
@@ -389,6 +403,10 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		const endX = toSvgX(center.x + arcRadius * Math.cos(endAngle))
 		const endY = toSvgY(center.y + arcRadius * Math.sin(endAngle))
 
+		// Track arc endpoints
+		includePointX(ext, startX)
+		includePointX(ext, endX)
+		
 		const largeArcFlag = Math.abs(angle) > 180 ? 1 : 0
 		const sweepFlag = angle > 0 ? 0 : 1 // Flip sweep direction for Y-axis flip in SVG coordinates
 
@@ -429,6 +447,9 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			const labelX = svgX + offsetX
 			const labelY = svgY + offsetY
 
+			// Track vertex label
+			includeText(ext, labelX, label, "middle", 13)
+			
 			labelsSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="13px" font-weight="600" fill="#333">${label}</text>`
 		}
 
@@ -480,6 +501,10 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		const endX = svgVertexX + svgRadius * Math.cos(endAngle)
 		const endY = svgVertexY + svgRadius * Math.sin(-endAngle) // Flip Y
 
+		// Track angle mark arc
+		includePointX(ext, startX)
+		includePointX(ext, endX)
+		
 		const largeArcFlag = Math.abs(endAngle - startAngle) > Math.PI ? 1 : 0
 		const sweepFlag = 0 // Use 0 for correct direction in flipped Y coordinates
 
@@ -493,6 +518,9 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			const labelY = svgVertexY + svgLabelDistance * Math.sin(-midAngle) // Flip Y
 			const fontSize = Math.max(11, 13)
 
+			// Track angle label
+			includeText(ext, labelX, mark.label, "middle", fontSize)
+			
 			markSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}px" fill="#333">${mark.label}</text>`
 		}
 
@@ -505,6 +533,9 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		const svgX = toSvgX(point.x)
 		const svgY = toSvgY(point.y)
 
+		// Track additional point
+		includePointX(ext, svgX)
+		
 		if (point.style === "circle") {
 			pointSvg += `<circle cx="${svgX}" cy="${svgY}" r="${radius}" fill="none" stroke="#333" stroke-width="2"/>`
 		} else {
@@ -515,6 +546,8 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		// Label offset to avoid overlapping with the point
 		if (point.label) {
 			const labelOffset = 12
+			// Track additional point label (using y - labelOffset for positioning)
+			includeText(ext, svgX, point.label, "middle", 13)
 			pointSvg += `<text x="${svgX}" y="${svgY - labelOffset}" text-anchor="middle" dominant-baseline="bottom" font-size="13px" font-weight="600" fill="#333">${point.label}</text>`
 		}
 
@@ -602,6 +635,9 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			// Always orient text horizontally (angle = 0) so it faces down/right
 			const angle = 0
 
+			// Track side length label
+			includeText(ext, labelX, sideLength.value, "middle", fontSize)
+			
 			lengthsSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}px" fill="#333" transform="rotate(${angle} ${labelX} ${labelY})">${sideLength.value}</text>`
 		}
 
@@ -691,21 +727,42 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 						const imageVertexRadius = 2.5
 
 						// Pre-image vertices: smaller, semi-transparent
-						svg += `<circle cx="${toSvgX(preVertex.x)}" cy="${toSvgY(preVertex.y)}" r="${preVertexRadius}" fill="#1fab54" opacity="0.6" stroke="#fff" stroke-width="0.5"/>`
+						const preSvgX = toSvgX(preVertex.x)
+						const preSvgY = toSvgY(preVertex.y)
+						const imgSvgX = toSvgX(imageVertex.x)
+						const imgSvgY = toSvgY(imageVertex.y)
+						
+						// Track vertex indicator positions
+						includePointX(ext, preSvgX)
+						includePointX(ext, imgSvgX)
+						
+						svg += `<circle cx="${preSvgX}" cy="${preSvgY}" r="${preVertexRadius}" fill="#1fab54" opacity="0.6" stroke="#fff" stroke-width="0.5"/>`
 						// Image vertices: larger, more prominent
-						svg += `<circle cx="${toSvgX(imageVertex.x)}" cy="${toSvgY(imageVertex.y)}" r="${imageVertexRadius}" fill="#1fab54" stroke="#fff" stroke-width="0.5"/>`
+						svg += `<circle cx="${imgSvgX}" cy="${imgSvgY}" r="${imageVertexRadius}" fill="#1fab54" stroke="#fff" stroke-width="0.5"/>`
 					}
 				}
 			}
 
 			// Draw center point on top of everything
-			svg += `<circle cx="${toSvgX(center.x)}" cy="${toSvgY(center.y)}" r="${centerRadius}" fill="#7854ab" stroke="#fff" stroke-width="1.5"/>`
+			const centerSvgX = toSvgX(center.x)
+			const centerSvgY = toSvgY(center.y)
+			
+			// Track center point
+			includePointX(ext, centerSvgX)
+			
+			svg += `<circle cx="${centerSvgX}" cy="${centerSvgY}" r="${centerRadius}" fill="#7854ab" stroke="#fff" stroke-width="1.5"/>`
 			break
 		}
 		case "rotation": {
 			const center = transformation.centerOfRotation
 			const centerRadius = 4
-			svg += `<circle cx="${toSvgX(center.x)}" cy="${toSvgY(center.y)}" r="${centerRadius}" fill="#7854ab" stroke="#fff" stroke-width="1"/>`
+			const centerSvgX = toSvgX(center.x)
+			const centerSvgY = toSvgY(center.y)
+			
+			// Track rotation center
+			includePointX(ext, centerSvgX)
+			
+			svg += `<circle cx="${centerSvgX}" cy="${centerSvgY}" r="${centerRadius}" fill="#7854ab" stroke="#fff" stroke-width="1"/>`
 
 			// Draw rotation arc to show angle and direction
 			if (preImage.vertices.length > 0) {
@@ -736,8 +793,17 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 
 						// Add small circles at vertices
 						const vertexRadius = 2
-						svg += `<circle cx="${toSvgX(preVertex.x)}" cy="${toSvgY(preVertex.y)}" r="${vertexRadius}" fill="#888" opacity="0.6"/>`
-						svg += `<circle cx="${toSvgX(imageVertex.x)}" cy="${toSvgY(imageVertex.y)}" r="${vertexRadius}" fill="#888" opacity="0.6"/>`
+						const preSvgX = toSvgX(preVertex.x)
+						const preSvgY = toSvgY(preVertex.y)
+						const imgSvgX = toSvgX(imageVertex.x)
+						const imgSvgY = toSvgY(imageVertex.y)
+						
+						// Track reflection vertex indicators
+						includePointX(ext, preSvgX)
+						includePointX(ext, imgSvgX)
+						
+						svg += `<circle cx="${preSvgX}" cy="${preSvgY}" r="${vertexRadius}" fill="#888" opacity="0.6"/>`
+						svg += `<circle cx="${imgSvgX}" cy="${imgSvgY}" r="${vertexRadius}" fill="#888" opacity="0.6"/>`
 					}
 				}
 			}
@@ -751,5 +817,15 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	}
 
 	svg += "</svg>"
+	
+	// Apply dynamic width calculation
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
+	
+	// Update SVG with dynamic width and viewBox
+	svg = svg.replace(
+		`width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"`,
+		`width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`
+	)
+	
 	return svg
 }

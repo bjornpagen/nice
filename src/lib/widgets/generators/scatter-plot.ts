@@ -12,6 +12,7 @@ import {
 	calculateYAxisLayout,
 	computeDynamicWidth,
 	createChartClipPath,
+	includePointX,
 	includeText,
 	initExtents,
 	wrapInClippedGroup
@@ -462,7 +463,14 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 					// Linear lines span exact chart range - no clipping needed
 					const y1 = coeff.slope * xAxis.min + coeff.yIntercept
 					const y2 = coeff.slope * xAxis.max + coeff.yIntercept
-					linearLineContent += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(y1)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(y2)}"${styleAttrs(
+					const x1Svg = toSvgX(xAxis.min)
+					const x2Svg = toSvgX(xAxis.max)
+					
+					// Track the regression line endpoints
+					includePointX(ext, x1Svg)
+					includePointX(ext, x2Svg)
+					
+					linearLineContent += `<line x1="${x1Svg}" y1="${toSvgY(y1)}" x2="${x2Svg}" y2="${toSvgY(y2)}"${styleAttrs(
 						line.style
 					)} />`
 				}
@@ -479,6 +487,9 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 						const px = toSvgX(xVal)
 						const py = toSvgY(yVal)
 						path += `${i === 0 ? "M" : "L"} ${px} ${py} `
+						
+						// Track the x-extent of each point on the curve
+						includePointX(ext, px)
 					}
 					curveLineContent += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
 				}
@@ -495,6 +506,9 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 						const px = toSvgX(xVal)
 						const py = toSvgY(yVal)
 						path += `${i === 0 ? "M" : "L"} ${px} ${py} `
+						
+						// Track the x-extent of each point on the curve
+						includePointX(ext, px)
 					}
 					curveLineContent += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
 				}
@@ -503,7 +517,9 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 			const { a, b } = line
 			if (a.x === b.x) {
 				// vertical line across full y-domain - no clipping needed
-				linearLineContent += `<line x1="${toSvgX(a.x)}" y1="${toSvgY(yAxis.min)}" x2="${toSvgX(a.x)}" y2="${toSvgY(yAxis.max)}"${styleAttrs(
+				const xSvg = toSvgX(a.x)
+				includePointX(ext, xSvg)
+				linearLineContent += `<line x1="${xSvg}" y1="${toSvgY(yAxis.min)}" x2="${xSvg}" y2="${toSvgY(yAxis.max)}"${styleAttrs(
 					line.style
 				)} />`
 			} else {
@@ -512,7 +528,14 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 				const intercept = a.y - slope * a.x
 				const yAtMin = slope * xAxis.min + intercept
 				const yAtMax = slope * xAxis.max + intercept
-				curveLineContent += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(yAtMin)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(yAtMax)}"${styleAttrs(
+				const x1Svg = toSvgX(xAxis.min)
+				const x2Svg = toSvgX(xAxis.max)
+				
+				// Track the line endpoints
+				includePointX(ext, x1Svg)
+				includePointX(ext, x2Svg)
+				
+				curveLineContent += `<line x1="${x1Svg}" y1="${toSvgY(yAtMin)}" x2="${x2Svg}" y2="${toSvgY(yAtMax)}"${styleAttrs(
 					line.style
 				)} />`
 			}
@@ -554,8 +577,14 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	for (const p of points) {
 		const px = toSvgX(p.x)
 		const py = toSvgY(p.y)
+		
+		// Track the x-extent of the point
+		includePointX(ext, px)
+		
 		svg += `<circle cx="${px}" cy="${py}" r="3.5" fill="black" fill-opacity="0.7"/>`
 		svg += `<text x="${px + 5}" y="${py - 5}" fill="black">${abbreviateMonth(p.label)}</text>`
+		// MODIFICATION: Add this line to track the label's extent
+		includeText(ext, px + 5, abbreviateMonth(p.label), "start", 7)
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)

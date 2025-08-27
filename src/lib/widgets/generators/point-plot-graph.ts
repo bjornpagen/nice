@@ -6,6 +6,7 @@ import {
 	renderPoints
 } from "@/lib/widgets/generators/coordinate-plane-base"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { computeDynamicWidth } from "@/lib/widgets/utils/layout"
 
 export const PointPlotGraphPropsSchema = z
 	.object({
@@ -51,9 +52,18 @@ export type PointPlotGraphProps = z.infer<typeof PointPlotGraphPropsSchema>
 export const generatePointPlotGraph: WidgetGenerator<typeof PointPlotGraphPropsSchema> = (props) => {
 	const { width, height, xAxis, yAxis, showQuadrantLabels, points } = props
 
+	// 1. Call the base generator and get the body content and extents object
 	const base = generateCoordinatePlaneBase(width, height, xAxis, yAxis, showQuadrantLabels, points)
 
+	// 2. Render elements in order, passing the extents object to each helper
 	let content = renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
 
-	return `${base.svg}${content}</svg>`
+	// 3. Compute final width and assemble the complete SVG
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, 10)
+	let finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	finalSvg += base.svgBody
+	finalSvg += content
+	finalSvg += `</svg>`
+
+	return finalSvg
 }

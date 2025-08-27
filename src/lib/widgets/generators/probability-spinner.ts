@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 // Defines a group of identical sectors on the spinner
 const ProbabilitySpinnerSectorGroupSchema = z
@@ -78,6 +79,9 @@ export type ProbabilitySpinnerProps = z.infer<typeof ProbabilitySpinnerPropsSche
 export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinnerPropsSchema> = (props) => {
 	const { width, height, groups, pointerAngle, title } = props
 
+	// Initialize extents tracking
+	const ext = initExtents(width)
+
 	const cx = width / 2
 	const cy = height / 2
 	const padding = title !== null ? 35 : 15
@@ -95,7 +99,44 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 		y: cy + r * Math.sin(toRad(angleDeg))
 	})
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	// Track the circle bounds
+	includePointX(ext, cx - radius) // Leftmost point of circle
+	includePointX(ext, cx + radius) // Rightmost point of circle
+
+	// Track title if present
+	if (title !== null) {
+		includeText(ext, cx, title, "middle", 8)
+	}
+
+	// Track pointer tip position (after rotation)
+	const pointerLength = radius * 1.2
+	const pointerTipX = cx + pointerLength * Math.cos(toRad(pointerAngle))
+	const pointerTipY = cy + pointerLength * Math.sin(toRad(pointerAngle))
+	includePointX(ext, pointerTipX)
+
+	// Track the sectors' key points
+	let currentAngle = -90 // Start at the top
+	for (const group of groups) {
+		for (let i = 0; i < group.count; i++) {
+			const startAngle = currentAngle
+			const endAngle = currentAngle + anglePerSector
+
+			const start = pointOnCircle(startAngle, radius)
+			const end = pointOnCircle(endAngle, radius)
+
+			// Track sector endpoints
+			includePointX(ext, start.x)
+			includePointX(ext, end.x)
+
+			currentAngle += anglePerSector
+		}
+	}
+
+	// Compute dynamic width
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	
+	// Build SVG with computed dimensions
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
 	svg += "<style>.title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
 	if (title !== null) {
@@ -103,7 +144,7 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 	}
 
 	// 1. Draw Sectors and Emojis
-	let currentAngle = -90 // Start at the top
+	currentAngle = -90 // Reset to start at the top
 
 	for (const group of groups) {
 		for (let i = 0; i < group.count; i++) {
@@ -124,6 +165,8 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 				const emojiPos = pointOnCircle(midAngle, radius * 0.65)
 				const emojiSize = Math.min(radius / totalSectors, 30) * 1.5 // Scale emoji size
 				svg += `<text x="${emojiPos.x}" y="${emojiPos.y}" font-size="${emojiSize}px" text-anchor="middle" dominant-baseline="central">${group.emoji}</text>`
+				// MODIFICATION: Add this line to track the emoji's extent
+				includeText(ext, emojiPos.x, group.emoji, "middle", emojiSize)
 			}
 
 			currentAngle += anglePerSector
@@ -131,7 +174,6 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 	}
 
 	// 2. Draw Spinner Pointer and Hub
-	const pointerLength = radius * 1.2
 	const pointerWidth = 12
 
 	svg += `<g transform="rotate(${pointerAngle}, ${cx}, ${cy})">`

@@ -1,7 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
 
 // Factory functions to avoid schema instance reuse which causes $ref in JSON Schema
@@ -90,6 +90,10 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 	const xAxisY = height - padding.bottom
 	svg += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${yAxisX}" y2="${padding.top}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
 	svg += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${width - padding.right}" y2="${xAxisY}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
+	// --- ADDED ---
+	includePointX(ext, yAxisX)
+	includePointX(ext, width - padding.right)
+	// --- END ADDED ---
 
 	// Axis Labels
 	svg += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisX - 20, padding.top + chartHeight / 2, chartHeight)
@@ -100,6 +104,11 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 	// Curve
 	const pointsStr = curvePoints.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
 	svg += `<polyline points="${pointsStr}" fill="none" stroke="${curveColor}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`
+	// --- ADDED ---
+	for (const p of curvePoints) {
+		includePointX(ext, toSvgX(p.x))
+	}
+	// --- END ADDED ---
 
 	// Precompute cumulative arc lengths along the curve for t-based positioning
 	const cumulativeLengths: number[] = [0]
@@ -159,6 +168,8 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 		const pt = pointAtT(hp.t)
 		const cx = toSvgX(pt.x)
 		const cy = toSvgY(pt.y)
+		// Track the highlight point position
+		includePointX(ext, cx)
 		svg += `<circle cx="${cx}" cy="${cy}" r="${highlightPointRadius}" fill="${highlightPointColor}"/>`
 		svg += `<text x="${cx - highlightPointRadius - 5}" y="${cy}" text-anchor="end" dominant-baseline="middle" font-weight="bold">${hp.label}</text>`
 		includeText(ext, cx - highlightPointRadius - 5, hp.label, "end", 7)

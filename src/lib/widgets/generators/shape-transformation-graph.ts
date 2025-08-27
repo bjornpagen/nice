@@ -9,6 +9,7 @@ import {
 } from "@/lib/widgets/generators/coordinate-plane-base"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includePointX } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidPolygon = errors.new("polygon must have at least 3 vertices")
 
@@ -178,14 +179,21 @@ export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTrans
 		throw errors.wrap(ErrInvalidPolygon, `polygon has ${preImage.vertices.length} vertices, requires at least 3`)
 	}
 
+	// 1. Call the base generator and get the body content and extents object
 	const base = generateCoordinatePlaneBase(width, height, xAxis, yAxis, showQuadrantLabels, points)
 	let content = ""
 
-	// 1. Draw Pre-Image (solid)
-	const preImagePoints = preImage.vertices.map((p) => `${base.toSvgX(p.x)},${base.toSvgY(p.y)}`).join(" ")
+	// 2. Draw Pre-Image (solid) and track extents
+	const preImageSvgPoints = preImage.vertices.map((p) => {
+		const svgX = base.toSvgX(p.x)
+		const svgY = base.toSvgY(p.y)
+		includePointX(base.ext, svgX)
+		return `${svgX},${svgY}`
+	})
+	const preImagePoints = preImageSvgPoints.join(" ")
 	content += `<polygon points="${preImagePoints}" fill="${preImage.color}" stroke="black" stroke-width="1.5" fill-opacity="0.6"/>`
 
-	// 2. Calculate Transformed Vertices
+	// 3. Calculate Transformed Vertices
 	let imageVertices: Vertex[] = []
 	switch (transformation.type) {
 		case "translation": {
@@ -226,18 +234,34 @@ export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTrans
 		}
 	}
 
-	// 3. Draw Image (dashed)
-	const imagePoints = imageVertices.map((p) => `${base.toSvgX(p.x)},${base.toSvgY(p.y)}`).join(" ")
+	// 4. Draw Image (dashed) and track extents
+	const imageSvgPoints = imageVertices.map((p) => {
+		const svgX = base.toSvgX(p.x)
+		const svgY = base.toSvgY(p.y)
+		includePointX(base.ext, svgX)
+		return `${svgX},${svgY}`
+	})
+	const imagePoints = imageSvgPoints.join(" ")
 	content += `<polygon points="${imagePoints}" fill-opacity="0.6" fill="${preImage.color}" stroke="black" stroke-width="1.5" stroke-dasharray="5 3"/>`
 
-	// 4. Add visual aids like center of rotation/dilation
+	// 5. Add visual aids like center of rotation/dilation
 	if (transformation.type === "rotation" || transformation.type === "dilation") {
 		const c = transformation.center
-		content += `<circle cx="${base.toSvgX(c.x)}" cy="${base.toSvgY(c.y)}" r="4" fill="red" />`
+		const cx = base.toSvgX(c.x)
+		const cy = base.toSvgY(c.y)
+		includePointX(base.ext, cx)
+		content += `<circle cx="${cx}" cy="${cy}" r="4" fill="red" />`
 	}
 
-	// 5. Render points
+	// 6. Render points
 	content += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
 
-	return `${base.svg}${content}</svg>`
+	// 7. Compute final width and assemble the complete SVG
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, 10)
+	let finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	finalSvg += base.svgBody
+	finalSvg += content
+	finalSvg += `</svg>`
+
+	return finalSvg
 }

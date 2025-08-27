@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 function createWeightSchema() {
 	return z
@@ -70,6 +71,8 @@ export type HangerDiagramProps = z.infer<typeof HangerDiagramPropsSchema>
 export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSchema> = (data) => {
 	const { width, height, leftSide, rightSide } = data
 	const centerX = width / 2
+	
+	const ext = initExtents(width)
 
 	// Dynamic vertical layout to avoid clipping for small heights
 	const maxStack = Math.max(leftSide.length, rightSide.length, 1)
@@ -105,8 +108,17 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 	svg += `<line x1="${centerX}" y1="10" x2="${centerX}" y2="${beamY}" stroke="#333333" stroke-width="0.6667"/>`
 	svg += `<path d="M ${centerX - 5} 10 L ${centerX} 5 L ${centerX + 5} 10 Z" fill="#333333" />` // Triangle at top of hook
 	svg += `<line x1="${beamStartX}" y1="${beamY}" x2="${beamEndX}" y2="${beamY}" stroke="#333333" stroke-width="3"/>`
+	// --- ADDED ---
+	includePointX(ext, beamStartX)
+	includePointX(ext, beamEndX)
+	// --- END ADDED ---
 
 	const drawWeight = (x: number, y: number, weight: (typeof leftSide)[0]) => {
+		// --- ADDED ---
+		// Track the bounding box for each weight shape
+		includePointX(ext, x - size / 2)
+		includePointX(ext, x + size / 2)
+		// --- END ADDED ---
 		let shapeSvg = ""
 		switch (weight.shape) {
 			case "circle":
@@ -133,10 +145,11 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 				shapeSvg = `<rect x="${x - size / 2}" y="${y}" width="${size}" height="${size}" fill="${weight.color}" stroke="#333333"/>`
 				break
 		}
-		const textSvg =
-			weight.label !== null
-				? `<text x="${x}" y="${y + size / 2 + 4}" fill="#333333" text-anchor="middle" font-weight="bold">${weight.label}</text>`
-				: ""
+		let textSvg = ""
+		if (weight.label !== null) {
+			textSvg = `<text x="${x}" y="${y + size / 2 + 4}" fill="#333333" text-anchor="middle" font-weight="bold">${weight.label}</text>`
+			includeText(ext, x, String(weight.label), "middle", 7)
+		}
 		return shapeSvg + textSvg
 	}
 
@@ -166,6 +179,9 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 	renderShapes(leftSide, true)
 	renderShapes(rightSide, false)
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

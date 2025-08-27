@@ -2,6 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { computeDynamicWidth, includePointX, initExtents } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidBaseShape = errors.new("invalid base shape for polyhedron type")
 
@@ -252,15 +253,24 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 	const { width, height, polyhedronType, base, showLabels } = data
 	const lateralHeight = "lateralHeight" in data ? data.lateralHeight : undefined
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const ext = initExtents(width)
+	let svgContent = ""
 
-	const unit = 5
+	const unit = 20 // Use a consistent unit size for drawing, not for scaling
 
-	const rect = (x: number, y: number, w: number, h: number) =>
-		`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="rgba(200,200,200,0.3)" stroke="black" stroke-width="2"/>`
+	const rect = (x: number, y: number, w: number, h: number) => {
+		includePointX(ext, x)
+		includePointX(ext, x + w)
+		return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="rgba(200,200,200,0.3)" stroke="black" stroke-width="2"/>`
+	}
 
-	const poly = (points: string) =>
-		`<polygon points="${points}" fill="rgba(200,200,200,0.3)" stroke="black" stroke-width="2"/>`
+	const poly = (points: string) => {
+		const pointCoords = points.split(" ").map(p => p.split(",").map(Number));
+		pointCoords.forEach(p => {
+			if (p[0]) includePointX(ext, p[0]);
+		});
+		return `<polygon points="${points}" fill="rgba(200,200,200,0.3)" stroke="black" stroke-width="2"/>`
+	}
 
 	const drawGridLines = (x: number, y: number, w: number, h: number, dim_w: number, dim_h: number) => {
 		const unit_w = w / dim_w
@@ -285,32 +295,29 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 			const a = side
 			const b = side
 			const c = side
-			const a_s = a * unit
-			const b_s = b * unit
-			const c_s = c * unit
-			const totalW = 2 * (a_s + b_s)
-			const totalH = 2 * b_s + c_s
-			const scale = Math.min(width / totalW, height / totalH) * 0.9
-			const u = unit * scale
-			const a_u = a * u
-			const b_u = b * u
-			const c_u = c * u
-			const x_offset = (width - 2 * (a_u + b_u)) / 2
-			const y_offset = (height - (2 * b_u + c_u)) / 2
-			const row_y = y_offset + b_u
-			svg += rect(x_offset, row_y, b_u, c_u)
-			svg += rect(x_offset + b_u, row_y, a_u, c_u)
-			svg += rect(x_offset + b_u + a_u, row_y, b_u, c_u)
-			svg += rect(x_offset + b_u + a_u + b_u, row_y, a_u, c_u)
-			svg += rect(x_offset + b_u, y_offset, a_u, b_u)
-			svg += rect(x_offset + b_u, row_y + c_u, a_u, b_u)
+			// REMOVE ALL SCALING AND OFFSET CALCULATIONS
+			const a_u = a * unit
+			const b_u = b * unit
+			const c_u = c * unit
+
+			// Center the main cross shape around (0,0) for a predictable viewBox
+			const row_y = -c_u / 2
+			const x_start = -(b_u + a_u / 2)
+
+			svgContent += rect(x_start, row_y, b_u, c_u)
+			svgContent += rect(x_start + b_u, row_y, a_u, c_u)
+			svgContent += rect(x_start + b_u + a_u, row_y, b_u, c_u)
+			svgContent += rect(x_start + b_u + a_u + b_u, row_y, a_u, c_u)
+			svgContent += rect(x_start + b_u, row_y - b_u, a_u, b_u)
+			svgContent += rect(x_start + b_u, row_y + c_u, a_u, b_u)
+
 			if (showLabels === true) {
-				svg += drawGridLines(x_offset, row_y, b_u, c_u, b, c)
-				svg += drawGridLines(x_offset + b_u, row_y, a_u, c_u, a, c)
-				svg += drawGridLines(x_offset + b_u + a_u, row_y, b_u, c_u, b, c)
-				svg += drawGridLines(x_offset + b_u + a_u + b_u, row_y, a_u, c_u, a, c)
-				svg += drawGridLines(x_offset + b_u, y_offset, a_u, b_u, a, b)
-				svg += drawGridLines(x_offset + b_u, row_y + c_u, a_u, b_u, a, b)
+				svgContent += drawGridLines(x_start, row_y, b_u, c_u, b, c)
+				svgContent += drawGridLines(x_start + b_u, row_y, a_u, c_u, a, c)
+				svgContent += drawGridLines(x_start + b_u + a_u, row_y, b_u, c_u, b, c)
+				svgContent += drawGridLines(x_start + b_u + a_u + b_u, row_y, a_u, c_u, a, c)
+				svgContent += drawGridLines(x_start + b_u, row_y - b_u, a_u, b_u, a, b)
+				svgContent += drawGridLines(x_start + b_u, row_y + c_u, a_u, b_u, a, b)
 			}
 			break
 		}
@@ -332,32 +339,28 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 			const a = length
 			const b = width
 			const c = prismHeight
-			const a_s = a * unit
-			const b_s = b * unit
-			const c_s = c * unit
-			const totalW = 2 * (a_s + b_s)
-			const totalH = 2 * b_s + c_s
-			const scale = Math.min(width / totalW, height / totalH) * 0.9
-			const u = unit * scale
-			const a_u = a * u
-			const b_u = b * u
-			const c_u = c * u
-			const x_offset = (width - 2 * (a_u + b_u)) / 2
-			const y_offset = (height - (2 * b_u + c_u)) / 2
-			const row_y = y_offset + b_u
-			svg += rect(x_offset, row_y, b_u, c_u) // side
-			svg += rect(x_offset + b_u, row_y, a_u, c_u) // front
-			svg += rect(x_offset + b_u + a_u, row_y, b_u, c_u) // side
-			svg += rect(x_offset + b_u + a_u + b_u, row_y, a_u, c_u) // back
-			svg += rect(x_offset + b_u, y_offset, a_u, b_u) // top
-			svg += rect(x_offset + b_u, row_y + c_u, a_u, b_u) // bottom
+			// REMOVE ALL SCALING AND OFFSET CALCULATIONS
+			const a_u = a * unit
+			const b_u = b * unit
+			const c_u = c * unit
+
+			// Center the main cross shape around (0,0) for a predictable viewBox
+			const row_y = -c_u / 2
+			const x_start = -(b_u + a_u / 2)
+
+			svgContent += rect(x_start, row_y, b_u, c_u) // side
+			svgContent += rect(x_start + b_u, row_y, a_u, c_u) // front
+			svgContent += rect(x_start + b_u + a_u, row_y, b_u, c_u) // side
+			svgContent += rect(x_start + b_u + a_u + b_u, row_y, a_u, c_u) // back
+			svgContent += rect(x_start + b_u, row_y - b_u, a_u, b_u) // top
+			svgContent += rect(x_start + b_u, row_y + c_u, a_u, b_u) // bottom
 			if (showLabels === true) {
-				svg += drawGridLines(x_offset, row_y, b_u, c_u, width, prismHeight)
-				svg += drawGridLines(x_offset + b_u, row_y, a_u, c_u, length, prismHeight)
-				svg += drawGridLines(x_offset + b_u + a_u, row_y, b_u, c_u, width, prismHeight)
-				svg += drawGridLines(x_offset + b_u + a_u + b_u, row_y, a_u, c_u, length, prismHeight)
-				svg += drawGridLines(x_offset + b_u, y_offset, a_u, b_u, length, width)
-				svg += drawGridLines(x_offset + b_u, row_y + c_u, a_u, b_u, length, width)
+				svgContent += drawGridLines(x_start, row_y, b_u, c_u, width, prismHeight)
+				svgContent += drawGridLines(x_start + b_u, row_y, a_u, c_u, length, prismHeight)
+				svgContent += drawGridLines(x_start + b_u + a_u, row_y, b_u, c_u, width, prismHeight)
+				svgContent += drawGridLines(x_start + b_u + a_u + b_u, row_y, a_u, c_u, length, prismHeight)
+				svgContent += drawGridLines(x_start + b_u, row_y - b_u, a_u, b_u, length, width)
+				svgContent += drawGridLines(x_start + b_u, row_y + c_u, a_u, b_u, length, width)
 			}
 			break
 		}
@@ -379,41 +382,37 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 			const side2 = base.side2
 			const prism_h = lateralHeight
 			let d = (side1 ** 2 + base_len ** 2 - side2 ** 2) / (2 * base_len)
-			let extend_left = Math.max(0, -d)
-			let extend_right = Math.max(0, d - base_len)
-			const row_w_units = side1 + base_len + side2 + extend_left + extend_right
-			const total_w_units = row_w_units
-			const total_h_units = tri_h * 2 + prism_h
-			const scale = Math.min(width / (total_w_units * unit), height / (total_h_units * unit)) * 0.9
-			const u = unit * scale
-			const x_offset = (width - total_w_units * u) / 2
-			const y_offset = (height - total_h_units * u) / 2
-			const row_start_x = x_offset + extend_left * u
-			const row_y = y_offset + tri_h * u
-			const side1_u = side1 * u
-			const base_u = base_len * u
-			const side2_u = side2 * u
-			const prism_h_u = prism_h * u
-			const tri_h_u = tri_h * u
-			svg += rect(row_start_x, row_y, side1_u, prism_h_u)
+			// REMOVE ALL SCALING AND OFFSET CALCULATIONS
+			const side1_u = side1 * unit
+			const base_u = base_len * unit
+			const side2_u = side2 * unit
+			const prism_h_u = prism_h * unit
+			const tri_h_u = tri_h * unit
+
+			// Center the shape around (0,0)
+			const total_width = side1_u + base_u + side2_u
+			const row_start_x = -total_width / 2
+			const row_y = -prism_h_u / 2
+
+			svgContent += rect(row_start_x, row_y, side1_u, prism_h_u)
 			const middle_x = row_start_x + side1_u
-			svg += rect(middle_x, row_y, base_u, prism_h_u)
+			svgContent += rect(middle_x, row_y, base_u, prism_h_u)
 			const right_x = middle_x + base_u
-			svg += rect(right_x, row_y, side2_u, prism_h_u)
+			svgContent += rect(right_x, row_y, side2_u, prism_h_u)
 			const top_left = middle_x
 			const top_right = middle_x + base_u
 			const top_y_base = row_y
-			const top_apex_x = middle_x + d * u
+			const top_apex_x = middle_x + d * unit
 			const top_apex_y = row_y - tri_h_u
-			svg += poly(`${top_left},${top_y_base} ${top_right},${top_y_base} ${top_apex_x},${top_apex_y}`)
+			svgContent += poly(`${top_left},${top_y_base} ${top_right},${top_y_base} ${top_apex_x},${top_apex_y}`)
 			const bot_y_base = row_y + prism_h_u
 			const bot_apex_y = bot_y_base + tri_h_u
-			const bot_apex_x = middle_x + d * u
-			svg += poly(`${top_left},${bot_y_base} ${top_right},${bot_y_base} ${bot_apex_x},${bot_apex_y}`)
+			const bot_apex_x = middle_x + d * unit
+			svgContent += poly(`${top_left},${bot_y_base} ${top_right},${bot_y_base} ${bot_apex_x},${bot_apex_y}`)
 			if (showLabels === true) {
-				svg += drawGridLines(row_start_x, row_y, side1_u, prism_h_u, side1, prism_h)
-				svg += drawGridLines(middle_x, row_y, base_u, prism_h_u, base_len, prism_h)
-				svg += drawGridLines(right_x, row_y, side2_u, prism_h_u, side2, prism_h)
+				svgContent += drawGridLines(row_start_x, row_y, side1_u, prism_h_u, side1, prism_h)
+				svgContent += drawGridLines(middle_x, row_y, base_u, prism_h_u, base_len, prism_h)
+				svgContent += drawGridLines(right_x, row_y, side2_u, prism_h_u, side2, prism_h)
 			}
 			break
 		}
@@ -431,44 +430,40 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 			}
 			const side = base.side
 			const lat_h = lateralHeight
-			const s_s = side * unit
-			const lat_s = lat_h * unit
-			const totalW = s_s + 2 * lat_s
-			const totalH = s_s + 2 * lat_s
-			const scale = Math.min(width / totalW, height / totalH) * 0.9
-			const u = unit * scale
-			const s_u = side * u
-			const lat_u = lat_h * u
-			const x_offset = (width - (s_u + 2 * lat_u)) / 2
-			const y_offset = (height - (s_u + 2 * lat_u)) / 2
-			const base_x = x_offset + lat_u
-			const base_y = y_offset + lat_u
-			svg += rect(base_x, base_y, s_u, s_u)
+			// REMOVE ALL SCALING AND OFFSET CALCULATIONS
+			const s_u = side * unit
+			const lat_u = lat_h * unit
+			
+			// Center the pyramid net around (0,0)
+			const base_x = -s_u / 2
+			const base_y = -s_u / 2
+			
+			svgContent += rect(base_x, base_y, s_u, s_u)
 			const top_base_y = base_y
 			const top_left_x = base_x
 			const top_right_x = base_x + s_u
 			const apex_d = side / 2
-			const top_apex_x = base_x + apex_d * u
+			const top_apex_x = base_x + apex_d * unit
 			const top_apex_y = base_y - lat_u
-			svg += poly(`${top_left_x},${top_base_y} ${top_right_x},${top_base_y} ${top_apex_x},${top_apex_y}`)
+			svgContent += poly(`${top_left_x},${top_base_y} ${top_right_x},${top_base_y} ${top_apex_x},${top_apex_y}`)
 			const bot_base_y = base_y + s_u
 			const bot_apex_y = bot_base_y + lat_u
-			const bot_apex_x = base_x + apex_d * u
-			svg += poly(`${top_left_x},${bot_base_y} ${top_right_x},${bot_base_y} ${bot_apex_x},${bot_apex_y}`)
+			const bot_apex_x = base_x + apex_d * unit
+			svgContent += poly(`${top_left_x},${bot_base_y} ${top_right_x},${bot_base_y} ${bot_apex_x},${bot_apex_y}`)
 			const left_base_top_y = base_y
 			const left_base_bot_y = base_y + s_u
 			const left_base_x = base_x
 			const left_apex_x = base_x - lat_u
-			const left_apex_y = base_y + apex_d * u
-			svg += poly(`${left_base_x},${left_base_top_y} ${left_base_x},${left_base_bot_y} ${left_apex_x},${left_apex_y}`)
+			const left_apex_y = base_y + apex_d * unit
+			svgContent += poly(`${left_base_x},${left_base_top_y} ${left_base_x},${left_base_bot_y} ${left_apex_x},${left_apex_y}`)
 			const right_base_x = base_x + s_u
 			const right_apex_x = right_base_x + lat_u
-			const right_apex_y = base_y + apex_d * u
-			svg += poly(
+			const right_apex_y = base_y + apex_d * unit
+			svgContent += poly(
 				`${right_base_x},${left_base_top_y} ${right_base_x},${left_base_bot_y} ${right_apex_x},${right_apex_y}`
 			)
 			if (showLabels === true) {
-				svg += drawGridLines(base_x, base_y, s_u, s_u, side, side)
+				svgContent += drawGridLines(base_x, base_y, s_u, s_u, side, side)
 			}
 			break
 		}
@@ -494,9 +489,11 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 				x: number
 				y: number
 			}
+			// REMOVE ALL SCALING AND OFFSET CALCULATIONS
+			// Use unit directly for all calculations
 			const p1: Point = { x: 0, y: 0 }
-			const p2: Point = { x: base_len, y: 0 }
-			const p3: Point = { x: d, y: -tri_h }
+			const p2: Point = { x: base_len * unit, y: 0 }
+			const p3: Point = { x: d * unit, y: -tri_h * unit }
 			const getApex = (pa: Point, pb: Point, pc: Point): Point => {
 				const ex = pb.x - pa.x
 				const ey = pb.y - pa.y
@@ -515,35 +512,38 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 				const plen = Math.sqrt(px ** 2 + py ** 2)
 				const ux = px / plen
 				const uy = py / plen
-				return { x: mx + lat_h * ux, y: my + lat_h * uy }
+				return { x: mx + lat_h * unit * ux, y: my + lat_h * unit * uy }
 			}
 			const apex_base = getApex(p1, p2, p3)
 			const apex_side1 = getApex(p1, p3, p2)
 			const apex_side2 = getApex(p3, p2, p1)
 			const all_points: Point[] = [p1, p2, p3, apex_base, apex_side1, apex_side2]
+			// Find bounds and center around (0,0)
 			let min_x = Math.min(...all_points.map((p) => p.x))
 			let max_x = Math.max(...all_points.map((p) => p.x))
 			let min_y = Math.min(...all_points.map((p) => p.y))
 			let max_y = Math.max(...all_points.map((p) => p.y))
-			const total_w_units = max_x - min_x
-			const total_h_units = max_y - min_y
-			const scale = Math.min(width / total_w_units, height / total_h_units) * 0.9
-			const u = scale
-			const x_offset = (width - total_w_units * u) / 2
-			const y_offset = (height - total_h_units * u) / 2
-			const to_px_x = (ux: number) => (ux - min_x) * u + x_offset
-			const to_px_y = (uy: number) => (uy - min_y) * u + y_offset
-			svg += poly(
-				`${to_px_x(p1.x)},${to_px_y(p1.y)} ${to_px_x(p2.x)},${to_px_y(p2.y)} ${to_px_x(p3.x)},${to_px_y(p3.y)}`
+			const center_x = (min_x + max_x) / 2
+			const center_y = (min_y + max_y) / 2
+			// Center all points
+			const cp1: Point = { x: p1.x - center_x, y: p1.y - center_y }
+			const cp2: Point = { x: p2.x - center_x, y: p2.y - center_y }
+			const cp3: Point = { x: p3.x - center_x, y: p3.y - center_y }
+			const capex_base: Point = { x: apex_base.x - center_x, y: apex_base.y - center_y }
+			const capex_side1: Point = { x: apex_side1.x - center_x, y: apex_side1.y - center_y }
+			const capex_side2: Point = { x: apex_side2.x - center_x, y: apex_side2.y - center_y }
+			
+			svgContent += poly(
+				`${cp1.x},${cp1.y} ${cp2.x},${cp2.y} ${cp3.x},${cp3.y}`
 			)
-			svg += poly(
-				`${to_px_x(p1.x)},${to_px_y(p1.y)} ${to_px_x(p2.x)},${to_px_y(p2.y)} ${to_px_x(apex_base.x)},${to_px_y(apex_base.y)}`
+			svgContent += poly(
+				`${cp1.x},${cp1.y} ${cp2.x},${cp2.y} ${capex_base.x},${capex_base.y}`
 			)
-			svg += poly(
-				`${to_px_x(p1.x)},${to_px_y(p1.y)} ${to_px_x(p3.x)},${to_px_y(p3.y)} ${to_px_x(apex_side1.x)},${to_px_y(apex_side1.y)}`
+			svgContent += poly(
+				`${cp1.x},${cp1.y} ${cp3.x},${cp3.y} ${capex_side1.x},${capex_side1.y}`
 			)
-			svg += poly(
-				`${to_px_x(p3.x)},${to_px_y(p3.y)} ${to_px_x(p2.x)},${to_px_y(p2.y)} ${to_px_x(apex_side2.x)},${to_px_y(apex_side2.y)}`
+			svgContent += poly(
+				`${cp3.x},${cp3.y} ${cp2.x},${cp2.y} ${capex_side2.x},${capex_side2.y}`
 			)
 			break
 		}
@@ -565,8 +565,9 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 				x: number
 				y: number
 			}
+			// REMOVE ALL SCALING AND OFFSET CALCULATIONS
 			const sin_pi5 = Math.sin(Math.PI / 5)
-			const R = side / (2 * sin_pi5)
+			const R = side * unit / (2 * sin_pi5)
 			let points: Point[] = []
 			for (let i = 0; i < 5; i++) {
 				const theta = (2 * Math.PI * i) / 5 - Math.PI / 2
@@ -593,9 +594,8 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 				const plen = Math.sqrt(px ** 2 + py ** 2)
 				const ux = px / plen
 				const uy = py / plen
-				return { x: mx + lat_h * ux, y: my + lat_h * uy }
+				return { x: mx + lat_h * unit * ux, y: my + lat_h * unit * uy }
 			}
-			let all_points: Point[] = [...points]
 			let apexes: Point[] = []
 			for (let j = 0; j < 5; j++) {
 				const pa = points[j]
@@ -604,34 +604,28 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 				if (!pa || !pb || !pc) continue
 				const apex = getApex(pa, pb, pc)
 				apexes.push(apex)
-				all_points.push(apex)
 			}
-			let min_x = Math.min(...all_points.map((p) => p.x))
-			let max_x = Math.max(...all_points.map((p) => p.x))
-			let min_y = Math.min(...all_points.map((p) => p.y))
-			let max_y = Math.max(...all_points.map((p) => p.y))
-			const total_w_units = max_x - min_x
-			const total_h_units = max_y - min_y
-			const scale = Math.min(width / total_w_units, height / total_h_units) * 0.9
-			const u = scale
-			const x_offset = (width - total_w_units * u) / 2
-			const y_offset = (height - total_h_units * u) / 2
-			const to_px_x = (ux: number) => (ux - min_x) * u + x_offset
-			const to_px_y = (uy: number) => (uy - min_y) * u + y_offset
-			const base_points_str = points.map((p) => `${to_px_x(p.x)},${to_px_y(p.y)}`).join(" ")
-			svg += poly(base_points_str)
+			// Pentagon is already centered at (0,0) by construction
+			const base_points_str = points.map((p) => `${p.x},${p.y}`).join(" ")
+			svgContent += poly(base_points_str)
 			for (let j = 0; j < 5; j++) {
 				const pa = points[j]
 				const pb = points[(j + 1) % 5]
 				const apex = apexes[j]
 				if (!pa || !pb || !apex) continue
-				svg += poly(
-					`${to_px_x(pa.x)},${to_px_y(pa.y)} ${to_px_x(pb.x)},${to_px_y(pb.y)} ${to_px_x(apex.x)},${to_px_y(apex.y)}`
+				svgContent += poly(
+					`${pa.x},${pa.y} ${pb.x},${pb.y} ${apex.x},${apex.y}`
 				)
 			}
 			break
 		}
 	}
+
+	const padding = 20
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
+
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	svg += svgContent
 	svg += "</svg>"
 	return svg
 }

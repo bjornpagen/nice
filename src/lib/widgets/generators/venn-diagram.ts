@@ -2,6 +2,7 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 function createCircleSchema() {
 	return z
@@ -89,29 +90,52 @@ export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema>
 	const cxB = width / 2 + r - overlap
 	const cy = padding.top + chartHeight / 2
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
-	svg +=
-		"<style>.label { font-size: 16px; font-weight: bold; text-anchor: middle; } .count { font-size: 18px; text-anchor: middle; }</style>"
+	const ext = initExtents(width)
+	let svgContent = "<style>.label { font-size: 16px; font-weight: bold; text-anchor: middle; } .count { font-size: 18px; text-anchor: middle; }</style>"
 
 	// Draw containing box
-	svg += `<rect x="1" y="1" width="${width - 2}" height="${height - 2}" fill="none" stroke="#333333" />`
+	svgContent += `<rect x="1" y="1" width="${width - 2}" height="${height - 2}" fill="none" stroke="#333333" />`
 
+	// Track circles
+	includePointX(ext, cxA - r)
+	includePointX(ext, cxA + r)
+	includePointX(ext, cxB - r)
+	includePointX(ext, cxB + r)
+	
 	// Circles (semi-transparent for overlap visibility)
-	svg += `<circle cx="${cxA}" cy="${cy}" r="${r}" fill="${circleA.color}" fill-opacity="0.6" stroke="#333333"/>`
-	svg += `<circle cx="${cxB}" cy="${cy}" r="${r}" fill="${circleB.color}" fill-opacity="0.6" stroke="#333333"/>`
+	svgContent += `<circle cx="${cxA}" cy="${cy}" r="${r}" fill="${circleA.color}" fill-opacity="0.6" stroke="#333333"/>`
+	svgContent += `<circle cx="${cxB}" cy="${cy}" r="${r}" fill="${circleB.color}" fill-opacity="0.6" stroke="#333333"/>`
 
 	// Labels for circles - positioned farther apart to use side space
-	svg += `<text x="${cxA - r * 0.5}" y="${padding.top - 5}" class="label">${abbreviateMonth(circleA.label)}</text>` // Moved left
-	svg += `<text x="${cxB + r * 0.5}" y="${padding.top - 5}" class="label">${abbreviateMonth(circleB.label)}</text>` // Moved right
+	const labelA_X = cxA - r * 0.5
+	const labelB_X = cxB + r * 0.5
+	includeText(ext, labelA_X, abbreviateMonth(circleA.label), "middle")
+	includeText(ext, labelB_X, abbreviateMonth(circleB.label), "middle")
+	svgContent += `<text x="${labelA_X}" y="${padding.top - 5}" class="label">${abbreviateMonth(circleA.label)}</text>` // Moved left
+	svgContent += `<text x="${labelB_X}" y="${padding.top - 5}" class="label">${abbreviateMonth(circleB.label)}</text>` // Moved right
 
+	// Track counts
+	const countA_X = cxA - r / 2
+	const countB_X = cxB + r / 2
+	const intersection_X = (cxA + cxB) / 2
+	const outside_X = width / 2
+	includeText(ext, countA_X, String(circleA.count), "middle")
+	includeText(ext, countB_X, String(circleB.count), "middle")
+	includeText(ext, intersection_X, String(intersectionCount), "middle")
+	includeText(ext, outside_X, String(outsideCount), "middle")
+	
 	// A only
-	svg += `<text x="${cxA - r / 2}" y="${cy}" class="count" dominant-baseline="middle">${circleA.count}</text>`
+	svgContent += `<text x="${countA_X}" y="${cy}" class="count" dominant-baseline="middle">${circleA.count}</text>`
 	// B only
-	svg += `<text x="${cxB + r / 2}" y="${cy}" class="count" dominant-baseline="middle">${circleB.count}</text>`
+	svgContent += `<text x="${countB_X}" y="${cy}" class="count" dominant-baseline="middle">${circleB.count}</text>`
 	// Intersection
-	svg += `<text x="${(cxA + cxB) / 2}" y="${cy}" class="count" dominant-baseline="middle">${intersectionCount}</text>`
-	svg += `<text x="${width / 2}" y="${height - padding.bottom / 2}" class="count">${outsideCount}</text>` // Adjusted y position based on padding
+	svgContent += `<text x="${intersection_X}" y="${cy}" class="count" dominant-baseline="middle">${intersectionCount}</text>`
+	svgContent += `<text x="${outside_X}" y="${height - padding.bottom / 2}" class="count">${outsideCount}</text>` // Adjusted y position based on padding
 
+	// Final assembly
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding.horizontal)
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	svg += svgContent
 	svg += "</svg>"
 	return svg
 }

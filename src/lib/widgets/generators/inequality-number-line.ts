@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidRange = errors.new("min must be less than max")
 
@@ -135,6 +136,8 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 
 	const scale = chartWidth / (max - min)
 	const toSvgX = (val: number) => padding.horizontal + (val - min) * scale
+	
+	const ext = initExtents(width)
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 
@@ -158,12 +161,17 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 		// Match tick sizing with standard number line widget for visual consistency
 		svg += `<line x1="${x}" y1="${yPos - 8}" x2="${x}" y2="${yPos + 8}" stroke="black"/>`
 		svg += `<text x="${x}" y="${yPos + 25}" fill="black" text-anchor="middle">${t}</text>`
+		includeText(ext, x, String(t), "middle", 7)
 	}
 
 	for (const r of ranges) {
 		const startPos = r.start.type === "bounded" ? toSvgX(r.start.at.value) : padding.horizontal
 		const endPos = r.end.type === "bounded" ? toSvgX(r.end.at.value) : width - padding.horizontal
 		const colorId = r.color.replace(/[^a-zA-Z0-9]/g, "")
+		
+		// Track the horizontal extent of the range
+		includePointX(ext, startPos)
+		includePointX(ext, endPos)
 
 		// Add markers for unbounded cases
 		let markerStart = ""
@@ -188,6 +196,9 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 		}
 	}
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

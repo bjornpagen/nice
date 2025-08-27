@@ -8,6 +8,7 @@ import {
 	calculateXAxisLayout,
 	calculateYAxisLayout,
 	computeDynamicWidth,
+	includePointX,
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
@@ -81,46 +82,7 @@ export const AreaGraphPropsSchema = z
 
 export type AreaGraphProps = z.infer<typeof AreaGraphPropsSchema>
 
-/**
- * Renders a text element with automatic wrapping for certain patterns.
- * Keeping for area-label specific behavior. Not used for titles.
- */
-const renderWrappedText_local = (
-	text: string,
-	x: number,
-	y: number,
-	className: string,
-	lineHeight = "1.2em"
-): string => {
-	let lines: string[] = []
 
-	// For titles ending with any parenthetical, split before the parenthesis but only for sufficiently long titles
-	const titlePattern = /^(.*)\s+(\(.+\))$/
-	const titleMatch = text.match(titlePattern)
-	if (titleMatch?.[1] && titleMatch[2]) {
-		const base = titleMatch[1].trim()
-		const suffix = titleMatch[2].trim()
-		const shouldSplitConservatively = text.length > 36
-		lines = shouldSplitConservatively ? [base, suffix] : [text]
-	} else {
-		// For area labels, split multi-word labels
-		const words = text.split(" ")
-		if (words.length === 2 && words.join(" ").length > 10) {
-			// Split two-word labels like "Fossil fuels"
-			lines = words
-		} else {
-			// Single line for short text
-			lines = [text]
-		}
-	}
-
-	let tspans = ""
-	lines.forEach((line, index) => {
-		const dy = index === 0 ? "0" : lineHeight
-		tspans += `<tspan x="${x}" dy="${dy}">${line}</tspan>`
-	})
-	return `<text x="${x}" y="${y}" class="${className}">${tspans}</text>`
-}
 
 export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (props) => {
 	const { width, height, title, xAxis, yAxis, dataPoints, bottomArea, topArea, boundaryLine } = props
@@ -201,6 +163,10 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	}
 
 	// Area Paths
+	// Track the x-extents of all data points
+	dataPoints.forEach((p) => {
+		includePointX(ext, toSvgX(p.x))
+	})
 	const pointsStr = dataPoints.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
 	const bottomPath = `M${toSvgX(dataPoints[0]?.x ?? xAxis.min)},${toSvgY(yAxis.min)} ${pointsStr} L${toSvgX(dataPoints[dataPoints.length - 1]?.x ?? xAxis.max)},${toSvgY(yAxis.min)} Z`
 	const topPath = `M${toSvgX(dataPoints[0]?.x ?? xAxis.min)},${toSvgY(yAxis.max)} ${pointsStr} L${toSvgX(dataPoints[dataPoints.length - 1]?.x ?? xAxis.max)},${toSvgY(yAxis.max)} Z`
@@ -209,9 +175,11 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	svg += `<path d="${topPath}" fill="${topArea.color}" stroke="none"/>`
 	svg += `<polyline points="${pointsStr}" fill="none" stroke="${boundaryLine.color}" stroke-width="${boundaryLine.strokeWidth}"/>`
 
-	// Area Labels (use local split for two-word labels)
-	svg += renderWrappedText_local(abbreviateMonth(bottomArea.label), toSvgX(1975), toSvgY(40), "area-label")
-	svg += renderWrappedText_local(abbreviateMonth(topArea.label), toSvgX(1850), toSvgY(70), "area-label")
+	// Area Labels (now using shared renderer)
+	svg += renderWrappedText(abbreviateMonth(bottomArea.label), toSvgX(1975), toSvgY(40), "area-label", "1.2em", chartWidth, 8)
+	svg += renderWrappedText(abbreviateMonth(topArea.label), toSvgX(1850), toSvgY(70), "area-label", "1.2em", chartWidth, 8)
+	includeText(ext, toSvgX(1975), abbreviateMonth(bottomArea.label), "middle", 7)
+	includeText(ext, toSvgX(1850), abbreviateMonth(topArea.label), "middle", 7)
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)

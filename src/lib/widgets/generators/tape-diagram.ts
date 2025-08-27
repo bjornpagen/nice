@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includeText, includePointX, initExtents } from "@/lib/widgets/utils/layout"
 
 function createSegmentSchema() {
 	return z
@@ -124,26 +125,34 @@ export const generateTapeDiagram: WidgetGenerator<typeof TapeDiagramPropsSchema>
 		scale = chartWidth / maxTotalLength
 	}
 
+	const ext = initExtents(width)
+	
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 
 	const drawTape = (tape: typeof topTape, yPos: number) => {
 		if (tape.label) {
 			svg += `<text x="${padding}" y="${yPos - 5}" fill="black" text-anchor="start" font-weight="bold">${tape.label}</text>`
+			includeText(ext, padding, tape.label, "start", 7)
 		}
 
 		// If no segments, don't render anything for this tape
 		if (tape.segments.length === 0) return
 
 		let currentX = padding
+		// Track the start of the tape
+		includePointX(ext, currentX)
 
 		for (const s of tape.segments) {
 			const segmentWidth = modelType === "ratio" ? s.length * unitWidth : s.length * scale
 			svg += `<rect x="${currentX}" y="${yPos}" width="${segmentWidth}" height="${tapeHeight}" fill="${tape.color}" stroke="black"/>`
 			if (s.label !== null) {
 				svg += `<text x="${currentX + segmentWidth / 2}" y="${yPos + tapeHeight / 2}" fill="white" text-anchor="middle" dominant-baseline="middle" font-weight="bold">${s.label}</text>`
+				includeText(ext, currentX + segmentWidth / 2, s.label, "middle", 7)
 			}
 			currentX += segmentWidth
 		}
+		// Track the end of the tape
+		includePointX(ext, currentX)
 	}
 
 	const topY = padding + 20
@@ -165,9 +174,13 @@ export const generateTapeDiagram: WidgetGenerator<typeof TapeDiagramPropsSchema>
 		svg += `<line x1="${padding + totalTapeLength}" y1="${bracketY - 5}" x2="${padding + totalTapeLength}" y2="${bracketY + 5}" stroke="black"/>`
 		if (totalLabel !== null) {
 			svg += `<text x="${padding + totalTapeLength / 2}" y="${bracketY + 15}" fill="black" text-anchor="middle" font-weight="bold">${totalLabel}</text>`
+			includeText(ext, padding + totalTapeLength / 2, totalLabel, "middle", 7)
 		}
 	}
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

@@ -4,6 +4,7 @@ import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels" // NEW
 import {
 	computeDynamicWidth,
+	includePointX,
 	includeText,
 	initExtents,
 	type Extents
@@ -241,6 +242,13 @@ function drawFigure(figure: z.infer<typeof Figure>, offsetX: number, offsetY: nu
 		x: v.x * scale + offsetX,
 		y: v.y * scale + offsetY
 	}))
+
+	// --- ADDED ---
+	// Track all transformed vertices to ensure the figure is within the dynamic bounds
+	for (const vertex of transformedVertices) {
+		includePointX(ext, vertex.x)
+	}
+	// --- END ADDED ---
 
 	// Draw the figure shape
 	const points = transformedVertices.map((v) => `${v.x},${v.y}`).join(" ")

@@ -1,5 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 // strict schema with no nullables or fallbacks
 export const NumberLineForOppositesPropsSchema = z
@@ -77,33 +78,51 @@ export const generateNumberLineForOpposites: WidgetGenerator<typeof NumberLineFo
 	const negPos = toSvgX(negativeValue)
 	const zeroPos = toSvgX(0)
 
+	const ext = initExtents(width)
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg += `<defs><marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker></defs>`
 
 	// axis and ticks
+	// Track the main line endpoints
+	includePointX(ext, padding)
+	includePointX(ext, width - padding)
 	svg += `<line x1="${padding}" y1="${yPos}" x2="${width - padding}" y2="${yPos}" stroke="black" stroke-width="1.5"/>`
 	for (let t = min; t <= max; t += tickInterval) {
 		const x = toSvgX(t)
+		includePointX(ext, x)
 		svg += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="black"/>`
 		svg += `<text x="${x}" y="${yPos + 20}" fill="black" text-anchor="middle">${t}</text>`
+		includeText(ext, x, String(t), "middle", 7)
 	}
 
 	if (showArrows) {
 		const arrowY = yPos - 10
+		includePointX(ext, zeroPos)
+		includePointX(ext, posPos)
+		includePointX(ext, negPos)
 		svg += `<line x1="${zeroPos}" y1="${arrowY}" x2="${posPos}" y2="${arrowY}" stroke="black" marker-end="url(#arrowhead)"/>`
 		svg += `<line x1="${zeroPos}" y1="${arrowY}" x2="${negPos}" y2="${arrowY}" stroke="black" marker-end="url(#arrowhead)"/>`
 	}
 
+	includePointX(ext, posPos)
+	includePointX(ext, negPos)
 	svg += `<circle cx="${posPos}" cy="${yPos}" r="5" fill="black"/>`
 	svg += `<circle cx="${negPos}" cy="${yPos}" r="5" fill="black"/>`
 
 	const posLab = positiveLabel
 	const negLab = negativeLabel
-	if (posLab !== null)
+	if (posLab !== null) {
 		svg += `<text x="${posPos}" y="${yPos - 25}" fill="black" text-anchor="middle" font-weight="bold">${posLab}</text>`
-	if (negLab !== null)
+		includeText(ext, posPos, posLab, "middle", 7)
+	}
+	if (negLab !== null) {
 		svg += `<text x="${negPos}" y="${yPos - 25}" fill="black" text-anchor="middle" font-weight="bold">${negLab}</text>`
+		includeText(ext, negPos, negLab, "middle", 7)
+	}
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

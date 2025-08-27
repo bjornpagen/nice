@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const Node = z
 	.object({
@@ -122,6 +123,9 @@ export type TreeDiagramProps = z.infer<typeof TreeDiagramPropsSchema>
 export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema> = (props) => {
 	const { width, height, nodes, edges, nodeFontSize, nodeRadius } = props
 
+	// Initialize extents tracking
+	const ext = initExtents(width)
+
 	// Handle empty nodes case
 	if (nodes.length === 0) {
 		return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"></svg>`
@@ -150,6 +154,10 @@ export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema>
 		const toNode = nodeMap.get(edge.to)
 		if (!fromNode || !toNode) continue
 
+		// Track edge endpoints
+		includePointX(ext, fromNode.position.x)
+		includePointX(ext, toNode.position.x)
+
 		const dash = edge.style === "dashed" ? 'stroke-dasharray="5 3"' : ""
 		svg += `<line x1="${fromNode.position.x}" y1="${fromNode.position.y}" x2="${toNode.position.x}" y2="${toNode.position.y}" stroke="black" stroke-width="2" ${dash}/>`
 	}
@@ -157,14 +165,32 @@ export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema>
 	// 2. Draw Nodes (on top of edges)
 	for (const node of nodes) {
 		const { x, y } = node.position
+		
+		// Track node circle (left and right edges)
+		includePointX(ext, x - nodeRadius)
+		includePointX(ext, x + nodeRadius)
+		
 		// Draw a circle for all nodes
 		svg += `<circle cx="${x}" cy="${y}" r="${nodeRadius}" fill="white" stroke="${node.color}" stroke-width="2"/>`
 		// Draw the text label only if it exists
 		if (node.label !== null) {
+			// Track node label
+			includeText(ext, x, node.label, "middle", nodeFontSize)
+			
 			svg += `<text x="${x}" y="${y}" fill="${node.color}" font-size="${nodeFontSize}px" text-anchor="middle" dominant-baseline="middle">${node.label}</text>`
 		}
 	}
 
 	svg += "</svg>"
+	
+	// Apply dynamic width calculation
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
+	
+	// Update SVG with dynamic width and viewBox
+	svg = svg.replace(
+		`width="${width}" height="${height}" viewBox="${vbX} ${vbY} ${vbWidth} ${vbHeight}"`,
+		`width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} ${vbY} ${dynamicWidth} ${vbHeight}"`
+	)
+	
 	return svg
 }

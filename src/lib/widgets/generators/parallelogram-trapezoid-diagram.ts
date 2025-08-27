@@ -3,10 +3,11 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import {
-	type CompositeShapeDiagramProps,
-	CompositeShapeDiagramPropsSchema,
-	generateCompositeShapeDiagram
-} from "./composite-shape-diagram"
+	computeDynamicWidth,
+	includePointX,
+	includeText,
+	initExtents,
+} from "@/lib/widgets/utils/layout"
 
 const Parallelogram = z
 	.object({
@@ -151,20 +152,19 @@ export const ParallelogramTrapezoidDiagramPropsSchema = z
 export type ParallelogramTrapezoidDiagramProps = z.infer<typeof ParallelogramTrapezoidDiagramPropsSchema>
 
 /**
- * Generates an SVG diagram for a parallelogram or trapezoid by calculating vertices
- * and reusing the generic composite shape diagram generator.
+ * Generates an SVG diagram for a parallelogram or trapezoid directly with layout utilities.
  */
 export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof ParallelogramTrapezoidDiagramPropsSchema> = (
 	props
 ) => {
 	const { width, height, shape } = props
-
-	let compositeProps: CompositeShapeDiagramProps
+	const ext = initExtents(width)
+	let svgContent = ""
 
 	// --- SCALING LOGIC START ---
 	const padding = 50 // Generous padding for labels
-	const availableWidth = width - padding
-	const availableHeight = height - padding
+	const availableWidth = width - padding * 2
+	const availableHeight = height - padding * 2
 
 	let shapeWidth = 0
 	let shapeHeight = 0
@@ -186,6 +186,10 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 	const scale = Math.min(availableWidth / shapeWidth, availableHeight / shapeHeight)
 	// --- SCALING LOGIC END ---
 
+	// Center the shape in the diagram
+	const centerX = width / 2
+	const centerY = height / 2
+
 	if (shape.type === "parallelogram") {
 		const { base, height: h, sideLength, labels } = shape
 
@@ -200,44 +204,79 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		const scaledSide = sideLength * scale
 		const scaledOffset = Math.sqrt(scaledSide * scaledSide - scaledH * scaledH)
 
+		// Center the shape
+		const shapeActualWidth = scaledBase + scaledOffset
+		const xOffset = centerX - shapeActualWidth / 2
+		const yOffset = centerY - scaledH / 2
+
 		const vertices = [
-			{ x: 0, y: scaledH }, // 0: Bottom-left
-			{ x: scaledBase, y: scaledH }, // 1: Bottom-right
-			{ x: scaledBase + scaledOffset, y: 0 }, // 2: Top-right
-			{ x: scaledOffset, y: 0 }, // 3: Top-left
-			{ x: scaledOffset, y: scaledH } // 4: Point for height line base
+			{ x: xOffset, y: yOffset + scaledH }, // 0: Bottom-left
+			{ x: xOffset + scaledBase, y: yOffset + scaledH }, // 1: Bottom-right
+			{ x: xOffset + scaledBase + scaledOffset, y: yOffset }, // 2: Top-right
+			{ x: xOffset + scaledOffset, y: yOffset }, // 3: Top-left
+			{ x: xOffset + scaledOffset, y: yOffset + scaledH } // 4: Point for height line base
 		]
 
-		compositeProps = {
-			type: "compositeShapeDiagram",
-			width,
-			height,
-			vertices,
-			outerBoundary: [0, 1, 2, 3],
-			outerBoundaryLabels: [
-				{ text: labels?.base ?? String(base), offset: 15 },
-				{ text: labels?.sideLength ?? String(sideLength), offset: 15 },
-				{ text: labels?.base ?? String(base), offset: 15 },
-				{ text: labels?.sideLength ?? String(sideLength), offset: 15 }
-			],
-			internalSegments: [
-				{
-					fromVertexIndex: 3,
-					toVertexIndex: 4,
-					style: "dashed",
-					label: labels?.height ?? String(h)
-				}
-			],
-			shadedRegions: [],
-			regionLabels: [],
-			rightAngleMarkers: [
-				{
-					cornerVertexIndex: 4,
-					adjacentVertex1Index: 3,
-					adjacentVertex2Index: 0
-				}
-			]
+		// Track all vertices
+		vertices.forEach(v => includePointX(ext, v.x))
+
+		// Draw outer boundary polygon
+		const outerPoints = [vertices[0], vertices[1], vertices[2], vertices[3]]
+			.filter(p => p !== undefined)
+			.map(p => `${p.x},${p.y}`)
+			.join(" ")
+		svgContent += `<polygon points="${outerPoints}" fill="none" stroke="black" stroke-width="2"/>`
+
+		// Draw height line (dashed)
+		const v3 = vertices[3]
+		const v4 = vertices[4]
+		if (v3 && v4) {
+			svgContent += `<line x1="${v3.x}" y1="${v3.y}" x2="${v4.x}" y2="${v4.y}" stroke="black" stroke-width="1.5" stroke-dasharray="4 2"/>`
 		}
+
+		// Draw right angle marker
+		const markerSize = 10
+		if (v4) {
+			svgContent += `<path d="M ${v4.x - markerSize} ${v4.y} L ${v4.x - markerSize} ${v4.y - markerSize} L ${v4.x} ${v4.y - markerSize}" fill="none" stroke="black" stroke-width="1.5"/>`
+		}
+
+		// Draw labels
+		// Base label (bottom)
+		const baseLabel = labels?.base ?? String(base)
+		const baseLabelX = xOffset + scaledBase / 2
+		const baseLabelY = yOffset + scaledH + 20
+		svgContent += `<text x="${baseLabelX}" y="${baseLabelY}" text-anchor="middle" font-size="14">${baseLabel}</text>`
+		includeText(ext, baseLabelX, baseLabel, "middle")
+
+		// Right side label
+		const rightLabel = labels?.sideLength ?? String(sideLength)
+		const rightLabelX = xOffset + scaledBase + scaledOffset / 2
+		const rightLabelY = yOffset + scaledH / 2
+		svgContent += `<text x="${rightLabelX + 20}" y="${rightLabelY}" text-anchor="start" font-size="14">${rightLabel}</text>`
+		includeText(ext, rightLabelX + 20, rightLabel, "start")
+
+		// Top base label
+		const topLabelX = xOffset + scaledOffset + scaledBase / 2
+		const topLabelY = yOffset - 10
+		svgContent += `<text x="${topLabelX}" y="${topLabelY}" text-anchor="middle" font-size="14">${baseLabel}</text>`
+		includeText(ext, topLabelX, baseLabel, "middle")
+
+		// Left side label
+		const leftLabel = labels?.sideLength ?? String(sideLength)
+		const leftLabelX = xOffset + scaledOffset / 2
+		const leftLabelY = yOffset + scaledH / 2
+		svgContent += `<text x="${leftLabelX - 20}" y="${leftLabelY}" text-anchor="end" font-size="14">${leftLabel}</text>`
+		includeText(ext, leftLabelX - 20, leftLabel, "end")
+
+		// Height label
+		const heightLabel = labels?.height ?? String(h)
+		if (v3 && v4) {
+			const heightLabelX = v3.x + (v4.x - v3.x) / 2 - 10
+			const heightLabelY = v3.y + (v4.y - v3.y) / 2
+			svgContent += `<text x="${heightLabelX}" y="${heightLabelY}" text-anchor="end" font-size="14">${heightLabel}</text>`
+			includeText(ext, heightLabelX, heightLabel, "end")
+		}
+
 	} else if (shape.type === "trapezoidRight") {
 		// Right trapezoid - left side is perpendicular
 		const { topBase, bottomBase, height: h, labels } = shape
@@ -245,49 +284,81 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		const scaledTop = topBase * scale
 		const scaledBottom = bottomBase * scale
 		const scaledH = h * scale
-		const leftOffset = 0 // Right trapezoid has no offset
+
+		// Center the shape
+		const xOffset = centerX - scaledBottom / 2
+		const yOffset = centerY - scaledH / 2
 
 		const vertices = [
-			{ x: 0, y: scaledH }, // 0: Bottom-left
-			{ x: scaledBottom, y: scaledH }, // 1: Bottom-right
-			{ x: leftOffset + scaledTop, y: 0 }, // 2: Top-right
-			{ x: leftOffset, y: 0 }, // 3: Top-left
-			{ x: leftOffset, y: scaledH } // 4: Point for left height
+			{ x: xOffset, y: yOffset + scaledH }, // 0: Bottom-left
+			{ x: xOffset + scaledBottom, y: yOffset + scaledH }, // 1: Bottom-right
+			{ x: xOffset + scaledTop, y: yOffset }, // 2: Top-right
+			{ x: xOffset, y: yOffset }, // 3: Top-left
+			{ x: xOffset, y: yOffset + scaledH } // 4: Point for left height
 		]
 
-		const rightOffset = scaledBottom - (leftOffset + scaledTop)
+		// Track all vertices
+		vertices.forEach(v => includePointX(ext, v.x))
+
+		// Draw outer boundary polygon
+		const outerPoints = [vertices[0], vertices[1], vertices[2], vertices[3]]
+			.filter(p => p !== undefined)
+			.map(p => `${p.x},${p.y}`)
+			.join(" ")
+		svgContent += `<polygon points="${outerPoints}" fill="none" stroke="black" stroke-width="2"/>`
+
+		// Draw height line (dashed)
+		const v3t = vertices[3]
+		const v4t = vertices[4]
+		if (v3t && v4t) {
+			svgContent += `<line x1="${v3t.x}" y1="${v3t.y}" x2="${v4t.x}" y2="${v4t.y}" stroke="black" stroke-width="1.5" stroke-dasharray="4 2"/>`
+		}
+
+		// Draw right angle marker
+		const markerSize = 10
+		if (v4t) {
+			svgContent += `<path d="M ${v4t.x} ${v4t.y - markerSize} L ${v4t.x + markerSize} ${v4t.y - markerSize} L ${v4t.x + markerSize} ${v4t.y}" fill="none" stroke="black" stroke-width="1.5"/>`
+		}
+
+		const rightOffset = scaledBottom - scaledTop
 		const rightSideLengthVal = Math.sqrt(rightOffset * rightOffset + scaledH * scaledH) / scale
 
-		compositeProps = {
-			type: "compositeShapeDiagram",
-			width,
-			height,
-			vertices,
-			outerBoundary: [0, 1, 2, 3],
-			outerBoundaryLabels: [
-				{ text: labels?.bottomBase ?? String(bottomBase), offset: 15 },
-				{ text: labels?.rightSide ?? String(Number.parseFloat(rightSideLengthVal.toFixed(2))), offset: 15 },
-				{ text: labels?.topBase ?? String(topBase), offset: 15 },
-				{ text: labels?.leftSide ?? String(h), offset: 15 }
-			],
-			internalSegments: [
-				{
-					fromVertexIndex: 3,
-					toVertexIndex: 4,
-					style: "dashed",
-					label: labels?.height ?? String(h)
-				}
-			],
-			shadedRegions: [],
-			regionLabels: [],
-			rightAngleMarkers: [
-				{
-					cornerVertexIndex: 4,
-					adjacentVertex1Index: 3,
-					adjacentVertex2Index: 0
-				}
-			]
-		}
+		// Draw labels
+		// Bottom base label
+		const bottomLabel = labels?.bottomBase ?? String(bottomBase)
+		const bottomLabelX = xOffset + scaledBottom / 2
+		const bottomLabelY = yOffset + scaledH + 20
+		svgContent += `<text x="${bottomLabelX}" y="${bottomLabelY}" text-anchor="middle" font-size="14">${bottomLabel}</text>`
+		includeText(ext, bottomLabelX, bottomLabel, "middle")
+
+		// Right side label
+		const rightLabel = labels?.rightSide ?? String(Number.parseFloat(rightSideLengthVal.toFixed(2)))
+		const rightLabelX = xOffset + scaledBottom - rightOffset / 2
+		const rightLabelY = yOffset + scaledH / 2
+		svgContent += `<text x="${rightLabelX + 20}" y="${rightLabelY}" text-anchor="start" font-size="14">${rightLabel}</text>`
+		includeText(ext, rightLabelX + 20, rightLabel, "start")
+
+		// Top base label
+		const topLabel = labels?.topBase ?? String(topBase)
+		const topLabelX = xOffset + scaledTop / 2
+		const topLabelY = yOffset - 10
+		svgContent += `<text x="${topLabelX}" y="${topLabelY}" text-anchor="middle" font-size="14">${topLabel}</text>`
+		includeText(ext, topLabelX, topLabel, "middle")
+
+		// Left side label
+		const leftLabel = labels?.leftSide ?? String(h)
+		const leftLabelX = xOffset - 20
+		const leftLabelY = yOffset + scaledH / 2
+		svgContent += `<text x="${leftLabelX}" y="${leftLabelY}" text-anchor="end" font-size="14">${leftLabel}</text>`
+		includeText(ext, leftLabelX, leftLabel, "end")
+
+		// Height label
+		const heightLabel = labels?.height ?? String(h)
+		const heightLabelX = xOffset - 10
+		const heightLabelY = yOffset + scaledH / 2
+		svgContent += `<text x="${heightLabelX}" y="${heightLabelY}" text-anchor="end" font-size="14">${heightLabel}</text>`
+		includeText(ext, heightLabelX, heightLabel, "end")
+
 	} else {
 		// shape.type === "trapezoid" - general trapezoid with both sides slanted
 		const { topBase, bottomBase, height: h, leftSideLength, labels } = shape
@@ -304,53 +375,89 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 
 		const leftOffset = Math.sqrt(scaledLeft * scaledLeft - scaledH * scaledH)
 
+		// Center the shape
+		const shapeActualWidth = Math.max(scaledBottom, leftOffset + scaledTop)
+		const xOffset = centerX - shapeActualWidth / 2
+		const yOffset = centerY - scaledH / 2
+
 		const vertices = [
-			{ x: 0, y: scaledH }, // 0: Bottom-left
-			{ x: scaledBottom, y: scaledH }, // 1: Bottom-right
-			{ x: leftOffset + scaledTop, y: 0 }, // 2: Top-right
-			{ x: leftOffset, y: 0 }, // 3: Top-left
-			{ x: leftOffset, y: scaledH } // 4: Point for left height
+			{ x: xOffset, y: yOffset + scaledH }, // 0: Bottom-left
+			{ x: xOffset + scaledBottom, y: yOffset + scaledH }, // 1: Bottom-right
+			{ x: xOffset + leftOffset + scaledTop, y: yOffset }, // 2: Top-right
+			{ x: xOffset + leftOffset, y: yOffset }, // 3: Top-left
+			{ x: xOffset + leftOffset, y: yOffset + scaledH } // 4: Point for left height
 		]
+
+		// Track all vertices
+		vertices.forEach(v => includePointX(ext, v.x))
+
+		// Draw outer boundary polygon
+		const outerPoints = [vertices[0], vertices[1], vertices[2], vertices[3]]
+			.filter(p => p !== undefined)
+			.map(p => `${p.x},${p.y}`)
+			.join(" ")
+		svgContent += `<polygon points="${outerPoints}" fill="none" stroke="black" stroke-width="2"/>`
+
+		// Draw height line (dashed)
+		const v3g = vertices[3]
+		const v4g = vertices[4]
+		if (v3g && v4g) {
+			svgContent += `<line x1="${v3g.x}" y1="${v3g.y}" x2="${v4g.x}" y2="${v4g.y}" stroke="black" stroke-width="1.5" stroke-dasharray="4 2"/>`
+		}
+
+		// Draw right angle marker
+		const markerSize = 10
+		if (v4g) {
+			svgContent += `<path d="M ${v4g.x - markerSize} ${v4g.y} L ${v4g.x - markerSize} ${v4g.y - markerSize} L ${v4g.x} ${v4g.y - markerSize}" fill="none" stroke="black" stroke-width="1.5"/>`
+		}
 
 		const rightOffset = scaledBottom - (leftOffset + scaledTop)
 		const rightSideLengthVal = Math.sqrt(rightOffset * rightOffset + scaledH * scaledH) / scale
 
-		compositeProps = {
-			type: "compositeShapeDiagram",
-			width,
-			height,
-			vertices,
-			outerBoundary: [0, 1, 2, 3],
-			outerBoundaryLabels: [
-				{ text: labels?.bottomBase ?? String(bottomBase), offset: 15 },
-				{ text: labels?.rightSide ?? String(Number.parseFloat(rightSideLengthVal.toFixed(2))), offset: 15 },
-				{ text: labels?.topBase ?? String(topBase), offset: 15 },
-				{ text: labels?.leftSide ?? String(leftSideLength), offset: 15 }
-			],
-			internalSegments: [
-				{
-					fromVertexIndex: 3,
-					toVertexIndex: 4,
-					style: "dashed",
-					label: labels?.height ?? String(h)
-				}
-			],
-			shadedRegions: [],
-			regionLabels: [],
-			rightAngleMarkers: [
-				{
-					cornerVertexIndex: 4,
-					adjacentVertex1Index: 3,
-					adjacentVertex2Index: 0
-				}
-			]
+		// Draw labels
+		// Bottom base label
+		const bottomLabel = labels?.bottomBase ?? String(bottomBase)
+		const bottomLabelX = xOffset + scaledBottom / 2
+		const bottomLabelY = yOffset + scaledH + 20
+		svgContent += `<text x="${bottomLabelX}" y="${bottomLabelY}" text-anchor="middle" font-size="14">${bottomLabel}</text>`
+		includeText(ext, bottomLabelX, bottomLabel, "middle")
+
+		// Right side label
+		const rightLabel = labels?.rightSide ?? String(Number.parseFloat(rightSideLengthVal.toFixed(2)))
+		const rightLabelX = xOffset + scaledBottom - rightOffset / 2
+		const rightLabelY = yOffset + scaledH / 2
+		svgContent += `<text x="${rightLabelX + 20}" y="${rightLabelY}" text-anchor="start" font-size="14">${rightLabel}</text>`
+		includeText(ext, rightLabelX + 20, rightLabel, "start")
+
+		// Top base label
+		const topLabel = labels?.topBase ?? String(topBase)
+		const topLabelX = xOffset + leftOffset + scaledTop / 2
+		const topLabelY = yOffset - 10
+		svgContent += `<text x="${topLabelX}" y="${topLabelY}" text-anchor="middle" font-size="14">${topLabel}</text>`
+		includeText(ext, topLabelX, topLabel, "middle")
+
+		// Left side label
+		const leftLabel = labels?.leftSide ?? String(leftSideLength)
+		const leftLabelX = xOffset + leftOffset / 2
+		const leftLabelY = yOffset + scaledH / 2
+		svgContent += `<text x="${leftLabelX - 20}" y="${leftLabelY}" text-anchor="end" font-size="14">${leftLabel}</text>`
+		includeText(ext, leftLabelX - 20, leftLabel, "end")
+
+		// Height label
+		const heightLabel = labels?.height ?? String(h)
+		if (v3g && v4g) {
+			const heightLabelX = v3g.x + (v4g.x - v3g.x) / 2 - 10
+			const heightLabelY = v3g.y + (v4g.y - v3g.y) / 2
+			svgContent += `<text x="${heightLabelX}" y="${heightLabelY}" text-anchor="end" font-size="14">${heightLabel}</text>`
+			includeText(ext, heightLabelX, heightLabel, "end")
 		}
 	}
 
-	const validation = CompositeShapeDiagramPropsSchema.safeParse(compositeProps)
-	if (!validation.success) {
-		logger.error("input validation", { error: validation.error })
-		throw errors.wrap(validation.error, "input validation")
-	}
-	return generateCompositeShapeDiagram(validation.data)
+	// Final assembly
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	svg += svgContent
+	svg += "</svg>"
+
+	return svg
 }

@@ -3,6 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import {
 	computeDynamicWidth,
+	includePointX,
 	includeText,
 	initExtents,
 } from "@/lib/widgets/utils/layout"
@@ -186,6 +187,11 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 		const from = pointMap.get(ray.from)
 		const to = pointMap.get(ray.to)
 		if (!from || !to) continue
+		
+		// Track ray endpoints
+		includePointX(ext, from.x)
+		includePointX(ext, to.x)
+		
 		svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="black" stroke-width="2"/>`
 	}
 
@@ -219,6 +225,11 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			const m3x = vertex.x + (u1x + u2x) * markerSize
 			const m3y = vertex.y + (u1y + u2y) * markerSize
 
+			// Track right angle marker vertices
+			includePointX(ext, m1x)
+			includePointX(ext, m2x)
+			includePointX(ext, m3x)
+
 			svg += `<path d="M ${m1x} ${m1y} L ${m3x} ${m3y} L ${m2x} ${m2y}" fill="none" stroke="${angle.color}" stroke-width="2"/>`
 		}
 
@@ -232,6 +243,10 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			const arcStartY = vertex.y + effectiveRadius * Math.sin(startAngle)
 			const arcEndX = vertex.x + effectiveRadius * Math.cos(endAngle)
 			const arcEndY = vertex.y + effectiveRadius * Math.sin(endAngle)
+
+			// Track angle arc endpoints
+			includePointX(ext, arcStartX)
+			includePointX(ext, arcEndX)
 
 			let angleDiff = endAngle - startAngle
 			if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI
@@ -286,12 +301,14 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 
 	// Draw points and their labels (drawn last to be on top)
 	for (const point of points) {
+		// Track point location
+		includePointX(ext, point.x)
+		
 		if (point.shape === "ellipse") {
 			svg += `<ellipse cx="${point.x}" cy="${point.y}" rx="4" ry="4" fill="black" stroke="#000" stroke-width="2" stroke-dasharray="0"/>`
 		} else {
 			svg += `<circle cx="${point.x}" cy="${point.y}" r="4" fill="black"/>`
 		}
-		includeText(ext, point.x, "", "middle") // Track point location
 		if (point.label !== null) {
 			// Smart label positioning: avoid rays emanating from this point
 			const raysFromPoint = rays.filter((ray) => ray.from === point.id)
@@ -300,6 +317,8 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 				// No rays from this point, use simple offset
 				const textX = point.x + 5
 				const textY = point.y - 5
+				// Track simple point label
+				includeText(ext, textX, point.label, "start", 16)
 				svg += `<text x="${textX}" y="${textY}" fill="black" font-size="16" font-weight="bold">${point.label}</text>`
 			} else {
 				// Calculate angles of all rays from this point
@@ -354,7 +373,7 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
 	const finalSVG = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	
-	// Rebuild SVG with correct viewBox
+	// Rebuild SVG with correct viewBox and width
 	svg = finalSVG + svg.substring(svg.indexOf(">") + 1)
 	return svg
 }

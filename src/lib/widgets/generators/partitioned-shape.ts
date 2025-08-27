@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includePointX, initExtents } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidPartitionGeometry = errors.new("invalid partition geometry")
 
@@ -226,6 +227,7 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 	const totalWidth = layout === "horizontal" ? shapes.length * shapeWidth + (shapes.length - 1) * gap : shapeWidth
 	const totalHeight = layout === "vertical" ? shapes.length * shapeHeight + (shapes.length - 1) * gap : shapeHeight
 
+	const ext = initExtents(totalWidth)
 	let svg = `<svg width="${totalWidth}" height="${totalHeight}" viewBox="0 0 ${totalWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg">`
 
 	shapes.forEach((s, idx) => {
@@ -249,21 +251,31 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 
 				const fill = isShaded ? s.shadeColor : "none"
 				const opacity = isShaded ? s.shadeOpacity : 1
+				const rectX = xOffset + col * cellW
+				const rectY = yOffset + row * cellH
 
-				svg += `<rect x="${xOffset + col * cellW}" y="${yOffset + row * cellH}" width="${cellW}" height="${cellH}" fill="${fill}" fill-opacity="${opacity}" stroke="#545454" stroke-width="1"/>`
+				// Track the horizontal extent of the rectangle
+				includePointX(ext, rectX)
+				includePointX(ext, rectX + cellW)
+
+				svg += `<rect x="${rectX}" y="${rectY}" width="${cellW}" height="${cellH}" fill="${fill}" fill-opacity="${opacity}" stroke="#545454" stroke-width="1"/>`
 
 				if (isHatched) {
 					const cellId = `hatch-${idx}-${i}`
 					svg += `<defs><pattern id="${cellId}" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
 						<rect width="2" height="4" fill="#555" opacity="0.9"/>
 					</pattern></defs>`
-					svg += `<rect x="${xOffset + col * cellW}" y="${yOffset + row * cellH}" width="${cellW}" height="${cellH}" fill="url(#${cellId})" stroke="#545454" stroke-width="1"/>`
+					svg += `<rect x="${rectX}" y="${rectY}" width="${cellW}" height="${cellH}" fill="url(#${cellId})" stroke="#545454" stroke-width="1"/>`
 				}
 			}
 		} else if (s.type === "circle") {
 			const cx = xOffset + shapeWidth / 2
 			const cy = yOffset + shapeHeight / 2
 			const r = Math.min(shapeWidth, shapeHeight) / 2 - 5
+			
+			// Track the horizontal extent of the circle
+			includePointX(ext, cx - r)
+			includePointX(ext, cx + r)
 			const angleStep = 360 / s.totalParts
 
 			const shadedSet = new Set(s.shadedCells)
@@ -324,12 +336,16 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 		}
 	}
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, totalHeight, 10)
+	svg = svg.replace(`width="${totalWidth}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${totalWidth} ${totalHeight}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}"`)
 	svg += "</svg>"
 	return svg
 }
 
 const generateGeometryView = (props: GeometryModeProps): string => {
 	const { width, height, grid, figures, lines } = props
+	const ext = initExtents(width)
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">`
 
 	const cellWidth = width / grid.columns
@@ -357,11 +373,15 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 
 	// 2. Draw figures
 	for (const fig of figures) {
-		const pointsStr = fig.vertices
-			.map((p) => {
-				const pixel = gridToPixel(p)
-				return `${pixel.x},${pixel.y}`
-			})
+		const pixelPoints = fig.vertices.map((p) => gridToPixel(p))
+		
+		// Track the x-extents of all vertices
+		pixelPoints.forEach((pixel) => {
+			includePointX(ext, pixel.x)
+		})
+		
+		const pointsStr = pixelPoints
+			.map((pixel) => `${pixel.x},${pixel.y}`)
 			.join(" ")
 		svg += `<polygon points="${pointsStr}" fill="${fig.fillColor ?? "none"}" stroke="${fig.strokeColor ?? "black"}" stroke-width="2"/>`
 	}
@@ -381,6 +401,9 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 		svg += `<line x1="${fromPixel.x}" y1="${fromPixel.y}" x2="${toPixel.x}" y2="${toPixel.y}" stroke="${line.color}" stroke-width="2" stroke-dasharray="${strokeDasharray}"/>`
 	}
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

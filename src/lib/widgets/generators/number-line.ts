@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const Point = z
 	.object({
@@ -117,19 +118,26 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 	if (min >= max || lineLength <= 0) return `<svg width="${width}" height="${height}"></svg>`
 	const scale = lineLength / (max - min)
 
+	const ext = initExtents(width)
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
-	// Removed unused collision tracker to satisfy no-unused-vars policy
 
 	if (isHorizontal) {
 		const yPos = height / 2
 		const toSvgX = (val: number) => padding + (val - min) * scale
+		
+		// Track the main line endpoints
+		includePointX(ext, padding)
+		includePointX(ext, width - padding)
+		
 		svg += `<line x1="${padding}" y1="${yPos}" x2="${width - padding}" y2="${yPos}" stroke="black"/>`
 		const minorTickSpacing = (majorTickInterval / (minorTicksPerInterval + 1)) * scale
 		for (let t = min; t <= max; t += majorTickInterval) {
 			const x = toSvgX(t)
+			includePointX(ext, x)
 			svg += `<line x1="${x}" y1="${yPos - 8}" x2="${x}" y2="${yPos + 8}" stroke="black"/>`
 			if (!specialTickLabels.some((stl) => stl.value === t)) {
 				svg += `<text x="${x}" y="${yPos + 25}" fill="black" text-anchor="middle">${t}</text>`
+				includeText(ext, x, String(t), "middle", 7)
 			}
 			for (let m = 1; m <= minorTicksPerInterval; m++) {
 				const mPos = x + m * minorTickSpacing
@@ -140,14 +148,17 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 		// Special Labels
 		for (const s of specialTickLabels) {
 			if (s.label !== "") {
-				svg += `<text x="${toSvgX(s.value)}" y="${yPos + 25}" fill="black" text-anchor="middle" font-weight="bold">${s.label}</text>`
+				const x = toSvgX(s.value)
+				svg += `<text x="${x}" y="${yPos + 25}" fill="black" text-anchor="middle" font-weight="bold">${s.label}</text>`
+				includeText(ext, x, s.label, "middle", 7)
 			}
 		}
 		for (const p of points) {
 			const cx = toSvgX(p.value)
+			includePointX(ext, cx)
 			let labelX = cx
 			let labelY = yPos
-			let anchor = "middle"
+			let anchor: "start" | "middle" | "end" = "middle"
 			switch (p.labelPosition) {
 				case "above":
 					labelY -= 15
@@ -167,20 +178,28 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 					labelY -= 15 // default to above
 			}
 			svg += `<circle cx="${cx}" cy="${yPos}" r="5" fill="${p.color}" stroke="black" stroke-width="1"/>`
-			if (p.label)
+			if (p.label) {
 				svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="${anchor}" dominant-baseline="middle">${p.label}</text>`
+				includeText(ext, labelX, p.label, anchor, 7)
+			}
 		}
 	} else {
 		// Vertical
 		const xPos = width / 2
 		const toSvgY = (val: number) => height - padding - (val - min) * scale
+		
+		// Track the vertical line
+		includePointX(ext, xPos)
+		
 		svg += `<line x1="${xPos}" y1="${padding}" x2="${xPos}" y2="${height - padding}" stroke="black"/>`
 		const minorTickSpacing = (majorTickInterval / (minorTicksPerInterval + 1)) * scale
 		for (let t = min; t <= max; t += majorTickInterval) {
 			const y = toSvgY(t)
 			svg += `<line x1="${xPos - 8}" y1="${y}" x2="${xPos + 8}" y2="${y}" stroke="black"/>`
 			if (!specialTickLabels.some((stl) => stl.value === t)) {
-				svg += `<text x="${xPos - 15}" y="${y + 4}" fill="black" text-anchor="end">${t}</text>`
+				const labelX = xPos - 15
+				svg += `<text x="${labelX}" y="${y + 4}" fill="black" text-anchor="end">${t}</text>`
+				includeText(ext, labelX, String(t), "end", 7)
 			}
 			for (let m = 1; m <= minorTicksPerInterval; m++) {
 				const mPos = y - m * minorTickSpacing
@@ -190,14 +209,17 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 		// Special Labels
 		for (const s of specialTickLabels) {
 			if (s.label !== "") {
-				svg += `<text x="${xPos - 15}" y="${toSvgY(s.value) + 4}" fill="black" text-anchor="end" font-weight="bold">${s.label}</text>`
+				const labelX = xPos - 15
+				svg += `<text x="${labelX}" y="${toSvgY(s.value) + 4}" fill="black" text-anchor="end" font-weight="bold">${s.label}</text>`
+				includeText(ext, labelX, s.label, "end", 7)
 			}
 		}
 		for (const p of points) {
 			const cy = toSvgY(p.value)
+			includePointX(ext, xPos)
 			let labelX = xPos
 			let labelY = cy
-			let anchor = "middle"
+			let anchor: "start" | "middle" | "end" = "middle"
 			switch (p.labelPosition) {
 				case "left":
 					labelX -= 15
@@ -212,10 +234,16 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 					anchor = "start" // default to right
 			}
 			svg += `<circle cx="${xPos}" cy="${cy}" r="5" fill="${p.color}" stroke="black" stroke-width="1"/>`
-			if (p.label)
+			if (p.label) {
 				svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="${anchor}" dominant-baseline="middle">${p.label}</text>`
+				includeText(ext, labelX, p.label, anchor, 7)
+			}
 		}
 	}
+	
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
+	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
 	return svg
 }

@@ -180,6 +180,10 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 	includePointX(ext, minPos)
 	includePointX(ext, maxPos)
 
+	// Include the main box in extent tracking
+	includePointX(ext, q1Pos)
+	includePointX(ext, q3Pos)
+
 	svg += `<rect x="${q1Pos}" y="${yCenter - plotHeight / 2}" width="${q3Pos - q1Pos}" height="${plotHeight}" fill="${boxColor}" stroke="black"/>`
 
 	svg += `<line x1="${medianPos}" y1="${yCenter - plotHeight / 2}" x2="${medianPos}" y2="${yCenter + plotHeight / 2}" stroke="${medianColor}" stroke-width="2"/>`

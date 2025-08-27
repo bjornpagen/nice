@@ -9,6 +9,7 @@ import {
 	calculateXAxisLayout,
 	calculateYAxisLayout,
 	computeDynamicWidth,
+	includePointX,
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
@@ -131,6 +132,7 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 		svg += `<line x1="0" y1="${y}" x2="${chartWidth}" y2="${y}" stroke="${gridColor}" stroke-width="1"/>`
 		// Tick label
 		svg += `<text x="-10" y="${y + 5}" class="tick-label" text-anchor="end">${t}</text>`
+		includeText(ext, margin.left - 10, String(t), "end", 7) // MODIFICATION: Add this line
 	}
 
 	// Prominent Zero Line
@@ -167,6 +169,11 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 		const x = i * barWidth
 		const innerBarWidth = barWidth * (1 - barPadding)
 		const xOffset = (barWidth - innerBarWidth) / 2
+		const barX = x + xOffset
+
+		// Track the horizontal extent of the bar
+		includePointX(ext, margin.left + barX)
+		includePointX(ext, margin.left + barX + innerBarWidth)
 
 		let y: number
 		let color: string
@@ -179,7 +186,7 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 			color = negativeBarColor
 		}
 
-		svg += `<rect x="${x + xOffset}" y="${y}" width="${innerBarWidth}" height="${barAbsHeight}" fill="${color}"/>`
+		svg += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barAbsHeight}" fill="${color}"/>`
 
 		const labelX = x + barWidth / 2
 		if (selectedLabelIndices.has(i)) {

@@ -2,6 +2,7 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
+import { computeDynamicWidth, includeText, includePointX, initExtents } from "@/lib/widgets/utils/layout"
 
 // Defines the content and styling for a single cell in the grid.
 const BoxGridCellSchema = z
@@ -101,8 +102,11 @@ export const generateBoxGrid: WidgetGenerator<typeof BoxGridPropsSchema> = (prop
 	const cellWidth = width / numCols
 	const cellHeight = height / numRows
 
+	const ext = initExtents(width)
+	let svgContent = "" // Use a temporary string for the SVG body
+
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
-	svg += `<style>
+	const style = `<style>
         .cell-text {
             font-size: 14px;
             text-anchor: middle;
@@ -121,14 +125,19 @@ export const generateBoxGrid: WidgetGenerator<typeof BoxGridPropsSchema> = (prop
 
 			// Draw background rectangle for highlighting, if specified
 			if (cell.backgroundColor && cell.backgroundColor !== "") {
-				svg += `<rect x="${x}" y="${y}" width="${cellWidth}" height="${cellHeight}" fill="${cell.backgroundColor}" />`
+				svgContent += `<rect x="${x}" y="${y}" width="${cellWidth}" height="${cellHeight}" fill="${cell.backgroundColor}" />`
 			}
 
 			// Draw the text content (render text directly; for math, render a simple text fallback by stripping tags)
 			const textX = x + cellWidth / 2
 			const textY = y + cellHeight / 2
 			const label = getCellLabel(cell.content)
-			svg += `<text x="${textX}" y="${textY}" class="cell-text">${label}</text>`
+			svgContent += `<text x="${textX}" y="${textY}" class="cell-text">${label}</text>`
+			includeText(ext, textX, label, "middle", 7)
+			
+			// Track the actual cell boundaries based on where content is placed
+			includePointX(ext, x) // Left edge of the cell
+			includePointX(ext, x + cellWidth) // Right edge of the cell
 		}
 	}
 
@@ -138,11 +147,15 @@ export const generateBoxGrid: WidgetGenerator<typeof BoxGridPropsSchema> = (prop
 			for (let c = 0; c < numCols; c++) {
 				const x = c * cellWidth
 				const y = r * cellHeight
-				svg += `<rect x="${x}" y="${y}" width="${cellWidth}" height="${cellHeight}" fill="none" stroke="black" stroke-width="1.5" />`
+				svgContent += `<rect x="${x}" y="${y}" width="${cellWidth}" height="${cellHeight}" fill="none" stroke="black" stroke-width="1.5" />`
 			}
 		}
 	}
 
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	svg += style
+	svg += svgContent
 	svg += "</svg>"
 	return svg
 }
