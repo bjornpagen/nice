@@ -34,6 +34,13 @@ const config = {
 				hostname: "**.public.blob.vercel-storage.com"
 			}
 		]
+	},
+	async rewrites() {
+		return [
+			{ source: "/timeback/icon.png", destination: "/icon.png" },
+			{ source: "/timeback/logo.png", destination: "/icon.png" },
+			{ source: "/timeback/cover.png", destination: "/cover.png" }
+		]
 	}
 }
 export default config
