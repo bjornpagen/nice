@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateRightYAxisLayout,
@@ -270,7 +271,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		})
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

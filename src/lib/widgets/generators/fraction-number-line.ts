@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const Tick = z
@@ -198,7 +199,7 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 	}
 
 	// Compute dynamic width
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	
 	// Build SVG with computed dimensions
 	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`

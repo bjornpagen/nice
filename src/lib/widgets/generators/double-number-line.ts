@@ -2,6 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	computeDynamicWidth,
@@ -80,8 +81,7 @@ export type DoubleNumberLineProps = z.infer<typeof DoubleNumberLinePropsSchema>
  */
 export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePropsSchema> = (data) => {
 	const { width, height, topLine, bottomLine } = data
-	const padding = { horizontal: 20 }
-	const lineLength = width - 2 * padding.horizontal
+	const lineLength = width - 2 * PADDING
 
 	// Define vertical spacing constants for clarity and maintainability.
 	const TOP_LINE_LABEL_Y_OFFSET = -20 // Distance from top line UP to its label
@@ -123,11 +123,11 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 	svg += "<style>.line-label { font-size: 14px; font-weight: bold; text-anchor: middle; }</style>"
 
 	// Track the horizontal bounds of the lines
-	includePointX(ext, padding.horizontal)
-	includePointX(ext, width - padding.horizontal)
+	includePointX(ext, PADDING)
+	includePointX(ext, width - PADDING)
 
 	// Top line
-	svg += `<line x1="${padding.horizontal}" y1="${topY}" x2="${width - padding.horizontal}" y2="${topY}" stroke="#333333"/>`
+	svg += `<line x1="${PADDING}" y1="${topY}" x2="${width - PADDING}" y2="${topY}" stroke="#333333"/>`
 	if (topLine.label !== null) {
 		const labelText = abbreviateMonth(topLine.label) // MODIFIED: Abbreviate
 		const labelX = width / 2
@@ -136,7 +136,7 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 		includeText(ext, labelX, labelText, "middle") // NEW: Track text
 	}
 	topLine.ticks.forEach((t, i) => {
-		const x = padding.horizontal + i * tickSpacing
+		const x = PADDING + i * tickSpacing
 		includePointX(ext, x) // Track tick position
 		svg += `<line x1="${x}" y1="${topY - TICK_MARK_HEIGHT}" x2="${x}" y2="${topY + TICK_MARK_HEIGHT}" stroke="#333333"/>`
 		const labelText = String(t)
@@ -146,7 +146,7 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 	})
 
 	// Bottom line
-	svg += `<line x1="${padding.horizontal}" y1="${bottomY}" x2="${width - padding.horizontal}" y2="${bottomY}" stroke="#333333"/>`
+	svg += `<line x1="${PADDING}" y1="${bottomY}" x2="${width - PADDING}" y2="${bottomY}" stroke="#333333"/>`
 	if (bottomLine.label !== null) {
 		const labelText = abbreviateMonth(bottomLine.label) // MODIFIED: Abbreviate
 		const labelX = width / 2
@@ -155,7 +155,7 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 		includeText(ext, labelX, labelText, "middle") // NEW: Track text
 	}
 	bottomLine.ticks.forEach((t, i) => {
-		const x = padding.horizontal + i * tickSpacing
+		const x = PADDING + i * tickSpacing
 		includePointX(ext, x) // Track tick position
 		svg += `<line x1="${x}" y1="${bottomY - TICK_MARK_HEIGHT}" x2="${x}" y2="${bottomY + TICK_MARK_HEIGHT}" stroke="#333333"/>`
 		const labelText = String(t)
@@ -166,12 +166,12 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 
 	// Alignment lines (optional, but good for clarity)
 	for (let i = 0; i < numTicks; i++) {
-		const x = padding.horizontal + i * tickSpacing
+		const x = PADDING + i * tickSpacing
 		svg += `<line x1="${x}" y1="${topY + TICK_MARK_HEIGHT}" x2="${x}" y2="${bottomY - TICK_MARK_HEIGHT}" stroke="#ccc" stroke-dasharray="2"/>`
 	}
 
 	// NEW: Apply dynamic width at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, adjustedHeight, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, adjustedHeight, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${adjustedHeight}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${adjustedHeight}"`)
 	svg += "</svg>"

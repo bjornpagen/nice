@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { calculateYAxisLayout, computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
 
@@ -80,7 +81,7 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 	const mockYAxis = { min: yAxisMin, max: yAxisMax, tickInterval: (yAxisMax - yAxisMin) / 5, label: yAxisLabel }
 	
 	// Calculate vertical paddings first to determine chartHeight
-	const paddingWithoutLeft = { top: 40, right: 40, bottom: 80 }
+	const paddingWithoutLeft = { top: PADDING * 2, right: PADDING * 2, bottom: PADDING * 4 }
 	const chartHeight = height - paddingWithoutLeft.top - paddingWithoutLeft.bottom
 	
 	// Now calculate Y-axis layout using the determined chartHeight
@@ -176,7 +177,7 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 		}
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

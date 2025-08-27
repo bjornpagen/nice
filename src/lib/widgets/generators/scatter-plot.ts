@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateLineLegendLayout,
@@ -358,7 +359,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 
 	// Calculate line legend layout for dedicated label area
 	const lineCount = lines.length
-	const basePadRight = 30
+	const basePadRight = PADDING + 10
 	const { requiredRightMargin } = calculateLineLegendLayout(lineCount, 0, 0) // chartRight/chartTop calculated after padding
 	const rightMargin = lineCount > 0 ? requiredRightMargin : basePadRight
 
@@ -587,7 +588,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		includeText(ext, px + 5, abbreviateMonth(p.label), "start", 7)
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

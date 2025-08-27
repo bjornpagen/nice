@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const Point = z
@@ -112,8 +113,7 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 	const { width, height, orientation, min, max, majorTickInterval, minorTicksPerInterval, points, specialTickLabels } =
 		data
 	const isHorizontal = orientation === "horizontal"
-	const padding = 40
-	const lineLength = (isHorizontal ? width : height) - 2 * padding
+	const lineLength = (isHorizontal ? width : height) - 2 * PADDING
 
 	if (min >= max || lineLength <= 0) return `<svg width="${width}" height="${height}"></svg>`
 	const scale = lineLength / (max - min)
@@ -123,13 +123,13 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 
 	if (isHorizontal) {
 		const yPos = height / 2
-		const toSvgX = (val: number) => padding + (val - min) * scale
+		const toSvgX = (val: number) => PADDING + (val - min) * scale
 		
 		// Track the main line endpoints
-		includePointX(ext, padding)
-		includePointX(ext, width - padding)
+		includePointX(ext, PADDING)
+		includePointX(ext, width - PADDING)
 		
-		svg += `<line x1="${padding}" y1="${yPos}" x2="${width - padding}" y2="${yPos}" stroke="black"/>`
+		svg += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="black"/>`
 		const minorTickSpacing = (majorTickInterval / (minorTicksPerInterval + 1)) * scale
 		for (let t = min; t <= max; t += majorTickInterval) {
 			const x = toSvgX(t)
@@ -141,7 +141,7 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 			}
 			for (let m = 1; m <= minorTicksPerInterval; m++) {
 				const mPos = x + m * minorTickSpacing
-				if (mPos < width - padding)
+				if (mPos < width - PADDING)
 					svg += `<line x1="${mPos}" y1="${yPos - 4}" x2="${mPos}" y2="${yPos + 4}" stroke="black"/>`
 			}
 		}
@@ -186,12 +186,12 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 	} else {
 		// Vertical
 		const xPos = width / 2
-		const toSvgY = (val: number) => height - padding - (val - min) * scale
+		const toSvgY = (val: number) => height - PADDING - (val - min) * scale
 		
 		// Track the vertical line
 		includePointX(ext, xPos)
 		
-		svg += `<line x1="${xPos}" y1="${padding}" x2="${xPos}" y2="${height - padding}" stroke="black"/>`
+		svg += `<line x1="${xPos}" y1="${PADDING}" x2="${xPos}" y2="${height - PADDING}" stroke="black"/>`
 		const minorTickSpacing = (majorTickInterval / (minorTicksPerInterval + 1)) * scale
 		for (let t = min; t <= max; t += majorTickInterval) {
 			const y = toSvgY(t)
@@ -203,7 +203,7 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 			}
 			for (let m = 1; m <= minorTicksPerInterval; m++) {
 				const mPos = y - m * minorTickSpacing
-				if (mPos > padding) svg += `<line x1="${xPos - 4}" y1="${mPos}" x2="${xPos + 4}" y2="${mPos}" stroke="black"/>`
+				if (mPos > PADDING) svg += `<line x1="${xPos - 4}" y1="${mPos}" x2="${xPos + 4}" y2="${mPos}" stroke="black"/>`
 			}
 		}
 		// Special Labels
@@ -241,7 +241,7 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 		}
 	}
 	
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

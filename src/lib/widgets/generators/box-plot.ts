@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import {
 	calculateXAxisLayout,
 	computeDynamicWidth,
@@ -125,9 +126,8 @@ export type BoxPlotProps = z.infer<typeof BoxPlotPropsSchema>
 export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data) => {
 	const { width, height, axis, summary, boxColor, medianColor } = data
 	
-	// MODIFIED: Use dynamic layout for bottom margin
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true, 15) // has tick labels, less padding
-	const margin = { top: 20, right: 20, bottom: bottomMargin, left: 20 }
+	const margin = { top: PADDING, right: PADDING, bottom: bottomMargin, left: PADDING }
 	
 	const plotHeight = height - margin.top - margin.bottom
 	const chartWidth = width - margin.left - margin.right
@@ -189,7 +189,7 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 	svg += `<line x1="${medianPos}" y1="${yCenter - plotHeight / 2}" x2="${medianPos}" y2="${yCenter + plotHeight / 2}" stroke="${medianColor}" stroke-width="2"/>`
 
 	// NEW: Apply dynamic width at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

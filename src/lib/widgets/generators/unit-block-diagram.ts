@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, initExtents } from "@/lib/widgets/utils/layout"
 
 export const UnitBlockDiagramPropsSchema = z
@@ -98,7 +99,7 @@ export const generateUnitBlockDiagram: WidgetGenerator<typeof UnitBlockDiagramPr
 		svg += `<rect x="${bx}" y="${by}" width="${blockWidth}" height="${blockHeight}" fill="none" stroke="black" stroke-width="1"/>`
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, svgHeight, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, svgHeight, PADDING)
 	svg = svg.replace(`width="${svgWidth}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${svgWidth} ${svgHeight}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${svgHeight}"`)
 	svg += "</svg>"

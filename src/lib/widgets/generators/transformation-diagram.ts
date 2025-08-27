@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 function createShapeSchema() {
@@ -329,7 +330,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	const dataHeight = maxY - minY
 
 	// 3. Create robust coordinate transformation with proper padding
-	const padding = 40
+	const padding = PADDING * 2
 	const availableWidth = width - 2 * padding
 	const availableHeight = height - 2 * padding
 
@@ -819,7 +820,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	svg += "</svg>"
 	
 	// Apply dynamic width calculation
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	
 	// Update SVG with dynamic width and viewBox
 	svg = svg.replace(

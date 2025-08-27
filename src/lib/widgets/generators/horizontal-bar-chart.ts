@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateXAxisLayout,
@@ -75,7 +76,7 @@ export const generateHorizontalBarChart: WidgetGenerator<typeof HorizontalBarCha
 	const { width, height, xAxis, data: chartData, gridColor } = data
 
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const margin = { top: 20, right: 80, bottom: bottomMargin, left: 100 }
+	const margin = { top: PADDING, right: 80, bottom: bottomMargin, left: 100 }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 
@@ -149,7 +150,7 @@ export const generateHorizontalBarChart: WidgetGenerator<typeof HorizontalBarCha
 	svg += "</g>" // Close chartBody group
 	
 	// NEW: Apply dynamic width at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	

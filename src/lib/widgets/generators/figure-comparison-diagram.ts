@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels" // NEW
 import {
 	computeDynamicWidth,
@@ -224,7 +225,7 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 	}
 
 	// NEW: Apply dynamic width at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${viewBoxHeight}"`)
 	svg += "</svg>"

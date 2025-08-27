@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const Node = z
@@ -131,19 +132,8 @@ export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema>
 		return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"></svg>`
 	}
 
-	const padding = 20
-	const minX = Math.min(...nodes.map((n) => n.position.x))
-	const maxX = Math.max(...nodes.map((n) => n.position.x))
-	const minY = Math.min(...nodes.map((n) => n.position.y))
-	const maxY = Math.max(...nodes.map((n) => n.position.y))
-
-	// Calculate a viewBox that encompasses all nodes with padding
-	const vbX = minX - padding - nodeRadius
-	const vbY = minY - padding - nodeRadius
-	const vbWidth = maxX - minX + (padding + nodeRadius) * 2
-	const vbHeight = maxY - minY + (padding + nodeRadius) * 2
-
-	let svg = `<svg width="${width}" height="${height}" viewBox="${vbX} ${vbY} ${vbWidth} ${vbHeight}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	// Start with standard viewBox
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
 
 	// Create a map for quick node lookup by ID
 	const nodeMap = new Map(nodes.map((node) => [node.id, node]))
@@ -183,14 +173,11 @@ export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema>
 
 	svg += "</svg>"
 	
-	// Apply dynamic width calculation
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
+	// MODIFICATION: Apply dynamic width and viewBox at the end
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
+	const finalSVG = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
 	
-	// Update SVG with dynamic width and viewBox
-	svg = svg.replace(
-		`width="${width}" height="${height}" viewBox="${vbX} ${vbY} ${vbWidth} ${vbHeight}"`,
-		`width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} ${vbY} ${dynamicWidth} ${vbHeight}"`
-	)
-	
+	// Rebuild SVG with correct viewBox and width
+	svg = finalSVG + svg.substring(svg.indexOf(">") + 1)
 	return svg
 }

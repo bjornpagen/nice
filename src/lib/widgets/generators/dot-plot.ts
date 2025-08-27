@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import {
 	calculateTextAwareLabelSelection,
 	calculateXAxisLayout,
@@ -110,9 +111,8 @@ export type DotPlotProps = z.infer<typeof DotPlotPropsSchema>
 export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data) => {
 	const { width, height, axis, data: plotData, dotColor, dotRadius } = data
 	
-	// MODIFIED: Use dynamic layout for bottom margin
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true)
-	const margin = { top: 20, right: 20, bottom: bottomMargin, left: 20 }
+	const margin = { top: PADDING, right: PADDING, bottom: bottomMargin, left: PADDING }
 
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
@@ -186,7 +186,7 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	}
 
 	// NEW: Apply dynamic width at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

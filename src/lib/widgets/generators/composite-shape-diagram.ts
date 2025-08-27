@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { initExtents, includePointX, includeText, computeDynamicWidth } from "@/lib/widgets/utils/layout"
 
 // Defines a 2D coordinate point for a vertex
@@ -197,8 +198,6 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 	} = data
 
 	if (vertices.length === 0) return `<svg width="${width}" height="${height}" />`
-
-	const padding = 20
 	
 	// Initialize extent tracking
 	const ext = initExtents(width)
@@ -353,7 +352,7 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 	}
 
 	// Compute dynamic width and create final SVG
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">`
 	svg += svgContent
 	svg += "</svg>"

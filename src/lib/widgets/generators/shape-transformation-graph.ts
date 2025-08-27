@@ -9,6 +9,7 @@ import {
 } from "@/lib/widgets/generators/coordinate-plane-base"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidPolygon = errors.new("polygon must have at least 3 vertices")
@@ -257,7 +258,7 @@ export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTrans
 	content += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
 
 	// 7. Compute final width and assemble the complete SVG
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, PADDING)
 	let finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	finalSvg += base.svgBody
 	finalSvg += content

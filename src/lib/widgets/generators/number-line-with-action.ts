@@ -1,5 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const Label = z
@@ -100,8 +101,7 @@ export type NumberLineWithActionProps = z.infer<typeof NumberLineWithActionProps
 export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWithActionPropsSchema> = (data) => {
 	const { width, height, orientation, min, max, tickInterval, startValue, customLabels, actions } = data
 	const isHorizontal = orientation === "horizontal"
-	const padding = 30
-	const lineLength = (isHorizontal ? width : height) - 2 * padding
+	const lineLength = (isHorizontal ? width : height) - 2 * PADDING
 
 	if (min >= max) return `<svg width="${width}" height="${height}"></svg>`
 	const scale = lineLength / (max - min)
@@ -112,12 +112,12 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 
 	if (isHorizontal) {
 		const yPos = height / 2
-		const toSvgX = (val: number) => padding + (val - min) * scale
+		const toSvgX = (val: number) => PADDING + (val - min) * scale
 
 		// Axis and Ticks
-		includePointX(ext, padding)
-		includePointX(ext, width - padding)
-		svg += `<line x1="${padding}" y1="${yPos}" x2="${width - padding}" y2="${yPos}" stroke="#333333" stroke-width="2"/>`
+		includePointX(ext, PADDING)
+		includePointX(ext, width - PADDING)
+		svg += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="#333333" stroke-width="2"/>`
 		for (let t = min; t <= max; t += tickInterval) {
 			const x = toSvgX(t)
 			includePointX(ext, x)
@@ -179,11 +179,11 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 	} else {
 		// Vertical orientation
 		const xPos = width / 2
-		const toSvgY = (val: number) => height - padding - (val - min) * scale
+		const toSvgY = (val: number) => height - PADDING - (val - min) * scale
 
 		// Axis and Ticks
 		includePointX(ext, xPos)
-		svg += `<line x1="${xPos}" y1="${padding}" x2="${xPos}" y2="${height - padding}" stroke="#333333" stroke-width="2"/>`
+		svg += `<line x1="${xPos}" y1="${PADDING}" x2="${xPos}" y2="${height - PADDING}" stroke="#333333" stroke-width="2"/>`
 		for (let t = min; t <= max; t += tickInterval) {
 			const y = toSvgY(t)
 			svg += `<line x1="${xPos - 5}" y1="${y}" x2="${xPos + 5}" y2="${y}" stroke="#333333"/>`
@@ -242,7 +242,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 		svg += `<circle cx="${xPos}" cy="${finalY}" r="3" fill="#FF6B35" stroke="#CC5429" stroke-width="1"/>`
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

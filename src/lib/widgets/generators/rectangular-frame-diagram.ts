@@ -2,6 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidDimensions = errors.new("invalid frame dimensions")
@@ -304,8 +305,7 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 	}
 
 	// Final assembly with dynamic width
-	const padding = 20
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg += svgContent
 	svg += "</svg>"

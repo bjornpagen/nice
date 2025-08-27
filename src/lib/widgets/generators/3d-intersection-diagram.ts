@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import {
 	computeDynamicWidth,
 	includePointX,
@@ -180,9 +181,8 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 	const { width, height, solid, plane, viewOptions } = props
 	const { projectionAngle, intersectionColor, showHiddenEdges } = viewOptions
 
-	const margin = { top: 20, right: 20, bottom: 20, left: 20 }
-	const chartWidth = width - margin.left - margin.right
-	const chartHeight = height - margin.top - margin.bottom
+	const chartWidth = width - PADDING * 2
+	const chartHeight = height - PADDING * 2
 	let vertices: Point3D[] = []
 	let edges: Edge[] = []
 	let solidHeight = 0
@@ -374,8 +374,8 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 
 	const scale = Math.min(chartWidth / (maxX - minX), chartHeight / (maxY - minY))
 	const toSvg = (p: { x: number; y: number }) => ({
-		x: margin.left + chartWidth / 2 + (p.x - (minX + maxX) / 2) * scale,
-		y: margin.top + chartHeight / 2 - (p.y - (minY + maxY) / 2) * scale
+		x: PADDING + chartWidth / 2 + (p.x - (minX + maxX) / 2) * scale,
+		y: PADDING + chartHeight / 2 - (p.y - (minY + maxY) / 2) * scale
 	})
 
 	// 3. Define the Plane and Calculate Intersection Points
@@ -493,7 +493,7 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 	}
 
 	// Apply dynamic width at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 20)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

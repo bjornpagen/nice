@@ -1,5 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const Cylinder = z
@@ -102,7 +103,6 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 
 	// --- NEW SCALING AND DRAWING LOGIC ---
 
-	const padding = 30 // Increased padding for labels and dimension lines
 	const labelSpace = labels.length > 0 ? 40 : 0 // Extra space for external labels
 	
 	const ext = initExtents(width)
@@ -110,8 +110,8 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
 	svg += `<defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black" /></marker></defs>`
 
-	const availableWidth = width - 2 * padding - labelSpace
-	const availableHeight = height - 2 * padding - labelSpace
+	const availableWidth = width - 2 * PADDING - labelSpace
+	const availableHeight = height - 2 * PADDING - labelSpace
 
 	if (shape.type === "cylinder") {
 		const scale = Math.min(availableWidth / (shape.radius * 2), availableHeight / shape.height)
@@ -226,7 +226,7 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		}
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

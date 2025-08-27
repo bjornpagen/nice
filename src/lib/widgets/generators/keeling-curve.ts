@@ -1,6 +1,14 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { PADDING } from "@/lib/widgets/utils/constants"
+import { 
+	calculateXAxisLayout, 
+	calculateYAxisLayout,
+	computeDynamicWidth, 
+	includePointX, 
+	includeText, 
+	initExtents 
+} from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
 
 const AnnotationSchema = z.object({
@@ -141,13 +149,21 @@ const renderMultiLineText = (
 export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchema> = (props) => {
 	const { width, height, xAxisLabel, yAxisLabel, annotations } = props
 
-	const margin = { top: 20, right: 20, bottom: 50, left: 70 }
-	const chartWidth = width - margin.left - margin.right
-	const chartHeight = height - margin.top - margin.bottom
-
 	// Hardcoded axis ranges to match the visual
 	const xAxis = { min: 1, max: 2021 }
-	const yAxis = { min: 240, max: 420 }
+	const yAxis = { min: 240, max: 420, tickInterval: 20, label: yAxisLabel }
+
+	// MODIFICATION: Replace hardcoded margin with dynamic layout helpers
+	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true, 30) // Has ticks, custom padding
+	const marginWithoutLeft = { top: PADDING, right: PADDING, bottom: bottomMargin }
+	const chartHeight = height - marginWithoutLeft.top - marginWithoutLeft.bottom
+	if (chartHeight <= 0) return `<svg width="${width}" height="${height}"></svg>`
+
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis, chartHeight, 30)
+	const margin = { ...marginWithoutLeft, left: leftMargin }
+
+	const chartWidth = width - margin.left - margin.right
+	if (chartWidth <= 0) return `<svg width="${width}" height="${height}"></svg>`
 
 	const toSvgX = (val: number) => margin.left + ((val - xAxis.min) / (xAxis.max - xAxis.min)) * chartWidth
 	const toSvgY = (val: number) => height - margin.bottom - ((val - yAxis.min) / (yAxis.max - yAxis.min)) * chartHeight
@@ -184,10 +200,10 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 	}
 
 	// Axis Labels
-	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 10}" class="axis-label">${xAxisLabel}</text>`
+	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${xAxisLabel}</text>`
 	includeText(ext, margin.left + chartWidth / 2, xAxisLabel, "middle", 7)
-	svg += renderRotatedWrappedYAxisLabel(yAxisLabel, margin.left - 50, margin.top + chartHeight / 2, chartHeight)
-	includeText(ext, margin.left - 50, yAxisLabel, "middle", 7)
+	svg += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisLabelX, margin.top + chartHeight / 2, chartHeight)
+	includeText(ext, yAxisLabelX, yAxisLabel, "middle", 7)
 
 	// Data Line
 	// Track the x-extents of all data points
@@ -215,7 +231,7 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 		}
 	})
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

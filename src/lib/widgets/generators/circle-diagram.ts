@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 // Defines a line segment, such as a radius or a diameter.
@@ -215,7 +216,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 
 	const cx = width / 2
 	const cy = height / 2
-	const mainRadius = Math.min(cx, cy) - 10
+	const mainRadius = Math.min(cx, cy) - PADDING
 	const scale = mainRadius / radius
 
 	const toRad = (deg: number) => (deg * Math.PI) / 180
@@ -224,7 +225,6 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 		y: cy + r * Math.sin(toRad(angleDeg)) // +y is down in SVG
 	})
 	const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(value, max))
-	const PADDING = 15
 
 	const ext = initExtents(width) // NEW: Initialize extents tracking
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
@@ -378,7 +378,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 	}
 
 	// NEW: Apply dynamic width and viewBox at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

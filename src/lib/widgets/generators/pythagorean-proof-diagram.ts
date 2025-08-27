@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includeText, includePointX, initExtents } from "@/lib/widgets/utils/layout"
 
 function createSideSquareSchema() {
@@ -230,7 +231,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 
 	svg += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_right.x},${v_right.y} ${v_b_end.x},${v_b_end.y}" fill="#FAFAFA" stroke="#333333" stroke-width="2"/>`
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

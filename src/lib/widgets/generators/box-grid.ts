@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
 import { computeDynamicWidth, includeText, includePointX, initExtents } from "@/lib/widgets/utils/layout"
 
@@ -152,7 +153,7 @@ export const generateBoxGrid: WidgetGenerator<typeof BoxGridPropsSchema> = (prop
 		}
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
 	svg += style
 	svg += svgContent

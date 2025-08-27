@@ -1,7 +1,16 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { PADDING } from "@/lib/widgets/utils/constants"
+import { 
+	calculateTitleLayout, 
+	calculateXAxisLayout, 
+	calculateYAxisLayout,
+	computeDynamicWidth, 
+	includePointX, 
+	includeText, 
+	initExtents 
+} from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
 
 // Factory functions to avoid schema instance reuse which causes $ref in JSON Schema
@@ -64,42 +73,50 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 		highlightPointRadius
 	} = props
 
-	const allPoints = curvePoints
-	const padding = { top: 40, right: 40, bottom: 60, left: 80 }
+	// MODIFICATION: Replace hardcoded padding with dynamic layout helpers
+	const { topMargin } = calculateTitleLayout(undefined, width - 60, 40) // No title, but reserve space
+	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(false, 40) // No tick labels, custom padding
+	const chartHeight = height - topMargin - bottomMargin
+	if (chartHeight <= 0) return `<svg width="${width}" height="${height}"></svg>`
 
+	const mockYAxis = { min: 0, max: 1, tickInterval: 1, label: yAxisLabel }
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(mockYAxis, chartHeight, 20)
+	const margin = { top: topMargin, right: 40, bottom: bottomMargin, left: leftMargin }
+
+	const chartWidth = width - margin.left - margin.right
+	if (chartWidth <= 0) return `<svg width="${width}" height="${height}"></svg>`
+
+	const allPoints = curvePoints
 	const minX = Math.min(...allPoints.map((p) => p.x))
 	const maxX = Math.max(...allPoints.map((p) => p.x))
 	const minY = Math.min(...allPoints.map((p) => p.y))
 	const maxY = Math.max(...allPoints.map((p) => p.y))
 
-	const chartWidth = width - padding.left - padding.right
-	const chartHeight = height - padding.top - padding.bottom
-
 	const scaleX = chartWidth / (maxX - minX)
 	const scaleY = chartHeight / (maxY - minY)
 
-	const toSvgX = (val: number) => padding.left + (val - minX) * scaleX
-	const toSvgY = (val: number) => height - padding.bottom - (val - minY) * scaleY
+	const toSvgX = (val: number) => margin.left + (val - minX) * scaleX
+	const toSvgY = (val: number) => height - margin.bottom - (val - minY) * scaleY
 
 	const ext = initExtents(width)
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">`
 	svg += `<defs><marker id="graph-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker></defs>`
 
 	// Axes
-	const yAxisX = padding.left
-	const xAxisY = height - padding.bottom
-	svg += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${yAxisX}" y2="${padding.top}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
-	svg += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${width - padding.right}" y2="${xAxisY}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
+	const yAxisX = margin.left
+	const xAxisY = height - margin.bottom
+	svg += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${yAxisX}" y2="${margin.top}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
+	svg += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${width - margin.right}" y2="${xAxisY}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
 	// --- ADDED ---
 	includePointX(ext, yAxisX)
-	includePointX(ext, width - padding.right)
+	includePointX(ext, width - margin.right)
 	// --- END ADDED ---
 
 	// Axis Labels
-	svg += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisX - 20, padding.top + chartHeight / 2, chartHeight)
-	includeText(ext, yAxisX - 20, yAxisLabel, "middle", 7)
-	svg += `<text x="${padding.left + chartWidth / 2}" y="${xAxisY + 40}" text-anchor="middle">${xAxisLabel}</text>`
-	includeText(ext, padding.left + chartWidth / 2, xAxisLabel, "middle", 7)
+	svg += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisLabelX, margin.top + chartHeight / 2, chartHeight)
+	includeText(ext, yAxisLabelX, yAxisLabel, "middle", 7)
+	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" text-anchor="middle">${xAxisLabel}</text>`
+	includeText(ext, margin.left + chartWidth / 2, xAxisLabel, "middle", 7)
 
 	// Curve
 	const pointsStr = curvePoints.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
@@ -175,7 +192,7 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 		includeText(ext, cx - highlightPointRadius - 5, hp.label, "end", 7)
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

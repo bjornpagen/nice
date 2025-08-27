@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, initExtents } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidPartitionGeometry = errors.new("invalid partition geometry")
@@ -336,7 +337,7 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 		}
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, totalHeight, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, totalHeight, PADDING)
 	svg = svg.replace(`width="${totalWidth}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${totalWidth} ${totalHeight}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}"`)
 	svg += "</svg>"
@@ -401,7 +402,7 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 		svg += `<line x1="${fromPixel.x}" y1="${fromPixel.y}" x2="${toPixel.x}" y2="${toPixel.y}" stroke="${line.color}" stroke-width="2" stroke-dasharray="${strokeDasharray}"/>`
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

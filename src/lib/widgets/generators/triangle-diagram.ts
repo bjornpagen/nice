@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const Point = z
@@ -200,7 +201,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 		throw errors.new("triangle requires at least 3 points")
 	}
 
-	const padding = 20
+	const padding = PADDING
 	const minX = Math.min(...points.map((p) => p.x)) - padding
 	const maxX = Math.max(...points.map((p) => p.x)) + padding
 	const minY = Math.min(...points.map((p) => p.y)) - padding

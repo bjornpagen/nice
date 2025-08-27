@@ -236,4 +236,88 @@ Key elements:
 ### Appendix: Why we did not choose a two‑pass layout
 - Single‑pass works if we avoid circular dependencies by design (freeze typography, compute vertical before horizontal, no conditional reflow based on chartWidth). Two‑pass is only warranted if we deliberately support dynamic reflow that depends on computed dimensions.
 
+## Comprehensive audit and required refactors
+
+### Classification key
+- **Compliant**: Uses `calculateYAxisLayout(...)` to compute `leftMargin` and `yAxisLabelX`, and uses `renderRotatedWrappedYAxisLabel(...)` (or a manual rotate) at that computed X. No hardcoded offsets.
+- **Partial**: Uses the rotated label helper but positions it with a hardcoded X instead of `yAxisLabelX`, or mixes helpers with local constants.
+- **Violating**: Bypasses the helpers entirely for axis spacing/placement and relies on magic numbers.
+
+### Widgets: current status (by generator)
+- Compliant (left/primary axis):
+  - `src/lib/widgets/generators/line-graph.ts` (left axis) — `calculateYAxisLayout` + `renderRotatedWrappedYAxisLabel`
+  - `src/lib/widgets/generators/area-graph.ts` — `calculateYAxisLayout` + `renderRotatedWrappedYAxisLabel`
+  - `src/lib/widgets/generators/histogram.ts` — `calculateYAxisLayout` + `renderRotatedWrappedYAxisLabel`
+  - `src/lib/widgets/generators/divergent-bar-chart.ts` — `calculateYAxisLayout` + `renderRotatedWrappedYAxisLabel`
+  - `src/lib/widgets/generators/population-bar-chart.ts` — `calculateYAxisLayout` + `renderRotatedWrappedYAxisLabel`
+  - `src/lib/widgets/generators/bar-chart.ts` — `calculateYAxisLayout` + `renderRotatedWrappedYAxisLabel`
+  - `src/lib/widgets/generators/scatter-plot.ts` — `calculateYAxisLayout` + `renderRotatedWrappedYAxisLabel`
+  - `src/lib/widgets/generators/population-change-event-graph.ts` — `calculateYAxisLayout` + `renderRotatedWrappedYAxisLabel`
+  - `src/lib/widgets/generators/parabola-graph.ts` — `calculateYAxisLayout` + manual `<text ... transform="rotate(-90, yAxisLabelX, ...)"/>`
+  - `src/lib/widgets/generators/coordinate-plane-base.ts` — `calculateYAxisLayout` + manual `<text ... transform="rotate(-90, yAxisLabelX, ...)"/>`
+
+- Partial:
+  - `src/lib/widgets/generators/line-graph.ts` (right axis) — uses `calculateRightYAxisLayout` correctly but renders the right title via manual rotate; ensure it always uses the computed `rightYAxisLabelX` (it currently does, but watch for any future local offsets).
+  - `src/lib/widgets/generators/conceptual-graph.ts` — uses `renderRotatedWrappedYAxisLabel` with a hardcoded X (`yAxisX - 20`) and a fixed `padding.left = 80`. Should switch to `calculateYAxisLayout` and place the title at returned `yAxisLabelX`.
+
+- Violating (for axis spacing):
+  - `src/lib/widgets/generators/keeling-curve.ts` — hardcoded y‑axis label X (`margin.left - 50`), local margins; must adopt `calculateYAxisLayout` and the unified frame ordering.
+
+- Not relevant to axis titles but noteworthy rotate usage:
+  - `src/lib/widgets/generators/number-line-with-action.ts` — uses `rotate(-90, ...)` for an action label (not an axis). Keep, but ensure no magic overlap with axes in composite contexts.
+
+If you find other charts emitting a vertical axis title, they should be moved into the Compliant bucket by applying the same steps below.
+
+### Refactor requirements per widget (must-do work)
+For each widget that renders a y‑axis title:
+1) Replace any hardcoded y‑axis title X offsets with the computed `yAxisLabelX` from `calculateYAxisLayout(yAxis, chartHeight)`.
+2) Compute vertical margins first (`calculateTitleLayout`, then `calculateXAxisLayout`) to get `chartHeight` before calling `calculateYAxisLayout`.
+3) Render the rotated y‑axis label via `renderRotatedWrappedYAxisLabel(title, yAxisLabelX, margin.top + chartHeight / 2, chartHeight)` (or manual `<text ... transform="rotate(-90, ...)"/>` using the computed pivot).
+4) Remove local magic numbers for axis spacing (e.g., `padding.left = 80`, `margin.left - 50`). If additional left spacing is desired for stylistic reasons, incorporate it via `titlePadding` in `calculateYAxisLayout` (typed, consistent).
+5) Keep `computeDynamicWidth` as an anti‑clipping step only. Do not rely on extents to “fix” spacing conflicts.
+
+Specific per-file tasks:
+- `conceptual-graph.ts`:
+  - Introduce `calculateXAxisLayout` → `chartHeight` → `calculateYAxisLayout`.
+  - Replace `yAxisX - 20` with `yAxisLabelX` and remove fixed left padding.
+  - Optionally port ticks/axis rendering to shared axis renderers when available.
+- `keeling-curve.ts`:
+  - Introduce `calculateXAxisLayout` and compute `chartHeight` from vertical margins.
+  - Use `calculateYAxisLayout` to derive left margin and `yAxisLabelX`.
+  - Replace `margin.left - 50` with `yAxisLabelX` and rebase the x‑axis/left axis lines to the unified margins.
+- `line-graph.ts` (right axis):
+  - Ensure the right axis title always uses `rightYAxisLabelX` from `calculateRightYAxisLayout` (it does currently); add a guard against future local offsets.
+
+### Migration plan (unification first)
+1) Introduce a shared “chart frame” utility
+   - Inputs: `width`, `height`, `title`, `xAxis`, `yAxis`, optional `yAxisRight`, and a centralized typography/theme.
+   - Outputs: `margin`, `yAxisLabelX`, `rightYAxisLabelX`, `xAxisTitleY`, `chartWidth`, `chartHeight`, `toSvgX/Y`, and a `<g transform="translate(margin.left, margin.top)">` wrapper for the plot area.
+
+2) Centralize typography
+   - Single theme provides font-size/weight/line-height + `approxCharWidth` per role (axis title, tick label, main title, legend). Layout helpers accept these metrics.
+   - Ban local overrides for axis/tick/title typography in widgets.
+
+3) Migrate widgets in batches
+   - Batch A (already close to compliant): line, area, histogram, divergent bar, bar, scatter, population change, coordinate plane, parabola.
+   - Batch B (partial/violating): conceptual graph, keeling curve (most benefit), any others discovered.
+
+4) Linting and CI checks
+   - Add a rule that forbids hardcoded rotate positions for axis titles (e.g., `rotate(-90, margin.left -` or `rotate(-90, yAxisX -`) unless derived from `calculate*Layout` results.
+   - Add a rule that disallows local padding constants for axis spacing in generators (prefer `calculate*Layout` inputs such as `titlePadding`).
+
+5) Snapshot audit
+   - Prepare a matrix (short vs long titles, dense vs sparse ticks, normal vs bold tick labels) and ensure no overlaps. Negative `viewBox` minX is allowed only due to legends/annotations—not axes.
+
+### Our values (why unification is non‑negotiable)
+- **Single source of truth**: All axis spacing derives from the shared layout helpers using the same theme; no per‑widget magic numbers. If spacing is wrong, we fix it once in the helpers and all charts benefit.
+- **Deterministic single‑pass layout**: Title/top then x‑axis/bottom → compute `chartHeight` → y‑axes/left and right → compute `chartWidth` → draw. No feedback loops, no hidden reflow.
+- **Predictability over guesswork**: Extents guard against clipping; they do not correct spacing. We prioritize accurate margin computation over expanding the canvas.
+- **Consistency and maintainability**: Centralized axis renderers and chart frame reduce cognitive load, allow safer refactors, and simplify visual QA.
+
+### Done definition for unification
+- No generator contains hardcoded x‑offsets for axis titles.
+- All y‑axis titles are placed via `yAxisLabelX` from `calculateYAxisLayout` (or `rightYAxisLabelX` for right axis) with `renderRotatedWrappedYAxisLabel` (or manual rotate using those pivots).
+- Typography for axis/ticks/titles comes exclusively from the shared theme.
+- Extents only adjust `viewBox`; spacing issues are handled before extents.
+
 

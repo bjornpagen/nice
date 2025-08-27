@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import {
 	computeDynamicWidth,
 	includePointX,
@@ -166,19 +167,8 @@ export type AngleDiagramProps = z.infer<typeof AngleDiagramPropsSchema>
 export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchema> = (props) => {
 	const { width, height, points, rays, angles } = props
 
-	const padding = 20
-	const minX = Math.min(...points.map((p) => p.x))
-	const maxX = Math.max(...points.map((p) => p.x))
-	const minY = Math.min(...points.map((p) => p.y))
-	const maxY = Math.max(...points.map((p) => p.y))
-
-	const vbX = minX - padding
-	const vbY = minY - padding
-	const vbWidth = maxX - minX + 2 * padding
-	const vbHeight = maxY - minY + 2 * padding
-
 	const ext = initExtents(width) // Initialize extents tracking
-	let svg = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 
 	const pointMap = new Map(points.map((p) => [p.id, p]))
 
@@ -369,8 +359,8 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 		}
 	}
 
-	// Apply dynamic width and viewBox at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
+	// MODIFICATION: Apply dynamic width and viewBox at the end
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	const finalSVG = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	
 	// Rebuild SVG with correct viewBox and width

@@ -2,6 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateIntersectionAwareTicks,
@@ -291,7 +292,7 @@ export function generateCoordinatePlaneBase(
 ): CoordinatePlaneBase {
 	// Calculate vertical margins first to determine chartHeight
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const padWithoutLeft = { top: 30, right: 30, bottom: bottomMargin }
+	const padWithoutLeft = { top: PADDING, right: PADDING, bottom: bottomMargin }
 	
 	// Calculate chartHeight based on vertical margins
 	const chartHeight = height - padWithoutLeft.top - padWithoutLeft.bottom

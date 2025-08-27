@@ -1,5 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 export const EmojiImagePropsSchema = z
@@ -45,7 +46,7 @@ export const generateEmojiImage: WidgetGenerator<typeof EmojiImagePropsSchema> =
 	// Using a larger font size estimate for avgCharWidthPx.
 	includeText(ext, cx, emoji, "middle", size * 0.9)
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, size, size * 0.1) // 10% padding
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, size, PADDING)
 
 	let svg = `<svg width="${dynamicWidth}" height="${size}" viewBox="${vbMinX} 0 ${dynamicWidth} ${size}" xmlns="http://www.w3.org/2000/svg">`
 

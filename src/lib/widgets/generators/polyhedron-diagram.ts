@@ -1,5 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 // Defines a dimension label for an edge or a face area
@@ -622,8 +623,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 		}
 	}
 	// Final assembly with dynamic width
-	const padding = 30
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg += svgContent
 	svg += "</svg>"

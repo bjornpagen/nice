@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateTextAwareLabelSelection,
@@ -81,7 +82,7 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 
 	// Calculate vertical margins first to determine chartHeight
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const marginWithoutLeft = { top: 20, right: 20, bottom: bottomMargin }
+	const marginWithoutLeft = { top: PADDING, right: PADDING, bottom: bottomMargin }
 	
 	// Calculate chartHeight based on vertical margins
 	const chartHeight = height - marginWithoutLeft.top - marginWithoutLeft.bottom
@@ -199,7 +200,7 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	svg += `<line x1="${chartWidth}" y1="0" x2="${chartWidth}" y2="${chartHeight}" stroke="#333" stroke-width="2"/>`
 
 	svg += "</g>" // Close final group
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

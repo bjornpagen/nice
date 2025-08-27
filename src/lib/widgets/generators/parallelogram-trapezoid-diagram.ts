@@ -2,6 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import {
 	computeDynamicWidth,
 	includePointX,
@@ -162,9 +163,8 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 	let svgContent = ""
 
 	// --- SCALING LOGIC START ---
-	const padding = 50 // Generous padding for labels
-	const availableWidth = width - padding * 2
-	const availableHeight = height - padding * 2
+	const availableWidth = width - PADDING * 2
+	const availableHeight = height - PADDING * 2
 
 	let shapeWidth = 0
 	let shapeHeight = 0
@@ -454,7 +454,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 	}
 
 	// Final assembly
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
 	svg += svgContent
 	svg += "</svg>"

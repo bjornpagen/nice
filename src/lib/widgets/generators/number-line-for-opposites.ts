@@ -1,5 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 // strict schema with no nullables or fallbacks
@@ -62,12 +63,11 @@ export const generateNumberLineForOpposites: WidgetGenerator<typeof NumberLineFo
 	const { width, height, maxAbsValue, tickInterval, value, positiveLabel, negativeLabel, showArrows } = data
 	const min = -maxAbsValue
 	const max = maxAbsValue
-	const padding = 20
-	const chartWidth = width - 2 * padding
+	const chartWidth = width - 2 * PADDING
 	const yPos = height / 2 + 10
 
 	const scale = chartWidth / (max - min)
-	const toSvgX = (val: number) => padding + (val - min) * scale
+	const toSvgX = (val: number) => PADDING + (val - min) * scale
 
 	// always plot the negative and positive of the absolute magnitude
 	const magnitude = Math.abs(value)
@@ -84,9 +84,9 @@ export const generateNumberLineForOpposites: WidgetGenerator<typeof NumberLineFo
 
 	// axis and ticks
 	// Track the main line endpoints
-	includePointX(ext, padding)
-	includePointX(ext, width - padding)
-	svg += `<line x1="${padding}" y1="${yPos}" x2="${width - padding}" y2="${yPos}" stroke="black" stroke-width="1.5"/>`
+	includePointX(ext, PADDING)
+	includePointX(ext, width - PADDING)
+	svg += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="black" stroke-width="1.5"/>`
 	for (let t = min; t <= max; t += tickInterval) {
 		const x = toSvgX(t)
 		includePointX(ext, x)
@@ -120,7 +120,7 @@ export const generateNumberLineForOpposites: WidgetGenerator<typeof NumberLineFo
 		includeText(ext, negPos, negLab, "middle", 7)
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

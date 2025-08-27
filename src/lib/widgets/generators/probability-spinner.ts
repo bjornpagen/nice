@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 // Defines a group of identical sectors on the spinner
@@ -84,7 +85,7 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 
 	const cx = width / 2
 	const cy = height / 2
-	const padding = title !== null ? 35 : 15
+	const padding = title !== null ? PADDING + 15 : PADDING
 	const radius = Math.min(width, height) / 2 - padding
 
 	const totalSectors = groups.reduce((sum, group) => sum + group.count, 0)
@@ -133,7 +134,7 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 	}
 
 	// Compute dynamic width
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	
 	// Build SVG with computed dimensions
 	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`

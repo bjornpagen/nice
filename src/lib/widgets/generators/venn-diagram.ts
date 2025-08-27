@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
@@ -81,7 +82,7 @@ export type VennDiagramProps = z.infer<typeof VennDiagramPropsSchema>
  */
 export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema> = (data) => {
 	const { width, height, circleA, circleB, intersectionCount, outsideCount } = data
-	const padding = { top: 40, bottom: 40, horizontal: 10 }
+	const padding = { top: PADDING * 2, bottom: PADDING * 2, horizontal: PADDING / 2 }
 	const chartHeight = height - padding.top - padding.bottom
 
 	const r = Math.min(width / 4, chartHeight / 2.5) // Reduced radius for better spacing
@@ -133,7 +134,7 @@ export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema>
 	svgContent += `<text x="${outside_X}" y="${height - padding.bottom / 2}" class="count">${outsideCount}</text>` // Adjusted y position based on padding
 
 	// Final assembly
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding.horizontal)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
 	svg += svgContent
 	svg += "</svg>"

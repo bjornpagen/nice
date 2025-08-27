@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents, type Extents } from "@/lib/widgets/utils/layout"
 
 function createRectSchema() {
@@ -87,7 +88,7 @@ export type ScaleCopiesSliderProps = z.infer<typeof ScaleCopiesSliderPropsSchema
 export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSliderPropsSchema> = (props) => {
 	const { width, height, shapeA, shapeB } = props
 
-	const padding = { top: 30, right: 20, bottom: 30, left: 20 }
+	const padding = { top: PADDING * 1.5, right: PADDING, bottom: PADDING * 1.5, left: PADDING }
 	const rowGap = 20
 	const colGap = 30 // Gap for the arrow
 
@@ -163,7 +164,7 @@ export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSlider
 	svgContent += drawShapeGroup(shapeB, shapeB_Y_Offset, ext)
 
 	// Final assembly with dynamic width
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding.left)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg += svgContent
 	svg += "</svg>"

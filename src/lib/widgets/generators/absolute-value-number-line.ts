@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import {
 	calculateTextAwareLabelSelection,
 	computeDynamicWidth,
@@ -49,8 +50,7 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	const { width, height, min, max, tickInterval, value, highlightColor, showDistanceLabel } = data
 	const absValue = Math.abs(value)
 	
-	const margin = { top: 30, right: 20, bottom: 30, left: 20 }
-	const chartWidth = width - margin.left - margin.right
+	const chartWidth = width - PADDING * 2
 
 	if (min >= max) {
 		logger.error("invalid range for absolute value number line", { min, max })
@@ -58,8 +58,8 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	}
 
 	const scale = chartWidth / (max - min)
-	const toSvgX = (val: number) => margin.left + (val - min) * scale
-	const yPos = height - margin.bottom
+	const toSvgX = (val: number) => PADDING + (val - min) * scale
+	const yPos = height - PADDING
 
 	const zeroPos = toSvgX(0)
 	const valuePos = toSvgX(value)
@@ -68,9 +68,9 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	
 	// Track the main line endpoints
-	includePointX(ext, margin.left)
-	includePointX(ext, width - margin.right)
-	svg += `<line x1="${margin.left}" y1="${yPos}" x2="${width - margin.right}" y2="${yPos}" stroke="black" stroke-width="1.5"/>`
+	includePointX(ext, PADDING)
+	includePointX(ext, width - PADDING)
+	svg += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="black" stroke-width="1.5"/>`
 
 	// Ticks and labels with text-aware selection
 	const tickValues: number[] = []
@@ -109,7 +109,7 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	svg += `<circle cx="${valuePos}" cy="${yPos}" r="5" fill="${highlightColor}" stroke="black" stroke-width="1"/>`
 
 	// Apply dynamic width at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

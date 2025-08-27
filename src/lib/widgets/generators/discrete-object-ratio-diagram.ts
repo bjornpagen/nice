@@ -1,5 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { calculateTitleLayout, computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
@@ -76,7 +77,7 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 	
 	// Use dynamic layout for title and top margin
 	const { titleY, topMargin } = calculateTitleLayout(title ?? undefined, width - 40)
-	const padding = { top: topMargin, right: 20, bottom: 20, left: 20 }
+	const padding = { top: topMargin, right: PADDING, bottom: PADDING, left: PADDING }
 	
 	const chartWidth = width - padding.left - padding.right
 	const chartHeight = height - padding.top - padding.bottom
@@ -149,7 +150,7 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 		}
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 
 	svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
 	svg += containerRect

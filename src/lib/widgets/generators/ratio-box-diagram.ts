@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, initExtents } from "@/lib/widgets/utils/layout"
 
 const Item = z
@@ -128,7 +129,7 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 		return `<svg width="${width}" height="${height}" />`
 	}
 
-	const padding = { top: 10, right: 10, bottom: 10, left: 10 }
+	const padding = { top: PADDING, right: PADDING, bottom: PADDING, left: PADDING }
 	const chartWidth = width - padding.left - padding.right
 	const chartHeight = height - padding.top - padding.bottom
 
@@ -300,7 +301,7 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 		}
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg">`
 	svg += svgContent
 	svg += "</svg>"

@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 export const ErrInvalidRange = errors.new("min must be less than max")
@@ -125,7 +126,7 @@ export type InequalityNumberLineProps = z.infer<typeof InequalityNumberLineProps
  */
 export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumberLinePropsSchema> = (data) => {
 	const { width, height, min, max, tickInterval, ranges } = data
-	const padding = { horizontal: 20, vertical: 20 }
+	const padding = { horizontal: PADDING, vertical: PADDING }
 	const chartWidth = width - 2 * padding.horizontal
 	const yPos = height / 2
 
@@ -196,7 +197,7 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 		}
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"

@@ -1,6 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateTextAwareLabelSelection,
@@ -181,7 +182,7 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	includeText(ext, toSvgX(1975), abbreviateMonth(bottomArea.label), "middle", 7)
 	includeText(ext, toSvgX(1850), abbreviateMonth(topArea.label), "middle", 7)
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, 10)
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
 	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 	svg += "</svg>"
