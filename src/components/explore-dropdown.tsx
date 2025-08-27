@@ -1,22 +1,23 @@
 "use client"
 
+import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
 import { ChevronDown } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { getOneRosterCoursesForExplore } from "@/lib/actions/courses"
-import type { ProfileSubject } from "@/lib/types/domain"
+import { getOneRosterCoursesForExplore, type SubjectWithCoursesForExplore } from "@/lib/actions/courses"
 
 interface ExploreDropdownProps {
 	dark?: boolean
 }
 
 export function ExploreDropdown({ dark = false }: ExploreDropdownProps) {
-	const [subjectsWithCourses, setSubjectsWithCourses] = React.useState<ProfileSubject[] | null>(null)
+	const [subjectsWithCourses, setSubjectsWithCourses] = React.useState<SubjectWithCoursesForExplore[] | null>(null)
 	const [isLoading, setIsLoading] = React.useState(true)
 	const [showAllCourses, setShowAllCourses] = React.useState<Record<string, boolean>>({})
+	const { isSignedIn } = useUser()
 
 	React.useEffect(() => {
 		const fetchData = async () => {
@@ -27,10 +28,28 @@ export function ExploreDropdown({ dark = false }: ExploreDropdownProps) {
 			setIsLoading(false)
 		}
 
-		fetchData()
-	}, [])
+		if (!isSignedIn) {
+			setIsLoading(false)
+			return
+		}
+
+		void fetchData()
+	}, [isSignedIn])
 
 	if (isLoading) {
+		return (
+			<Button
+				variant="ghost"
+				className={`hidden lg:flex items-center space-x-1 p-2 ${dark ? "text-white" : "text-blue-600"}`}
+				disabled
+			>
+				<span className="text-sm font-medium">Explore</span>
+				<ChevronDown className="h-4 w-4" />
+			</Button>
+		)
+	}
+
+	if (!subjectsWithCourses || subjectsWithCourses.length === 0) {
 		return (
 			<Button
 				variant="ghost"
@@ -82,19 +101,29 @@ export function ExploreDropdown({ dark = false }: ExploreDropdownProps) {
 											</h3>
 										</div>
 										<div className="space-y-2">
-											{coursesToShow.map((course) => (
-												<Link
-													key={course.id}
-													href={course.path}
-													className="block text-sm text-blue-600 hover:text-blue-700 hover:underline"
-													onClick={() => {
-														// Close dropdown when clicking a link
-														document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }))
-													}}
-												>
-													{course.title}
-												</Link>
-											))}
+											{coursesToShow.map((course) =>
+												course.isEnrolled ? (
+													<Link
+														key={course.id}
+														href={course.path}
+														className="block text-sm text-blue-600 hover:text-blue-700 hover:underline"
+														onClick={() => {
+															// Close dropdown when clicking a link
+															document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }))
+														}}
+													>
+														{course.title}
+													</Link>
+												) : (
+													<span
+														key={course.id}
+														className="block text-sm text-gray-400 cursor-not-allowed select-none"
+														aria-disabled="true"
+													>
+														{course.title}
+													</span>
+												)
+											)}
 											{hasMoreCourses && !showAll && (
 												<button
 													type="button"

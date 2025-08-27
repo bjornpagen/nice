@@ -280,14 +280,15 @@ export async function setUserEnrollmentsByCourseId(selectedCourseIds: string[]):
 
 // Type definitions for OneRoster explore dropdown (no DB dependency)
 
-type CourseForExplore = {
+export type CourseForExplore = {
 	id: string // Using OneRoster sourcedId as the key
 	title: string
 	path: string
 	slug: string
+	isEnrolled: boolean // Indicates if the authenticated user is enrolled in this course
 }
 
-type SubjectWithCoursesForExplore = {
+export type SubjectWithCoursesForExplore = {
 	slug: string
 	title: string
 	courses: CourseForExplore[]
@@ -321,6 +322,37 @@ export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCourse
 	}
 	logger.info("fetching explore dropdown data from oneroster api", { orgId: ONEROSTER_ORG_ID })
 
+	// Get user metadata to check for enrolled courses
+	const user = await currentUser()
+	let userSourceId: string | undefined
+	if (user?.publicMetadata?.sourceId && typeof user.publicMetadata.sourceId === "string") {
+		userSourceId = user.publicMetadata.sourceId
+	}
+	const enrolledCourseIds = new Set<string>()
+
+	// We'll map from class IDs to course IDs after fetching classes
+	const enrolledClassIds = new Set<string>()
+
+	// Fetch enrollments if user has a sourceId
+	if (userSourceId) {
+		const enrollmentsResult = await errors.try(getEnrollmentsForUser(userSourceId))
+		if (enrollmentsResult.error) {
+			logger.error("failed to fetch user enrollments", { userSourceId, error: enrollmentsResult.error })
+			throw errors.wrap(enrollmentsResult.error, "user enrollments")
+		}
+		// Get unique class IDs from enrollments
+		for (const enrollment of enrollmentsResult.data) {
+			if (enrollment.status === "active") {
+				enrolledClassIds.add(enrollment.class.sourcedId)
+			}
+		}
+
+		logger.debug("fetched user enrollments", {
+			userSourceId,
+			enrolledClassCount: enrolledClassIds.size
+		})
+	}
+
 	const [classesResult, coursesResult] = await Promise.all([
 		errors.try(getClassesForSchool(ONEROSTER_ORG_ID)),
 		errors.try(getAllCourses())
@@ -340,6 +372,13 @@ export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCourse
 	const coursesMap = new Map(allCourses.map((c) => [c.sourcedId, c]))
 	const coursesBySubject = new Map<string, CourseForExplore[]>()
 	const processedCourseIds = new Set<string>()
+
+	// Map class IDs to course IDs for enrolled courses
+	for (const oneRosterClass of allClasses) {
+		if (enrolledClassIds.has(oneRosterClass.sourcedId)) {
+			enrolledCourseIds.add(oneRosterClass.course.sourcedId)
+		}
+	}
 
 	for (const oneRosterClass of allClasses) {
 		const course = coursesMap.get(oneRosterClass.course.sourcedId)
@@ -366,7 +405,8 @@ export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCourse
 			id: course.sourcedId, // Using OneRoster sourcedId as the key
 			title: removeNiceAcademyPrefix(course.title),
 			path: constructedPath,
-			slug: courseMetadata.khanSlug
+			slug: courseMetadata.khanSlug,
+			isEnrolled: enrolledCourseIds.has(course.sourcedId)
 		}
 
 		// Map OneRoster subjects back to UI-friendly subjects
