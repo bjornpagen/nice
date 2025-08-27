@@ -9,7 +9,6 @@ import { toast } from "sonner"
 import { Card } from "@/app/(user)/profile/me/courses/components/card"
 import { CourseSelector } from "@/components/course-selector-content"
 import { OnboardingModal } from "@/components/onboarding-modal"
-import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { setUserEnrollmentsByCourseId } from "@/lib/actions/courses"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
@@ -79,7 +78,7 @@ function CourseGrid({ courses }: { courses: ProfileCourse[] }) {
 		return (
 			<div className="text-center py-12 text-gray-500">
 				<h2 className="text-xl font-semibold mb-2">No courses yet!</h2>
-				<p>Click "Edit Courses" to start your learning journey.</p>
+				<p>Please contact your guide or admin to enroll you in Nice Academy courses.</p>
 			</div>
 		)
 	}
@@ -175,8 +174,7 @@ export function Content({ coursesPromise }: { coursesPromise: Promise<ProfileCou
 
 	const handleOnboardingComplete = () => {
 		setShowOnboarding(false)
-		// Open course selector to help them get started
-		setIsModalOpen(true)
+		// Course selector no longer opens - students must be enrolled by admin
 	}
 
 	// Show skeleton while syncing
@@ -199,13 +197,13 @@ export function Content({ coursesPromise }: { coursesPromise: Promise<ProfileCou
 		<>
 			<div className="flex items-center justify-between mb-6">
 				<h1 className="text-2xl font-bold text-gray-800">My courses</h1>
-				<Button
+				{/* <Button
 					onClick={() => setIsModalOpen(true)}
 					variant="outline"
 					className="bg-blue-600 hover:bg-blue-700 text-white hover:text-white font-medium px-4 border-blue-600 hover:border-blue-600 hover:outline hover:outline-2 hover:outline-blue-600 hover:outline-offset-2 transition-all"
 				>
 					Edit Courses
-				</Button>
+				</Button> */}
 			</div>
 
 			<CourseGrid courses={userCourses} />
