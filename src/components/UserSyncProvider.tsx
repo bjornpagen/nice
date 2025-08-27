@@ -46,6 +46,8 @@ export function UserSyncProvider({ children }: { children: React.ReactNode }) {
 				return
 			}
 
+			// Force reload the user data from Clerk to get fresh metadata
+			await user.reload()
 			router.refresh()
 		}
 

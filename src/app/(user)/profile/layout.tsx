@@ -14,17 +14,16 @@ import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 function ProfileLayoutContent({ children }: { children: React.ReactNode }) {
 	const { user, isLoaded } = useUser()
 
-	// Effect to periodically check for metadata updates
+	// Effect to ensure metadata is valid
 	React.useEffect(() => {
-		// Only trigger reload if user is loaded, exists, and metadata is explicitly missing or invalid.
-		// If `parseUserPublicMetadata` throws, it means it's invalid.
-		const metadataResult = user ? errors.trySync(() => parseUserPublicMetadata(user.publicMetadata)) : { error: null }
-		if (isLoaded && user && metadataResult.error) {
-			const interval = setInterval(() => {
-				window.location.reload()
-			}, 2000)
-
-			return () => clearInterval(interval)
+		// Only validate if user is loaded and exists
+		if (isLoaded && user) {
+			const metadataResult = errors.trySync(() => parseUserPublicMetadata(user.publicMetadata))
+			if (metadataResult.error) {
+				// Metadata is invalid, but UserSyncProvider should handle the sync
+				// No need for auto-refresh as user.reload() is called after sync
+				logger.warn("user metadata invalid, waiting for sync", { userId: user.id })
+			}
 		}
 	}, [isLoaded, user])
 
