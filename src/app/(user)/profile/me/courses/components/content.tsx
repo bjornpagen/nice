@@ -9,6 +9,7 @@ import { toast } from "sonner"
 import { Card } from "@/app/(user)/profile/me/courses/components/card"
 import { CourseSelector } from "@/components/course-selector-content"
 import { OnboardingModal } from "@/components/onboarding-modal"
+import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { setUserEnrollmentsByCourseId } from "@/lib/actions/courses"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
@@ -104,6 +105,14 @@ export function Content({ coursesPromise }: { coursesPromise: Promise<ProfileCou
 	const { user, isLoaded } = useUser()
 	const router = useRouter()
 
+	// Check if user has permission to edit courses (same as unlock content access)
+	function checkCanEditCourses() {
+		if (!user) return false
+		const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+		return parsed.success && parsed.data.roles.some((r) => r.role !== "student")
+	}
+	const canEditCourses = checkCanEditCourses()
+
 	// Show onboarding modal for new users with no courses
 	React.useEffect(() => {
 		if (!needsSync && userCourses.length === 0) {
@@ -197,13 +206,15 @@ export function Content({ coursesPromise }: { coursesPromise: Promise<ProfileCou
 		<>
 			<div className="flex items-center justify-between mb-6">
 				<h1 className="text-2xl font-bold text-gray-800">My courses</h1>
-				{/* <Button
-					onClick={() => setIsModalOpen(true)}
-					variant="outline"
-					className="bg-blue-600 hover:bg-blue-700 text-white hover:text-white font-medium px-4 border-blue-600 hover:border-blue-600 hover:outline hover:outline-2 hover:outline-blue-600 hover:outline-offset-2 transition-all"
-				>
-					Edit Courses
-				</Button> */}
+				{canEditCourses && (
+					<Button
+						onClick={() => setIsModalOpen(true)}
+						variant="outline"
+						className="bg-blue-600 hover:bg-blue-700 text-white hover:text-white font-medium px-4 border-blue-600 hover:border-blue-600 hover:outline hover:outline-2 hover:outline-blue-600 hover:outline-offset-2 transition-all"
+					>
+						Edit Courses
+					</Button>
+				)}
 			</div>
 
 			<CourseGrid courses={userCourses} />
