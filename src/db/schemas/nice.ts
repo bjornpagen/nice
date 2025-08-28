@@ -1,4 +1,14 @@
-import { foreignKey, index, integer, jsonb, pgSchema, primaryKey, text, uniqueIndex, uuid } from "drizzle-orm/pg-core"
+import {
+  foreignKey,
+  index,
+  integer,
+  jsonb,
+  pgSchema,
+  primaryKey,
+  text,
+  uniqueIndex,
+  uuid,
+} from "drizzle-orm/pg-core";
 
 /**
  * This file defines the entire database schema for the "nice" project,
@@ -15,269 +25,345 @@ import { foreignKey, index, integer, jsonb, pgSchema, primaryKey, text, uniqueIn
  * This approach provides strong data integrity, type safety, and enables
  * performant, batch-oriented queries for rendering complex pages.
  */
-const schema = pgSchema("nice")
-export { schema as niceSchema }
+const schema = pgSchema("nice");
+export { schema as niceSchema };
 
 // --- Enums ---
 
-const assessmentTypeEnum = schema.enum("assessment_type_enum", ["Quiz", "UnitTest", "CourseChallenge"])
-export { assessmentTypeEnum as niceAssessmentTypeEnum }
+const assessmentTypeEnum = schema.enum("assessment_type_enum", [
+  "Quiz",
+  "UnitTest",
+  "CourseChallenge",
+]);
+export { assessmentTypeEnum as niceAssessmentTypeEnum };
 
-const assessmentParentTypeEnum = schema.enum("assessment_parent_type_enum", ["Unit", "Course"])
-export { assessmentParentTypeEnum as niceAssessmentParentTypeEnum }
+const assessmentParentTypeEnum = schema.enum("assessment_parent_type_enum", [
+  "Unit",
+  "Course",
+]);
+export { assessmentParentTypeEnum as niceAssessmentParentTypeEnum };
 
-const lessonContentTypeEnum = schema.enum("lesson_content_type_enum", ["Video", "Article", "Exercise"])
-export { lessonContentTypeEnum as niceLessonContentTypeEnum }
+const lessonContentTypeEnum = schema.enum("lesson_content_type_enum", [
+  "Video",
+  "Article",
+  "Exercise",
+]);
+export { lessonContentTypeEnum as niceLessonContentTypeEnum };
 
-const issueSeverityEnum = schema.enum("issue_severity_enum", ["major", "minor", "patch"])
-export { issueSeverityEnum as niceIssueSeverityEnum }
+const issueSeverityEnum = schema.enum("issue_severity_enum", [
+  "major",
+  "minor",
+  "patch",
+]);
+export { issueSeverityEnum as niceIssueSeverityEnum };
 
-const subjectEnum = schema.enum("subject_enum", ["science", "math", "history"])
-export { subjectEnum as niceSubjectEnum }
+const subjectEnum = schema.enum("subject_enum", ["science", "math", "history"]);
+export { subjectEnum as niceSubjectEnum };
 
 // --- JSONB Type Definitions ---
 
 // --- Content Tables ---
 
 const subjects = schema.table(
-	"subjects",
-	{
-		slug: text("slug").primaryKey(),
-		title: text("title").notNull()
-	},
-	(table) => [uniqueIndex("subjects_slug_idx").on(table.slug)]
-)
-export { subjects as niceSubjects }
+  "subjects",
+  {
+    slug: text("slug").primaryKey(),
+    title: text("title").notNull(),
+  },
+  (table) => [uniqueIndex("subjects_slug_idx").on(table.slug)],
+);
+export { subjects as niceSubjects };
 
 const courses = schema.table(
-	"courses",
-	{
-		id: text("id").primaryKey(),
-		slug: text("slug").notNull(),
-		title: text("title").notNull(),
-		description: text("description").notNull().default(""),
-		path: text("path").notNull().unique()
-	},
-	(table) => [
-		index("courses_path_idx").on(table.path),
-		index("courses_title_idx").on(table.title),
-		uniqueIndex("courses_slug_idx").on(table.slug)
-	]
-)
-export { courses as niceCourses }
+  "courses",
+  {
+    id: text("id").primaryKey(),
+    slug: text("slug").notNull(),
+    title: text("title").notNull(),
+    description: text("description").notNull().default(""),
+    path: text("path").notNull().unique(),
+  },
+  (table) => [
+    index("courses_path_idx").on(table.path),
+    index("courses_title_idx").on(table.title),
+    uniqueIndex("courses_slug_idx").on(table.slug),
+  ],
+);
+export { courses as niceCourses };
 
 const units = schema.table(
-	"units",
-	{
-		id: text("id").primaryKey(),
-		courseId: text("course_id").notNull(),
-		slug: text("slug").notNull(),
-		title: text("title").notNull(),
-		description: text("description").notNull().default(""),
-		path: text("path").notNull().unique(),
-		ordering: integer("ordering").notNull()
-	},
-	(table) => [
-		index("units_course_id_idx").on(table.courseId),
-		index("units_path_idx").on(table.path),
-		index("units_title_idx").on(table.title),
-		uniqueIndex("unit_slug_per_course_idx").on(table.courseId, table.slug),
-		foreignKey({ name: "units_course_fk", columns: [table.courseId], foreignColumns: [courses.id] }).onDelete("cascade")
-	]
-)
-export { units as niceUnits }
+  "units",
+  {
+    id: text("id").primaryKey(),
+    courseId: text("course_id").notNull(),
+    slug: text("slug").notNull(),
+    title: text("title").notNull(),
+    description: text("description").notNull().default(""),
+    path: text("path").notNull().unique(),
+    ordering: integer("ordering").notNull(),
+  },
+  (table) => [
+    index("units_course_id_idx").on(table.courseId),
+    index("units_path_idx").on(table.path),
+    index("units_title_idx").on(table.title),
+    uniqueIndex("unit_slug_per_course_idx").on(table.courseId, table.slug),
+    foreignKey({
+      name: "units_course_fk",
+      columns: [table.courseId],
+      foreignColumns: [courses.id],
+    }).onDelete("cascade"),
+  ],
+);
+export { units as niceUnits };
 
 const lessons = schema.table(
-	"lessons",
-	{
-		id: text("id").primaryKey(),
-		unitId: text("unit_id").notNull(),
-		slug: text("slug").notNull(),
-		title: text("title").notNull(),
-		description: text("description").notNull().default(""),
-		path: text("path").notNull().unique(),
-		ordering: integer("ordering").notNull()
-	},
-	(table) => [
-		index("lessons_unit_id_idx").on(table.unitId),
-		index("lessons_path_idx").on(table.path),
-		index("lessons_title_idx").on(table.title),
-		uniqueIndex("lesson_slug_per_unit_idx").on(table.unitId, table.slug),
-		foreignKey({ name: "lessons_unit_fk", columns: [table.unitId], foreignColumns: [units.id] }).onDelete("cascade")
-	]
-)
-export { lessons as niceLessons }
+  "lessons",
+  {
+    id: text("id").primaryKey(),
+    unitId: text("unit_id").notNull(),
+    slug: text("slug").notNull(),
+    title: text("title").notNull(),
+    description: text("description").notNull().default(""),
+    path: text("path").notNull().unique(),
+    ordering: integer("ordering").notNull(),
+  },
+  (table) => [
+    index("lessons_unit_id_idx").on(table.unitId),
+    index("lessons_path_idx").on(table.path),
+    index("lessons_title_idx").on(table.title),
+    uniqueIndex("lesson_slug_per_unit_idx").on(table.unitId, table.slug),
+    foreignKey({
+      name: "lessons_unit_fk",
+      columns: [table.unitId],
+      foreignColumns: [units.id],
+    }).onDelete("cascade"),
+  ],
+);
+export { lessons as niceLessons };
 
 const lessonContents = schema.table(
-	"lesson_contents",
-	{
-		lessonId: text("lesson_id").notNull(),
-		contentId: text("content_id").notNull(),
-		contentType: lessonContentTypeEnum("content_type").notNull(),
-		ordering: integer("ordering").notNull()
-	},
-	(table) => [
-		primaryKey({ name: "lesson_contents_pk", columns: [table.lessonId, table.contentId] }),
-		index("lc_lesson_id_idx").on(table.lessonId),
-		foreignKey({
-			name: "lc_lesson_fk",
-			columns: [table.lessonId],
-			foreignColumns: [lessons.id]
-		}).onDelete("cascade")
-	]
-)
-export { lessonContents as niceLessonContents }
+  "lesson_contents",
+  {
+    lessonId: text("lesson_id").notNull(),
+    contentId: text("content_id").notNull(),
+    contentType: lessonContentTypeEnum("content_type").notNull(),
+    ordering: integer("ordering").notNull(),
+  },
+  (table) => [
+    primaryKey({
+      name: "lesson_contents_pk",
+      columns: [table.lessonId, table.contentId],
+    }),
+    index("lc_lesson_id_idx").on(table.lessonId),
+    foreignKey({
+      name: "lc_lesson_fk",
+      columns: [table.lessonId],
+      foreignColumns: [lessons.id],
+    }).onDelete("cascade"),
+  ],
+);
+export { lessonContents as niceLessonContents };
 
 const videos = schema.table(
-	"videos",
-	{
-		id: text("id").primaryKey(),
-		title: text("title").notNull(),
-		slug: text("slug").notNull(),
-		path: text("path").notNull().unique(),
-		youtubeId: text("youtube_id").notNull(),
-		duration: integer("duration").notNull(),
-		description: text("description").notNull().default("")
-	},
-	(table) => [index("videos_path_idx").on(table.path), index("videos_title_idx").on(table.title)]
-)
-export { videos as niceVideos }
+  "videos",
+  {
+    id: text("id").primaryKey(),
+    title: text("title").notNull(),
+    slug: text("slug").notNull(),
+    path: text("path").notNull().unique(),
+    youtubeId: text("youtube_id").notNull(),
+    duration: integer("duration").notNull(),
+    description: text("description").notNull().default(""),
+  },
+  (table) => [
+    index("videos_path_idx").on(table.path),
+    index("videos_title_idx").on(table.title),
+  ],
+);
+export { videos as niceVideos };
 
 const articles = schema.table(
-	"articles",
-	{
-		id: text("id").primaryKey(),
-		title: text("title").notNull(),
-		slug: text("slug").notNull(),
-		path: text("path").notNull().unique(),
-		perseusContent: jsonb("perseus_content").notNull(),
-		xml: text("xml")
-	},
-	(table) => [index("articles_path_idx").on(table.path), index("articles_title_idx").on(table.title)]
-)
-export { articles as niceArticles }
+  "articles",
+  {
+    id: text("id").primaryKey(),
+    title: text("title").notNull(),
+    slug: text("slug").notNull(),
+    path: text("path").notNull().unique(),
+    perseusContent: jsonb("perseus_content").notNull(),
+    xml: text("xml"),
+  },
+  (table) => [
+    index("articles_path_idx").on(table.path),
+    index("articles_title_idx").on(table.title),
+  ],
+);
+export { articles as niceArticles };
 
 const exercises = schema.table(
-	"exercises",
-	{
-		id: text("id").primaryKey(),
-		title: text("title").notNull(),
-		slug: text("slug").notNull(),
-		path: text("path").notNull().unique(),
-		description: text("description").notNull().default("")
-	},
-	(table) => [index("exercises_path_idx").on(table.path), index("exercises_title_idx").on(table.title)]
-)
-export { exercises as niceExercises }
+  "exercises",
+  {
+    id: text("id").primaryKey(),
+    title: text("title").notNull(),
+    slug: text("slug").notNull(),
+    path: text("path").notNull().unique(),
+    description: text("description").notNull().default(""),
+  },
+  (table) => [
+    index("exercises_path_idx").on(table.path),
+    index("exercises_title_idx").on(table.title),
+  ],
+);
+export { exercises as niceExercises };
 
 const questions = schema.table(
-	"questions",
-	{
-		id: text("id").primaryKey(),
-		exerciseId: text("exercise_id").notNull(),
-		sha: text("sha").notNull().default(""),
-		parsedData: jsonb("parsed_data").notNull(),
-		xml: text("xml"),
-		// New column to cache the intermediate structured QTI JSON representation
-		structuredJson: jsonb("structured_json"),
-		// Problem type identifier for grouping question variants
-		problemType: text("problem_type").notNull()
-	},
-	(table) => [
-		index("questions_exercise_id_idx").on(table.exerciseId),
-		index("questions_problem_type_idx").on(table.problemType),
-		index("questions_exercise_problem_type_idx").on(table.exerciseId, table.problemType),
-		foreignKey({
-			name: "questions_exercise_fk",
-			columns: [table.exerciseId],
-			foreignColumns: [exercises.id]
-		}).onDelete("cascade")
-	]
-)
-export { questions as niceQuestions }
+  "questions",
+  {
+    id: text("id").primaryKey(),
+    exerciseId: text("exercise_id").notNull(),
+    sha: text("sha").notNull().default(""),
+    parsedData: jsonb("parsed_data").notNull(),
+    xml: text("xml"),
+    // New column to cache the intermediate structured QTI JSON representation
+    structuredJson: jsonb("structured_json"),
+    // Problem type identifier for grouping question variants
+    problemType: text("problem_type").notNull(),
+  },
+  (table) => [
+    index("questions_exercise_id_idx").on(table.exerciseId),
+    index("questions_problem_type_idx").on(table.problemType),
+    index("questions_exercise_problem_type_idx").on(
+      table.exerciseId,
+      table.problemType,
+    ),
+    foreignKey({
+      name: "questions_exercise_fk",
+      columns: [table.exerciseId],
+      foreignColumns: [exercises.id],
+    }).onDelete("cascade"),
+  ],
+);
+export { questions as niceQuestions };
 
 const assessments = schema.table(
-	"assessments",
-	{
-		id: text("id").primaryKey(),
-		type: assessmentTypeEnum("type").notNull(),
-		parentId: text("parent_id").notNull(),
-		parentType: assessmentParentTypeEnum("parent_type").notNull(),
-		title: text("title").notNull(),
-		slug: text("slug").notNull(),
-		path: text("path").notNull().unique(),
-		ordering: integer("ordering").notNull(),
-		description: text("description").notNull().default("")
-	},
-	(table) => [
-		index("assessments_path_idx").on(table.path),
-		index("assessments_parent_type_idx").on(table.parentId, table.type)
-	]
-)
-export { assessments as niceAssessments }
+  "assessments",
+  {
+    id: text("id").primaryKey(),
+    type: assessmentTypeEnum("type").notNull(),
+    parentId: text("parent_id").notNull(),
+    parentType: assessmentParentTypeEnum("parent_type").notNull(),
+    title: text("title").notNull(),
+    slug: text("slug").notNull(),
+    path: text("path").notNull().unique(),
+    ordering: integer("ordering").notNull(),
+    description: text("description").notNull().default(""),
+  },
+  (table) => [
+    index("assessments_path_idx").on(table.path),
+    index("assessments_parent_type_idx").on(table.parentId, table.type),
+  ],
+);
+export { assessments as niceAssessments };
 
 const assessmentExercises = schema.table(
-	"assessment_exercises",
-	{
-		assessmentId: text("assessment_id").notNull(),
-		exerciseId: text("exercise_id").notNull()
-	},
-	(table) => [
-		primaryKey({ columns: [table.assessmentId, table.exerciseId] }),
-		index("ae_assessment_id_idx").on(table.assessmentId),
-		index("ae_exercise_id_idx").on(table.exerciseId),
-		foreignKey({
-			name: "ae_assessment_fk",
-			columns: [table.assessmentId],
-			foreignColumns: [assessments.id]
-		}).onDelete("cascade"),
-		foreignKey({
-			name: "ae_exercise_fk",
-			columns: [table.exerciseId],
-			foreignColumns: [exercises.id]
-		}).onDelete("cascade")
-	]
-)
-export { assessmentExercises as niceAssessmentExercises }
+  "assessment_exercises",
+  {
+    assessmentId: text("assessment_id").notNull(),
+    exerciseId: text("exercise_id").notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.assessmentId, table.exerciseId] }),
+    index("ae_assessment_id_idx").on(table.assessmentId),
+    index("ae_exercise_id_idx").on(table.exerciseId),
+    foreignKey({
+      name: "ae_assessment_fk",
+      columns: [table.assessmentId],
+      foreignColumns: [assessments.id],
+    }).onDelete("cascade"),
+    foreignKey({
+      name: "ae_exercise_fk",
+      columns: [table.exerciseId],
+      foreignColumns: [exercises.id],
+    }).onDelete("cascade"),
+  ],
+);
+export { assessmentExercises as niceAssessmentExercises };
+
+const commonCoreStandards = schema.table(
+  "common_core_standards",
+  {
+    id: text("id").primaryKey(),
+    setId: text("set_id").notNull(),
+    standardId: text("standard_id").notNull(),
+    standardDescription: text("standard_description").notNull(),
+  },
+  (table) => [
+    index("ccs_set_id_idx").on(table.setId),
+    index("ccs_standard_id_idx").on(table.standardId),
+  ],
+);
+export { commonCoreStandards as niceCommonCoreStandards };
+
+const lessonContentsCommonCoreStandards = schema.table(
+  "lesson_contents_common_core_standards", 
+  {
+    commonCoreStandardId: text("common_core_standard_id").notNull(),
+    contentId: text("content_id").notNull(),
+    contentType: lessonContentTypeEnum("content_type").notNull(),
+  },
+  (table) => [
+    primaryKey({
+      name: "lc_ccs_pk",
+      columns: [table.commonCoreStandardId, table.contentId, table.contentType],
+    }),
+    index("lc_ccs_standard_id_idx").on(table.commonCoreStandardId),
+    index("lc_ccs_content_idx").on(table.contentId, table.contentType),
+    foreignKey({
+      name: "lc_ccs_standard_fk", 
+      columns: [table.commonCoreStandardId],
+      foreignColumns: [commonCoreStandards.id],
+    }).onDelete("cascade"),
+  ],
+);
+export { lessonContentsCommonCoreStandards as niceLessonContentsCommonCoreStandards };
 
 const questionsAnalysis = schema.table(
-	"questions_analysis",
-	{
-		id: uuid("id").primaryKey().defaultRandom(),
-		questionId: text("question_id").notNull().unique(),
-		analysisNotes: text("analysis_notes"),
-		severity: issueSeverityEnum("severity")
-	},
-	(table) => [
-		uniqueIndex("questions_analysis_question_id_idx").on(table.questionId),
-		foreignKey({
-			name: "questions_analysis_question_fk",
-			columns: [table.questionId],
-			foreignColumns: [questions.id]
-		}).onDelete("cascade")
-	]
-)
-export { questionsAnalysis as niceQuestionsAnalysis }
+  "questions_analysis",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    questionId: text("question_id").notNull().unique(),
+    analysisNotes: text("analysis_notes"),
+    severity: issueSeverityEnum("severity"),
+  },
+  (table) => [
+    uniqueIndex("questions_analysis_question_id_idx").on(table.questionId),
+    foreignKey({
+      name: "questions_analysis_question_fk",
+      columns: [table.questionId],
+      foreignColumns: [questions.id],
+    }).onDelete("cascade"),
+  ],
+);
+export { questionsAnalysis as niceQuestionsAnalysis };
 
 const questionRenderReviews = schema.table(
-	"question_render_reviews",
-	{
-		questionId: text("question_id").primaryKey(),
-		analysisNotes: text("analysis_notes").notNull(),
-		severity: issueSeverityEnum("severity"),
-		model: text("model").notNull().default(""),
-		raw: jsonb("raw"),
-		productionScreenshotUrl: text("production_screenshot_url").notNull(),
-		perseusScreenshotUrl: text("perseus_screenshot_url").notNull(),
-		reviewedAt: text("reviewed_at").notNull().default(""),
-		subject: subjectEnum("subject")
-	},
-	(table) => [
-		foreignKey({
-			name: "qrr_question_fk",
-			columns: [table.questionId],
-			foreignColumns: [questions.id]
-		}).onDelete("cascade")
-	]
-)
-export { questionRenderReviews as niceQuestionRenderReviews }
+  "question_render_reviews",
+  {
+    questionId: text("question_id").primaryKey(),
+    analysisNotes: text("analysis_notes").notNull(),
+    severity: issueSeverityEnum("severity"),
+    model: text("model").notNull().default(""),
+    raw: jsonb("raw"),
+    productionScreenshotUrl: text("production_screenshot_url").notNull(),
+    perseusScreenshotUrl: text("perseus_screenshot_url").notNull(),
+    reviewedAt: text("reviewed_at").notNull().default(""),
+    subject: subjectEnum("subject"),
+  },
+  (table) => [
+    foreignKey({
+      name: "qrr_question_fk",
+      columns: [table.questionId],
+      foreignColumns: [questions.id],
+    }).onDelete("cascade"),
+  ],
+);
+export { questionRenderReviews as niceQuestionRenderReviews };
