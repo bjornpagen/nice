@@ -194,7 +194,7 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 	const viewBoxHeight = height
 	
 	const ext = initExtents(width) // NEW: Initialize extents
-	let svg = `<svg width="${width}" height="${viewBoxHeight}" viewBox="${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	let svgBody = ""
 
 	// Calculate starting position to center the content
 	const startX = (width - scaledContentWidth) / 2
@@ -214,7 +214,7 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 		const offsetY = currentY - bounds.minY * scale
 
 		// Draw the figure
-		svg += drawFigure(figure, offsetX, offsetY, scale, ext) // MODIFIED: Pass extents
+		svgBody += drawFigure(figure, offsetX, offsetY, scale, ext) // MODIFIED: Pass extents
 
 		// Move to next position
 		if (layout === "horizontal") {
@@ -226,10 +226,10 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 
 	// NEW: Apply dynamic width at the end
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${viewBoxHeight}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${viewBoxHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${viewBoxHeight}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }
 
 /**

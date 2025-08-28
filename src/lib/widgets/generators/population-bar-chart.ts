@@ -132,29 +132,27 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 	const barPadding = 0.3 // Visually closer to the example image
 
 	const ext = initExtents(width)
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
-	svg +=
-		"<style>.axis-label { font-size: 1.1em; font-weight: bold; text-anchor: middle; } .tick-label { font-size: 1em; font-weight: bold; } </style>"
+	let svgBody = "<style>.axis-label { font-size: 1.1em; font-weight: bold; text-anchor: middle; } .tick-label { font-size: 1em; font-weight: bold; } </style>"
 
 	// Main SVG Body
 	const chartBody = `<g transform="translate(${margin.left},${margin.top})">`
-	svg += chartBody
+	svgBody += chartBody
 
 	// Y-axis line
-	svg += `<line x1="0" y1="0" x2="0" y2="${chartHeight}" stroke="black" stroke-width="2"/>`
+	svgBody += `<line x1="0" y1="0" x2="0" y2="${chartHeight}" stroke="black" stroke-width="2"/>`
 	// X-axis line
-	svg += `<line x1="0" y1="${chartHeight}" x2="${chartWidth}" y2="${chartHeight}" stroke="black" stroke-width="2"/>`
+	svgBody += `<line x1="0" y1="${chartHeight}" x2="${chartWidth}" y2="${chartHeight}" stroke="black" stroke-width="2"/>`
 
 	// Axis Labels (x-axis inside group; y-axis will be rendered in global coordinates later)
-	svg += `<text x="${chartWidth / 2}" y="${chartHeight + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
+	svgBody += `<text x="${chartWidth / 2}" y="${chartHeight + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
 
 	// Y ticks and SOLID grid lines
 	for (let t = yAxis.min; t <= maxValue; t += yAxis.tickInterval) {
 		const y = chartHeight - (t - yAxis.min) * scaleY
 		// Grid line
-		svg += `<line x1="0" y1="${y}" x2="${chartWidth}" y2="${y}" stroke="${gridColor}" stroke-width="1"/>`
+		svgBody += `<line x1="0" y1="${y}" x2="${chartWidth}" y2="${y}" stroke="${gridColor}" stroke-width="1"/>`
 		// Tick label
-		svg += `<text x="-10" y="${y + 5}" class="tick-label" text-anchor="end">${t}</text>`
+		svgBody += `<text x="-10" y="${y + 5}" class="tick-label" text-anchor="end">${t}</text>`
 		includeText(ext, margin.left - 10, String(t), "end", 7) // MODIFICATION: Add this line
 	}
 
@@ -177,25 +175,25 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 		includePointX(ext, margin.left + barX + innerBarWidth)
 
 		// Bar
-		svg += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="${barColor}"/>`
+		svgBody += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="${barColor}"/>`
 
 		const labelX = x + barWidth / 2
 
 		// X-axis tick mark
-		svg += `<line x1="${labelX}" y1="${chartHeight}" x2="${labelX}" y2="${chartHeight + 5}" stroke="black" stroke-width="1.5"/>`
+		svgBody += `<line x1="${labelX}" y1="${chartHeight}" x2="${labelX}" y2="${chartHeight + 5}" stroke="black" stroke-width="1.5"/>`
 
 		// X-axis label (conditionally rendered)
 		const useAutoThinning = xAxisVisibleLabels.length === 0
 		const labelText = d.label
 		const shouldShowLabel = useAutoThinning ? selectedTextAware.has(i) : visibleLabelSet.has(labelText)
 		if (shouldShowLabel) {
-			svg += `<text x="${labelX}" y="${chartHeight + 20}" class="tick-label" text-anchor="middle">${abbreviateMonth(labelText)}</text>`
+			svgBody += `<text x="${labelX}" y="${chartHeight + 20}" class="tick-label" text-anchor="middle">${abbreviateMonth(labelText)}</text>`
 			// Track the x-axis tick label
 			includeText(ext, margin.left + labelX, abbreviateMonth(labelText), "middle", 7)
 		}
 	})
 
-	svg += "</g>" // Close chartBody group
+	svgBody += "</g>" // Close chartBody group
 
 	// Global coordinates for axis labels with proper pivot to avoid clipping
 	const globalXAxisLabelX = margin.left + chartWidth / 2
@@ -204,14 +202,13 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 
 	const globalYAxisLabelX = yAxisLabelX
 	const globalYAxisLabelY = margin.top + chartHeight / 2
-	svg += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), globalYAxisLabelX, globalYAxisLabelY, chartHeight)
+	svgBody += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), globalYAxisLabelX, globalYAxisLabelY, chartHeight)
 	includeRotatedYAxisLabel(ext, globalYAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
 
 	// Expand viewBox as needed to accommodate labels
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
-
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }

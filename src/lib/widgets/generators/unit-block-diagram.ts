@@ -74,7 +74,7 @@ export const generateUnitBlockDiagram: WidgetGenerator<typeof UnitBlockDiagramPr
 
 	const ext = initExtents(svgWidth)
 	
-	let svg = `<svg width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}" xmlns="http://www.w3.org/2000/svg">`
+	let svgBody = ""
 
 	for (let b = 0; b < totalBlocks; b++) {
 		const blockRow = Math.floor(b / blocksPerRow)
@@ -93,15 +93,15 @@ export const generateUnitBlockDiagram: WidgetGenerator<typeof UnitBlockDiagramPr
 			const row = Math.floor(i / 10)
 			const col = i % 10
 			const fill = i < shadedUnitsPerBlock ? shadeColor : "none"
-			svg += `<rect x="${bx + col * cellW}" y="${by + row * cellH}" width="${cellW}" height="${cellH}" fill="${fill}" stroke="#ccc" stroke-width="0.5"/>`
+			svgBody += `<rect x="${bx + col * cellW}" y="${by + row * cellH}" width="${cellW}" height="${cellH}" fill="${fill}" stroke="#ccc" stroke-width="0.5"/>`
 		}
 		// Add a border around the whole block
-		svg += `<rect x="${bx}" y="${by}" width="${blockWidth}" height="${blockHeight}" fill="none" stroke="black" stroke-width="1"/>`
+		svgBody += `<rect x="${bx}" y="${by}" width="${blockWidth}" height="${blockHeight}" fill="none" stroke="black" stroke-width="1"/>`
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, svgHeight, PADDING)
-	svg = svg.replace(`width="${svgWidth}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${svgWidth} ${svgHeight}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${svgHeight}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${svgHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${svgHeight}" xmlns="http://www.w3.org/2000/svg">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }

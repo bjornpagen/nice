@@ -104,9 +104,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 
 	const ext = initExtents(width)
 	
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
-	svg +=
-		"<style>.area-label { font-size: 16px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; } .side-label { font-size: 14px; text-anchor: middle; dominant-baseline: middle; } .grid-line { stroke: #888888; stroke-width: 0.5; opacity: 0.5; }</style>"
+	let svgBody = "<style>.area-label { font-size: 16px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; } .side-label { font-size: 14px; text-anchor: middle; dominant-baseline: middle; } .grid-line { stroke: #888888; stroke-width: 0.5; opacity: 0.5; }</style>"
 
 	// Helper function to generate grid lines for a rectangular square
 	const generateRectangularGrid = (x: number, y: number, width: number, height: number, sideLength: number): string => {
@@ -169,18 +167,18 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	includePointX(ext, v_c1.x)
 	includePointX(ext, v_c2.x)
 
-	svg += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_b_end.x},${v_b_end.y} ${v_c1.x},${v_c1.y} ${v_c2.x},${v_c2.y}" fill="${squareC.color}" stroke="#333333" stroke-width="1"/>`
+	svgBody += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_b_end.x},${v_b_end.y} ${v_c1.x},${v_c1.y} ${v_c2.x},${v_c2.y}" fill="${squareC.color}" stroke="#333333" stroke-width="1"/>`
 
 	// Add grid lines for square C
-	svg += generateRotatedGrid(v_a_end, v_b_end, v_c2, c)
+	svgBody += generateRotatedGrid(v_a_end, v_b_end, v_c2, c)
 
 	const centerC = { x: (v_a_end.x + v_c1.x) / 2, y: (v_a_end.y + v_c1.y) / 2 }
-	svg += `<text x="${centerC.x}" y="${centerC.y}" class="area-label">${squareC.area}</text>`
+	svgBody += `<text x="${centerC.x}" y="${centerC.y}" class="area-label">${squareC.area}</text>`
 	includeText(ext, centerC.x, String(squareC.area), "middle", 7)
 	if (squareC.sideLabel) {
 		const midHyp = { x: (v_a_end.x + v_b_end.x) / 2, y: (v_a_end.y + v_b_end.y) / 2 }
 		// Place "c" label on the hypotenuse side of the triangle
-		svg += `<text x="${midHyp.x}" y="${midHyp.y - 10}" class="side-label">${squareC.sideLabel}</text>`
+		svgBody += `<text x="${midHyp.x}" y="${midHyp.y - 10}" class="side-label">${squareC.sideLabel}</text>`
 		includeText(ext, midHyp.x, squareC.sideLabel, "middle", 7)
 	}
 
@@ -190,17 +188,17 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	includePointX(ext, rectB_x)
 	includePointX(ext, rectB_x + sb)
 
-	svg += `<rect x="${rectB_x}" y="${rectB_y}" width="${sb}" height="${sb}" fill="${squareB.color}" stroke="#333333" stroke-width="1"/>`
+	svgBody += `<rect x="${rectB_x}" y="${rectB_y}" width="${sb}" height="${sb}" fill="${squareB.color}" stroke="#333333" stroke-width="1"/>`
 
 	// Add grid lines for square B
-	svg += generateRectangularGrid(v_right.x, v_b_end.y, sb, sb, b)
+	svgBody += generateRectangularGrid(v_right.x, v_b_end.y, sb, sb, b)
 
 	const centerB = { x: v_right.x + sb / 2, y: v_b_end.y + sb / 2 }
-	svg += `<text x="${centerB.x}" y="${centerB.y}" class="area-label">${squareB.area}</text>`
+	svgBody += `<text x="${centerB.x}" y="${centerB.y}" class="area-label">${squareB.area}</text>`
 	includeText(ext, centerB.x, String(squareB.area), "middle", 7)
 	if (squareB.sideLabel) {
 		const midB = { x: (v_right.x + v_b_end.x) / 2, y: (v_right.y + v_b_end.y) / 2 }
-		svg += `<text x="${midB.x + 10}" y="${midB.y}" class="side-label">${squareB.sideLabel}</text>`
+		svgBody += `<text x="${midB.x + 10}" y="${midB.y}" class="side-label">${squareB.sideLabel}</text>`
 		includeText(ext, midB.x + 10, squareB.sideLabel, "middle", 7)
 	}
 
@@ -210,17 +208,17 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	includePointX(ext, rectA_x)
 	includePointX(ext, rectA_x + sa)
 
-	svg += `<rect x="${rectA_x}" y="${rectA_y}" width="${sa}" height="${sa}" fill="${squareA.color}" stroke="#333333" stroke-width="1"/>`
+	svgBody += `<rect x="${rectA_x}" y="${rectA_y}" width="${sa}" height="${sa}" fill="${squareA.color}" stroke="#333333" stroke-width="1"/>`
 
 	// Add grid lines for square A
-	svg += generateRectangularGrid(v_a_end.x, v_a_end.y, sa, sa, a)
+	svgBody += generateRectangularGrid(v_a_end.x, v_a_end.y, sa, sa, a)
 
 	const centerA = { x: v_a_end.x + sa / 2, y: v_a_end.y + sa / 2 }
-	svg += `<text x="${centerA.x}" y="${centerA.y}" class="area-label">${squareA.area}</text>`
+	svgBody += `<text x="${centerA.x}" y="${centerA.y}" class="area-label">${squareA.area}</text>`
 	includeText(ext, centerA.x, String(squareA.area), "middle", 7)
 	if (squareA.sideLabel) {
 		const midA = { x: (v_right.x + v_a_end.x) / 2, y: (v_right.y + v_a_end.y) / 2 }
-		svg += `<text x="${midA.x}" y="${midA.y + 10}" class="side-label">${squareA.sideLabel}</text>`
+		svgBody += `<text x="${midA.x}" y="${midA.y + 10}" class="side-label">${squareA.sideLabel}</text>`
 		includeText(ext, midA.x, squareA.sideLabel, "middle", 7)
 	}
 
@@ -229,11 +227,11 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	includePointX(ext, v_right.x)
 	includePointX(ext, v_b_end.x)
 
-	svg += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_right.x},${v_right.y} ${v_b_end.x},${v_b_end.y}" fill="#FAFAFA" stroke="#333333" stroke-width="2"/>`
+	svgBody += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_right.x},${v_right.y} ${v_b_end.x},${v_b_end.y}" fill="#FAFAFA" stroke="#333333" stroke-width="2"/>`
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }

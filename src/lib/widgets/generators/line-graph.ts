@@ -151,52 +151,50 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	const toSvgX = (index: number) => margin.left + index * stepX
 
 	const ext = initExtents(width)
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
-	svg +=
-		"<style>.axis-label { font-size: 14px; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
+	let svgBody = "<style>.axis-label { font-size: 14px; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
-	svg += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", width - 60, 8)
+	svgBody += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", width - 60, 8)
 	includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
 
 	// Left Y-axis
-	svg += `<g class="axis y-axis-left">`
-	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>`
+	svgBody += `<g class="axis y-axis-left">`
+	svgBody += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>`
 	{
 		const yCenter = margin.top + chartHeight / 2
-		svg += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), yAxisLabelX, yCenter, chartHeight)
+		svgBody += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), yAxisLabelX, yCenter, chartHeight)
 		includeRotatedYAxisLabel(ext, yAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
 	}
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = toSvgYLeft(t)
-		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
-		svg += `<text x="${margin.left - 10}" y="${y + 4}" text-anchor="end">${t}</text>`
+		svgBody += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
+		svgBody += `<text x="${margin.left - 10}" y="${y + 4}" text-anchor="end">${t}</text>`
 		includeText(ext, margin.left - 10, String(t), "end", 7)
 		if (yAxis.showGridLines) {
-			svg += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#ccc" stroke-dasharray="2"/>`
+			svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#ccc" stroke-dasharray="2"/>`
 		}
 	}
-	svg += "</g>"
+	svgBody += "</g>"
 
 	// Right Y-axis
 	if (yAxisRight) {
 		const rightAxisX = width - margin.right
-		svg += `<g class="axis y-axis-right">`
-		svg += `<line x1="${rightAxisX}" y1="${margin.top}" x2="${rightAxisX}" y2="${height - margin.bottom}" stroke="black"/>`
-		svg += `<text x="${rightAxisX + rightYAxisLabelX}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${rightAxisX + rightYAxisLabelX}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxisRight.label)}</text>`
+		svgBody += `<g class="axis y-axis-right">`
+		svgBody += `<line x1="${rightAxisX}" y1="${margin.top}" x2="${rightAxisX}" y2="${height - margin.bottom}" stroke="black"/>`
+		svgBody += `<text x="${rightAxisX + rightYAxisLabelX}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${rightAxisX + rightYAxisLabelX}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxisRight.label)}</text>`
 		includeText(ext, rightAxisX + rightYAxisLabelX, abbreviateMonth(yAxisRight.label), "middle", 7)
 		for (let t = yAxisRight.min; t <= yAxisRight.max; t += yAxisRight.tickInterval) {
 			const y = toSvgYRight(t)
-			svg += `<line x1="${rightAxisX}" y1="${y}" x2="${rightAxisX + 5}" y2="${y}" stroke="black"/>`
-			svg += `<text x="${rightAxisX + 10}" y="${y + 4}" text-anchor="start">${t}</text>`
+			svgBody += `<line x1="${rightAxisX}" y1="${y}" x2="${rightAxisX + 5}" y2="${y}" stroke="black"/>`
+			svgBody += `<text x="${rightAxisX + 10}" y="${y + 4}" text-anchor="start">${t}</text>`
 			includeText(ext, rightAxisX + 10, String(t), "start", 7)
 		}
-		svg += "</g>"
+		svgBody += "</g>"
 	}
 
 	// X-axis with label thinning
-	svg += `<g class="axis x-axis">`
-	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>`
-	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
+	svgBody += `<g class="axis x-axis">`
+	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>`
+	svgBody += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
 	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
 	{
 		// Text-width-aware label selection for better spacing
@@ -207,15 +205,15 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		xAxis.categories.forEach((cat, i) => {
 			if (!cat) return
 			const x = toSvgX(i)
-			svg += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="black"/>`
+			svgBody += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="black"/>`
 			if (selected.has(i)) {
 				const abbreviatedCat = abbreviateMonth(cat)
-				svg += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${abbreviatedCat}</text>`
+				svgBody += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${abbreviatedCat}</text>`
 				includeText(ext, x, abbreviatedCat, "middle", 7)
 			}
 		})
 	}
-	svg += "</g>"
+	svgBody += "</g>"
 
 	// Data Series
 	for (const s of series) {
@@ -230,15 +228,15 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		let dasharray = ""
 		if (s.style === "dashed") dasharray = 'stroke-dasharray="8 4"'
 		if (s.style === "dotted") dasharray = 'stroke-dasharray="2 6"'
-		svg += `<polyline points="${pointsStr}" fill="none" stroke="${s.color}" stroke-width="2.5" ${dasharray}/>`
+		svgBody += `<polyline points="${pointsStr}" fill="none" stroke="${s.color}" stroke-width="2.5" ${dasharray}/>`
 
 		for (const [i, v] of s.values.entries()) {
 			const cx = toSvgX(i)
 			const cy = toSvgY(v)
 			if (s.pointShape === "circle") {
-				svg += `<circle cx="${cx}" cy="${cy}" r="4" fill="${s.color}"/>`
+				svgBody += `<circle cx="${cx}" cy="${cy}" r="4" fill="${s.color}"/>`
 			} else if (s.pointShape === "square") {
-				svg += `<rect x="${cx - 4}" y="${cy - 4}" width="8" height="8" fill="${s.color}"/>`
+				svgBody += `<rect x="${cx - 4}" y="${cy - 4}" width="8" height="8" fill="${s.color}"/>`
 			}
 		}
 	}
@@ -268,20 +266,20 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 			let dash = ""
 			if (s.style === "dashed") dash = ' stroke-dasharray="8 4"'
 			if (s.style === "dotted") dash = ' stroke-dasharray="2 6"'
-			svg += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${s.color}" stroke-width="2.5"${dash}/>`
+			svgBody += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${s.color}" stroke-width="2.5"${dash}/>`
 			if (s.pointShape === "circle") {
-				svg += `<circle cx="${markerCx}" cy="${y}" r="4" fill="${s.color}"/>`
+				svgBody += `<circle cx="${markerCx}" cy="${y}" r="4" fill="${s.color}"/>`
 			} else if (s.pointShape === "square") {
-				svg += `<rect x="${markerCx - 4}" y="${y - 4}" width="8" height="8" fill="${s.color}"/>`
+				svgBody += `<rect x="${markerCx - 4}" y="${y - 4}" width="8" height="8" fill="${s.color}"/>`
 			}
-			svg += `<text x="${textX}" y="${y + 4}">${s.name}</text>`
+			svgBody += `<text x="${textX}" y="${y + 4}">${s.name}</text>`
 			includeText(ext, textX, s.name, "start", 7)
 		})
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }

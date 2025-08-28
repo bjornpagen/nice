@@ -111,19 +111,18 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 	const toSvgY = (val: number) => height - padding.bottom - (val - paddedMinY) * scaleY
 
 	const ext = initExtents(width)
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">`
-	svg += `<defs><marker id="graph-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker></defs>`
+	let svgBody = `<defs><marker id="graph-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker></defs>`
 
 	// Axes
 	const yAxisX = padding.left
 	const xAxisY = height - padding.bottom
-	svg += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${yAxisX}" y2="${padding.top}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
-	svg += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${width - padding.right}" y2="${xAxisY}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
+	svgBody += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${yAxisX}" y2="${padding.top}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
+	svgBody += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${width - padding.right}" y2="${xAxisY}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
 
 	// Axis Labels (closer to axes)
-	svg += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisLabelX, padding.top + chartHeight / 2, chartHeight)
+	svgBody += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisLabelX, padding.top + chartHeight / 2, chartHeight)
 	includeRotatedYAxisLabel(ext, yAxisLabelX, yAxisLabel, chartHeight)
-	svg += `<text x="${padding.left + chartWidth / 2}" y="${xAxisY + 30}" text-anchor="middle">${xAxisLabel}</text>`
+	svgBody += `<text x="${padding.left + chartWidth / 2}" y="${xAxisY + 30}" text-anchor="middle">${xAxisLabel}</text>`
 	includeText(ext, padding.left + chartWidth / 2, xAxisLabel, "middle", 7)
 
 	// Before Curve
@@ -133,7 +132,7 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 			includePointX(ext, toSvgX(p.x))
 		})
 		const beforePointsStr = beforeSegment.points.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
-		svg += `<polyline points="${beforePointsStr}" fill="none" stroke="${beforeSegment.color}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`
+		svgBody += `<polyline points="${beforePointsStr}" fill="none" stroke="${beforeSegment.color}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`
 	}
 
 	// After Curve
@@ -143,7 +142,7 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 			includePointX(ext, toSvgX(p.x))
 		})
 		const afterPointsStr = afterSegment.points.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
-		svg += `<polyline points="${afterPointsStr}" fill="none" stroke="${afterSegment.color}" stroke-width="3" stroke-dasharray="8 6" stroke-linejoin="round" stroke-linecap="round"/>`
+		svgBody += `<polyline points="${afterPointsStr}" fill="none" stroke="${afterSegment.color}" stroke-width="3" stroke-dasharray="8 6" stroke-linejoin="round" stroke-linecap="round"/>`
 	}
 
 	// Legend (stacked vertically to avoid horizontal cutoff)
@@ -179,15 +178,15 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 			const textX = x2 + legendGapX
 
 			const dash = item.dashed ? ' stroke-dasharray="8 6"' : ""
-			svg += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${item.color}" stroke-width="3"${dash}/>`
-			svg += `<text x="${textX}" y="${textY}">${item.label}</text>`
+			svgBody += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${item.color}" stroke-width="3"${dash}/>`
+			svgBody += `<text x="${textX}" y="${textY}">${item.label}</text>`
 			includeText(ext, textX, item.label, "start", 7)
 		}
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }

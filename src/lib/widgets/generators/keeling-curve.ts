@@ -187,30 +187,28 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 	}
 
 	const ext = initExtents(width)
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
-	svg += `<defs><marker id="co2-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker></defs>`
-	svg +=
-		"<style>.axis-label { font-size: 16px; text-anchor: middle; } .annotation-label { font-size: 16px; font-weight: bold; text-anchor: start; }</style>"
+	let svgBody = `<defs><marker id="co2-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker></defs>`
+		+ "<style>.axis-label { font-size: 16px; text-anchor: middle; } .annotation-label { font-size: 16px; font-weight: bold; text-anchor: start; }</style>"
 
 	// Gridlines and Axes
 	for (let t = yAxis.min; t <= yAxis.max; t += 20) {
 		const y = toSvgY(t)
-		svg += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#e0e0e0"/>`
-		svg += `<text x="${margin.left - 10}" y="${y + 5}" text-anchor="end">${t}</text>`
+		svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#e0e0e0"/>`
+		svgBody += `<text x="${margin.left - 10}" y="${y + 5}" text-anchor="end">${t}</text>`
 		includeText(ext, margin.left - 10, String(t), "end", 7)
 	}
-	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black" stroke-width="1.5"/>`
+	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black" stroke-width="1.5"/>`
 	for (const year of [1, 500, 1000, 1500, 2021]) {
 		const x = toSvgX(year)
-		svg += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="black" stroke-width="1.5"/>`
-		svg += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${year}</text>`
+		svgBody += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="black" stroke-width="1.5"/>`
+		svgBody += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${year}</text>`
 		includeText(ext, x, String(year), "middle", 7)
 	}
 
 	// Axis Labels
-	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${xAxisLabel}</text>`
+	svgBody += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${xAxisLabel}</text>`
 	includeText(ext, margin.left + chartWidth / 2, xAxisLabel, "middle", 7)
-	svg += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisLabelX, margin.top + chartHeight / 2, chartHeight)
+	svgBody += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisLabelX, margin.top + chartHeight / 2, chartHeight)
 	includeRotatedYAxisLabel(ext, yAxisLabelX, yAxisLabel, chartHeight)
 
 	// Data Line
@@ -219,7 +217,7 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 		includePointX(ext, toSvgX(p.year))
 	})
 	const pointsStr = CO2_DATA.map((p) => `${toSvgX(p.year)},${toSvgY(p.ppm)}`).join(" ")
-	svg += `<polyline points="${pointsStr}" fill="none" stroke="black" stroke-width="2.5"/>`
+	svgBody += `<polyline points="${pointsStr}" fill="none" stroke="black" stroke-width="2.5"/>`
 
 	// Annotations - always placed in upper left corner area
 	annotations.forEach((anno, index) => {
@@ -232,16 +230,16 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 		const textY = margin.top + 40 + index * 60
 
 		// Draw arrow from text to target point on curve
-		svg += `<line x1="${textX}" y1="${textY + 20}" x2="${targetX}" y2="${targetY}" stroke="black" stroke-width="1.5" marker-end="url(#co2-arrow)"/>`
-		svg += renderMultiLineText(anno.text, textX, textY, "annotation-label", "1.1em")
+		svgBody += `<line x1="${textX}" y1="${textY + 20}" x2="${targetX}" y2="${targetY}" stroke="black" stroke-width="1.5" marker-end="url(#co2-arrow)"/>`
+		svgBody += renderMultiLineText(anno.text, textX, textY, "annotation-label", "1.1em")
 		for (const line of anno.text) {
 			includeText(ext, textX, line, "start", 7)
 		}
 	})
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }

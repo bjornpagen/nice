@@ -108,28 +108,27 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 	const toSvgY = (val: number) => height - margin.bottom - (val - minY) * scaleY
 
 	const ext = initExtents(width)
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">`
-	svg += `<defs><marker id="graph-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker></defs>`
+	let svgBody = `<defs><marker id="graph-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker></defs>`
 
 	// Axes
 	const yAxisX = margin.left
 	const xAxisY = height - margin.bottom
-	svg += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${yAxisX}" y2="${margin.top}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
-	svg += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${width - margin.right}" y2="${xAxisY}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
+	svgBody += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${yAxisX}" y2="${margin.top}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
+	svgBody += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${width - margin.right}" y2="${xAxisY}" stroke="black" stroke-width="2" marker-end="url(#graph-arrow)"/>`
 	// --- ADDED ---
 	includePointX(ext, yAxisX)
 	includePointX(ext, width - margin.right)
 	// --- END ADDED ---
 
 	// Axis Labels
-	svg += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisLabelX, margin.top + chartHeight / 2, chartHeight)
+	svgBody += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisLabelX, margin.top + chartHeight / 2, chartHeight)
 	includeRotatedYAxisLabel(ext, yAxisLabelX, yAxisLabel, chartHeight)
-	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" text-anchor="middle">${xAxisLabel}</text>`
+	svgBody += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" text-anchor="middle">${xAxisLabel}</text>`
 	includeText(ext, margin.left + chartWidth / 2, xAxisLabel, "middle", 7)
 
 	// Curve
 	const pointsStr = curvePoints.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
-	svg += `<polyline points="${pointsStr}" fill="none" stroke="${curveColor}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`
+	svgBody += `<polyline points="${pointsStr}" fill="none" stroke="${curveColor}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`
 	// --- ADDED ---
 	for (const p of curvePoints) {
 		includePointX(ext, toSvgX(p.x))
@@ -196,14 +195,14 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 		const cy = toSvgY(pt.y)
 		// Track the highlight point position
 		includePointX(ext, cx)
-		svg += `<circle cx="${cx}" cy="${cy}" r="${highlightPointRadius}" fill="${highlightPointColor}"/>`
-		svg += `<text x="${cx - highlightPointRadius - 5}" y="${cy}" text-anchor="end" dominant-baseline="middle" font-weight="bold">${hp.label}</text>`
+		svgBody += `<circle cx="${cx}" cy="${cy}" r="${highlightPointRadius}" fill="${highlightPointColor}"/>`
+		svgBody += `<text x="${cx - highlightPointRadius - 5}" y="${cy}" text-anchor="end" dominant-baseline="middle" font-weight="bold">${hp.label}</text>`
 		includeText(ext, cx - highlightPointRadius - 5, hp.label, "end", 7)
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="16">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }

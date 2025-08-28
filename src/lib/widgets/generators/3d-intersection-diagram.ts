@@ -444,7 +444,7 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 
 	// 5. Generate SVG String
 	const ext = initExtents(width) // Initialize extents tracking
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	let svgBody = ""
 	
 	const solidStroke = 'stroke="black" stroke-width="1.5"'
 	const hiddenStroke = `${solidStroke} stroke-dasharray="4 3"`
@@ -461,7 +461,7 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 			// Track extents of all points
 			includePointX(ext, p1.x)
 			includePointX(ext, p2.x)
-			svg += `<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" ${hiddenStroke}/>`
+			svgBody += `<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" ${hiddenStroke}/>`
 		}
 	}
 
@@ -476,7 +476,7 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 		// Track extents of all points
 		includePointX(ext, p1.x)
 		includePointX(ext, p2.x)
-		svg += `<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" ${solidStroke}/>`
+		svgBody += `<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" ${solidStroke}/>`
 	}
 
 	// Draw intersection polygon
@@ -489,13 +489,13 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 				return `${svgP.x},${svgP.y}`
 			})
 			.join(" ")
-		svg += `<polygon points="${pointsStr}" fill="${intersectionColor}" stroke="black" stroke-width="2"/>`
+		svgBody += `<polygon points="${pointsStr}" fill="${intersectionColor}" stroke="black" stroke-width="2"/>`
 	}
 
 	// Apply dynamic width at the end
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }

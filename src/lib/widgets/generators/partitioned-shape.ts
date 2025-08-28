@@ -229,7 +229,7 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 	const totalHeight = layout === "vertical" ? shapes.length * shapeHeight + (shapes.length - 1) * gap : shapeHeight
 
 	const ext = initExtents(totalWidth)
-	let svg = `<svg width="${totalWidth}" height="${totalHeight}" viewBox="0 0 ${totalWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg">`
+	let svgBody = ""
 
 	shapes.forEach((s, idx) => {
 		const xOffset = layout === "horizontal" ? idx * (shapeWidth + gap) : 0
@@ -259,14 +259,14 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 				includePointX(ext, rectX)
 				includePointX(ext, rectX + cellW)
 
-				svg += `<rect x="${rectX}" y="${rectY}" width="${cellW}" height="${cellH}" fill="${fill}" fill-opacity="${opacity}" stroke="#545454" stroke-width="1"/>`
+				svgBody += `<rect x="${rectX}" y="${rectY}" width="${cellW}" height="${cellH}" fill="${fill}" fill-opacity="${opacity}" stroke="#545454" stroke-width="1"/>`
 
 				if (isHatched) {
 					const cellId = `hatch-${idx}-${i}`
-					svg += `<defs><pattern id="${cellId}" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
+					svgBody += `<defs><pattern id="${cellId}" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
 						<rect width="2" height="4" fill="#555" opacity="0.9"/>
 					</pattern></defs>`
-					svg += `<rect x="${rectX}" y="${rectY}" width="${cellW}" height="${cellH}" fill="url(#${cellId})" stroke="#545454" stroke-width="1"/>`
+					svgBody += `<rect x="${rectX}" y="${rectY}" width="${cellW}" height="${cellH}" fill="url(#${cellId})" stroke="#545454" stroke-width="1"/>`
 				}
 			}
 		} else if (s.type === "circle") {
@@ -299,14 +299,14 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 				const x2 = cx + r * Math.cos(endRad)
 				const y2 = cy + r * Math.sin(endRad)
 
-				svg += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${fill}" fill-opacity="${opacity}" stroke="#545454" stroke-width="1"/>`
+				svgBody += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${fill}" fill-opacity="${opacity}" stroke="#545454" stroke-width="1"/>`
 
 				if (isHatched) {
 					const cellId = `hatch-circle-${idx}-${i}`
-					svg += `<defs><pattern id="${cellId}" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
+					svgBody += `<defs><pattern id="${cellId}" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
 						<rect width="2" height="4" fill="#555" opacity="0.9"/>
 					</pattern></defs>`
-					svg += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="url(#${cellId})" stroke="#545454" stroke-width="1"/>`
+					svgBody += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="url(#${cellId})" stroke="#545454" stroke-width="1"/>`
 				}
 			}
 		}
@@ -332,22 +332,22 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 					strokeDasharray = "2,2"
 				}
 
-				svg += `<line x1="${fromX}" y1="${fromY}" x2="${toX}" y2="${toY}" stroke="${line.color}" stroke-width="2" stroke-dasharray="${strokeDasharray}"/>`
+				svgBody += `<line x1="${fromX}" y1="${fromY}" x2="${toX}" y2="${toY}" stroke="${line.color}" stroke-width="2" stroke-dasharray="${strokeDasharray}"/>`
 			}
 		}
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, totalHeight, PADDING)
-	svg = svg.replace(`width="${totalWidth}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${totalWidth} ${totalHeight}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }
 
 const generateGeometryView = (props: GeometryModeProps): string => {
 	const { width, height, grid, figures, lines } = props
 	const ext = initExtents(width)
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">`
+	let svgBody = ""
 
 	const cellWidth = width / grid.columns
 	const cellHeight = height / grid.rows
@@ -364,12 +364,12 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 	// Vertical lines
 	for (let col = 0; col <= grid.columns; col++) {
 		const x = col * cellWidth
-		svg += `<line x1="${x}" y1="0" x2="${x}" y2="${height}" stroke="#000000" stroke-width="1" opacity="${grid.opacity}"/>`
+		svgBody += `<line x1="${x}" y1="0" x2="${x}" y2="${height}" stroke="#000000" stroke-width="1" opacity="${grid.opacity}"/>`
 	}
 	// Horizontal lines
 	for (let row = 0; row <= grid.rows; row++) {
 		const y = row * cellHeight
-		svg += `<line x1="0" y1="${y}" x2="${width}" y2="${y}" stroke="#000000" stroke-width="1" opacity="${grid.opacity}"/>`
+		svgBody += `<line x1="0" y1="${y}" x2="${width}" y2="${y}" stroke="#000000" stroke-width="1" opacity="${grid.opacity}"/>`
 	}
 
 	// 2. Draw figures
@@ -384,7 +384,7 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 		const pointsStr = pixelPoints
 			.map((pixel) => `${pixel.x},${pixel.y}`)
 			.join(" ")
-		svg += `<polygon points="${pointsStr}" fill="${fig.fillColor ?? "none"}" stroke="${fig.strokeColor ?? "black"}" stroke-width="2"/>`
+		svgBody += `<polygon points="${pointsStr}" fill="${fig.fillColor ?? "none"}" stroke="${fig.strokeColor ?? "black"}" stroke-width="2"/>`
 	}
 
 	// 3. Draw lines
@@ -399,14 +399,14 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 			strokeDasharray = "2,2"
 		}
 
-		svg += `<line x1="${fromPixel.x}" y1="${fromPixel.y}" x2="${toPixel.x}" y2="${toPixel.y}" stroke="${line.color}" stroke-width="2" stroke-dasharray="${strokeDasharray}"/>`
+		svgBody += `<line x1="${fromPixel.x}" y1="${fromPixel.y}" x2="${toPixel.x}" y2="${toPixel.y}" stroke="${line.color}" stroke-width="2" stroke-dasharray="${strokeDasharray}"/>`
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }
 
 // MODIFIED: The main generator function is now a switcher

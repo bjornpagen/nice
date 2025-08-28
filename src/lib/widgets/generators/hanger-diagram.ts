@@ -103,12 +103,12 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 	const beamStartX = centerX - beamWidth / 2
 	const beamEndX = centerX + beamWidth / 2
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	let svgBody = ""
 
 	// Hook and beam
-	svg += `<line x1="${centerX}" y1="10" x2="${centerX}" y2="${beamY}" stroke="#333333" stroke-width="0.6667"/>`
-	svg += `<path d="M ${centerX - 5} 10 L ${centerX} 5 L ${centerX + 5} 10 Z" fill="#333333" />` // Triangle at top of hook
-	svg += `<line x1="${beamStartX}" y1="${beamY}" x2="${beamEndX}" y2="${beamY}" stroke="#333333" stroke-width="3"/>`
+	svgBody += `<line x1="${centerX}" y1="10" x2="${centerX}" y2="${beamY}" stroke="#333333" stroke-width="0.6667"/>`
+	svgBody += `<path d="M ${centerX - 5} 10 L ${centerX} 5 L ${centerX + 5} 10 Z" fill="#333333" />` // Triangle at top of hook
+	svgBody += `<line x1="${beamStartX}" y1="${beamY}" x2="${beamEndX}" y2="${beamY}" stroke="#333333" stroke-width="3"/>`
 	// --- ADDED ---
 	includePointX(ext, beamStartX)
 	includePointX(ext, beamEndX)
@@ -159,7 +159,7 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 		const sideCenterX = isLeft ? beamStartX + beamWidth / 4 : beamEndX - beamWidth / 4
 		weights.forEach((_w, i) => {
 			const weightY = weightYStart + i * weightHeight
-			svg += `<line x1="${sideCenterX}" y1="${i === 0 ? beamY : weightY - weightHeight + weightGap}" x2="${sideCenterX}" y2="${weightY}" stroke="#333333"/>`
+			svgBody += `<line x1="${sideCenterX}" y1="${i === 0 ? beamY : weightY - weightHeight + weightGap}" x2="${sideCenterX}" y2="${weightY}" stroke="#333333"/>`
 		})
 	}
 
@@ -168,7 +168,7 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 		const sideCenterX = isLeft ? beamStartX + beamWidth / 4 : beamEndX - beamWidth / 4
 		weights.forEach((w, i) => {
 			const weightY = weightYStart + i * weightHeight
-			svg += drawWeight(sideCenterX, weightY, w)
+			svgBody += drawWeight(sideCenterX, weightY, w)
 		})
 	}
 
@@ -181,8 +181,8 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 	renderShapes(rightSide, false)
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }

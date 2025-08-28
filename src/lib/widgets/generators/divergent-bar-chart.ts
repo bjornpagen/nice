@@ -126,38 +126,36 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	// yZero is derivable from yAxis and scale; not needed directly
 
 	const ext = initExtents(width)
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
-	svg +=
-		"<style>.axis-label { font-size: 1.1em; font-weight: bold; text-anchor: middle; } .tick-label { font-size: 1em; font-weight: bold; } </style>"
+	let svgBody = "<style>.axis-label { font-size: 1.1em; font-weight: bold; text-anchor: middle; } .tick-label { font-size: 1em; font-weight: bold; } </style>"
 
 	const chartBody = `<g transform="translate(${margin.left},${margin.top})">`
-	svg += chartBody
+	svgBody += chartBody
 
 	// Y-axis line with ticks and labels
-	svg += `<line x1="0" y1="0" x2="0" y2="${chartHeight}" stroke="#333" stroke-width="2"/>`
+	svgBody += `<line x1="0" y1="0" x2="0" y2="${chartHeight}" stroke="#333" stroke-width="2"/>`
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = chartHeight - (t - yAxis.min) * scaleY
 		// Grid line
-		svg += `<line x1="0" y1="${y}" x2="${chartWidth}" y2="${y}" stroke="${gridColor}" stroke-width="1"/>`
+		svgBody += `<line x1="0" y1="${y}" x2="${chartWidth}" y2="${y}" stroke="${gridColor}" stroke-width="1"/>`
 		// Tick label
-		svg += `<text x="-10" y="${y + 5}" class="tick-label" text-anchor="end">${t}</text>`
+		svgBody += `<text x="-10" y="${y + 5}" class="tick-label" text-anchor="end">${t}</text>`
 		includeText(ext, margin.left - 10, String(t), "end", 7) // MODIFICATION: Add this line
 	}
 
 	// Prominent Zero Line
 	const yZeroInChartCoords = chartHeight - (0 - yAxis.min) * scaleY
-	svg += `<line x1="0" y1="${yZeroInChartCoords}" x2="${chartWidth}" y2="${yZeroInChartCoords}" stroke="black" stroke-width="2"/>`
+	svgBody += `<line x1="0" y1="${yZeroInChartCoords}" x2="${chartWidth}" y2="${yZeroInChartCoords}" stroke="black" stroke-width="2"/>`
 
 	// X-axis label (using group-relative coordinates)
-	svg += `<text x="${chartWidth / 2}" y="${chartHeight + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
+	svgBody += `<text x="${chartWidth / 2}" y="${chartHeight + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
 
 	// Close group before rendering y-axis label
-	svg += "</g>"
+	svgBody += "</g>"
 
 	// Y-axis label with wrapping
 	const globalYAxisLabelX = yAxisLabelX
 	const globalYAxisLabelY = margin.top + chartHeight / 2
-	svg += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), globalYAxisLabelX, globalYAxisLabelY, chartHeight)
+	svgBody += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), globalYAxisLabelX, globalYAxisLabelY, chartHeight)
 	includeRotatedYAxisLabel(ext, globalYAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
 
 	// X-axis label (global coordinates)
@@ -166,7 +164,7 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	includeText(ext, globalXAxisLabelX, abbreviateMonth(xAxisLabel), "middle", 7)
 
 	// Reopen group for remaining chart elements
-	svg += `<g transform="translate(${margin.left},${margin.top})">`
+	svgBody += `<g transform="translate(${margin.left},${margin.top})">`
 
 	// Text-width-aware label selection for visual uniformity
 	const barLabels = chartData.map((d) => abbreviateMonth(d.category))
@@ -195,22 +193,22 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 			color = negativeBarColor
 		}
 
-		svg += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barAbsHeight}" fill="${color}"/>`
+		svgBody += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barAbsHeight}" fill="${color}"/>`
 
 		const labelX = x + barWidth / 2
 		if (selectedLabelIndices.has(i)) {
-			svg += `<text x="${labelX}" y="${chartHeight + 25}" class="tick-label" text-anchor="middle">${abbreviateMonth(d.category)}</text>`
+			svgBody += `<text x="${labelX}" y="${chartHeight + 25}" class="tick-label" text-anchor="middle">${abbreviateMonth(d.category)}</text>`
 			includeText(ext, margin.left + labelX, abbreviateMonth(d.category), "middle", 7)
 		}
 	})
 
 	// Add right-side border for the chart area
-	svg += `<line x1="${chartWidth}" y1="0" x2="${chartWidth}" y2="${chartHeight}" stroke="#333" stroke-width="2"/>`
+	svgBody += `<line x1="${chartWidth}" y1="0" x2="${chartWidth}" y2="${chartHeight}" stroke="#333" stroke-width="2"/>`
 
-	svg += "</g>" // Close final group
+	svgBody += "</g>" // Close final group
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }

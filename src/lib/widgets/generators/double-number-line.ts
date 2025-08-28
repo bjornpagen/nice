@@ -119,61 +119,60 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 	const tickSpacing = lineLength / (numTicks - 1)
 
 	const ext = initExtents(width) // NEW: Initialize extents
-	let svg = `<svg width="${width}" height="${adjustedHeight}" viewBox="0 0 ${width} ${adjustedHeight}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
-	svg += "<style>.line-label { font-size: 14px; font-weight: bold; text-anchor: middle; }</style>"
+	let svgBody = "<style>.line-label { font-size: 14px; font-weight: bold; text-anchor: middle; }</style>"
 
 	// Track the horizontal bounds of the lines
 	includePointX(ext, PADDING)
 	includePointX(ext, width - PADDING)
 
 	// Top line
-	svg += `<line x1="${PADDING}" y1="${topY}" x2="${width - PADDING}" y2="${topY}" stroke="#333333"/>`
+	svgBody += `<line x1="${PADDING}" y1="${topY}" x2="${width - PADDING}" y2="${topY}" stroke="#333333"/>`
 	if (topLine.label !== null) {
 		const labelText = abbreviateMonth(topLine.label) // MODIFIED: Abbreviate
 		const labelX = width / 2
 		const labelY = topY + TOP_LINE_LABEL_Y_OFFSET
-		svg += `<text x="${labelX}" y="${labelY}" class="line-label">${labelText}</text>`
+		svgBody += `<text x="${labelX}" y="${labelY}" class="line-label">${labelText}</text>`
 		includeText(ext, labelX, labelText, "middle") // NEW: Track text
 	}
 	topLine.ticks.forEach((t, i) => {
 		const x = PADDING + i * tickSpacing
 		includePointX(ext, x) // Track tick position
-		svg += `<line x1="${x}" y1="${topY - TICK_MARK_HEIGHT}" x2="${x}" y2="${topY + TICK_MARK_HEIGHT}" stroke="#333333"/>`
+		svgBody += `<line x1="${x}" y1="${topY - TICK_MARK_HEIGHT}" x2="${x}" y2="${topY + TICK_MARK_HEIGHT}" stroke="#333333"/>`
 		const labelText = String(t)
 		const labelY = topY + TOP_LINE_TICK_LABEL_Y_OFFSET
-		svg += `<text x="${x}" y="${labelY}" fill="#333333" text-anchor="middle">${labelText}</text>`
+		svgBody += `<text x="${x}" y="${labelY}" fill="#333333" text-anchor="middle">${labelText}</text>`
 		includeText(ext, x, labelText, "middle") // NEW: Track text
 	})
 
 	// Bottom line
-	svg += `<line x1="${PADDING}" y1="${bottomY}" x2="${width - PADDING}" y2="${bottomY}" stroke="#333333"/>`
+	svgBody += `<line x1="${PADDING}" y1="${bottomY}" x2="${width - PADDING}" y2="${bottomY}" stroke="#333333"/>`
 	if (bottomLine.label !== null) {
 		const labelText = abbreviateMonth(bottomLine.label) // MODIFIED: Abbreviate
 		const labelX = width / 2
 		const labelY = bottomY + BOTTOM_LINE_LABEL_Y_OFFSET
-		svg += `<text x="${labelX}" y="${labelY}" class="line-label">${labelText}</text>`
+		svgBody += `<text x="${labelX}" y="${labelY}" class="line-label">${labelText}</text>`
 		includeText(ext, labelX, labelText, "middle") // NEW: Track text
 	}
 	bottomLine.ticks.forEach((t, i) => {
 		const x = PADDING + i * tickSpacing
 		includePointX(ext, x) // Track tick position
-		svg += `<line x1="${x}" y1="${bottomY - TICK_MARK_HEIGHT}" x2="${x}" y2="${bottomY + TICK_MARK_HEIGHT}" stroke="#333333"/>`
+		svgBody += `<line x1="${x}" y1="${bottomY - TICK_MARK_HEIGHT}" x2="${x}" y2="${bottomY + TICK_MARK_HEIGHT}" stroke="#333333"/>`
 		const labelText = String(t)
 		const labelY = bottomY + BOTTOM_LINE_TICK_LABEL_Y_OFFSET
-		svg += `<text x="${x}" y="${labelY}" fill="#333333" text-anchor="middle">${labelText}</text>`
+		svgBody += `<text x="${x}" y="${labelY}" fill="#333333" text-anchor="middle">${labelText}</text>`
 		includeText(ext, x, labelText, "middle") // NEW: Track text
 	})
 
 	// Alignment lines (optional, but good for clarity)
 	for (let i = 0; i < numTicks; i++) {
 		const x = PADDING + i * tickSpacing
-		svg += `<line x1="${x}" y1="${topY + TICK_MARK_HEIGHT}" x2="${x}" y2="${bottomY - TICK_MARK_HEIGHT}" stroke="#ccc" stroke-dasharray="2"/>`
+		svgBody += `<line x1="${x}" y1="${topY + TICK_MARK_HEIGHT}" x2="${x}" y2="${bottomY - TICK_MARK_HEIGHT}" stroke="#ccc" stroke-dasharray="2"/>`
 	}
 
 	// NEW: Apply dynamic width at the end
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, adjustedHeight, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${adjustedHeight}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${adjustedHeight}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${adjustedHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${adjustedHeight}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }

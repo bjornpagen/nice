@@ -76,9 +76,7 @@ export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPr
 	
 	const ext = initExtents(width)
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
-	svg +=
-		"<style>.set-label { font-size: 14px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; fill: black; }</style>"
+	let svgBody = "<style>.set-label { font-size: 14px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; fill: black; }</style>"
 
 	const mainCenterX = width * 0.4
 	const mainCenterY = height / 2
@@ -93,9 +91,9 @@ export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPr
 	// Rational Numbers (outermost of the nested set)
 	includePointX(ext, mainCenterX - rationalRx)
 	includePointX(ext, mainCenterX + rationalRx)
-	svg += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${rationalRx}" ry="${rationalRy}" fill="${sets.rational.color}" stroke="black" />`
+	svgBody += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${rationalRx}" ry="${rationalRy}" fill="${sets.rational.color}" stroke="black" />`
 	if (sets.rational.label !== null) {
-		svg += `<text x="${mainCenterX}" y="${mainCenterY - rationalRy + 20}" class="set-label">${sets.rational.label}</text>`
+		svgBody += `<text x="${mainCenterX}" y="${mainCenterY - rationalRy + 20}" class="set-label">${sets.rational.label}</text>`
 		includeText(ext, mainCenterX, sets.rational.label, "middle", 7)
 	}
 
@@ -104,9 +102,9 @@ export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPr
 	const integerRy = rationalRy * 0.7
 	includePointX(ext, mainCenterX - integerRx)
 	includePointX(ext, mainCenterX + integerRx)
-	svg += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${integerRx}" ry="${integerRy}" fill="${sets.integer.color}" stroke="black" />`
+	svgBody += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${integerRx}" ry="${integerRy}" fill="${sets.integer.color}" stroke="black" />`
 	if (sets.integer.label !== null) {
-		svg += `<text x="${mainCenterX}" y="${mainCenterY - integerRy + (rationalRy - integerRy) / 2}" class="set-label">${sets.integer.label}</text>`
+		svgBody += `<text x="${mainCenterX}" y="${mainCenterY - integerRy + (rationalRy - integerRy) / 2}" class="set-label">${sets.integer.label}</text>`
 		includeText(ext, mainCenterX, sets.integer.label, "middle", 7)
 	}
 
@@ -115,24 +113,24 @@ export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPr
 	const wholeRy = integerRy * 0.6
 	includePointX(ext, mainCenterX - wholeRx)
 	includePointX(ext, mainCenterX + wholeRx)
-	svg += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${wholeRx}" ry="${wholeRy}" fill="${sets.whole.color}" stroke="black" />`
+	svgBody += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${wholeRx}" ry="${wholeRy}" fill="${sets.whole.color}" stroke="black" />`
 	if (sets.whole.label !== null) {
-		svg += `<text x="${mainCenterX}" y="${mainCenterY}" class="set-label">${sets.whole.label}</text>`
+		svgBody += `<text x="${mainCenterX}" y="${mainCenterY}" class="set-label">${sets.whole.label}</text>`
 		includeText(ext, mainCenterX, sets.whole.label, "middle", 7)
 	}
 
 	// Irrational Numbers (separate)
 	includePointX(ext, irrationalCenterX - irrationalRx)
 	includePointX(ext, irrationalCenterX + irrationalRx)
-	svg += `<ellipse cx="${irrationalCenterX}" cy="${irrationalCenterY}" rx="${irrationalRx}" ry="${irrationalRy}" fill="${sets.irrational.color}" stroke="black" />`
+	svgBody += `<ellipse cx="${irrationalCenterX}" cy="${irrationalCenterY}" rx="${irrationalRx}" ry="${irrationalRy}" fill="${sets.irrational.color}" stroke="black" />`
 	if (sets.irrational.label !== null) {
-		svg += `<text x="${irrationalCenterX}" y="${irrationalCenterY}" class="set-label">${sets.irrational.label}</text>`
+		svgBody += `<text x="${irrationalCenterX}" y="${irrationalCenterY}" class="set-label">${sets.irrational.label}</text>`
 		includeText(ext, irrationalCenterX, sets.irrational.label, "middle", 7)
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }

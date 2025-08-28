@@ -134,14 +134,14 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	const toSvgX = (val: number) => margin.left + (val - axis.min) * scale
 
 	const ext = initExtents(width) // NEW: Initialize extents tracking
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	let svgBody = ""
 
 	// Axis line
-	svg += `<line x1="${margin.left}" y1="${axisY}" x2="${width - margin.right}" y2="${axisY}" stroke="black"/>`
+	svgBody += `<line x1="${margin.left}" y1="${axisY}" x2="${width - margin.right}" y2="${axisY}" stroke="black"/>`
 
 	// Axis label
 	if (axis.label !== null) {
-		svg += `<text x="${width / 2}" y="${height - margin.bottom + xAxisTitleY}" fill="black" text-anchor="middle" font-size="14">${abbreviateMonth(axis.label)}</text>`
+		svgBody += `<text x="${width / 2}" y="${height - margin.bottom + xAxisTitleY}" fill="black" text-anchor="middle" font-size="14">${abbreviateMonth(axis.label)}</text>`
 		includeText(ext, width / 2, abbreviateMonth(axis.label), "middle", 7)
 	}
 
@@ -162,10 +162,10 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 
 	tickValues.forEach((t, i) => {
 		const x = toSvgX(t)
-		svg += `<line x1="${x}" y1="${axisY - 5}" x2="${x}" y2="${axisY + 5}" stroke="black"/>`
+		svgBody += `<line x1="${x}" y1="${axisY - 5}" x2="${x}" y2="${axisY + 5}" stroke="black"/>`
 		if (selectedLabels.has(i)) {
 			const label = t.toFixed(decimals)
-			svg += `<text x="${x}" y="${axisY + 20}" fill="black" text-anchor="middle">${label}</text>`
+			svgBody += `<text x="${x}" y="${axisY + 20}" fill="black" text-anchor="middle">${label}</text>`
 			includeText(ext, x, label, "middle", 7)
 		}
 	})
@@ -180,15 +180,15 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 			includePointX(ext, x)
 			for (let i = 0; i < dp.count; i++) {
 				const y = axisY - dotRadius - baseOffset - i * (dotDiameter + dotSpacing)
-				svg += `<circle cx="${x}" cy="${y}" r="${dotRadius}" fill="${dotColor}"/>`
+				svgBody += `<circle cx="${x}" cy="${y}" r="${dotRadius}" fill="${dotColor}"/>`
 			}
 		}
 	}
 
 	// NEW: Apply dynamic width at the end
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }

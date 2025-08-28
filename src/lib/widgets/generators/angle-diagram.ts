@@ -168,7 +168,7 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 	const { width, height, points, rays, angles } = props
 
 	const ext = initExtents(width) // Initialize extents tracking
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	let svgBody = ""
 
 	const pointMap = new Map(points.map((p) => [p.id, p]))
 
@@ -182,7 +182,7 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 		includePointX(ext, from.x)
 		includePointX(ext, to.x)
 		
-		svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="black" stroke-width="2"/>`
+		svgBody += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="black" stroke-width="2"/>`
 	}
 
 	// draw angles
@@ -220,7 +220,7 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			includePointX(ext, m2x)
 			includePointX(ext, m3x)
 
-			svg += `<path d="M ${m1x} ${m1y} L ${m3x} ${m3y} L ${m2x} ${m2y}" fill="none" stroke="${angle.color}" stroke-width="2"/>`
+			svgBody += `<path d="M ${m1x} ${m1y} L ${m3x} ${m3y} L ${m2x} ${m2y}" fill="none" stroke="${angle.color}" stroke-width="2"/>`
 		}
 
 		if (angle.type === "arc") {
@@ -245,7 +245,7 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			const largeArcFlag = Math.abs(angleDiff) > Math.PI ? 1 : 0
 			const sweepFlag = angleDiff > 0 ? 1 : 0
 
-			svg += `<path d="M ${arcStartX} ${arcStartY} A ${angle.radius} ${angle.radius} 0 ${largeArcFlag} ${sweepFlag} ${arcEndX} ${arcEndY}" fill="none" stroke="${angle.color}" stroke-width="2.5"/>`
+			svgBody += `<path d="M ${arcStartX} ${arcStartY} A ${angle.radius} ${angle.radius} 0 ${largeArcFlag} ${sweepFlag} ${arcEndX} ${arcEndY}" fill="none" stroke="${angle.color}" stroke-width="2.5"/>`
 		}
 
 		if (angle.label !== null) {
@@ -283,7 +283,7 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 
 			const labelX = vertex.x + labelRadius * Math.cos(midAngle)
 			const labelY = vertex.y + labelRadius * Math.sin(midAngle)
-			svg += `<text x="${labelX}" y="${labelY}" fill="black" stroke="white" stroke-width="0.3" paint-order="stroke fill" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="500">${angle.label}</text>`
+			svgBody += `<text x="${labelX}" y="${labelY}" fill="black" stroke="white" stroke-width="0.3" paint-order="stroke fill" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="500">${angle.label}</text>`
 			// Track angle label extents
 			includeText(ext, labelX, angle.label, "middle", 7)
 		}
@@ -295,9 +295,9 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 		includePointX(ext, point.x)
 		
 		if (point.shape === "ellipse") {
-			svg += `<ellipse cx="${point.x}" cy="${point.y}" rx="4" ry="4" fill="black" stroke="#000" stroke-width="2" stroke-dasharray="0"/>`
+			svgBody += `<ellipse cx="${point.x}" cy="${point.y}" rx="4" ry="4" fill="black" stroke="#000" stroke-width="2" stroke-dasharray="0"/>`
 		} else {
-			svg += `<circle cx="${point.x}" cy="${point.y}" r="4" fill="black"/>`
+			svgBody += `<circle cx="${point.x}" cy="${point.y}" r="4" fill="black"/>`
 		}
 		if (point.label !== null) {
 			// Smart label positioning: avoid rays emanating from this point
@@ -309,7 +309,7 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 				const textY = point.y - 5
 				// Track simple point label
 				includeText(ext, textX, point.label, "start", 16)
-				svg += `<text x="${textX}" y="${textY}" fill="black" font-size="16" font-weight="bold">${point.label}</text>`
+				svgBody += `<text x="${textX}" y="${textY}" fill="black" font-size="16" font-weight="bold">${point.label}</text>`
 			} else {
 				// Calculate angles of all rays from this point
 				const rayAngles = raysFromPoint
@@ -352,18 +352,17 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 				const labelDistance = 15
 				const textX = point.x + labelDistance * Math.cos(bestAngle)
 				const textY = point.y + labelDistance * Math.sin(bestAngle)
-				svg += `<text x="${textX}" y="${textY}" fill="black" font-size="16" font-weight="bold">${point.label}</text>`
+				svgBody += `<text x="${textX}" y="${textY}" fill="black" font-size="16" font-weight="bold">${point.label}</text>`
 				// Track vertex label extents
 				includeText(ext, textX, point.label, "middle", 8)
 			}
 		}
 	}
 
-	// MODIFICATION: Apply dynamic width and viewBox at the end
+	// Apply dynamic width at the end
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSVG = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
-	
-	// Rebuild SVG with correct viewBox and width
-	svg = finalSVG + svg.substring(svg.indexOf(">") + 1)
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }

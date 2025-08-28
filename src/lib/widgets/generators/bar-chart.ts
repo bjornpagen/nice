@@ -139,38 +139,37 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 	const barPadding = 0.2
 
 	const ext = initExtents(width) // NEW: Initialize extents tracking
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
-	svg += "<style>.axis-label { font-size: 14px; font-weight: bold; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
+	let svgBody = "<style>.axis-label { font-size: 14px; font-weight: bold; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
 	// MODIFIED: Use wrapped text for title
 	if (title !== null) {
-		svg += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", width - 60, 8)
+		svgBody += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", width - 60, 8)
 		includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
 	}
 
-	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>`
-	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>`
+	svgBody += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>`
+	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>`
 
 	// MODIFIED: Use dynamic positioning and new renderers
 	if (xAxisLabel !== null) {
 		const labelX = margin.left + chartWidth / 2
 		const labelY = height - margin.bottom + xAxisTitleY
-		svg += `<text x="${labelX}" y="${labelY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
+		svgBody += `<text x="${labelX}" y="${labelY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
 		includeText(ext, labelX, abbreviateMonth(xAxisLabel), "middle", 7)
 	}
 	if (yAxis.label !== null) {
 		const yCenter = margin.top + chartHeight / 2
-		svg += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), yAxisLabelX, yCenter, chartHeight)
+		svgBody += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), yAxisLabelX, yCenter, chartHeight)
 		includeRotatedYAxisLabel(ext, yAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
 	}
 
 	// Y ticks and grid lines
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = height - margin.bottom - (t - yAxis.min) * scaleY
-		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
-		svg += `<text x="${margin.left - 10}" y="${y + 4}" fill="black" text-anchor="end">${t}</text>`
+		svgBody += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
+		svgBody += `<text x="${margin.left - 10}" y="${y + 4}" fill="black" text-anchor="end">${t}</text>`
 		includeText(ext, margin.left - 10, String(t), "end", 7)
-		svg += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#ccc" stroke-dasharray="2"/>`
+		svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#ccc" stroke-dasharray="2"/>`
 	}
 
 	// MODIFIED: Bars and text-aware X-axis labels
@@ -191,22 +190,22 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 		includePointX(ext, barX + innerBarWidth)
 
 		if (d.state === "normal") {
-			svg += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="${barColor}"/>`
+			svgBody += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="${barColor}"/>`
 		} else {
-			svg += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="none" stroke="${barColor}" stroke-width="2" stroke-dasharray="4"/>`
+			svgBody += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="none" stroke="${barColor}" stroke-width="2" stroke-dasharray="4"/>`
 		}
 		
 			if (d.label !== "" && selectedXLabels.has(i)) {
 		const labelX = x + barWidth / 2
-		svg += `<text x="${labelX}" y="${height - margin.bottom + 15}" fill="black" text-anchor="middle">${d.label}</text>`
+		svgBody += `<text x="${labelX}" y="${height - margin.bottom + 15}" fill="black" text-anchor="middle">${d.label}</text>`
 		includeText(ext, labelX, d.label, "middle", 7)
 	}
 	})
 
 	// NEW: Apply dynamic width at the end
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }

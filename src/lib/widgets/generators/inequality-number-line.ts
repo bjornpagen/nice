@@ -126,8 +126,7 @@ export type InequalityNumberLineProps = z.infer<typeof InequalityNumberLineProps
  */
 export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumberLinePropsSchema> = (data) => {
 	const { width, height, min, max, tickInterval, ranges } = data
-	const padding = { horizontal: PADDING, vertical: PADDING }
-	const chartWidth = width - 2 * padding.horizontal
+	const chartWidth = width - 2 * PADDING
 	const yPos = height / 2
 
 	if (min >= max) {
@@ -136,38 +135,37 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 	}
 
 	const scale = chartWidth / (max - min)
-	const toSvgX = (val: number) => padding.horizontal + (val - min) * scale
+	const toSvgX = (val: number) => PADDING + (val - min) * scale
 	
 	const ext = initExtents(width)
-
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	let svgBody = ""
 
 	// Axis and Ticks
-	svg += `<line x1="${padding.horizontal}" y1="${yPos}" x2="${width - padding.horizontal}" y2="${yPos}" stroke="black" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
+	svgBody += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="black" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
 
 	// Define markers for arrows
-	svg += "<defs>"
-	svg += `<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#333333"/></marker>`
+	svgBody += "<defs>"
+	svgBody += `<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#333333"/></marker>`
 
 	// Add colored arrow markers for ranges
 	const uniqueColors = new Set(ranges.map((r) => r.color))
 	for (const color of uniqueColors) {
 		const colorId = color.replace(/[^a-zA-Z0-9]/g, "")
-		svg += `<marker id="arrow-${colorId}" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="3" markerHeight="3" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${color}"/></marker>`
+		svgBody += `<marker id="arrow-${colorId}" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="3" markerHeight="3" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${color}"/></marker>`
 	}
-	svg += "</defs>"
+	svgBody += "</defs>"
 
 	for (let t = min; t <= max; t += tickInterval) {
 		const x = toSvgX(t)
 		// Match tick sizing with standard number line widget for visual consistency
-		svg += `<line x1="${x}" y1="${yPos - 8}" x2="${x}" y2="${yPos + 8}" stroke="black"/>`
-		svg += `<text x="${x}" y="${yPos + 25}" fill="black" text-anchor="middle">${t}</text>`
+		svgBody += `<line x1="${x}" y1="${yPos - 8}" x2="${x}" y2="${yPos + 8}" stroke="black"/>`
+		svgBody += `<text x="${x}" y="${yPos + 25}" fill="black" text-anchor="middle">${t}</text>`
 		includeText(ext, x, String(t), "middle", 7)
 	}
 
 	for (const r of ranges) {
-		const startPos = r.start.type === "bounded" ? toSvgX(r.start.at.value) : padding.horizontal
-		const endPos = r.end.type === "bounded" ? toSvgX(r.end.at.value) : width - padding.horizontal
+		const startPos = r.start.type === "bounded" ? toSvgX(r.start.at.value) : PADDING
+		const endPos = r.end.type === "bounded" ? toSvgX(r.end.at.value) : width - PADDING
 		const colorId = r.color.replace(/[^a-zA-Z0-9]/g, "")
 		
 		// Track the horizontal extent of the range
@@ -184,22 +182,22 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 			markerEnd = `marker-end="url(#arrow-${colorId})"`
 		}
 
-		svg += `<line x1="${startPos}" y1="${yPos}" x2="${endPos}" y2="${yPos}" stroke="${r.color}" stroke-width="5" stroke-linecap="butt" ${markerStart} ${markerEnd}/>`
+		svgBody += `<line x1="${startPos}" y1="${yPos}" x2="${endPos}" y2="${yPos}" stroke="${r.color}" stroke-width="5" stroke-linecap="butt" ${markerStart} ${markerEnd}/>`
 
 		// Boundary circles
 		if (r.start.type === "bounded") {
 			const fill = r.start.at.type === "closed" ? r.color : "#FAFAFA"
-			svg += `<circle cx="${startPos}" cy="${yPos}" r="5" fill="${fill}" stroke="${r.color}" stroke-width="1.5"/>`
+			svgBody += `<circle cx="${startPos}" cy="${yPos}" r="5" fill="${fill}" stroke="${r.color}" stroke-width="1.5"/>`
 		}
 		if (r.end.type === "bounded") {
 			const fill = r.end.at.type === "closed" ? r.color : "white"
-			svg += `<circle cx="${endPos}" cy="${yPos}" r="5" fill="${fill}" stroke="${r.color}" stroke-width="1.5"/>`
+			svgBody += `<circle cx="${endPos}" cy="${yPos}" r="5" fill="${fill}" stroke="${r.color}" stroke-width="1.5"/>`
 		}
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }

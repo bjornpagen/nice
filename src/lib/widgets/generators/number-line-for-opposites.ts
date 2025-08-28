@@ -79,19 +79,18 @@ export const generateNumberLineForOpposites: WidgetGenerator<typeof NumberLineFo
 	const zeroPos = toSvgX(0)
 
 	const ext = initExtents(width)
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
-	svg += `<defs><marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker></defs>`
+	let svgBody = `<defs><marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker></defs>`
 
 	// axis and ticks
 	// Track the main line endpoints
 	includePointX(ext, PADDING)
 	includePointX(ext, width - PADDING)
-	svg += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="black" stroke-width="1.5"/>`
+	svgBody += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="black" stroke-width="1.5"/>`
 	for (let t = min; t <= max; t += tickInterval) {
 		const x = toSvgX(t)
 		includePointX(ext, x)
-		svg += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="black"/>`
-		svg += `<text x="${x}" y="${yPos + 20}" fill="black" text-anchor="middle">${t}</text>`
+		svgBody += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="black"/>`
+		svgBody += `<text x="${x}" y="${yPos + 20}" fill="black" text-anchor="middle">${t}</text>`
 		includeText(ext, x, String(t), "middle", 7)
 	}
 
@@ -100,29 +99,29 @@ export const generateNumberLineForOpposites: WidgetGenerator<typeof NumberLineFo
 		includePointX(ext, zeroPos)
 		includePointX(ext, posPos)
 		includePointX(ext, negPos)
-		svg += `<line x1="${zeroPos}" y1="${arrowY}" x2="${posPos}" y2="${arrowY}" stroke="black" marker-end="url(#arrowhead)"/>`
-		svg += `<line x1="${zeroPos}" y1="${arrowY}" x2="${negPos}" y2="${arrowY}" stroke="black" marker-end="url(#arrowhead)"/>`
+		svgBody += `<line x1="${zeroPos}" y1="${arrowY}" x2="${posPos}" y2="${arrowY}" stroke="black" marker-end="url(#arrowhead)"/>`
+		svgBody += `<line x1="${zeroPos}" y1="${arrowY}" x2="${negPos}" y2="${arrowY}" stroke="black" marker-end="url(#arrowhead)"/>`
 	}
 
 	includePointX(ext, posPos)
 	includePointX(ext, negPos)
-	svg += `<circle cx="${posPos}" cy="${yPos}" r="5" fill="black"/>`
-	svg += `<circle cx="${negPos}" cy="${yPos}" r="5" fill="black"/>`
+	svgBody += `<circle cx="${posPos}" cy="${yPos}" r="5" fill="black"/>`
+	svgBody += `<circle cx="${negPos}" cy="${yPos}" r="5" fill="black"/>`
 
 	const posLab = positiveLabel
 	const negLab = negativeLabel
 	if (posLab !== null) {
-		svg += `<text x="${posPos}" y="${yPos - 25}" fill="black" text-anchor="middle" font-weight="bold">${posLab}</text>`
+		svgBody += `<text x="${posPos}" y="${yPos - 25}" fill="black" text-anchor="middle" font-weight="bold">${posLab}</text>`
 		includeText(ext, posPos, posLab, "middle", 7)
 	}
 	if (negLab !== null) {
-		svg += `<text x="${negPos}" y="${yPos - 25}" fill="black" text-anchor="middle" font-weight="bold">${negLab}</text>`
+		svgBody += `<text x="${negPos}" y="${yPos - 25}" fill="black" text-anchor="middle" font-weight="bold">${negLab}</text>`
 		includeText(ext, negPos, negLab, "middle", 7)
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = svg.replace(`width="${width}"`, `width="${dynamicWidth}"`)
-	svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
-	svg += "</svg>"
-	return svg
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+		+ svgBody
+		+ `</svg>`
+	return finalSvg
 }
