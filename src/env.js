@@ -38,7 +38,13 @@ export const env = createEnv({
 		// Vercel deployment variable (optional, only present in deployed environments)
 		VERCEL_DEPLOYMENT_ID: z.string().optional(),
 		// Redis connection URL (optional for local development)
-		REDIS_URL: z.string().url().optional()
+		REDIS_URL: z.string().url().optional(),
+
+		// --- LTI 1.3 CONFIGURATION ---
+		LTI_ISSUER: z.string().url(),
+		LTI_JWKS_URL: z.string().url(),
+		LTI_AUDIENCE: z.string().min(1),
+		LTI_ALLOWED_REDIRECT_HOSTS: z.string().min(1)
 	},
 
 	/**
@@ -89,7 +95,13 @@ export const env = createEnv({
 		BROWSERBASE_PROJECT_ID: process.env.BROWSERBASE_PROJECT_ID,
 		BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN,
 		VERCEL_DEPLOYMENT_ID: process.env.VERCEL_DEPLOYMENT_ID,
-		REDIS_URL: process.env.REDIS_URL
+		REDIS_URL: process.env.REDIS_URL,
+
+		// --- LTI 1.3 CONFIGURATION ---
+		LTI_ISSUER: process.env.LTI_ISSUER,
+		LTI_JWKS_URL: process.env.LTI_JWKS_URL,
+		LTI_AUDIENCE: process.env.LTI_AUDIENCE,
+		LTI_ALLOWED_REDIRECT_HOSTS: process.env.LTI_ALLOWED_REDIRECT_HOSTS
 	},
 	/**
 	 * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
