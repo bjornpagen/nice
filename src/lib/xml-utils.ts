@@ -1,3 +1,6 @@
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
+
 /**
  * XML utility functions for extracting data from QTI XML strings
  */
@@ -36,45 +39,68 @@ export function sanitizeXmlAttributeValue(value: string): string {
  * @returns The modified XML string
  */
 export function replaceRootAttributes(xml: string, elementName: string, identifier: string, title: string): string {
-	// Match the opening tag for the specified element anywhere in the document,
-	// preserving any XML declaration that might appear before it.
-	const regex = new RegExp(`<\s*${elementName}([^>]*)>`, "i")
-	const match = xml.match(regex)
-	if (!match) return xml
+	// Use robust named capture groups; fail fast if not found
+	const openTagRegex = new RegExp(`(?<open><\\s*${elementName}\\b)(?<attrs>[^>]*)>`, "i")
+	const openMatch = openTagRegex.exec(xml)
+	if (!openMatch || !openMatch.groups) {
+		logger.error("xml root open tag not found", { elementName })
+		throw errors.new("xml: root open tag not found")
+	}
 
-	const originalAttrs = match[1] ?? ""
+	const start: string = String(openMatch.groups.open)
+	const originalAttrs: string = String(openMatch.groups.attrs)
 
-	// Update or insert the identifier attribute
-	let updatedAttrs = originalAttrs.replace(
-		/\sidentifier=["'][^"']*["']/i,
-		` identifier="${escapeXmlAttribute(identifier)}"`
-	)
-	if (!/\sidentifier=["'][^"']*["']/i.test(originalAttrs)) {
+	let updatedAttrs: string = originalAttrs
+
+	// identifier: replace if present (preserving quote style), else append
+	const idAttrRegex = /\sidentifier\s*=\s*(?<q>["'])(?<value>.*?)\k<q>/i
+	const idAttrMatch = idAttrRegex.exec(updatedAttrs)
+	if (idAttrMatch && idAttrMatch.groups) {
+		const quote: string = String(idAttrMatch.groups.q)
+		updatedAttrs = updatedAttrs.replace(idAttrRegex, ` identifier=${quote}${escapeXmlAttribute(identifier)}${quote}`)
+	} else {
 		updatedAttrs += ` identifier="${escapeXmlAttribute(identifier)}"`
 	}
 
-	// Update or insert the title attribute
-	updatedAttrs = updatedAttrs.replace(/\stitle=["'][^"']*["']/i, ` title="${escapeXmlAttribute(title)}"`)
-	if (!/\stitle=["'][^"']*["']/i.test(originalAttrs)) {
+	// title: replace if present (preserving quote style), else append
+	const titleAttrRegex = /\stitle\s*=\s*(?<q>["'])(?<value>.*?)\k<q>/i
+	const titleAttrMatch = titleAttrRegex.exec(updatedAttrs)
+	if (titleAttrMatch && titleAttrMatch.groups) {
+		const quote: string = String(titleAttrMatch.groups.q)
+		updatedAttrs = updatedAttrs.replace(titleAttrRegex, ` title=${quote}${escapeXmlAttribute(title)}${quote}`)
+	} else {
 		updatedAttrs += ` title="${escapeXmlAttribute(title)}"`
 	}
 
 	// Reconstruct the opening tag with updated attributes
-	const replacement = `<${elementName}${updatedAttrs}>`
-	return xml.replace(regex, replacement)
+	const replacement = `${start}${updatedAttrs}>`
+	return xml.replace(openTagRegex, replacement)
 }
 
 /**
  * Extracts the identifier attribute from a QTI XML element
  * @param xml The XML string to parse
  * @param elementName The name of the element (e.g., 'qti-assessment-item')
- * @returns The identifier value or null if not found
+ * @returns The identifier value (throws if missing)
  */
-export function extractIdentifier(xml: string, elementName: string): string | null {
-	// Match the element and extract the identifier attribute
-	const regex = new RegExp(`<${elementName}[^>]*\\sidentifier=["']([^"']+)["']`, "i")
-	const match = xml.match(regex)
-	return match?.[1] ?? null
+export function extractIdentifier(xml: string, elementName: string): string {
+	// Use named groups for the open tag; fail fast
+	const openTagRegex = new RegExp(`(?<open><\\s*${elementName}\\b)(?<attrs>[^>]*)>`, "i")
+	const openMatch = openTagRegex.exec(xml)
+	if (!openMatch || !openMatch.groups) {
+		logger.error("xml root open tag not found in extractIdentifier", { elementName })
+		throw errors.new("xml: root open tag not found")
+	}
+
+	const attrs: string = String(openMatch.groups.attrs)
+	const idAttrRegex = /\sidentifier\s*=\s*(?<q>["'])(?<value>[^"']+)\k<q>/i
+	const idMatch = idAttrRegex.exec(attrs)
+	if (!idMatch || !idMatch.groups || !idMatch.groups.value) {
+		logger.error("xml identifier attribute not found", { elementName })
+		throw errors.new("xml: identifier attribute not found")
+	}
+
+	return String(idMatch.groups.value)
 }
 
 /**
