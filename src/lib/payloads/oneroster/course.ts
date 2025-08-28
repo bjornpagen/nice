@@ -899,6 +899,63 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		}
 	}
 
+	// 4. Compute course metrics
+	logger.info("computing course metrics", { courseId })
+
+	function getNumber(obj: Record<string, unknown>, key: string): number | undefined {
+		const value = obj[key]
+		return typeof value === "number" ? value : undefined
+	}
+
+	function getString(obj: Record<string, unknown>, key: string): string | undefined {
+		const value = obj[key]
+		return typeof value === "string" ? value : undefined
+	}
+
+	// Match UI semantics: sum XP per component-resource placement
+	let totalXp = 0
+	const resourceById = new Map(onerosterPayload.resources.map((r) => [r.sourcedId, r]))
+	for (const cr of onerosterPayload.componentResources) {
+		const resource = resourceById.get(cr.resource.sourcedId)
+		if (!resource) {
+			logger.error("metrics: component resource references missing resource", {
+				componentResourceId: cr.sourcedId,
+				resourceId: cr.resource.sourcedId
+			})
+			throw errors.new("metrics: missing referenced resource")
+		}
+		const md = resource.metadata
+		const activity = getString(md, "khanActivityType")
+		const isRelevant =
+			activity === "Article" ||
+			activity === "Video" ||
+			activity === "Exercise" ||
+			activity === "Quiz" ||
+			activity === "UnitTest" ||
+			activity === "CourseChallenge"
+		if (!isRelevant) {
+			continue
+		}
+		const xp = getNumber(md, "xp")
+		if (xp === undefined) {
+			logger.error("metrics: missing xp for resource", {
+				resourceId: resource.sourcedId,
+				activity,
+				title: resource.title
+			})
+			throw errors.new("metrics: xp missing on resource")
+		}
+		totalXp += xp
+	}
+
+	const unitTestCount = assessments.filter((a) => a.type === "UnitTest").length
+	const courseChallengeCount = courseAssessments.filter((a) => a.type === "CourseChallenge").length
+	const totalLessons = contentIds.Exercise.length + allQuizAssessments.length + unitTestCount + courseChallengeCount
+
+	const courseMetadata: Record<string, unknown> = onerosterPayload.course.metadata ?? {}
+	courseMetadata.metrics = { totalXp, totalLessons }
+	onerosterPayload.course.metadata = courseMetadata
+
 	logger.info("oneroster payload generation complete", { courseId })
 	return onerosterPayload
 }
