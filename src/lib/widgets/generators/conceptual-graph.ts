@@ -87,10 +87,10 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 		mockXAxis,
 		width,
 		chartHeight,
-		{ top: topMargin, right: 40, bottom: bottomMargin },
+		{ top: topMargin, right: PADDING, bottom: bottomMargin },
 		{ axisPlacement: "leftEdge", axisTitleFontPx: 16, titlePadding: 20 }
 	)
-	const margin = { top: topMargin, right: 40, bottom: bottomMargin, left: leftMargin }
+	const margin = { top: topMargin, right: PADDING, bottom: bottomMargin, left: leftMargin }
 
 	const chartWidth = width - margin.left - margin.right
 	if (chartWidth <= 0) return `<svg width="${width}" height="${height}"></svg>`

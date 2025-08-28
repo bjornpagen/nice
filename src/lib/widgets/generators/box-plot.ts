@@ -5,6 +5,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import {
+	calculateTextAwareLabelSelection,
 	calculateXAxisLayout,
 	computeDynamicWidth,
 	includeText,
@@ -160,13 +161,19 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 		includeText(ext, labelX, abbreviateMonth(axis.label), "middle", 7)
 	}
 	
+	// Add text-aware label selection
 	// Draw tick marks and labels
-	for (const t of axis.tickLabels) {
+	const tickPositions = axis.tickLabels.map(toSvgX);
+	const selectedLabels = calculateTextAwareLabelSelection(axis.tickLabels.map(String), tickPositions, chartWidth);
+
+	axis.tickLabels.forEach((t, i) => {
 		const pos = toSvgX(t)
 		svg += `<line x1="${pos}" y1="${axisY - 5}" x2="${pos}" y2="${axisY + 5}" stroke="black"/>`
-		svg += `<text x="${pos}" y="${axisY + 20}" fill="black" text-anchor="middle">${t}</text>`
-		includeText(ext, pos, String(t), "middle", 7)
-	}
+		if (selectedLabels.has(i)) { // Check if label should be rendered
+			svg += `<text x="${pos}" y="${axisY + 20}" fill="black" text-anchor="middle">${t}</text>`
+			includeText(ext, pos, String(t), "middle", 7)
+		}
+	})
 
 	// Box plot elements
 	// Whiskers
