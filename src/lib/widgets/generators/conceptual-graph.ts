@@ -5,9 +5,10 @@ import { PADDING } from "@/lib/widgets/utils/constants"
 import { 
 	calculateTitleLayout, 
 	calculateXAxisLayout, 
-	calculateYAxisLayout,
+	calculateYAxisLayoutAxisAware,
 	computeDynamicWidth, 
-	includePointX, 
+	includePointX,
+	includeRotatedYAxisLabel, 
 	includeText, 
 	initExtents 
 } from "@/lib/widgets/utils/layout"
@@ -80,7 +81,15 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 	if (chartHeight <= 0) return `<svg width="${width}" height="${height}"></svg>`
 
 	const mockYAxis = { min: 0, max: 1, tickInterval: 1, label: yAxisLabel }
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(mockYAxis, chartHeight, 20)
+	const mockXAxis = { min: 0, max: 1 } // Non-numeric axis, provide mock range
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
+		mockYAxis,
+		mockXAxis,
+		width,
+		chartHeight,
+		{ top: topMargin, right: 40, bottom: bottomMargin },
+		{ axisPlacement: "leftEdge", axisTitleFontPx: 16, titlePadding: 20 }
+	)
 	const margin = { top: topMargin, right: 40, bottom: bottomMargin, left: leftMargin }
 
 	const chartWidth = width - margin.left - margin.right
@@ -114,7 +123,7 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 
 	// Axis Labels
 	svg += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisLabelX, margin.top + chartHeight / 2, chartHeight)
-	includeText(ext, yAxisLabelX, yAxisLabel, "middle", 7)
+	includeRotatedYAxisLabel(ext, yAxisLabelX, yAxisLabel, chartHeight)
 	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" text-anchor="middle">${xAxisLabel}</text>`
 	includeText(ext, margin.left + chartWidth / 2, xAxisLabel, "middle", 7)
 

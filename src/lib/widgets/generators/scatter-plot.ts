@@ -10,10 +10,11 @@ import {
 	calculateTextAwareLabelSelection,
 	calculateTitleLayout,
 	calculateXAxisLayout,
-	calculateYAxisLayout,
+	calculateYAxisLayoutAxisAware,
 	computeDynamicWidth,
 	createChartClipPath,
 	includePointX,
+	includeRotatedYAxisLabel,
 	includeText,
 	initExtents,
 	wrapInClippedGroup
@@ -372,7 +373,14 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	}
 
 	// Now calculate Y-axis layout using the determined chartHeight
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis, chartHeight)
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
+		yAxis,
+		xAxis,
+		width,
+		chartHeight,
+		padWithoutLeft,
+		{ axisPlacement: "leftEdge", axisTitleFontPx: 16 }
+	)
 	const pad = { ...padWithoutLeft, left: leftMargin }
 
 	// Calculate chartWidth with the final left margin
@@ -450,7 +458,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		pad.top + chartHeight / 2,
 		chartHeight
 	)
-	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
+	includeRotatedYAxisLabel(ext, yAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
 
 	// Render line overlays - linear lines don't need clipping, curves do
 	let linearLineContent = ""

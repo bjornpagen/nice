@@ -49,54 +49,62 @@ export function computeDynamicWidth(
 	return { vbMinX, vbMaxX, dynamicWidth }
 }
 
-/**
- * Calculates the required left margin and Y-axis title position for a chart.
- * This version is robust to long, wrapping Y-axis labels.
- *
- * @param yAxis - The Y-axis configuration object.
- * @param chartHeightPx - The available height for the chart area, used to calculate wrapping.
- * @param titlePadding - Optional spacing between tick labels and title (default: 20px)
- * @returns An object containing the calculated `leftMargin` and `yAxisLabelX` position.
- */
-export function calculateYAxisLayout(
-	yAxis: {
-		max: number
-		min: number
-		tickInterval: number
-		label: string
-	},
-	chartHeightPx: number, // NEW: chartHeightPx is now required
-	titlePadding = 20
-): { leftMargin: number; yAxisLabelX: number } {
-	const AVG_CHAR_WIDTH_PX = 8
-	const TICK_LENGTH = 5
-	const LABEL_PADDING = 10
-	const AXIS_TITLE_FONT_SIZE = 16
+export interface AxisPlacementOptions {
+	axisPlacement: "leftEdge" | "internalZero";
+	titlePadding?: number;
+	tickLength?: number;
+	labelPadding?: number;
+	axisTitleFontPx?: number;
+}
 
-	// 1. Calculate width needed for tick labels
-	let maxTickLabelWidth = 0
-	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
-		const label = String(t)
-		maxTickLabelWidth = Math.max(maxTickLabelWidth, label.length * AVG_CHAR_WIDTH_PX)
+export function calculateYAxisLayoutAxisAware(
+  yAxis: { max: number; min: number; tickInterval: number; label: string },
+  xAxis: { min: number; max: number },
+  svgWidth: number,
+  chartHeightPx: number,
+  pads: { top: number; right: number; bottom: number },
+  opts: AxisPlacementOptions
+): { leftMargin: number; yAxisLabelX: number; anchorX: number } {
+	const T = opts.tickLength ?? 5;
+	const LP = opts.labelPadding ?? 8;
+	const TP = opts.titlePadding ?? 12;
+	const TITLE_PX = opts.axisTitleFontPx ?? 16;
+
+	const { height: wrappedTitleHeight } = estimateWrappedTextDimensions(yAxis.label, chartHeightPx, TITLE_PX, 1.1, 8);
+
+	let maxTickLabelWidth = 0;
+	if (yAxis.tickInterval > 0) {
+		for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
+			const s = String(t);
+			maxTickLabelWidth = Math.max(maxTickLabelWidth, s.length * 7); // Heuristic
+		}
 	}
 
-	// 2. Calculate the effective width of the rotated, wrapped axis label
-	const { height: wrappedLabelHeight } = estimateWrappedTextDimensions(
-		yAxis.label,
-		chartHeightPx, // The wrapping constraint is the chart's height
-		AXIS_TITLE_FONT_SIZE
-	)
+	const spaceLeftOfAnchor = T + LP + maxTickLabelWidth + TP + wrappedTitleHeight / 2;
 
-	// 3. The required space is the greater of the two, plus padding
-	const spaceForTickLabels = TICK_LENGTH + LABEL_PADDING + maxTickLabelWidth
-	const spaceForAxisLabel = titlePadding + wrappedLabelHeight
+	const xRange = xAxis.max - xAxis.min;
+	const f =
+		opts.axisPlacement === "internalZero" && xRange > 0
+			? (0 - xAxis.min) / xRange
+			: 0;
 
-	const leftMargin = Math.max(spaceForTickLabels, spaceForAxisLabel)
+	let leftMargin: number;
+	if (f >= 1) {
+		leftMargin = Math.ceil(spaceLeftOfAnchor);
+	} else {
+		const denom = 1 - f;
+		leftMargin = Math.ceil((spaceLeftOfAnchor - f * (svgWidth - pads.right)) / denom);
+	}
 
-	// Position the axis label's rotation point at the very left edge of the margin
-	const yAxisLabelX = wrappedLabelHeight / 2 // Centered within its own required space
+	if (!isFinite(leftMargin) || leftMargin < 0) {
+		leftMargin = Math.ceil(spaceLeftOfAnchor);
+	}
 
-	return { leftMargin, yAxisLabelX }
+	const chartWidth = svgWidth - leftMargin - pads.right;
+	const anchorX = leftMargin + f * chartWidth;
+	const yAxisLabelX = anchorX - (T + LP + maxTickLabelWidth + TP + wrappedTitleHeight / 2);
+
+	return { leftMargin, yAxisLabelX, anchorX };
 }
 
 /**
@@ -421,6 +429,20 @@ export function calculateTextAwareLabelSelection(
  * @param isXAxis - Whether this is the x-axis (affects collision logic)
  * @returns Set of indices indicating which ticks should have labels
  */
+export function includeRotatedYAxisLabel(
+	_ext: Extents,
+	_pivotX: number,
+	_text: string,
+	_chartHeightPx: number,
+	_fontPx = 16,
+	_lineHeight = 1.1
+): void {
+	// This is a deliberate no-op for horizontal extents.
+	// The horizontal space required for the rotated Y-axis title (including its padding,
+	// tick labels, etc.) is already calculated and reserved by `calculateYAxisLayoutAxisAware`.
+	// Calling `includeText` would incorrectly expand the viewBox further to the left.
+}
+
 export function calculateIntersectionAwareTicks(tickValues: number[], _isXAxis: boolean): Set<number> {
 	const labeledIndices = new Set<number>()
 

@@ -7,9 +7,10 @@ import { PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateXAxisLayout,
-	calculateYAxisLayout,
+	calculateYAxisLayoutAxisAware,
 	computeDynamicWidth,
 	includePointX,
+	includeRotatedYAxisLabel,
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
@@ -71,7 +72,14 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 	if (chartHeight <= 0) return `<svg width="${width}" height="${height}"></svg>`
 	
 	// Now calculate Y-axis layout using the determined chartHeight
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis, chartHeight)
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
+		yAxis,
+		xAxis,
+		width,
+		chartHeight,
+		marginWithoutLeft,
+		{ axisPlacement: "leftEdge", axisTitleFontPx: 14 }
+	)
 	const margin = { ...marginWithoutLeft, left: leftMargin }
 	
 	// Calculate chartWidth with the final left margin
@@ -139,7 +147,7 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
 	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
 	svg += `<text x="${yAxisLabelX}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
-	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
+	includeRotatedYAxisLabel(ext, yAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
 
 	// Parabola Curve - clip to first quadrant (x >= 0, y >= 0)
 	const steps = 200

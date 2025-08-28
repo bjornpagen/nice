@@ -10,9 +10,10 @@ import {
 	calculateTextAwareLabelSelection,
 	calculateTitleLayout,
 	calculateXAxisLayout,
-	calculateYAxisLayout,
+	calculateYAxisLayoutAxisAware,
 	computeDynamicWidth,
 	includePointX,
+	includeRotatedYAxisLabel,
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
@@ -123,7 +124,14 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	if (chartHeight <= 0) return `<svg width="${width}" height="${height}"></svg>`
 	
 	// Now calculate Y-axis layout using the determined chartHeight
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis, chartHeight)
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
+		yAxis,
+		{ min: 0, max: xAxis.categories.length - 1 }, // Categorical axis
+		width,
+		chartHeight,
+		marginWithoutLeft,
+		{ axisPlacement: "leftEdge", axisTitleFontPx: 16 }
+	)
 	const margin = { ...marginWithoutLeft, left: leftMargin }
 	
 	// Calculate chartWidth with the final left margin
@@ -156,7 +164,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	{
 		const yCenter = margin.top + chartHeight / 2
 		svg += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), yAxisLabelX, yCenter, chartHeight)
-		includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
+		includeRotatedYAxisLabel(ext, yAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
 	}
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = toSvgYLeft(t)

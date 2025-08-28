@@ -7,9 +7,10 @@ import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateIntersectionAwareTicks,
 	calculateXAxisLayout,
-	calculateYAxisLayout,
+	calculateYAxisLayoutAxisAware,
 	computeDynamicWidth,
 	createChartClipPath,
+	includeRotatedYAxisLabel,
 	includeText,
 	includePointX,
 	initExtents,
@@ -306,7 +307,14 @@ export function generateCoordinatePlaneBase(
 	}
 	
 	// Now calculate Y-axis layout using the determined chartHeight
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis, chartHeight)
+	const { leftMargin, yAxisLabelX, anchorX } = calculateYAxisLayoutAxisAware(
+		yAxis,
+		xAxis,
+		width,
+		chartHeight,
+		padWithoutLeft,
+		{ axisPlacement: "internalZero", axisTitleFontPx: 14 }
+	)
 	const pad = { ...padWithoutLeft, left: leftMargin }
 	
 	// Calculate chartWidth with the final left margin
@@ -322,7 +330,7 @@ export function generateCoordinatePlaneBase(
 	const toSvgX = (val: number) => pad.left + (val - xAxis.min) * scaleX
 	const toSvgY = (val: number) => height - pad.bottom - (val - yAxis.min) * scaleY
 
-	const zeroX = toSvgX(0)
+	const zeroX = anchorX
 	const zeroY = toSvgY(0)
 
 	// Build point map for ID resolution
@@ -394,7 +402,7 @@ export function generateCoordinatePlaneBase(
 	svgBody += `<text x="${pad.left + chartWidth / 2}" y="${height - pad.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
 	includeText(ext, pad.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
 	svgBody += `<text x="${yAxisLabelX}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${pad.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
-	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
+	includeRotatedYAxisLabel(ext, yAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
 
 	// Quadrant labels
 	if (showQuadrantLabels) {

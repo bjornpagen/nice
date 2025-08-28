@@ -8,9 +8,10 @@ import {
 	calculateTextAwareLabelSelection,
 	calculateTitleLayout,
 	calculateXAxisLayout,
-	calculateYAxisLayout,
+	calculateYAxisLayoutAxisAware,
 	computeDynamicWidth,
 	includePointX,
+	includeRotatedYAxisLabel,
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
@@ -140,7 +141,14 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	}
 	
 	// Now calculate Y-axis layout using the determined chartHeight
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(mockYAxis, chartHeight)
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
+		mockYAxis,
+		{ min: separators[0] ?? 0, max: separators[separators.length - 1] ?? 1 },
+		width,
+		chartHeight,
+		marginWithoutLeft,
+		{ axisPlacement: "leftEdge", axisTitleFontPx: 16 }
+	)
 	const margin = { ...marginWithoutLeft, left: leftMargin }
 	
 	// Calculate chartWidth with the final left margin
@@ -175,7 +183,7 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		margin.top + chartHeight / 2,
 		chartHeight
 	)
-	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
+	includeRotatedYAxisLabel(ext, yAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
 
 	// Y ticks and labels
 	const yTickInterval = yAxis.tickInterval

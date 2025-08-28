@@ -2,7 +2,7 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { calculateYAxisLayout, computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { calculateYAxisLayoutAxisAware, computeDynamicWidth, includePointX, includeRotatedYAxisLabel, includeText, initExtents } from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
 
 // Factory helpers to avoid schema reuse and $ref generation
@@ -85,7 +85,15 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 	const chartHeight = height - paddingWithoutLeft.top - paddingWithoutLeft.bottom
 	
 	// Now calculate Y-axis layout using the determined chartHeight
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(mockYAxis, chartHeight)
+	const mockXAxis = { min: xAxisMin, max: xAxisMax }
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
+		mockYAxis,
+		mockXAxis,
+		width,
+		chartHeight,
+		paddingWithoutLeft,
+		{ axisPlacement: "leftEdge", axisTitleFontPx: 16 }
+	)
 	const padding = { ...paddingWithoutLeft, left: leftMargin }
 
 	// Use the explicitly provided axis ranges
@@ -114,7 +122,7 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 
 	// Axis Labels (closer to axes)
 	svg += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisLabelX, padding.top + chartHeight / 2, chartHeight)
-	includeText(ext, yAxisLabelX, yAxisLabel, "middle", 7)
+	includeRotatedYAxisLabel(ext, yAxisLabelX, yAxisLabel, chartHeight)
 	svg += `<text x="${padding.left + chartWidth / 2}" y="${xAxisY + 30}" text-anchor="middle">${xAxisLabel}</text>`
 	includeText(ext, padding.left + chartWidth / 2, xAxisLabel, "middle", 7)
 

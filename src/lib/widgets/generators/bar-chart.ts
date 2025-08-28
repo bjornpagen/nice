@@ -8,9 +8,10 @@ import {
 	calculateTextAwareLabelSelection,
 	calculateTitleLayout,
 	calculateXAxisLayout,
-	calculateYAxisLayout,
+	calculateYAxisLayoutAxisAware,
 	computeDynamicWidth,
 	includePointX,
+	includeRotatedYAxisLabel,
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
@@ -110,10 +111,14 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 	const chartHeight = height - topMargin - bottomMargin
 	if (chartHeight <= 0) return `<svg width="${width}" height="${height}"></svg>`
 	
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout({
-		...yAxis,
-		label: yAxis.label ?? ""
-	}, chartHeight)
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
+		{ ...yAxis, label: yAxis.label ?? "" },
+		{ min: 0, max: chartData.length - 1 }, // Categorical axis is index-based
+		width,
+		chartHeight,
+		{ top: topMargin, right: 20, bottom: bottomMargin },
+		{ axisPlacement: "leftEdge", axisTitleFontPx: 16 }
+	)
 	const margin = { top: topMargin, right: 20, bottom: bottomMargin, left: leftMargin }
 	const chartWidth = width - margin.left - margin.right
 	
@@ -156,7 +161,7 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 	if (yAxis.label !== null) {
 		const yCenter = margin.top + chartHeight / 2
 		svg += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), yAxisLabelX, yCenter, chartHeight)
-		includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
+		includeRotatedYAxisLabel(ext, yAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
 	}
 
 	// Y ticks and grid lines

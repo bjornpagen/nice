@@ -7,9 +7,10 @@ import {
 	calculateTextAwareLabelSelection,
 	calculateTitleLayout,
 	calculateXAxisLayout,
-	calculateYAxisLayout,
+	calculateYAxisLayoutAxisAware,
 	computeDynamicWidth,
 	includePointX,
+	includeRotatedYAxisLabel,
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
@@ -100,7 +101,14 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	}
 
 	// 3. Now, calculate Y-axis layout using the determined chartHeight.
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis, chartHeight)
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
+		yAxis,
+		xAxis,
+		width,
+		chartHeight,
+		{ top: marginWithoutLeft.top, right: marginWithoutLeft.right, bottom: marginWithoutLeft.bottom },
+		{ axisPlacement: "leftEdge", axisTitleFontPx: 16 }
+	)
 	const margin = { ...marginWithoutLeft, left: leftMargin }
 
 	// 4. Calculate chartWidth with the final left margin.
@@ -134,7 +142,7 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 		margin.top + chartHeight / 2,
 		chartHeight
 	)
-	includeText(ext, yAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
+	includeRotatedYAxisLabel(ext, yAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
 
 	// X-axis ticks with text-width-aware label selection
 	const xTickPositions = xAxis.tickValues.map((val) => toSvgX(val))

@@ -8,9 +8,10 @@ import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateTextAwareLabelSelection,
 	calculateXAxisLayout,
-	calculateYAxisLayout,
+	calculateYAxisLayoutAxisAware,
 	computeDynamicWidth,
 	includePointX,
+	includeRotatedYAxisLabel,
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
@@ -100,7 +101,14 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	}
 	
 	// Now calculate Y-axis layout using the determined chartHeight
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis, chartHeight)
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
+		yAxis,
+		{ min: 0, max: chartData.length - 1 }, // Categorical axis
+		width,
+		chartHeight,
+		marginWithoutLeft,
+		{ axisPlacement: "leftEdge", axisTitleFontPx: 16 }
+	)
 	const margin = { ...marginWithoutLeft, left: leftMargin }
 	
 	// Calculate chartWidth with the final left margin
@@ -150,7 +158,7 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	const globalYAxisLabelX = yAxisLabelX
 	const globalYAxisLabelY = margin.top + chartHeight / 2
 	svg += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), globalYAxisLabelX, globalYAxisLabelY, chartHeight)
-	includeText(ext, globalYAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
+	includeRotatedYAxisLabel(ext, globalYAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
 
 	// X-axis label (global coordinates)
 	const globalXAxisLabelX = margin.left + chartWidth / 2

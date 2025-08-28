@@ -3,9 +3,10 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { 
 	calculateXAxisLayout, 
-	calculateYAxisLayout,
+	calculateYAxisLayoutAxisAware,
 	computeDynamicWidth, 
-	includePointX, 
+	includePointX,
+	includeRotatedYAxisLabel, 
 	includeText, 
 	initExtents 
 } from "@/lib/widgets/utils/layout"
@@ -159,7 +160,14 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 	const chartHeight = height - marginWithoutLeft.top - marginWithoutLeft.bottom
 	if (chartHeight <= 0) return `<svg width="${width}" height="${height}"></svg>`
 
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis, chartHeight, 30)
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
+		yAxis,
+		xAxis, // Pass the numeric xAxis object
+		width,
+		chartHeight,
+		marginWithoutLeft,
+		{ axisPlacement: "leftEdge", axisTitleFontPx: 16, titlePadding: 30 }
+	)
 	const margin = { ...marginWithoutLeft, left: leftMargin }
 
 	const chartWidth = width - margin.left - margin.right
@@ -203,7 +211,7 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${xAxisLabel}</text>`
 	includeText(ext, margin.left + chartWidth / 2, xAxisLabel, "middle", 7)
 	svg += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisLabelX, margin.top + chartHeight / 2, chartHeight)
-	includeText(ext, yAxisLabelX, yAxisLabel, "middle", 7)
+	includeRotatedYAxisLabel(ext, yAxisLabelX, yAxisLabel, chartHeight)
 
 	// Data Line
 	// Track the x-extents of all data points

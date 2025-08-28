@@ -8,9 +8,10 @@ import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateTextAwareLabelSelection,
 	calculateXAxisLayout,
-	calculateYAxisLayout,
+	calculateYAxisLayoutAxisAware,
 	computeDynamicWidth,
 	includePointX,
+	includeRotatedYAxisLabel,
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
@@ -108,7 +109,14 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 	}
 	
 	// Now calculate Y-axis layout using the determined chartHeight
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayout(yAxis, chartHeight)
+	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
+		yAxis,
+		{ min: 0, max: chartData.length - 1 }, // Categorical axis
+		width,
+		chartHeight,
+		marginWithoutLeft,
+		{ axisPlacement: "leftEdge", axisTitleFontPx: 16 }
+	)
 	const margin = { ...marginWithoutLeft, left: leftMargin }
 	
 	// Calculate chartWidth with the final left margin
@@ -197,7 +205,7 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 	const globalYAxisLabelX = yAxisLabelX
 	const globalYAxisLabelY = margin.top + chartHeight / 2
 	svg += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), globalYAxisLabelX, globalYAxisLabelY, chartHeight)
-	includeText(ext, globalYAxisLabelX, abbreviateMonth(yAxis.label), "middle", 7)
+	includeRotatedYAxisLabel(ext, globalYAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
 
 	// Expand viewBox as needed to accommodate labels
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
