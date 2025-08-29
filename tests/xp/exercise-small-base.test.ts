@@ -92,7 +92,8 @@ mock.module("@/lib/ports/gradebook", () => ({
 
 // Mock XP bank
 mock.module("@/lib/xp/bank", () => ({
-	awardBankedXpForExercise: mock(() => Promise.resolve({ bankedXp: 0, awardedResourceIds: [] }))
+	awardBankedXpForExercise: mock(() => Promise.resolve({ bankedXp: 0, awardedResourceIds: [] })),
+	awardBankedXpForUnitCompletion: () => Promise.resolve({ bankedXp: 0, awardedResourceIds: [] })
 }))
 
 // Mock OneRoster fetchers

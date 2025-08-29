@@ -112,7 +112,8 @@ mock.module("@/lib/ports/gradebook", () => ({
 // Mock XP bank
 const mockAwardBankedXpForExercise = mock(() => Promise.resolve({ bankedXp: 0, awardedResourceIds: [] }))
 mock.module("@/lib/xp/bank", () => ({
-	awardBankedXpForExercise: mockAwardBankedXpForExercise
+	awardBankedXpForExercise: mockAwardBankedXpForExercise,
+	awardBankedXpForUnitCompletion: () => Promise.resolve({ bankedXp: 0, awardedResourceIds: [] })
 }))
 
 // --- IMPORT SUT (AFTER MOCKS) ---

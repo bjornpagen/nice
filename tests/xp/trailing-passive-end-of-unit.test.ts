@@ -191,193 +191,178 @@ mock.module("@/lib/clients", () => ({
 	}
 }))
 
-// Mock the xp/bank module itself to provide the functions used by tests
-mock.module("@/lib/xp/bank", () => {
-	function getAssessmentLineItemId(resourceId: string): string {
-		return `${resourceId}_ali`
+// Define local helpers and functions (avoid cross-file module mock collisions)
+function getAssessmentLineItemId(resourceId: string): string {
+	return `${resourceId}_ali`
+}
+function generateResultSourcedId(userSourcedId: string, resourceId: string): string {
+	return `nice_${userSourcedId}_${getAssessmentLineItemId(resourceId)}`
+}
+async function awardBankedXpForExercise(params: {
+	exerciseResourceSourcedId: string
+	onerosterUserSourcedId: string
+	onerosterCourseSourcedId: string
+}): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
+	const { extractResourceIdFromCompoundId } = await import("@/lib/caliper/utils")
+	const { oneroster } = await import("@/lib/clients")
+	const { calculateBankedXpForResources } = await import("@/lib/data/fetchers/caliper")
+
+	const exerciseResourceId = extractResourceIdFromCompoundId(params.exerciseResourceSourcedId)
+	const crRows = await oneroster.getAllComponentResources({
+		filter: `resource.sourcedId='${exerciseResourceId}' AND status='active'`
+	})
+	const exerciseCr = crRows[0]
+	if (!exerciseCr) return { bankedXp: 0, awardedResourceIds: [] }
+	const lessonComponentId = exerciseCr.courseComponent.sourcedId
+	const lessonRow = (
+		await oneroster.getCourseComponents({ filter: `sourcedId='${lessonComponentId}' AND status='active'` })
+	)[0]
+	const parentUnitId = lessonRow?.parent?.sourcedId
+	if (!parentUnitId) return { bankedXp: 0, awardedResourceIds: [] }
+
+	const unitLessons = await oneroster.getCourseComponents({
+		filter: `parent.sourcedId='${parentUnitId}' AND status='active'`,
+		orderBy: "asc",
+		sort: "sortOrder"
+	})
+	const lessonOrder = new Map<string, number>()
+	for (const l of unitLessons) lessonOrder.set(l.sourcedId, l.sortOrder)
+
+	const lessonIds = unitLessons.map((c) => c.sourcedId)
+	const lessonCrs = await oneroster.getAllComponentResources({
+		filter: `courseComponent.sourcedId@'${lessonIds.join(",")}' AND status='active'`
+	})
+	if (lessonCrs.length === 0) return { bankedXp: 0, awardedResourceIds: [] }
+
+	const currentLessonOrder = lessonOrder.get(lessonComponentId) ?? 0
+	const exerciseSortOrder = exerciseCr.sortOrder
+	let previousExerciseTuple: { lessonSortOrder: number; contentSortOrder: number } | null = null
+	for (const cr of lessonCrs) {
+		const lso = lessonOrder.get(cr.courseComponent.sourcedId) ?? 0
+		const id = cr.resource.sourcedId
+		const isExercise = id.startsWith("E")
+		if (!isExercise) continue
+		if (id === exerciseResourceId) continue
+		const isBeforeCurrent = lso < currentLessonOrder || (lso === currentLessonOrder && cr.sortOrder < exerciseSortOrder)
+		if (!isBeforeCurrent) continue
+		if (!previousExerciseTuple) {
+			previousExerciseTuple = { lessonSortOrder: lso, contentSortOrder: cr.sortOrder }
+			continue
+		}
+		const isAfterPrev =
+			lso > previousExerciseTuple.lessonSortOrder ||
+			(lso === previousExerciseTuple.lessonSortOrder && cr.sortOrder > previousExerciseTuple.contentSortOrder)
+		if (isAfterPrev) previousExerciseTuple = { lessonSortOrder: lso, contentSortOrder: cr.sortOrder }
 	}
-	function generateResultSourcedId(userSourcedId: string, resourceId: string): string {
-		return `nice_${userSourcedId}_${getAssessmentLineItemId(resourceId)}`
-	}
-	async function awardBankedXpForExercise(params: {
-		exerciseResourceSourcedId: string
-		onerosterUserSourcedId: string
-		onerosterCourseSourcedId: string
-	}): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
-		const { extractResourceIdFromCompoundId } = await import("@/lib/caliper/utils")
-		const { oneroster } = await import("@/lib/clients")
-		const { calculateBankedXpForResources } = await import("@/lib/data/fetchers/caliper")
 
-		const exerciseResourceId = extractResourceIdFromCompoundId(params.exerciseResourceSourcedId)
-		// Locate exercise CR to get lesson and unit
-		const crRows = await oneroster.getAllComponentResources({
-			filter: `resource.sourcedId='${exerciseResourceId}' AND status='active'`
-		})
-		const exerciseCr = crRows[0]
-		if (!exerciseCr) return { bankedXp: 0, awardedResourceIds: [] }
-		const lessonComponentId = exerciseCr.courseComponent.sourcedId
-		const lessonRow = (
-			await oneroster.getCourseComponents({ filter: `sourcedId='${lessonComponentId}' AND status='active'` })
-		)[0]
-		const parentUnitId = lessonRow?.parent?.sourcedId
-		if (!parentUnitId) return { bankedXp: 0, awardedResourceIds: [] }
-
-		// List lessons in unit for sort orders
-		const unitLessons = await oneroster.getCourseComponents({
-			filter: `parent.sourcedId='${parentUnitId}' AND status='active'`,
-			orderBy: "asc",
-			sort: "sortOrder"
-		})
-		const lessonOrder = new Map<string, number>()
-		for (const l of unitLessons) lessonOrder.set(l.sourcedId, l.sortOrder)
-
-		// Fetch CRs under unit lessons
-		const lessonIds = unitLessons.map((c) => c.sourcedId)
-		const lessonCrs = await oneroster.getAllComponentResources({
-			filter: `courseComponent.sourcedId@'${lessonIds.join(",")}' AND status='active'`
-		})
-		if (lessonCrs.length === 0) return { bankedXp: 0, awardedResourceIds: [] }
-
-		// Find previous exercise boundary before current
-		const currentLessonOrder = lessonOrder.get(lessonComponentId) ?? 0
-		const exerciseSortOrder = exerciseCr.sortOrder
-		let previousExerciseTuple: { lessonSortOrder: number; contentSortOrder: number } | null = null
-		for (const cr of lessonCrs) {
-			const lso = lessonOrder.get(cr.courseComponent.sourcedId) ?? 0
-			const id = cr.resource.sourcedId
-			const isExercise = id.startsWith("E")
-			if (!isExercise) continue
-			if (id === exerciseResourceId) continue
-			const isBeforeCurrent =
-				lso < currentLessonOrder || (lso === currentLessonOrder && cr.sortOrder < exerciseSortOrder)
-			if (!isBeforeCurrent) continue
-			if (!previousExerciseTuple) {
-				previousExerciseTuple = { lessonSortOrder: lso, contentSortOrder: cr.sortOrder }
-				continue
-			}
-			const isAfterPrev =
-				lso > previousExerciseTuple.lessonSortOrder ||
+	const candidateIds: string[] = []
+	for (const cr of lessonCrs) {
+		const lso = lessonOrder.get(cr.courseComponent.sourcedId) ?? 0
+		const isAfterPrev = previousExerciseTuple
+			? lso > previousExerciseTuple.lessonSortOrder ||
 				(lso === previousExerciseTuple.lessonSortOrder && cr.sortOrder > previousExerciseTuple.contentSortOrder)
-			if (isAfterPrev) previousExerciseTuple = { lessonSortOrder: lso, contentSortOrder: cr.sortOrder }
-		}
-
-		// Candidates strictly between previous and current
-		const candidateIds: string[] = []
-		for (const cr of lessonCrs) {
-			const lso = lessonOrder.get(cr.courseComponent.sourcedId) ?? 0
-			const isAfterPrev = previousExerciseTuple
-				? lso > previousExerciseTuple.lessonSortOrder ||
-					(lso === previousExerciseTuple.lessonSortOrder && cr.sortOrder > previousExerciseTuple.contentSortOrder)
-				: true
-			const isBeforeCurrent =
-				lso < currentLessonOrder || (lso === currentLessonOrder && cr.sortOrder < exerciseSortOrder)
-			if (!(isAfterPrev && isBeforeCurrent)) continue
-			const id = cr.resource.sourcedId
-			const isPassive = id === "A1" || id === "TRAIL"
-			if (isPassive) candidateIds.push(id)
-		}
-		if (candidateIds.length === 0) return { bankedXp: 0, awardedResourceIds: [] }
-
-		// Dedupe by reading in-memory results directly
-		const userId = params.onerosterUserSourcedId
-		const eligible: Array<{ sourcedId: string; expectedXp: number }> = []
-		for (const id of candidateIds) {
-			const resultId = generateResultSourcedId(userId, id)
-			if (inMemoryResults.has(resultId)) continue
-			eligible.push({ sourcedId: id, expectedXp: 1 })
-		}
-		if (eligible.length === 0) return { bankedXp: 0, awardedResourceIds: [] }
-
-		const actorId = `actor:${userId}`
-		const bank = await calculateBankedXpForResources(actorId, eligible)
-		// Save per-award results
-		for (const rid of bank.awardedResourceIds) {
-			const resultSourcedId = generateResultSourcedId(userId, rid)
-			await (await import("@/lib/ports/gradebook")).saveResult({
-				resultSourcedId,
-				lineItemSourcedId: getAssessmentLineItemId(rid),
-				userSourcedId: userId,
-				score: 1,
-				comment: "Banked XP",
-				metadata: {
-					xp: 1,
-					xpReason: "Banked XP",
-					masteredUnits: 0,
-					totalQuestions: 1,
-					correctQuestions: 1,
-					accuracy: 100,
-					multiplier: 1.0,
-					completedAt: new Date().toISOString(),
-					courseSourcedId: params.onerosterCourseSourcedId,
-					penaltyApplied: false
-				},
-				correlationId: "test-correlation-id"
-			})
-		}
-		return { bankedXp: bank.bankedXp, awardedResourceIds: bank.awardedResourceIds }
+			: true
+		const isBeforeCurrent = lso < currentLessonOrder || (lso === currentLessonOrder && cr.sortOrder < exerciseSortOrder)
+		if (!(isAfterPrev && isBeforeCurrent)) continue
+		const id = cr.resource.sourcedId
+		const isPassive = id === "A1" || id === "TRAIL"
+		if (isPassive) candidateIds.push(id)
 	}
-	async function awardBankedXpForUnitCompletion(params: {
-		onerosterUserSourcedId: string
-		onerosterCourseSourcedId: string
-		unitData: import("@/lib/types/domain").Unit
-	}): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
-		const { calculateBankedXpForResources } = await import("@/lib/data/fetchers/caliper")
-		const userId = params.onerosterUserSourcedId
-		// collect all passive resources from unit lessons
-		const passive: Array<{ sourcedId: string; expectedXp: number }> = []
-		for (const child of params.unitData.children) {
-			if (child.type === "Lesson") {
-				for (const c of child.children) {
-					if ((c.type === "Article" || c.type === "Video") && c.xp > 0) {
-						passive.push({ sourcedId: c.id, expectedXp: c.xp })
-					}
+	if (candidateIds.length === 0) return { bankedXp: 0, awardedResourceIds: [] }
+
+	const userId = params.onerosterUserSourcedId
+	const eligible: Array<{ sourcedId: string; expectedXp: number }> = []
+	for (const id of candidateIds) {
+		const resultId = generateResultSourcedId(userId, id)
+		if (inMemoryResults.has(resultId)) continue
+		eligible.push({ sourcedId: id, expectedXp: 1 })
+	}
+	if (eligible.length === 0) return { bankedXp: 0, awardedResourceIds: [] }
+
+	const actorId = `actor:${userId}`
+	const bank = await calculateBankedXpForResources(actorId, eligible)
+	for (const rid of bank.awardedResourceIds) {
+		const resultSourcedId = generateResultSourcedId(userId, rid)
+		await (await import("@/lib/ports/gradebook")).saveResult({
+			resultSourcedId,
+			lineItemSourcedId: getAssessmentLineItemId(rid),
+			userSourcedId: userId,
+			score: 1,
+			comment: "Banked XP",
+			metadata: {
+				xp: 1,
+				xpReason: "Banked XP",
+				masteredUnits: 0,
+				totalQuestions: 1,
+				correctQuestions: 1,
+				accuracy: 100,
+				multiplier: 1.0,
+				completedAt: new Date().toISOString(),
+				courseSourcedId: params.onerosterCourseSourcedId,
+				penaltyApplied: false
+			},
+			correlationId: "test-correlation-id"
+		})
+	}
+	return { bankedXp: bank.bankedXp, awardedResourceIds: bank.awardedResourceIds }
+}
+async function awardBankedXpForUnitCompletion(params: {
+	onerosterUserSourcedId: string
+	onerosterCourseSourcedId: string
+	unitData: import("@/lib/types/domain").Unit
+}): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
+	const { calculateBankedXpForResources } = await import("@/lib/data/fetchers/caliper")
+	const userId = params.onerosterUserSourcedId
+	const passive: Array<{ sourcedId: string; expectedXp: number }> = []
+	for (const child of params.unitData.children) {
+		if (child.type === "Lesson") {
+			for (const c of child.children) {
+				if ((c.type === "Article" || c.type === "Video") && c.xp > 0) {
+					passive.push({ sourcedId: c.id, expectedXp: c.xp })
 				}
 			}
 		}
-		if (passive.length === 0) return { bankedXp: 0, awardedResourceIds: [] }
-		// Dedupe existing using in-memory results
-		const eligible: Array<{ sourcedId: string; expectedXp: number }> = []
-		for (const r of passive) {
-			const resultId = generateResultSourcedId(userId, r.sourcedId)
-			if (inMemoryResults.has(resultId)) continue
-			eligible.push(r)
-		}
-		if (eligible.length === 0) return { bankedXp: 0, awardedResourceIds: [] }
-		const actorId = `actor:${userId}`
-		const bank = await calculateBankedXpForResources(actorId, eligible)
-		for (const rid of bank.awardedResourceIds) {
-			const resultSourcedId = generateResultSourcedId(userId, rid)
-			await (await import("@/lib/ports/gradebook")).saveResult({
-				resultSourcedId,
-				lineItemSourcedId: getAssessmentLineItemId(rid),
-				userSourcedId: userId,
-				score: 1,
-				comment: "Banked XP",
-				metadata: {
-					xp: 1,
-					xpReason: "Banked XP",
-					masteredUnits: 0,
-					totalQuestions: 1,
-					correctQuestions: 1,
-					accuracy: 100,
-					multiplier: 1.0,
-					completedAt: new Date().toISOString(),
-					courseSourcedId: params.onerosterCourseSourcedId,
-					penaltyApplied: false
-				},
-				correlationId: "test-correlation-id"
-			})
-		}
-		return { bankedXp: bank.bankedXp, awardedResourceIds: bank.awardedResourceIds }
 	}
-	return { awardBankedXpForExercise, awardBankedXpForUnitCompletion }
-})
+	if (passive.length === 0) return { bankedXp: 0, awardedResourceIds: [] }
+	const eligible: Array<{ sourcedId: string; expectedXp: number }> = []
+	for (const r of passive) {
+		const resultId = generateResultSourcedId(userId, r.sourcedId)
+		if (inMemoryResults.has(resultId)) continue
+		eligible.push(r)
+	}
+	if (eligible.length === 0) return { bankedXp: 0, awardedResourceIds: [] }
+	const actorId = `actor:${userId}`
+	const bank = await calculateBankedXpForResources(actorId, eligible)
+	for (const rid of bank.awardedResourceIds) {
+		const resultSourcedId = generateResultSourcedId(userId, rid)
+		await (await import("@/lib/ports/gradebook")).saveResult({
+			resultSourcedId,
+			lineItemSourcedId: getAssessmentLineItemId(rid),
+			userSourcedId: userId,
+			score: 1,
+			comment: "Banked XP",
+			metadata: {
+				xp: 1,
+				xpReason: "Banked XP",
+				masteredUnits: 0,
+				totalQuestions: 1,
+				correctQuestions: 1,
+				accuracy: 100,
+				multiplier: 1.0,
+				completedAt: new Date().toISOString(),
+				courseSourcedId: params.onerosterCourseSourcedId,
+				penaltyApplied: false
+			},
+			correlationId: "test-correlation-id"
+		})
+	}
+	return { bankedXp: bank.bankedXp, awardedResourceIds: bank.awardedResourceIds }
+}
 
 import type { Unit } from "@/lib/types/domain"
 
 describe("Banked XP - trailing passive at end-of-unit", () => {
 	test("Trailing passives are awarded on unit completion (quiz/test)", async () => {
-		const { awardBankedXpForUnitCompletion } = await import("@/lib/xp/bank")
 
 		const unitData: Unit = {
 			id: UNIT1,
@@ -481,7 +466,7 @@ describe("Banked XP - trailing passive at end-of-unit", () => {
 
 describe("Banked XP - dedupe across exercise and unit completion", () => {
 	test("Awards A1 on exercise, then only TRAIL on unit completion (no double award)", async () => {
-		const { awardBankedXpForExercise, awardBankedXpForUnitCompletion } = await import("@/lib/xp/bank")
+		// Use locally defined helpers to avoid cross-file module mock ordering
 
 		// Clear in-memory results to isolate from previous test
 		inMemoryResults.clear()
