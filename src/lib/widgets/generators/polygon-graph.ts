@@ -68,18 +68,32 @@ export const generatePolygonGraph: WidgetGenerator<typeof PolygonGraphPropsSchem
 	let clippedContent = ""
 	let unclippedContent = ""
 
-	// Render polygons in clipped content (background)
+	// Render polygons in clipped content (geometry)
 	clippedContent += renderPolygons(polygons, base.pointMap, base.toSvgX, base.toSvgY, base.ext)
 
 	// Render points in unclipped content (foreground) to prevent being cut off at boundaries
 	unclippedContent += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
 
-	// 3. Compute final width and assemble the complete SVG
+	// 3. Compute final width and assemble the complete SVG (ensure clipPath defs appear before usage)
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, PADDING)
 	let finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-	finalSvg += base.svgBody
+
+	// Extract <defs> containing the chartArea clip path so we can reference it before usage
+	const defsStart = base.svgBody.indexOf("<defs>")
+	const defsEnd = base.svgBody.indexOf("</defs>")
+	let defs = ""
+	let bodyWithoutDefs = base.svgBody
+	if (defsStart !== -1 && defsEnd !== -1 && defsEnd > defsStart) {
+		const endIdx = defsEnd + "</defs>".length
+		defs = base.svgBody.slice(defsStart, endIdx)
+		bodyWithoutDefs = base.svgBody.slice(0, defsStart) + base.svgBody.slice(endIdx)
+	}
+
+	// Place defs first, then geometry (clipped), then remaining axes/labels, finally points
+	finalSvg += defs
 	finalSvg += wrapInClippedGroup("chartArea", clippedContent)
-	finalSvg += unclippedContent // Add unclipped points
+	finalSvg += bodyWithoutDefs
+	finalSvg += unclippedContent
 	finalSvg += `</svg>`
 
 	return finalSvg
