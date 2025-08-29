@@ -3,6 +3,7 @@
 
 export interface LessonResource {
 	id: string
+	componentResourceSourcedId: string
 	slug: string
 	path: string
 	title: string
@@ -29,6 +30,7 @@ export interface CourseLessonMaterial {
 
 export interface CourseUnitMaterial {
 	id: string
+	componentResourceSourcedId: string
 	slug: string
 	path: string
 	title: string
@@ -46,6 +48,7 @@ export interface CourseUnitMaterial {
 
 export interface CourseResourceMaterial {
 	id: string
+	componentResourceSourcedId: string
 	slug: string
 	path: string
 	title: string
@@ -80,6 +83,7 @@ export interface Unit {
 	}>
 	resources: Array<{
 		id: string
+		componentResourceSourcedId: string
 		slug: string
 		path: string
 		title: string
@@ -99,6 +103,7 @@ export interface Course {
 	units: Unit[]
 	resources: Array<{
 		id: string
+		componentResourceSourcedId: string
 		slug: string
 		path: string
 		title: string
@@ -134,6 +139,7 @@ export function getCourseMaterials(course: Course): CourseMaterial[] {
 		for (const resource of unit.resources) {
 			const unitMaterial: CourseUnitMaterial = {
 				...resource,
+				componentResourceSourcedId: resource.componentResourceSourcedId,
 				meta: {
 					unit: {
 						path: unit.path,
@@ -159,6 +165,7 @@ export function getCourseMaterials(course: Course): CourseMaterial[] {
 	for (const [index, resource] of course.resources.entries()) {
 		const courseMaterial: CourseResourceMaterial = {
 			...resource,
+			componentResourceSourcedId: resource.componentResourceSourcedId,
 			meta: {
 				course: {
 					path: course.path,

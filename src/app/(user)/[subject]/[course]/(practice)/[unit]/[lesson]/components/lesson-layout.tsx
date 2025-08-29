@@ -66,19 +66,18 @@ export function LessonLayout({
 			const currentMaterial = materials[currentMaterialIndex]
 			if (currentMaterial?.type === "Lesson") {
 				const currentResource = currentMaterial.resources.find((r) => r.path === pathname)
-				const currentResourceId = currentResource?.id
 				const t1 = currentResource?.type
 				isArticleOrVideo = t1 === "Article" || t1 === "Video"
-				if (currentResourceId) {
-					isLocked = resourceLockStatus[currentResourceId] === true
+				if (currentResource?.componentResourceSourcedId) {
+					isLocked = resourceLockStatus[currentResource.componentResourceSourcedId] === true
 				}
 			} else if (currentMaterial) {
-				const currentResourceId = currentMaterial.id
 				// Non-lesson materials are assessments (Quiz, UnitTest, CourseChallenge)
 				// These pages handle their own top-offset overlays via AssessmentStartScreen
 				isArticleOrVideo = false
-				if (currentResourceId) {
-					isLocked = resourceLockStatus[currentResourceId] === true
+				if ("componentResourceSourcedId" in currentMaterial) {
+					const compId = currentMaterial.componentResourceSourcedId
+					isLocked = resourceLockStatus[compId] === true
 				}
 			}
 		}

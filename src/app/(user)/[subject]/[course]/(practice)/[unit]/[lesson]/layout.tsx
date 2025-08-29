@@ -113,6 +113,7 @@ export default async function Layout({
 								resources: lesson.children.map((resource) => {
 									const baseResource = {
 										id: resource.id,
+										componentResourceSourcedId: resource.componentResourceSourcedId,
 										slug: resource.slug,
 										path: resource.path,
 										title: resource.title
@@ -152,6 +153,7 @@ export default async function Layout({
 									if (resourceType === "e") {
 										const exerciseResource = {
 											id: resourceSlug,
+											componentResourceSourcedId: lesson.children.find((r) => r.slug === resourceSlug)?.componentResourceSourcedId ?? resourceSlug,
 											slug: resourceSlug,
 											path: pathname,
 											title: `Exercise: ${resourceSlug}`,
@@ -162,6 +164,7 @@ export default async function Layout({
 									} else if (resourceType === "a") {
 										const articleResource = {
 											id: resourceSlug,
+											componentResourceSourcedId: lesson.children.find((r) => r.slug === resourceSlug)?.componentResourceSourcedId ?? resourceSlug,
 											slug: resourceSlug,
 											path: pathname,
 											title: `Article: ${resourceSlug}`,
@@ -172,6 +175,7 @@ export default async function Layout({
 									} else if (resourceType === "v") {
 										const videoResource = {
 											id: resourceSlug,
+											componentResourceSourcedId: lesson.children.find((r) => r.slug === resourceSlug)?.componentResourceSourcedId ?? resourceSlug,
 											slug: resourceSlug,
 											path: pathname,
 											title: `Video: ${resourceSlug}`,
@@ -212,6 +216,7 @@ export default async function Layout({
 							if (assessment.type === "Quiz") {
 								return {
 									id: assessment.id,
+									componentResourceSourcedId: assessment.componentResourceSourcedId,
 									slug: assessment.slug,
 									path: correctPath,
 									type: "Quiz" as const,
@@ -222,6 +227,7 @@ export default async function Layout({
 							}
 							return {
 								id: assessment.id,
+								componentResourceSourcedId: assessment.componentResourceSourcedId,
 								slug: assessment.slug,
 								path: correctPath,
 								type: "UnitTest" as const,
@@ -238,6 +244,7 @@ export default async function Layout({
 			// Convert course challenges
 			resources: courseData.challenges.map((challenge) => ({
 				id: challenge.id,
+				componentResourceSourcedId: challenge.componentResourceSourcedId,
 				slug: challenge.slug,
 				path: challenge.path,
 				type: "CourseChallenge" as const,

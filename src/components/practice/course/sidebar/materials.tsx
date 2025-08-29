@@ -92,7 +92,7 @@ function MaterialItem({
 				<React.Fragment>
 					{material.resources.map((resource) => {
 						const progress = progressMap.get(resource.id)
-						const isLocked = resourceLockStatus[resource.id] === true
+						const isLocked = resourceLockStatus[resource.componentResourceSourcedId] === true
 
 						if (isLocked) {
 							return (
@@ -135,7 +135,7 @@ function MaterialItem({
 		case "UnitTest":
 		case "CourseChallenge": {
 			const progress = progressMap.get(material.id)
-			const isLocked = resourceLockStatus[material.id] === true
+			const isLocked = resourceLockStatus[material.componentResourceSourcedId] === true
 
 			// Get the appropriate illustration based on material type
 			let illustration: typeof quizIllustration

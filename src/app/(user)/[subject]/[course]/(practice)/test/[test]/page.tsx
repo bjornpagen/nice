@@ -61,6 +61,7 @@ export default async function CourseChallengePage({
 						resources: lesson.children.map((resource) => {
 							const baseResource = {
 								id: resource.id,
+								componentResourceSourcedId: resource.componentResourceSourcedId,
 								slug: resource.slug,
 								path: resource.path,
 								title: resource.title
@@ -105,6 +106,7 @@ export default async function CourseChallengePage({
 						if (assessment.type === "Quiz") {
 							return {
 								id: assessment.id,
+								componentResourceSourcedId: assessment.componentResourceSourcedId,
 								slug: assessment.slug,
 								path: correctPath,
 								type: "Quiz" as const,
@@ -114,6 +116,7 @@ export default async function CourseChallengePage({
 						}
 						return {
 							id: assessment.id,
+							componentResourceSourcedId: assessment.componentResourceSourcedId,
 							slug: assessment.slug,
 							path: correctPath,
 							type: "UnitTest" as const,
@@ -126,6 +129,7 @@ export default async function CourseChallengePage({
 			// Convert course challenges
 			resources: courseData.challenges.map((challenge) => ({
 				id: challenge.id,
+				componentResourceSourcedId: challenge.componentResourceSourcedId,
 				slug: challenge.slug,
 				path: challenge.path,
 				type: "CourseChallenge" as const,

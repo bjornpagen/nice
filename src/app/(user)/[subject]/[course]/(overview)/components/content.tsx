@@ -177,7 +177,7 @@ export function Content({
 						<Section className="rounded-sm">
 							<h2 className="font-medium text-gray-900 text-base text-lg">Course challenge</h2>
 							<p className="text-gray-600 text-sm">Test your knowledge of the skills in this course.</p>
-							{resourceLockStatus[course.challenges[0].id] !== false ? (
+							{resourceLockStatus[course.challenges[0].componentResourceSourcedId] !== false ? (
 								<div className="inline-flex items-center gap-2 text-gray-400 mt-2">
 									<Lock className="w-4 h-4" />
 									<span className="text-sm font-medium">Locked</span>

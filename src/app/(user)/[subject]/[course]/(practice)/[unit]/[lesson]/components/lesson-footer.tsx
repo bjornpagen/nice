@@ -118,7 +118,8 @@ export function LessonFooter({ coursePromise, progressPromise }: LessonFooterPro
 	}
 
 	// Use lock status from context to inform UI; video/article progression is unlocked when the server marks completion
-	const nextLockedByServer = resourceLockStatus ? resourceLockStatus[nextItem.id] === true : false
+	const nextComponentId = nextItem ? nextItem.componentResourceSourcedId : undefined
+	const nextLockedByServer = nextComponentId ? resourceLockStatus[nextComponentId] === true : false
 
 	const getIcon = (type: string) => {
 		switch (type) {

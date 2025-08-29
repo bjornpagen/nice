@@ -35,8 +35,19 @@ export function Carousel({
 	const prevMaterial = materials[index - 1]
 	const nextMaterial = materials[index + 1]
 
-	const isPrevLocked = prevMaterial ? resourceLockStatus[prevMaterial.id] === true : true
-	const isNextLocked = nextMaterial ? resourceLockStatus[nextMaterial.id] === true : true
+	function firstActionableComponentId(m: CourseMaterial | undefined): string | undefined {
+		if (!m) return undefined
+		if (m.type === "Lesson") {
+			const first = m.resources[0]
+			return first?.componentResourceSourcedId
+		}
+		return m.componentResourceSourcedId
+	}
+
+	const prevCompId = firstActionableComponentId(prevMaterial)
+	const nextCompId = firstActionableComponentId(nextMaterial)
+	const isPrevLocked = prevCompId ? resourceLockStatus[prevCompId] === true : true
+	const isNextLocked = nextCompId ? resourceLockStatus[nextCompId] === true : true
 
 	const handlePrev = () => {
 		if (index > 0) setIndex(index - 1)

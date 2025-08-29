@@ -20,12 +20,12 @@ function getTargetUnitPath(
 		const ordered: Array<{ id: string; path: string }> = []
 		for (const lesson of unit.lessons) {
 			for (const resource of lesson.resources) {
-				ordered.push({ id: resource.id, path: unit.path })
+				ordered.push({ id: resource.componentResourceSourcedId, path: unit.path })
 			}
 		}
 		// Then unit-level assessments
 		for (const res of unit.resources) {
-			ordered.push({ id: res.id, path: unit.path })
+			ordered.push({ id: res.componentResourceSourcedId, path: unit.path })
 		}
 		const first = ordered[0]
 		if (!first) continue
