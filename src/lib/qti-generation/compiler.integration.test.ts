@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { env } from "@/env"
+import { compile } from "@/lib/qti-generation/compiler"
+import { allExamples } from "@/lib/qti-generation/examples"
 import { Client as QtiClient } from "@/lib/qti"
-import { compile } from "./compiler"
-import { allExamples } from "./examples"
+import { env } from "@/env"
 
 // This test suite is an integration test. It requires a running QTI API
 // and valid credentials configured in the environment variables.
@@ -12,12 +12,34 @@ import { allExamples } from "./examples"
 // is fully compliant with the target QTI service.
 describe("QTI Compiler API Validation", () => {
 	test("should produce valid QTI XML for all examples that passes API validation", async () => {
+		// Gate execution on required env vars; other test files may mock @/env without QTI keys
+		const {
+			TIMEBACK_QTI_SERVER_URL,
+			TIMEBACK_TOKEN_URL,
+			TIMEBACK_CLIENT_ID,
+			TIMEBACK_CLIENT_SECRET
+		} = env
+		const hasQtiEnv =
+			Boolean(TIMEBACK_QTI_SERVER_URL) &&
+			Boolean(TIMEBACK_TOKEN_URL) &&
+			Boolean(TIMEBACK_CLIENT_ID) &&
+			Boolean(TIMEBACK_CLIENT_SECRET)
+		if (!hasQtiEnv) {
+			logger.warn("skipping qti api validation: missing env", {
+				TIMEBACK_QTI_SERVER_URL,
+				TIMEBACK_TOKEN_URL,
+				TIMEBACK_CLIENT_ID,
+				TIMEBACK_CLIENT_SECRET
+			})
+			return
+		}
+
 		// Use a dedicated client instance to avoid test interference from module mocks
 		const qti = new QtiClient({
-			serverUrl: env.TIMEBACK_QTI_SERVER_URL,
-			tokenUrl: env.TIMEBACK_TOKEN_URL,
-			clientId: env.TIMEBACK_CLIENT_ID,
-			clientSecret: env.TIMEBACK_CLIENT_SECRET
+			serverUrl: TIMEBACK_QTI_SERVER_URL,
+			tokenUrl: TIMEBACK_TOKEN_URL,
+			clientId: TIMEBACK_CLIENT_ID,
+			clientSecret: TIMEBACK_CLIENT_SECRET
 		})
 		// Step 1: Compile only selected examples into QTI XML strings in parallel.
 		const allowedIds = new Set<string>([
