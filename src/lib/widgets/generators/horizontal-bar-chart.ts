@@ -107,8 +107,9 @@ export const generateHorizontalBarChart: WidgetGenerator<typeof HorizontalBarCha
 		customAxisContent += `<line x1="${x}" y1="${base.chartArea.top}" x2="${x}" y2="${base.chartArea.top + base.chartArea.height}" stroke="${gridColor}" stroke-width="1"/>`
 	}
 
-	// Bar rendering
-	let bars = ""
+	// Bar rendering - separate clipped bars from unclipped labels
+	let barsContent = ""
+	let labelsContent = ""
 	let bandWidth = base.bandWidth
 	if (bandWidth === undefined) {
 		logger.error("bandWidth missing for categorical y-axis in horizontal bar chart", { length: chartData.length })
@@ -129,20 +130,23 @@ export const generateHorizontalBarChart: WidgetGenerator<typeof HorizontalBarCha
 		includePointX(base.ext, barX)
 		includePointX(base.ext, barX + barWidth)
 
-		bars += `<rect x="${barX}" y="${barY}" width="${barWidth}" height="${innerBarHeight}" fill="${d.color}"/>`
+		// Bar goes in clipped content
+		barsContent += `<rect x="${barX}" y="${barY}" width="${barWidth}" height="${innerBarHeight}" fill="${d.color}"/>`
 
-		// Value label
+		// Value label goes in unclipped content to prevent being cut off
 		const valueLabelX = barX + barWidth + 5
-		bars += `<text x="${valueLabelX}" y="${yCenter}" class="value-label" text-anchor="start" dominant-baseline="middle">${abbreviateMonth(d.label)}</text>`
+		labelsContent += `<text x="${valueLabelX}" y="${yCenter}" class="value-label" text-anchor="start" dominant-baseline="middle" font-size="${theme.font.size.small}">${abbreviateMonth(d.label)}</text>`
 		includeText(base.ext, valueLabelX, abbreviateMonth(d.label), "start", 7)
 	})
 
 	let svgBody = base.svgBody
 	svgBody += customAxisContent
-	svgBody += wrapInClippedGroup(base.clipId, bars)
+	svgBody += wrapInClippedGroup(base.clipId, barsContent)
+	svgBody += labelsContent // Render labels outside the clip
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, AXIS_VIEWBOX_PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.serif}">` +
+	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, totalHeight, AXIS_VIEWBOX_PADDING)
+	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">` +
 		svgBody +
 		`</svg>`
 	return finalSvg

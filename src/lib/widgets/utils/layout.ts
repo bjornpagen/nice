@@ -447,17 +447,20 @@ export function calculateIntersectionAwareTicks(tickValues: number[], _isXAxis: 
 	const labeledIndices = new Set<number>()
 
 	// Find the first negative value (closest to intersection)
-	let firstNegativeIndex = -1
+	let hasSkippedFirstNegative = false
 	for (let i = 0; i < tickValues.length; i++) {
 		const value = tickValues[i]
 		if (value === undefined) continue
 
-		// Skip origin (standard behavior)
-		if (value === 0) continue
+		// ALWAYS include 0 tick - never skip the origin
+		if (value === 0) {
+			labeledIndices.add(i)
+			continue
+		}
 
 		// Skip first negative to avoid intersection collision
-		if (value < 0 && firstNegativeIndex === -1) {
-			firstNegativeIndex = i
+		if (value < 0 && !hasSkippedFirstNegative) {
+			hasSkippedFirstNegative = true
 			continue // Skip this one
 		}
 

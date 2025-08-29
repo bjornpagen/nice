@@ -9,7 +9,7 @@ import {
 } from "@/lib/widgets/generators/coordinate-plane-base"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth } from "@/lib/widgets/utils/layout"
+import { computeDynamicWidth, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 
 export const PolygonGraphPropsSchema = z
@@ -63,20 +63,23 @@ export const generatePolygonGraph: WidgetGenerator<typeof PolygonGraphPropsSchem
 
 	// 1. Call the base generator and get the body content and extents object
 	const base = generateCoordinatePlaneBase(width, height, xAxis, yAxis, showQuadrantLabels, points)
-	let content = ""
+	
+	// 2. Separate clipped polygons from unclipped points
+	let clippedContent = ""
+	let unclippedContent = ""
 
-	// 2. Render elements in order, passing the extents object to each helper
-	// Render polygons first (background)
-	content += renderPolygons(polygons, base.pointMap, base.toSvgX, base.toSvgY, base.ext)
+	// Render polygons in clipped content (background)
+	clippedContent += renderPolygons(polygons, base.pointMap, base.toSvgX, base.toSvgY, base.ext)
 
-	// Render points last (foreground)
-	content += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
+	// Render points in unclipped content (foreground) to prevent being cut off at boundaries
+	unclippedContent += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
 
 	// 3. Compute final width and assemble the complete SVG
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, PADDING)
 	let finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 	finalSvg += base.svgBody
-	finalSvg += content
+	finalSvg += wrapInClippedGroup("chartArea", clippedContent)
+	finalSvg += unclippedContent // Add unclipped points
 	finalSvg += `</svg>`
 
 	return finalSvg

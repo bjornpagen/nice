@@ -3,7 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { computeDynamicWidth, includePointX, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
+import { computeDynamicWidth, includePointX, includeText, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 import { theme } from "@/lib/widgets/utils/theme"
 import * as errors from "@superbuilders/errors"
@@ -125,7 +125,6 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 		}
 	)
 
-	let content = ""
 	const toSvgX = base.toSvgX
 	const toSvgY = base.toSvgY
 
@@ -149,15 +148,31 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	const bottomPath = `M${leftX},${toSvgY(yAxis.min)} ${pointsStr} L${rightX},${toSvgY(yAxis.min)} Z`
 	const topPath = `M${leftX},${toSvgY(yAxis.max)} ${pointsStr} L${rightX},${toSvgY(yAxis.max)} Z`
 
-	content += `<path d="${bottomPath}" fill="${bottomArea.color}" stroke="none"/>`
-	content += `<path d="${topPath}" fill="${topArea.color}" stroke="none"/>`
-	content += `<polyline points="${pointsStr}" fill="none" stroke="${boundaryLine.color}" stroke-width="${boundaryLine.strokeWidth}"/>`
+	// 1. Compute safe label anchors using median x-value
+	const medianXValue = dataPoints.length > 0 
+		? dataPoints[Math.floor(dataPoints.length / 2)]?.x ?? ((xAxis.min + xAxis.max) / 2)
+		: (xAxis.min + xAxis.max) / 2
+	const topLabelX = toSvgX(medianXValue)
+	const topLabelY = toSvgY(yAxis.max * 0.75) // Position in upper area
+	const bottomLabelX = toSvgX(medianXValue)
+	const bottomLabelY = toSvgY(yAxis.max * 0.25) // Position in lower area
 
-	content += renderWrappedText(abbreviateMonth(bottomArea.label), toSvgX(1975), toSvgY(40), "area-label", "1.2em", base.chartArea.width, 8)
-	content += renderWrappedText(abbreviateMonth(topArea.label), toSvgX(1850), toSvgY(70), "area-label", "1.2em", base.chartArea.width, 8)
+	// 2. Build clipped and unclipped content separately
+	let clippedContent = ""
+	clippedContent += `<path d="${bottomPath}" fill="${bottomArea.color}" stroke="none"/>`
+	clippedContent += `<path d="${topPath}" fill="${topArea.color}" stroke="none"/>`
+	clippedContent += `<polyline points="${pointsStr}" fill="none" stroke="${boundaryLine.color}" stroke-width="${boundaryLine.strokeWidth}"/>`
 
+	let unclippedContent = ""
+	unclippedContent += renderWrappedText(abbreviateMonth(topArea.label), topLabelX, topLabelY, "area-label", theme.font.size.medium, base.chartArea.width, 8)
+	includeText(base.ext, topLabelX, abbreviateMonth(topArea.label), "middle", 8)
+	unclippedContent += renderWrappedText(abbreviateMonth(bottomArea.label), bottomLabelX, bottomLabelY, "area-label", theme.font.size.medium, base.chartArea.width, 8)
+	includeText(base.ext, bottomLabelX, abbreviateMonth(bottomArea.label), "middle", 8)
+
+	// 3. Assemble SVG
 	let svgBody = base.svgBody
-	svgBody += wrapInClippedGroup(base.clipId, content)
+	svgBody += wrapInClippedGroup(base.clipId, clippedContent)
+	svgBody += unclippedContent // Add unclipped labels
 
 	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, totalHeight, AXIS_VIEWBOX_PADDING)

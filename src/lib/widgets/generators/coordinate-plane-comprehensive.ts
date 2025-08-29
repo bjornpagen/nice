@@ -101,31 +101,39 @@ export const generateCoordinatePlaneComprehensive: WidgetGenerator<typeof Coordi
 
 	// 1. Call the base generator and get the body content and extents object
 	const base = generateCoordinatePlaneBase(width, height, xAxis, yAxis, showQuadrantLabels, points)
-	let content = ""
+	
+	// 2. Separate clipped geometry from unclipped elements
+	let clippedContent = ""
+	let unclippedContent = ""
 
-	// 2. Render elements in order, passing the extents object to each helper
+	// Polygons go in clipped content
 	if (polygons.length > 0) {
-		content += renderPolygons(polygons, base.pointMap, base.toSvgX, base.toSvgY, base.ext)
+		clippedContent += renderPolygons(polygons, base.pointMap, base.toSvgX, base.toSvgY, base.ext)
 	}
-	if (distances.length > 0) {
-		content += renderDistances(distances, base.pointMap, base.toSvgX, base.toSvgY, base.ext)
-	}
+	// Lines go in clipped content
 	if (lines.length > 0) {
-		const lineContent = renderLines(lines, xAxis, yAxis, base.toSvgX, base.toSvgY, base.ext)
-		content += wrapInClippedGroup("chartArea", lineContent)
+		clippedContent += renderLines(lines, xAxis, yAxis, base.toSvgX, base.toSvgY, base.ext)
 	}
+	// Polylines go in clipped content
 	if (polylines.length > 0) {
-		content += renderPolylines(polylines, base.toSvgX, base.toSvgY, base.ext)
+		clippedContent += renderPolylines(polylines, base.toSvgX, base.toSvgY, base.ext)
 	}
+	
+	// Points go in unclipped content to prevent being cut off at boundaries
 	if (points.length > 0) {
-		content += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
+		unclippedContent += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
+	}
+	// Distances go in unclipped content (they include labels)
+	if (distances.length > 0) {
+		unclippedContent += renderDistances(distances, base.pointMap, base.toSvgX, base.toSvgY, base.ext)
 	}
 
 	// 3. Compute final width and assemble the complete SVG
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, PADDING)
 	let finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 	finalSvg += base.svgBody
-	finalSvg += content
+	finalSvg += wrapInClippedGroup("chartArea", clippedContent)
+	finalSvg += unclippedContent // Add unclipped points and labels
 	finalSvg += `</svg>`
 
 	return finalSvg

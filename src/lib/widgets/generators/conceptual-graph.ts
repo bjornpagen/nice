@@ -108,10 +108,13 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 	arrows += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${base.chartArea.left + base.chartArea.width}" y2="${xAxisY}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}" marker-end="url(#graph-arrow)"/>`
 	includePointX(base.ext, base.chartArea.left + base.chartArea.width)
 
-	// Curve inside clip
-	let content = ""
+	// Separate clipped geometry from unclipped markers and labels
+	let clippedContent = ""
+	let unclippedContent = ""
+	
+	// Main curve goes in clipped content
 	const pointsStr = curvePoints.map((p) => `${base.toSvgX(p.x)},${base.toSvgY(p.y)}`).join(" ")
-	content += `<polyline points="${pointsStr}" fill="none" stroke="${curveColor}" stroke-width="${theme.stroke.width.xxthick}" stroke-linejoin="round" stroke-linecap="round"/>`
+	clippedContent += `<polyline points="${pointsStr}" fill="none" stroke="${curveColor}" stroke-width="${theme.stroke.width.xxthick}" stroke-linejoin="round" stroke-linecap="round"/>`
 	for (const p of curvePoints) {
 		includePointX(base.ext, base.toSvgX(p.x))
 	}
@@ -155,20 +158,21 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 		return { x: p0.x + (p1.x - p0.x) * localT, y: p0.y + (p1.y - p0.y) * localT }
 	}
 
-	// Highlight Points
+	// Highlight points and labels go in unclipped content to prevent being cut off at boundaries
 	for (const hp of highlightPoints) {
 		const pt = pointAtT(hp.t)
 		const cx = base.toSvgX(pt.x)
 		const cy = base.toSvgY(pt.y)
 		includePointX(base.ext, cx)
-		content += `<circle cx="${cx}" cy="${cy}" r="${highlightPointRadius}" fill="${highlightPointColor}"/>`
-		content += `<text x="${cx - highlightPointRadius - 5}" y="${cy}" text-anchor="end" dominant-baseline="middle" font-weight="${theme.font.weight.bold}">${hp.label}</text>`
+		unclippedContent += `<circle cx="${cx}" cy="${cy}" r="${highlightPointRadius}" fill="${highlightPointColor}"/>`
+		unclippedContent += `<text x="${cx - highlightPointRadius - 5}" y="${cy}" text-anchor="end" dominant-baseline="middle" font-weight="${theme.font.weight.bold}" font-size="${theme.font.size.medium}">${hp.label}</text>`
 		includeText(base.ext, cx - highlightPointRadius - 5, hp.label, "end", 7)
 	}
 
 	let svgBody = base.svgBody
 	svgBody += arrows
-	svgBody += wrapInClippedGroup(base.clipId, content)
+	svgBody += wrapInClippedGroup(base.clipId, clippedContent)
+	svgBody += unclippedContent // Add unclipped markers and labels
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, base.chartArea.top + base.chartArea.height + base.outsideBottomPx, AXIS_VIEWBOX_PADDING)
 	const finalSvg = `<svg width="${dynamicWidth}" height="${base.chartArea.top + base.chartArea.height + base.outsideBottomPx}" viewBox="${vbMinX} 0 ${dynamicWidth} ${base.chartArea.top + base.chartArea.height + base.outsideBottomPx}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.large}">` +

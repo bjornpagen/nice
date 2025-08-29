@@ -152,8 +152,10 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	const stepX = base.chartArea.width / Math.max(1, xAxis.categories.length - 1)
 	const toSvgX = (index: number) => base.chartArea.left + index * stepX
 
-	// Data series content
-	let seriesContent = ""
+	// Separate clipped polylines from unclipped markers
+	let clippedContent = ""
+	let unclippedContent = ""
+	
 	for (const s of series) {
 		const toSvgY = s.yAxis === "right" ? toSvgYRight : base.toSvgY
 		const pointsStr = s.values.map((v, i) => `${toSvgX(i)},${toSvgY(v)}`).join(" ")
@@ -162,18 +164,20 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 			includePointX(base.ext, toSvgX(i))
 		})
 
+		// Polyline goes in clipped content
 		let dasharray = ""
 		if (s.style === "dashed") dasharray = 'stroke-dasharray="8 4"'
 		if (s.style === "dotted") dasharray = 'stroke-dasharray="2 6"'
-		seriesContent += `<polyline points="${pointsStr}" fill="none" stroke="${s.color}" stroke-width="${theme.stroke.width.xthick}" ${dasharray}/>`
+		clippedContent += `<polyline points="${pointsStr}" fill="none" stroke="${s.color}" stroke-width="${theme.stroke.width.xthick}" ${dasharray}/>`
 
+		// Data point markers go in unclipped content to prevent being cut off at boundaries
 		for (const [i, v] of s.values.entries()) {
 			const cx = toSvgX(i)
 			const cy = toSvgY(v)
 			if (s.pointShape === "circle") {
-				seriesContent += `<circle cx="${cx}" cy="${cy}" r="${theme.geometry.pointRadius.base}" fill="${s.color}"/>`
+				unclippedContent += `<circle cx="${cx}" cy="${cy}" r="${theme.geometry.pointRadius.base}" fill="${s.color}"/>`
 			} else if (s.pointShape === "square") {
-				seriesContent += `<rect x="${cx - 4}" y="${cy - 4}" width="8" height="8" fill="${s.color}"/>`
+				unclippedContent += `<rect x="${cx - 4}" y="${cy - 4}" width="8" height="8" fill="${s.color}"/>`
 			}
 		}
 	}
@@ -216,7 +220,8 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 
 	let svgBody = base.svgBody
 	svgBody += rightAxisContent
-	svgBody += wrapInClippedGroup(base.clipId, seriesContent)
+	svgBody += wrapInClippedGroup(base.clipId, clippedContent)
+	svgBody += unclippedContent // Add unclipped markers
 	svgBody += legendContent
 
 	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx

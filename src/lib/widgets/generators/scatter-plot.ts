@@ -460,8 +460,8 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		}
 	}
 
-	// Points content
-	let pointsContent = ""
+	// Separate unclipped data points and labels
+	let unclippedPointsContent = ""
 	for (const p of points) {
 		const px = base.toSvgX(p.x)
 		const py = base.toSvgY(p.y)
@@ -469,8 +469,9 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		// Track the x-extent of the point
 		includePointX(base.ext, px)
 		
-		pointsContent += `<circle cx="${px}" cy="${py}" r="${theme.geometry.pointRadius.large}" fill="${theme.colors.black}" fill-opacity="${theme.opacity.overlayHigh}"/>`
-		pointsContent += `<text x="${px + 5}" y="${py - 5}" fill="${theme.colors.text}">${abbreviateMonth(p.label)}</text>`
+		// Data points and labels go in unclipped content to prevent being cut off at boundaries
+		unclippedPointsContent += `<circle cx="${px}" cy="${py}" r="${theme.geometry.pointRadius.large}" fill="${theme.colors.black}" fill-opacity="${theme.opacity.overlayHigh}"/>`
+		unclippedPointsContent += `<text x="${px + 5}" y="${py - 5}" fill="${theme.colors.text}" font-size="${theme.font.size.small}">${abbreviateMonth(p.label)}</text>`
 		// Track the label's extent
 		includeText(base.ext, px + 5, abbreviateMonth(p.label), "start", 7)
 	}
@@ -505,7 +506,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	if (curveLineContent) {
 		svgBody += wrapInClippedGroup(base.clipId, curveLineContent)
 	}
-	svgBody += pointsContent
+	svgBody += unclippedPointsContent // Add unclipped data points and labels
 	svgBody += legendContent
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, AXIS_VIEWBOX_PADDING)

@@ -117,7 +117,9 @@ export function computeAndRenderYAxis(
 
 		tickValues.forEach((t, i) => {
 			const y = toSvgYNumeric(t)
+			// Always draw the tick mark, including at t=0
 			markup += `<line x1="${axisX - TICK_LENGTH_PX}" y1="${y}" x2="${axisX}" y2="${y}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
+			
 			if (spec.showTickLabels && selected.has(i)) {
 				let label: string
 				if (spec.labelFormatter) {
@@ -129,7 +131,10 @@ export function computeAndRenderYAxis(
 				yTickPositions.push(y)
 				yTickLabels.push(label)
 			}
-			if (spec.showGridLines && t !== 0) {
+
+			// Suppress gridline at 0 only if it would overdraw the main axis, but never the tick/label
+			const isZeroOverlappingAxis = (t === 0 && xAxisSpec.domain.min <= 0 && xAxisSpec.domain.max >= 0)
+			if (spec.showGridLines && !isZeroOverlappingAxis) {
 				markup += `<line x1="${chartArea.left}" y1="${y}" x2="${chartArea.left + chartArea.width}" y2="${y}" stroke="${theme.colors.gridMajor}" stroke-width="${GRID_STROKE_WIDTH_PX}"/>`
 			}
 		})
@@ -222,7 +227,9 @@ export function computeAndRenderXAxis(
 		for (let i = 0; i < ticks.length; i++) {
 			const t = ticks[i] as number
 			const x = toSvgX(t)
+			// Always draw the tick mark, including at t=0
 			markup += `<line x1="${x}" y1="${axisY}" x2="${x}" y2="${axisY + TICK_LENGTH_PX}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
+			
 			if (spec.showTickLabels && selected.has(i)) {
 				let label = String(t)
 				if (spec.labelFormatter) {
@@ -233,7 +240,10 @@ export function computeAndRenderXAxis(
 				tickPositions.push(x)
 				tickLabels.push(label)
 			}
-			if (spec.showGridLines && t !== 0) {
+
+			// Suppress gridline at 0 only if it would overdraw the main axis, but never the tick/label
+			const isZeroOverlappingAxis = (t === 0)
+			if (spec.showGridLines && !isZeroOverlappingAxis) {
 				markup += `<line x1="${x}" y1="${chartArea.top}" x2="${x}" y2="${chartArea.top + chartArea.height}" stroke="${theme.colors.gridMajor}" stroke-width="${GRID_STROKE_WIDTH_PX}"/>`
 			}
 		}
