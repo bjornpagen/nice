@@ -5,6 +5,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 const KAArc = z
 	.object({
@@ -194,7 +195,7 @@ export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof Pentago
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 
 	// Start building SVG with computed dimensions
-	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 
 	// Draw pentagon perimeter
 	for (let i = 0; i < pentagonPoints.length; i++) {
@@ -206,7 +207,7 @@ export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof Pentago
 			throw errors.new(`pentagon point missing at index ${i}`)
 		}
 
-		svg += `<line x1="${current.x}" y1="${current.y}" x2="${next.x}" y2="${next.y}" stroke="black" stroke-width="2"/>`
+		svg += `<line x1="${current.x}" y1="${current.y}" x2="${next.x}" y2="${next.y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 	}
 
 	// Draw intersection lines
@@ -219,13 +220,13 @@ export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof Pentago
 			continue
 		}
 
-		svg += `<line x1="${fromPoint.x}" y1="${fromPoint.y}" x2="${toPoint.x}" y2="${toPoint.y}" stroke="black" stroke-width="2"/>`
+		svg += `<line x1="${fromPoint.x}" y1="${fromPoint.y}" x2="${toPoint.x}" y2="${toPoint.y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 	}
 
 	// Draw Khan Academy style arcs using exact SVG arc parameters
 	for (const arc of khanArcs) {
 		// Create the exact SVG path using Khan Academy's arc format
-		svg += `<path d="M ${arc.startX} ${arc.startY}a${arc.rx} ${arc.ry} ${arc.xAxisRotation} ${arc.largeArcFlag} ${arc.sweepFlag} ${arc.endDeltaX} ${arc.endDeltaY}" fill="none" stroke="${arc.color}" stroke-width="2.5"/>`
+		svg += `<path d="M ${arc.startX} ${arc.startY}a${arc.rx} ${arc.ry} ${arc.xAxisRotation} ${arc.largeArcFlag} ${arc.sweepFlag} ${arc.endDeltaX} ${arc.endDeltaY}" fill="none" stroke="${arc.color}" stroke-width="${theme.stroke.width.xthick}"/>`
 
 		// Calculate label position at the center of the arc but just outside its edge
 		// Find the center point of the arc path
@@ -243,13 +244,13 @@ export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof Pentago
 			const labelX = arcCenterX + perpX * labelOffset
 			const labelY = arcCenterY + perpY * labelOffset
 
-			svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="14">${arc.label}</text>`
+			svg += `<text x="${labelX}" y="${labelY}" fill="${theme.colors.black}" text-anchor="middle" dominant-baseline="middle" font-size="${theme.font.size.medium}">${arc.label}</text>`
 		}
 	}
 
 	// Draw pentagon points
 	for (const point of pentagonPoints) {
-		svg += `<circle cx="${point.x}" cy="${point.y}" r="4" fill="black"/>`
+		svg += `<circle cx="${point.x}" cy="${point.y}" r="4" fill="${theme.colors.black}"/>`
 	}
 
 	svg += "</svg>"

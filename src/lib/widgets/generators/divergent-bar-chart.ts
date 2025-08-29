@@ -16,6 +16,7 @@ import {
 	initExtents
 } from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
+import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -132,11 +133,11 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	svgBody += chartBody
 
 	// Y-axis line with ticks and labels
-	svgBody += `<line x1="0" y1="0" x2="0" y2="${chartHeight}" stroke="#333" stroke-width="2"/>`
+	svgBody += `<line x1="0" y1="0" x2="0" y2="${chartHeight}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = chartHeight - (t - yAxis.min) * scaleY
 		// Grid line
-		svgBody += `<line x1="0" y1="${y}" x2="${chartWidth}" y2="${y}" stroke="${gridColor}" stroke-width="1"/>`
+		svgBody += `<line x1="0" y1="${y}" x2="${chartWidth}" y2="${y}" stroke="${gridColor}" stroke-width="${theme.stroke.width.thin}"/>`
 		// Tick label
 		svgBody += `<text x="-10" y="${y + 5}" class="tick-label" text-anchor="end">${t}</text>`
 		includeText(ext, margin.left - 10, String(t), "end", 7) // MODIFICATION: Add this line
@@ -144,7 +145,7 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 
 	// Prominent Zero Line
 	const yZeroInChartCoords = chartHeight - (0 - yAxis.min) * scaleY
-	svgBody += `<line x1="0" y1="${yZeroInChartCoords}" x2="${chartWidth}" y2="${yZeroInChartCoords}" stroke="black" stroke-width="2"/>`
+	svgBody += `<line x1="0" y1="${yZeroInChartCoords}" x2="${chartWidth}" y2="${yZeroInChartCoords}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
 
 	// X-axis label (using group-relative coordinates)
 	svgBody += `<text x="${chartWidth / 2}" y="${chartHeight + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
@@ -203,11 +204,11 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	})
 
 	// Add right-side border for the chart area
-	svgBody += `<line x1="${chartWidth}" y1="0" x2="${chartWidth}" y2="${chartHeight}" stroke="#333" stroke-width="2"/>`
+	svgBody += `<line x1="${chartWidth}" y1="0" x2="${chartWidth}" y2="${chartHeight}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
 
 	svgBody += "</g>" // Close final group
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

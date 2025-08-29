@@ -16,6 +16,7 @@ import {
 	initExtents
 } from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
+import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -139,9 +140,9 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 	svgBody += chartBody
 
 	// Y-axis line
-	svgBody += `<line x1="0" y1="0" x2="0" y2="${chartHeight}" stroke="black" stroke-width="2"/>`
+	svgBody += `<line x1="0" y1="0" x2="0" y2="${chartHeight}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
 	// X-axis line
-	svgBody += `<line x1="0" y1="${chartHeight}" x2="${chartWidth}" y2="${chartHeight}" stroke="black" stroke-width="2"/>`
+	svgBody += `<line x1="0" y1="${chartHeight}" x2="${chartWidth}" y2="${chartHeight}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
 
 	// Axis Labels (x-axis inside group; y-axis will be rendered in global coordinates later)
 	svgBody += `<text x="${chartWidth / 2}" y="${chartHeight + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
@@ -150,7 +151,7 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 	for (let t = yAxis.min; t <= maxValue; t += yAxis.tickInterval) {
 		const y = chartHeight - (t - yAxis.min) * scaleY
 		// Grid line
-		svgBody += `<line x1="0" y1="${y}" x2="${chartWidth}" y2="${y}" stroke="${gridColor}" stroke-width="1"/>`
+		svgBody += `<line x1="0" y1="${y}" x2="${chartWidth}" y2="${y}" stroke="${gridColor}" stroke-width="${theme.stroke.width.thin}"/>`
 		// Tick label
 		svgBody += `<text x="-10" y="${y + 5}" class="tick-label" text-anchor="end">${t}</text>`
 		includeText(ext, margin.left - 10, String(t), "end", 7) // MODIFICATION: Add this line
@@ -180,7 +181,7 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 		const labelX = x + barWidth / 2
 
 		// X-axis tick mark
-		svgBody += `<line x1="${labelX}" y1="${chartHeight}" x2="${labelX}" y2="${chartHeight + 5}" stroke="black" stroke-width="1.5"/>`
+		svgBody += `<line x1="${labelX}" y1="${chartHeight}" x2="${labelX}" y2="${chartHeight + 5}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
 
 		// X-axis label (conditionally rendered)
 		const useAutoThinning = xAxisVisibleLabels.length === 0
@@ -207,7 +208,7 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 
 	// Expand viewBox as needed to accommodate labels
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

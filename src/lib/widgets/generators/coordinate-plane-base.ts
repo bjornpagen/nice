@@ -16,6 +16,7 @@ import {
 	initExtents,
 	type Extents
 } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
 
@@ -347,20 +348,20 @@ export function generateCoordinatePlaneBase(
 		for (let t = xAxis.min; t <= xAxis.max; t += xAxis.tickInterval) {
 			if (t === 0) continue
 			const x = toSvgX(t)
-			svgBody += `<line x1="${x}" y1="${pad.top}" x2="${x}" y2="${height - pad.bottom}" stroke="#eee" stroke-width="1"/>`
+			svgBody += `<line x1="${x}" y1="${pad.top}" x2="${x}" y2="${height - pad.bottom}" stroke="${theme.colors.gridMajor}" stroke-width="${theme.stroke.width.thin}"/>`
 		}
 	}
 	if (yAxis.showGridLines) {
 		for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 			if (t === 0) continue
 			const y = toSvgY(t)
-			svgBody += `<line x1="${pad.left}" y1="${y}" x2="${width - pad.right}" y2="${y}" stroke="#eee" stroke-width="1"/>`
+			svgBody += `<line x1="${pad.left}" y1="${y}" x2="${width - pad.right}" y2="${y}" stroke="${theme.colors.gridMajor}" stroke-width="${theme.stroke.width.thin}"/>`
 		}
 	}
 
 	// Axes
-	svgBody += `<line x1="${pad.left}" y1="${zeroY}" x2="${width - pad.right}" y2="${zeroY}" stroke="black" stroke-width="1.5"/>`
-	svgBody += `<line x1="${zeroX}" y1="${pad.top}" x2="${zeroX}" y2="${height - pad.bottom}" stroke="black" stroke-width="1.5"/>`
+	svgBody += `<line x1="${pad.left}" y1="${zeroY}" x2="${width - pad.right}" y2="${zeroY}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
+	svgBody += `<line x1="${zeroX}" y1="${pad.top}" x2="${zeroX}" y2="${height - pad.bottom}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
 
 	// X-axis ticks and labels with intersection collision avoidance
 	const xTickValues: number[] = []
@@ -372,10 +373,10 @@ export function generateCoordinatePlaneBase(
 	xTickValues.forEach((t, i) => {
 		if (t === 0) return // Skip origin
 		const x = toSvgX(t)
-		svgBody += `<line x1="${x}" y1="${zeroY - 4}" x2="${x}" y2="${zeroY + 4}" stroke="black"/>`
+		svgBody += `<line x1="${x}" y1="${zeroY - 4}" x2="${x}" y2="${zeroY + 4}" stroke="${theme.colors.axis}"/>`
 		if (selectedXTicks.has(i)) {
 			const label = formatPiLabel(t)
-			svgBody += `<text x="${x}" y="${zeroY + 15}" fill="black" text-anchor="middle">${label}</text>`
+			svgBody += `<text x="${x}" y="${zeroY + 15}" fill="${theme.colors.axisLabel}" text-anchor="middle">${label}</text>`
 			includeText(ext, x, label, "middle", 7)
 		}
 	})
@@ -390,10 +391,10 @@ export function generateCoordinatePlaneBase(
 	yTickValues.forEach((t, i) => {
 		if (t === 0) return // Skip origin
 		const y = toSvgY(t)
-		svgBody += `<line x1="${zeroX - 4}" y1="${y}" x2="${zeroX + 4}" y2="${y}" stroke="black"/>`
+		svgBody += `<line x1="${zeroX - 4}" y1="${y}" x2="${zeroX + 4}" y2="${y}" stroke="${theme.colors.axis}"/>`
 		if (selectedYTicks.has(i)) {
 			const label = formatPiLabel(t)
-			svgBody += `<text x="${zeroX - 8}" y="${y + 4}" fill="black" text-anchor="end">${label}</text>`
+			svgBody += `<text x="${zeroX - 8}" y="${y + 4}" fill="${theme.colors.axisLabel}" text-anchor="end">${label}</text>`
 			includeText(ext, zeroX - 8, label, "end", 7)
 		}
 	})
@@ -441,8 +442,8 @@ export function renderPoints(
 		const py = toSvgY(p.y)
 		const fill = p.style === "open" ? "none" : p.color
 		const stroke = p.color
-		pointsSvg += `<circle cx="${px}" cy="${py}" r="4" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`
-		pointsSvg += `<text x="${px + 6}" y="${py - 6}" fill="black">${abbreviateMonth(p.label)}</text>`
+		pointsSvg += `<circle cx="${px}" cy="${py}" r="${theme.geometry.pointRadius.base}" fill="${fill}" stroke="${stroke}" stroke-width="${theme.stroke.width.base}"/>`
+		pointsSvg += `<text x="${px + 6}" y="${py - 6}" fill="${theme.colors.text}">${abbreviateMonth(p.label)}</text>`
 		// Add tracking for the point and its label
 		includePointX(ext, px)
 		includeText(ext, px + 6, abbreviateMonth(p.label), "start")
@@ -499,7 +500,7 @@ export function renderLines(
 		const x1Svg = isVertical && verticalX !== null ? toSvgX(verticalX) : toSvgX(xAxis.min)
 		const x2Svg = isVertical && verticalX !== null ? toSvgX(verticalX) : toSvgX(xAxis.max)
 
-		linesSvg += `<line x1="${x1Svg}" y1="${toSvgY(y1)}" x2="${x2Svg}" y2="${toSvgY(y2)}" stroke="${l.color}" stroke-width="2"${dash}/>`
+		linesSvg += `<line x1="${x1Svg}" y1="${toSvgY(y1)}" x2="${x2Svg}" y2="${toSvgY(y2)}" stroke="${l.color}" stroke-width="${theme.stroke.width.thick}"${dash}/>`
 		// Add tracking for the line endpoints
 		includePointX(ext, x1Svg)
 		includePointX(ext, x2Svg)
@@ -537,7 +538,7 @@ export function renderPolygons(
 		if (polyPointsStr) {
 			const tag = poly.isClosed ? "polygon" : "polyline"
 			const fill = poly.isClosed ? poly.fillColor : "none"
-			polygonsSvg += `<${tag} points="${polyPointsStr}" fill="${fill}" stroke="${poly.strokeColor}" stroke-width="2"/>`
+			polygonsSvg += `<${tag} points="${polyPointsStr}" fill="${fill}" stroke="${poly.strokeColor}" stroke-width="${theme.stroke.width.thick}"/>`
 
 			// Render polygon label
 			if (polyPoints.length > 0) {
@@ -551,7 +552,7 @@ export function renderPolygons(
 				const labelX = centroidX
 				const labelY = bottomY + 20
 
-				polygonsSvg += `<text x="${labelX}" y="${labelY}" fill="${poly.strokeColor}" text-anchor="middle" font-size="14" font-weight="500">${abbreviateMonth(poly.label)}</text>`
+				polygonsSvg += `<text x="${labelX}" y="${labelY}" fill="${poly.strokeColor}" text-anchor="middle" font-size="${theme.font.size.medium}" font-weight="500">${abbreviateMonth(poly.label)}</text>`
 				// Add tracking for the polygon label
 				includeText(ext, labelX, abbreviateMonth(poly.label), "middle")
 			}
@@ -584,7 +585,7 @@ export function renderDistances(
 		const cornerSvg = { x: toSvgX(p2.x), y: toSvgY(p1.y) }
 
 		const dash = dist.style === "dashed" ? ` stroke-dasharray="4 3"` : ""
-		const stroke = `stroke="${dist.color}" stroke-width="1.5"`
+		const stroke = `stroke="${dist.color}" stroke-width="${theme.stroke.width.base}"`
 
 		// Hypotenuse
 		distancesSvg += `<line x1="${p1Svg.x}" y1="${p1Svg.y}" x2="${p2Svg.x}" y2="${p2Svg.y}" ${stroke}${dash}/>`
@@ -623,7 +624,7 @@ export function renderPolylines(
 
 		if (pointsStr) {
 			const dash = polyline.style === "dashed" ? ' stroke-dasharray="5 3"' : ""
-			polylinesSvg += `<polyline points="${pointsStr}" fill="none" stroke="${polyline.color}" stroke-width="2"${dash}/>`
+			polylinesSvg += `<polyline points="${pointsStr}" fill="none" stroke="${polyline.color}" stroke-width="${theme.stroke.width.thick}"${dash}/>`
 		}
 	}
 

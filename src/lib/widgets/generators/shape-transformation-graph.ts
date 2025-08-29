@@ -11,6 +11,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidPolygon = errors.new("polygon must have at least 3 vertices")
 
@@ -192,7 +193,7 @@ export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTrans
 		return `${svgX},${svgY}`
 	})
 	const preImagePoints = preImageSvgPoints.join(" ")
-	content += `<polygon points="${preImagePoints}" fill="${preImage.color}" stroke="black" stroke-width="1.5" fill-opacity="0.6"/>`
+	content += `<polygon points="${preImagePoints}" fill="${preImage.color}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" fill-opacity="${theme.opacity.overlay}"/>`
 
 	// 3. Calculate Transformed Vertices
 	let imageVertices: Vertex[] = []
@@ -243,7 +244,7 @@ export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTrans
 		return `${svgX},${svgY}`
 	})
 	const imagePoints = imageSvgPoints.join(" ")
-	content += `<polygon points="${imagePoints}" fill-opacity="0.6" fill="${preImage.color}" stroke="black" stroke-width="1.5" stroke-dasharray="5 3"/>`
+	content += `<polygon points="${imagePoints}" fill-opacity="${theme.opacity.overlay}" fill="${preImage.color}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.dashed}"/>`
 
 	// 5. Add visual aids like center of rotation/dilation
 	if (transformation.type === "rotation" || transformation.type === "dilation") {
@@ -251,7 +252,7 @@ export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTrans
 		const cx = base.toSvgX(c.x)
 		const cy = base.toSvgY(c.y)
 		includePointX(base.ext, cx)
-		content += `<circle cx="${cx}" cy="${cy}" r="4" fill="red" />`
+		content += `<circle cx="${cx}" cy="${cy}" r="${theme.geometry.pointRadius.base}" fill="${theme.colors.actionSecondary}" />`
 	}
 
 	// 6. Render points
@@ -259,7 +260,7 @@ export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTrans
 
 	// 7. Compute final width and assemble the complete SVG
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, PADDING)
-	let finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	let finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 	finalSvg += base.svgBody
 	finalSvg += content
 	finalSvg += `</svg>`

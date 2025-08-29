@@ -13,6 +13,7 @@ import {
 	initExtents
 } from "@/lib/widgets/utils/layout"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
+import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidRange = errors.new("axis min must be less than axis max")
 
@@ -153,11 +154,11 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 
 	// MODIFIED: Use dynamic axisY and label positioning
 	const axisY = height - margin.bottom
-	svgBody += `<line x1="${margin.left}" y1="${axisY}" x2="${width - margin.right}" y2="${axisY}" stroke="black"/>`
+	svgBody += `<line x1="${margin.left}" y1="${axisY}" x2="${width - margin.right}" y2="${axisY}" stroke="${theme.colors.axis}"/>`
 	if (axis.label && axis.label !== "") {
 		const labelX = margin.left + chartWidth / 2
 		const labelY = height - margin.bottom + xAxisTitleY
-		svgBody += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" font-size="14">${abbreviateMonth(axis.label)}</text>`
+		svgBody += `<text x="${labelX}" y="${labelY}" fill="${theme.colors.axisLabel}" text-anchor="middle" font-size="${theme.font.size.medium}">${abbreviateMonth(axis.label)}</text>`
 		includeText(ext, labelX, abbreviateMonth(axis.label), "middle", 7)
 	}
 	
@@ -168,20 +169,20 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 
 	axis.tickLabels.forEach((t, i) => {
 		const pos = toSvgX(t)
-		svgBody += `<line x1="${pos}" y1="${axisY - 5}" x2="${pos}" y2="${axisY + 5}" stroke="black"/>`
+		svgBody += `<line x1="${pos}" y1="${axisY - 5}" x2="${pos}" y2="${axisY + 5}" stroke="${theme.colors.axis}"/>`
 		if (selectedLabels.has(i)) { // Check if label should be rendered
-			svgBody += `<text x="${pos}" y="${axisY + 20}" fill="black" text-anchor="middle">${t}</text>`
+			svgBody += `<text x="${pos}" y="${axisY + 20}" fill="${theme.colors.axisLabel}" text-anchor="middle">${t}</text>`
 			includeText(ext, pos, String(t), "middle", 7)
 		}
 	})
 
 	// Box plot elements
 	// Whiskers
-	svgBody += `<line x1="${minPos}" y1="${yCenter}" x2="${q1Pos}" y2="${yCenter}" stroke="black"/>`
-	svgBody += `<line x1="${q3Pos}" y1="${yCenter}" x2="${maxPos}" y2="${yCenter}" stroke="black"/>`
+	svgBody += `<line x1="${minPos}" y1="${yCenter}" x2="${q1Pos}" y2="${yCenter}" stroke="${theme.colors.black}"/>`
+	svgBody += `<line x1="${q3Pos}" y1="${yCenter}" x2="${maxPos}" y2="${yCenter}" stroke="${theme.colors.black}"/>`
 
-	svgBody += `<line x1="${minPos}" y1="${yCenter - 10}" x2="${minPos}" y2="${yCenter + 10}" stroke="black"/>`
-	svgBody += `<line x1="${maxPos}" y1="${yCenter - 10}" x2="${maxPos}" y2="${yCenter + 10}" stroke="black"/>`
+	svgBody += `<line x1="${minPos}" y1="${yCenter - 10}" x2="${minPos}" y2="${yCenter + 10}" stroke="${theme.colors.black}"/>`
+	svgBody += `<line x1="${maxPos}" y1="${yCenter - 10}" x2="${maxPos}" y2="${yCenter + 10}" stroke="${theme.colors.black}"/>`
 
 	// Add tracking for the min/max whisker positions
 	includePointX(ext, minPos)
@@ -191,13 +192,13 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 	includePointX(ext, q1Pos)
 	includePointX(ext, q3Pos)
 
-	svgBody += `<rect x="${q1Pos}" y="${yCenter - plotHeight / 2}" width="${q3Pos - q1Pos}" height="${plotHeight}" fill="${boxColor}" stroke="black"/>`
+	svgBody += `<rect x="${q1Pos}" y="${yCenter - plotHeight / 2}" width="${q3Pos - q1Pos}" height="${plotHeight}" fill="${boxColor}" stroke="${theme.colors.black}"/>`
 
-	svgBody += `<line x1="${medianPos}" y1="${yCenter - plotHeight / 2}" x2="${medianPos}" y2="${yCenter + plotHeight / 2}" stroke="${medianColor}" stroke-width="2"/>`
+	svgBody += `<line x1="${medianPos}" y1="${yCenter - plotHeight / 2}" x2="${medianPos}" y2="${yCenter + plotHeight / 2}" stroke="${medianColor}" stroke-width="${theme.stroke.width.thick}"/>`
 
 	// NEW: Apply dynamic width at the end
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

@@ -13,6 +13,7 @@ import {
 	initExtents
 } from "@/lib/widgets/utils/layout"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
+import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
 
@@ -137,11 +138,11 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	let svgBody = ""
 
 	// Axis line
-	svgBody += `<line x1="${margin.left}" y1="${axisY}" x2="${width - margin.right}" y2="${axisY}" stroke="black"/>`
+	svgBody += `<line x1="${margin.left}" y1="${axisY}" x2="${width - margin.right}" y2="${axisY}" stroke="${theme.colors.axis}"/>`
 
 	// Axis label
 	if (axis.label !== null) {
-		svgBody += `<text x="${width / 2}" y="${height - margin.bottom + xAxisTitleY}" fill="black" text-anchor="middle" font-size="14">${abbreviateMonth(axis.label)}</text>`
+		svgBody += `<text x="${width / 2}" y="${height - margin.bottom + xAxisTitleY}" fill="${theme.colors.axisLabel}" text-anchor="middle" font-size="${theme.font.size.medium}">${abbreviateMonth(axis.label)}</text>`
 		includeText(ext, width / 2, abbreviateMonth(axis.label), "middle", 7)
 	}
 
@@ -162,10 +163,10 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 
 	tickValues.forEach((t, i) => {
 		const x = toSvgX(t)
-		svgBody += `<line x1="${x}" y1="${axisY - 5}" x2="${x}" y2="${axisY + 5}" stroke="black"/>`
+		svgBody += `<line x1="${x}" y1="${axisY - 5}" x2="${x}" y2="${axisY + 5}" stroke="${theme.colors.axis}"/>`
 		if (selectedLabels.has(i)) {
 			const label = t.toFixed(decimals)
-			svgBody += `<text x="${x}" y="${axisY + 20}" fill="black" text-anchor="middle">${label}</text>`
+			svgBody += `<text x="${x}" y="${axisY + 20}" fill="${theme.colors.axisLabel}" text-anchor="middle">${label}</text>`
 			includeText(ext, x, label, "middle", 7)
 		}
 	})
@@ -187,7 +188,7 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 
 	// NEW: Apply dynamic width at the end
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

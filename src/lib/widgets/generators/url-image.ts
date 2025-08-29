@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { stripMarkdownToPlaintext } from "@/lib/widgets/utils/text"
+import { theme } from "@/lib/widgets/utils/theme"
 import { escapeXmlAttribute, sanitizeXmlAttributeValue } from "@/lib/xml-utils"
 
 export const UrlImageWidgetPropsSchema = z
@@ -82,7 +83,7 @@ export const generateUrlImage: WidgetGenerator<typeof UrlImageWidgetPropsSchema>
 	const imgStyles = ["display: block;", width ? `width: ${width}px;` : "", height ? `height: ${height}px;` : ""]
 		.filter(Boolean)
 		.join(" ")
-	const captionStyles = "font-size: 0.9em; color: #333; margin-top: 8px;"
+	const captionStyles = `font-size: 0.9em; color: ${theme.colors.text}; margin-top: 8px;`
 
 	// Escape helpers for XML contexts
 	const escapeXmlText = (text: string): string =>

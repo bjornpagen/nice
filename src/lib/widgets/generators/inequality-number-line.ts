@@ -5,6 +5,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidRange = errors.new("min must be less than max")
 
@@ -141,11 +142,11 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 	let svgBody = ""
 
 	// Axis and Ticks
-	svgBody += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="black" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
+	svgBody += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
 
 	// Define markers for arrows
 	svgBody += "<defs>"
-	svgBody += `<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#333333"/></marker>`
+	svgBody += `<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.axis}"/></marker>`
 
 	// Add colored arrow markers for ranges
 	const uniqueColors = new Set(ranges.map((r) => r.color))
@@ -158,8 +159,8 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 	for (let t = min; t <= max; t += tickInterval) {
 		const x = toSvgX(t)
 		// Match tick sizing with standard number line widget for visual consistency
-		svgBody += `<line x1="${x}" y1="${yPos - 8}" x2="${x}" y2="${yPos + 8}" stroke="black"/>`
-		svgBody += `<text x="${x}" y="${yPos + 25}" fill="black" text-anchor="middle">${t}</text>`
+		svgBody += `<line x1="${x}" y1="${yPos - 8}" x2="${x}" y2="${yPos + 8}" stroke="${theme.colors.axis}"/>`
+		svgBody += `<text x="${x}" y="${yPos + 25}" fill="${theme.colors.axisLabel}" text-anchor="middle">${t}</text>`
 		includeText(ext, x, String(t), "middle", 7)
 	}
 
@@ -182,21 +183,21 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 			markerEnd = `marker-end="url(#arrow-${colorId})"`
 		}
 
-		svgBody += `<line x1="${startPos}" y1="${yPos}" x2="${endPos}" y2="${yPos}" stroke="${r.color}" stroke-width="5" stroke-linecap="butt" ${markerStart} ${markerEnd}/>`
+		svgBody += `<line x1="${startPos}" y1="${yPos}" x2="${endPos}" y2="${yPos}" stroke="${r.color}" stroke-width="${theme.stroke.width.xthick}" stroke-linecap="butt" ${markerStart} ${markerEnd}/>`
 
 		// Boundary circles
 		if (r.start.type === "bounded") {
-			const fill = r.start.at.type === "closed" ? r.color : "#FAFAFA"
-			svgBody += `<circle cx="${startPos}" cy="${yPos}" r="5" fill="${fill}" stroke="${r.color}" stroke-width="1.5"/>`
+			const fill = r.start.at.type === "closed" ? r.color : theme.colors.background
+			svgBody += `<circle cx="${startPos}" cy="${yPos}" r="5" fill="${fill}" stroke="${r.color}" stroke-width="${theme.stroke.width.base}"/>`
 		}
 		if (r.end.type === "bounded") {
-			const fill = r.end.at.type === "closed" ? r.color : "white"
-			svgBody += `<circle cx="${endPos}" cy="${yPos}" r="5" fill="${fill}" stroke="${r.color}" stroke-width="1.5"/>`
+			const fill = r.end.at.type === "closed" ? r.color : theme.colors.white
+			svgBody += `<circle cx="${endPos}" cy="${yPos}" r="5" fill="${fill}" stroke="${r.color}" stroke-width="${theme.stroke.width.base}"/>`
 		}
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

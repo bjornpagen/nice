@@ -14,6 +14,7 @@ import {
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -113,17 +114,17 @@ export const generateHorizontalBarChart: WidgetGenerator<typeof HorizontalBarCha
 	svgBody += chartBody
 
 	// X-axis line and ticks
-	svgBody += `<line x1="0" y1="${chartHeight}" x2="${chartWidth}" y2="${chartHeight}" stroke="black" stroke-width="2"/>`
+	svgBody += `<line x1="0" y1="${chartHeight}" x2="${chartWidth}" y2="${chartHeight}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
 	for (let t = xAxis.min; t <= xAxis.max; t += xAxis.tickInterval) {
 		const x = (t - xAxis.min) * scaleX
-		svgBody += `<line x1="${x}" y1="0" x2="${x}" y2="${chartHeight}" stroke="${gridColor}" stroke-width="1.5"/>`
-		svgBody += `<line x1="${x}" y1="${chartHeight}" x2="${x}" y2="${chartHeight + 5}" stroke="black" stroke-width="1.5"/>`
+		svgBody += `<line x1="${x}" y1="0" x2="${x}" y2="${chartHeight}" stroke="${gridColor}" stroke-width="${theme.stroke.width.base}"/>`
+		svgBody += `<line x1="${x}" y1="${chartHeight}" x2="${x}" y2="${chartHeight + 5}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
 		svgBody += `<text x="${x}" y="${chartHeight + 20}" class="tick-label" text-anchor="middle">${t}</text>`
 		includeText(ext, margin.left + x, String(t), "middle") // NEW: Track extents
 	}
 
 	// Y-axis line
-	svgBody += `<line x1="0" y1="0" x2="0" y2="${chartHeight}" stroke="black" stroke-width="2"/>`
+	svgBody += `<line x1="0" y1="0" x2="0" y2="${chartHeight}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
 
 	// X-Axis Label
 	const xAxisLabelX = margin.left + chartWidth / 2
@@ -150,7 +151,7 @@ export const generateHorizontalBarChart: WidgetGenerator<typeof HorizontalBarCha
 		includeText(ext, margin.left + categoryLabelX, abbreviateMonth(d.category), "end") // NEW: Track extents
 		
 		// Tick mark for category
-		svgBody += `<line x1="0" y1="${y + innerBarHeight / 2}" x2="-5" y2="${y + innerBarHeight / 2}" stroke="black" stroke-width="1.5"/>`
+		svgBody += `<line x1="0" y1="${y + innerBarHeight / 2}" x2="-5" y2="${y + innerBarHeight / 2}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
 
 		// Value label
 		const valueLabelX = barLength + 5
@@ -162,7 +163,7 @@ export const generateHorizontalBarChart: WidgetGenerator<typeof HorizontalBarCha
 	
 	// NEW: Apply dynamic width at the end
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="serif">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.serif}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

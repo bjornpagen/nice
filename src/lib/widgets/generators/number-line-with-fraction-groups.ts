@@ -3,6 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 const Tick = z
 	.object({
@@ -109,15 +110,15 @@ export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof Number
 
 	includePointX(ext, padding.horizontal)
 	includePointX(ext, width - padding.horizontal)
-	svgBody += `<line x1="${padding.horizontal}" y1="${yPos}" x2="${width - padding.horizontal}" y2="${yPos}" stroke="#333333" stroke-width="1.5"/>`
+	svgBody += `<line x1="${padding.horizontal}" y1="${yPos}" x2="${width - padding.horizontal}" y2="${yPos}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
 
 	for (const t of ticks) {
 		const x = toSvgX(t.value)
 		includePointX(ext, x)
 		const tickHeight = t.isMajor ? 8 : 4
-		svgBody += `<line x1="${x}" y1="${yPos - tickHeight}" x2="${x}" y2="${yPos + tickHeight}" stroke="#333333"/>`
+		svgBody += `<line x1="${x}" y1="${yPos - tickHeight}" x2="${x}" y2="${yPos + tickHeight}" stroke="${theme.colors.axis}"/>`
 		if (t.label !== "") {
-			svgBody += `<text x="${x}" y="${yPos + 25}" fill="#333333" text-anchor="middle">${t.label}</text>`
+			svgBody += `<text x="${x}" y="${yPos + 25}" fill="${theme.colors.axisLabel}" text-anchor="middle">${t.label}</text>`
 			includeText(ext, x, t.label, "middle", 7)
 		}
 	}
@@ -135,17 +136,17 @@ export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof Number
 		includePointX(ext, startPos)
 		includePointX(ext, endPos)
 
-		svgBody += `<rect x="${startPos}" y="${segmentY}" width="${segmentWidth}" height="${segmentHeight}" fill="${s.color}" fill-opacity="0.7" stroke="#333333" stroke-width="0.5"/>`
+		svgBody += `<rect x="${startPos}" y="${segmentY}" width="${segmentWidth}" height="${segmentHeight}" fill="${s.color}" fill-opacity="${theme.opacity.overlay}" stroke="${theme.colors.axis}" stroke-width="0.5"/>`
 		if (s.label !== null) {
-			const textColor = "#FFFFFF" // Assuming dark segment colors
+			const textColor = theme.colors.white // Assuming dark segment colors
 			const textX = startPos + segmentWidth / 2
-			svgBody += `<text x="${textX}" y="${segmentY + segmentHeight / 2}" fill="${textColor}" text-anchor="middle" dominant-baseline="middle" font-weight="bold">${s.label}</text>`
+			svgBody += `<text x="${textX}" y="${segmentY + segmentHeight / 2}" fill="${textColor}" text-anchor="middle" dominant-baseline="middle" font-weight="${theme.font.weight.bold}">${s.label}</text>`
 			includeText(ext, textX, s.label, "middle", 7)
 		}
 	})
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

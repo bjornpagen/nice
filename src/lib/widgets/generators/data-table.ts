@@ -4,6 +4,7 @@ import { renderInlineContent } from "@/lib/qti-generation/content-renderer"
 import { SAFE_IDENTIFIER_REGEX } from "@/lib/qti-generation/qti-constants"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
+import { theme } from "@/lib/widgets/utils/theme"
 import { escapeXmlAttribute, sanitizeXmlAttributeValue } from "@/lib/xml-utils"
 
 // Factory function to create inline content schema - avoids $ref in OpenAI JSON schema
@@ -189,15 +190,15 @@ const renderCellContent = (c: TableCell | undefined): string => {
 export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (props) => {
 	const { title, columns, data, rowHeaderKey, footer } = props
 
-	const commonCellStyle = "border: 1px solid black; padding: 8px; text-align: left;"
-	const headerCellStyle = `${commonCellStyle} font-weight: bold; background-color: #f2f2f2;`
+	const commonCellStyle = `border: 1px solid ${theme.colors.black}; padding: ${theme.table.padding}; text-align: left;`
+	const headerCellStyle = `${commonCellStyle} font-weight: ${theme.font.weight.bold}; background-color: ${theme.table.headerBackground};`
 
-	let xml = `<table style="border-collapse: collapse; width: 100%; border: 1px solid black;">`
+	let xml = `<table style="border-collapse: collapse; width: 100%; border: 1px solid ${theme.colors.black};">`
 
 	if (title) {
 		const escapeXmlText = (text: string): string =>
 			sanitizeXmlAttributeValue(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-		xml += `<caption style="padding: 8px; font-size: 1.2em; font-weight: bold; caption-side: top;">${escapeXmlText(
+		xml += `<caption style="padding: ${theme.table.padding}; font-size: 1.2em; font-weight: ${theme.font.weight.bold}; caption-side: top;">${escapeXmlText(
 			title
 		)}</caption>`
 	}
@@ -244,14 +245,14 @@ export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (
 		if (!xml.includes("<tbody>")) {
 			xml += "<tbody>"
 		}
-		xml += `<tr style="background-color: #f2f2f2;">`
+		xml += `<tr style="background-color: ${theme.table.headerBackground};">`
 		for (let i = 0; i < columns.length; i++) {
 			const col = columns[i]
 			if (!col) continue
 			const isRowHeader = col.key === rowHeaderKey
 			const tag = isRowHeader ? "th" : "td"
 			const scope = isRowHeader ? ' scope="row"' : ""
-			const style = `${commonCellStyle} font-weight: bold;`
+			const style = `${commonCellStyle} font-weight: ${theme.font.weight.bold};`
 			const content = renderCellContent(footer[i])
 			xml += `<${tag}${scope} style="${style}">${content}</${tag}>`
 		}

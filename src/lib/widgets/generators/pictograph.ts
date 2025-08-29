@@ -1,5 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { theme } from "@/lib/widgets/utils/theme"
 
 const Key = z
 	.object({
@@ -68,7 +69,7 @@ export type PictographProps = z.infer<typeof PictographPropsSchema>
  */
 export const generatePictograph: WidgetGenerator<typeof PictographPropsSchema> = (data) => {
 	const { title, key, data: pictographData } = data
-	let html = `<div style="font-family: sans-serif; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">`
+	let html = `<div style="font-family: ${theme.font.family.sans}; border: 1px solid ${theme.colors.border}; padding: ${theme.table.padding}; border-radius: 5px;">`
 
 	// Render title only if it's non-empty
 	if (title !== null) {
@@ -79,8 +80,8 @@ export const generatePictograph: WidgetGenerator<typeof PictographPropsSchema> =
 	html += "<tbody>"
 	for (const d of pictographData) {
 		html += "<tr>"
-		html += `<td style="padding: 8px; width: 30%; font-weight: bold; text-align: right; border-right: 1px solid #eee;">${d.category}</td>`
-		html += `<td style="padding: 8px; font-size: 1.5em; letter-spacing: 0.2em;">`
+		html += `<td style="padding: ${theme.table.padding}; width: 30%; font-weight: ${theme.font.weight.bold}; text-align: right; border-right: 1px solid ${theme.colors.gridMajor};">${d.category}</td>`
+		html += `<td style="padding: ${theme.table.padding}; font-size: 1.5em; letter-spacing: 0.2em;">`
 
 		// Handle fractional icon counts
 		const wholeIcons = Math.floor(d.iconCount)

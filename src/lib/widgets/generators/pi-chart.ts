@@ -10,6 +10,7 @@ import {
 	initExtents
 } from "@/lib/widgets/utils/layout"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
+import { theme } from "@/lib/widgets/utils/theme"
 
 // Defines a single slice within a pie chart.
 const SliceSchema = z
@@ -150,7 +151,7 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 
 			// Draw the slice
 			const pathData = `M ${cx},${cy} L ${x1},${y1} A ${radius},${radius} 0 ${largeArcFlag} 1 ${x2},${y2} Z`
-			content += `<path d="${pathData}" fill="${slice.color}" stroke="black" stroke-width="1"/>`
+			content += `<path d="${pathData}" fill="${slice.color}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thin}"/>`
 
 			// Prepare label info
 			const midAngle = startAngle + sliceAngle / 2
@@ -241,6 +242,6 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 	// Compute dynamic width and viewBox using shared utility
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 
-	const svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">${styleTag}${content}</svg>`
+	const svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">${styleTag}${content}</svg>`
 	return svg
 }

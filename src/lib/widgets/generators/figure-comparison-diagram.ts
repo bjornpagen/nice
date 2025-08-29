@@ -10,6 +10,7 @@ import {
 	initExtents,
 	type Extents
 } from "@/lib/widgets/utils/layout" // NEW
+import { theme } from "@/lib/widgets/utils/theme"
 
 const Point = z
 	.object({
@@ -226,7 +227,7 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 
 	// NEW: Apply dynamic width at the end
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${viewBoxHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${viewBoxHeight}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${viewBoxHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${viewBoxHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg
@@ -295,7 +296,7 @@ function drawFigure(figure: z.infer<typeof Figure>, offsetX: number, offsetY: nu
 		const labelY = midY + outwardNormalY * labelOffset
 
 		const fontSize = Math.max(10, 14 * scale)
-		svg += `<text x="${labelX}" y="${labelY}" fill="${figure.strokeColor}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}" font-weight="bold">${label}</text>`
+		svg += `<text x="${labelX}" y="${labelY}" fill="${figure.strokeColor}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}" font-weight="${theme.font.weight.bold}">${label}</text>`
 		includeText(ext, labelX, label, "middle") // NEW: Track text
 	}
 

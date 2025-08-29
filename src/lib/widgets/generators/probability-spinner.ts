@@ -3,6 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 // Defines a group of identical sectors on the spinner
 const ProbabilitySpinnerSectorGroupSchema = z
@@ -137,7 +138,7 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	
 	// Build SVG with computed dimensions
-	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
 	svg += "<style>.title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
 	if (title !== null) {
@@ -158,7 +159,7 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 			// Create the path for the pie slice
 			const largeArcFlag = anglePerSector > 180 ? 1 : 0
 			const pathData = `M ${cx},${cy} L ${start.x},${start.y} A ${radius},${radius} 0 ${largeArcFlag} 1 ${end.x},${end.y} Z`
-			svg += `<path d="${pathData}" fill="${group.color}" stroke="black" stroke-width="1.5"/>`
+			svg += `<path d="${pathData}" fill="${group.color}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"/>`
 
 			// Add emoji if it exists
 			if (group.emoji !== null) {
@@ -187,11 +188,11 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 	const p6 = { x: cx + pointerLength - pointerWidth, y: cy + pointerWidth / 2 }
 	const p7 = { x: cx, y: cy + pointerWidth / 2 }
 	const pointsStr = `${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y} ${p5.x},${p5.y} ${p6.x},${p6.y} ${p7.x},${p7.y}`
-	svg += `<polygon points="${pointsStr}" fill="#4A4A4A" stroke="black" stroke-width="1"/>`
+	svg += `<polygon points="${pointsStr}" fill="${theme.colors.textSecondary}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thin}"/>`
 	svg += "</g>"
 
 	// Central hub
-	svg += `<circle cx="${cx}" cy="${cy}" r="${pointerWidth}" fill="#F5F5F5" stroke="black" stroke-width="2"/>`
+	svg += `<circle cx="${cx}" cy="${cy}" r="${pointerWidth}" fill="${theme.colors.background}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 
 	svg += "</svg>"
 	return svg

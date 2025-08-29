@@ -3,6 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 export const UnitBlockDiagramPropsSchema = z
 	.object({
@@ -93,10 +94,10 @@ export const generateUnitBlockDiagram: WidgetGenerator<typeof UnitBlockDiagramPr
 			const row = Math.floor(i / 10)
 			const col = i % 10
 			const fill = i < shadedUnitsPerBlock ? shadeColor : "none"
-			svgBody += `<rect x="${bx + col * cellW}" y="${by + row * cellH}" width="${cellW}" height="${cellH}" fill="${fill}" stroke="#ccc" stroke-width="0.5"/>`
+			svgBody += `<rect x="${bx + col * cellW}" y="${by + row * cellH}" width="${cellW}" height="${cellH}" fill="${fill}" stroke="${theme.colors.gridMinor}" stroke-width="0.5"/>`
 		}
 		// Add a border around the whole block
-		svgBody += `<rect x="${bx}" y="${by}" width="${blockWidth}" height="${blockHeight}" fill="none" stroke="black" stroke-width="1"/>`
+		svgBody += `<rect x="${bx}" y="${by}" width="${blockWidth}" height="${blockHeight}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thin}"/>`
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, svgHeight, PADDING)

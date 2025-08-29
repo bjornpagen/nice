@@ -9,6 +9,7 @@ import {
 	includeText,
 	initExtents,
 } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 const Parallelogram = z
 	.object({
@@ -225,19 +226,19 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			.filter(p => p !== undefined)
 			.map(p => `${p.x},${p.y}`)
 			.join(" ")
-		svgContent += `<polygon points="${outerPoints}" fill="none" stroke="black" stroke-width="2"/>`
+		svgContent += `<polygon points="${outerPoints}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 
 		// Draw height line (dashed)
 		const v3 = vertices[3]
 		const v4 = vertices[4]
 		if (v3 && v4) {
-			svgContent += `<line x1="${v3.x}" y1="${v3.y}" x2="${v4.x}" y2="${v4.y}" stroke="black" stroke-width="1.5" stroke-dasharray="4 2"/>`
+			svgContent += `<line x1="${v3.x}" y1="${v3.y}" x2="${v4.x}" y2="${v4.y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.dashedShort}"/>`
 		}
 
 		// Draw right angle marker
 		const markerSize = 10
 		if (v4) {
-			svgContent += `<path d="M ${v4.x - markerSize} ${v4.y} L ${v4.x - markerSize} ${v4.y - markerSize} L ${v4.x} ${v4.y - markerSize}" fill="none" stroke="black" stroke-width="1.5"/>`
+			svgContent += `<path d="M ${v4.x - markerSize} ${v4.y} L ${v4.x - markerSize} ${v4.y - markerSize} L ${v4.x} ${v4.y - markerSize}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"/>`
 		}
 
 		// Draw labels
@@ -245,27 +246,27 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		const baseLabel = labels?.base ?? String(base)
 		const baseLabelX = xOffset + scaledBase / 2
 		const baseLabelY = yOffset + scaledH + 20
-		svgContent += `<text x="${baseLabelX}" y="${baseLabelY}" text-anchor="middle" font-size="14">${baseLabel}</text>`
+		svgContent += `<text x="${baseLabelX}" y="${baseLabelY}" text-anchor="middle" font-size="${theme.font.size.medium}">${baseLabel}</text>`
 		includeText(ext, baseLabelX, baseLabel, "middle")
 
 		// Right side label
 		const rightLabel = labels?.sideLength ?? String(sideLength)
 		const rightLabelX = xOffset + scaledBase + scaledOffset / 2
 		const rightLabelY = yOffset + scaledH / 2
-		svgContent += `<text x="${rightLabelX + 20}" y="${rightLabelY}" text-anchor="start" font-size="14">${rightLabel}</text>`
+		svgContent += `<text x="${rightLabelX + 20}" y="${rightLabelY}" text-anchor="start" font-size="${theme.font.size.medium}">${rightLabel}</text>`
 		includeText(ext, rightLabelX + 20, rightLabel, "start")
 
 		// Top base label
 		const topLabelX = xOffset + scaledOffset + scaledBase / 2
 		const topLabelY = yOffset - 10
-		svgContent += `<text x="${topLabelX}" y="${topLabelY}" text-anchor="middle" font-size="14">${baseLabel}</text>`
+		svgContent += `<text x="${topLabelX}" y="${topLabelY}" text-anchor="middle" font-size="${theme.font.size.medium}">${baseLabel}</text>`
 		includeText(ext, topLabelX, baseLabel, "middle")
 
 		// Left side label
 		const leftLabel = labels?.sideLength ?? String(sideLength)
 		const leftLabelX = xOffset + scaledOffset / 2
 		const leftLabelY = yOffset + scaledH / 2
-		svgContent += `<text x="${leftLabelX - 20}" y="${leftLabelY}" text-anchor="end" font-size="14">${leftLabel}</text>`
+		svgContent += `<text x="${leftLabelX - 20}" y="${leftLabelY}" text-anchor="end" font-size="${theme.font.size.medium}">${leftLabel}</text>`
 		includeText(ext, leftLabelX - 20, leftLabel, "end")
 
 		// Height label
@@ -273,7 +274,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		if (v3 && v4) {
 			const heightLabelX = v3.x + (v4.x - v3.x) / 2 - 10
 			const heightLabelY = v3.y + (v4.y - v3.y) / 2
-			svgContent += `<text x="${heightLabelX}" y="${heightLabelY}" text-anchor="end" font-size="14">${heightLabel}</text>`
+			svgContent += `<text x="${heightLabelX}" y="${heightLabelY}" text-anchor="end" font-size="${theme.font.size.medium}">${heightLabel}</text>`
 			includeText(ext, heightLabelX, heightLabel, "end")
 		}
 
@@ -305,19 +306,19 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			.filter(p => p !== undefined)
 			.map(p => `${p.x},${p.y}`)
 			.join(" ")
-		svgContent += `<polygon points="${outerPoints}" fill="none" stroke="black" stroke-width="2"/>`
+		svgContent += `<polygon points="${outerPoints}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 
 		// Draw height line (dashed)
 		const v3t = vertices[3]
 		const v4t = vertices[4]
 		if (v3t && v4t) {
-			svgContent += `<line x1="${v3t.x}" y1="${v3t.y}" x2="${v4t.x}" y2="${v4t.y}" stroke="black" stroke-width="1.5" stroke-dasharray="4 2"/>`
+			svgContent += `<line x1="${v3t.x}" y1="${v3t.y}" x2="${v4t.x}" y2="${v4t.y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.dashedShort}"/>`
 		}
 
 		// Draw right angle marker
 		const markerSize = 10
 		if (v4t) {
-			svgContent += `<path d="M ${v4t.x} ${v4t.y - markerSize} L ${v4t.x + markerSize} ${v4t.y - markerSize} L ${v4t.x + markerSize} ${v4t.y}" fill="none" stroke="black" stroke-width="1.5"/>`
+			svgContent += `<path d="M ${v4t.x} ${v4t.y - markerSize} L ${v4t.x + markerSize} ${v4t.y - markerSize} L ${v4t.x + markerSize} ${v4t.y}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"/>`
 		}
 
 		const rightOffset = scaledBottom - scaledTop
@@ -328,35 +329,35 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		const bottomLabel = labels?.bottomBase ?? String(bottomBase)
 		const bottomLabelX = xOffset + scaledBottom / 2
 		const bottomLabelY = yOffset + scaledH + 20
-		svgContent += `<text x="${bottomLabelX}" y="${bottomLabelY}" text-anchor="middle" font-size="14">${bottomLabel}</text>`
+		svgContent += `<text x="${bottomLabelX}" y="${bottomLabelY}" text-anchor="middle" font-size="${theme.font.size.medium}">${bottomLabel}</text>`
 		includeText(ext, bottomLabelX, bottomLabel, "middle")
 
 		// Right side label
 		const rightLabel = labels?.rightSide ?? String(Number.parseFloat(rightSideLengthVal.toFixed(2)))
 		const rightLabelX = xOffset + scaledBottom - rightOffset / 2
 		const rightLabelY = yOffset + scaledH / 2
-		svgContent += `<text x="${rightLabelX + 20}" y="${rightLabelY}" text-anchor="start" font-size="14">${rightLabel}</text>`
+		svgContent += `<text x="${rightLabelX + 20}" y="${rightLabelY}" text-anchor="start" font-size="${theme.font.size.medium}">${rightLabel}</text>`
 		includeText(ext, rightLabelX + 20, rightLabel, "start")
 
 		// Top base label
 		const topLabel = labels?.topBase ?? String(topBase)
 		const topLabelX = xOffset + scaledTop / 2
 		const topLabelY = yOffset - 10
-		svgContent += `<text x="${topLabelX}" y="${topLabelY}" text-anchor="middle" font-size="14">${topLabel}</text>`
+		svgContent += `<text x="${topLabelX}" y="${topLabelY}" text-anchor="middle" font-size="${theme.font.size.medium}">${topLabel}</text>`
 		includeText(ext, topLabelX, topLabel, "middle")
 
 		// Left side label
 		const leftLabel = labels?.leftSide ?? String(h)
 		const leftLabelX = xOffset - 20
 		const leftLabelY = yOffset + scaledH / 2
-		svgContent += `<text x="${leftLabelX}" y="${leftLabelY}" text-anchor="end" font-size="14">${leftLabel}</text>`
+		svgContent += `<text x="${leftLabelX}" y="${leftLabelY}" text-anchor="end" font-size="${theme.font.size.medium}">${leftLabel}</text>`
 		includeText(ext, leftLabelX, leftLabel, "end")
 
 		// Height label
 		const heightLabel = labels?.height ?? String(h)
 		const heightLabelX = xOffset - 10
 		const heightLabelY = yOffset + scaledH / 2
-		svgContent += `<text x="${heightLabelX}" y="${heightLabelY}" text-anchor="end" font-size="14">${heightLabel}</text>`
+		svgContent += `<text x="${heightLabelX}" y="${heightLabelY}" text-anchor="end" font-size="${theme.font.size.medium}">${heightLabel}</text>`
 		includeText(ext, heightLabelX, heightLabel, "end")
 
 	} else {
@@ -396,19 +397,19 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			.filter(p => p !== undefined)
 			.map(p => `${p.x},${p.y}`)
 			.join(" ")
-		svgContent += `<polygon points="${outerPoints}" fill="none" stroke="black" stroke-width="2"/>`
+		svgContent += `<polygon points="${outerPoints}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 
 		// Draw height line (dashed)
 		const v3g = vertices[3]
 		const v4g = vertices[4]
 		if (v3g && v4g) {
-			svgContent += `<line x1="${v3g.x}" y1="${v3g.y}" x2="${v4g.x}" y2="${v4g.y}" stroke="black" stroke-width="1.5" stroke-dasharray="4 2"/>`
+			svgContent += `<line x1="${v3g.x}" y1="${v3g.y}" x2="${v4g.x}" y2="${v4g.y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.dashedShort}"/>`
 		}
 
 		// Draw right angle marker
 		const markerSize = 10
 		if (v4g) {
-			svgContent += `<path d="M ${v4g.x - markerSize} ${v4g.y} L ${v4g.x - markerSize} ${v4g.y - markerSize} L ${v4g.x} ${v4g.y - markerSize}" fill="none" stroke="black" stroke-width="1.5"/>`
+			svgContent += `<path d="M ${v4g.x - markerSize} ${v4g.y} L ${v4g.x - markerSize} ${v4g.y - markerSize} L ${v4g.x} ${v4g.y - markerSize}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"/>`
 		}
 
 		const rightOffset = scaledBottom - (leftOffset + scaledTop)
@@ -419,28 +420,28 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		const bottomLabel = labels?.bottomBase ?? String(bottomBase)
 		const bottomLabelX = xOffset + scaledBottom / 2
 		const bottomLabelY = yOffset + scaledH + 20
-		svgContent += `<text x="${bottomLabelX}" y="${bottomLabelY}" text-anchor="middle" font-size="14">${bottomLabel}</text>`
+		svgContent += `<text x="${bottomLabelX}" y="${bottomLabelY}" text-anchor="middle" font-size="${theme.font.size.medium}">${bottomLabel}</text>`
 		includeText(ext, bottomLabelX, bottomLabel, "middle")
 
 		// Right side label
 		const rightLabel = labels?.rightSide ?? String(Number.parseFloat(rightSideLengthVal.toFixed(2)))
 		const rightLabelX = xOffset + scaledBottom - rightOffset / 2
 		const rightLabelY = yOffset + scaledH / 2
-		svgContent += `<text x="${rightLabelX + 20}" y="${rightLabelY}" text-anchor="start" font-size="14">${rightLabel}</text>`
+		svgContent += `<text x="${rightLabelX + 20}" y="${rightLabelY}" text-anchor="start" font-size="${theme.font.size.medium}">${rightLabel}</text>`
 		includeText(ext, rightLabelX + 20, rightLabel, "start")
 
 		// Top base label
 		const topLabel = labels?.topBase ?? String(topBase)
 		const topLabelX = xOffset + leftOffset + scaledTop / 2
 		const topLabelY = yOffset - 10
-		svgContent += `<text x="${topLabelX}" y="${topLabelY}" text-anchor="middle" font-size="14">${topLabel}</text>`
+		svgContent += `<text x="${topLabelX}" y="${topLabelY}" text-anchor="middle" font-size="${theme.font.size.medium}">${topLabel}</text>`
 		includeText(ext, topLabelX, topLabel, "middle")
 
 		// Left side label
 		const leftLabel = labels?.leftSide ?? String(leftSideLength)
 		const leftLabelX = xOffset + leftOffset / 2
 		const leftLabelY = yOffset + scaledH / 2
-		svgContent += `<text x="${leftLabelX - 20}" y="${leftLabelY}" text-anchor="end" font-size="14">${leftLabel}</text>`
+		svgContent += `<text x="${leftLabelX - 20}" y="${leftLabelY}" text-anchor="end" font-size="${theme.font.size.medium}">${leftLabel}</text>`
 		includeText(ext, leftLabelX - 20, leftLabel, "end")
 
 		// Height label
@@ -448,14 +449,14 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		if (v3g && v4g) {
 			const heightLabelX = v3g.x + (v4g.x - v3g.x) / 2 - 10
 			const heightLabelY = v3g.y + (v4g.y - v3g.y) / 2
-			svgContent += `<text x="${heightLabelX}" y="${heightLabelY}" text-anchor="end" font-size="14">${heightLabel}</text>`
+			svgContent += `<text x="${heightLabelX}" y="${heightLabelY}" text-anchor="end" font-size="${theme.font.size.medium}">${heightLabel}</text>`
 			includeText(ext, heightLabelX, heightLabel, "end")
 		}
 	}
 
 	// Final assembly
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
 	svg += svgContent
 	svg += "</svg>"
 

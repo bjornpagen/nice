@@ -3,6 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { initExtents, includePointX, includeText, computeDynamicWidth } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 // Defines a 2D coordinate point for a vertex
 const PointSchema = z
@@ -232,7 +233,7 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		})
 		.filter(Boolean)
 		.join(" ")
-	svgContent += `<polygon points="${outerPoints}" fill="none" stroke="black" stroke-width="2"/>`
+	svgContent += `<polygon points="${outerPoints}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 
 	// Outer boundary labels
 	for (let i = 0; i < outerBoundary.length; i++) {
@@ -284,7 +285,7 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		const labelX = midX + perpX * label.offset
 		const labelY = midY + perpY * label.offset
 
-		svgContent += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="bold">${label.text}</text>`
+		svgContent += `<text x="${labelX}" y="${labelY}" fill="${theme.colors.text}" text-anchor="middle" dominant-baseline="middle" font-size="${theme.font.size.medium}" font-weight="${theme.font.weight.bold}">${label.text}</text>`
 		includeText(ext, labelX, label.text, "middle") // Track label
 	}
 
@@ -297,7 +298,7 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		// Track segment endpoints
 		includePointX(ext, from.x)
 		includePointX(ext, to.x)
-		svgContent += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="black" stroke-width="1.5"${dash}/>`
+		svgContent += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"${dash}/>`
 		if (s.label !== null) {
 			const midX = (from.x + to.x) / 2
 			const midY = (from.y + to.y) / 2
@@ -305,14 +306,14 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 			const angle = Math.atan2(to.y - from.y, to.x - from.x)
 			const offsetX = -Math.sin(angle) * 5
 			const offsetY = Math.cos(angle) * 5
-			svgContent += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #f0f0f0; stroke-width: 3px; stroke-linejoin: round;">${s.label}</text>`
+			svgContent += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="${theme.colors.text}" text-anchor="middle" dominant-baseline="middle" font-size="${theme.font.size.base}" style="paint-order: stroke; stroke: ${theme.colors.background}; stroke-width: 3px; stroke-linejoin: round;">${s.label}</text>`
 			includeText(ext, midX + offsetX, s.label, "middle") // Track label
 		}
 	}
 
 	// Region labels
 	for (const l of regionLabels) {
-		svgContent += `<text x="${l.position.x}" y="${l.position.y}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="bold">${l.text}</text>`
+		svgContent += `<text x="${l.position.x}" y="${l.position.y}" fill="${theme.colors.text}" text-anchor="middle" dominant-baseline="middle" font-size="${theme.font.size.medium}" font-weight="${theme.font.weight.bold}">${l.text}</text>`
 		includeText(ext, l.position.x, l.text, "middle") // Track label
 	}
 
@@ -348,12 +349,12 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		includePointX(ext, p1x)
 		includePointX(ext, p2x)
 		includePointX(ext, p3x)
-		svgContent += `<path d="M ${p1x} ${p1y} L ${p3x} ${p3y} L ${p2x} ${p2y}" fill="none" stroke="black" stroke-width="1.5"/>`
+		svgContent += `<path d="M ${p1x} ${p1y} L ${p3x} ${p3y} L ${p2x} ${p2y}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"/>`
 	}
 
 	// Compute dynamic width and create final SVG
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">`
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.small}">`
 	svg += svgContent
 	svg += "</svg>"
 	return svg

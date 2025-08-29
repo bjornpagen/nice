@@ -10,6 +10,7 @@ import {
 	includePointX,
 	initExtents
 } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrMismatchedTickCounts = errors.new("top and bottom lines must have the same number of ticks")
 
@@ -126,7 +127,7 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 	includePointX(ext, width - PADDING)
 
 	// Top line
-	svgBody += `<line x1="${PADDING}" y1="${topY}" x2="${width - PADDING}" y2="${topY}" stroke="#333333"/>`
+	svgBody += `<line x1="${PADDING}" y1="${topY}" x2="${width - PADDING}" y2="${topY}" stroke="${theme.colors.axis}"/>`
 	if (topLine.label !== null) {
 		const labelText = abbreviateMonth(topLine.label) // MODIFIED: Abbreviate
 		const labelX = width / 2
@@ -137,15 +138,15 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 	topLine.ticks.forEach((t, i) => {
 		const x = PADDING + i * tickSpacing
 		includePointX(ext, x) // Track tick position
-		svgBody += `<line x1="${x}" y1="${topY - TICK_MARK_HEIGHT}" x2="${x}" y2="${topY + TICK_MARK_HEIGHT}" stroke="#333333"/>`
+		svgBody += `<line x1="${x}" y1="${topY - TICK_MARK_HEIGHT}" x2="${x}" y2="${topY + TICK_MARK_HEIGHT}" stroke="${theme.colors.axis}"/>`
 		const labelText = String(t)
 		const labelY = topY + TOP_LINE_TICK_LABEL_Y_OFFSET
-		svgBody += `<text x="${x}" y="${labelY}" fill="#333333" text-anchor="middle">${labelText}</text>`
+		svgBody += `<text x="${x}" y="${labelY}" fill="${theme.colors.axisLabel}" text-anchor="middle">${labelText}</text>`
 		includeText(ext, x, labelText, "middle") // NEW: Track text
 	})
 
 	// Bottom line
-	svgBody += `<line x1="${PADDING}" y1="${bottomY}" x2="${width - PADDING}" y2="${bottomY}" stroke="#333333"/>`
+	svgBody += `<line x1="${PADDING}" y1="${bottomY}" x2="${width - PADDING}" y2="${bottomY}" stroke="${theme.colors.axis}"/>`
 	if (bottomLine.label !== null) {
 		const labelText = abbreviateMonth(bottomLine.label) // MODIFIED: Abbreviate
 		const labelX = width / 2
@@ -156,22 +157,22 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 	bottomLine.ticks.forEach((t, i) => {
 		const x = PADDING + i * tickSpacing
 		includePointX(ext, x) // Track tick position
-		svgBody += `<line x1="${x}" y1="${bottomY - TICK_MARK_HEIGHT}" x2="${x}" y2="${bottomY + TICK_MARK_HEIGHT}" stroke="#333333"/>`
+		svgBody += `<line x1="${x}" y1="${bottomY - TICK_MARK_HEIGHT}" x2="${x}" y2="${bottomY + TICK_MARK_HEIGHT}" stroke="${theme.colors.axis}"/>`
 		const labelText = String(t)
 		const labelY = bottomY + BOTTOM_LINE_TICK_LABEL_Y_OFFSET
-		svgBody += `<text x="${x}" y="${labelY}" fill="#333333" text-anchor="middle">${labelText}</text>`
+		svgBody += `<text x="${x}" y="${labelY}" fill="${theme.colors.axisLabel}" text-anchor="middle">${labelText}</text>`
 		includeText(ext, x, labelText, "middle") // NEW: Track text
 	})
 
 	// Alignment lines (optional, but good for clarity)
 	for (let i = 0; i < numTicks; i++) {
 		const x = PADDING + i * tickSpacing
-		svgBody += `<line x1="${x}" y1="${topY + TICK_MARK_HEIGHT}" x2="${x}" y2="${bottomY - TICK_MARK_HEIGHT}" stroke="#ccc" stroke-dasharray="2"/>`
+		svgBody += `<line x1="${x}" y1="${topY + TICK_MARK_HEIGHT}" x2="${x}" y2="${bottomY - TICK_MARK_HEIGHT}" stroke="${theme.colors.gridMinor}" stroke-dasharray="${theme.stroke.dasharray.gridMinor}"/>`
 	}
 
 	// NEW: Apply dynamic width at the end
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, adjustedHeight, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${adjustedHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${adjustedHeight}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${adjustedHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${adjustedHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

@@ -3,6 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includeText, includePointX, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 function createSegmentSchema() {
 	return z
@@ -132,7 +133,7 @@ export const generateTapeDiagram: WidgetGenerator<typeof TapeDiagramPropsSchema>
 
 	const drawTape = (tape: typeof topTape, yPos: number) => {
 		if (tape.label) {
-			svgBody += `<text x="${padding}" y="${yPos - 5}" fill="black" text-anchor="start" font-weight="bold">${tape.label}</text>`
+			svgBody += `<text x="${padding}" y="${yPos - 5}" fill="${theme.colors.text}" text-anchor="start" font-weight="${theme.font.weight.bold}">${tape.label}</text>`
 			includeText(ext, padding, tape.label, "start", 7)
 		}
 
@@ -145,9 +146,9 @@ export const generateTapeDiagram: WidgetGenerator<typeof TapeDiagramPropsSchema>
 
 		for (const s of tape.segments) {
 			const segmentWidth = modelType === "ratio" ? s.length * unitWidth : s.length * scale
-			svgBody += `<rect x="${currentX}" y="${yPos}" width="${segmentWidth}" height="${tapeHeight}" fill="${tape.color}" stroke="black"/>`
+			svgBody += `<rect x="${currentX}" y="${yPos}" width="${segmentWidth}" height="${tapeHeight}" fill="${tape.color}" stroke="${theme.colors.black}"/>`
 			if (s.label !== null) {
-				svgBody += `<text x="${currentX + segmentWidth / 2}" y="${yPos + tapeHeight / 2}" fill="white" text-anchor="middle" dominant-baseline="middle" font-weight="bold">${s.label}</text>`
+				svgBody += `<text x="${currentX + segmentWidth / 2}" y="${yPos + tapeHeight / 2}" fill="${theme.colors.white}" text-anchor="middle" dominant-baseline="middle" font-weight="${theme.font.weight.bold}">${s.label}</text>`
 				includeText(ext, currentX + segmentWidth / 2, s.label, "middle", 7)
 			}
 			currentX += segmentWidth
@@ -170,17 +171,17 @@ export const generateTapeDiagram: WidgetGenerator<typeof TapeDiagramPropsSchema>
 		const bracketY = (hasBottomTape ? bottomY : topY) + tapeHeight + 20
 		const totalTapeLength = modelType === "ratio" ? Math.max(topTotalLength, bottomTotalLength) * unitWidth : chartWidth
 
-		svgBody += `<line x1="${padding}" y1="${bracketY}" x2="${padding + totalTapeLength}" y2="${bracketY}" stroke="black"/>`
-		svgBody += `<line x1="${padding}" y1="${bracketY - 5}" x2="${padding}" y2="${bracketY + 5}" stroke="black"/>`
-		svgBody += `<line x1="${padding + totalTapeLength}" y1="${bracketY - 5}" x2="${padding + totalTapeLength}" y2="${bracketY + 5}" stroke="black"/>`
+		svgBody += `<line x1="${padding}" y1="${bracketY}" x2="${padding + totalTapeLength}" y2="${bracketY}" stroke="${theme.colors.black}"/>`
+		svgBody += `<line x1="${padding}" y1="${bracketY - 5}" x2="${padding}" y2="${bracketY + 5}" stroke="${theme.colors.black}"/>`
+		svgBody += `<line x1="${padding + totalTapeLength}" y1="${bracketY - 5}" x2="${padding + totalTapeLength}" y2="${bracketY + 5}" stroke="${theme.colors.black}"/>`
 		if (totalLabel !== null) {
-			svgBody += `<text x="${padding + totalTapeLength / 2}" y="${bracketY + 15}" fill="black" text-anchor="middle" font-weight="bold">${totalLabel}</text>`
+			svgBody += `<text x="${padding + totalTapeLength / 2}" y="${bracketY + 15}" fill="${theme.colors.text}" text-anchor="middle" font-weight="${theme.font.weight.bold}">${totalLabel}</text>`
 			includeText(ext, padding + totalTapeLength / 2, totalLabel, "middle", 7)
 		}
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

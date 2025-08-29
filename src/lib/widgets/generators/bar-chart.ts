@@ -16,6 +16,7 @@ import {
 	initExtents
 } from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel, renderWrappedText } from "@/lib/widgets/utils/text"
+import { theme } from "@/lib/widgets/utils/theme"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
@@ -147,8 +148,8 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 		includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
 	}
 
-	svgBody += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>`
-	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>`
+	svgBody += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}"/>`
+	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}"/>`
 
 	// MODIFIED: Use dynamic positioning and new renderers
 	if (xAxisLabel !== null) {
@@ -166,10 +167,10 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 	// Y ticks and grid lines
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = height - margin.bottom - (t - yAxis.min) * scaleY
-		svgBody += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
-		svgBody += `<text x="${margin.left - 10}" y="${y + 4}" fill="black" text-anchor="end">${t}</text>`
+		svgBody += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="${theme.colors.axis}"/>`
+		svgBody += `<text x="${margin.left - 10}" y="${y + 4}" fill="${theme.colors.axisLabel}" text-anchor="end">${t}</text>`
 		includeText(ext, margin.left - 10, String(t), "end", 7)
-		svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#ccc" stroke-dasharray="2"/>`
+		svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="${theme.colors.gridMinor}" stroke-dasharray="${theme.stroke.dasharray.gridMinor}"/>`
 	}
 
 	// MODIFIED: Bars and text-aware X-axis labels
@@ -192,19 +193,19 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 		if (d.state === "normal") {
 			svgBody += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="${barColor}"/>`
 		} else {
-			svgBody += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="none" stroke="${barColor}" stroke-width="2" stroke-dasharray="4"/>`
+			svgBody += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="none" stroke="${barColor}" stroke-width="${theme.stroke.width.thick}" stroke-dasharray="${theme.stroke.dasharray.dashed}"/>`
 		}
 		
 			if (d.label !== "" && selectedXLabels.has(i)) {
 		const labelX = x + barWidth / 2
-		svgBody += `<text x="${labelX}" y="${height - margin.bottom + 15}" fill="black" text-anchor="middle">${d.label}</text>`
+		svgBody += `<text x="${labelX}" y="${height - margin.bottom + 15}" fill="${theme.colors.axisLabel}" text-anchor="middle">${d.label}</text>`
 		includeText(ext, labelX, d.label, "middle", 7)
 	}
 	})
 
 	// NEW: Apply dynamic width at the end
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

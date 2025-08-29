@@ -3,6 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 function createWeightSchema() {
 	return z
@@ -106,9 +107,9 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 	let svgBody = ""
 
 	// Hook and beam
-	svgBody += `<line x1="${centerX}" y1="10" x2="${centerX}" y2="${beamY}" stroke="#333333" stroke-width="0.6667"/>`
-	svgBody += `<path d="M ${centerX - 5} 10 L ${centerX} 5 L ${centerX + 5} 10 Z" fill="#333333" />` // Triangle at top of hook
-	svgBody += `<line x1="${beamStartX}" y1="${beamY}" x2="${beamEndX}" y2="${beamY}" stroke="#333333" stroke-width="3"/>`
+	svgBody += `<line x1="${centerX}" y1="10" x2="${centerX}" y2="${beamY}" stroke="${theme.colors.axis}" stroke-width="0.6667"/>`
+	svgBody += `<path d="M ${centerX - 5} 10 L ${centerX} 5 L ${centerX + 5} 10 Z" fill="${theme.colors.axis}" />` // Triangle at top of hook
+	svgBody += `<line x1="${beamStartX}" y1="${beamY}" x2="${beamEndX}" y2="${beamY}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.xxthick}"/>`
 	// --- ADDED ---
 	includePointX(ext, beamStartX)
 	includePointX(ext, beamEndX)
@@ -123,10 +124,10 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 		let shapeSvg = ""
 		switch (weight.shape) {
 			case "circle":
-				shapeSvg = `<circle cx="${x}" cy="${y + size / 2}" r="${size / 2}" fill="${weight.color}" stroke="#333333"/>`
+				shapeSvg = `<circle cx="${x}" cy="${y + size / 2}" r="${size / 2}" fill="${weight.color}" stroke="${theme.colors.axis}"/>`
 				break
 			case "triangle":
-				shapeSvg = `<polygon points="${x - size / 2},${y + size} ${x + size / 2},${y + size} ${x},${y}" fill="${weight.color}" stroke="#333333"/>`
+				shapeSvg = `<polygon points="${x - size / 2},${y + size} ${x + size / 2},${y + size} ${x},${y}" fill="${weight.color}" stroke="${theme.colors.axis}"/>`
 				break
 			case "pentagon": {
 				// Simplified pentagon
@@ -139,16 +140,16 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 				]
 					.map((pt) => pt.join(","))
 					.join(" ")
-				shapeSvg = `<polygon points="${p_pts}" fill="${weight.color}" stroke="#333333"/>`
+				shapeSvg = `<polygon points="${p_pts}" fill="${weight.color}" stroke="${theme.colors.axis}"/>`
 				break
 			}
 			default:
-				shapeSvg = `<rect x="${x - size / 2}" y="${y}" width="${size}" height="${size}" fill="${weight.color}" stroke="#333333"/>`
+				shapeSvg = `<rect x="${x - size / 2}" y="${y}" width="${size}" height="${size}" fill="${weight.color}" stroke="${theme.colors.axis}"/>`
 				break
 		}
 		let textSvg = ""
 		if (weight.label !== null) {
-			textSvg = `<text x="${x}" y="${y + size / 2 + 4}" fill="#333333" text-anchor="middle" font-weight="bold">${weight.label}</text>`
+			textSvg = `<text x="${x}" y="${y + size / 2 + 4}" fill="${theme.colors.axis}" text-anchor="middle" font-weight="bold">${weight.label}</text>`
 			includeText(ext, x, String(weight.label), "middle", 7)
 		}
 		return shapeSvg + textSvg
@@ -159,7 +160,7 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 		const sideCenterX = isLeft ? beamStartX + beamWidth / 4 : beamEndX - beamWidth / 4
 		weights.forEach((_w, i) => {
 			const weightY = weightYStart + i * weightHeight
-			svgBody += `<line x1="${sideCenterX}" y1="${i === 0 ? beamY : weightY - weightHeight + weightGap}" x2="${sideCenterX}" y2="${weightY}" stroke="#333333"/>`
+			svgBody += `<line x1="${sideCenterX}" y1="${i === 0 ? beamY : weightY - weightHeight + weightGap}" x2="${sideCenterX}" y2="${weightY}" stroke="${theme.colors.axis}"/>`
 		})
 	}
 
@@ -181,7 +182,7 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 	renderShapes(rightSide, false)
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="12">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

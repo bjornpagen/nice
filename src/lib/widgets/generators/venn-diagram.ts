@@ -4,6 +4,7 @@ import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 function createCircleSchema() {
 	return z
@@ -95,7 +96,7 @@ export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema>
 	let svgContent = "<style>.label { font-size: 16px; font-weight: bold; text-anchor: middle; } .count { font-size: 18px; text-anchor: middle; }</style>"
 
 	// Draw containing box
-	svgContent += `<rect x="1" y="1" width="${width - 2}" height="${height - 2}" fill="none" stroke="#333333" />`
+	svgContent += `<rect x="1" y="1" width="${width - 2}" height="${height - 2}" fill="none" stroke="${theme.colors.axis}" />`
 
 	// Track circles
 	includePointX(ext, cxA - r)
@@ -104,8 +105,8 @@ export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema>
 	includePointX(ext, cxB + r)
 	
 	// Circles (semi-transparent for overlap visibility)
-	svgContent += `<circle cx="${cxA}" cy="${cy}" r="${r}" fill="${circleA.color}" fill-opacity="0.6" stroke="#333333"/>`
-	svgContent += `<circle cx="${cxB}" cy="${cy}" r="${r}" fill="${circleB.color}" fill-opacity="0.6" stroke="#333333"/>`
+	svgContent += `<circle cx="${cxA}" cy="${cy}" r="${r}" fill="${circleA.color}" fill-opacity="${theme.opacity.overlay}" stroke="${theme.colors.axis}"/>`
+	svgContent += `<circle cx="${cxB}" cy="${cy}" r="${r}" fill="${circleB.color}" fill-opacity="${theme.opacity.overlay}" stroke="${theme.colors.axis}"/>`
 
 	// Labels for circles - positioned farther apart to use side space
 	const labelA_X = cxA - r * 0.5
@@ -135,7 +136,7 @@ export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema>
 
 	// Final assembly
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
 	svg += svgContent
 	svg += "</svg>"
 	return svg

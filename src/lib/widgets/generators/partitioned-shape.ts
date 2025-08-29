@@ -5,6 +5,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidPartitionGeometry = errors.new("invalid partition geometry")
 
@@ -259,14 +260,14 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 				includePointX(ext, rectX)
 				includePointX(ext, rectX + cellW)
 
-				svgBody += `<rect x="${rectX}" y="${rectY}" width="${cellW}" height="${cellH}" fill="${fill}" fill-opacity="${opacity}" stroke="#545454" stroke-width="1"/>`
+				svgBody += `<rect x="${rectX}" y="${rectY}" width="${cellW}" height="${cellH}" fill="${fill}" fill-opacity="${opacity}" stroke="${theme.colors.border}" stroke-width="${theme.stroke.width.thin}"/>`
 
 				if (isHatched) {
 					const cellId = `hatch-${idx}-${i}`
 					svgBody += `<defs><pattern id="${cellId}" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
-						<rect width="2" height="4" fill="#555" opacity="0.9"/>
+						<rect width="2" height="4" fill="${theme.colors.textSecondary}" opacity="${theme.opacity.overlayHigh}"/>
 					</pattern></defs>`
-					svgBody += `<rect x="${rectX}" y="${rectY}" width="${cellW}" height="${cellH}" fill="url(#${cellId})" stroke="#545454" stroke-width="1"/>`
+					svgBody += `<rect x="${rectX}" y="${rectY}" width="${cellW}" height="${cellH}" fill="url(#${cellId})" stroke="${theme.colors.border}" stroke-width="${theme.stroke.width.thin}"/>`
 				}
 			}
 		} else if (s.type === "circle") {
@@ -299,14 +300,14 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 				const x2 = cx + r * Math.cos(endRad)
 				const y2 = cy + r * Math.sin(endRad)
 
-				svgBody += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${fill}" fill-opacity="${opacity}" stroke="#545454" stroke-width="1"/>`
+				svgBody += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${fill}" fill-opacity="${opacity}" stroke="${theme.colors.border}" stroke-width="${theme.stroke.width.thin}"/>`
 
 				if (isHatched) {
 					const cellId = `hatch-circle-${idx}-${i}`
 					svgBody += `<defs><pattern id="${cellId}" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
-						<rect width="2" height="4" fill="#555" opacity="0.9"/>
+						<rect width="2" height="4" fill="${theme.colors.textSecondary}" opacity="${theme.opacity.overlayHigh}"/>
 					</pattern></defs>`
-					svgBody += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="url(#${cellId})" stroke="#545454" stroke-width="1"/>`
+					svgBody += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="url(#${cellId})" stroke="${theme.colors.border}" stroke-width="${theme.stroke.width.thin}"/>`
 				}
 			}
 		}
@@ -327,12 +328,12 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 
 				let strokeDasharray = ""
 				if (line.style === "dashed") {
-					strokeDasharray = "5,5"
+					strokeDasharray = theme.stroke.dasharray.dashed
 				} else if (line.style === "dotted") {
-					strokeDasharray = "2,2"
+					strokeDasharray = theme.stroke.dasharray.dotted
 				}
 
-				svgBody += `<line x1="${fromX}" y1="${fromY}" x2="${toX}" y2="${toY}" stroke="${line.color}" stroke-width="2" stroke-dasharray="${strokeDasharray}"/>`
+				svgBody += `<line x1="${fromX}" y1="${fromY}" x2="${toX}" y2="${toY}" stroke="${line.color}" stroke-width="${theme.stroke.width.thick}" stroke-dasharray="${strokeDasharray}"/>`
 			}
 		}
 	}
@@ -364,12 +365,12 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 	// Vertical lines
 	for (let col = 0; col <= grid.columns; col++) {
 		const x = col * cellWidth
-		svgBody += `<line x1="${x}" y1="0" x2="${x}" y2="${height}" stroke="#000000" stroke-width="1" opacity="${grid.opacity}"/>`
+		svgBody += `<line x1="${x}" y1="0" x2="${x}" y2="${height}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thin}" opacity="${grid.opacity}"/>`
 	}
 	// Horizontal lines
 	for (let row = 0; row <= grid.rows; row++) {
 		const y = row * cellHeight
-		svgBody += `<line x1="0" y1="${y}" x2="${width}" y2="${y}" stroke="#000000" stroke-width="1" opacity="${grid.opacity}"/>`
+		svgBody += `<line x1="0" y1="${y}" x2="${width}" y2="${y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thin}" opacity="${grid.opacity}"/>`
 	}
 
 	// 2. Draw figures
@@ -384,7 +385,7 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 		const pointsStr = pixelPoints
 			.map((pixel) => `${pixel.x},${pixel.y}`)
 			.join(" ")
-		svgBody += `<polygon points="${pointsStr}" fill="${fig.fillColor ?? "none"}" stroke="${fig.strokeColor ?? "black"}" stroke-width="2"/>`
+		svgBody += `<polygon points="${pointsStr}" fill="${fig.fillColor ?? "none"}" stroke="${fig.strokeColor ?? theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 	}
 
 	// 3. Draw lines
@@ -394,12 +395,12 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 
 		let strokeDasharray = ""
 		if (line.style === "dashed") {
-			strokeDasharray = "5,5"
+			strokeDasharray = theme.stroke.dasharray.dashed
 		} else if (line.style === "dotted") {
-			strokeDasharray = "2,2"
+			strokeDasharray = theme.stroke.dasharray.dotted
 		}
 
-		svgBody += `<line x1="${fromPixel.x}" y1="${fromPixel.y}" x2="${toPixel.x}" y2="${toPixel.y}" stroke="${line.color}" stroke-width="2" stroke-dasharray="${strokeDasharray}"/>`
+		svgBody += `<line x1="${fromPixel.x}" y1="${fromPixel.y}" x2="${toPixel.x}" y2="${toPixel.y}" stroke="${line.color}" stroke-width="${theme.stroke.width.thick}" stroke-dasharray="${strokeDasharray}"/>`
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)

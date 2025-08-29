@@ -2,6 +2,7 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
+import { theme } from "@/lib/widgets/utils/theme"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const Node = z
@@ -129,11 +130,11 @@ export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema>
 
 	// Handle empty nodes case
 	if (nodes.length === 0) {
-		return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"></svg>`
+		return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}"></svg>`
 	}
 
 	// Start with standard viewBox
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
 
 	// Create a map for quick node lookup by ID
 	const nodeMap = new Map(nodes.map((node) => [node.id, node]))
@@ -149,7 +150,7 @@ export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema>
 		includePointX(ext, toNode.position.x)
 
 		const dash = edge.style === "dashed" ? 'stroke-dasharray="5 3"' : ""
-		svg += `<line x1="${fromNode.position.x}" y1="${fromNode.position.y}" x2="${toNode.position.x}" y2="${toNode.position.y}" stroke="black" stroke-width="2" ${dash}/>`
+		svg += `<line x1="${fromNode.position.x}" y1="${fromNode.position.y}" x2="${toNode.position.x}" y2="${toNode.position.y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}" ${dash}/>`
 	}
 
 	// 2. Draw Nodes (on top of edges)
@@ -161,7 +162,7 @@ export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema>
 		includePointX(ext, x + nodeRadius)
 		
 		// Draw a circle for all nodes
-		svg += `<circle cx="${x}" cy="${y}" r="${nodeRadius}" fill="white" stroke="${node.color}" stroke-width="2"/>`
+		svg += `<circle cx="${x}" cy="${y}" r="${nodeRadius}" fill="${theme.colors.white}" stroke="${node.color}" stroke-width="${theme.stroke.width.thick}"/>`
 		// Draw the text label only if it exists
 		if (node.label !== null) {
 			// Track node label
@@ -175,7 +176,7 @@ export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema>
 	
 	// MODIFICATION: Apply dynamic width and viewBox at the end
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSVG = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	const finalSVG = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
 	
 	// Rebuild SVG with correct viewBox and width
 	svg = finalSVG + svg.substring(svg.indexOf(">") + 1)

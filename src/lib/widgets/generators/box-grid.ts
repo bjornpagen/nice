@@ -4,6 +4,7 @@ import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
 import { computeDynamicWidth, includeText, includePointX, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 // Defines the content and styling for a single cell in the grid.
 const BoxGridCellSchema = z
@@ -106,7 +107,7 @@ export const generateBoxGrid: WidgetGenerator<typeof BoxGridPropsSchema> = (prop
 	const ext = initExtents(width)
 	let svgContent = "" // Use a temporary string for the SVG body
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
 	const style = `<style>
         .cell-text {
             font-size: 14px;
@@ -148,13 +149,13 @@ export const generateBoxGrid: WidgetGenerator<typeof BoxGridPropsSchema> = (prop
 			for (let c = 0; c < numCols; c++) {
 				const x = c * cellWidth
 				const y = r * cellHeight
-				svgContent += `<rect x="${x}" y="${y}" width="${cellWidth}" height="${cellHeight}" fill="none" stroke="black" stroke-width="1.5" />`
+				svgContent += `<rect x="${x}" y="${y}" width="${cellWidth}" height="${cellHeight}" fill="none" stroke="${theme.colors.border}" stroke-width="${theme.stroke.width.base}" />`
 			}
 		}
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
 	svg += style
 	svg += svgContent
 	svg += "</svg>"

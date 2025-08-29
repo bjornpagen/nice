@@ -20,6 +20,7 @@ import {
 	wrapInClippedGroup
 } from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel, renderWrappedText } from "@/lib/widgets/utils/text"
+import { theme } from "@/lib/widgets/utils/theme"
 
 // Defines a single data point on the scatter plot
 const ScatterPointSchema = z
@@ -418,14 +419,14 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	// Grid lines, Axes, Ticks, Labels
 	if (xAxis.gridLines)
 		for (let t = xAxis.min; t <= xAxis.max; t += xAxis.tickInterval) {
-			svgBody += `<line x1="${toSvgX(t)}" y1="${pad.top}" x2="${toSvgX(t)}" y2="${height - pad.bottom}" stroke="#eee"/>`
+			svgBody += `<line x1="${toSvgX(t)}" y1="${pad.top}" x2="${toSvgX(t)}" y2="${height - pad.bottom}" stroke="${theme.colors.gridMajor}"/>`
 		}
 	if (yAxis.gridLines)
 		for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
-			svgBody += `<line x1="${pad.left}" y1="${toSvgY(t)}" x2="${width - pad.right}" y2="${toSvgY(t)}" stroke="#eee"/>`
+			svgBody += `<line x1="${pad.left}" y1="${toSvgY(t)}" x2="${width - pad.right}" y2="${toSvgY(t)}" stroke="${theme.colors.gridMajor}"/>`
 		}
-	svgBody += `<line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="black"/>`
-	svgBody += `<line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="black"/>`
+	svgBody += `<line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="${theme.colors.axis}"/>`
+	svgBody += `<line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="${theme.colors.axis}"/>`
 	// Text-width-aware x-axis label thinning
 	const tickValues: number[] = []
 	const tickPositions: number[] = []
@@ -438,14 +439,14 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 
 	tickValues.forEach((t, i) => {
 		const x = toSvgX(t)
-		svgBody += `<line x1="${x}" y1="${height - pad.bottom}" x2="${x}" y2="${height - pad.bottom + 5}" stroke="black"/>`
+		svgBody += `<line x1="${x}" y1="${height - pad.bottom}" x2="${x}" y2="${height - pad.bottom + 5}" stroke="${theme.colors.axis}"/>`
 		if (selected.has(i)) {
 			svgBody += `<text x="${x}" y="${height - pad.bottom + 20}" text-anchor="middle">${t}</text>`
 			includeText(ext, x, String(t), "middle", 7)
 		}
 	})
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
-		svgBody += `<line x1="${pad.left}" y1="${toSvgY(t)}" x2="${pad.left - 5}" y2="${toSvgY(t)}" stroke="black"/><text x="${pad.left - 10}" y="${toSvgY(t) + 4}" text-anchor="end">${t}</text>`
+		svgBody += `<line x1="${pad.left}" y1="${toSvgY(t)}" x2="${pad.left - 5}" y2="${toSvgY(t)}" stroke="${theme.colors.axis}"/><text x="${pad.left - 10}" y="${toSvgY(t) + 4}" text-anchor="end">${t}</text>`
 		includeText(ext, pad.left - 10, String(t), "end", 7)
 	}
 	svgBody += `<text x="${pad.left + chartWidth / 2}" y="${height - pad.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
@@ -576,7 +577,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 			svgBody += `<line x1="${lineStartX}" y1="${lineCenterY}" x2="${lineEndX}" y2="${lineCenterY}"${styleStr}/>`
 
 			// Label positioned after the line sample
-			svgBody += `<text x="${lineEndX + 5}" y="${legendY}" fill="black" text-anchor="start">${abbreviateMonth(line.label)}</text>`
+			svgBody += `<text x="${lineEndX + 5}" y="${legendY}" fill="${theme.colors.black}" text-anchor="start">${abbreviateMonth(line.label)}</text>`
 			includeText(ext, lineEndX + 5, abbreviateMonth(line.label), "start", 7)
 		}
 	}
@@ -588,14 +589,14 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		// Track the x-extent of the point
 		includePointX(ext, px)
 		
-		svgBody += `<circle cx="${px}" cy="${py}" r="3.5" fill="black" fill-opacity="0.7"/>`
-		svgBody += `<text x="${px + 5}" y="${py - 5}" fill="black">${abbreviateMonth(p.label)}</text>`
+					svgBody += `<circle cx="${px}" cy="${py}" r="${theme.geometry.pointRadius.large}" fill="${theme.colors.black}" fill-opacity="${theme.opacity.overlayHigh}"/>`
+					svgBody += `<text x="${px + 5}" y="${py - 5}" fill="${theme.colors.text}">${abbreviateMonth(p.label)}</text>`
 		// MODIFICATION: Add this line to track the label's extent
 		includeText(ext, px + 5, abbreviateMonth(p.label), "start", 7)
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

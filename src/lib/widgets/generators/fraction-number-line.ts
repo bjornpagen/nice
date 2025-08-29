@@ -3,6 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 const Tick = z
 	.object({
@@ -202,18 +203,18 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 	
 	// Build SVG with computed dimensions
-	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 	svg +=
 		"<style>.label-top { font-size: 11px; } .label-bottom { font-weight: bold; } .model-label { font-size: 13px; font-weight: bold; }</style>"
 
 	// 1. Draw Axis Line
-	svg += `<line x1="${padding.left}" y1="${yPosAxis}" x2="${width - padding.right}" y2="${yPosAxis}" stroke="black" stroke-width="1.5"/>`
+	svg += `<line x1="${padding.left}" y1="${yPosAxis}" x2="${width - padding.right}" y2="${yPosAxis}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
 
 	// 2. Draw Ticks and Labels
 	for (const tick of ticks) {
 		const x = toSvgX(tick.value)
 		const tickHeight = tick.isMajor ? 8 : 4
-		svg += `<line x1="${x}" y1="${yPosAxis - tickHeight}" x2="${x}" y2="${yPosAxis + tickHeight}" stroke="black" stroke-width="1.5"/>`
+		svg += `<line x1="${x}" y1="${yPosAxis - tickHeight}" x2="${x}" y2="${yPosAxis + tickHeight}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
 		if (tick.topLabel !== "") {
 			svg += `<text x="${x}" y="${yPosAxis - 15}" class="label-top" text-anchor="middle">${tick.topLabel}</text>`
 		}
@@ -243,7 +244,7 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 		for (const group of model.cellGroups) {
 			for (let i = 0; i < group.count; i++) {
 				const cellX = padding.left + cellCounter * cellWidth
-				svg += `<rect x="${cellX}" y="${modelY}" width="${cellWidth}" height="${modelHeight}" fill="${group.color}" fill-opacity="0.3"/>`
+				svg += `<rect x="${cellX}" y="${modelY}" width="${cellWidth}" height="${modelHeight}" fill="${group.color}" fill-opacity="${theme.opacity.overlayLow}"/>`
 				cellCounter++
 			}
 		}
@@ -251,7 +252,7 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 		// Render cell borders on top for a clean look
 		currentX = padding.left
 		for (let i = 0; i < model.totalCells; i++) {
-			svg += `<rect x="${currentX}" y="${modelY}" width="${cellWidth}" height="${modelHeight}" fill="none" stroke="black" stroke-width="2"/>`
+			svg += `<rect x="${currentX}" y="${modelY}" width="${cellWidth}" height="${modelHeight}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 			currentX += cellWidth
 		}
 
@@ -260,9 +261,9 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 			const bracketY = modelY - 15
 			const bracketStartX = padding.left
 			const bracketEndX = padding.left + chartWidth
-			svg += `<line x1="${bracketStartX}" y1="${bracketY + 5}" x2="${bracketStartX}" y2="${bracketY - 5}" stroke="black"/>`
-			svg += `<line x1="${bracketStartX}" y1="${bracketY}" x2="${bracketEndX}" y2="${bracketY}" stroke="black"/>`
-			svg += `<line x1="${bracketEndX}" y1="${bracketY + 5}" x2="${bracketEndX}" y2="${bracketY - 5}" stroke="black"/>`
+			svg += `<line x1="${bracketStartX}" y1="${bracketY + 5}" x2="${bracketStartX}" y2="${bracketY - 5}" stroke="${theme.colors.black}"/>`
+			svg += `<line x1="${bracketStartX}" y1="${bracketY}" x2="${bracketEndX}" y2="${bracketY}" stroke="${theme.colors.black}"/>`
+			svg += `<line x1="${bracketEndX}" y1="${bracketY + 5}" x2="${bracketEndX}" y2="${bracketY - 5}" stroke="${theme.colors.black}"/>`
 			svg += `<text x="${width / 2}" y="${bracketY - 8}" class="model-label" text-anchor="middle">${model.bracketLabel}</text>`
 		}
 	}

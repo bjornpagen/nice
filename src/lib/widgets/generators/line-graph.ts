@@ -18,6 +18,7 @@ import {
 	initExtents
 } from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel, renderWrappedText } from "@/lib/widgets/utils/text"
+import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrMismatchedDataLength = errors.new("series data must have the same length as x-axis categories")
 
@@ -158,7 +159,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 
 	// Left Y-axis
 	svgBody += `<g class="axis y-axis-left">`
-	svgBody += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>`
+	svgBody += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}"/>`
 	{
 		const yCenter = margin.top + chartHeight / 2
 		svgBody += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), yAxisLabelX, yCenter, chartHeight)
@@ -166,11 +167,11 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	}
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = toSvgYLeft(t)
-		svgBody += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
+		svgBody += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="${theme.colors.axis}"/>`
 		svgBody += `<text x="${margin.left - 10}" y="${y + 4}" text-anchor="end">${t}</text>`
 		includeText(ext, margin.left - 10, String(t), "end", 7)
 		if (yAxis.showGridLines) {
-			svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#ccc" stroke-dasharray="2"/>`
+			svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="${theme.colors.gridMinor}" stroke-dasharray="${theme.stroke.dasharray.gridMinor}"/>`
 		}
 	}
 	svgBody += "</g>"
@@ -179,12 +180,12 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	if (yAxisRight) {
 		const rightAxisX = width - margin.right
 		svgBody += `<g class="axis y-axis-right">`
-		svgBody += `<line x1="${rightAxisX}" y1="${margin.top}" x2="${rightAxisX}" y2="${height - margin.bottom}" stroke="black"/>`
+		svgBody += `<line x1="${rightAxisX}" y1="${margin.top}" x2="${rightAxisX}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}"/>`
 		svgBody += `<text x="${rightAxisX + rightYAxisLabelX}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${rightAxisX + rightYAxisLabelX}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxisRight.label)}</text>`
 		includeText(ext, rightAxisX + rightYAxisLabelX, abbreviateMonth(yAxisRight.label), "middle", 7)
 		for (let t = yAxisRight.min; t <= yAxisRight.max; t += yAxisRight.tickInterval) {
 			const y = toSvgYRight(t)
-			svgBody += `<line x1="${rightAxisX}" y1="${y}" x2="${rightAxisX + 5}" y2="${y}" stroke="black"/>`
+			svgBody += `<line x1="${rightAxisX}" y1="${y}" x2="${rightAxisX + 5}" y2="${y}" stroke="${theme.colors.axis}"/>`
 			svgBody += `<text x="${rightAxisX + 10}" y="${y + 4}" text-anchor="start">${t}</text>`
 			includeText(ext, rightAxisX + 10, String(t), "start", 7)
 		}
@@ -193,7 +194,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 
 	// X-axis with label thinning
 	svgBody += `<g class="axis x-axis">`
-	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>`
+	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}"/>`
 	svgBody += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
 	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
 	{
@@ -205,7 +206,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		xAxis.categories.forEach((cat, i) => {
 			if (!cat) return
 			const x = toSvgX(i)
-			svgBody += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="black"/>`
+			svgBody += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="${theme.colors.axis}"/>`
 			if (selected.has(i)) {
 				const abbreviatedCat = abbreviateMonth(cat)
 				svgBody += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${abbreviatedCat}</text>`
@@ -228,13 +229,13 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		let dasharray = ""
 		if (s.style === "dashed") dasharray = 'stroke-dasharray="8 4"'
 		if (s.style === "dotted") dasharray = 'stroke-dasharray="2 6"'
-		svgBody += `<polyline points="${pointsStr}" fill="none" stroke="${s.color}" stroke-width="2.5" ${dasharray}/>`
+		svgBody += `<polyline points="${pointsStr}" fill="none" stroke="${s.color}" stroke-width="${theme.stroke.width.xthick}" ${dasharray}/>`
 
 		for (const [i, v] of s.values.entries()) {
 			const cx = toSvgX(i)
 			const cy = toSvgY(v)
 			if (s.pointShape === "circle") {
-				svgBody += `<circle cx="${cx}" cy="${cy}" r="4" fill="${s.color}"/>`
+				svgBody += `<circle cx="${cx}" cy="${cy}" r="${theme.geometry.pointRadius.base}" fill="${s.color}"/>`
 			} else if (s.pointShape === "square") {
 				svgBody += `<rect x="${cx - 4}" y="${cy - 4}" width="8" height="8" fill="${s.color}"/>`
 			}
@@ -266,9 +267,9 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 			let dash = ""
 			if (s.style === "dashed") dash = ' stroke-dasharray="8 4"'
 			if (s.style === "dotted") dash = ' stroke-dasharray="2 6"'
-			svgBody += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${s.color}" stroke-width="2.5"${dash}/>`
+			svgBody += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${s.color}" stroke-width="${theme.stroke.width.xthick}"${dash}/>`
 			if (s.pointShape === "circle") {
-				svgBody += `<circle cx="${markerCx}" cy="${y}" r="4" fill="${s.color}"/>`
+				svgBody += `<circle cx="${markerCx}" cy="${y}" r="${theme.geometry.pointRadius.base}" fill="${s.color}"/>`
 			} else if (s.pointShape === "square") {
 				svgBody += `<rect x="${markerCx - 4}" y="${y - 4}" width="8" height="8" fill="${s.color}"/>`
 			}
@@ -278,7 +279,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

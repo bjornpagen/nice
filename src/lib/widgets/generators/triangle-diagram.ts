@@ -4,6 +4,7 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
+import { theme } from "@/lib/widgets/utils/theme"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const Point = z
@@ -207,7 +208,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 	const minY = Math.min(...points.map((p) => p.y)) - padding
 	const maxY = Math.max(...points.map((p) => p.y)) + padding
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="${minX} ${minY} ${maxX - minX} ${maxY - minY}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
+	let svg = `<svg width="${width}" height="${height}" viewBox="${minX} ${minY} ${maxX - minX} ${maxY - minY}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">`
 	const pointMap = new Map(points.map((p) => [p.id, p]))
 
 	// Compute centroid of the main triangle (first 3 points) to infer outward direction
@@ -248,7 +249,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 		.slice(0, 3)
 		.map((p) => `${p.x},${p.y}`)
 		.join(" ")
-	svg += `<polygon points="${mainTrianglePoints}" fill="none" stroke="black" stroke-width="2"/>`
+	svg += `<polygon points="${mainTrianglePoints}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 
 	// Layer 3: Internal Lines
 	for (const line of internalLines) {
@@ -266,7 +267,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 		} else if (line.style === "dotted") {
 			dash = 'stroke-dasharray="2 4"'
 		}
-		svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="black" stroke-width="1.5" ${dash}/>`
+		svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" ${dash}/>`
 	}
 
 	// Layer 4: Angle Markers
@@ -348,7 +349,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 				includePointX(ext, m2x)
 				includePointX(ext, m3x)
 				
-				svg += `<path d="M ${m1x} ${m1y} L ${m3x} ${m3y} L ${m2x} ${m2y}" fill="none" stroke="black" stroke-width="2"/>`
+				svg += `<path d="M ${m1x} ${m1y} L ${m3x} ${m3y} L ${m2x} ${m2y}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 			} else {
 				const arcStartX = vertex.x + scaledArcRadius * Math.cos(startAngle)
 				const arcStartY = vertex.y + scaledArcRadius * Math.sin(startAngle)
@@ -363,7 +364,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 				if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI
 				if (angleDiff < -Math.PI) angleDiff += 2 * Math.PI
 				const sweepFlag = angleDiff > 0 ? 1 : 0
-				svg += `<path d="M ${arcStartX} ${arcStartY} A ${scaledArcRadius} ${scaledArcRadius} 0 0 ${sweepFlag} ${arcEndX} ${arcEndY}" fill="none" stroke="${angle.color}" stroke-width="2"/>`
+				svg += `<path d="M ${arcStartX} ${arcStartY} A ${scaledArcRadius} ${scaledArcRadius} 0 0 ${sweepFlag} ${arcEndX} ${arcEndY}" fill="none" stroke="${angle.color}" stroke-width="${theme.stroke.width.thick}"/>`
 			}
 		}
 
@@ -413,7 +414,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 			// Track angle label
 			includeText(ext, labelX, angle.label, "middle", 14)
 			
-			svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle">${angle.label}</text>`
+			svg += `<text x="${labelX}" y="${labelY}" fill="${theme.colors.black}" text-anchor="middle" dominant-baseline="middle">${angle.label}</text>`
 		}
 	}
 
@@ -463,7 +464,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 			// Track side label
 			includeText(ext, labelX, side.label, "middle", 14)
 			
-			svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle">${side.label}</text>`
+			svg += `<text x="${labelX}" y="${labelY}" fill="${theme.colors.black}" text-anchor="middle" dominant-baseline="middle">${side.label}</text>`
 		}
 		if (side.tickMarks > 0) {
 			const tickSize = 6
@@ -481,7 +482,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 				includePointX(ext, t1x)
 				includePointX(ext, t2x)
 				
-				svg += `<line x1="${t1x}" y1="${t1y}" x2="${t2x}" y2="${t2y}" stroke="black" stroke-width="2"/>`
+				svg += `<line x1="${t1x}" y1="${t1y}" x2="${t2x}" y2="${t2y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 			}
 		}
 	}
@@ -491,7 +492,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 		// Track point position
 		includePointX(ext, point.x)
 		
-		svg += `<circle cx="${point.x}" cy="${point.y}" r="4" fill="black"/>`
+		svg += `<circle cx="${point.x}" cy="${point.y}" r="4" fill="${theme.colors.black}"/>`
 		if (point.label) {
 			const textX = point.x + 8
 			const textY = point.y - 8
@@ -499,7 +500,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 			// Track point label
 			includeText(ext, textX, point.label, "start", 16)
 			
-			svg += `<text x="${textX}" y="${textY}" fill="black" font-size="16" font-weight="bold">${point.label}</text>`
+			svg += `<text x="${textX}" y="${textY}" fill="${theme.colors.black}" font-size="${theme.font.size.large}" font-weight="${theme.font.weight.bold}">${point.label}</text>`
 		}
 	}
 

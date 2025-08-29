@@ -14,6 +14,7 @@ import {
 	includeText,
 	initExtents
 } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 function createAxisOptionsSchema() {
 	return z
@@ -119,16 +120,16 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 	if (yAxis.showGridLines) {
 		for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 			const y = toSvgY(t)
-			svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#e0e0e0"/>`
+			svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="${theme.colors.gridMajor}"/>`
 		}
 	}
 	// Axes
-	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>`
-	svgBody += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>`
+	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}"/>`
+	svgBody += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}"/>`
 	// Ticks
 	for (let t = xAxis.min; t <= xAxis.max; t += xAxis.tickInterval) {
 		const x = toSvgX(t)
-		svgBody += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="black"/>`
+		svgBody += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="${theme.colors.axis}"/>`
 		if (xAxis.showTickLabels !== false) {
 			svgBody += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${t}</text>`
 			includeText(ext, x, String(t), "middle", 7)
@@ -136,7 +137,7 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 	}
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = toSvgY(t)
-		svgBody += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
+		svgBody += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="${theme.colors.axis}"/>`
 		if (yAxis.showTickLabels !== false) {
 			svgBody += `<text x="${margin.left - 10}" y="${y + 4}" text-anchor="end">${t}</text>`
 			includeText(ext, margin.left - 10, String(t), "end", 7)
@@ -164,7 +165,7 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 	svgBody += `<polyline points="${pointsStr.trim()}" fill="none" stroke="${parabola.color}" stroke-width="2.5" ${dash}/>`
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="12">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

@@ -3,6 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents, type Extents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 function createRectSchema() {
 	return z
@@ -122,7 +123,7 @@ export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSlider
 		const beforeY = yOffset + (rowHeight - beforeH) / 2 // Center within its row
 		includePointX(ext, beforeX)
 		includePointX(ext, beforeX + beforeW)
-		groupSvg += `<rect x="${beforeX}" y="${beforeY}" width="${beforeW}" height="${beforeH}" fill="${shape.color}" stroke="#333" stroke-width="1"/>`
+		groupSvg += `<rect x="${beforeX}" y="${beforeY}" width="${beforeW}" height="${beforeH}" fill="${shape.color}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thin}"/>`
 		const beforeLabelX = padding.left + shapeWidth / 2
 		includeText(ext, beforeLabelX, "Before", "middle")
 		groupSvg += `<text x="${beforeLabelX}" y="${yOffset + rowHeight + 15}" text-anchor="middle" class="sub-label">Before</text>`
@@ -131,8 +132,8 @@ export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSlider
 		const arrowXStart = padding.left + shapeWidth + 5
 		const arrowXEnd = arrowXStart + colGap - 10
 		const arrowY = yOffset + rowHeight / 2
-		groupSvg += `<defs><marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/></marker></defs>`
-		groupSvg += `<line x1="${arrowXStart}" y1="${arrowY}" x2="${arrowXEnd}" y2="${arrowY}" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>`
+		groupSvg += `<defs><marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.axis}"/></marker></defs>`
+		groupSvg += `<line x1="${arrowXStart}" y1="${arrowY}" x2="${arrowXEnd}" y2="${arrowY}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}" marker-end="url(#arrowhead)"/>`
 
 		// --- After Shape ---
 		const afterW = shape.after.width * scale
@@ -141,7 +142,7 @@ export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSlider
 		const afterY = yOffset + (rowHeight - afterH) / 2 // Center
 		includePointX(ext, afterX)
 		includePointX(ext, afterX + afterW)
-		groupSvg += `<rect x="${afterX}" y="${afterY}" width="${afterW}" height="${afterH}" fill="${shape.color}" stroke="#333" stroke-width="1"/>`
+		groupSvg += `<rect x="${afterX}" y="${afterY}" width="${afterW}" height="${afterH}" fill="${shape.color}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thin}"/>`
 		const afterLabelX = padding.left + shapeWidth + colGap + shapeWidth / 2
 		includeText(ext, afterLabelX, "After", "middle")
 		groupSvg += `<text x="${afterLabelX}" y="${yOffset + rowHeight + 15}" text-anchor="middle" class="sub-label">After</text>`
@@ -165,7 +166,7 @@ export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSlider
 
 	// Final assembly with dynamic width
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 	svg += svgContent
 	svg += "</svg>"
 	return svg

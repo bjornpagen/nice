@@ -4,6 +4,7 @@ import { PADDING } from "@/lib/widgets/utils/constants"
 import { calculateTitleLayout, computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 import { renderWrappedText } from "@/lib/widgets/utils/text"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
+import { theme } from "@/lib/widgets/utils/theme"
 
 // Defines a type of object to be rendered
 const ObjectTypeSchema = z
@@ -85,7 +86,7 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 	const ext = initExtents(width)
 	let svgContent = ""
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">`
 
 	// Add a clean background container with rounded corners and subtle border
 	const containerPadding = 10
@@ -94,7 +95,7 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 	const containerWidth = chartWidth + 2 * containerPadding
 	const containerHeight = chartHeight + 2 * containerPadding
 
-	let containerRect = `<rect x="${containerX}" y="${containerY}" width="${containerWidth}" height="${containerHeight}" fill="#fafafa" stroke="#e0e0e0" stroke-width="2" rx="8" ry="8"/>`
+	let containerRect = `<rect x="${containerX}" y="${containerY}" width="${containerWidth}" height="${containerHeight}" fill="${theme.colors.background}" stroke="${theme.colors.border}" stroke-width="${theme.stroke.width.thick}" rx="8" ry="8"/>`
 
 	// Use renderWrappedText for the title
 	let titleContent = ""
@@ -152,7 +153,7 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 
-	svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
+	svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">`
 	svg += containerRect
 	svg += titleContent
 	svg += svgContent

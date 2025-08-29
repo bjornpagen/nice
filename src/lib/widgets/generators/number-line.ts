@@ -3,6 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 const Point = z
 	.object({
@@ -129,27 +130,27 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 		includePointX(ext, PADDING)
 		includePointX(ext, width - PADDING)
 		
-		svgBody += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="black"/>`
+		svgBody += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="${theme.colors.axis}"/>`
 		const minorTickSpacing = (majorTickInterval / (minorTicksPerInterval + 1)) * scale
 		for (let t = min; t <= max; t += majorTickInterval) {
 			const x = toSvgX(t)
 			includePointX(ext, x)
-			svgBody += `<line x1="${x}" y1="${yPos - 8}" x2="${x}" y2="${yPos + 8}" stroke="black"/>`
+			svgBody += `<line x1="${x}" y1="${yPos - 8}" x2="${x}" y2="${yPos + 8}" stroke="${theme.colors.axis}"/>`
 			if (!specialTickLabels.some((stl) => stl.value === t)) {
-				svgBody += `<text x="${x}" y="${yPos + 25}" fill="black" text-anchor="middle">${t}</text>`
+				svgBody += `<text x="${x}" y="${yPos + 25}" fill="${theme.colors.axisLabel}" text-anchor="middle">${t}</text>`
 				includeText(ext, x, String(t), "middle", 7)
 			}
 			for (let m = 1; m <= minorTicksPerInterval; m++) {
 				const mPos = x + m * minorTickSpacing
 				if (mPos < width - PADDING)
-					svgBody += `<line x1="${mPos}" y1="${yPos - 4}" x2="${mPos}" y2="${yPos + 4}" stroke="black"/>`
+					svgBody += `<line x1="${mPos}" y1="${yPos - 4}" x2="${mPos}" y2="${yPos + 4}" stroke="${theme.colors.axis}"/>`
 			}
 		}
 		// Special Labels
 		for (const s of specialTickLabels) {
 			if (s.label !== "") {
 				const x = toSvgX(s.value)
-				svgBody += `<text x="${x}" y="${yPos + 25}" fill="black" text-anchor="middle" font-weight="bold">${s.label}</text>`
+				svgBody += `<text x="${x}" y="${yPos + 25}" fill="${theme.colors.axisLabel}" text-anchor="middle" font-weight="${theme.font.weight.bold}">${s.label}</text>`
 				includeText(ext, x, s.label, "middle", 7)
 			}
 		}
@@ -177,9 +178,9 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 				default:
 					labelY -= 15 // default to above
 			}
-			svgBody += `<circle cx="${cx}" cy="${yPos}" r="5" fill="${p.color}" stroke="black" stroke-width="1"/>`
+			svgBody += `<circle cx="${cx}" cy="${yPos}" r="${theme.geometry.pointRadius.large}" fill="${p.color}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thin}"/>`
 			if (p.label) {
-				svgBody += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="${anchor}" dominant-baseline="middle">${p.label}</text>`
+				svgBody += `<text x="${labelX}" y="${labelY}" fill="${theme.colors.axisLabel}" text-anchor="${anchor}" dominant-baseline="middle">${p.label}</text>`
 				includeText(ext, labelX, p.label, anchor, 7)
 			}
 		}
@@ -191,26 +192,26 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 		// Track the vertical line
 		includePointX(ext, xPos)
 		
-		svgBody += `<line x1="${xPos}" y1="${PADDING}" x2="${xPos}" y2="${height - PADDING}" stroke="black"/>`
+		svgBody += `<line x1="${xPos}" y1="${PADDING}" x2="${xPos}" y2="${height - PADDING}" stroke="${theme.colors.axis}"/>`
 		const minorTickSpacing = (majorTickInterval / (minorTicksPerInterval + 1)) * scale
 		for (let t = min; t <= max; t += majorTickInterval) {
 			const y = toSvgY(t)
-			svgBody += `<line x1="${xPos - 8}" y1="${y}" x2="${xPos + 8}" y2="${y}" stroke="black"/>`
+			svgBody += `<line x1="${xPos - 8}" y1="${y}" x2="${xPos + 8}" y2="${y}" stroke="${theme.colors.axis}"/>`
 			if (!specialTickLabels.some((stl) => stl.value === t)) {
 				const labelX = xPos - 15
-				svgBody += `<text x="${labelX}" y="${y + 4}" fill="black" text-anchor="end">${t}</text>`
+				svgBody += `<text x="${labelX}" y="${y + 4}" fill="${theme.colors.axisLabel}" text-anchor="end">${t}</text>`
 				includeText(ext, labelX, String(t), "end", 7)
 			}
 			for (let m = 1; m <= minorTicksPerInterval; m++) {
 				const mPos = y - m * minorTickSpacing
-				if (mPos > PADDING) svgBody += `<line x1="${xPos - 4}" y1="${mPos}" x2="${xPos + 4}" y2="${mPos}" stroke="black"/>`
+				if (mPos > PADDING) svgBody += `<line x1="${xPos - 4}" y1="${mPos}" x2="${xPos + 4}" y2="${mPos}" stroke="${theme.colors.axis}"/>`
 			}
 		}
 		// Special Labels
 		for (const s of specialTickLabels) {
 			if (s.label !== "") {
 				const labelX = xPos - 15
-				svgBody += `<text x="${labelX}" y="${toSvgY(s.value) + 4}" fill="black" text-anchor="end" font-weight="bold">${s.label}</text>`
+				svgBody += `<text x="${labelX}" y="${toSvgY(s.value) + 4}" fill="${theme.colors.axisLabel}" text-anchor="end" font-weight="${theme.font.weight.bold}">${s.label}</text>`
 				includeText(ext, labelX, s.label, "end", 7)
 			}
 		}
@@ -233,16 +234,16 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 					labelX += 15
 					anchor = "start" // default to right
 			}
-			svgBody += `<circle cx="${xPos}" cy="${cy}" r="5" fill="${p.color}" stroke="black" stroke-width="1"/>`
+			svgBody += `<circle cx="${xPos}" cy="${cy}" r="${theme.geometry.pointRadius.large}" fill="${p.color}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thin}"/>`
 			if (p.label) {
-				svgBody += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="${anchor}" dominant-baseline="middle">${p.label}</text>`
+				svgBody += `<text x="${labelX}" y="${labelY}" fill="${theme.colors.axisLabel}" text-anchor="${anchor}" dominant-baseline="middle">${p.label}</text>`
 				includeText(ext, labelX, p.label, anchor, 7)
 			}
 		}
 	}
 	
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="12">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

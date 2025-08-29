@@ -5,6 +5,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 function createShapeSchema() {
 	const shape = z
@@ -221,8 +222,8 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	// Validation now handled by schema; preImage already guaranteed to have >=3 vertices and matching labels
 
 	// 1. Use a fixed, predictable coordinate system
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
-	svg += `<defs><marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1fab54"/></marker></defs>`
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
+	svg += `<defs><marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.highlightPrimary}"/></marker></defs>`
 
 	// Helper function needed for coordinate calculations
 	const calculateCentroid = (vertices: Array<{ x: number; y: number }>) => {
@@ -368,7 +369,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			const svgCentroidX = toSvgX(centroid.x)
 			const svgCentroidY = toSvgY(centroid.y)
 			includeText(ext, svgCentroidX, shape.label, "middle", 14)
-			polySvg += `<text x="${svgCentroidX}" y="${svgCentroidY}" text-anchor="middle" dominant-baseline="middle" font-size="14px" font-weight="600" fill="#333">${shape.label}</text>`
+			polySvg += `<text x="${svgCentroidX}" y="${svgCentroidY}" text-anchor="middle" dominant-baseline="middle" font-size="${theme.font.size.medium}" font-weight="${theme.font.weight.bold}" fill="${theme.colors.text}">${shape.label}</text>`
 		}
 
 		return polySvg
@@ -389,7 +390,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			strokeDash = 'stroke-dasharray="2 4"'
 		}
 		const marker = hasArrow ? 'marker-end="url(#arrowhead)"' : ""
-		return `<line x1="${toSvgX(line.from.x)}" y1="${toSvgY(line.from.y)}" x2="${toSvgX(line.to.x)}" y2="${toSvgY(line.to.y)}" stroke="${line.color}" stroke-width="2" ${strokeDash} ${marker}/>`
+		return `<line x1="${toSvgX(line.from.x)}" y1="${toSvgY(line.from.y)}" x2="${toSvgX(line.to.x)}" y2="${toSvgY(line.to.y)}" stroke="${line.color}" stroke-width="${theme.stroke.width.thick}" ${strokeDash} ${marker}/>`
 	}
 
 	const drawRotationArc = (center: { x: number; y: number }, startPoint: { x: number; y: number }, angle: number) => {
@@ -411,7 +412,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		const largeArcFlag = Math.abs(angle) > 180 ? 1 : 0
 		const sweepFlag = angle > 0 ? 0 : 1 // Flip sweep direction for Y-axis flip in SVG coordinates
 
-		return `<path d="M ${startX} ${startY} A ${arcRadius * scale} ${arcRadius * scale} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}" stroke="#ff6600" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>`
+		return `<path d="M ${startX} ${startY} A ${arcRadius * scale} ${arcRadius * scale} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}" stroke="${theme.colors.actionSecondary}" stroke-width="${theme.stroke.width.thick}" fill="none" marker-end="url(#arrowhead)"/>`
 	}
 
 	const drawVertexLabels = (shape: TransformationDiagramProps["preImage"]) => {
@@ -451,7 +452,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			// Track vertex label
 			includeText(ext, labelX, label, "middle", 13)
 			
-			labelsSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="13px" font-weight="600" fill="#333">${label}</text>`
+			labelsSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="${theme.font.size.medium}" font-weight="${theme.font.weight.bold}" fill="${theme.colors.text}">${label}</text>`
 		}
 
 		return labelsSvg
@@ -522,7 +523,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			// Track angle label
 			includeText(ext, labelX, mark.label, "middle", fontSize)
 			
-			markSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}px" fill="#333">${mark.label}</text>`
+			markSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}px" fill="${theme.colors.text}">${mark.label}</text>`
 		}
 
 		return markSvg
@@ -538,10 +539,10 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		includePointX(ext, svgX)
 		
 		if (point.style === "circle") {
-			pointSvg += `<circle cx="${svgX}" cy="${svgY}" r="${radius}" fill="none" stroke="#333" stroke-width="2"/>`
+			pointSvg += `<circle cx="${svgX}" cy="${svgY}" r="${radius}" fill="none" stroke="${theme.colors.text}" stroke-width="${theme.stroke.width.thick}"/>`
 		} else {
 			// dot style
-			pointSvg += `<circle cx="${svgX}" cy="${svgY}" r="${radius}" fill="#333"/>`
+			pointSvg += `<circle cx="${svgX}" cy="${svgY}" r="${radius}" fill="${theme.colors.text}"/>`
 		}
 
 		// Label offset to avoid overlapping with the point
@@ -549,7 +550,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			const labelOffset = 12
 			// Track additional point label (using y - labelOffset for positioning)
 			includeText(ext, svgX, point.label, "middle", 13)
-			pointSvg += `<text x="${svgX}" y="${svgY - labelOffset}" text-anchor="middle" dominant-baseline="bottom" font-size="13px" font-weight="600" fill="#333">${point.label}</text>`
+			pointSvg += `<text x="${svgX}" y="${svgY - labelOffset}" text-anchor="middle" dominant-baseline="bottom" font-size="${theme.font.size.medium}" font-weight="${theme.font.weight.bold}" fill="${theme.colors.text}">${point.label}</text>`
 		}
 
 		return pointSvg
@@ -639,7 +640,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			// Track side length label
 			includeText(ext, labelX, sideLength.value, "middle", fontSize)
 			
-			lengthsSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}px" fill="#333" transform="rotate(${angle} ${labelX} ${labelY})">${sideLength.value}</text>`
+			lengthsSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}px" fill="${theme.colors.text}" transform="rotate(${angle} ${labelX} ${labelY})">${sideLength.value}</text>`
 		}
 
 		return lengthsSvg
@@ -680,7 +681,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 						from: center,
 						to: { x: extendedX, y: extendedY },
 						style: "solid",
-						color: "#1fab54"
+						color: theme.colors.highlightPrimary
 					},
 					false
 				)
@@ -737,9 +738,9 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 						includePointX(ext, preSvgX)
 						includePointX(ext, imgSvgX)
 						
-						svg += `<circle cx="${preSvgX}" cy="${preSvgY}" r="${preVertexRadius}" fill="#1fab54" opacity="0.6" stroke="#fff" stroke-width="0.5"/>`
+						svg += `<circle cx="${preSvgX}" cy="${preSvgY}" r="${preVertexRadius}" fill="${theme.colors.highlightPrimary}" opacity="${theme.opacity.overlay}" stroke="${theme.colors.white}" stroke-width="${theme.stroke.width.thin}"/>`
 						// Image vertices: larger, more prominent
-						svg += `<circle cx="${imgSvgX}" cy="${imgSvgY}" r="${imageVertexRadius}" fill="#1fab54" stroke="#fff" stroke-width="0.5"/>`
+						svg += `<circle cx="${imgSvgX}" cy="${imgSvgY}" r="${imageVertexRadius}" fill="${theme.colors.highlightPrimary}" stroke="${theme.colors.white}" stroke-width="${theme.stroke.width.thin}"/>`
 					}
 				}
 			}
@@ -751,7 +752,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			// Track center point
 			includePointX(ext, centerSvgX)
 			
-			svg += `<circle cx="${centerSvgX}" cy="${centerSvgY}" r="${centerRadius}" fill="#7854ab" stroke="#fff" stroke-width="1.5"/>`
+			svg += `<circle cx="${centerSvgX}" cy="${centerSvgY}" r="${centerRadius}" fill="${theme.colors.highlightPrimary}" stroke="${theme.colors.white}" stroke-width="${theme.stroke.width.base}"/>`
 			break
 		}
 		case "rotation": {
@@ -763,7 +764,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			// Track rotation center
 			includePointX(ext, centerSvgX)
 			
-			svg += `<circle cx="${centerSvgX}" cy="${centerSvgY}" r="${centerRadius}" fill="#7854ab" stroke="#fff" stroke-width="1"/>`
+			svg += `<circle cx="${centerSvgX}" cy="${centerSvgY}" r="${centerRadius}" fill="${theme.colors.highlightPrimary}" stroke="${theme.colors.white}" stroke-width="${theme.stroke.width.thin}"/>`
 
 			// Draw rotation arc to show angle and direction
 			if (preImage.vertices.length > 0) {
@@ -787,7 +788,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 								from: preVertex,
 								to: imageVertex,
 								style: "dotted",
-								color: "#cccccc"
+								color: theme.colors.gridMinor
 							},
 							false
 						)
@@ -803,8 +804,8 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 						includePointX(ext, preSvgX)
 						includePointX(ext, imgSvgX)
 						
-						svg += `<circle cx="${preSvgX}" cy="${preSvgY}" r="${vertexRadius}" fill="#888" opacity="0.6"/>`
-						svg += `<circle cx="${imgSvgX}" cy="${imgSvgY}" r="${vertexRadius}" fill="#888" opacity="0.6"/>`
+						svg += `<circle cx="${preSvgX}" cy="${preSvgY}" r="${vertexRadius}" fill="${theme.colors.textSecondary}" opacity="${theme.opacity.overlay}"/>`
+						svg += `<circle cx="${imgSvgX}" cy="${imgSvgY}" r="${vertexRadius}" fill="${theme.colors.textSecondary}" opacity="${theme.opacity.overlay}"/>`
 					}
 				}
 			}

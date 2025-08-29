@@ -11,6 +11,7 @@ import {
 	includeText,
 	initExtents,
 } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidRange = errors.new("min must be less than max")
 
@@ -70,7 +71,7 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	// Track the main line endpoints
 	includePointX(ext, PADDING)
 	includePointX(ext, width - PADDING)
-	svgBody += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="black" stroke-width="1.5"/>`
+	svgBody += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"/>`
 
 	// Ticks and labels with text-aware selection
 	const tickValues: number[] = []
@@ -85,9 +86,9 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	tickValues.forEach((t, i) => {
 		const x = toSvgX(t)
 		includePointX(ext, x)
-		svgBody += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="black" stroke-width="1"/>`
+		svgBody += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thin}"/>`
 		if (selectedLabels.has(i)) {
-			svgBody += `<text x="${x}" y="${yPos + 20}" fill="black" text-anchor="middle">${t}</text>`
+			svgBody += `<text x="${x}" y="${yPos + 20}" fill="${theme.colors.text}" text-anchor="middle">${t}</text>`
 			includeText(ext, x, String(t), "middle", 8)
 		}
 	})
@@ -101,16 +102,16 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	if (showDistanceLabel) {
 		const labelX = (zeroPos + valuePos) / 2
 		const labelText = `|${value}| = ${absValue}`
-		svgBody += `<text x="${labelX}" y="${yPos - 15}" fill="black" text-anchor="middle" font-weight="bold">${labelText}</text>`
+		svgBody += `<text x="${labelX}" y="${yPos - 15}" fill="${theme.colors.text}" text-anchor="middle" font-weight="${theme.font.weight.bold}">${labelText}</text>`
 		includeText(ext, labelX, labelText, "middle", 8)
 	}
 
 	includePointX(ext, valuePos)
-	svgBody += `<circle cx="${valuePos}" cy="${yPos}" r="5" fill="${highlightColor}" stroke="black" stroke-width="1"/>`
+	svgBody += `<circle cx="${valuePos}" cy="${yPos}" r="${theme.geometry.pointRadius.large}" fill="${highlightColor}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thin}"/>`
 
 	// Apply dynamic width at the end
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

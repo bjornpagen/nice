@@ -3,6 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 // Defines a line segment, such as a radius or a diameter.
 const SegmentSchema = z
@@ -255,7 +256,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 				const p1 = pointOnCircle(sector.startAngle, markerSize)
 				const p3 = pointOnCircle(sector.startAngle + 45, markerSize * Math.sqrt(2))
 				const p2 = pointOnCircle(sector.endAngle, markerSize)
-				svgBody += `<path d="M ${p1.x},${p1.y} L ${p3.x},${p3.y} L ${p2.x},${p2.y}" fill="none" stroke="black" stroke-width="1.5"/>`
+				svgBody += `<path d="M ${p1.x},${p1.y} L ${p3.x},${p3.y} L ${p2.x},${p2.y}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"/>`
 			}
 		}
 	}
@@ -272,7 +273,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 			includePointX(ext, start.x)
 			includePointX(ext, end.x)
 			const pathData = `M ${start.x},${start.y} A ${r},${r} 0 0 1 ${end.x},${end.y} Z`
-			svgBody += `<path d="${pathData}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="2"/>`
+			svgBody += `<path d="${pathData}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${theme.stroke.width.thick}"/>`
 			break
 		}
 		case "quarter-circle": {
@@ -286,11 +287,11 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 			includePointX(ext, start.x)
 			includePointX(ext, end.x)
 			const pathData = `M ${cx},${cy} L ${start.x},${start.y} A ${r},${r} 0 0 1 ${end.x},${end.y} Z`
-			svgBody += `<path d="${pathData}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="2"/>`
+			svgBody += `<path d="${pathData}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${theme.stroke.width.thick}"/>`
 			break
 		}
 		default: {
-			svgBody += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="2"/>`
+			svgBody += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${theme.stroke.width.thick}"/>`
 			includePointX(ext, cx - r)
 			includePointX(ext, cx + r)
 			break
@@ -300,7 +301,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 	// The inner circle is only drawn for the main "circle" shape.
 	if (shape === "circle" && innerRadius) {
 		const rInner = innerRadius * scale
-		svgBody += `<circle cx="${cx}" cy="${cy}" r="${rInner}" fill="white" stroke="black" stroke-width="2"/>`
+		svgBody += `<circle cx="${cx}" cy="${cy}" r="${rInner}" fill="${theme.colors.white}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 		includePointX(ext, cx - rInner)
 		includePointX(ext, cx + rInner)
 	}
@@ -315,13 +316,13 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 			includePointX(ext, end.x)
 			const largeArcFlag = Math.abs(arc.endAngle - arc.startAngle) > 180 ? 1 : 0
 			const pathData = `M ${start.x},${start.y} A ${r},${r} 0 ${largeArcFlag} 1 ${end.x},${end.y}`
-			svgBody += `<path d="${pathData}" fill="none" stroke="${arc.strokeColor}" stroke-width="3"/>`
+			svgBody += `<path d="${pathData}" fill="none" stroke="${arc.strokeColor}" stroke-width="${theme.stroke.width.xxthick}"/>`
 			if (arc.label !== null) {
 				const midAngle = (arc.startAngle + arc.endAngle) / 2
 				const labelPos = pointOnCircle(midAngle, r + PADDING)
 				const finalX = clamp(labelPos.x, PADDING, width - PADDING)
 				const finalY = clamp(labelPos.y, PADDING, height - PADDING)
-				svgBody += `<text x="${finalX}" y="${finalY}" font-size="14px" font-weight="bold" fill="#333" text-anchor="middle" dominant-baseline="middle">${arc.label}</text>`
+				svgBody += `<text x="${finalX}" y="${finalY}" font-size="${theme.font.size.medium}" font-weight="${theme.font.weight.bold}" fill="${theme.colors.text}" text-anchor="middle" dominant-baseline="middle">${arc.label}</text>`
 				// NEW: Track arc label extents
 				includeText(ext, finalX, arc.label, "middle", 7)
 			}
@@ -347,7 +348,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 			includePointX(ext, lineStart.x)
 			includePointX(ext, lineEnd.x)
 			
-			svgBody += `<line x1="${lineStart.x}" y1="${lineStart.y}" x2="${lineEnd.x}" y2="${lineEnd.y}" stroke="${seg.color}" stroke-width="2"/>`
+			svgBody += `<line x1="${lineStart.x}" y1="${lineStart.y}" x2="${lineEnd.x}" y2="${lineEnd.y}" stroke="${seg.color}" stroke-width="${theme.stroke.width.thick}"/>`
 
 			if (seg.label) {
 				const labelStartRadius = shape === "circle" && innerRadius ? innerRadius * scale : 0
@@ -359,7 +360,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 				const offsetY = Math.cos(angleRad) * 10 * verticalOffsetMultiplier
 				const finalX = clamp(mid.x + offsetX, PADDING, width - PADDING)
 				const finalY = clamp(mid.y + offsetY, PADDING, height - PADDING)
-				svgBody += `<text x="${finalX}" y="${finalY}" font-size="13px" fill="#333" text-anchor="middle" dominant-baseline="middle">${seg.label}</text>`
+				svgBody += `<text x="${finalX}" y="${finalY}" font-size="${theme.font.size.base}" fill="${theme.colors.text}" text-anchor="middle" dominant-baseline="middle">${seg.label}</text>`
 				// NEW: Track segment label extents
 				includeText(ext, finalX, seg.label, "middle", 7)
 			}
@@ -367,19 +368,19 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 	}
 
 	if (showCenterDot) {
-		svgBody += `<circle cx="${cx}" cy="${cy}" r="3" fill="black"/>`
+		svgBody += `<circle cx="${cx}" cy="${cy}" r="${theme.geometry.pointRadius.small}" fill="${theme.colors.black}"/>`
 	}
 
 	if (areaLabel !== null) {
 		const yOffset = -10
-		svgBody += `<text x="${cx}" y="${cy + yOffset}" font-size="16px" font-weight="bold" fill="#333" text-anchor="middle" dominant-baseline="middle">${areaLabel}</text>`
+		svgBody += `<text x="${cx}" y="${cy + yOffset}" font-size="${theme.font.size.large}" font-weight="${theme.font.weight.bold}" fill="${theme.colors.text}" text-anchor="middle" dominant-baseline="middle">${areaLabel}</text>`
 		// NEW: Track area label extents
 		includeText(ext, cx, areaLabel, "middle", 8)
 	}
 
 	// NEW: Apply dynamic width and viewBox at the end
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

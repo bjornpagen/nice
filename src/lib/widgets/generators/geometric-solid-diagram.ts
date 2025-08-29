@@ -2,6 +2,7 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 const Cylinder = z
 	.object({
@@ -107,7 +108,7 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 	
 	const ext = initExtents(width)
 	
-	let svgBody = `<defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black" /></marker></defs>`
+	let svgBody = `<defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}" /></marker></defs>`
 
 	const availableWidth = width - 2 * PADDING - labelSpace
 	const availableHeight = height - 2 * PADDING - labelSpace
@@ -128,29 +129,29 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		// --- END ADDED ---
 
 		// Side lines
-		svgBody += `<line x1="${cx - r}" y1="${topY}" x2="${cx - r}" y2="${bottomY}" stroke="black" stroke-width="2"/>`
-		svgBody += `<line x1="${cx + r}" y1="${topY}" x2="${cx + r}" y2="${bottomY}" stroke="black" stroke-width="2"/>`
+		svgBody += `<line x1="${cx - r}" y1="${topY}" x2="${cx - r}" y2="${bottomY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+		svgBody += `<line x1="${cx + r}" y1="${topY}" x2="${cx + r}" y2="${bottomY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 
 		// Bottom base (draw back dashed part first, then front solid part)
-		svgBody += `<path d="M ${cx - r} ${bottomY} A ${r} ${ry} 0 0 0 ${cx + r} ${bottomY}" fill="none" stroke="black" stroke-width="2" stroke-dasharray="4 3"/>`
-		svgBody += `<path d="M ${cx - r} ${bottomY} A ${r} ${ry} 0 0 1 ${cx + r} ${bottomY}" fill="rgba(200, 200, 200, 0.2)" stroke="black" stroke-width="2"/>`
+		svgBody += `<path d="M ${cx - r} ${bottomY} A ${r} ${ry} 0 0 0 ${cx + r} ${bottomY}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}" stroke-dasharray="${theme.stroke.dasharray.dashed}"/>`
+		svgBody += `<path d="M ${cx - r} ${bottomY} A ${r} ${ry} 0 0 1 ${cx + r} ${bottomY}" fill="rgba(200, 200, 200, 0.2)" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 
 		// Top base
-		svgBody += `<ellipse cx="${cx}" cy="${topY}" rx="${r}" ry="${ry}" fill="rgba(220, 220, 220, 0.4)" stroke="black" stroke-width="2"/>`
+		svgBody += `<ellipse cx="${cx}" cy="${topY}" rx="${r}" ry="${ry}" fill="rgba(220, 220, 220, 0.4)" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 
 		for (const l of labels) {
 			if (l.target === "radius") {
 				// Dashed line for radius on the bottom base
-				svgBody += `<line x1="${cx}" y1="${bottomY}" x2="${cx + r}" y2="${bottomY}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
+				svgBody += `<line x1="${cx}" y1="${bottomY}" x2="${cx + r}" y2="${bottomY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.backEdge}"/>`
 				const textY = Math.min(bottomY + 18, height - 10) // Ensure text stays within bounds
-				svgBody += `<text x="${cx + r / 2}" y="${textY}" fill="black" text-anchor="middle">${l.text}</text>`
+				svgBody += `<text x="${cx + r / 2}" y="${textY}" fill="${theme.colors.text}" text-anchor="middle">${l.text}</text>`
 				includeText(ext, cx + r / 2, String(l.text), "middle", 7)
 			}
 			if (l.target === "height") {
 				// External line with arrows for height
 				const lineX = Math.min(cx + r + 15, width - 50) // Ensure it stays within bounds
-				svgBody += `<line x1="${lineX}" y1="${topY}" x2="${lineX}" y2="${bottomY}" stroke="black" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
-				svgBody += `<text x="${lineX + 10}" y="${height / 2}" fill="black" dominant-baseline="middle">${l.text}</text>`
+				svgBody += `<line x1="${lineX}" y1="${topY}" x2="${lineX}" y2="${bottomY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
+				svgBody += `<text x="${lineX + 10}" y="${height / 2}" fill="${theme.colors.text}" dominant-baseline="middle">${l.text}</text>`
 				includeText(ext, lineX + 10, String(l.text), "start", 7)
 			}
 		}
@@ -170,28 +171,28 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		// --- END ADDED ---
 
 		// Generator lines
-		svgBody += `<line x1="${cx - r}" y1="${baseY}" x2="${cx}" y2="${apexY}" stroke="black" stroke-width="2"/>`
-		svgBody += `<line x1="${cx + r}" y1="${baseY}" x2="${cx}" y2="${apexY}" stroke="black" stroke-width="2"/>`
+		svgBody += `<line x1="${cx - r}" y1="${baseY}" x2="${cx}" y2="${apexY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+		svgBody += `<line x1="${cx + r}" y1="${baseY}" x2="${cx}" y2="${apexY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 
 		// Base (draw back dashed part first, then front solid part)
-		svgBody += `<path d="M ${cx - r} ${baseY} A ${r} ${ry} 0 0 0 ${cx + r} ${baseY}" fill="none" stroke="black" stroke-width="2" stroke-dasharray="4 3"/>`
-		svgBody += `<path d="M ${cx - r} ${baseY} A ${r} ${ry} 0 0 1 ${cx + r} ${baseY}" fill="rgba(200, 200, 200, 0.2)" stroke="black" stroke-width="2"/>`
+		svgBody += `<path d="M ${cx - r} ${baseY} A ${r} ${ry} 0 0 0 ${cx + r} ${baseY}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}" stroke-dasharray="${theme.stroke.dasharray.dashed}"/>`
+		svgBody += `<path d="M ${cx - r} ${baseY} A ${r} ${ry} 0 0 1 ${cx + r} ${baseY}" fill="rgba(200, 200, 200, 0.2)" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 
 		for (const l of labels) {
 			if (l.target === "radius") {
 				// Dashed line from center to right for radius
-				svgBody += `<line x1="${cx}" y1="${baseY}" x2="${cx + r}" y2="${baseY}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
+				svgBody += `<line x1="${cx}" y1="${baseY}" x2="${cx + r}" y2="${baseY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.backEdge}"/>`
 				const textY = Math.min(baseY + 18, height - 10) // Ensure text stays within bounds
-				svgBody += `<text x="${cx + r / 2}" y="${textY}" fill="black" text-anchor="middle">${l.text}</text>`
+				svgBody += `<text x="${cx + r / 2}" y="${textY}" fill="${theme.colors.text}" text-anchor="middle">${l.text}</text>`
 				includeText(ext, cx + r / 2, String(l.text), "middle", 7)
 			}
 			if (l.target === "height") {
 				// Dashed line from apex to center for height
-				svgBody += `<line x1="${cx}" y1="${apexY}" x2="${cx}" y2="${baseY}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
+				svgBody += `<line x1="${cx}" y1="${apexY}" x2="${cx}" y2="${baseY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.backEdge}"/>`
 				// Right angle indicator
 				const indicatorSize = Math.min(10, r * 0.2)
-				svgBody += `<path d="M ${cx + indicatorSize} ${baseY} L ${cx + indicatorSize} ${baseY - indicatorSize} L ${cx} ${baseY - indicatorSize}" fill="none" stroke="black" stroke-width="1"/>`
-				svgBody += `<text x="${cx - 10}" y="${height / 2}" fill="black" text-anchor="end" dominant-baseline="middle">${l.text}</text>`
+				svgBody += `<path d="M ${cx + indicatorSize} ${baseY} L ${cx + indicatorSize} ${baseY - indicatorSize} L ${cx} ${baseY - indicatorSize}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thin}"/>`
+				svgBody += `<text x="${cx - 10}" y="${height / 2}" fill="${theme.colors.text}" text-anchor="end" dominant-baseline="middle">${l.text}</text>`
 				includeText(ext, cx - 10, String(l.text), "end", 7)
 			}
 		}
@@ -209,24 +210,24 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		// --- END ADDED ---
 
 		// Main sphere outline
-		svgBody += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="rgba(220, 220, 220, 0.4)" stroke="black" stroke-width="2"/>`
+		svgBody += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="rgba(220, 220, 220, 0.4)" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 
 		// Internal equator for 3D effect (dashed back, solid front)
-		svgBody += `<path d="M ${cx - r} ${cy} A ${r} ${ry} 0 0 0 ${cx + r} ${cy}" fill="none" stroke="black" stroke-width="1.5" stroke-dasharray="4 3"/>`
-		svgBody += `<path d="M ${cx - r} ${cy} A ${r} ${ry} 0 0 1 ${cx + r} ${cy}" fill="none" stroke="black" stroke-width="1.5"/>`
+		svgBody += `<path d="M ${cx - r} ${cy} A ${r} ${ry} 0 0 0 ${cx + r} ${cy}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.dashed}"/>`
+		svgBody += `<path d="M ${cx - r} ${cy} A ${r} ${ry} 0 0 1 ${cx + r} ${cy}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"/>`
 
 		for (const l of labels) {
 			if (l.target === "radius") {
 				// Dashed line from center to circumference for radius
-				svgBody += `<line x1="${cx}" y1="${cy}" x2="${cx + r}" y2="${cy}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
-				svgBody += `<text x="${cx + r / 2}" y="${cy - 10}" fill="black" text-anchor="middle">${l.text}</text>`
+				svgBody += `<line x1="${cx}" y1="${cy}" x2="${cx + r}" y2="${cy}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.backEdge}"/>`
+				svgBody += `<text x="${cx + r / 2}" y="${cy - 10}" fill="${theme.colors.text}" text-anchor="middle">${l.text}</text>`
 				includeText(ext, cx + r / 2, String(l.text), "middle", 7)
 			}
 		}
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

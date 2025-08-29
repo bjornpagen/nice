@@ -4,6 +4,7 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidBaseShape = errors.new("invalid base shape for polyhedron type")
 
@@ -262,7 +263,7 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 	const rect = (x: number, y: number, w: number, h: number) => {
 		includePointX(ext, x)
 		includePointX(ext, x + w)
-		return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="rgba(200,200,200,0.3)" stroke="black" stroke-width="2"/>`
+		return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="rgba(200,200,200,0.3)" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 	}
 
 	const poly = (points: string) => {
@@ -270,7 +271,7 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 		pointCoords.forEach(p => {
 			if (p[0]) includePointX(ext, p[0]);
 		});
-		return `<polygon points="${points}" fill="rgba(200,200,200,0.3)" stroke="black" stroke-width="2"/>`
+		return `<polygon points="${points}" fill="rgba(200,200,200,0.3)" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 	}
 
 	const drawGridLines = (x: number, y: number, w: number, h: number, dim_w: number, dim_h: number) => {
@@ -278,10 +279,10 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 		const unit_h = h / dim_h
 		let grid = ""
 		for (let i = 1; i < dim_w; i++) {
-			grid += `<line x1="${x + i * unit_w}" y1="${y}" x2="${x + i * unit_w}" y2="${y + h}" stroke="black" stroke-width="0.5"/>`
+			grid += `<line x1="${x + i * unit_w}" y1="${y}" x2="${x + i * unit_w}" y2="${y + h}" stroke="${theme.colors.black}" stroke-width="0.5"/>`
 		}
 		for (let i = 1; i < dim_h; i++) {
-			grid += `<line x1="${x}" y1="${y + i * unit_h}" x2="${x + w}" y2="${y + i * unit_h}" stroke="black" stroke-width="0.5"/>`
+			grid += `<line x1="${x}" y1="${y + i * unit_h}" x2="${x + w}" y2="${y + i * unit_h}" stroke="${theme.colors.black}" stroke-width="0.5"/>`
 		}
 		return grid
 	}
@@ -624,7 +625,7 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
 
-	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 	svg += svgContent
 	svg += "</svg>"
 	return svg

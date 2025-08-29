@@ -15,6 +15,7 @@ import {
 	initExtents
 } from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel, renderWrappedText } from "@/lib/widgets/utils/text"
+import { theme } from "@/lib/widgets/utils/theme"
 
 const PointSchema = z.object({
 	x: z.number().describe("The x-coordinate (horizontal value) of the data point."),
@@ -129,8 +130,8 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
 
 	// Axes and Labels
-	svgBody += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black" stroke-width="2"/>` // Y-axis
-	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black" stroke-width="2"/>` // X-axis
+	svgBody += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>` // Y-axis
+	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>` // X-axis
 
 	svgBody += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
 	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
@@ -149,7 +150,7 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 
 	xAxis.tickValues.forEach((val, i) => {
 		const x = toSvgX(val)
-		svgBody += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="black" stroke-width="2"/>`
+		svgBody += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
 		if (selectedXLabels.has(i)) {
 			svgBody += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${val}</text>`
 			includeText(ext, x, String(val), "middle", 7)
@@ -157,12 +158,12 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	})
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = toSvgY(t)
-		svgBody += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black" stroke-width="2"/>`
+		svgBody += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
 		// CHANGED: Removed concatenation of `yAxis.tickFormat`.
 		svgBody += `<text x="${margin.left - 10}" y="${y + 5}" text-anchor="end">${t}</text>`
 		includeText(ext, margin.left - 10, `${t}`, "end", 7)
 		if (yAxis.showGridLines && t > yAxis.min) {
-			svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#e0e0e0"/>`
+			svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="${theme.colors.gridMajor}"/>`
 		}
 	}
 
@@ -186,7 +187,7 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	includeText(ext, toSvgX(1850), abbreviateMonth(topArea.label), "middle", 7)
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

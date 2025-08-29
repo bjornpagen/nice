@@ -7,6 +7,7 @@ import {
 	includePointX,
 	initExtents,
 } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 // Defines the properties for a rectangular prism solid
 const RectangularPrismDataSchema = z
@@ -446,8 +447,8 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 	const ext = initExtents(width) // Initialize extents tracking
 	let svgBody = ""
 	
-	const solidStroke = 'stroke="black" stroke-width="1.5"'
-	const hiddenStroke = `${solidStroke} stroke-dasharray="4 3"`
+	const solidStroke = `stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"`
+	const hiddenStroke = `stroke="${theme.colors.hiddenEdge}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.dashed}"`
 
 	// Draw hidden edges
 	if (showHiddenEdges) {
@@ -489,12 +490,12 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 				return `${svgP.x},${svgP.y}`
 			})
 			.join(" ")
-		svgBody += `<polygon points="${pointsStr}" fill="${intersectionColor}" stroke="black" stroke-width="2"/>`
+		svgBody += `<polygon points="${pointsStr}" fill="${intersectionColor}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 	}
 
 	// Apply dynamic width at the end
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

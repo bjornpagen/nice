@@ -11,6 +11,7 @@ import {
 	initExtents 
 } from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
+import { theme } from "@/lib/widgets/utils/theme"
 
 const AnnotationSchema = z.object({
 	year: z.number().describe("The year on the x-axis that the annotation arrow should point to."),
@@ -187,20 +188,20 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 	}
 
 	const ext = initExtents(width)
-	let svgBody = `<defs><marker id="co2-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker></defs>`
+	let svgBody = `<defs><marker id="co2-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}"/></marker></defs>`
 		+ "<style>.axis-label { font-size: 16px; text-anchor: middle; } .annotation-label { font-size: 16px; font-weight: bold; text-anchor: start; }</style>"
 
 	// Gridlines and Axes
 	for (let t = yAxis.min; t <= yAxis.max; t += 20) {
 		const y = toSvgY(t)
-		svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#e0e0e0"/>`
+		svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="${theme.colors.gridMajor}"/>`
 		svgBody += `<text x="${margin.left - 10}" y="${y + 5}" text-anchor="end">${t}</text>`
 		includeText(ext, margin.left - 10, String(t), "end", 7)
 	}
-	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black" stroke-width="1.5"/>`
+	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
 	for (const year of [1, 500, 1000, 1500, 2021]) {
 		const x = toSvgX(year)
-		svgBody += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="black" stroke-width="1.5"/>`
+		svgBody += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
 		svgBody += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${year}</text>`
 		includeText(ext, x, String(year), "middle", 7)
 	}
@@ -217,7 +218,7 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 		includePointX(ext, toSvgX(p.year))
 	})
 	const pointsStr = CO2_DATA.map((p) => `${toSvgX(p.year)},${toSvgY(p.ppm)}`).join(" ")
-	svgBody += `<polyline points="${pointsStr}" fill="none" stroke="black" stroke-width="2.5"/>`
+	svgBody += `<polyline points="${pointsStr}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.xthick}"/>`
 
 	// Annotations - always placed in upper left corner area
 	annotations.forEach((anno, index) => {
@@ -230,7 +231,7 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 		const textY = margin.top + 40 + index * 60
 
 		// Draw arrow from text to target point on curve
-		svgBody += `<line x1="${textX}" y1="${textY + 20}" x2="${targetX}" y2="${targetY}" stroke="black" stroke-width="1.5" marker-end="url(#co2-arrow)"/>`
+		svgBody += `<line x1="${textX}" y1="${textY + 20}" x2="${targetX}" y2="${targetY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" marker-end="url(#co2-arrow)"/>`
 		svgBody += renderMultiLineText(anno.text, textX, textY, "annotation-label", "1.1em")
 		for (const line of anno.text) {
 			includeText(ext, textX, line, "start", 7)
@@ -238,7 +239,7 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 	})
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

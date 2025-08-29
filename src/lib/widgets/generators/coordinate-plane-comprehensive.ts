@@ -17,6 +17,7 @@ import {
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 export const CoordinatePlaneComprehensivePropsSchema = z
 	.object({
@@ -122,7 +123,7 @@ export const generateCoordinatePlaneComprehensive: WidgetGenerator<typeof Coordi
 
 	// 3. Compute final width and assemble the complete SVG
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, PADDING)
-	let finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	let finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 	finalSvg += base.svgBody
 	finalSvg += content
 	finalSvg += `</svg>`

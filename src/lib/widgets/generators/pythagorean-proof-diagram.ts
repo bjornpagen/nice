@@ -3,6 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includeText, includePointX, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 function createSideSquareSchema() {
 	return z
@@ -167,7 +168,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	includePointX(ext, v_c1.x)
 	includePointX(ext, v_c2.x)
 
-	svgBody += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_b_end.x},${v_b_end.y} ${v_c1.x},${v_c1.y} ${v_c2.x},${v_c2.y}" fill="${squareC.color}" stroke="#333333" stroke-width="1"/>`
+	svgBody += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_b_end.x},${v_b_end.y} ${v_c1.x},${v_c1.y} ${v_c2.x},${v_c2.y}" fill="${squareC.color}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thin}"/>`
 
 	// Add grid lines for square C
 	svgBody += generateRotatedGrid(v_a_end, v_b_end, v_c2, c)
@@ -188,7 +189,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	includePointX(ext, rectB_x)
 	includePointX(ext, rectB_x + sb)
 
-	svgBody += `<rect x="${rectB_x}" y="${rectB_y}" width="${sb}" height="${sb}" fill="${squareB.color}" stroke="#333333" stroke-width="1"/>`
+	svgBody += `<rect x="${rectB_x}" y="${rectB_y}" width="${sb}" height="${sb}" fill="${squareB.color}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thin}"/>`
 
 	// Add grid lines for square B
 	svgBody += generateRectangularGrid(v_right.x, v_b_end.y, sb, sb, b)
@@ -208,7 +209,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	includePointX(ext, rectA_x)
 	includePointX(ext, rectA_x + sa)
 
-	svgBody += `<rect x="${rectA_x}" y="${rectA_y}" width="${sa}" height="${sa}" fill="${squareA.color}" stroke="#333333" stroke-width="1"/>`
+	svgBody += `<rect x="${rectA_x}" y="${rectA_y}" width="${sa}" height="${sa}" fill="${squareA.color}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thin}"/>`
 
 	// Add grid lines for square A
 	svgBody += generateRectangularGrid(v_a_end.x, v_a_end.y, sa, sa, a)
@@ -227,10 +228,10 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	includePointX(ext, v_right.x)
 	includePointX(ext, v_b_end.x)
 
-	svgBody += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_right.x},${v_right.y} ${v_b_end.x},${v_b_end.y}" fill="#FAFAFA" stroke="#333333" stroke-width="2"/>`
+	svgBody += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_right.x},${v_right.y} ${v_b_end.x},${v_b_end.y}" fill="${theme.colors.background}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

@@ -3,6 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includePointX, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 const Item = z
 	.object({
@@ -192,7 +193,7 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 			const fill = item.style === "filled" ? item.color : "none"
 			const stroke = item.color
 
-			svgContent += `<ellipse cx="${cx}" cy="${cy}" rx="${iconRadiusX}" ry="${iconRadiusY}" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`
+			svgContent += `<ellipse cx="${cx}" cy="${cy}" rx="${iconRadiusX}" ry="${iconRadiusY}" fill="${fill}" stroke="${stroke}" stroke-width="${theme.stroke.width.thick}"/>`
 		}
 
 		// Draw boxes
@@ -206,7 +207,7 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 				const boxHeight = (endRow - startRow + 1) * cellHeight + boxPadding
 				includePointX(ext, x)
 				includePointX(ext, x + boxWidth)
-				svgContent += `<rect x="${x}" y="${y}" width="${boxWidth}" height="${boxHeight}" fill="none" stroke="black" stroke-width="2"/>`
+				svgContent += `<rect x="${x}" y="${y}" width="${boxWidth}" height="${boxHeight}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 			}
 
 			// Draw outer box first (so it appears behind inner box)
@@ -253,7 +254,7 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 			const fill = item.style === "filled" ? item.color : "none"
 			const stroke = item.color
 
-			svgContent += `<ellipse cx="${cx}" cy="${cy}" rx="${iconRadiusX}" ry="${iconRadiusY}" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`
+			svgContent += `<ellipse cx="${cx}" cy="${cy}" rx="${iconRadiusX}" ry="${iconRadiusY}" fill="${fill}" stroke="${stroke}" stroke-width="${theme.stroke.width.thick}"/>`
 		}
 
 		// Helper function to draw a box based on grid cell coordinates
@@ -265,7 +266,7 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 			const boxHeight = (endRow - startRow + 1) * cellHeight - boxPadding
 			includePointX(ext, x)
 			includePointX(ext, x + boxWidth)
-			svgContent += `<rect x="${x}" y="${y}" width="${boxWidth}" height="${boxHeight}" fill="none" stroke="black" stroke-width="2"/>`
+			svgContent += `<rect x="${x}" y="${y}" width="${boxWidth}" height="${boxHeight}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 		}
 
 		// 2. Render Partition Boxes

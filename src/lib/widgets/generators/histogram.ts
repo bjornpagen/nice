@@ -16,6 +16,7 @@ import {
 	initExtents
 } from "@/lib/widgets/utils/layout"
 import { renderRotatedWrappedYAxisLabel, renderWrappedText } from "@/lib/widgets/utils/text"
+import { theme } from "@/lib/widgets/utils/theme"
 
 const Bin = z
 	.object({
@@ -169,8 +170,8 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	svgBody += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", maxTextWidth, 8)
 	includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
 
-	svgBody += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="#333333"/>` // Y-axis
-	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="#333333"/>` // X-axis
+	svgBody += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}"/>` // Y-axis
+	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}"/>` // X-axis
 
 	// Axis Labels
 	svgBody += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
@@ -187,8 +188,8 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	const yTickInterval = yAxis.tickInterval
 	for (let t = 0; t <= maxFreq; t += yTickInterval) {
 		const y = height - margin.bottom - t * scaleY
-		svgBody += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="#333333"/>`
-		svgBody += `<text x="${margin.left - 10}" y="${y + 4}" fill="#333333" text-anchor="end">${t}</text>`
+		svgBody += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="${theme.colors.axis}"/>`
+		svgBody += `<text x="${margin.left - 10}" y="${y + 4}" fill="${theme.colors.axisLabel}" text-anchor="end">${t}</text>`
 		includeText(ext, margin.left - 10, String(t), "end", 7) // MODIFICATION: Add this line
 	}
 
@@ -202,7 +203,7 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		includePointX(ext, x)
 		includePointX(ext, x + binWidth)
 		
-		svgBody += `<rect x="${x}" y="${y}" width="${binWidth}" height="${barHeight}" fill="#6495ED" stroke="#333333"/>`
+		svgBody += `<rect x="${x}" y="${y}" width="${binWidth}" height="${barHeight}" fill="${theme.colors.highlightPrimary}" stroke="${theme.colors.axis}"/>`
 	})
 
 	// Compute boundary tick labels from numeric separators
@@ -216,13 +217,13 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		if (!selected.has(i)) return
 		const labelX = margin.left + i * binWidth
 		const labelY = height - margin.bottom + 28
-		svgBody += `<text class="x-tick" x="${labelX}" y="${labelY}" fill="#333333" text-anchor="middle">${sep}</text>`
+		svgBody += `<text class="x-tick" x="${labelX}" y="${labelY}" fill="${theme.colors.axisLabel}" text-anchor="middle">${sep}</text>`
 		// Track the x-axis tick label
 		includeText(ext, labelX, String(sep), "middle", 6)
 	})
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

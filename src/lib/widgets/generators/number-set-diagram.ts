@@ -3,6 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { computeDynamicWidth, includeText, includePointX, initExtents } from "@/lib/widgets/utils/layout"
+import { theme } from "@/lib/widgets/utils/theme"
 
 function createStyleSchema() {
 	return z
@@ -91,7 +92,7 @@ export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPr
 	// Rational Numbers (outermost of the nested set)
 	includePointX(ext, mainCenterX - rationalRx)
 	includePointX(ext, mainCenterX + rationalRx)
-	svgBody += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${rationalRx}" ry="${rationalRy}" fill="${sets.rational.color}" stroke="black" />`
+	svgBody += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${rationalRx}" ry="${rationalRy}" fill="${sets.rational.color}" stroke="${theme.colors.black}" />`
 	if (sets.rational.label !== null) {
 		svgBody += `<text x="${mainCenterX}" y="${mainCenterY - rationalRy + 20}" class="set-label">${sets.rational.label}</text>`
 		includeText(ext, mainCenterX, sets.rational.label, "middle", 7)
@@ -102,7 +103,7 @@ export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPr
 	const integerRy = rationalRy * 0.7
 	includePointX(ext, mainCenterX - integerRx)
 	includePointX(ext, mainCenterX + integerRx)
-	svgBody += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${integerRx}" ry="${integerRy}" fill="${sets.integer.color}" stroke="black" />`
+	svgBody += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${integerRx}" ry="${integerRy}" fill="${sets.integer.color}" stroke="${theme.colors.black}" />`
 	if (sets.integer.label !== null) {
 		svgBody += `<text x="${mainCenterX}" y="${mainCenterY - integerRy + (rationalRy - integerRy) / 2}" class="set-label">${sets.integer.label}</text>`
 		includeText(ext, mainCenterX, sets.integer.label, "middle", 7)
@@ -113,7 +114,7 @@ export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPr
 	const wholeRy = integerRy * 0.6
 	includePointX(ext, mainCenterX - wholeRx)
 	includePointX(ext, mainCenterX + wholeRx)
-	svgBody += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${wholeRx}" ry="${wholeRy}" fill="${sets.whole.color}" stroke="black" />`
+	svgBody += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${wholeRx}" ry="${wholeRy}" fill="${sets.whole.color}" stroke="${theme.colors.black}" />`
 	if (sets.whole.label !== null) {
 		svgBody += `<text x="${mainCenterX}" y="${mainCenterY}" class="set-label">${sets.whole.label}</text>`
 		includeText(ext, mainCenterX, sets.whole.label, "middle", 7)
@@ -122,14 +123,14 @@ export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPr
 	// Irrational Numbers (separate)
 	includePointX(ext, irrationalCenterX - irrationalRx)
 	includePointX(ext, irrationalCenterX + irrationalRx)
-	svgBody += `<ellipse cx="${irrationalCenterX}" cy="${irrationalCenterY}" rx="${irrationalRx}" ry="${irrationalRy}" fill="${sets.irrational.color}" stroke="black" />`
+	svgBody += `<ellipse cx="${irrationalCenterX}" cy="${irrationalCenterY}" rx="${irrationalRx}" ry="${irrationalRy}" fill="${sets.irrational.color}" stroke="${theme.colors.black}" />`
 	if (sets.irrational.label !== null) {
 		svgBody += `<text x="${irrationalCenterX}" y="${irrationalCenterY}" class="set-label">${sets.irrational.label}</text>`
 		includeText(ext, irrationalCenterX, sets.irrational.label, "middle", 7)
 	}
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
 		+ svgBody
 		+ `</svg>`
 	return finalSvg

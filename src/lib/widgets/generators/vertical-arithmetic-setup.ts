@@ -1,5 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { theme } from "@/lib/widgets/utils/theme"
 
 // The main Zod schema for the verticalArithmeticSetup function
 export const VerticalArithmeticSetupPropsSchema = z
@@ -47,13 +48,13 @@ export type VerticalArithmeticSetupProps = z.infer<typeof VerticalArithmeticSetu
 export const generateVerticalArithmeticSetup: WidgetGenerator<typeof VerticalArithmeticSetupPropsSchema> = (data) => {
 	const { title, operand1, operand2, operator } = data
 
-	let html = `<div style="display: inline-block; font-family: 'Courier New', monospace; font-size: 1.2em; text-align: right;">`
+	let html = `<div style="display: inline-block; font-family: ${theme.font.family.mono}; font-size: 1.2em; text-align: right;">`
 	if (title !== null) {
-		html += `<div style="text-align: center; margin-bottom: 5px; font-family: sans-serif;">${title}</div>`
+		html += `<div style="text-align: center; margin-bottom: 5px; font-family: ${theme.font.family.sans};">${title}</div>`
 	}
 	html += `<table style="border-collapse: collapse;">`
 	html += `<tr><td></td><td style="padding: 2px 5px;">${operand1}</td></tr>`
-	html += `<tr><td style="padding: 2px 5px;">${operator}</td><td style="padding: 2px 5px; border-bottom: 2px solid black;">${operand2}</td></tr>`
+	html += `<tr><td style="padding: 2px 5px;">${operator}</td><td style="padding: 2px 5px; border-bottom: 2px solid ${theme.colors.black};">${operand2}</td></tr>`
 	html += "</table>"
 	html += "</div>"
 	return html
