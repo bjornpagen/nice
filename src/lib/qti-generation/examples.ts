@@ -152,20 +152,20 @@ export const linearModelEquationPrediction: AssessmentItemInput = {
 	widgets: {
 		image_1: {
 			type: "scatterPlot",
-			title: null,
+			title: "Time vs distance model",
 			width: 359,
 			xAxis: { max: 10, min: 0, label: "Time (hours)", gridLines: true, tickInterval: 1 },
 			yAxis: { max: 20, min: 0, label: "Distance (kilometers)", gridLines: true, tickInterval: 2 },
 			height: 354,
 			points: [
-				{ x: 2, y: 5, label: null },
-				{ x: 2.75, y: 8, label: null },
-				{ x: 4, y: 9.5, label: null },
-				{ x: 7.25, y: 16, label: null },
-				{ x: 8.5, y: 18, label: null }
+				{ x: 2, y: 5, label: "" },
+				{ x: 2.75, y: 8, label: "" },
+				{ x: 4, y: 9.5, label: "" },
+				{ x: 7.25, y: 16, label: "" },
+				{ x: 8.5, y: 18, label: "" }
 			],
 			lines: [
-				{ type: "bestFit", method: "linear", label: null, style: { color: "#333333", strokeWidth: 2, dash: false } }
+				{ type: "bestFit", method: "linear", label: "", style: { color: "#333333", strokeWidth: 2, dash: false } }
 			]
 		}
 	},
@@ -2328,96 +2328,9 @@ export const reactantAmountsTemperatureTableWithDropdowns: AssessmentItemInput =
 			]
 		},
 		{ type: "blockSlot", slotId: "react_temp_table" },
-		{
-			type: "paragraph",
-			content: [
-				{ type: "text", content: "Row C: Reactant " },
-				{ type: "inlineSlot", slotId: "react_c" },
-				{ type: "text", content: ", Amount " },
-				{ type: "inlineSlot", slotId: "amt_c" }
-			]
-		},
-		{
-			type: "paragraph",
-			content: [
-				{ type: "text", content: "Row D: Reactant " },
-				{ type: "inlineSlot", slotId: "react_d" },
-				{ type: "text", content: ", Amount " },
-				{ type: "inlineSlot", slotId: "amt_d" }
-			]
-		},
-		{
-			type: "paragraph",
-			content: [
-				{ type: "text", content: "Row E: Reactant " },
-				{ type: "inlineSlot", slotId: "react_e" },
-				{ type: "text", content: ", Amount " },
-				{ type: "inlineSlot", slotId: "amt_e" }
-			]
-		}
+		{ type: "paragraph", content: [{ type: "text", content: "Select the reactant and amount for rows C, D, and E directly in the table." }] }
 	],
-	interactions: {
-		react_c: {
-			type: "inlineChoiceInteraction",
-			responseIdentifier: "RESP_REACT_C",
-			shuffle: true,
-			choices: [
-				{ identifier: "NH4CL", content: [{ type: "text", content: "NH4Cl" }] },
-				{ identifier: "MGSO4", content: [{ type: "text", content: "MgSO4" }] },
-				{ identifier: "CACL2", content: [{ type: "text", content: "CaCl2" }] }
-			]
-		},
-		amt_c: {
-			type: "inlineChoiceInteraction",
-			responseIdentifier: "RESP_AMT_C",
-			shuffle: true,
-			choices: [
-				{ identifier: "AMT_2_5", content: [{ type: "math", mathml: "<mn>2.5</mn>" }] },
-				{ identifier: "AMT_3_0", content: [{ type: "math", mathml: "<mn>3.0</mn>" }] },
-				{ identifier: "AMT_8_0", content: [{ type: "math", mathml: "<mn>8.0</mn>" }] }
-			]
-		},
-		react_d: {
-			type: "inlineChoiceInteraction",
-			responseIdentifier: "RESP_REACT_D",
-			shuffle: true,
-			choices: [
-				{ identifier: "NH4CL", content: [{ type: "text", content: "NH4Cl" }] },
-				{ identifier: "MGSO4", content: [{ type: "text", content: "MgSO4" }] },
-				{ identifier: "CACL2", content: [{ type: "text", content: "CaCl2" }] }
-			]
-		},
-		amt_d: {
-			type: "inlineChoiceInteraction",
-			responseIdentifier: "RESP_AMT_D",
-			shuffle: true,
-			choices: [
-				{ identifier: "AMT_2_5", content: [{ type: "math", mathml: "<mn>2.5</mn>" }] },
-				{ identifier: "AMT_3_0", content: [{ type: "math", mathml: "<mn>3.0</mn>" }] },
-				{ identifier: "AMT_8_0", content: [{ type: "math", mathml: "<mn>8.0</mn>" }] }
-			]
-		},
-		react_e: {
-			type: "inlineChoiceInteraction",
-			responseIdentifier: "RESP_REACT_E",
-			shuffle: true,
-			choices: [
-				{ identifier: "NH4CL", content: [{ type: "text", content: "NH4Cl" }] },
-				{ identifier: "MGSO4", content: [{ type: "text", content: "MgSO4" }] },
-				{ identifier: "CACL2", content: [{ type: "text", content: "CaCl2" }] }
-			]
-		},
-		amt_e: {
-			type: "inlineChoiceInteraction",
-			responseIdentifier: "RESP_AMT_E",
-			shuffle: true,
-			choices: [
-				{ identifier: "AMT_2_5", content: [{ type: "math", mathml: "<mn>2.5</mn>" }] },
-				{ identifier: "AMT_3_0", content: [{ type: "math", mathml: "<mn>3.0</mn>" }] },
-				{ identifier: "AMT_8_0", content: [{ type: "math", mathml: "<mn>8.0</mn>" }] }
-			]
-		}
-	},
+	interactions: {},
 	feedback: {
 		correct: [
 			{
@@ -3569,15 +3482,15 @@ export const compareNegativeDecimalVsRootInlineChoice: AssessmentItemInput = {
 		comparison_dropdown: {
 			type: "inlineChoiceInteraction",
 			choices: [
-				{ content: [{ type: "text", content: "<" }], identifier: "<" },
-				{ content: [{ type: "text", content: ">" }], identifier: ">" },
-				{ content: [{ type: "text", content: "=" }], identifier: "=" }
+				{ content: [{ type: "text", content: "<" }], identifier: "LT" },
+				{ content: [{ type: "text", content: ">" }], identifier: "GT" },
+				{ content: [{ type: "text", content: "=" }], identifier: "EQ" }
 			],
 			shuffle: true,
 			responseIdentifier: "RESPONSE"
 		}
 	},
-	responseDeclarations: [{ correct: ">", baseType: "string", identifier: "RESPONSE", cardinality: "single" }]
+	responseDeclarations: [{ correct: "GT", baseType: "identifier", identifier: "RESPONSE", cardinality: "single" }]
 }
 
 export const reactionRateChangesTable: AssessmentItemInput = {
@@ -4510,3 +4423,4 @@ export const allExamples: AssessmentItemInput[] = [
 	kineticEnergyMassSpeedRelationships,
 	reactantAmountsTempChangeTablePerseus
 ]
+
