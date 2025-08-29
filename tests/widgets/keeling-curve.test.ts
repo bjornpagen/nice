@@ -42,7 +42,8 @@ describe("keelingCurve widget", () => {
 		})
 
 		expect(result).toContain("<polyline")
-		expect(result).toContain('stroke="black"')
+		// Accept theme-based hex color or named color
+		expect(result).toMatch(/stroke=\"(black|#000000)\"/)
 		expect(result).toContain('stroke-width="2.5"')
 	})
 
