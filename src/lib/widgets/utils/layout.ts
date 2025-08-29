@@ -211,7 +211,7 @@ export function calculateHorizontalBarChartYAxisLayout(
  * @returns SVG clipPath definition string
  */
 export function createChartClipPath(clipId: string, x: number, y: number, width: number, height: number): string {
-	return `<defs><clipPath id="${clipId}"><rect x="${x}" y="${y}" width="${width}" height="${height}"/></clipPath></defs>`
+	return `<defs><clipPath id="${clipId}" clipPathUnits="userSpaceOnUse"><rect x="${x}" y="${y}" width="${width}" height="${height}"/></clipPath></defs>`
 }
 
 /**
