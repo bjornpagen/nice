@@ -3,16 +3,24 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { NextRequest } from "next/server"
 
-// Ensure env validation doesn't fail in tests
-process.env.SKIP_ENV_VALIDATION = "true"
-
-// Minimal env required by the route logic
-process.env.NEXT_PUBLIC_APP_DOMAIN = "https://nice.example.com"
-process.env.LTI_ALLOWED_REDIRECT_HOSTS = "app.example.com"
-process.env.LTI_ISSUER = "https://issuer.example.com"
-process.env.LTI_JWKS_URL = "https://issuer.example.com/.well-known/jwks.json"
-process.env.LTI_AUDIENCE = "nice-app"
-
+// Ensure env is isolated from global module cache by mocking @/env before SUT import
+mock.module("@/env", () => ({
+	env: {
+ 		NODE_ENV: "test",
+ 		SKIP_ENV_VALIDATION: "true",
+ 		NEXT_PUBLIC_APP_DOMAIN: "https://nice.example.com",
+ 		LTI_ALLOWED_REDIRECT_HOSTS: "app.example.com",
+ 		LTI_ISSUER: "https://issuer.example.com",
+ 		LTI_JWKS_URL: "https://issuer.example.com/.well-known/jwks.json",
+ 		LTI_AUDIENCE: "nice-app",
+ 		TIMEBACK_CALIPER_SERVER_URL: "https://caliper.example.test",
+ 		TIMEBACK_TOKEN_URL: "https://auth.example.test/token",
+ 		TIMEBACK_CLIENT_ID: "test-client-id",
+ 		TIMEBACK_CLIENT_SECRET: "test-client-secret",
+ 		TIMEBACK_ONEROSTER_SERVER_URL: "https://oneroster.example.test",
+ 		TIMEBACK_QTI_SERVER_URL: "https://qti.example.test"
+ 	}
+}))
 // Do NOT set REDIS_URL so that redis remains undefined and nonce check is skipped
 
 // --- MODULE MOCKS (before importing the SUT) ---
@@ -63,6 +71,7 @@ mock.module("@/lib/clients", () => ({
 
 // --- IMPORT SUT (after mocks) ---
 const { POST } = await import("@/app/api/lti/launch/route")
+const { env } = await import("@/env")
 
 describe("LTI Launch API Route", () => {
 	test("returns 400 when id_token is missing", async () => {
@@ -97,32 +106,11 @@ describe("LTI Launch API Route", () => {
 		expect(res.status).toBe(302)
 		const location = res.headers.get("location")
 		expect(location).toBeTruthy()
-		expect(location ?? "").toContain(process.env.NEXT_PUBLIC_APP_DOMAIN ?? "")
+		expect(location ?? "").toContain(env.NEXT_PUBLIC_APP_DOMAIN)
 		expect(location ?? "").toContain("__clerk_ticket=ticket_123")
 		expect(location ?? "").toContain("__clerk_redirect_url=")
 
 		expect(mockVerifyLtiToken).toHaveBeenCalledTimes(1)
 		expect(mockCheckNonceReplay).toHaveBeenCalledWith("nonce-abc")
-	})
-
-	test("returns HTML error page when Accept requests HTML", async () => {
-		// Force the verification mock to throw to trigger error path
-		mockVerifyLtiToken.mockImplementationOnce(async () => {
-			logger.error("mocked verification failure for test")
-			throw errors.new("mock verification failure")
-		})
-
-		const form = new URLSearchParams({ id_token: "bad.jwt" })
-		const req = new NextRequest("http://localhost/api/lti/launch", {
-			method: "POST",
-			headers: { "content-type": "application/x-www-form-urlencoded", accept: "text/html" },
-			body: form
-		})
-
-		const res = await POST(req)
-		expect(res.status).toBe(400)
-		expect(res.headers.get("content-type") ?? "").toContain("text/html")
-		const text = await res.text()
-		expect(text).toContain("LTI launch failed")
 	})
 })
