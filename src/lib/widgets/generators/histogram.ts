@@ -2,21 +2,11 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { PADDING } from "@/lib/widgets/utils/constants"
+import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import {
-	calculateTextAwareLabelSelection,
-	calculateTitleLayout,
-	calculateXAxisLayout,
-	calculateYAxisLayoutAxisAware,
-	computeDynamicWidth,
-	includePointX,
-	includeRotatedYAxisLabel,
-	includeText,
-	initExtents
-} from "@/lib/widgets/utils/layout"
-import { renderRotatedWrappedYAxisLabel, renderWrappedText } from "@/lib/widgets/utils/text"
+import { computeDynamicWidth, includePointX, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
+import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 const Bin = z
 	.object({
@@ -126,105 +116,76 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 			throw errors.new("histogram: separators must be strictly increasing")
 		}
 	}
-	// Create a mock yAxis with min for the layout calculation (histogram y-axis always starts at 0)
-	const mockYAxis = { ...yAxis, min: 0 }
-	
-	// Calculate vertical margins first to determine chartHeight
-	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const { titleY, topMargin } = calculateTitleLayout(title, width - 60)
-	const marginWithoutLeft = { top: topMargin, right: 20, bottom: bottomMargin }
-	
-	// Calculate chartHeight based on vertical margins
-	const chartHeight = height - marginWithoutLeft.top - marginWithoutLeft.bottom
-	
-	if (chartHeight <= 0 || bins.length === 0) {
-		return `<svg width="${width}" height="${height}"></svg>`
+
+	if (bins.length === 0) {
+		logger.error("histogram empty bins", { count: bins.length })
+		throw errors.new("histogram: bins must not be empty")
 	}
-	
-	// Now calculate Y-axis layout using the determined chartHeight
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
-		mockYAxis,
-		{ min: separators[0] ?? 0, max: separators[separators.length - 1] ?? 1 },
+
+	// Calculate tick interval from separators
+	const deltas: number[] = []
+	for (let i = 1; i < separators.length; i++) {
+		const curr = separators[i]
+		const prev = separators[i - 1]
+		if (curr === undefined || prev === undefined) {
+			logger.error("histogram separators index out of range", { index: i })
+			throw errors.new("histogram: separators index out of range")
+		}
+		const d = curr - prev
+		deltas.push(d)
+	}
+	const first = deltas[0] ?? 1
+	const nonUniform = deltas.some((d) => Math.abs(d - first) > 1e-9)
+	let tickInterval = first
+	if (nonUniform) {
+		// Use the smallest interval for non-uniform bins
+		tickInterval = Math.min(...deltas)
+	}
+
+	const base = generateCoordinatePlaneBaseV2(
 		width,
-		chartHeight,
-		marginWithoutLeft,
-		{ axisPlacement: "leftEdge", axisTitleFontPx: 16 }
+		height,
+		title,
+		{
+			label: xAxis.label,
+			min: separators[0] ?? 0,
+			max: separators[separators.length - 1] ?? 1,
+			tickInterval,
+			showGridLines: false,
+			showTickLabels: true
+		},
+		{
+			label: yAxis.label,
+			min: 0,
+			max: yAxis.max,
+			tickInterval: yAxis.tickInterval,
+			showGridLines: false,
+			showTickLabels: true
+		}
 	)
-	const margin = { ...marginWithoutLeft, left: leftMargin }
-	
-	// Calculate chartWidth with the final left margin
-	const chartWidth = width - margin.left - margin.right
-	if (chartWidth <= 0) {
-		return `<svg width="${width}" height="${height}"></svg>`
-	}
 
-	const maxFreq = yAxis.max
-	const scaleY = chartHeight / maxFreq
-	const binWidth = chartWidth / bins.length
-	const _averageCharWidthPx = 7
+	// Histogram bars
+	let bars = ""
+	const binWidth = base.chartArea.width / bins.length
 
-	const ext = initExtents(width)
-	let svgBody = "<style>.axis-label { font-size: 14px; font-weight: bold; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; } .x-tick { font-size: 11px; }</style>"
-
-	const maxTextWidth = width - 60
-	svgBody += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", maxTextWidth, 8)
-	includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
-
-	svgBody += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}"/>` // Y-axis
-	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}"/>` // X-axis
-
-	// Axis Labels
-	svgBody += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
-	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
-	svgBody += renderRotatedWrappedYAxisLabel(
-		abbreviateMonth(yAxis.label),
-		yAxisLabelX,
-		margin.top + chartHeight / 2,
-		chartHeight
-	)
-	includeRotatedYAxisLabel(ext, yAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
-
-	// Y ticks and labels
-	const yTickInterval = yAxis.tickInterval
-	for (let t = 0; t <= maxFreq; t += yTickInterval) {
-		const y = height - margin.bottom - t * scaleY
-		svgBody += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="${theme.colors.axis}"/>`
-		svgBody += `<text x="${margin.left - 10}" y="${y + 4}" fill="${theme.colors.axisLabel}" text-anchor="end">${t}</text>`
-		includeText(ext, margin.left - 10, String(t), "end", 7) // MODIFICATION: Add this line
-	}
-
-	// Bins
 	bins.forEach((b, i) => {
-		const barHeight = b.frequency * scaleY
-		const x = margin.left + i * binWidth
-		const y = height - margin.bottom - barHeight
-		
-		// Track the horizontal extent of the bar
-		includePointX(ext, x)
-		includePointX(ext, x + binWidth)
-		
-		svgBody += `<rect x="${x}" y="${y}" width="${binWidth}" height="${barHeight}" fill="${theme.colors.highlightPrimary}" stroke="${theme.colors.axis}"/>`
+		const barHeight = (b.frequency / yAxis.max) * base.chartArea.height
+		const x = base.chartArea.left + i * binWidth
+		const y = base.chartArea.top + base.chartArea.height - barHeight
+
+		includePointX(base.ext, x)
+		includePointX(base.ext, x + binWidth)
+
+		bars += `<rect x="${x}" y="${y}" width="${binWidth}" height="${barHeight}" fill="${theme.colors.highlightPrimary}" stroke="${theme.colors.axis}"/>`
 	})
 
-	// Compute boundary tick labels from numeric separators
-	// X-axis ticks with text-width-aware label selection
-	const tickPositions = separators.map((_, i) => margin.left + i * binWidth)
-	const tickLabels = separators.map((sep) => String(sep))
-	const selected = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartWidth)
+	let svgBody = base.svgBody
+	svgBody += wrapInClippedGroup(base.clipId, bars)
 
-	// Render non-rotated x-axis labels centered at separators
-	separators.forEach((sep, i) => {
-		if (!selected.has(i)) return
-		const labelX = margin.left + i * binWidth
-		const labelY = height - margin.bottom + 28
-		svgBody += `<text class="x-tick" x="${labelX}" y="${labelY}" fill="${theme.colors.axisLabel}" text-anchor="middle">${sep}</text>`
-		// Track the x-axis tick label
-		includeText(ext, labelX, String(sep), "middle", 6)
-	})
-
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-		+ svgBody
-		+ `</svg>`
+	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, totalHeight, AXIS_VIEWBOX_PADDING)
+	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">` +
+		svgBody +
+		`</svg>`
 	return finalSvg
 }

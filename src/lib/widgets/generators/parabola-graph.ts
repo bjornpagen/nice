@@ -3,18 +3,11 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { PADDING } from "@/lib/widgets/utils/constants"
+import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import {
-	calculateXAxisLayout,
-	calculateYAxisLayoutAxisAware,
-	computeDynamicWidth,
-	includePointX,
-	includeRotatedYAxisLabel,
-	includeText,
-	initExtents
-} from "@/lib/widgets/utils/layout"
+import { computeDynamicWidth, includePointX, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
+import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 function createAxisOptionsSchema() {
 	return z
@@ -63,33 +56,6 @@ export type ParabolaGraphProps = z.infer<typeof ParabolaGraphPropsSchema>
 export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSchema> = (props) => {
 	const { width, height, xAxis, yAxis, parabola } = props
 
-	// Calculate vertical margins first to determine chartHeight
-	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const marginWithoutLeft = { top: PADDING, right: PADDING, bottom: bottomMargin }
-	
-	// Calculate chartHeight based on vertical margins
-	const chartHeight = height - marginWithoutLeft.top - marginWithoutLeft.bottom
-	
-	if (chartHeight <= 0) return `<svg width="${width}" height="${height}"></svg>`
-	
-	// Now calculate Y-axis layout using the determined chartHeight
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
-		yAxis,
-		xAxis,
-		width,
-		chartHeight,
-		marginWithoutLeft,
-		{ axisPlacement: "leftEdge", axisTitleFontPx: 14 }
-	)
-	const margin = { ...marginWithoutLeft, left: leftMargin }
-	
-	// Calculate chartWidth with the final left margin
-	const chartWidth = width - margin.left - margin.right
-	if (chartWidth <= 0) return `<svg width="${width}" height="${height}"></svg>`
-
-	const toSvgX = (val: number) => margin.left + ((val - xAxis.min) / (xAxis.max - xAxis.min)) * chartWidth
-	const toSvgY = (val: number) => height - margin.bottom - ((val - yAxis.min) / (yAxis.max - yAxis.min)) * chartHeight
-
 	// Vertex-form parabola: y = a (x - h)^2 + k
 	const h = parabola.vertex.x
 	const k = parabola.vertex.y
@@ -112,44 +78,30 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 		throw errors.new("invalid parabola shape")
 	}
 
-	const ext = initExtents(width)
-	let svgBody = "<style>.axis-label { font-size: 14px; text-anchor: middle; }</style>"
+	const base = generateCoordinatePlaneBaseV2(
+		width,
+		height,
+		null, // No title for this widget
+		{
+			label: xAxis.label,
+			min: xAxis.min,
+			max: xAxis.max,
+			tickInterval: xAxis.tickInterval,
+			showGridLines: false,
+			showTickLabels: xAxis.showTickLabels
+		},
+		{
+			label: yAxis.label,
+			min: yAxis.min,
+			max: yAxis.max,
+			tickInterval: yAxis.tickInterval,
+			showGridLines: yAxis.showGridLines,
+			showTickLabels: yAxis.showTickLabels
+		}
+	)
 
-	// --- Coordinate Plane Rendering ---
-	// Grid Lines
-	if (yAxis.showGridLines) {
-		for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
-			const y = toSvgY(t)
-			svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="${theme.colors.gridMajor}"/>`
-		}
-	}
-	// Axes
-	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}"/>`
-	svgBody += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}"/>`
-	// Ticks
-	for (let t = xAxis.min; t <= xAxis.max; t += xAxis.tickInterval) {
-		const x = toSvgX(t)
-		svgBody += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="${theme.colors.axis}"/>`
-		if (xAxis.showTickLabels !== false) {
-			svgBody += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${t}</text>`
-			includeText(ext, x, String(t), "middle", 7)
-		}
-	}
-	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
-		const y = toSvgY(t)
-		svgBody += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="${theme.colors.axis}"/>`
-		if (yAxis.showTickLabels !== false) {
-			svgBody += `<text x="${margin.left - 10}" y="${y + 4}" text-anchor="end">${t}</text>`
-			includeText(ext, margin.left - 10, String(t), "end", 7)
-		}
-	}
-	// Labels
-	svgBody += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
-	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
-	svgBody += `<text x="${yAxisLabelX}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${yAxisLabelX}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxis.label)}</text>`
-	includeRotatedYAxisLabel(ext, yAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
-
-	// Parabola Curve - clip to first quadrant (x >= 0, y >= 0)
+	// Parabola curve content - clip to first quadrant (x >= 0, y >= 0)
+	let parabolaContent = ""
 	const steps = 200
 	let pointsStr = ""
 	for (let i = 0; i <= steps; i++) {
@@ -157,16 +109,19 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 		const y = a * (x - h) * (x - h) + k
 		if (x >= 0 && y >= 0) {
 			// Track the x-extent of the parabola point
-			includePointX(ext, toSvgX(x))
-			pointsStr += `${toSvgX(x)},${toSvgY(y)} `
+			includePointX(base.ext, base.toSvgX(x))
+			pointsStr += `${base.toSvgX(x)},${base.toSvgY(y)} `
 		}
 	}
 	const dash = parabola.style === "dashed" ? ' stroke-dasharray="8 6"' : ""
-	svgBody += `<polyline points="${pointsStr.trim()}" fill="none" stroke="${parabola.color}" stroke-width="2.5" ${dash}/>`
+	parabolaContent += `<polyline points="${pointsStr.trim()}" fill="none" stroke="${parabola.color}" stroke-width="2.5" ${dash}/>`
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="12">`
-		+ svgBody
-		+ `</svg>`
+	let svgBody = base.svgBody
+	svgBody += wrapInClippedGroup(base.clipId, parabolaContent)
+
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, AXIS_VIEWBOX_PADDING)
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="12">` +
+		svgBody +
+		`</svg>`
 	return finalSvg
 }

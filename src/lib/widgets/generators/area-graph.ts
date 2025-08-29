@@ -1,21 +1,14 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { PADDING } from "@/lib/widgets/utils/constants"
+import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import {
-	calculateTextAwareLabelSelection,
-	calculateTitleLayout,
-	calculateXAxisLayout,
-	calculateYAxisLayoutAxisAware,
-	computeDynamicWidth,
-	includePointX,
-	includeRotatedYAxisLabel,
-	includeText,
-	initExtents
-} from "@/lib/widgets/utils/layout"
-import { renderRotatedWrappedYAxisLabel, renderWrappedText } from "@/lib/widgets/utils/text"
+import { computeDynamicWidth, includePointX, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
+import { renderWrappedText } from "@/lib/widgets/utils/text"
 import { theme } from "@/lib/widgets/utils/theme"
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
+import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 const PointSchema = z.object({
 	x: z.number().describe("The x-coordinate (horizontal value) of the data point."),
@@ -86,109 +79,90 @@ export type AreaGraphProps = z.infer<typeof AreaGraphPropsSchema>
 export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (props) => {
 	const { width, height, title, xAxis, yAxis, dataPoints, bottomArea, topArea, boundaryLine } = props
 
-	// --- MODIFICATION START ---
-	// The core layout calculations must be re-ordered. We must calculate vertical
-	// margins first to determine chartHeight, which is now a required input for calculateYAxisLayout.
-
-	// 1. Calculate vertical margins first.
-	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const { titleY, topMargin } = calculateTitleLayout(title, width - 60, 60)
-	const marginWithoutLeft = { top: topMargin, right: 20, bottom: bottomMargin } // Defer left margin
-
-	// 2. Calculate chartHeight based on vertical margins.
-	const chartHeight = height - marginWithoutLeft.top - marginWithoutLeft.bottom
-	if (chartHeight <= 0) {
-		return `<svg width="${width}" height="${height}"></svg>`
+	if (xAxis.tickValues.length < 2) {
+		logger.error("area graph invalid tickValues", { count: xAxis.tickValues.length })
+		throw errors.new("invalid x tick values")
 	}
+	const deltas: number[] = []
+	for (let i = 1; i < xAxis.tickValues.length; i++) {
+		const curr = xAxis.tickValues[i]
+		if (curr === undefined) {
+			logger.error("area graph invalid tick value", { index: i })
+			throw errors.new("invalid x tick values")
+		}
+		const prev = xAxis.tickValues[i - 1]
+		if (prev === undefined) {
+			logger.error("area graph invalid tick value", { index: i - 1 })
+			throw errors.new("invalid x tick values")
+		}
+		const d = curr - prev
+		deltas.push(d)
+	}
+	const first = deltas[0] ?? 0
+	const nonUniform = deltas.some((d) => Math.abs(d - first) > 1e-9)
+	// Relaxed: if non-uniform, we won't throw; we use a reasonable tickInterval fallback
+	const tickInterval = nonUniform ? Math.max(1e-9, Math.min(...deltas.map((d) => Math.abs(d)))) : Math.abs(first)
 
-	// 3. Now, calculate Y-axis layout using the determined chartHeight.
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
-		yAxis,
-		xAxis,
+	const base = generateCoordinatePlaneBaseV2(
 		width,
-		chartHeight,
-		{ top: marginWithoutLeft.top, right: marginWithoutLeft.right, bottom: marginWithoutLeft.bottom },
-		{ axisPlacement: "leftEdge", axisTitleFontPx: 16 }
-	)
-	const margin = { ...marginWithoutLeft, left: leftMargin }
-
-	// 4. Calculate chartWidth with the final left margin.
-	const chartWidth = width - margin.left - margin.right
-	if (chartWidth <= 0) {
-		return `<svg width="${width}" height="${height}"></svg>`
-	}
-	// --- MODIFICATION END ---
-
-	const toSvgX = (val: number) => margin.left + ((val - xAxis.min) / (xAxis.max - xAxis.min)) * chartWidth
-	const toSvgY = (val: number) => height - margin.bottom - ((val - yAxis.min) / (yAxis.max - yAxis.min)) * chartHeight
-
-	const ext = initExtents(width)
-	let svgBody = "<style>.axis-label { font-size: 16px; text-anchor: middle; } .title { font-size: 18px; font-weight: bold; text-anchor: middle; } .area-label { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
-
-	const maxTextWidth = width - 60
-	svgBody += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", maxTextWidth, 8)
-	includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
-
-	// Axes and Labels
-	svgBody += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>` // Y-axis
-	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>` // X-axis
-
-	svgBody += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
-	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
-	svgBody += renderRotatedWrappedYAxisLabel(
-		abbreviateMonth(yAxis.label),
-		yAxisLabelX,
-		margin.top + chartHeight / 2,
-		chartHeight
-	)
-	includeRotatedYAxisLabel(ext, yAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
-
-	// X-axis ticks with text-width-aware label selection
-	const xTickPositions = xAxis.tickValues.map((val) => toSvgX(val))
-	const xTickLabels = xAxis.tickValues.map((val) => String(val))
-	const selectedXLabels = calculateTextAwareLabelSelection(xTickLabels, xTickPositions, chartWidth)
-
-	xAxis.tickValues.forEach((val, i) => {
-		const x = toSvgX(val)
-		svgBody += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
-		if (selectedXLabels.has(i)) {
-			svgBody += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${val}</text>`
-			includeText(ext, x, String(val), "middle", 7)
+		height,
+		title,
+		{
+			label: xAxis.label,
+			min: xAxis.min,
+			max: xAxis.max,
+			tickInterval,
+			showGridLines: false,
+			showTickLabels: true
+		},
+		{
+			label: yAxis.label,
+			min: yAxis.min,
+			max: yAxis.max,
+			tickInterval: yAxis.tickInterval,
+			showGridLines: yAxis.showGridLines,
+			showTickLabels: true
 		}
-	})
-	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
-		const y = toSvgY(t)
-		svgBody += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
-		// CHANGED: Removed concatenation of `yAxis.tickFormat`.
-		svgBody += `<text x="${margin.left - 10}" y="${y + 5}" text-anchor="end">${t}</text>`
-		includeText(ext, margin.left - 10, `${t}`, "end", 7)
-		if (yAxis.showGridLines && t > yAxis.min) {
-			svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="${theme.colors.gridMajor}"/>`
-		}
-	}
+	)
 
-	// Area Paths
-	// Track the x-extents of all data points
+	let content = ""
+	const toSvgX = base.toSvgX
+	const toSvgY = base.toSvgY
+
 	dataPoints.forEach((p) => {
-		includePointX(ext, toSvgX(p.x))
+		includePointX(base.ext, toSvgX(p.x))
 	})
 	const pointsStr = dataPoints.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
-	const bottomPath = `M${toSvgX(dataPoints[0]?.x ?? xAxis.min)},${toSvgY(yAxis.min)} ${pointsStr} L${toSvgX(dataPoints[dataPoints.length - 1]?.x ?? xAxis.max)},${toSvgY(yAxis.min)} Z`
-	const topPath = `M${toSvgX(dataPoints[0]?.x ?? xAxis.min)},${toSvgY(yAxis.max)} ${pointsStr} L${toSvgX(dataPoints[dataPoints.length - 1]?.x ?? xAxis.max)},${toSvgY(yAxis.max)} Z`
+	const firstPoint = dataPoints[0]
+	if (!firstPoint) {
+		logger.error("area graph missing first point", { count: dataPoints.length })
+		throw errors.new("missing data point")
+	}
+	const lastPoint = dataPoints[dataPoints.length - 1]
+	if (!lastPoint) {
+		logger.error("area graph missing last point", { count: dataPoints.length })
+		throw errors.new("missing data point")
+	}
+	const leftX = toSvgX(firstPoint.x)
+	const rightX = toSvgX(lastPoint.x)
 
-	svgBody += `<path d="${bottomPath}" fill="${bottomArea.color}" stroke="none"/>`
-	svgBody += `<path d="${topPath}" fill="${topArea.color}" stroke="none"/>`
-	svgBody += `<polyline points="${pointsStr}" fill="none" stroke="${boundaryLine.color}" stroke-width="${boundaryLine.strokeWidth}"/>`
+	const bottomPath = `M${leftX},${toSvgY(yAxis.min)} ${pointsStr} L${rightX},${toSvgY(yAxis.min)} Z`
+	const topPath = `M${leftX},${toSvgY(yAxis.max)} ${pointsStr} L${rightX},${toSvgY(yAxis.max)} Z`
 
-	// Area Labels (now using shared renderer)
-	svgBody += renderWrappedText(abbreviateMonth(bottomArea.label), toSvgX(1975), toSvgY(40), "area-label", "1.2em", chartWidth, 8)
-	svgBody += renderWrappedText(abbreviateMonth(topArea.label), toSvgX(1850), toSvgY(70), "area-label", "1.2em", chartWidth, 8)
-	includeText(ext, toSvgX(1975), abbreviateMonth(bottomArea.label), "middle", 7)
-	includeText(ext, toSvgX(1850), abbreviateMonth(topArea.label), "middle", 7)
+	content += `<path d="${bottomPath}" fill="${bottomArea.color}" stroke="none"/>`
+	content += `<path d="${topPath}" fill="${topArea.color}" stroke="none"/>`
+	content += `<polyline points="${pointsStr}" fill="none" stroke="${boundaryLine.color}" stroke-width="${boundaryLine.strokeWidth}"/>`
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">`
-		+ svgBody
-		+ `</svg>`
+	content += renderWrappedText(abbreviateMonth(bottomArea.label), toSvgX(1975), toSvgY(40), "area-label", "1.2em", base.chartArea.width, 8)
+	content += renderWrappedText(abbreviateMonth(topArea.label), toSvgX(1850), toSvgY(70), "area-label", "1.2em", base.chartArea.width, 8)
+
+	let svgBody = base.svgBody
+	svgBody += wrapInClippedGroup(base.clipId, content)
+
+	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, totalHeight, AXIS_VIEWBOX_PADDING)
+	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">` +
+		svgBody +
+		`</svg>`
 	return finalSvg
 }

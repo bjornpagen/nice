@@ -17,6 +17,16 @@ import {
 	type Extents
 } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
+import { computeAndRenderXAxis, computeAndRenderYAxis, type AxisSpec } from "@/lib/widgets/utils/axes"
+import {
+	CHART_TITLE_TOP_PADDING_PX,
+	CHART_TITLE_FONT_PX,
+	CHART_TITLE_BOTTOM_PADDING_PX,
+	AXIS_VIEWBOX_PADDING,
+	ESTIMATED_BOTTOM_MARGIN_PX,
+	LABEL_AVG_CHAR_WIDTH_PX
+} from "@/lib/widgets/utils/constants"
+import { estimateWrappedTextDimensions, renderWrappedText } from "@/lib/widgets/utils/text"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
 
@@ -419,6 +429,123 @@ export function generateCoordinatePlaneBase(
 	// svg = svg.replace(`viewBox="0 0 ${width} ${height}"`, `viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`)
 
 	return { svgBody, toSvgX, toSvgY, width, height, pointMap, ext }
+}
+
+// --- V2 ORCHESTRATOR USING UNIFIED AXIS ENGINE ---
+
+let chartIdCounter = 0
+
+type AxisOptionsFromWidget = {
+	label: string
+	min: number
+	max: number
+	tickInterval: number
+	showGridLines: boolean
+	showTickLabels: boolean
+	categories?: string[]
+	labelFormatter?: (value: number) => string
+}
+
+export type CoordinatePlaneBaseV2 = {
+	svgBody: string
+	clipId: string
+	toSvgX: (val: number) => number
+	toSvgY: (val: number) => number
+	chartArea: { top: number; left: number; width: number; height: number }
+	ext: Extents
+	bandWidth?: number
+	outsideTopPx: number
+	outsideBottomPx: number
+}
+
+export function generateCoordinatePlaneBaseV2(
+	width: number,
+	height: number,
+	title: string | null,
+	xAxis: AxisOptionsFromWidget,
+	yAxis: AxisOptionsFromWidget
+): CoordinatePlaneBaseV2 {
+	const ext = initExtents(width)
+	let svgBody = ""
+
+	const clipId = `chartArea-${chartIdCounter++}`
+
+	const hasTitle = !!title
+	let titleHeight = 0
+	if (hasTitle) {
+		const dims = estimateWrappedTextDimensions(title as string, width - AXIS_VIEWBOX_PADDING * 2, CHART_TITLE_FONT_PX)
+		titleHeight = CHART_TITLE_TOP_PADDING_PX + dims.height + CHART_TITLE_BOTTOM_PADDING_PX
+	}
+
+	// Treat provided width/height as the chart (axis) area size
+	// Compute pads using a probe area anchored at (0,0) with the full axis area
+	const probeArea = {
+		top: 0,
+		left: 0,
+		width: width,
+		height: Math.max(1, height)
+	}
+
+	const yAxisSpec: AxisSpec = { ...yAxis, placement: "left", domain: { min: yAxis.min, max: yAxis.max } }
+	const xAxisSpec: AxisSpec = { ...xAxis, placement: "bottom", domain: { min: xAxis.min, max: xAxis.max } }
+
+	const yProbe = computeAndRenderYAxis(yAxisSpec, probeArea, xAxisSpec)
+	const xProbe = computeAndRenderXAxis(xAxisSpec, probeArea)
+
+	const outsideTopPx = hasTitle ? titleHeight : 0
+	const outsideBottomPx = xProbe.pads.bottom
+	const leftOutsidePx = yProbe.pads.left
+
+	// Final chart area places the axis area inside the total SVG canvas
+	const chartArea = {
+		top: outsideTopPx,
+		left: leftOutsidePx,
+		width: width,
+		height: height
+	}
+
+	// Render title (outside, above chart area)
+	if (hasTitle) {
+		const titleX = leftOutsidePx + width / 2
+		const titleY = CHART_TITLE_TOP_PADDING_PX
+		svgBody += renderWrappedText(title as string, titleX, titleY, "title", "1.1em", width)
+		includeText(ext, titleX, title as string, "middle", LABEL_AVG_CHAR_WIDTH_PX)
+	}
+
+	// Render axes against the final chartArea
+	const yRes = computeAndRenderYAxis(yAxisSpec, chartArea, xAxisSpec)
+	svgBody += yRes.markup
+	const xRes = computeAndRenderXAxis(xAxisSpec, chartArea)
+	svgBody += xRes.markup
+
+	// Clip path for geometry (only chart content, not axes/labels)
+	svgBody += createChartClipPath(clipId, chartArea.left, chartArea.top, chartArea.width, chartArea.height)
+
+	// Register extents for axis hardware/text
+	yRes.registerExtents(ext)
+	xRes.registerExtents(ext)
+	// Also include the right boundary of the chart area to ensure width grows as needed
+	includePointX(ext, chartArea.left + chartArea.width)
+
+	// Scaling functions
+	const xRange = xAxis.max - xAxis.min
+	const yRange = yAxis.max - yAxis.min
+	function toSvgX(val: number): number {
+		if (xAxis.categories && xAxis.categories.length > 0) {
+			const bw = chartArea.width / (xAxis.categories as string[]).length
+			return chartArea.left + (val + 0.5) * bw
+		}
+		const frac = (val - xAxis.min) / xRange
+		return chartArea.left + frac * chartArea.width
+	}
+	function toSvgY(val: number): number {
+		const frac = (val - yAxis.min) / yRange
+		return chartArea.top + chartArea.height - frac * chartArea.height
+	}
+
+	const bandWidth = xRes.bandWidth !== undefined ? xRes.bandWidth : yRes.bandWidth
+
+	return { svgBody, clipId, toSvgX, toSvgY, chartArea, ext, bandWidth, outsideTopPx, outsideBottomPx }
 }
 
 /**

@@ -3,22 +3,11 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { PADDING } from "@/lib/widgets/utils/constants"
+import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import {
-	calculateRightYAxisLayout,
-	calculateTextAwareLabelSelection,
-	calculateTitleLayout,
-	calculateXAxisLayout,
-	calculateYAxisLayoutAxisAware,
-	computeDynamicWidth,
-	includePointX,
-	includeRotatedYAxisLabel,
-	includeText,
-	initExtents
-} from "@/lib/widgets/utils/layout"
-import { renderRotatedWrappedYAxisLabel, renderWrappedText } from "@/lib/widgets/utils/text"
+import { computeDynamicWidth, includePointX, includeText, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
+import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 export const ErrMismatchedDataLength = errors.new("series data must have the same length as x-axis categories")
 
@@ -110,140 +99,89 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		}
 	}
 
-	const legendItemHeight = 18
-	const legendHeight = showLegend ? series.length * legendItemHeight + 12 : 0
-	
-	// Calculate vertical margins first to determine chartHeight
-	const { bottomMargin: xAxisBottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const { titleY, topMargin } = calculateTitleLayout(title, width - 60)
-	const { rightMargin, rightYAxisLabelX } = calculateRightYAxisLayout(yAxisRight)
-	
-	// Calculate chartHeight based on vertical margins
-	const marginWithoutLeft = { top: topMargin, right: rightMargin, bottom: xAxisBottomMargin + legendHeight }
-	const chartHeight = height - marginWithoutLeft.top - marginWithoutLeft.bottom
-	
-	if (chartHeight <= 0) return `<svg width="${width}" height="${height}"></svg>`
-	
-	// Now calculate Y-axis layout using the determined chartHeight
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
-		yAxis,
-		{ min: 0, max: xAxis.categories.length - 1 }, // Categorical axis
+	// Use V2 base for left axis only (dual Y-axis not supported in V2 yet)
+	const base = generateCoordinatePlaneBaseV2(
 		width,
-		chartHeight,
-		marginWithoutLeft,
-		{ axisPlacement: "leftEdge", axisTitleFontPx: 16 }
-	)
-	const margin = { ...marginWithoutLeft, left: leftMargin }
-	
-	// Calculate chartWidth with the final left margin
-	const chartWidth = width - margin.left - margin.right
-	if (chartWidth <= 0) return `<svg width="${width}" height="${height}"></svg>`
-
-	// Y-axis scaling functions
-	const scaleYLeft = chartHeight / (yAxis.max - yAxis.min)
-	const toSvgYLeft = (val: number) => height - margin.bottom - (val - yAxis.min) * scaleYLeft
-	const toSvgYRight = yAxisRight
-		? (val: number) =>
-				height - margin.bottom - ((val - yAxisRight.min) / (yAxisRight.max - yAxisRight.min)) * chartHeight
-		: () => 0
-
-	// X-axis scaling
-	const stepX = chartWidth / (xAxis.categories.length > 1 ? xAxis.categories.length - 1 : 1)
-	const toSvgX = (index: number) => margin.left + index * stepX
-
-	const ext = initExtents(width)
-	let svgBody = "<style>.axis-label { font-size: 14px; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
-
-	svgBody += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", width - 60, 8)
-	includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
-
-	// Left Y-axis
-	svgBody += `<g class="axis y-axis-left">`
-	svgBody += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}"/>`
-	{
-		const yCenter = margin.top + chartHeight / 2
-		svgBody += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), yAxisLabelX, yCenter, chartHeight)
-		includeRotatedYAxisLabel(ext, yAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
-	}
-	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
-		const y = toSvgYLeft(t)
-		svgBody += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="${theme.colors.axis}"/>`
-		svgBody += `<text x="${margin.left - 10}" y="${y + 4}" text-anchor="end">${t}</text>`
-		includeText(ext, margin.left - 10, String(t), "end", 7)
-		if (yAxis.showGridLines) {
-			svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="${theme.colors.gridMinor}" stroke-dasharray="${theme.stroke.dasharray.gridMinor}"/>`
+		height,
+		title,
+		{
+			label: xAxis.label,
+			categories: xAxis.categories.map(cat => abbreviateMonth(cat)),
+			showGridLines: false,
+			showTickLabels: true,
+			tickInterval: 1,
+			min: 0,
+			max: xAxis.categories.length
+		},
+		{
+			label: yAxis.label,
+			min: yAxis.min,
+			max: yAxis.max,
+			tickInterval: yAxis.tickInterval,
+			showGridLines: yAxis.showGridLines,
+			showTickLabels: true
 		}
-	}
-	svgBody += "</g>"
+	)
 
-	// Right Y-axis
+	// Handle right Y-axis manually if present
+	let rightAxisContent = ""
+	let toSvgYRight = (_val: number) => 0
 	if (yAxisRight) {
-		const rightAxisX = width - margin.right
-		svgBody += `<g class="axis y-axis-right">`
-		svgBody += `<line x1="${rightAxisX}" y1="${margin.top}" x2="${rightAxisX}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}"/>`
-		svgBody += `<text x="${rightAxisX + rightYAxisLabelX}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${rightAxisX + rightYAxisLabelX}, ${margin.top + chartHeight / 2})">${abbreviateMonth(yAxisRight.label)}</text>`
-		includeText(ext, rightAxisX + rightYAxisLabelX, abbreviateMonth(yAxisRight.label), "middle", 7)
+		const rightAxisX = base.chartArea.left + base.chartArea.width
+		toSvgYRight = (val: number) => {
+			const frac = (val - yAxisRight.min) / (yAxisRight.max - yAxisRight.min)
+			return base.chartArea.top + base.chartArea.height - frac * base.chartArea.height
+		}
+		
+		rightAxisContent += `<line x1="${rightAxisX}" y1="${base.chartArea.top}" x2="${rightAxisX}" y2="${base.chartArea.top + base.chartArea.height}" stroke="${theme.colors.axis}" stroke-width="1.5"/>`
+		
 		for (let t = yAxisRight.min; t <= yAxisRight.max; t += yAxisRight.tickInterval) {
 			const y = toSvgYRight(t)
-			svgBody += `<line x1="${rightAxisX}" y1="${y}" x2="${rightAxisX + 5}" y2="${y}" stroke="${theme.colors.axis}"/>`
-			svgBody += `<text x="${rightAxisX + 10}" y="${y + 4}" text-anchor="start">${t}</text>`
-			includeText(ext, rightAxisX + 10, String(t), "start", 7)
+			rightAxisContent += `<line x1="${rightAxisX}" y1="${y}" x2="${rightAxisX + 5}" y2="${y}" stroke="${theme.colors.axis}" stroke-width="1.5"/>`
+			rightAxisContent += `<text x="${rightAxisX + 10}" y="${y + 4}" text-anchor="start" font-size="12px">${t}</text>`
+			includeText(base.ext, rightAxisX + 10, String(t), "start", 7)
 		}
-		svgBody += "</g>"
+		
+		const yCenter = base.chartArea.top + base.chartArea.height / 2
+		const labelX = rightAxisX + 30
+		rightAxisContent += `<text x="${labelX}" y="${yCenter}" text-anchor="middle" font-size="16px" transform="rotate(-90, ${labelX}, ${yCenter})">${abbreviateMonth(yAxisRight.label)}</text>`
+		includeText(base.ext, labelX, abbreviateMonth(yAxisRight.label), "middle", 7)
 	}
 
-	// X-axis with label thinning
-	svgBody += `<g class="axis x-axis">`
-	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}"/>`
-	svgBody += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
-	includeText(ext, margin.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
-	{
-		// Text-width-aware label selection for better spacing
-		const positions = xAxis.categories.map((_, i) => toSvgX(i))
-		const abbreviatedLabels = xAxis.categories.map((cat) => abbreviateMonth(cat))
-		const selected = calculateTextAwareLabelSelection(abbreviatedLabels, positions, chartWidth)
+	// X-axis scaling for categorical data
+	const stepX = base.chartArea.width / Math.max(1, xAxis.categories.length - 1)
+	const toSvgX = (index: number) => base.chartArea.left + index * stepX
 
-		xAxis.categories.forEach((cat, i) => {
-			if (!cat) return
-			const x = toSvgX(i)
-			svgBody += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="${theme.colors.axis}"/>`
-			if (selected.has(i)) {
-				const abbreviatedCat = abbreviateMonth(cat)
-				svgBody += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${abbreviatedCat}</text>`
-				includeText(ext, x, abbreviatedCat, "middle", 7)
-			}
-		})
-	}
-	svgBody += "</g>"
-
-	// Data Series
+	// Data series content
+	let seriesContent = ""
 	for (const s of series) {
-		const toSvgY = s.yAxis === "right" ? toSvgYRight : toSvgYLeft
+		const toSvgY = s.yAxis === "right" ? toSvgYRight : base.toSvgY
 		const pointsStr = s.values.map((v, i) => `${toSvgX(i)},${toSvgY(v)}`).join(" ")
 
-		// Track the x-extents of all points in the series
 		s.values.forEach((_, i) => {
-			includePointX(ext, toSvgX(i))
+			includePointX(base.ext, toSvgX(i))
 		})
 
 		let dasharray = ""
 		if (s.style === "dashed") dasharray = 'stroke-dasharray="8 4"'
 		if (s.style === "dotted") dasharray = 'stroke-dasharray="2 6"'
-		svgBody += `<polyline points="${pointsStr}" fill="none" stroke="${s.color}" stroke-width="${theme.stroke.width.xthick}" ${dasharray}/>`
+		seriesContent += `<polyline points="${pointsStr}" fill="none" stroke="${s.color}" stroke-width="${theme.stroke.width.xthick}" ${dasharray}/>`
 
 		for (const [i, v] of s.values.entries()) {
 			const cx = toSvgX(i)
 			const cy = toSvgY(v)
 			if (s.pointShape === "circle") {
-				svgBody += `<circle cx="${cx}" cy="${cy}" r="${theme.geometry.pointRadius.base}" fill="${s.color}"/>`
+				seriesContent += `<circle cx="${cx}" cy="${cy}" r="${theme.geometry.pointRadius.base}" fill="${s.color}"/>`
 			} else if (s.pointShape === "square") {
-				svgBody += `<rect x="${cx - 4}" y="${cy - 4}" width="8" height="8" fill="${s.color}"/>`
+				seriesContent += `<rect x="${cx - 4}" y="${cy - 4}" width="8" height="8" fill="${s.color}"/>`
 			}
 		}
 	}
 
-	// Legend (stacked vertically below chart, centered)
+	// Legend content
+	let legendContent = ""
 	if (showLegend) {
+		const legendItemHeight = 18
 		const legendLineLength = 30
 		const legendGapX = 8
 		const estimateTextWidth = (text: string) => text.length * 7
@@ -253,9 +191,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		let legendStartX = (width - legendBoxWidth) / 2
 		if (legendStartX < 10) legendStartX = 10
 
-		const xAxisY = height - margin.bottom
-		const axisLabelY = xAxis.label ? xAxisY + 36 : xAxisY + 18
-		let legendStartY = Math.max(axisLabelY + 8, height - 10 - series.length * legendItemHeight)
+		const legendStartY = base.chartArea.top + base.chartArea.height + 50
 
 		series.forEach((s, idx) => {
 			const y = legendStartY + idx * legendItemHeight
@@ -267,20 +203,26 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 			let dash = ""
 			if (s.style === "dashed") dash = ' stroke-dasharray="8 4"'
 			if (s.style === "dotted") dash = ' stroke-dasharray="2 6"'
-			svgBody += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${s.color}" stroke-width="${theme.stroke.width.xthick}"${dash}/>`
+			legendContent += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${s.color}" stroke-width="${theme.stroke.width.xthick}"${dash}/>`
 			if (s.pointShape === "circle") {
-				svgBody += `<circle cx="${markerCx}" cy="${y}" r="${theme.geometry.pointRadius.base}" fill="${s.color}"/>`
+				legendContent += `<circle cx="${markerCx}" cy="${y}" r="${theme.geometry.pointRadius.base}" fill="${s.color}"/>`
 			} else if (s.pointShape === "square") {
-				svgBody += `<rect x="${markerCx - 4}" y="${y - 4}" width="8" height="8" fill="${s.color}"/>`
+				legendContent += `<rect x="${markerCx - 4}" y="${y - 4}" width="8" height="8" fill="${s.color}"/>`
 			}
-			svgBody += `<text x="${textX}" y="${y + 4}">${s.name}</text>`
-			includeText(ext, textX, s.name, "start", 7)
+			legendContent += `<text x="${textX}" y="${y + 4}">${s.name}</text>`
+			includeText(base.ext, textX, s.name, "start", 7)
 		})
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-		+ svgBody
-		+ `</svg>`
+	let svgBody = base.svgBody
+	svgBody += rightAxisContent
+	svgBody += wrapInClippedGroup(base.clipId, seriesContent)
+	svgBody += legendContent
+
+	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, totalHeight, AXIS_VIEWBOX_PADDING)
+	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">` +
+		svgBody +
+		`</svg>`
 	return finalSvg
 }

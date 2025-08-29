@@ -1,10 +1,10 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { PADDING } from "@/lib/widgets/utils/constants"
-import { calculateYAxisLayoutAxisAware, computeDynamicWidth, includePointX, includeRotatedYAxisLabel, includeText, initExtents } from "@/lib/widgets/utils/layout"
-import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
+import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
+import { computeDynamicWidth, includePointX, includeText, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
+import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 // Factory helpers to avoid schema reuse and $ref generation
 function createPointSchema() {
@@ -78,116 +78,91 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 		return `<svg width="${width}" height="${height}"></svg>`
 	}
 
-	// Create a mock yAxis object for the utility
-	const mockYAxis = { min: yAxisMin, max: yAxisMax, tickInterval: (yAxisMax - yAxisMin) / 5, label: yAxisLabel }
-	
-	// Calculate vertical paddings first to determine chartHeight
-	const paddingWithoutLeft = { top: PADDING * 2, right: PADDING * 2, bottom: PADDING * 4 }
-	const chartHeight = height - paddingWithoutLeft.top - paddingWithoutLeft.bottom
-	
-	// Now calculate Y-axis layout using the determined chartHeight
-	const mockXAxis = { min: xAxisMin, max: xAxisMax }
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
-		mockYAxis,
-		mockXAxis,
+	const base = generateCoordinatePlaneBaseV2(
 		width,
-		chartHeight,
-		paddingWithoutLeft,
-		{ axisPlacement: "leftEdge", axisTitleFontPx: 16 }
+		height,
+		null, // No title for this widget
+		{
+			label: xAxisLabel,
+			min: xAxisMin,
+			max: xAxisMax,
+			tickInterval: (xAxisMax - xAxisMin) / 5,
+			showGridLines: false,
+			showTickLabels: false // Conceptual, no numeric labels
+		},
+		{
+			label: yAxisLabel,
+			min: yAxisMin,
+			max: yAxisMax,
+			tickInterval: (yAxisMax - yAxisMin) / 5,
+			showGridLines: false,
+			showTickLabels: false // Conceptual, no numeric labels
+		}
 	)
-	const padding = { ...paddingWithoutLeft, left: leftMargin }
 
-	// Use the explicitly provided axis ranges
-	const minX = xAxisMin
-	const maxX = xAxisMax
-	const paddedMinY = yAxisMin
-	const paddedMaxY = yAxisMax
+	// Axis arrows outside clip
+	let arrows = `<defs><marker id="graph-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}"/></marker></defs>`
+	const yAxisX = base.chartArea.left
+	const xAxisY = base.chartArea.top + base.chartArea.height
+	arrows += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${yAxisX}" y2="${base.chartArea.top}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}" marker-end="url(#graph-arrow)"/>`
+	arrows += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${base.chartArea.left + base.chartArea.width}" y2="${xAxisY}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}" marker-end="url(#graph-arrow)"/>`
+	includePointX(base.ext, base.chartArea.left + base.chartArea.width)
 
-	const chartWidth = width - padding.left - padding.right
-
-	const scaleX = chartWidth / (maxX - minX || 1)
-	const scaleY = chartHeight / (paddedMaxY - paddedMinY || 1)
-
-	const toSvgX = (val: number) => padding.left + (val - minX) * scaleX
-	const toSvgY = (val: number) => height - padding.bottom - (val - paddedMinY) * scaleY
-
-	const ext = initExtents(width)
-	let svgBody = `<defs><marker id="graph-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}"/></marker></defs>`
-
-	// Axes
-	const yAxisX = padding.left
-	const xAxisY = height - padding.bottom
-	svgBody += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${yAxisX}" y2="${padding.top}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}" marker-end="url(#graph-arrow)"/>`
-	svgBody += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${width - padding.right}" y2="${xAxisY}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}" marker-end="url(#graph-arrow)"/>`
-
-	// Axis Labels (closer to axes)
-	svgBody += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisLabelX, padding.top + chartHeight / 2, chartHeight)
-	includeRotatedYAxisLabel(ext, yAxisLabelX, yAxisLabel, chartHeight)
-	svgBody += `<text x="${padding.left + chartWidth / 2}" y="${xAxisY + 30}" text-anchor="middle">${xAxisLabel}</text>`
-	includeText(ext, padding.left + chartWidth / 2, xAxisLabel, "middle", 7)
-
-	// Before Curve
+	// Curves inside clip
+	let content = ""
 	if (beforeSegment.points.length > 0) {
-		// Track the x-extents of all points in the before segment
 		beforeSegment.points.forEach((p) => {
-			includePointX(ext, toSvgX(p.x))
+			includePointX(base.ext, base.toSvgX(p.x))
 		})
-		const beforePointsStr = beforeSegment.points.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
-		svgBody += `<polyline points="${beforePointsStr}" fill="none" stroke="${beforeSegment.color}" stroke-width="${theme.stroke.width.xxthick}" stroke-linejoin="round" stroke-linecap="round"/>`
+		const beforePointsStr = beforeSegment.points.map((p) => `${base.toSvgX(p.x)},${base.toSvgY(p.y)}`).join(" ")
+		content += `<polyline points="${beforePointsStr}" fill="none" stroke="${beforeSegment.color}" stroke-width="${theme.stroke.width.xxthick}" stroke-linejoin="round" stroke-linecap="round"/>`
 	}
-
-	// After Curve
 	if (afterSegment.points.length > 0) {
-		// Track the x-extents of all points in the after segment
 		afterSegment.points.forEach((p) => {
-			includePointX(ext, toSvgX(p.x))
+			includePointX(base.ext, base.toSvgX(p.x))
 		})
-		const afterPointsStr = afterSegment.points.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
-		svgBody += `<polyline points="${afterPointsStr}" fill="none" stroke="${afterSegment.color}" stroke-width="${theme.stroke.width.xxthick}" stroke-dasharray="${theme.stroke.dasharray.dashedLong}" stroke-linejoin="round" stroke-linecap="round"/>`
+		const afterPointsStr = afterSegment.points.map((p) => `${base.toSvgX(p.x)},${base.toSvgY(p.y)}`).join(" ")
+		content += `<polyline points="${afterPointsStr}" fill="none" stroke="${afterSegment.color}" stroke-width="${theme.stroke.width.xxthick}" stroke-dasharray="${theme.stroke.dasharray.dashedLong}" stroke-linejoin="round" stroke-linecap="round"/>`
 	}
 
-	// Legend (stacked vertically to avoid horizontal cutoff)
+	// Legend content (outside clip)
+	let legendContent = ""
 	if (showLegend) {
 		const legendItems = [
 			{ label: beforeSegment.label, color: beforeSegment.color, dashed: false },
 			{ label: afterSegment.label, color: afterSegment.color, dashed: true }
 		]
-
-		const estimateTextWidth = (text: string) => text.length * 7 // rough estimate
+		const estimateTextWidth = (text: string) => text.length * 7
 		const legendLineLength = 30
 		const legendGapX = 8
-		const legendItemHeight = 18 // fit two items between axis and x-axis label
-
+		const legendItemHeight = 18
 		const maxTextWidth = Math.max(...legendItems.map((i) => estimateTextWidth(i.label)))
 		const legendBoxWidth = legendLineLength + legendGapX + maxTextWidth
-		const legendBoxHeight = legendItems.length * legendItemHeight
-
-		// Center horizontally below the plot area
 		let legendStartX = (width - legendBoxWidth) / 2
 		if (legendStartX < 10) legendStartX = 10
-
-		// Place vertically below the x-axis label but within the bottom margin
-		const xAxisY = height - padding.bottom
-		const axisLabelY = xAxisY + 30
-		let legendStartY = Math.max(axisLabelY + 12, height - 10 - legendBoxHeight)
-
+		const legendStartY = base.chartArea.top + base.chartArea.height + 50
 		for (const [i, item] of legendItems.entries()) {
 			const y = legendStartY + i * legendItemHeight
 			const textY = y + 5
 			const x1 = legendStartX
 			const x2 = legendStartX + legendLineLength
 			const textX = x2 + legendGapX
-
 			const dash = item.dashed ? ' stroke-dasharray="8 6"' : ""
-			svgBody += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${item.color}" stroke-width="${theme.stroke.width.xxthick}"${dash}/>`
-			svgBody += `<text x="${textX}" y="${textY}">${item.label}</text>`
-			includeText(ext, textX, item.label, "start", 7)
+			legendContent += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${item.color}" stroke-width="${theme.stroke.width.xxthick}"${dash}/>`
+			legendContent += `<text x="${textX}" y="${textY}">${item.label}</text>`
+			includeText(base.ext, textX, item.label, "start", 7)
 		}
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.large}">`
-		+ svgBody
-		+ `</svg>`
+	let svgBody = base.svgBody
+	svgBody += arrows
+	svgBody += wrapInClippedGroup(base.clipId, content)
+	svgBody += legendContent
+
+	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, totalHeight, AXIS_VIEWBOX_PADDING)
+	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.large}">` +
+		svgBody +
+		`</svg>`
 	return finalSvg
 }

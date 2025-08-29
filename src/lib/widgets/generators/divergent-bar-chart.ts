@@ -3,20 +3,11 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { PADDING } from "@/lib/widgets/utils/constants"
+import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import {
-	calculateTextAwareLabelSelection,
-	calculateXAxisLayout,
-	calculateYAxisLayoutAxisAware,
-	computeDynamicWidth,
-	includePointX,
-	includeRotatedYAxisLabel,
-	includeText,
-	initExtents
-} from "@/lib/widgets/utils/layout"
-import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
+import { computeDynamicWidth, includePointX, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
+import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -82,134 +73,85 @@ export type DivergentBarChartProps = z.infer<typeof DivergentBarChartPropsSchema
 export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChartPropsSchema> = (data) => {
 	const { width, height, xAxisLabel, yAxis, data: chartData, positiveBarColor, negativeBarColor, gridColor } = data
 
-	// Calculate vertical margins first to determine chartHeight
-	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const marginWithoutLeft = { top: PADDING, right: PADDING, bottom: bottomMargin }
-	
-	// Calculate chartHeight based on vertical margins
-	const chartHeight = height - marginWithoutLeft.top - marginWithoutLeft.bottom
-	
-	if (chartHeight <= 0 || chartData.length === 0 || yAxis.min >= yAxis.max) {
-		logger.error("invalid chart dimensions or data for divergent bar chart", {
-			chartHeight,
-			dataLength: chartData.length,
-			yAxis
-		})
-		throw errors.wrap(
-			ErrInvalidDimensions,
-			"chart dimensions must be positive, data must not be empty, and y-axis min must be less than max."
-		)
+	if (chartData.length === 0 || yAxis.min >= yAxis.max) {
+		logger.error("invalid data for divergent bar chart", { dataLength: chartData.length, yAxis })
+		throw errors.wrap(ErrInvalidDimensions, "chart data must not be empty and y-axis min must be less than max")
 	}
-	
-	// Now calculate Y-axis layout using the determined chartHeight
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
-		yAxis,
-		{ min: 0, max: chartData.length - 1 }, // Categorical axis
+
+	const base = generateCoordinatePlaneBaseV2(
 		width,
-		chartHeight,
-		marginWithoutLeft,
-		{ axisPlacement: "leftEdge", axisTitleFontPx: 16 }
+		height,
+		null, // No title for this widget
+		{
+			label: xAxisLabel,
+			categories: chartData.map((d) => abbreviateMonth(d.category)),
+			showGridLines: false,
+			showTickLabels: true,
+			tickInterval: 1,
+			min: 0,
+			max: chartData.length
+		},
+		{
+			label: yAxis.label,
+			min: yAxis.min,
+			max: yAxis.max,
+			tickInterval: yAxis.tickInterval,
+			showGridLines: true,
+			showTickLabels: true
+		}
 	)
-	const margin = { ...marginWithoutLeft, left: leftMargin }
-	
-	// Calculate chartWidth with the final left margin
-	const chartWidth = width - margin.left - margin.right
-	if (chartWidth <= 0) {
-		logger.error("invalid chart width for divergent bar chart", { chartWidth })
-		throw errors.wrap(ErrInvalidDimensions, "chart width must be positive.")
-	}
 
-	const yRange = yAxis.max - yAxis.min
-	const scaleY = chartHeight / yRange
-	const barWidth = chartWidth / chartData.length
-	const barPadding = 0.4
-
-	// yZero is derivable from yAxis and scale; not needed directly
-
-	const ext = initExtents(width)
-	let svgBody = "<style>.axis-label { font-size: 1.1em; font-weight: bold; text-anchor: middle; } .tick-label { font-size: 1em; font-weight: bold; } </style>"
-
-	const chartBody = `<g transform="translate(${margin.left},${margin.top})">`
-	svgBody += chartBody
-
-	// Y-axis line with ticks and labels
-	svgBody += `<line x1="0" y1="0" x2="0" y2="${chartHeight}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
+	// Override grid lines with custom color
+	let customAxisContent = ""
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
-		const y = chartHeight - (t - yAxis.min) * scaleY
-		// Grid line
-		svgBody += `<line x1="0" y1="${y}" x2="${chartWidth}" y2="${y}" stroke="${gridColor}" stroke-width="${theme.stroke.width.thin}"/>`
-		// Tick label
-		svgBody += `<text x="-10" y="${y + 5}" class="tick-label" text-anchor="end">${t}</text>`
-		includeText(ext, margin.left - 10, String(t), "end", 7) // MODIFICATION: Add this line
+		const y = base.toSvgY(t)
+		customAxisContent += `<line x1="${base.chartArea.left}" y1="${y}" x2="${base.chartArea.left + base.chartArea.width}" y2="${y}" stroke="${gridColor}" stroke-width="1"/>`
 	}
 
-	// Prominent Zero Line
-	const yZeroInChartCoords = chartHeight - (0 - yAxis.min) * scaleY
-	svgBody += `<line x1="0" y1="${yZeroInChartCoords}" x2="${chartWidth}" y2="${yZeroInChartCoords}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
+	// Prominent zero line
+	const yZero = base.toSvgY(0)
+	customAxisContent += `<line x1="${base.chartArea.left}" y1="${yZero}" x2="${base.chartArea.left + base.chartArea.width}" y2="${yZero}" stroke="${theme.colors.axis}" stroke-width="2"/>`
 
-	// X-axis label (using group-relative coordinates)
-	svgBody += `<text x="${chartWidth / 2}" y="${chartHeight + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
-
-	// Close group before rendering y-axis label
-	svgBody += "</g>"
-
-	// Y-axis label with wrapping
-	const globalYAxisLabelX = yAxisLabelX
-	const globalYAxisLabelY = margin.top + chartHeight / 2
-	svgBody += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), globalYAxisLabelX, globalYAxisLabelY, chartHeight)
-	includeRotatedYAxisLabel(ext, globalYAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
-
-	// X-axis label (global coordinates)
-	const globalXAxisLabelX = margin.left + chartWidth / 2
-	const _globalXAxisLabelY = height - margin.bottom + xAxisTitleY
-	includeText(ext, globalXAxisLabelX, abbreviateMonth(xAxisLabel), "middle", 7)
-
-	// Reopen group for remaining chart elements
-	svgBody += `<g transform="translate(${margin.left},${margin.top})">`
-
-	// Text-width-aware label selection for visual uniformity
-	const barLabels = chartData.map((d) => abbreviateMonth(d.category))
-	const barPositions = chartData.map((_, i) => i * barWidth + barWidth / 2)
-	const selectedLabelIndices = calculateTextAwareLabelSelection(barLabels, barPositions, chartWidth)
+	// Bar rendering
+	let bars = ""
+	let bandWidth = base.bandWidth
+	if (bandWidth === undefined) {
+		logger.error("bandWidth missing for categorical x-axis in divergent bar chart", { length: chartData.length })
+		throw errors.wrap(ErrInvalidDimensions, "categorical x-axis requires defined bandWidth")
+	}
+	const barPadding = 0.4
+	const innerBarWidth = bandWidth * (1 - barPadding)
 
 	chartData.forEach((d, i) => {
-		const barAbsHeight = Math.abs(d.value) * scaleY
-		const x = i * barWidth
-		const innerBarWidth = barWidth * (1 - barPadding)
-		const xOffset = (barWidth - innerBarWidth) / 2
-		const barX = x + xOffset
+		const xCenter = base.toSvgX(i)
+		const barX = xCenter - innerBarWidth / 2
+		const barAbsHeight = Math.abs(d.value) / (yAxis.max - yAxis.min) * base.chartArea.height
 
-		// Track the horizontal extent of the bar
-		includePointX(ext, margin.left + barX)
-		includePointX(ext, margin.left + barX + innerBarWidth)
+		includePointX(base.ext, barX)
+		includePointX(base.ext, barX + innerBarWidth)
 
 		let y: number
 		let color: string
 
 		if (d.value >= 0) {
-			y = yZeroInChartCoords - barAbsHeight
+			y = yZero - barAbsHeight
 			color = positiveBarColor
 		} else {
-			y = yZeroInChartCoords
+			y = yZero
 			color = negativeBarColor
 		}
 
-		svgBody += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barAbsHeight}" fill="${color}"/>`
-
-		const labelX = x + barWidth / 2
-		if (selectedLabelIndices.has(i)) {
-			svgBody += `<text x="${labelX}" y="${chartHeight + 25}" class="tick-label" text-anchor="middle">${abbreviateMonth(d.category)}</text>`
-			includeText(ext, margin.left + labelX, abbreviateMonth(d.category), "middle", 7)
-		}
+		bars += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barAbsHeight}" fill="${color}"/>`
 	})
 
-	// Add right-side border for the chart area
-	svgBody += `<line x1="${chartWidth}" y1="0" x2="${chartWidth}" y2="${chartHeight}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
+	let svgBody = base.svgBody
+	svgBody += customAxisContent
+	svgBody += wrapInClippedGroup(base.clipId, bars)
 
-	svgBody += "</g>" // Close final group
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
-		+ svgBody
-		+ `</svg>`
+	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, totalHeight, AXIS_VIEWBOX_PADDING)
+	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">` +
+		svgBody +
+		`</svg>`
 	return finalSvg
 }

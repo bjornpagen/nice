@@ -3,20 +3,11 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { PADDING } from "@/lib/widgets/utils/constants"
+import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import {
-	calculateTextAwareLabelSelection,
-	calculateXAxisLayout,
-	calculateYAxisLayoutAxisAware,
-	computeDynamicWidth,
-	includePointX,
-	includeRotatedYAxisLabel,
-	includeText,
-	initExtents
-} from "@/lib/widgets/utils/layout"
-import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
+import { computeDynamicWidth, includePointX, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
+import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -91,125 +82,76 @@ export type PopulationBarChartProps = z.infer<typeof PopulationBarChartPropsSche
 export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarChartPropsSchema> = (data) => {
 	const { width, height, xAxisLabel, yAxis, data: chartData, barColor, gridColor, xAxisVisibleLabels } = data
 
-	// Calculate vertical margins first to determine chartHeight
-	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const marginWithoutLeft = { top: PADDING, right: PADDING, bottom: bottomMargin }
-	
-	// Calculate chartHeight based on vertical margins
-	const chartHeight = height - marginWithoutLeft.top - marginWithoutLeft.bottom
-	
-	if (chartHeight <= 0 || chartData.length === 0) {
-		logger.error("invalid chart dimensions or data for population bar chart", {
-			chartHeight,
-			dataLength: chartData.length
-		})
-		throw errors.wrap(
-			ErrInvalidDimensions,
-			`chart height must be positive and data must not be empty. height: ${chartHeight}, data length: ${chartData.length}`
-		)
+	if (chartData.length === 0) {
+		logger.error("invalid data for population bar chart", { dataLength: chartData.length })
+		throw errors.wrap(ErrInvalidDimensions, "chart data must not be empty")
 	}
-	
-	// Now calculate Y-axis layout using the determined chartHeight
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
-		yAxis,
-		{ min: 0, max: chartData.length - 1 }, // Categorical axis
+
+	const base = generateCoordinatePlaneBaseV2(
 		width,
-		chartHeight,
-		marginWithoutLeft,
-		{ axisPlacement: "leftEdge", axisTitleFontPx: 16 }
+		height,
+		null, // No title for this widget
+		{
+			label: xAxisLabel,
+			categories: chartData.map((d) => abbreviateMonth(d.label)),
+			showGridLines: false,
+			showTickLabels: true,
+			tickInterval: 1,
+			min: 0,
+			max: chartData.length
+		},
+		{
+			label: yAxis.label,
+			min: yAxis.min,
+			max: yAxis.max,
+			tickInterval: yAxis.tickInterval,
+			showGridLines: true,
+			showTickLabels: true
+		}
 	)
-	const margin = { ...marginWithoutLeft, left: leftMargin }
-	
-	// Calculate chartWidth with the final left margin
-	const chartWidth = width - margin.left - margin.right
-	if (chartWidth <= 0) {
-		logger.error("invalid chart width for population bar chart", { chartWidth })
-		throw errors.wrap(ErrInvalidDimensions, `chart width must be positive. width: ${chartWidth}`)
+
+	// Override grid lines with custom color
+	let customAxisContent = ""
+	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
+		if (t === 0) continue
+		const y = base.toSvgY(t)
+		customAxisContent += `<line x1="${base.chartArea.left}" y1="${y}" x2="${base.chartArea.left + base.chartArea.width}" y2="${y}" stroke="${gridColor}" stroke-width="1"/>`
 	}
 
-	const maxValue = yAxis.max
-	const scaleY = chartHeight / (maxValue - yAxis.min)
-	const barWidth = chartWidth / chartData.length
-	const barPadding = 0.3 // Visually closer to the example image
-
-	const ext = initExtents(width)
-	let svgBody = "<style>.axis-label { font-size: 1.1em; font-weight: bold; text-anchor: middle; } .tick-label { font-size: 1em; font-weight: bold; } </style>"
-
-	// Main SVG Body
-	const chartBody = `<g transform="translate(${margin.left},${margin.top})">`
-	svgBody += chartBody
-
-	// Y-axis line
-	svgBody += `<line x1="0" y1="0" x2="0" y2="${chartHeight}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
-	// X-axis line
-	svgBody += `<line x1="0" y1="${chartHeight}" x2="${chartWidth}" y2="${chartHeight}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
-
-	// Axis Labels (x-axis inside group; y-axis will be rendered in global coordinates later)
-	svgBody += `<text x="${chartWidth / 2}" y="${chartHeight + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxisLabel)}</text>`
-
-	// Y ticks and SOLID grid lines
-	for (let t = yAxis.min; t <= maxValue; t += yAxis.tickInterval) {
-		const y = chartHeight - (t - yAxis.min) * scaleY
-		// Grid line
-		svgBody += `<line x1="0" y1="${y}" x2="${chartWidth}" y2="${y}" stroke="${gridColor}" stroke-width="${theme.stroke.width.thin}"/>`
-		// Tick label
-		svgBody += `<text x="-10" y="${y + 5}" class="tick-label" text-anchor="end">${t}</text>`
-		includeText(ext, margin.left - 10, String(t), "end", 7) // MODIFICATION: Add this line
+	// Bar rendering
+	let bars = ""
+	let bandWidth = base.bandWidth
+	if (bandWidth === undefined) {
+		logger.error("bandWidth missing for categorical x-axis in population bar chart", { length: chartData.length })
+		throw errors.wrap(ErrInvalidDimensions, "categorical x-axis requires defined bandWidth")
 	}
+	const barPadding = 0.3
+	const innerBarWidth = bandWidth * (1 - barPadding)
 
-	// Compute bar centers and text-aware label selection for auto thinning
-	const barCenters = chartData.map((_, i) => i * barWidth + barWidth / 2)
-	const candidateLabels = chartData.map((d) => abbreviateMonth(d.label))
-	const selectedTextAware = calculateTextAwareLabelSelection(candidateLabels, barCenters, chartWidth)
+	// Handle visible labels logic
 	const visibleLabelSet = new Set<string>(xAxisVisibleLabels)
+	const useAutoThinning = xAxisVisibleLabels.length === 0
 
 	chartData.forEach((d, i) => {
-		const barHeight = d.value * scaleY
-		const x = i * barWidth
-		const y = chartHeight - barHeight
-		const innerBarWidth = barWidth * (1 - barPadding)
-		const xOffset = (barWidth - innerBarWidth) / 2
-		const barX = x + xOffset
+		const xCenter = base.toSvgX(i)
+		const barX = xCenter - innerBarWidth / 2
+		const barHeight = (d.value - yAxis.min) / (yAxis.max - yAxis.min) * base.chartArea.height
+		const y = base.chartArea.top + base.chartArea.height - barHeight
 
-		// Track the horizontal extent of the bar
-		includePointX(ext, margin.left + barX)
-		includePointX(ext, margin.left + barX + innerBarWidth)
+		includePointX(base.ext, barX)
+		includePointX(base.ext, barX + innerBarWidth)
 
-		// Bar
-		svgBody += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="${barColor}"/>`
-
-		const labelX = x + barWidth / 2
-
-		// X-axis tick mark
-		svgBody += `<line x1="${labelX}" y1="${chartHeight}" x2="${labelX}" y2="${chartHeight + 5}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
-
-		// X-axis label (conditionally rendered)
-		const useAutoThinning = xAxisVisibleLabels.length === 0
-		const labelText = d.label
-		const shouldShowLabel = useAutoThinning ? selectedTextAware.has(i) : visibleLabelSet.has(labelText)
-		if (shouldShowLabel) {
-			svgBody += `<text x="${labelX}" y="${chartHeight + 20}" class="tick-label" text-anchor="middle">${abbreviateMonth(labelText)}</text>`
-			// Track the x-axis tick label
-			includeText(ext, margin.left + labelX, abbreviateMonth(labelText), "middle", 7)
-		}
+		bars += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="${barColor}"/>`
 	})
 
-	svgBody += "</g>" // Close chartBody group
+	let svgBody = base.svgBody
+	svgBody += customAxisContent
+	svgBody += wrapInClippedGroup(base.clipId, bars)
 
-	// Global coordinates for axis labels with proper pivot to avoid clipping
-	const globalXAxisLabelX = margin.left + chartWidth / 2
-	const _globalXAxisLabelY = height - margin.bottom + xAxisTitleY
-	includeText(ext, globalXAxisLabelX, abbreviateMonth(xAxisLabel), "middle", 7)
-
-	const globalYAxisLabelX = yAxisLabelX
-	const globalYAxisLabelY = margin.top + chartHeight / 2
-	svgBody += renderRotatedWrappedYAxisLabel(abbreviateMonth(yAxis.label), globalYAxisLabelX, globalYAxisLabelY, chartHeight)
-	includeRotatedYAxisLabel(ext, globalYAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
-
-	// Expand viewBox as needed to accommodate labels
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
-		+ svgBody
-		+ `</svg>`
+	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, totalHeight, AXIS_VIEWBOX_PADDING)
+	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">` +
+		svgBody +
+		`</svg>`
 	return finalSvg
 }

@@ -4,3 +4,24 @@
  * touching the edges of the SVG container.
  */
 export const PADDING = 20
+
+// Default padding for the dynamic viewBox calculation for coordinate plane widgets.
+export const AXIS_VIEWBOX_PADDING = 10
+
+// AXIS HARDWARE CONSTANTS
+export const TICK_LENGTH_PX = 5
+export const AXIS_STROKE_WIDTH_PX = 1.5
+export const GRID_STROKE_WIDTH_PX = 1
+
+// LAYOUT AND PADDING CONSTANTS
+export const CHART_TITLE_TOP_PADDING_PX = 20
+export const CHART_TITLE_BOTTOM_PADDING_PX = 15
+export const TICK_LABEL_PADDING_PX = 8
+export const AXIS_TITLE_PADDING_PX = 15
+export const ESTIMATED_BOTTOM_MARGIN_PX = 60
+
+// FONT AND TEXT CONSTANTS
+export const CHART_TITLE_FONT_PX = 18
+export const AXIS_TITLE_FONT_PX = 16
+export const TICK_LABEL_FONT_PX = 12
+export const LABEL_AVG_CHAR_WIDTH_PX = 7

@@ -26,11 +26,58 @@ test("coordinate plane - kinetic energy vs mass", () => {
 			showGridLines: true
 		},
 		showQuadrantLabels: false,
-		points: [],
-		lines: [],
-		polygons: [],
-		distances: [],
-		polylines: []
+		points: [
+			{ id: "p0", x: 0, y: 0, label: "0 kg", color: "#FF0000", style: "closed" },
+			{ id: "p1", x: 1, y: 32, label: "1 kg", color: "#FF0000", style: "closed" },
+			{ id: "p2", x: 2, y: 64, label: "2 kg", color: "#FF0000", style: "closed" }
+		],
+		lines: [
+			{
+				id: "ke-proportional",
+				equation: { type: "slopeIntercept", slope: 32, yIntercept: 0 },
+				color: "#00A2C7",
+				style: "solid"
+			},
+			{
+				id: "x-equals-5",
+				equation: { type: "standard", A: 1, B: 0, C: 5 }, // vertical line x = 5
+				color: "#555555",
+				style: "dashed"
+			}
+		],
+		polygons: [
+			{
+				vertices: ["p0", "p1", "p2"],
+				isClosed: true,
+				fillColor: "#FF000080",
+				strokeColor: "#FF0000",
+				label: "Region"
+			}
+		],
+		distances: [
+			{
+				pointId1: "p1",
+				pointId2: "p2",
+				showLegs: true,
+				showLegLabels: false,
+				hypotenuseLabel: "d",
+				color: "#333333",
+				style: "solid"
+			}
+		],
+		polylines: [
+			{
+				id: "sample-curve",
+				points: [
+					{ x: 0, y: 10 },
+					{ x: 3, y: 38 },
+					{ x: 6, y: 55 },
+					{ x: 9, y: 60 }
+				],
+				color: "#7C3AED",
+				style: "dashed"
+			}
+		]
 	} satisfies CoordinatePlaneInput
 
 	// Validate the input

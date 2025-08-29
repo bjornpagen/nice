@@ -1,17 +1,9 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { PADDING } from "@/lib/widgets/utils/constants"
-import { 
-	calculateXAxisLayout, 
-	calculateYAxisLayoutAxisAware,
-	computeDynamicWidth, 
-	includePointX,
-	includeRotatedYAxisLabel, 
-	includeText, 
-	initExtents 
-} from "@/lib/widgets/utils/layout"
-import { renderRotatedWrappedYAxisLabel } from "@/lib/widgets/utils/text"
+import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
+import { computeDynamicWidth, includePointX, includeText, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
+import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 const AnnotationSchema = z.object({
 	year: z.number().describe("The year on the x-axis that the annotation arrow should point to."),
@@ -145,102 +137,85 @@ const renderMultiLineText = (
 	const tspans = lines
 		.map((line, index) => `<tspan x="${x}" dy="${index === 0 ? "0" : lineHeight}">${line}</tspan>`)
 		.join("")
-	return `<text x="${x}" y="${y}" class="${className}">${tspans}</text>`
+	return `<text x="${x}" y="${y}" class="${className}" text-anchor="start">${tspans}</text>`
 }
 
 export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchema> = (props) => {
 	const { width, height, xAxisLabel, yAxisLabel, annotations } = props
 
-	// Hardcoded axis ranges to match the visual
-	const xAxis = { min: 1, max: 2021 }
-	const yAxis = { min: 240, max: 420, tickInterval: 20, label: yAxisLabel }
-
-	// MODIFICATION: Replace hardcoded margin with dynamic layout helpers
-	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true, 30) // Has ticks, custom padding
-	const marginWithoutLeft = { top: PADDING, right: PADDING, bottom: bottomMargin }
-	const chartHeight = height - marginWithoutLeft.top - marginWithoutLeft.bottom
-	if (chartHeight <= 0) return `<svg width="${width}" height="${height}"></svg>`
-
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
-		yAxis,
-		xAxis, // Pass the numeric xAxis object
-		width,
-		chartHeight,
-		marginWithoutLeft,
-		{ axisPlacement: "leftEdge", axisTitleFontPx: 16, titlePadding: 30 }
-	)
-	const margin = { ...marginWithoutLeft, left: leftMargin }
-
-	const chartWidth = width - margin.left - margin.right
-	if (chartWidth <= 0) return `<svg width="${width}" height="${height}"></svg>`
-
-	const toSvgX = (val: number) => margin.left + ((val - xAxis.min) / (xAxis.max - xAxis.min)) * chartWidth
-	const toSvgY = (val: number) => height - margin.bottom - ((val - yAxis.min) / (yAxis.max - yAxis.min)) * chartHeight
-
 	// Helper to find PPM for a given year via linear interpolation
 	const getPpmForYear = (year: number): number => {
 		const p1 = CO2_DATA.filter((p) => p.year <= year).pop()
 		const p2 = CO2_DATA.find((p) => p.year > year)
-		if (!p1) return CO2_DATA[0]?.ppm ?? yAxis.min
+		const firstPoint = CO2_DATA[0]
+		if (!firstPoint) return 240
+		if (!p1) return firstPoint.ppm
 		if (!p2) return p1.ppm
 		const t = (year - p1.year) / (p2.year - p1.year)
 		return p1.ppm + t * (p2.ppm - p1.ppm)
 	}
 
-	const ext = initExtents(width)
-	let svgBody = `<defs><marker id="co2-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}"/></marker></defs>`
-		+ "<style>.axis-label { font-size: 16px; text-anchor: middle; } .annotation-label { font-size: 16px; font-weight: bold; text-anchor: start; }</style>"
+	const base = generateCoordinatePlaneBaseV2(
+		width,
+		height,
+		null, // No title for this widget
+		{
+			label: xAxisLabel,
+			min: 1,
+			max: 2021,
+			tickInterval: 500, // Custom intervals for years
+			showGridLines: false,
+			showTickLabels: true,
+			labelFormatter: (val: number) => {
+				if (val === 1 || val === 500 || val === 1000 || val === 1500 || val === 2021) {
+					return String(Math.round(val))
+				}
+				return ""
+			}
+		},
+		{
+			label: yAxisLabel,
+			min: 240,
+			max: 420,
+			tickInterval: 20,
+			showGridLines: true,
+			showTickLabels: true
+		}
+	)
 
-	// Gridlines and Axes
-	for (let t = yAxis.min; t <= yAxis.max; t += 20) {
-		const y = toSvgY(t)
-		svgBody += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="${theme.colors.gridMajor}"/>`
-		svgBody += `<text x="${margin.left - 10}" y="${y + 5}" text-anchor="end">${t}</text>`
-		includeText(ext, margin.left - 10, String(t), "end", 7)
-	}
-	svgBody += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
-	for (const year of [1, 500, 1000, 1500, 2021]) {
-		const x = toSvgX(year)
-		svgBody += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
-		svgBody += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${year}</text>`
-		includeText(ext, x, String(year), "middle", 7)
-	}
-
-	// Axis Labels
-	svgBody += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + xAxisTitleY}" class="axis-label">${xAxisLabel}</text>`
-	includeText(ext, margin.left + chartWidth / 2, xAxisLabel, "middle", 7)
-	svgBody += renderRotatedWrappedYAxisLabel(yAxisLabel, yAxisLabelX, margin.top + chartHeight / 2, chartHeight)
-	includeRotatedYAxisLabel(ext, yAxisLabelX, yAxisLabel, chartHeight)
-
-	// Data Line
-	// Track the x-extents of all data points
+	// Data line content (inside clip)
+	let clippedContent = ""
+	clippedContent += `<defs><marker id="co2-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}"/></marker></defs>`
 	CO2_DATA.forEach((p) => {
-		includePointX(ext, toSvgX(p.year))
+		includePointX(base.ext, base.toSvgX(p.year))
 	})
-	const pointsStr = CO2_DATA.map((p) => `${toSvgX(p.year)},${toSvgY(p.ppm)}`).join(" ")
-	svgBody += `<polyline points="${pointsStr}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.xthick}"/>`
+	const pointsStr = CO2_DATA.map((p) => `${base.toSvgX(p.year)},${base.toSvgY(p.ppm)}`).join(" ")
+	clippedContent += `<polyline points="${pointsStr}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.xthick}"/>`
 
-	// Annotations - always placed in upper left corner area
+	// Annotations (text outside clip, arrows outside clip)
+	let outsideContent = ""
 	annotations.forEach((anno, index) => {
 		const ppm = getPpmForYear(anno.year)
-		const targetX = toSvgX(anno.year)
-		const targetY = toSvgY(ppm)
-
-		// Fixed position in upper left area
-		const textX = margin.left + 40
-		const textY = margin.top + 40 + index * 60
-
-		// Draw arrow from text to target point on curve
-		svgBody += `<line x1="${textX}" y1="${textY + 20}" x2="${targetX}" y2="${targetY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" marker-end="url(#co2-arrow)"/>`
-		svgBody += renderMultiLineText(anno.text, textX, textY, "annotation-label", "1.1em")
+		const targetX = base.toSvgX(anno.year)
+		const targetY = base.toSvgY(ppm)
+		const textX = base.chartArea.left + 40
+		const textY = base.chartArea.top + 40 + index * 60
+		outsideContent += `<line x1="${textX}" y1="${textY + 20}" x2="${targetX}" y2="${targetY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" marker-end="url(#co2-arrow)"/>`
+		outsideContent += `<text x="${textX}" y="${textY}" class="annotation-label" text-anchor="start"><tspan x="${textX}" dy="0">${anno.text[0] ?? ""}</tspan>${(anno.text.slice(1) || []).map(line => `<tspan x="${textX}" dy="1.2em">${line}</tspan>`).join("")}</text>`
 		for (const line of anno.text) {
-			includeText(ext, textX, line, "start", 7)
+			includeText(base.ext, textX, line, "start", 7)
 		}
+		includePointX(base.ext, Math.max(textX, targetX))
 	})
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">`
-		+ svgBody
-		+ `</svg>`
+	let svgBody = base.svgBody
+	svgBody += wrapInClippedGroup(base.clipId, clippedContent)
+	svgBody += outsideContent
+
+	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, totalHeight, AXIS_VIEWBOX_PADDING)
+	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">` +
+		svgBody +
+		`</svg>`
 	return finalSvg
 }

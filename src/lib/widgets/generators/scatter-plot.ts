@@ -3,24 +3,11 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { PADDING } from "@/lib/widgets/utils/constants"
+import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import {
-	calculateLineLegendLayout,
-	calculateTextAwareLabelSelection,
-	calculateTitleLayout,
-	calculateXAxisLayout,
-	calculateYAxisLayoutAxisAware,
-	computeDynamicWidth,
-	createChartClipPath,
-	includePointX,
-	includeRotatedYAxisLabel,
-	includeText,
-	initExtents,
-	wrapInClippedGroup
-} from "@/lib/widgets/utils/layout"
-import { renderRotatedWrappedYAxisLabel, renderWrappedText } from "@/lib/widgets/utils/text"
+import { computeDynamicWidth, includePointX, includeText, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
+import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 // Defines a single data point on the scatter plot
 const ScatterPointSchema = z
@@ -354,110 +341,33 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 			throw errors.new("line endpoints must differ")
 		}
 	}
-	// Use the same robust coordinate plane logic from generateCoordinatePlane
-	// Calculate vertical margins first to determine chartHeight
-	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const { titleY, topMargin } = calculateTitleLayout(title, width - 60)
 
-	// Calculate line legend layout for dedicated label area
-	const lineCount = lines.length
-	const basePadRight = PADDING + 10
-	const { requiredRightMargin } = calculateLineLegendLayout(lineCount, 0, 0) // chartRight/chartTop calculated after padding
-	const rightMargin = lineCount > 0 ? requiredRightMargin : basePadRight
-
-	// Calculate chartHeight based on vertical margins
-	const padWithoutLeft = { top: topMargin, right: rightMargin, bottom: bottomMargin }
-	const chartHeight = height - padWithoutLeft.top - padWithoutLeft.bottom
-	
-	if (chartHeight <= 0 || xAxis.min >= xAxis.max || yAxis.min >= yAxis.max) {
-		return `<svg width="${width}" height="${height}"></svg>`
-	}
-
-	// Now calculate Y-axis layout using the determined chartHeight
-	const { leftMargin, yAxisLabelX } = calculateYAxisLayoutAxisAware(
-		yAxis,
-		xAxis,
+	const base = generateCoordinatePlaneBaseV2(
 		width,
-		chartHeight,
-		padWithoutLeft,
-		{ axisPlacement: "leftEdge", axisTitleFontPx: 16 }
+		height,
+		title,
+		{
+			label: xAxis.label,
+			min: xAxis.min,
+			max: xAxis.max,
+			tickInterval: xAxis.tickInterval,
+			showGridLines: xAxis.gridLines,
+			showTickLabels: true
+		},
+		{
+			label: yAxis.label,
+			min: yAxis.min,
+			max: yAxis.max,
+			tickInterval: yAxis.tickInterval,
+			showGridLines: yAxis.gridLines,
+			showTickLabels: true
+		}
 	)
-	const pad = { ...padWithoutLeft, left: leftMargin }
-
-	// Calculate chartWidth with the final left margin
-	const chartWidth = width - pad.left - pad.right
-	if (chartWidth <= 0) {
-		return `<svg width="${width}" height="${height}"></svg>`
-	}
-
-	const scaleX = chartWidth / (xAxis.max - xAxis.min)
-	const scaleY = chartHeight / (yAxis.max - yAxis.min)
-	const toSvgX = (val: number) => pad.left + (val - xAxis.min) * scaleX
-	const toSvgY = (val: number) => height - pad.bottom - (val - yAxis.min) * scaleY
-
-	const _clamp = (value: number, min: number, max: number) => {
-		if (value < min) return min
-		if (value > max) return max
-		return value
-	}
 
 	const styleAttrs = (style: LineStyle): string => {
 		const dash = style.dash ? ` stroke-dasharray="5 5"` : ""
 		return ` stroke="${style.color}" stroke-width="${style.strokeWidth}"${dash}`
 	}
-
-	const ext = initExtents(width)
-	let svgBody = "<style>.axis-label { font-size: 14px; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
-
-	// Define clip path for chart area to properly clip lines at boundaries
-	svgBody += createChartClipPath("chartArea", pad.left, pad.top, chartWidth, chartHeight)
-
-	const maxTextWidth = width - 60
-	svgBody += renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", maxTextWidth, 8)
-	includeText(ext, width / 2, abbreviateMonth(title), "middle", 7)
-
-	// Grid lines, Axes, Ticks, Labels
-	if (xAxis.gridLines)
-		for (let t = xAxis.min; t <= xAxis.max; t += xAxis.tickInterval) {
-			svgBody += `<line x1="${toSvgX(t)}" y1="${pad.top}" x2="${toSvgX(t)}" y2="${height - pad.bottom}" stroke="${theme.colors.gridMajor}"/>`
-		}
-	if (yAxis.gridLines)
-		for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
-			svgBody += `<line x1="${pad.left}" y1="${toSvgY(t)}" x2="${width - pad.right}" y2="${toSvgY(t)}" stroke="${theme.colors.gridMajor}"/>`
-		}
-	svgBody += `<line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="${theme.colors.axis}"/>`
-	svgBody += `<line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="${theme.colors.axis}"/>`
-	// Text-width-aware x-axis label thinning
-	const tickValues: number[] = []
-	const tickPositions: number[] = []
-	for (let t = xAxis.min; t <= xAxis.max; t += xAxis.tickInterval) {
-		tickValues.push(t)
-		tickPositions.push(toSvgX(t))
-	}
-	const tickLabels = tickValues.map((t) => String(t))
-	const selected = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartWidth)
-
-	tickValues.forEach((t, i) => {
-		const x = toSvgX(t)
-		svgBody += `<line x1="${x}" y1="${height - pad.bottom}" x2="${x}" y2="${height - pad.bottom + 5}" stroke="${theme.colors.axis}"/>`
-		if (selected.has(i)) {
-			svgBody += `<text x="${x}" y="${height - pad.bottom + 20}" text-anchor="middle">${t}</text>`
-			includeText(ext, x, String(t), "middle", 7)
-		}
-	})
-	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
-		svgBody += `<line x1="${pad.left}" y1="${toSvgY(t)}" x2="${pad.left - 5}" y2="${toSvgY(t)}" stroke="${theme.colors.axis}"/><text x="${pad.left - 10}" y="${toSvgY(t) + 4}" text-anchor="end">${t}</text>`
-		includeText(ext, pad.left - 10, String(t), "end", 7)
-	}
-	svgBody += `<text x="${pad.left + chartWidth / 2}" y="${height - pad.bottom + xAxisTitleY}" class="axis-label">${abbreviateMonth(xAxis.label)}</text>`
-	includeText(ext, pad.left + chartWidth / 2, abbreviateMonth(xAxis.label), "middle", 7)
-	svgBody += renderRotatedWrappedYAxisLabel(
-		abbreviateMonth(yAxis.label),
-		yAxisLabelX,
-		pad.top + chartHeight / 2,
-		chartHeight
-	)
-	includeRotatedYAxisLabel(ext, yAxisLabelX, abbreviateMonth(yAxis.label), chartHeight)
 
 	// Render line overlays - linear lines don't need clipping, curves do
 	let linearLineContent = ""
@@ -471,14 +381,14 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 					// Linear lines span exact chart range - no clipping needed
 					const y1 = coeff.slope * xAxis.min + coeff.yIntercept
 					const y2 = coeff.slope * xAxis.max + coeff.yIntercept
-					const x1Svg = toSvgX(xAxis.min)
-					const x2Svg = toSvgX(xAxis.max)
+					const x1Svg = base.toSvgX(xAxis.min)
+					const x2Svg = base.toSvgX(xAxis.max)
 					
 					// Track the regression line endpoints
-					includePointX(ext, x1Svg)
-					includePointX(ext, x2Svg)
+					includePointX(base.ext, x1Svg)
+					includePointX(base.ext, x2Svg)
 					
-					linearLineContent += `<line x1="${x1Svg}" y1="${toSvgY(y1)}" x2="${x2Svg}" y2="${toSvgY(y2)}"${styleAttrs(
+					linearLineContent += `<line x1="${x1Svg}" y1="${base.toSvgY(y1)}" x2="${x2Svg}" y2="${base.toSvgY(y2)}"${styleAttrs(
 						line.style
 					)} />`
 				}
@@ -492,12 +402,12 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 					for (let i = 0; i <= steps; i++) {
 						const xVal = xAxis.min + (i / steps) * (xAxis.max - xAxis.min)
 						const yVal = coeff.a * xVal ** 2 + coeff.b * xVal + coeff.c
-						const px = toSvgX(xVal)
-						const py = toSvgY(yVal)
+						const px = base.toSvgX(xVal)
+						const py = base.toSvgY(yVal)
 						path += `${i === 0 ? "M" : "L"} ${px} ${py} `
 						
 						// Track the x-extent of each point on the curve
-						includePointX(ext, px)
+						includePointX(base.ext, px)
 					}
 					curveLineContent += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
 				}
@@ -511,12 +421,12 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 					for (let i = 0; i <= steps; i++) {
 						const xVal = xAxis.min + (i / steps) * (xAxis.max - xAxis.min)
 						const yVal = coeff.a * Math.exp(coeff.b * xVal)
-						const px = toSvgX(xVal)
-						const py = toSvgY(yVal)
+						const px = base.toSvgX(xVal)
+						const py = base.toSvgY(yVal)
 						path += `${i === 0 ? "M" : "L"} ${px} ${py} `
 						
 						// Track the x-extent of each point on the curve
-						includePointX(ext, px)
+						includePointX(base.ext, px)
 					}
 					curveLineContent += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
 				}
@@ -525,9 +435,9 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 			const { a, b } = line
 			if (a.x === b.x) {
 				// vertical line across full y-domain - no clipping needed
-				const xSvg = toSvgX(a.x)
-				includePointX(ext, xSvg)
-				linearLineContent += `<line x1="${xSvg}" y1="${toSvgY(yAxis.min)}" x2="${xSvg}" y2="${toSvgY(yAxis.max)}"${styleAttrs(
+				const xSvg = base.toSvgX(a.x)
+				includePointX(base.ext, xSvg)
+				linearLineContent += `<line x1="${xSvg}" y1="${base.toSvgY(yAxis.min)}" x2="${xSvg}" y2="${base.toSvgY(yAxis.max)}"${styleAttrs(
 					line.style
 				)} />`
 			} else {
@@ -536,68 +446,71 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 				const intercept = a.y - slope * a.x
 				const yAtMin = slope * xAxis.min + intercept
 				const yAtMax = slope * xAxis.max + intercept
-				const x1Svg = toSvgX(xAxis.min)
-				const x2Svg = toSvgX(xAxis.max)
+				const x1Svg = base.toSvgX(xAxis.min)
+				const x2Svg = base.toSvgX(xAxis.max)
 				
 				// Track the line endpoints
-				includePointX(ext, x1Svg)
-				includePointX(ext, x2Svg)
+				includePointX(base.ext, x1Svg)
+				includePointX(base.ext, x2Svg)
 				
-				curveLineContent += `<line x1="${x1Svg}" y1="${toSvgY(yAtMin)}" x2="${x2Svg}" y2="${toSvgY(yAtMax)}"${styleAttrs(
+				curveLineContent += `<line x1="${x1Svg}" y1="${base.toSvgY(yAtMin)}" x2="${x2Svg}" y2="${base.toSvgY(yAtMax)}"${styleAttrs(
 					line.style
 				)} />`
 			}
 		}
 	}
 
-	// Render linear lines without clipping (they're already bounded)
-	svgBody += linearLineContent
-
-	// Render curves with clipping (they can extend to infinity)
-	if (curveLineContent) {
-		svgBody += wrapInClippedGroup("chartArea", curveLineContent)
+	// Points content
+	let pointsContent = ""
+	for (const p of points) {
+		const px = base.toSvgX(p.x)
+		const py = base.toSvgY(p.y)
+		
+		// Track the x-extent of the point
+		includePointX(base.ext, px)
+		
+		pointsContent += `<circle cx="${px}" cy="${py}" r="${theme.geometry.pointRadius.large}" fill="${theme.colors.black}" fill-opacity="${theme.opacity.overlayHigh}"/>`
+		pointsContent += `<text x="${px + 5}" y="${py - 5}" fill="${theme.colors.text}">${abbreviateMonth(p.label)}</text>`
+		// Track the label's extent
+		includeText(base.ext, px + 5, abbreviateMonth(p.label), "start", 7)
 	}
 
-	// Render line labels in dedicated legend area to prevent conflicts
+	// Line legend content
+	let legendContent = ""
 	if (lines.length > 0) {
-		const chartRight = pad.left + chartWidth
-		const { legendAreaX, legendStartY, legendSpacing } = calculateLineLegendLayout(lines.length, chartRight, pad.top)
+		const legendStartX = base.chartArea.left + base.chartArea.width + 15
+		const legendStartY = base.chartArea.top + 10
 
 		for (let i = 0; i < lines.length; i++) {
 			const line = lines[i]
 			if (!line) continue
 
-			const legendY = legendStartY + i * legendSpacing
-			const lineStartX = legendAreaX
-			const lineEndX = legendAreaX + 20
+			const legendY = legendStartY + i * 18
+			const lineStartX = legendStartX
+			const lineEndX = legendStartX + 20
 			const lineCenterY = legendY - 3
 
 			// Draw small line sample with same style as the actual line
 			const styleStr = styleAttrs(line.style)
-			svgBody += `<line x1="${lineStartX}" y1="${lineCenterY}" x2="${lineEndX}" y2="${lineCenterY}"${styleStr}/>`
+			legendContent += `<line x1="${lineStartX}" y1="${lineCenterY}" x2="${lineEndX}" y2="${lineCenterY}"${styleStr}/>`
 
 			// Label positioned after the line sample
-			svgBody += `<text x="${lineEndX + 5}" y="${legendY}" fill="${theme.colors.black}" text-anchor="start">${abbreviateMonth(line.label)}</text>`
-			includeText(ext, lineEndX + 5, abbreviateMonth(line.label), "start", 7)
+			legendContent += `<text x="${lineEndX + 5}" y="${legendY}" fill="${theme.colors.black}" text-anchor="start">${abbreviateMonth(line.label)}</text>`
+			includeText(base.ext, lineEndX + 5, abbreviateMonth(line.label), "start", 7)
 		}
 	}
 
-	for (const p of points) {
-		const px = toSvgX(p.x)
-		const py = toSvgY(p.y)
-		
-		// Track the x-extent of the point
-		includePointX(ext, px)
-		
-					svgBody += `<circle cx="${px}" cy="${py}" r="${theme.geometry.pointRadius.large}" fill="${theme.colors.black}" fill-opacity="${theme.opacity.overlayHigh}"/>`
-					svgBody += `<text x="${px + 5}" y="${py - 5}" fill="${theme.colors.text}">${abbreviateMonth(p.label)}</text>`
-		// MODIFICATION: Add this line to track the label's extent
-		includeText(ext, px + 5, abbreviateMonth(p.label), "start", 7)
+	let svgBody = base.svgBody
+	svgBody += linearLineContent
+	if (curveLineContent) {
+		svgBody += wrapInClippedGroup(base.clipId, curveLineContent)
 	}
+	svgBody += pointsContent
+	svgBody += legendContent
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-		+ svgBody
-		+ `</svg>`
+	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, AXIS_VIEWBOX_PADDING)
+	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">` +
+		svgBody +
+		`</svg>`
 	return finalSvg
 }
