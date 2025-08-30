@@ -1,16 +1,13 @@
 import { clerkClient, currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import type { z } from "zod"
-import type { CaliperEventSchema } from "@/lib/caliper"
+import { z } from "zod"
 import { oneroster } from "@/lib/clients"
-import { getAllEventsForUser } from "@/lib/data/fetchers/caliper"
 import { getActiveEnrollmentsForUser, getClass, getCourse, getUnitsForCourses } from "@/lib/data/fetchers/oneroster"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
 import type { Lesson, ProfileCourse, Quiz, Unit, UnitTest } from "@/lib/types/domain"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
-import { constructActorId } from "@/lib/utils/actor-id"
 import { getResourceIdFromLineItem } from "@/lib/utils/assessment-line-items"
 import type { ClassReadSchemaType } from "../oneroster"
 
@@ -31,10 +28,9 @@ function removeNiceAcademyPrefix(title: string): string {
 }
 
 /**
- * Fetches earned XP for a specific course from Caliper events
- * Filters events by course slug (not title) since Caliper uses slugs
+ * Deprecated: Caliper-based XP aggregation. Kept temporarily for reference.
  */
-async function fetchCourseEarnedXP(actorId: string, courseSlug: string): Promise<number> {
+/* async function fetchCourseEarnedXP(actorId: string, courseSlug: string): Promise<number> {
 	logger.debug("fetching earned XP for course", { actorId, courseSlug })
 
 	const eventsResult = await errors.try(getAllEventsForUser(actorId))
@@ -108,6 +104,61 @@ async function fetchCourseEarnedXP(actorId: string, courseSlug: string): Promise
 		courseEventsCount: courseEvents.length,
 		completedEventsCount: courseEvents.filter((e) => e.action === "Completed").length
 	})
+
+	return totalEarnedXP
+} */
+
+/**
+ * NEW: Sums earned XP from OneRoster assessment results for a given student and course.
+ * We read fully graded results for the student within the course and sum positive `metadata.xp`.
+ * Only assessment line items using the new `_ali` convention are considered.
+ */
+async function fetchCourseEarnedXPFromResults(userSourcedId: string, courseSourcedId: string): Promise<number> {
+	logger.debug("fetching earned XP from results", { userSourcedId, courseSourcedId })
+
+	const resultsResponse = await errors.try(
+		oneroster.getAllResults({
+			// Filter by student and by assessment line items that belong to this course.
+			// The API does not support direct course filter on results, so we fetch all for the student
+			// and filter client-side by course sourced id embedded in metadata.
+			filter: `student.sourcedId='${userSourcedId}'`
+		})
+	)
+
+	if (resultsResponse.error) {
+		logger.error("failed to fetch assessment results for earned XP", {
+			userSourcedId,
+			courseSourcedId,
+			error: resultsResponse.error
+		})
+		return 0
+	}
+
+	// Keep only the newest fully graded result per assessment line item
+	const latestByLineItem = new Map<string, { scoreDateMs: number; xp: number }>()
+
+	for (const result of resultsResponse.data) {
+		const lineItemId = result.assessmentLineItem?.sourcedId
+		if (typeof lineItemId !== "string" || !lineItemId.endsWith("_ali")) continue
+		if (result.scoreStatus !== "fully graded") continue
+
+		const MetaSchema = z.object({ xp: z.number().optional(), courseSourcedId: z.string().optional() }).passthrough()
+		const parsedMeta = MetaSchema.safeParse(result.metadata)
+		const xpValue = parsedMeta.success && typeof parsedMeta.data.xp === "number" ? parsedMeta.data.xp : 0
+		const metaCourseId =
+			parsedMeta.success && typeof parsedMeta.data.courseSourcedId === "string" ? parsedMeta.data.courseSourcedId : ""
+		if (metaCourseId !== courseSourcedId || xpValue <= 0) continue
+
+		const scoreDateMs = new Date(result.scoreDate || 0).getTime()
+		const existing = latestByLineItem.get(lineItemId)
+		if (!existing || scoreDateMs > existing.scoreDateMs) {
+			latestByLineItem.set(lineItemId, { scoreDateMs, xp: xpValue })
+		}
+	}
+
+	const totalEarnedXP = Array.from(latestByLineItem.values()).reduce((sum, v) => sum + v.xp, 0)
+
+	logger.debug("calculated earned XP from results", { userSourcedId, courseSourcedId, totalEarnedXP })
 
 	return totalEarnedXP
 }
@@ -793,9 +844,6 @@ export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData>
 
 	const [subjects, userCourses] = await Promise.all([subjectsPromise, userCoursesPromise])
 
-	// Fetch XP data for each course in parallel
-	const actorId = constructActorId(sourceId)
-
 	logger.info("fetching XP data for user courses", {
 		userId: user.id,
 		sourceId,
@@ -814,8 +862,9 @@ export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData>
 				return { ...course, earnedXP: 0, totalXP: 0, unitProficiencies: [] }
 			}
 
+			// Switch to results-based XP aggregation instead of Caliper events.
 			const [earnedXP, totalXP, unitProficiencies] = await Promise.all([
-				fetchCourseEarnedXP(actorId, courseSlug),
+				fetchCourseEarnedXPFromResults(sourceId, course.id),
 				fetchCourseTotalXP(course.id),
 				fetchUnitProficiencies(sourceId, course)
 			])
