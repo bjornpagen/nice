@@ -4,6 +4,7 @@ import {
 	AXIS_STROKE_WIDTH_PX,
 	AXIS_TITLE_FONT_PX,
 	AXIS_TITLE_PADDING_PX,
+	X_AXIS_TITLE_PADDING_PX,
 	GRID_STROKE_WIDTH_PX,
 	LABEL_AVG_CHAR_WIDTH_PX,
 	TICK_LABEL_FONT_PX,
@@ -184,7 +185,7 @@ export function computeAndRenderXAxis(
 	}
 
 	let markup = ""
-	const pads = { left: 0, right: 0, top: 0, bottom: TICK_LENGTH_PX + TICK_LABEL_PADDING_PX + TICK_LABEL_FONT_PX + AXIS_TITLE_PADDING_PX + AXIS_TITLE_FONT_PX }
+	const pads = { left: 0, right: 0, top: 0, bottom: TICK_LENGTH_PX + TICK_LABEL_PADDING_PX + TICK_LABEL_FONT_PX + X_AXIS_TITLE_PADDING_PX + AXIS_TITLE_FONT_PX }
 	const axisY = chartArea.top + chartArea.height
 
 	markup += `<line x1="${chartArea.left}" y1="${axisY}" x2="${chartArea.left + chartArea.width}" y2="${axisY}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
@@ -252,7 +253,7 @@ export function computeAndRenderXAxis(
 		}
 	}
 
-	const xAxisLabelY = axisY + TICK_LENGTH_PX + TICK_LABEL_PADDING_PX + TICK_LABEL_FONT_PX + AXIS_TITLE_PADDING_PX
+	const xAxisLabelY = axisY + TICK_LENGTH_PX + TICK_LABEL_PADDING_PX + TICK_LABEL_FONT_PX + X_AXIS_TITLE_PADDING_PX
 	markup += renderWrappedText(spec.label, chartArea.left + chartArea.width / 2, xAxisLabelY, "axis-label")
 
 	const registerExtents = (ext: Extents) => {
