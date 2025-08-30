@@ -21,19 +21,18 @@ function normalizeKhanSlug(slug: string): string {
 // --- ONE ROSTER TYPE DEFINITIONS ---
 // These interfaces define the structure of the final JSON payload.
 
-// Valid grade level strings
-type GradeLevel = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11" | "12"
+// Valid grade levels are integers in the range 0..12
+type GradeLevelNumber = number
 
-// Helper function to check if a string is a valid grade level
-function isValidGradeLevel(grade: string): grade is GradeLevel {
-	const validGrades: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
-	return validGrades.includes(grade)
+function isValidGradeLevelNumber(value: number): boolean {
+	return Number.isInteger(value) && value >= 0 && value <= 12
 }
 
-// Helper function to validate and convert strings to GradeLevel
-function validateGradeLevel(grade: string): GradeLevel {
-	if (isValidGradeLevel(grade)) {
-		return grade
+// Helper to parse and validate grade levels from strings to integers
+function parseGradeLevelNumber(grade: string): GradeLevelNumber {
+	const parsed = Number(grade)
+	if (isValidGradeLevelNumber(parsed)) {
+		return parsed
 	}
 	logger.error("invalid grade level provided", { grade })
 	throw errors.new(`invalid grade level: ${grade}`)
@@ -83,7 +82,7 @@ interface OneRosterCourse {
 	status: "active"
 	title: string
 	subjects: string[]
-	grades: GradeLevel[]
+	grades: GradeLevelNumber[]
 	courseCode?: string
 	org: OneRosterGUIDRef
 	academicSession: OneRosterGUIDRef
@@ -403,8 +402,8 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 	}
 
 	// Determine grades for this course
-	const courseGrades: GradeLevel[] = isHardcodedCourse(course.id)
-		? getCourseMapping(course.id).map(validateGradeLevel)
+	const courseGrades: GradeLevelNumber[] = isHardcodedCourse(course.id)
+		? getCourseMapping(course.id).map(parseGradeLevelNumber)
 		: []
 
 	const onerosterPayload: OneRosterPayload = {
@@ -418,6 +417,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 			org: { sourcedId: ORG_SOURCED_ID, type: "district" },
 			academicSession: { sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "term" },
 			metadata: {
+				timebackVisible: "true",
 				primaryApp: "nice_academy",
 				khanId: course.id,
 				khanSlug: course.slug,
