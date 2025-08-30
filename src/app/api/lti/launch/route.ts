@@ -149,9 +149,18 @@ export async function POST(req: NextRequest) {
 				redirectUrlObj.hostname = canonicalHost
 				redirectUrlObj.protocol = "https:"
 			}
+			// If target is root, land on a stable, post-login page to avoid container spinners
+			if (redirectUrlObj.pathname === "/" || redirectUrlObj.pathname === "") {
+				logger.info("lti: rewriting redirect path to stable landing", {
+					from: redirectUrlObj.pathname,
+					to: "/profile/me/courses"
+				})
+				redirectUrlObj.pathname = "/profile/me/courses"
+			}
 			const normalizedRedirectUrl = redirectUrlObj.toString()
 
 			const finalUrl = new URL(env.NEXT_PUBLIC_APP_DOMAIN)
+			finalUrl.pathname = "/sso-callback"
 			finalUrl.searchParams.set("__clerk_ticket", signInTokenResult.data.token)
 			finalUrl.searchParams.set("__clerk_redirect_url", normalizedRedirectUrl)
 			logger.info("lti: redirecting", { location: finalUrl.toString() })
