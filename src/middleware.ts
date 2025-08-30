@@ -2,6 +2,7 @@ import type { ClerkClient, User } from "@clerk/backend"
 import { clerkClient, clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 
 // Define which routes should be protected (require authentication)
 const isProtectedRoute = createRouteMatcher([
@@ -12,6 +13,9 @@ const isProtectedRoute = createRouteMatcher([
 
 // Route matcher for debug questions
 const isDebugQuestionsRoute = createRouteMatcher(["/debug/questions/review(.*)"])
+
+// Route matcher for enrollments page (restricted to non-student roles)
+const isEnrollmentsRoute = createRouteMatcher(["/profile/me/enrollments(.*)"])
 
 // Define which routes authenticated users shouldn't access
 const isAuthRoute = createRouteMatcher([
@@ -31,6 +35,34 @@ export default clerkMiddleware(async (auth, req) => {
 	// Protect routes that require authentication
 	if (isProtectedRoute(req)) {
 		await auth.protect()
+	}
+
+	// Restrict enrollments route to non-student roles only
+	if (isEnrollmentsRoute(req)) {
+		if (!userId) {
+			return Response.redirect(new URL("/profile/me/courses", req.url))
+		}
+
+		const clientResult = await errors.try<ClerkClient>(clerkClient())
+		if (clientResult.error) {
+			logger.error("clerk client", { error: clientResult.error })
+			return Response.redirect(new URL("/profile/me/courses", req.url))
+		}
+
+		const client = clientResult.data
+		const userResult = await errors.try<User>(client.users.getUser(userId))
+		if (userResult.error) {
+			logger.error("user lookup", { error: userResult.error })
+			return Response.redirect(new URL("/profile/me/courses", req.url))
+		}
+
+		const user = userResult.data
+		const metaResult = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+		const hasAccess = metaResult.success && metaResult.data.roles.some((r) => r.role !== "student")
+		if (!hasAccess) {
+			logger.warn("forbidden enrollments access", { userId })
+			return Response.redirect(new URL("/profile/me/courses", req.url))
+		}
 	}
 
 	// Enforce domain restriction for debug questions

@@ -1,8 +1,10 @@
 "use client"
 
+import { useUser } from "@clerk/nextjs"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { assertNoEncodedColons, cn, normalizeString } from "@/lib/utils"
 
 type SidebarItem = {
@@ -53,6 +55,14 @@ export function Sidebar() {
 	const pathname = normalizeString(rawPathname)
 	assertNoEncodedColons(pathname, "profile-sidebar pathname")
 
+	const { user, isLoaded } = useUser()
+
+	let canShowEnrollTab = false
+	if (isLoaded && user) {
+		const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+		canShowEnrollTab = parsed.success && parsed.data.roles.some((r) => r.role !== "student")
+	}
+
 	return (
 		<div className="bg-white rounded-lg border border-gray-200 p-4">
 			<div className="space-y-6">
@@ -82,6 +92,13 @@ export function Sidebar() {
 								)}
 							</li>
 						))}
+						{canShowEnrollTab && (
+							<li>
+								<Button asChild variant="ghost" className={highlight(pathname, "me/enrollments")}>
+									<Link href="/profile/me/enrollments">Enroll Students</Link>
+								</Button>
+							</li>
+						)}
 					</ul>
 				</div>
 				<div>
