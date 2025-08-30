@@ -2,7 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { PADDING } from "@/lib/widgets/utils/constants"
+import { PADDING, TICK_LABEL_FONT_PX } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import {
 	calculateIntersectionAwareTicks,
@@ -304,7 +304,11 @@ export function generateCoordinatePlaneBase(
 ): CoordinatePlaneBase {
 	// Calculate vertical margins first to determine chartHeight
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true) // has tick labels
-	const padWithoutLeft = { top: PADDING, right: PADDING, bottom: bottomMargin }
+	// Ensure enough top headroom for top-most Y tick label ascenders
+	const approximateAscentPx = Math.ceil(TICK_LABEL_FONT_PX * 0.8)
+	const baselineOffsetPx = 4
+	const requiredTopHeadroom = Math.max(0, approximateAscentPx - baselineOffsetPx)
+	const padWithoutLeft = { top: Math.max(PADDING, requiredTopHeadroom), right: PADDING, bottom: bottomMargin }
 	
 	// Calculate chartHeight based on vertical margins
 	const chartHeight = height - padWithoutLeft.top - padWithoutLeft.bottom

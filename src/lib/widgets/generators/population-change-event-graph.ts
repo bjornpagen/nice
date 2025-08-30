@@ -88,7 +88,8 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 			max: xAxisMax,
 			tickInterval: (xAxisMax - xAxisMin) / 5,
 			showGridLines: false,
-			showTickLabels: false // Conceptual, no numeric labels
+			showTickLabels: false, // Conceptual, no numeric labels
+			showTicks: false
 		},
 		{
 			label: yAxisLabel,
@@ -96,7 +97,8 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 			max: yAxisMax,
 			tickInterval: (yAxisMax - yAxisMin) / 5,
 			showGridLines: false,
-			showTickLabels: false // Conceptual, no numeric labels
+			showTickLabels: false, // Conceptual, no numeric labels
+			showTicks: false
 		}
 	)
 

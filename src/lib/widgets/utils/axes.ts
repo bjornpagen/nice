@@ -143,6 +143,17 @@ export function computeAndRenderYAxis(
 		})
 	}
 
+	// Compute required top padding from top-most tick label baseline to avoid clipping
+	if (spec.showTickLabels && yTickPositions.length > 0) {
+		const BASELINE_OFFSET_PX = 4
+		const topMostBaselineY = Math.min(...yTickPositions) + BASELINE_OFFSET_PX
+		const approximateAscentPx = Math.ceil(TICK_LABEL_FONT_PX * 0.8)
+		const overflowAboveTop = Math.max(0, (chartArea.top + approximateAscentPx) - topMostBaselineY)
+		if (overflowAboveTop > 0) {
+			pads.top = Math.max(pads.top, overflowAboveTop)
+		}
+	}
+
 	// Y-axis title (rotated)
 	const yAxisLabelX = axisX - (tickLength + TICK_LABEL_PADDING_PX + TICK_LABEL_FONT_PX + AXIS_TITLE_PADDING_PX + AXIS_TITLE_FONT_PX / 2)
 	const yAxisLabelY = chartArea.top + chartArea.height / 2
