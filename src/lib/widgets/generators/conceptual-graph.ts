@@ -111,6 +111,19 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 	// Separate clipped geometry from unclipped markers and labels
 	let clippedContent = ""
 	let unclippedContent = ""
+
+	// Track vertical extents for unclipped content so we can grow the viewBox vertically
+	let minYExtent = 0
+	let maxYExtent = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
+	function includeCircleY(cy: number, r: number) {
+		minYExtent = Math.min(minYExtent, cy - r)
+		maxYExtent = Math.max(maxYExtent, cy + r)
+	}
+	function includeTextY(cy: number, fontPx: number) {
+		const half = fontPx / 2
+		minYExtent = Math.min(minYExtent, cy - half)
+		maxYExtent = Math.max(maxYExtent, cy + half)
+	}
 	
 	// Main curve goes in clipped content
 	const pointsStr = curvePoints.map((p) => `${base.toSvgX(p.x)},${base.toSvgY(p.y)}`).join(" ")
@@ -167,6 +180,10 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 		unclippedContent += `<circle cx="${cx}" cy="${cy}" r="${highlightPointRadius}" fill="${highlightPointColor}"/>`
 		unclippedContent += `<text x="${cx - highlightPointRadius - 5}" y="${cy}" text-anchor="end" dominant-baseline="middle" font-weight="${theme.font.weight.bold}" font-size="${theme.font.size.medium}">${hp.label}</text>`
 		includeText(base.ext, cx - highlightPointRadius - 5, hp.label, "end", 7)
+		// Include vertical extents for the circle and label (dominant-baseline=middle)
+		includeCircleY(cy, highlightPointRadius)
+		const fontPx = Number.parseInt(theme.font.size.medium, 10)
+		includeTextY(cy, fontPx)
 	}
 
 	let svgBody = base.svgBody
@@ -175,7 +192,10 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 	svgBody += unclippedContent // Add unclipped markers and labels
 
 	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, base.chartArea.top + base.chartArea.height + base.outsideBottomPx, AXIS_VIEWBOX_PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${base.chartArea.top + base.chartArea.height + base.outsideBottomPx}" viewBox="${vbMinX} 0 ${dynamicWidth} ${base.chartArea.top + base.chartArea.height + base.outsideBottomPx}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.large}">` +
+	// Compute vertical viewBox adjustments based on unclipped content extents
+	const vbMinY = Math.min(0, Math.floor(minYExtent - AXIS_VIEWBOX_PADDING))
+	const dynamicHeight = Math.max(1, Math.ceil(maxYExtent + AXIS_VIEWBOX_PADDING) - vbMinY)
+	const finalSvg = `<svg width="${dynamicWidth}" height="${dynamicHeight}" viewBox="${vbMinX} ${vbMinY} ${dynamicWidth} ${dynamicHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.large}">` +
 		svgBody +
 		`</svg>`
 	return finalSvg
