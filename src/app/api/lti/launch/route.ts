@@ -137,9 +137,23 @@ export async function POST(req: NextRequest) {
 			const targetUri = payload["https://purl.imsglobal.org/spec/lti/claim/target_link_uri"]
 			const safeRedirectUrl = validateRedirectUrl(targetUri)
 
+			// Canonicalize the redirect host to match NEXT_PUBLIC_APP_DOMAIN to avoid
+			// cross-host cookie issues (e.g., www vs apex) which can cause spinner loops
+			const canonicalHost = new URL(env.NEXT_PUBLIC_APP_DOMAIN).hostname
+			const redirectUrlObj = new URL(safeRedirectUrl)
+			if (redirectUrlObj.hostname !== canonicalHost || redirectUrlObj.protocol !== "https:") {
+				logger.info("lti: rewriting redirect host to canonical", {
+					from: redirectUrlObj.hostname,
+					to: canonicalHost
+				})
+				redirectUrlObj.hostname = canonicalHost
+				redirectUrlObj.protocol = "https:"
+			}
+			const normalizedRedirectUrl = redirectUrlObj.toString()
+
 			const finalUrl = new URL(env.NEXT_PUBLIC_APP_DOMAIN)
 			finalUrl.searchParams.set("__clerk_ticket", signInTokenResult.data.token)
-			finalUrl.searchParams.set("__clerk_redirect_url", safeRedirectUrl)
+			finalUrl.searchParams.set("__clerk_redirect_url", normalizedRedirectUrl)
 			logger.info("lti: redirecting", { location: finalUrl.toString() })
 			return NextResponse.redirect(finalUrl, { status: 302 })
 		})()
