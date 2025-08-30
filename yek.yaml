@@ -20,6 +20,7 @@ ignore_patterns:
   - "src/lib/qti-validation/**"
   - "scripts/**"
   - "src/inngest/**"
+  - "tests/**"
 priority_rules:
   - score: 99
     pattern: "^rules/"

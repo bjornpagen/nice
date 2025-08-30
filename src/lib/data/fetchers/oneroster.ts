@@ -1,7 +1,9 @@
+import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { redisCache } from "@/lib/cache"
 import { oneroster } from "@/lib/clients"
 import { createPrefixFilter } from "@/lib/filter"
+import type { ClassReadSchemaType } from "@/lib/oneroster"
 
 /**
  * ⚠️ CRITICAL: OneRoster API Soft Delete Behavior
@@ -337,7 +339,7 @@ export async function getActiveEnrollmentsForUser(userSourcedId: string) {
 	logger.info("getActiveEnrollmentsForUser called", { userSourcedId })
 	const operation = async () => {
 		// Due to OneRoster API limitation, we can only use one AND operation for complex filters
-		// Fetch all active enrollments for user, then filter for Khan Academy classes client-side
+		// Fetch all enrollments for this user filtered by status at API level; apply role & course checks client-side
 		const allEnrollments = await oneroster.getAllEnrollments({
 			filter: `user.sourcedId='${userSourcedId}' AND status='active'`
 		})
@@ -345,8 +347,30 @@ export async function getActiveEnrollmentsForUser(userSourcedId: string) {
 		// ⚠️ CRITICAL: Apply client-side safety filtering first
 		const activeEnrollments = ensureActiveStatus(allEnrollments)
 
-		// Filter for Khan Academy (nice_) classes only - excludes PowerPath and other systems
-		return activeEnrollments.filter((enrollment) => enrollment.class.sourcedId.startsWith("nice_"))
+		// Restrict to student-role enrollments only (teacher/other roles should not count as "enrolled")
+		const studentEnrollments = activeEnrollments.filter((e) => e.role === "student")
+
+		// Resolve each unique class to its course and keep only those whose course.sourcedId starts with "nice_"
+		const uniqueClassIds = [...new Set(studentEnrollments.map((e) => e.class.sourcedId))]
+		const classResults = await Promise.all(
+			uniqueClassIds.map(async (classId) => {
+				const clsResult = await errors.try(getClass(classId))
+				if (clsResult.error) {
+					logger.error("failed to resolve class for enrollment filtering", { classId, error: clsResult.error })
+					return { classId, cls: null }
+				}
+				return { classId, cls: clsResult.data }
+			})
+		)
+		const classById = new Map<string, ClassReadSchemaType>()
+		for (const { classId, cls } of classResults) {
+			if (cls) classById.set(classId, cls)
+		}
+
+		return studentEnrollments.filter((enrollment) => {
+			const cls = classById.get(enrollment.class.sourcedId)
+			return Boolean(cls && typeof cls.course?.sourcedId === "string" && cls.course.sourcedId.startsWith("nice_"))
+		})
 	}
 	// User data is more volatile, so use a shorter cache duration
 	return redisCache(operation, ["oneroster-getActiveEnrollmentsForUser", userSourcedId], { revalidate: 60 }) // 1 minute cache

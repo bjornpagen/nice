@@ -6,7 +6,12 @@ import * as logger from "@superbuilders/slog"
 import { revalidatePath } from "next/cache"
 import { createCacheKey, invalidateCache } from "@/lib/cache"
 import { oneroster } from "@/lib/clients"
-import { getAllCourses, getClass, getClassesForSchool, getEnrollmentsForUser } from "@/lib/data/fetchers/oneroster"
+import {
+	getActiveEnrollmentsForUser,
+	getAllCourses,
+	getClass,
+	getClassesForSchool
+} from "@/lib/data/fetchers/oneroster"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
 
@@ -88,18 +93,17 @@ export async function enrollUserInCoursesByCourseId(courseIds: string[]): Promis
 
 	logger.info("append enrollments by course id", { userId, sourceId, count: courseIds.length })
 
-	const currentEnrollmentsResult = await errors.try(getEnrollmentsForUser(sourceId))
+	const currentEnrollmentsResult = await errors.try(getActiveEnrollmentsForUser(sourceId))
 	if (currentEnrollmentsResult.error) {
 		logger.error("failed to fetch current enrollments", { sourceId, error: currentEnrollmentsResult.error })
 		throw errors.wrap(currentEnrollmentsResult.error, "get current enrollments")
 	}
 	const currentEnrollments = currentEnrollmentsResult.data
 
-	// Map current enrollments to courseIds, but only for Nice Academy classes
-	const niceEnrollments = currentEnrollments.filter((e) => e.class.sourcedId.startsWith("nice_"))
-	const uniqueClassIds = [...new Set(niceEnrollments.map((e) => e.class.sourcedId))]
+	// Map to Nice Academy courseIds via class->course (already active student Nice enrollments upstream)
+	const uniqueClassIds = [...new Set(currentEnrollments.map((e) => e.class.sourcedId))]
+
 	const currentCourseIds = new Set<string>()
-	// Resolve courseIds for current nice classes
 	const classPromises = uniqueClassIds.map(async (classId) => {
 		const clsResult = await errors.try(getClass(classId))
 		if (clsResult.error) {
@@ -107,7 +111,9 @@ export async function enrollUserInCoursesByCourseId(courseIds: string[]): Promis
 			throw errors.wrap(clsResult.error, "class fetch")
 		}
 		const cls = clsResult.data
-		if (cls) currentCourseIds.add(cls.course.sourcedId)
+		if (cls && typeof cls.course?.sourcedId === "string" && cls.course.sourcedId.startsWith("nice_")) {
+			currentCourseIds.add(cls.course.sourcedId)
+		}
 	})
 	await Promise.all(classPromises)
 
@@ -166,17 +172,16 @@ export async function setUserEnrollmentsByCourseId(selectedCourseIds: string[]):
 
 	logger.info("replace enrollments by course id", { userId, sourceId, count: selectedCourseIds.length })
 
-	// Fetch current enrollments
-	const currentEnrollmentsResult = await errors.try(getEnrollmentsForUser(sourceId))
+	// Fetch current active student enrollments (Nice-only handled through mapping)
+	const currentEnrollmentsResult = await errors.try(getActiveEnrollmentsForUser(sourceId))
 	if (currentEnrollmentsResult.error) {
 		logger.error("failed to fetch current enrollments", { sourceId, error: currentEnrollmentsResult.error })
 		throw errors.wrap(currentEnrollmentsResult.error, "get current enrollments")
 	}
 	const currentEnrollments = currentEnrollmentsResult.data
 
-	// Consider only Nice Academy classes for destructive operations
-	const niceEnrollments = currentEnrollments.filter((e) => e.class.sourcedId.startsWith("nice_"))
-	const uniqueClassIds = [...new Set(niceEnrollments.map((e) => e.class.sourcedId))]
+	// Determine Nice Academy membership via class->course mapping (already active student enrollments)
+	const uniqueClassIds = [...new Set(currentEnrollments.map((e) => e.class.sourcedId))]
 
 	// Map current nice class enrollments -> courseIds
 	const enrollmentToCourseId = new Map<string, string>() // enrollmentId -> courseId
@@ -188,9 +193,9 @@ export async function setUserEnrollmentsByCourseId(selectedCourseIds: string[]):
 			throw errors.wrap(clsResult.error, "class fetch")
 		}
 		const cls = clsResult.data
-		if (cls) {
+		if (cls && typeof cls.course?.sourcedId === "string" && cls.course.sourcedId.startsWith("nice_")) {
 			currentCourseIdsSet.add(cls.course.sourcedId)
-			const enrollment = niceEnrollments.find((e) => e.class.sourcedId === classId)
+			const enrollment = currentEnrollments.find((e) => e.class.sourcedId === classId)
 			if (enrollment) enrollmentToCourseId.set(enrollment.sourcedId, cls.course.sourcedId)
 		}
 	})
@@ -200,7 +205,7 @@ export async function setUserEnrollmentsByCourseId(selectedCourseIds: string[]):
 
 	// Determine adds and removals in terms of courseIds
 	const coursesToAdd = selectedCourseIds.filter((cid) => !currentCourseIdsSet.has(cid))
-	const enrollmentsToRemove = niceEnrollments.filter((e) => {
+	const enrollmentsToRemove = currentEnrollments.filter((e) => {
 		const courseId = enrollmentToCourseId.get(e.sourcedId)
 		return !!courseId && !selectedSet.has(courseId)
 	})
@@ -330,26 +335,35 @@ export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCourse
 	}
 	const enrolledCourseIds = new Set<string>()
 
-	// We'll map from class IDs to course IDs after fetching classes
-	const enrolledClassIds = new Set<string>()
+	// No longer needed: we map enrollments directly to course ids via class->course
 
-	// Fetch enrollments if user has a sourceId
+	// Fetch active student enrollments for Nice courses if user has a sourceId
 	if (userSourceId) {
-		const enrollmentsResult = await errors.try(getEnrollmentsForUser(userSourceId))
+		const enrollmentsResult = await errors.try(getActiveEnrollmentsForUser(userSourceId))
 		if (enrollmentsResult.error) {
 			logger.error("failed to fetch user enrollments", { userSourceId, error: enrollmentsResult.error })
 			throw errors.wrap(enrollmentsResult.error, "user enrollments")
 		}
-		// Get unique class IDs from enrollments
-		for (const enrollment of enrollmentsResult.data) {
-			if (enrollment.status === "active") {
-				enrolledClassIds.add(enrollment.class.sourcedId)
+		const uniqueClassIds = [...new Set(enrollmentsResult.data.map((e) => e.class.sourcedId))]
+		const classResults = await Promise.all(
+			uniqueClassIds.map(async (classId) => {
+				const clsResult = await errors.try(getClass(classId))
+				if (clsResult.error) {
+					logger.error("failed to fetch class details for enrolled mapping", { classId, error: clsResult.error })
+					throw errors.wrap(clsResult.error, "class fetch")
+				}
+				return clsResult.data
+			})
+		)
+		for (const cls of classResults) {
+			if (cls && typeof cls.course?.sourcedId === "string" && cls.course.sourcedId.startsWith("nice_")) {
+				enrolledCourseIds.add(cls.course.sourcedId)
 			}
 		}
 
-		logger.debug("fetched user enrollments", {
+		logger.debug("mapped enrollments to course ids", {
 			userSourceId,
-			enrolledClassCount: enrolledClassIds.size
+			enrolledCourseCount: enrolledCourseIds.size
 		})
 	}
 
@@ -373,12 +387,7 @@ export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCourse
 	const coursesBySubject = new Map<string, CourseForExplore[]>()
 	const processedCourseIds = new Set<string>()
 
-	// Map class IDs to course IDs for enrolled courses
-	for (const oneRosterClass of allClasses) {
-		if (enrolledClassIds.has(oneRosterClass.sourcedId)) {
-			enrolledCourseIds.add(oneRosterClass.course.sourcedId)
-		}
-	}
+	// Note: enrolledCourseIds is already computed via class->course mapping above
 
 	for (const oneRosterClass of allClasses) {
 		const course = coursesMap.get(oneRosterClass.course.sourcedId)
