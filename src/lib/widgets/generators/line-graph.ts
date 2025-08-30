@@ -105,13 +105,11 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		height,
 		title,
 		{
+			xScaleType: "categoryPoint", // Set the scale type
 			label: xAxis.label,
-			categories: xAxis.categories.map(cat => abbreviateMonth(cat)),
+			categories: xAxis.categories.map(cat => abbreviateMonth(cat)), // This is now type-checked
 			showGridLines: false,
-			showTickLabels: true,
-			tickInterval: 1,
-			min: 0,
-			max: xAxis.categories.length
+			showTickLabels: true
 		},
 		{
 			label: yAxis.label,
@@ -148,9 +146,8 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		includeText(base.ext, labelX, abbreviateMonth(yAxisRight.label), "middle", 7)
 	}
 
-	// X-axis scaling for categorical data
-	const stepX = base.chartArea.width / Math.max(1, xAxis.categories.length - 1)
-	const toSvgX = (index: number) => base.chartArea.left + index * stepX
+	// Use axis engine's toSvgX for positioning (no manual stepX calculation)
+	const toSvgX = (index: number) => base.toSvgX(index)
 
 	// Separate clipped polylines from unclipped markers
 	let clippedContent = ""

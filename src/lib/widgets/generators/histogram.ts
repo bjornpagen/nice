@@ -147,10 +147,11 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		height,
 		title,
 		{
+			xScaleType: "numeric", // Set scale type - histograms use numeric separators, not categories
 			label: xAxis.label,
-			min: separators[0] ?? 0,
-			max: separators[separators.length - 1] ?? 1,
-			tickInterval,
+			min: separators[0] ?? 0, // Required for numeric
+			max: separators[separators.length - 1] ?? 1, // Required for numeric
+			tickInterval, // Required for numeric
 			showGridLines: false,
 			showTickLabels: true
 		},
@@ -164,17 +165,28 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		}
 	)
 
-	// Histogram bars
+	// Histogram bars using numeric separators to calculate bin positions and widths
 	let bars = ""
-	const binWidth = base.chartArea.width / bins.length
 
 	bins.forEach((b, i) => {
 		const barHeight = (b.frequency / yAxis.max) * base.chartArea.height
-		const x = base.chartArea.left + i * binWidth
+		
+		// Calculate bin boundaries from separators
+		const leftSeparator = separators[i]
+		const rightSeparator = separators[i + 1]
+		if (leftSeparator === undefined || rightSeparator === undefined) {
+			logger.error("histogram separator index out of range", { index: i, separatorsLength: separators.length })
+			throw errors.new("histogram: separator index out of range")
+		}
+		
+		// Convert separator values to SVG coordinates
+		const x = base.toSvgX(leftSeparator)
+		const rightX = base.toSvgX(rightSeparator)
+		const binWidth = rightX - x
 		const y = base.chartArea.top + base.chartArea.height - barHeight
 
 		includePointX(base.ext, x)
-		includePointX(base.ext, x + binWidth)
+		includePointX(base.ext, rightX)
 
 		bars += `<rect x="${x}" y="${y}" width="${binWidth}" height="${barHeight}" fill="${theme.colors.highlightPrimary}" stroke="${theme.colors.axis}"/>`
 	})

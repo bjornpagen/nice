@@ -25,7 +25,7 @@ import {
 	generateGeometricSolidDiagram,
 	generateHangerDiagram,
 	generateHistogram,
-	generateHorizontalBarChart,
+
 	generateInequalityNumberLine,
 	generateKeelingCurve,
 	generateLineEquationGraph,
@@ -95,8 +95,7 @@ export function generateWidget(widget: Widget): string {
 			return generateDivergentBarChart(widget)
 		case "distanceFormulaGraph":
 			return generateDistanceFormulaGraph(widget)
-		case "horizontalBarChart":
-			return generateHorizontalBarChart(widget)
+
 		case "functionPlotGraph":
 			return generateFunctionPlotGraph(widget)
 		case "keelingCurve":

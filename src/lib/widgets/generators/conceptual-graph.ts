@@ -82,10 +82,11 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 		height,
 		null, // No title for conceptual graphs
 		{
+			xScaleType: "numeric", // Set the scale type
 			label: xAxisLabel,
-			min: minX,
-			max: maxX,
-			tickInterval: (maxX - minX) / 4, // Arbitrary spacing
+			min: minX, // Required for numeric
+			max: maxX, // Required for numeric
+			tickInterval: (maxX - minX) / 4, // Arbitrary spacing, required for numeric
 			showGridLines: false,
 			showTickLabels: false, // Conceptual, no numeric labels
 			showTicks: false

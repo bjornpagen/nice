@@ -111,13 +111,11 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 		height,
 		title,
 		{
+			xScaleType: "categoryBand", // Set the scale type
 			label: finalXAxisLabel,
-			categories: chartData.map((d) => abbreviateMonth(d.label)),
+			categories: chartData.map((d) => abbreviateMonth(d.label)), // This is now type-checked
 			showTickLabels: true,
-			showGridLines: false,
-			tickInterval: 1,
-			min: 0,
-			max: chartData.length
+			showGridLines: false
 		},
 		{
 			...yAxis,

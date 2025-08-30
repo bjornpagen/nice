@@ -83,10 +83,11 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 		height,
 		null, // No title for this widget
 		{
+			xScaleType: "numeric", // Set the scale type
 			label: xAxis.label,
-			min: xAxis.min,
-			max: xAxis.max,
-			tickInterval: xAxis.tickInterval,
+			min: xAxis.min, // Required for numeric
+			max: xAxis.max, // Required for numeric
+			tickInterval: xAxis.tickInterval, // Required for numeric
 			showGridLines: false,
 			showTickLabels: xAxis.showTickLabels
 		},

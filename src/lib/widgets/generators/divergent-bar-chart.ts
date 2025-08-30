@@ -83,13 +83,11 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 		height,
 		null, // No title for this widget
 		{
+			xScaleType: "categoryBand", // Set the scale type
 			label: xAxisLabel,
-			categories: chartData.map((d) => abbreviateMonth(d.category)),
+			categories: chartData.map((d) => abbreviateMonth(d.category)), // This is now type-checked
 			showGridLines: false,
-			showTickLabels: true,
-			tickInterval: 1,
-			min: 0,
-			max: chartData.length
+			showTickLabels: true
 		},
 		{
 			label: yAxis.label,

@@ -53,10 +53,7 @@ import {
 } from "@/lib/widgets/generators/geometric-solid-diagram"
 import { generateHangerDiagram, HangerDiagramPropsSchema } from "@/lib/widgets/generators/hanger-diagram"
 import { generateHistogram, HistogramPropsSchema } from "@/lib/widgets/generators/histogram"
-import {
-	generateHorizontalBarChart,
-	HorizontalBarChartPropsSchema
-} from "@/lib/widgets/generators/horizontal-bar-chart"
+
 import {
 	generateInequalityNumberLine,
 	InequalityNumberLinePropsSchema
@@ -174,7 +171,7 @@ export const allWidgetSchemas = {
 	geometricSolidDiagram: GeometricSolidDiagramPropsSchema,
 	hangerDiagram: HangerDiagramPropsSchema,
 	histogram: HistogramPropsSchema,
-	horizontalBarChart: HorizontalBarChartPropsSchema,
+
 	inequalityNumberLine: InequalityNumberLinePropsSchema,
 	keelingCurve: KeelingCurvePropsSchema,
 	lineGraph: LineGraphPropsSchema,
@@ -245,7 +242,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.geometricSolidDiagram,
 	typedSchemas.hangerDiagram,
 	typedSchemas.histogram,
-	typedSchemas.horizontalBarChart,
+
 	typedSchemas.inequalityNumberLine,
 	typedSchemas.keelingCurve,
 	typedSchemas.lineGraph,
@@ -313,7 +310,7 @@ export {
 	GeometricSolidDiagramPropsSchema,
 	HangerDiagramPropsSchema,
 	HistogramPropsSchema,
-	HorizontalBarChartPropsSchema,
+
 	InequalityNumberLinePropsSchema,
 	KeelingCurvePropsSchema,
 	LineEquationGraphPropsSchema,
@@ -385,7 +382,7 @@ export {
 	generateGeometricSolidDiagram,
 	generateHangerDiagram,
 	generateHistogram,
-	generateHorizontalBarChart,
+
 	generateInequalityNumberLine,
 	generateKeelingCurve,
 	generateLineGraph,
@@ -473,8 +470,7 @@ export function generateWidget(widget: Widget): string {
 			return generateHangerDiagram(widget)
 		case "histogram":
 			return generateHistogram(widget)
-		case "horizontalBarChart":
-			return generateHorizontalBarChart(widget)
+
 		case "inequalityNumberLine":
 			return generateInequalityNumberLine(widget)
 		case "keelingCurve":

@@ -17,7 +17,7 @@ import {
 	type Extents
 } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
-import { computeAndRenderXAxis, computeAndRenderYAxis, type AxisSpec } from "@/lib/widgets/utils/axes"
+import { computeAndRenderXAxis, computeAndRenderYAxis, type AxisSpec, type AxisSpecX, type AxisSpecY } from "@/lib/widgets/utils/axes"
 import {
 	CHART_TITLE_TOP_PADDING_PX,
 	CHART_TITLE_FONT_PX,
@@ -439,7 +439,29 @@ export function generateCoordinatePlaneBase(
 
 let chartIdCounter = 0
 
-type AxisOptionsFromWidget = {
+// The public-facing options type will also be a discriminated union.
+type AxisOptionsFromWidgetX =
+	| {
+			xScaleType: "numeric"
+			label: string
+			min: number // Required for numeric
+			max: number // Required for numeric
+			tickInterval: number // Required for numeric
+			showGridLines: boolean
+			showTickLabels: boolean
+			showTicks?: boolean
+			labelFormatter?: (value: number) => string
+		}
+	| {
+			xScaleType: "categoryBand" | "categoryPoint"
+			label: string
+			categories: string[] // Required for category
+			showGridLines: boolean
+			showTickLabels: boolean
+			showTicks?: boolean
+		}
+
+type AxisOptionsFromWidgetY = {
 	label: string
 	min: number
 	max: number
@@ -447,7 +469,6 @@ type AxisOptionsFromWidget = {
 	showGridLines: boolean
 	showTickLabels: boolean
 	showTicks?: boolean
-	categories?: string[]
 	labelFormatter?: (value: number) => string
 }
 
@@ -467,8 +488,8 @@ export function generateCoordinatePlaneBaseV2(
 	width: number,
 	height: number,
 	title: string | null,
-	xAxis: AxisOptionsFromWidget,
-	yAxis: AxisOptionsFromWidget
+	xAxis: AxisOptionsFromWidgetX, // Use new X-specific discriminated union type
+	yAxis: AxisOptionsFromWidgetY
 ): CoordinatePlaneBaseV2 {
 	const ext = initExtents(width)
 	let svgBody = ""
@@ -491,10 +512,43 @@ export function generateCoordinatePlaneBaseV2(
 		height: Math.max(1, height)
 	}
 
-	const yAxisSpec: AxisSpec = { ...yAxis, placement: "left", domain: { min: yAxis.min, max: yAxis.max } }
-	const xAxisSpec: AxisSpec = { ...xAxis, placement: "bottom", domain: { min: xAxis.min, max: xAxis.max } }
+	const yAxisSpec: AxisSpecY = { ...yAxis, placement: "left", domain: { min: yAxis.min, max: yAxis.max } }
+	const xAxisSpec: AxisSpecX = xAxis.xScaleType === "numeric" 
+		? {
+			...xAxis,
+			placement: "bottom" as const,
+			domain: { min: xAxis.min, max: xAxis.max }
+		}
+		: {
+			...xAxis,
+			placement: "bottom" as const
+		}
 
-	const yProbe = computeAndRenderYAxis(yAxisSpec, probeArea, xAxisSpec)
+	// Create legacy AxisSpec for Y-axis compatibility
+	const yAxisLegacySpec: AxisSpec = { ...yAxisSpec, placement: "left" }
+	const xAxisLegacySpec: AxisSpec = xAxis.xScaleType === "numeric"
+		? {
+			domain: { min: xAxis.min, max: xAxis.max },
+			tickInterval: xAxis.tickInterval,
+			label: xAxis.label,
+			showGridLines: xAxis.showGridLines,
+			showTickLabels: xAxis.showTickLabels,
+			showTicks: xAxis.showTicks,
+			placement: "bottom",
+			labelFormatter: xAxis.labelFormatter
+		}
+		: {
+			domain: { min: 0, max: xAxis.categories.length },
+			tickInterval: 1,
+			label: xAxis.label,
+			showGridLines: xAxis.showGridLines,
+			showTickLabels: xAxis.showTickLabels,
+			showTicks: xAxis.showTicks,
+			placement: "bottom",
+			categories: xAxis.categories
+		}
+
+	const yProbe = computeAndRenderYAxis(yAxisLegacySpec, probeArea, xAxisLegacySpec)
 	const xProbe = computeAndRenderXAxis(xAxisSpec, probeArea)
 
 	const outsideTopPx = hasTitle ? titleHeight : 0
@@ -518,7 +572,7 @@ export function generateCoordinatePlaneBaseV2(
 	}
 
 	// Render axes against the final chartArea
-	const yRes = computeAndRenderYAxis(yAxisSpec, chartArea, xAxisSpec)
+	const yRes = computeAndRenderYAxis(yAxisLegacySpec, chartArea, xAxisLegacySpec)
 	svgBody += yRes.markup
 	const xRes = computeAndRenderXAxis(xAxisSpec, chartArea)
 	svgBody += xRes.markup
@@ -533,16 +587,8 @@ export function generateCoordinatePlaneBaseV2(
 	includePointX(ext, chartArea.left + chartArea.width)
 
 	// Scaling functions
-	const xRange = xAxis.max - xAxis.min
 	const yRange = yAxis.max - yAxis.min
-	function toSvgX(val: number): number {
-		if (xAxis.categories && xAxis.categories.length > 0) {
-			const bw = chartArea.width / (xAxis.categories as string[]).length
-			return chartArea.left + (val + 0.5) * bw
-		}
-		const frac = (val - xAxis.min) / xRange
-		return chartArea.left + frac * chartArea.width
-	}
+	const toSvgX = xRes.toSvg
 	function toSvgY(val: number): number {
 		const frac = (val - yAxis.min) / yRange
 		return chartArea.top + chartArea.height - frac * chartArea.height

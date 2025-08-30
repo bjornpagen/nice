@@ -160,10 +160,11 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 		height,
 		null, // No title for this widget
 		{
+			xScaleType: "numeric", // Set the scale type
 			label: xAxisLabel,
-			min: 1,
-			max: 2021,
-			tickInterval: 500, // Custom intervals for years
+			min: 1, // Required for numeric
+			max: 2021, // Required for numeric
+			tickInterval: 500, // Custom intervals for years, required for numeric
 			showGridLines: false,
 			showTickLabels: true,
 			labelFormatter: (val: number) => {

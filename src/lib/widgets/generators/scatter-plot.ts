@@ -347,10 +347,11 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		height,
 		title,
 		{
+			xScaleType: "numeric", // Set the scale type
 			label: xAxis.label,
-			min: xAxis.min,
-			max: xAxis.max,
-			tickInterval: xAxis.tickInterval,
+			min: xAxis.min, // Required for numeric
+			max: xAxis.max, // Required for numeric
+			tickInterval: xAxis.tickInterval, // Required for numeric
 			showGridLines: xAxis.gridLines,
 			showTickLabels: true
 		},

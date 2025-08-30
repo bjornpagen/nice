@@ -92,13 +92,11 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 		height,
 		null, // No title for this widget
 		{
+			xScaleType: "categoryBand", // Set the scale type
 			label: xAxisLabel,
-			categories: chartData.map((d) => abbreviateMonth(d.label)),
+			categories: chartData.map((d) => abbreviateMonth(d.label)), // This is now type-checked
 			showGridLines: false,
-			showTickLabels: true,
-			tickInterval: 1,
-			min: 0,
-			max: chartData.length
+			showTickLabels: true
 		},
 		{
 			label: yAxis.label,

@@ -83,10 +83,11 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 		height,
 		null, // No title for this widget
 		{
+			xScaleType: "numeric", // Set the scale type
 			label: xAxisLabel,
-			min: xAxisMin,
-			max: xAxisMax,
-			tickInterval: (xAxisMax - xAxisMin) / 5,
+			min: xAxisMin, // Required for numeric
+			max: xAxisMax, // Required for numeric
+			tickInterval: (xAxisMax - xAxisMin) / 5, // Required for numeric
 			showGridLines: false,
 			showTickLabels: false, // Conceptual, no numeric labels
 			showTicks: false

@@ -4,7 +4,7 @@ import {
 	CoordinatePlaneComprehensivePropsSchema,
 	DivergentBarChartPropsSchema,
 	HistogramPropsSchema,
-	HorizontalBarChartPropsSchema,
+
 	KeelingCurvePropsSchema,
 	LineGraphPropsSchema,
 	ParabolaGraphPropsSchema,
@@ -27,7 +27,7 @@ export const scienceCollection = {
 		areaGraph: AreaGraphPropsSchema,
 		divergentBarChart: DivergentBarChartPropsSchema,
 		keelingCurve: KeelingCurvePropsSchema,
-		horizontalBarChart: HorizontalBarChartPropsSchema,
+
 		histogram: HistogramPropsSchema,
 		parabolaGraph: ParabolaGraphPropsSchema,
 		scatterPlot: ScatterPlotPropsSchema,
@@ -43,7 +43,7 @@ export const scienceCollection = {
 		"areaGraph",
 		"divergentBarChart",
 		"keelingCurve",
-		"horizontalBarChart",
+
 		"histogram",
 		"parabolaGraph",
 		"scatterPlot",

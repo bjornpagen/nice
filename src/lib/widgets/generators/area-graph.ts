@@ -108,10 +108,11 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 		height,
 		title,
 		{
+			xScaleType: "numeric", // Set the scale type
 			label: xAxis.label,
-			min: xAxis.min,
-			max: xAxis.max,
-			tickInterval,
+			min: xAxis.min, // Required for numeric
+			max: xAxis.max, // Required for numeric
+			tickInterval, // Required for numeric
 			showGridLines: false,
 			showTickLabels: true
 		},
