@@ -140,7 +140,7 @@ export async function POST(req: NextRequest) {
 			const finalUrl = new URL(env.NEXT_PUBLIC_APP_DOMAIN)
 			finalUrl.searchParams.set("__clerk_ticket", signInTokenResult.data.token)
 			finalUrl.searchParams.set("__clerk_redirect_url", safeRedirectUrl)
-
+			logger.info("lti: redirecting", { location: finalUrl.toString() })
 			return NextResponse.redirect(finalUrl, { status: 302 })
 		})()
 	)
