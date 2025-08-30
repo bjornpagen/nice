@@ -442,6 +442,7 @@ type AxisOptionsFromWidget = {
 	tickInterval: number
 	showGridLines: boolean
 	showTickLabels: boolean
+	showTicks?: boolean
 	categories?: string[]
 	labelFormatter?: (value: number) => string
 }

@@ -87,7 +87,8 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 			max: maxX,
 			tickInterval: (maxX - minX) / 4, // Arbitrary spacing
 			showGridLines: false,
-			showTickLabels: false // Conceptual, no numeric labels
+			showTickLabels: false, // Conceptual, no numeric labels
+			showTicks: false
 		},
 		{
 			label: yAxisLabel,
@@ -95,7 +96,8 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 			max: maxY,
 			tickInterval: (maxY - minY) / 4, // Arbitrary spacing
 			showGridLines: false,
-			showTickLabels: false // Conceptual, no numeric labels
+			showTickLabels: false, // Conceptual, no numeric labels
+			showTicks: false
 		}
 	)
 

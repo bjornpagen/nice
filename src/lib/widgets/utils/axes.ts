@@ -33,6 +33,7 @@ export type AxisSpec = {
 	label: string
 	showGridLines: boolean
 	showTickLabels: boolean
+	showTicks?: boolean
 	placement: "left" | "right" | "bottom" | "internalZero"
 	categories?: string[]
 	labelFormatter?: (value: number) => string
@@ -57,6 +58,7 @@ export function computeAndRenderYAxis(
 	chartArea: { top: number; left: number; width: number; height: number },
 	xAxisSpec: AxisSpec
 ): AxisResult {
+	const tickLength = spec.showTicks === false ? 0 : TICK_LENGTH_PX
 	const isCategorical = !!(spec.categories && spec.categories.length > 0)
 	if (!isCategorical) {
 		if (spec.domain.min >= spec.domain.max) {
@@ -74,7 +76,7 @@ export function computeAndRenderYAxis(
 		}
 	}
 
-	const pads = { left: TICK_LENGTH_PX + TICK_LABEL_PADDING_PX + TICK_LABEL_FONT_PX + AXIS_TITLE_PADDING_PX + AXIS_TITLE_FONT_PX, right: 0, top: 0, bottom: 0 }
+	const pads = { left: tickLength + (spec.showTickLabels ? (TICK_LABEL_PADDING_PX + TICK_LABEL_FONT_PX) : 0) + AXIS_TITLE_PADDING_PX + AXIS_TITLE_FONT_PX, right: 0, top: 0, bottom: 0 }
 	const axisX = chartArea.left
 
 	const yRange = spec.domain.max - spec.domain.min
@@ -99,7 +101,7 @@ export function computeAndRenderYAxis(
 		const cats = spec.categories as string[]
 		for (let i = 0; i < cats.length; i++) {
 			const y = toSvgYCategorical!(i)
-			markup += `<line x1="${axisX - TICK_LENGTH_PX}" y1="${y}" x2="${axisX}" y2="${y}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
+			markup += `<line x1="${axisX - tickLength}" y1="${y}" x2="${axisX}" y2="${y}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
 			if (spec.showTickLabels) {
 				const label = cats[i] as string
 				markup += `<text class="tick-label" x="${axisX - TICK_LABEL_PADDING_PX}" y="${y + 4}" text-anchor="end" font-size="${TICK_LABEL_FONT_PX}px">${label}</text>`
@@ -117,8 +119,8 @@ export function computeAndRenderYAxis(
 
 		tickValues.forEach((t, i) => {
 			const y = toSvgYNumeric(t)
-			// Always draw the tick mark, including at t=0
-			markup += `<line x1="${axisX - TICK_LENGTH_PX}" y1="${y}" x2="${axisX}" y2="${y}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
+			// Draw the tick mark (length may be 0 if disabled)
+			markup += `<line x1="${axisX - tickLength}" y1="${y}" x2="${axisX}" y2="${y}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
 			
 			if (spec.showTickLabels && selected.has(i)) {
 				let label: string
@@ -141,7 +143,7 @@ export function computeAndRenderYAxis(
 	}
 
 	// Y-axis title (rotated)
-	const yAxisLabelX = axisX - (TICK_LENGTH_PX + TICK_LABEL_PADDING_PX + TICK_LABEL_FONT_PX + AXIS_TITLE_PADDING_PX + AXIS_TITLE_FONT_PX / 2)
+	const yAxisLabelX = axisX - (tickLength + TICK_LABEL_PADDING_PX + TICK_LABEL_FONT_PX + AXIS_TITLE_PADDING_PX + AXIS_TITLE_FONT_PX / 2)
 	const yAxisLabelY = chartArea.top + chartArea.height / 2
 	const title = renderWrappedText(spec.label, yAxisLabelX, yAxisLabelY, "axis-label")
 	const rotatedTitle = title.replace("<text ", `<text transform="rotate(-90, ${yAxisLabelX}, ${yAxisLabelY})" `)
@@ -163,6 +165,7 @@ export function computeAndRenderXAxis(
 	spec: AxisSpec,
 	chartArea: { top: number; left: number; width: number; height: number }
 ): AxisResult {
+	const tickLength = spec.showTicks === false ? 0 : TICK_LENGTH_PX
 	const isCategorical = !!(spec.categories && spec.categories.length > 0)
 	if (!isCategorical) {
 		if (spec.domain.min >= spec.domain.max) {
@@ -212,10 +215,10 @@ export function computeAndRenderXAxis(
 		const selected = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartArea.width, LABEL_AVG_CHAR_WIDTH_PX)
 		for (let i = 0; i < tickPositions.length; i++) {
 			const x = tickPositions[i] as number
-			markup += `<line x1="${x}" y1="${axisY}" x2="${x}" y2="${axisY + TICK_LENGTH_PX}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
+			markup += `<line x1="${x}" y1="${axisY}" x2="${x}" y2="${axisY + tickLength}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
 			if (spec.showTickLabels && selected.has(i)) {
 				const label = tickLabels[i] as string
-				markup += `<text class="tick-label" x="${x}" y="${axisY + TICK_LENGTH_PX + TICK_LABEL_PADDING_PX}" text-anchor="middle" dominant-baseline="hanging" font-size="${TICK_LABEL_FONT_PX}px">${label}</text>`
+				markup += `<text class="tick-label" x="${x}" y="${axisY + tickLength + TICK_LABEL_PADDING_PX}" text-anchor="middle" dominant-baseline="hanging" font-size="${TICK_LABEL_FONT_PX}px">${label}</text>`
 			}
 		}
 	} else {
@@ -227,15 +230,15 @@ export function computeAndRenderXAxis(
 		for (let i = 0; i < ticks.length; i++) {
 			const t = ticks[i] as number
 			const x = toSvgX(t)
-			// Always draw the tick mark, including at t=0
-			markup += `<line x1="${x}" y1="${axisY}" x2="${x}" y2="${axisY + TICK_LENGTH_PX}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
+			// Draw the tick mark (length may be 0 if disabled)
+			markup += `<line x1="${x}" y1="${axisY}" x2="${x}" y2="${axisY + tickLength}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
 			
 			if (spec.showTickLabels && selected.has(i)) {
 				let label = String(t)
 				if (spec.labelFormatter) {
 					label = spec.labelFormatter(t)
 				}
-				markup += `<text class="tick-label" x="${x}" y="${axisY + TICK_LENGTH_PX + TICK_LABEL_PADDING_PX}" text-anchor="middle" dominant-baseline="hanging" font-size="${TICK_LABEL_FONT_PX}px">${label}</text>`
+				markup += `<text class="tick-label" x="${x}" y="${axisY + tickLength + TICK_LABEL_PADDING_PX}" text-anchor="middle" dominant-baseline="hanging" font-size="${TICK_LABEL_FONT_PX}px">${label}</text>`
 				// Track positions and labels for extent registration
 				tickPositions.push(x)
 				tickLabels.push(label)
