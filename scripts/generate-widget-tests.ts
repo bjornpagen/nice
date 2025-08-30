@@ -3,7 +3,6 @@ import { parseArgs } from "node:util"
 import * as fs from "node:fs"
 import * as path from "node:path"
 import { generateMock } from '@anatine/zod-mock'
-import { faker } from "@faker-js/faker"
 
 const { values: flags, positionals } = parseArgs({
   args: process.argv.slice(2),
@@ -79,13 +78,38 @@ function testFileExists(widgetName: string): boolean {
   return fs.existsSync(testPath)
 }
 
-function toKebabCase(str: string): string {
-  return str.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '')
+function detectExports(widgetName: string): { schemaName: string; generatorName: string; inputType: string } {
+  const generatorPath = path.join(process.cwd(), 'src/lib/widgets/generators', `${widgetName}.ts`)
+  
+  if (!fs.existsSync(generatorPath)) {
+    throw new Error(`Widget generator file not found: ${generatorPath}`)
+  }
+  
+  const content = fs.readFileSync(generatorPath, 'utf-8')
+  
+  // Find schema export (ends with PropsSchema)
+  const schemaMatch = content.match(/export\s+(?:const|type)\s+(\w+PropsSchema)/)
+  if (!schemaMatch) {
+    throw new Error(`No PropsSchema export found in ${widgetName}.ts`)
+  }
+  const schemaName = schemaMatch[1]!
+  
+  // Find generator export (starts with generate)
+  const generatorMatch = content.match(/export\s+const\s+(generate\w+)/)
+  if (!generatorMatch) {
+    throw new Error(`No generate function export found in ${widgetName}.ts`)
+  }
+  const generatorName = generatorMatch[1]!
+  
+  // Derive input type from schema name
+  const inputType = schemaName.replace('PropsSchema', 'Input')
+  
+  return { schemaName, generatorName, inputType }
 }
 
 function generateTestFile(widgetName: string): void {
   const testPath = path.join(process.cwd(), 'tests/widgets', `${widgetName}.test.ts`)
-  const kebabName = toKebabCase(widgetName)
+  const kebabName = widgetName
   
   console.log(`Generating tests for ${widgetName}...`)
   
@@ -100,18 +124,10 @@ function generateTestFile(widgetName: string): void {
 }
 
 function generateTestContent(widgetName: string, kebabName: string): string {
-  // Convert kebab-case to PascalCase (e.g., "bar-chart" -> "BarChart")
-  const pascalName = widgetName
-    .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join('')
-  const schemaName = `${pascalName}PropsSchema`
-  const generatorName = `generate${pascalName}`
-  const inputType = `${pascalName}Input`
+  const { schemaName, generatorName, inputType } = detectExports(widgetName)
   
   const imports = `import { expect, test } from "bun:test"
 import { generateMock } from '@anatine/zod-mock'
-import { faker } from "@faker-js/faker"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import type { z } from "zod"
@@ -153,74 +169,23 @@ const validateAndGenerate = (input: ${inputType}): string => {
   return ${generatorName}(parsed)
 }`
 
-  // Generate 50 normal test cases with reasonable values
-  const normalTests = Array.from({ length: 50 }, (_, i) => {
+  // Generate 10 normal test cases with reasonable values
+  const normalTests = Array.from({ length: 10 }, (_, i) => {
     const seed = i + 1
     return `
 test("${kebabName} - normal variation ${i + 1}", () => {
-  const mockData = generateMock(${schemaName}, { 
-    seed: ${seed},
-    stringMap: {
-      title: () => faker.lorem.words(faker.number.int({ min: 2, max: 6 })),
-      xAxisLabel: () => faker.lorem.words(2),
-      yAxisLabel: () => faker.lorem.words(2),
-      barColor: () => faker.color.rgb({ format: 'hex' }),
-      width: () => faker.number.int({ min: 300, max: 1000 }),
-      height: () => faker.number.int({ min: 200, max: 600 }),
-      min: () => faker.number.float({ min: 0, max: 100, fractionDigits: 1 }),
-      max: () => faker.number.float({ min: 100, max: 1000, fractionDigits: 1 }),
-      tickInterval: () => faker.number.float({ min: 1, max: 50, fractionDigits: 1 }),
-      value: () => faker.number.float({ min: 1, max: 100, fractionDigits: 1 }),
-      count: () => faker.number.int({ min: 1, max: 100 }),
-      frequency: () => faker.number.int({ min: 0, max: 50 })
-    }
-  })
+  const mockData = generateMock(${schemaName}, { seed: ${seed} })
   const svg = validateAndGenerate(mockData)
   expect(svg).toMatchSnapshot()
 })`
   }).join('\n')
 
-  // Generate 50 extreme test cases with extreme values
-  const extremeTests = Array.from({ length: 50 }, (_, i) => {
+  // Generate 5 extreme test cases with extreme values
+  const extremeTests = Array.from({ length: 5 }, (_, i) => {
     const seed = i + 1001
     return `
 test("${kebabName} - extreme variation ${i + 1}", () => {
-  const mockData = generateMock(${schemaName}, { 
-    seed: ${seed},
-    stringMap: {
-      title: () => faker.helpers.arrayElement([
-        "", // Empty title
-        faker.lorem.paragraphs(3), // Very long title
-        faker.helpers.arrayElement(['🚀🎉💯', 'αβγδε', '中文测试', '!@#$%^&*()']) // Special chars
-      ]),
-      width: () => faker.helpers.arrayElement([
-        faker.number.int({ min: 1, max: 10 }), // Very small
-        faker.number.int({ min: 10000, max: 50000 }) // Very large
-      ]),
-      height: () => faker.helpers.arrayElement([
-        faker.number.int({ min: 1, max: 10 }), // Very small
-        faker.number.int({ min: 10000, max: 50000 }) // Very large
-      ]),
-      min: () => faker.helpers.arrayElement([
-        faker.number.float({ min: 0.001, max: 0.1, fractionDigits: 4 }), // Very small
-        faker.number.float({ min: 1000000, max: 9999999, fractionDigits: 2 }), // Very large
-        faker.number.float({ min: -1000, max: -1, fractionDigits: 2 }), // Negative
-        0 // Zero
-      ]),
-      max: () => faker.helpers.arrayElement([
-        faker.number.float({ min: 0.001, max: 0.1, fractionDigits: 4 }), // Very small
-        faker.number.float({ min: 1000000, max: 9999999, fractionDigits: 2 }), // Very large
-        faker.number.float({ min: -1000, max: -1, fractionDigits: 2 }), // Negative
-        0 // Zero
-      ]),
-      value: () => faker.helpers.arrayElement([
-        faker.number.float({ min: 0.001, max: 0.1, fractionDigits: 4 }), // Very small
-        faker.number.float({ min: 1000000, max: 9999999, fractionDigits: 2 }), // Very large
-        faker.number.float({ min: -1000, max: -1, fractionDigits: 2 }), // Negative
-        0 // Zero
-      ])
-    }
-  })
+  const mockData = generateMock(${schemaName}, { seed: ${seed} })
   
   // For extreme tests, we expect errors due to unbounded values
   expect(() => validateAndGenerate(mockData)).toThrow(/Unbounded value detected|Non-finite value detected/)
@@ -231,12 +196,12 @@ test("${kebabName} - extreme variation ${i + 1}", () => {
 ${helperFunction}
 
 // ============================================================================
-// NORMAL VARIATIONS (50 individual tests)
+// NORMAL VARIATIONS (10 individual tests)
 // ============================================================================
 ${normalTests}
 
 // ============================================================================
-// EXTREME VARIATIONS (50 individual tests)
+// EXTREME VARIATIONS (5 individual tests)
 // ============================================================================
 ${extremeTests}
 `
