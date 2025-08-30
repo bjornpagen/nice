@@ -1,0 +1,609 @@
+{
+  "widgetType": "label-image",
+  "totalCount": 167,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.847Z",
+  "samples": [
+    {
+      "questionId": "x339042ed2762375d",
+      "problemType": "Model of nested organization",
+      "widgetKey": "label-image 1",
+      "questionContent": "**Label the diagram to represent the nested organization of multicellular organisms.**\n\n[[☃ label-image 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "label-image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            "organ systems",
+            "tissues",
+            "organs"
+          ],
+          "markers": [
+            {
+              "x": 41.8,
+              "y": 57.3,
+              "label": "the second-smallest circle",
+              "answers": [
+                "tissues"
+              ]
+            },
+            {
+              "x": 56.2,
+              "y": 41,
+              "label": "the third-smallest circle",
+              "answers": [
+                "organs"
+              ]
+            },
+            {
+              "x": 72.9,
+              "y": 21.3,
+              "label": "the largest circle",
+              "answers": [
+                "organ systems"
+              ]
+            }
+          ],
+          "imageAlt": "A diagram shows four nested circles. The smallest circle is labeled cells and is inside the second-smallest circle. The second-smallest circle is inside the third-smallest circle. The third-smallest circle is inside the largest circle.",
+          "imageUrl": "https://cdn.kastatic.org/ka-content-images/f9fd8b7ea52fe280c71f327bb4683a51182bc7b3.svg",
+          "imageWidth": 325,
+          "imageHeight": 319,
+          "multipleAnswers": false,
+          "preferredPopoverDirection": "RIGHT",
+          "hideChoicesFromInstructions": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xf3ef16d6c24b34e6",
+      "problemType": "pH from [H+]",
+      "widgetKey": "label-image 1",
+      "questionContent": "The following table provides information about the relative concentrations of hydrogen ions and hydroxide ions in three household substances. \n\nSubstance | Relative concentration of ions in solution\n- | :-: \ndistilled water | $\\ce{[H+]} = \\ce{[OH-]}$\nwindow cleaner | $\\ce{[H+]} < \\ce{[OH-]}$ \nyogurt...",
+      "widgetData": {
+        "type": "label-image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            "distilled water",
+            "window cleaner",
+            "yogurt"
+          ],
+          "markers": [
+            {
+              "x": 70.1,
+              "y": 83,
+              "label": "pH of 10",
+              "answers": [
+                "window cleaner"
+              ]
+            },
+            {
+              "x": 50,
+              "y": 87.1,
+              "label": "pH of 7",
+              "answers": [
+                "distilled water"
+              ]
+            },
+            {
+              "x": 31.8,
+              "y": 86.9,
+              "label": "pH of 4",
+              "answers": [
+                "yogurt"
+              ]
+            }
+          ],
+          "imageAlt": "pH scale ranging from 0-14, with acidic pH's labeled with warmer colors and basic pH's labeled with cooler colors",
+          "imageUrl": "https://cdn.kastatic.org/ka-content-images/0d613b6253ab97cb6a1f1b2d48781ee96100bf77.svg",
+          "imageWidth": 600,
+          "imageHeight": 58,
+          "multipleAnswers": false,
+          "hideChoicesFromInstructions": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x2799802b987799d6",
+      "problemType": "Object hanging",
+      "widgetKey": "label-image 1",
+      "questionContent": "A piñata hangs from a string. The piñata is at rest.\n\n[[☃ image 1]]\n\n**Complete the free body diagram by labeling the forces acting on the piñata.**\n\n[[☃ label-image 2]]",
+      "widgetData": {
+        "type": "label-image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            "gravity $(F_\\text{g})$",
+            "thrust $(F_\\text{Th})$",
+            "normal force $(F_\\text{N})$",
+            "tension $(F_\\text{T})$"
+          ],
+          "markers": [
+            {
+              "x": 64.2,
+              "y": 17.6,
+              "label": "An arrow that points upward from the square",
+              "answers": [
+                "tension $(F_\\text{T})$"
+              ]
+            },
+            {
+              "x": 66.2,
+              "y": 81.8,
+              "label": "An arrow that points downward from the square",
+              "answers": [
+                "gravity $(F_\\text{g})$"
+              ]
+            }
+          ],
+          "imageAlt": "A model shows a square with two arrows pointing out of it. One arrow points up and another arrow points down.",
+          "imageUrl": "https://cdn.kastatic.org/ka-content-images/b24e40b5a36890130acfb7bd237c4bf0d85c7b44.svg",
+          "imageWidth": 150,
+          "imageHeight": 300,
+          "multipleAnswers": false,
+          "preferredPopoverDirection": "RIGHT",
+          "hideChoicesFromInstructions": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xb3ece5e733bfacee",
+      "problemType": "",
+      "widgetKey": "label-image 1",
+      "questionContent": "**Label the parts of the virus.**\n\n[[☃ label-image 1]]\n\n**Complete the statements.**\n\n* The viral genetic material is made up of [[☃ dropdown 1]].\n\n* The viral capsid is made up of [[☃ dropdown 2]].\n\n* The viral envelope is made up of [[☃ dropdown 3]].\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "label-image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            "capsid",
+            "envelope",
+            "genetic material"
+          ],
+          "markers": [
+            {
+              "x": 67,
+              "y": 75.3,
+              "label": "The outer layer of the virus which has structures sticking out from it.",
+              "answers": [
+                "envelope"
+              ]
+            },
+            {
+              "x": 69.3,
+              "y": 47,
+              "label": "The inner layer which surrounds the virus's contents.",
+              "answers": [
+                "capsid"
+              ]
+            },
+            {
+              "x": 66,
+              "y": 21.6,
+              "label": "The wavy line in the center of the virus.",
+              "answers": [
+                "genetic material"
+              ]
+            }
+          ],
+          "imageAlt": "A diagram shows a hexagon-shaped virus. The virus has an outer layer with structures sticking out all around. Just inside the outer layer is an inner layer that looks like multiple small subunits joined together. The inner layer surrounds the contents of the virus, which looks like a wavy line.",
+          "imageUrl": "https://cdn.kastatic.org/ka-content-images/24fc919ba52d3bab228e8093029f6202d86be4ad.png",
+          "imageWidth": 400,
+          "imageHeight": 263,
+          "multipleAnswers": false,
+          "preferredPopoverDirection": "RIGHT",
+          "hideChoicesFromInstructions": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xc840606c8c6e1cd7",
+      "problemType": "Horizontal-label graph",
+      "widgetKey": "label-image 1",
+      "questionContent": "Farris created a chart and a bar graph to show how many different types of shapes she has.\n\nShape type | Number \n:- | :-: \nCircles | $3$ \nTriangles | $4$ \nRectangles | $9$ \nSquares | $5$ \n\n**Label each bar on the bar graph.**\n\n[[☃ label-image 1]]\n\n",
+      "widgetData": {
+        "type": "label-image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            "Circles",
+            "Triangles",
+            "Rectangles",
+            "Squares"
+          ],
+          "markers": [
+            {
+              "x": 24.1,
+              "y": 17.7,
+              "label": "",
+              "answers": [
+                "Triangles"
+              ]
+            },
+            {
+              "x": 24.4,
+              "y": 35.7,
+              "label": "",
+              "answers": [
+                "Rectangles"
+              ]
+            },
+            {
+              "x": 23.8,
+              "y": 52.9,
+              "label": "",
+              "answers": [
+                "Circles"
+              ]
+            },
+            {
+              "x": 24.1,
+              "y": 70.9,
+              "label": "",
+              "answers": [
+                "Squares"
+              ]
+            }
+          ],
+          "imageAlt": "A horizontal bar graph. Number is on the horizontal axis and has lines marking from 0 to 10. Shape is on the vertical axis.  There are bars for each of the Shapes. The bottom bar is 5. The second bar is 3. The third bar is 9. The fourth bar is 4.",
+          "imageUrl": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/eabcb95bf68125b2d5f92b2d392ae5e12cacdea4",
+          "imageWidth": 404,
+          "imageHeight": 330,
+          "multipleAnswers": false,
+          "hideChoicesFromInstructions": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x76f53e7969c909b4",
+      "problemType": "Type 4: Thermometer",
+      "widgetKey": "label-image 1",
+      "questionContent": "A substance has a freezing point of $–15\\degree\\text{C}$ and a boiling point of $45\\degree\\text{C}$.\n\n**On the thermometer below, indicate the phase of this substance at each of the following points.**\n\n[[☃ label-image 1]]",
+      "widgetData": {
+        "type": "label-image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            "solid",
+            "liquid",
+            "gas"
+          ],
+          "markers": [
+            {
+              "x": 48.6,
+              "y": 28.6,
+              "label": "55 degrees Celsius",
+              "answers": [
+                "gas"
+              ]
+            },
+            {
+              "x": 48.8,
+              "y": 44.3,
+              "label": "27 degrees Celsius",
+              "answers": [
+                "liquid"
+              ]
+            },
+            {
+              "x": 48.1,
+              "y": 61.7,
+              "label": "Negative 3 degrees Celsius",
+              "answers": [
+                "liquid"
+              ]
+            }
+          ],
+          "imageAlt": "An alcohol thermometer ranging from 60 degrees celsius to negative 30 degrees celsius. ",
+          "imageUrl": "https://cdn.kastatic.org/ka-content-images/7a7addf80baeb62595720bdcfdbb5369295baf49.png",
+          "imageWidth": 140,
+          "imageHeight": 500,
+          "multipleAnswers": false,
+          "preferredPopoverDirection": "RIGHT",
+          "hideChoicesFromInstructions": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xf9069a62020a3844",
+      "problemType": "3. Velocity, speed up-down",
+      "widgetKey": "label-image 1",
+      "questionContent": "An object is moving along a line. The following graph gives the object's velocity over time.\n\n**For each point on the graph, is the object speeding up, slowing down, or neither?**\n\n[[☃ label-image 1]]",
+      "widgetData": {
+        "type": "label-image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            "speeding up",
+            "slowing down",
+            "neither"
+          ],
+          "markers": [
+            {
+              "x": 16.7,
+              "y": 49.1,
+              "label": "Leftmost point, where graph is increasing and positive",
+              "answers": [
+                "speeding up"
+              ]
+            },
+            {
+              "x": 33.6,
+              "y": 30.1,
+              "label": "Second point, where graph is at a local maximum and positive",
+              "answers": [
+                "neither"
+              ]
+            },
+            {
+              "x": 50.3,
+              "y": 48.8,
+              "label": "Third point, where graph is decreasing and positive",
+              "answers": [
+                "slowing down"
+              ]
+            },
+            {
+              "x": 83.6,
+              "y": 64.6,
+              "label": "Fourth point, where graph is decreasing and negative",
+              "answers": [
+                "speeding up"
+              ]
+            }
+          ],
+          "imageAlt": "A graph with time, in seconds, on the horizontal axis and velocity, in meters per second, on the vertical axis has a graph that begins in quadrant 4 at t equals 0, reaches a maximum in quadrant 1, and ends in quadrant 4. There are 4 points marked from left to right on the graph.",
+          "imageUrl": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/18426a53d5ef28b13bdc8a175970583eb0685532",
+          "imageWidth": 345,
+          "imageHeight": 345,
+          "multipleAnswers": false,
+          "hideChoicesFromInstructions": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x9c236b2e1414d7d5",
+      "problemType": "Type 2-Label graphs",
+      "widgetKey": "label-image 1",
+      "questionContent": "To prepare her grocery list, Ivy asked everyone coming to the family reunion what their favorite fruit is. She created a chart and a bar graph with the results.\n\nFruit  | Number of votes  \n:- | :-: \nBanana | $50$ \nApple | $55$ \nKiwi | $10$ \nGrapes | $35$ \nMango | $25$ \n\n**Label each bar on the bar g...",
+      "widgetData": {
+        "type": "label-image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            "Banana",
+            "Apple",
+            "Kiwi",
+            "Grapes",
+            "Mango"
+          ],
+          "markers": [
+            {
+              "x": 25.2,
+              "y": 86.9,
+              "label": "",
+              "answers": [
+                "Apple"
+              ]
+            },
+            {
+              "x": 41,
+              "y": 86.2,
+              "label": "",
+              "answers": [
+                "Mango"
+              ]
+            },
+            {
+              "x": 56.6,
+              "y": 85.9,
+              "label": "",
+              "answers": [
+                "Grapes"
+              ]
+            },
+            {
+              "x": 72.8,
+              "y": 86.2,
+              "label": "",
+              "answers": [
+                "Kiwi"
+              ]
+            },
+            {
+              "x": 88.1,
+              "y": 85.9,
+              "label": "",
+              "answers": [
+                "Banana"
+              ]
+            }
+          ],
+          "imageAlt": "A table shows fruit and the number of votes. Bananas had fifty votes. Apples had fifty five votes. Kiwi had ten votes. Grapes had thirty five votes and mangos had twenty five votes.",
+          "imageUrl": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/042c93fa36e149c07b147e8f73e641f1d8129048",
+          "imageWidth": 334,
+          "imageHeight": 310,
+          "multipleAnswers": false,
+          "hideChoicesFromInstructions": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x44a1ebde9eb66b28",
+      "problemType": "Number line matcher",
+      "widgetKey": "label-image 1",
+      "questionContent": "**Label each point on the number line with the correct value.**\n\n[[☃ label-image 1]]",
+      "widgetData": {
+        "type": "label-image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            "$0.73$",
+            "$0.\\overline{6}$",
+            "$\\dfrac{7}{8}$"
+          ],
+          "markers": [
+            {
+              "x": 45.2,
+              "y": 50.9,
+              "label": "Point a is the leftmost of two points between 0.6 and 0.8.",
+              "answers": [
+                "$0.\\overline{6}$"
+              ]
+            },
+            {
+              "x": 54.2,
+              "y": 50.2,
+              "label": "Point b is the rightmost of two points between 0.6 and 0.8.",
+              "answers": [
+                "$0.73$"
+              ]
+            },
+            {
+              "x": 74.4,
+              "y": 50.9,
+              "label": "Point c is between 0.8 and 1.",
+              "answers": [
+                "$\\dfrac{7}{8}$"
+              ]
+            }
+          ],
+          "imageAlt": "A number line from 0.4 to 1, labeled in increments of 0.2. There are three points on the line, labeled from left to right with a, b, and c.",
+          "imageUrl": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/971379f3d35193b42b7faa9b05e1974fd715eb88",
+          "imageWidth": 360,
+          "imageHeight": 160,
+          "multipleAnswers": false,
+          "hideChoicesFromInstructions": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x75cc9453b5b7ce5d",
+      "problemType": "Type 1",
+      "widgetKey": "label-image 1",
+      "questionContent": "A boy holds a ball at shoulder level before throwing it.  Four possible paths the ball could travel and the locations of the ball at some point along those paths are shown below.\n\n**For each location, select whether the potential energy stored in the ball-Earth system is more, less, or the same as w...",
+      "widgetData": {
+        "type": "label-image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            "more",
+            "less",
+            "the same"
+          ],
+          "markers": [
+            {
+              "x": 36.9,
+              "y": 63.8,
+              "label": "The ball moved down and to the right, bounced off the ground and is in the air, moving to the right and slightly upward. It is below the horizontal line passing through the initial position of the ball.",
+              "answers": [
+                "less"
+              ]
+            },
+            {
+              "x": 73.8,
+              "y": 56.5,
+              "label": "The ball is in the hand of the boy on the right. It is slightly lower than the initial position of the ball. Its path is a low arc between the two boys. ",
+              "answers": [
+                "less"
+              ]
+            },
+            {
+              "x": 87.8,
+              "y": 47.7,
+              "label": "The ball is in the tree on the right side of the image. It is on the horizontal line that passes through the ball’s initial position. The path is an arc from the boy to the tree.",
+              "answers": [
+                "the same"
+              ]
+            },
+            {
+              "x": 63.4,
+              "y": 18.5,
+              "label": "The ball is in the air, following the path of a tall arc from the boy to this point. It is above the horizontal line that passes through the ball’s initial position.",
+              "answers": [
+                "more"
+              ]
+            }
+          ],
+          "imageAlt": "Two boys stand facing each other, each on top of a hill with a small valley between. A tree is on the far right of the image. The boy on the left holds a ball at his shoulder. A dotted horizontal line runs through this ball and across the image.",
+          "imageUrl": "https://cdn.kastatic.org/ka-content-images/ec15b1bc0c11017459ef0973678784c1034f76e6.svg",
+          "imageWidth": 500,
+          "imageHeight": 318,
+          "multipleAnswers": false,
+          "preferredPopoverDirection": "DOWN",
+          "hideChoicesFromInstructions": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

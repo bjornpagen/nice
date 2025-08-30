@@ -1,0 +1,300 @@
+{
+  "widgetType": "categorizer",
+  "totalCount": 242,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.849Z",
+  "samples": [
+    {
+      "questionId": "x087d46805b20affe",
+      "problemType": "Identify denitrification in the nitrogen cycle",
+      "widgetKey": "categorizer 1",
+      "questionContent": "The following diagram describes the nitrogen cycle. Arrow A shows nitrogen moving from microorganisms in the soil to the atmosphere.\n\n[[☃ image 1]]\n\n**Which process is represented by Arrow A?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "categorizer",
+        "options": {
+          "items": [],
+          "values": [],
+          "categories": [],
+          "randomizeItems": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x0a59c84e78b1700b",
+      "problemType": "Identify ammonification in the nitrogen cycle",
+      "widgetKey": "categorizer 1",
+      "questionContent": "The following diagram describes the nitrogen cycle. Arrow C shows nitrogen moving from dead organisms and waste to the soil.\n\n[[☃ image 1]]\n\n**Which process is represented by Arrow C?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "categorizer",
+        "options": {
+          "items": [],
+          "values": [],
+          "categories": [],
+          "randomizeItems": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x5178ddbd778bc614",
+      "problemType": "Generalist versus specialist organisms",
+      "widgetKey": "categorizer 1",
+      "questionContent": "**Complete the table by selecting the most likely type of organism for each characteristic.**\n\nCharacteristic | Type of organism\n- | :-:\nnarrow niche | [[☃ dropdown 1]]\nbroad niche | [[☃ dropdown 2]]\nhas large tolerance ranges for abiotic factors | [[☃ dropdown 3]]\nhas small tolerance ranges for abi...",
+      "widgetData": {
+        "type": "categorizer",
+        "graded": true,
+        "static": false,
+        "options": {
+          "items": [
+            "This type of organism has a narrow niche.",
+            "This type of organism has a broad niche.",
+            "This type of organism has large tolerance ranges for abiotic factors in their environment.",
+            "This type of organism has small tolerance ranges for abiotic factors in their environment."
+          ],
+          "static": false,
+          "values": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "categories": [
+            "Generalist",
+            "Specialist"
+          ],
+          "linterContext": {
+            "paths": [],
+            "stack": [],
+            "contentType": "",
+            "highlightLint": false
+          },
+          "randomizeItems": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x592670cd1a867d9d",
+      "problemType": "Identify nitrification in the nitrogen cycle",
+      "widgetKey": "categorizer 1",
+      "questionContent": "The following diagram describes the nitrogen cycle. Arrow 2 shows nitrogen changing form from ammonia to nitrites.\n\n[[☃ image 1]]\n\n**Which process is represented by Arrow 2?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "categorizer",
+        "options": {
+          "items": [],
+          "values": [],
+          "categories": [],
+          "randomizeItems": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x5111a6d93d386721",
+      "problemType": "Distinguish between zeros, vertical asymptotes, and removable discontinuities",
+      "widgetKey": "categorizer 2",
+      "questionContent": "$h(x)=\\dfrac{x^2-81}{x+9}$\n\n**At each of the following values of $x$, select whether $h$ has a zero, a vertical asymptote, or a removable discontinuity.** \n\n[[☃ categorizer 2]]",
+      "widgetData": {
+        "type": "categorizer",
+        "graded": true,
+        "static": false,
+        "options": {
+          "items": [
+            "$x=-9$",
+            "$x=9$"
+          ],
+          "static": false,
+          "values": [
+            2,
+            0
+          ],
+          "categories": [
+            "Zero",
+            "Vertical Asymptote",
+            "Removable Discontinuity"
+          ],
+          "randomizeItems": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x595da0baef5ddac0",
+      "problemType": "Identify nitrogen fixation in the nitrogen cycle",
+      "widgetKey": "categorizer 1",
+      "questionContent": "The following diagram describes the nitrogen cycle. Arrow IV shows nitrogen moving from the atmosphere to microorganisms in the soil and plant roots.\n\n[[☃ image 1]]\n\n**Which process is represented by Arrow IV?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "categorizer",
+        "options": {
+          "items": [],
+          "values": [],
+          "categories": [],
+          "randomizeItems": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x9380f9985adb87e3",
+      "problemType": "Classify based on the type of function",
+      "widgetKey": "categorizer 1",
+      "questionContent": "The costs of buying a small piece of land and a small car in a remote village since the year $1990$ are represented by the  following tables:\n\n|| **Land** ||\nTime (years)| Cost (thousands of dollars)\n- | - | -\n$0$ | $30$ \n$2$ | $36.9$ \n$4$ | $44.1$\n$6$ | $51.1$\n$8$ | $58.1$\n\n|| **Car** ||\nTime (year...",
+      "widgetData": {
+        "type": "categorizer",
+        "graded": true,
+        "static": false,
+        "options": {
+          "items": [
+            "**Land**",
+            "**Car**"
+          ],
+          "static": false,
+          "values": [
+            0,
+            0
+          ],
+          "categories": [
+            "Linear function",
+            "Exponential function"
+          ],
+          "randomizeItems": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x71ee66910d97c7fc",
+      "problemType": "Products and reactants of photosynthesis",
+      "widgetKey": "categorizer 1",
+      "questionContent": "**Complete the table by selecting the reactants and products of photosynthesis.**\n\nRole in photosynthesis | Substances\n:-: | :-: \nreactants | [[☃ dropdown 1]] and [[☃ dropdown 2]]\nproducts | [[☃ dropdown 3]] and [[☃ dropdown 4]]",
+      "widgetData": {
+        "type": "categorizer",
+        "graded": true,
+        "static": false,
+        "options": {
+          "items": [
+            "carbon dioxide $\\ce{(CO2)}$ ",
+            "water $\\ce{(H2O)}$",
+            "oxygen $\\ce{(O2)}$",
+            "glucose $\\ce{(C6H12O6)}$"
+          ],
+          "static": false,
+          "values": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "categories": [
+            "Reactants",
+            "Products"
+          ],
+          "linterContext": {
+            "paths": [],
+            "stack": [],
+            "contentType": "",
+            "highlightLint": false
+          },
+          "randomizeItems": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xe03d4194d5a9f7d1",
+      "problemType": "RI.2.5 Use text features to locate key facts",
+      "widgetKey": "categorizer 1",
+      "questionContent": " Read the passage, then answer the practice question.\n\n___\n\n##Why Are There Tides?##\n \n###Summer at the Beach###   \n     \nIt's summer at the beach. You build the perfect sandcastle. Oh, no! Suddenly, a wave knocks it down. The water is getting closer and closer, so you grab your towel and run. But w...",
+      "widgetData": {
+        "type": "categorizer",
+        "graded": true,
+        "static": false,
+        "options": {
+          "items": [
+            "What high tide and low tide look like in the same place",
+            "What the bulges of high tides look like on the earth",
+            "How the moon's gravity pulls the ocean level higher  "
+          ],
+          "static": false,
+          "values": [
+            1,
+            0,
+            0
+          ],
+          "categories": [
+            "Picture 1",
+            "Picture 2"
+          ],
+          "linterContext": {
+            "paths": [],
+            "stack": [],
+            "contentType": "",
+            "highlightLint": false
+          },
+          "randomizeItems": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x98a36e9a494f7b6b",
+      "problemType": "Find mistake",
+      "widgetKey": "categorizer 1",
+      "questionContent": "Santiago tried to evaluate an expression step by step.\n\n$\\qquad\\begin{align}\n&(4 \\cdot 10^9) \\cdot 0.00003 \\\\\\\\\n\\\\\n=&(4 \\cdot 10^9) \\cdot (3\\cdot10^{-5})&\\green{\\text{Step } 1}\\\\\\\\\n\\\\\n=&(4\\cdot3)\\cdot(10^9\\cdot10^{-5})&\\blue{\\text{Step } 2}\\\\\\\\\n\\\\\n=&12 \\cdot10^{14}&\\purple{\\text{Step } 3} \\\\\\\\\n\\end{...",
+      "widgetData": {
+        "type": "categorizer",
+        "graded": true,
+        "options": {
+          "items": [
+            "0.002"
+          ],
+          "values": [],
+          "categories": [
+            "$2\\cdot10^{-3}$",
+            "$2\\cdot10^{-1}$",
+            "$2\\cdot10^{1}$",
+            "$2\\cdot10^{3}$"
+          ],
+          "randomizeItems": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    }
+  ]
+}

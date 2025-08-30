@@ -12,10 +12,9 @@ describe("keelingCurve widget", () => {
 			annotations: []
 		})
 
-		// Height is composed (title/top + chart area + x-axis block); width may expand dynamically.
-		// ViewBox min-x may be negative due to dynamic width calculation.
-		expect(result).toMatch(/<svg width="\d+" height="\d+"/)
-		expect(result).toMatch(/viewBox="-?\d+ 0 \d+ \d+"/)
+		// Height is fixed; width may expand dynamically. ViewBox min-x may be negative.
+		expect(result).toMatch(/<svg width="\d+" height="400"/)
+		expect(result).toMatch(/viewBox="-?\d+ 0 \d+ 400"/)
 	})
 
 	it("should include axis labels", () => {
@@ -43,8 +42,7 @@ describe("keelingCurve widget", () => {
 		})
 
 		expect(result).toContain("<polyline")
-		// Accept theme-based hex color or named color
-		expect(result).toMatch(/stroke=\"(black|#000000)\"/)
+		expect(result).toContain('stroke="black"')
 		expect(result).toContain('stroke-width="2.5"')
 	})
 
@@ -118,7 +116,7 @@ describe("keelingCurve widget", () => {
 		expect(result).toContain("First annotation")
 		expect(result).toContain("Second annotation")
 		// Check that text-anchor is start (for left alignment)
-		expect(result).toContain('text-anchor="start"')
+		expect(result).toContain("text-anchor: start")
 	})
 
 	it("should generate a snapshot-worthy SVG", () => {

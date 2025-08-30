@@ -1,0 +1,773 @@
+{
+  "widgetType": "grapher",
+  "totalCount": 251,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.850Z",
+  "samples": [
+    {
+      "questionId": "x14b06f01627567dc",
+      "problemType": "Type 1",
+      "widgetKey": "grapher 1",
+      "questionContent": "Amir drove from Jerusalem down to the lowest place on Earth, the Dead Sea, descending at a rate of $12$ meters per minute. He was at sea level after $30$ minutes of driving.\n\n**Graph the relationship between Amir's altitude relative to sea level (in meters) and time (in minutes).**  \n\n[[☃ grapher 1]...",
+      "widgetData": {
+        "type": "grapher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "step": [
+              10,
+              60
+            ],
+            "range": [
+              [
+                -10,
+                65
+              ],
+              [
+                -420,
+                360
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "",
+              ""
+            ],
+            "gridStep": [
+              5,
+              60
+            ],
+            "markings": "none",
+            "snapStep": [
+              5,
+              60
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/cc460864c5c1511b0877355290482bd6eb9010c2",
+              "left": 0,
+              "scale": 1,
+              "width": 400,
+              "bottom": 0,
+              "height": 400
+            },
+            "editableSettings": [
+              "graph",
+              "snap",
+              "image"
+            ]
+          },
+          "correct": {
+            "type": "linear",
+            "coords": [
+              [
+                30,
+                -60
+              ],
+              [
+                25,
+                0
+              ]
+            ],
+            "asymptote": []
+          },
+          "availableTypes": [
+            "linear"
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xf5e32108d8d81929",
+      "problemType": "2. Vertex",
+      "widgetKey": "grapher 1",
+      "questionContent": "**Graph the equation.**\n\n$y=-2(x-1)^2-4$\n\n[[☃ grapher 1]]",
+      "widgetData": {
+        "type": "grapher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "step": [
+              1,
+              1
+            ],
+            "range": [
+              [
+                -10,
+                10
+              ],
+              [
+                -10,
+                10
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "snapStep": [
+              1,
+              1
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": null
+            },
+            "editableSettings": [
+              "graph",
+              "snap",
+              "image"
+            ]
+          },
+          "correct": {
+            "type": "quadratic",
+            "coords": [
+              [
+                1,
+                -4
+              ],
+              [
+                0,
+                -6
+              ]
+            ]
+          },
+          "availableTypes": [
+            "quadratic"
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x5f86a8d652ec83af",
+      "problemType": "4. Function (-)",
+      "widgetKey": "grapher 1",
+      "questionContent": "**Graph the function.**\n\n$g(x)=-6(x -2)(x)$\n\n[[☃ grapher 1]]",
+      "widgetData": {
+        "type": "grapher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "step": [
+              1,
+              1
+            ],
+            "range": [
+              [
+                -10,
+                10
+              ],
+              [
+                -10,
+                10
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "snapStep": [
+              1,
+              1
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showTooltips": false,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": null
+            },
+            "editableSettings": [
+              "graph",
+              "snap",
+              "image"
+            ]
+          },
+          "correct": {
+            "type": "quadratic",
+            "coords": [
+              [
+                1,
+                6
+              ],
+              [
+                2,
+                0
+              ]
+            ]
+          },
+          "availableTypes": [
+            "quadratic"
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x8446fde2766e0b9b",
+      "problemType": "",
+      "widgetKey": "grapher 1",
+      "questionContent": "**Which graph shows a linear function with domain $x\\geq5$?**\n\n\n[[☃ radio 1]]\n\n",
+      "widgetData": {
+        "type": "grapher",
+        "options": {
+          "graph": {
+            "step": [
+              1,
+              1
+            ],
+            "range": [
+              [
+                -10,
+                10
+              ],
+              [
+                -10,
+                10
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "markings": "graph",
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showTooltips": false,
+            "backgroundImage": {
+              "url": null
+            }
+          },
+          "correct": {
+            "type": "linear",
+            "coords": null
+          },
+          "availableTypes": [
+            "linear"
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x1eed6b6f4315c40e",
+      "problemType": "1. Factored",
+      "widgetKey": "grapher 1",
+      "questionContent": "**Graph the function.**\n\n$f(x)=-(x-2)(x-6)$\n\n[[☃ grapher 1]]",
+      "widgetData": {
+        "type": "grapher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "step": [
+              1,
+              1
+            ],
+            "range": [
+              [
+                -10,
+                10
+              ],
+              [
+                -10,
+                10
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "snapStep": [
+              1,
+              1
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": null
+            },
+            "editableSettings": [
+              "graph",
+              "snap",
+              "image"
+            ]
+          },
+          "correct": {
+            "type": "quadratic",
+            "coords": [
+              [
+                4,
+                4
+              ],
+              [
+                2,
+                0
+              ]
+            ]
+          },
+          "availableTypes": [
+            "quadratic"
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xf3e2949457bb54d2",
+      "problemType": "1. Integer slope",
+      "widgetKey": "grapher 1",
+      "questionContent": "**Graph a line with a slope of $-4$ that contains the point $(-4, 7)$.**\n\n[[☃ grapher 1]]",
+      "widgetData": {
+        "type": "grapher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "step": [
+              1,
+              1
+            ],
+            "range": [
+              [
+                -8,
+                8
+              ],
+              [
+                -8,
+                8
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "snapStep": [
+              1,
+              1
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showTooltips": false,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": null
+            },
+            "editableSettings": [
+              "graph",
+              "snap",
+              "image"
+            ]
+          },
+          "correct": {
+            "type": "linear",
+            "coords": [
+              [
+                -3,
+                3
+              ],
+              [
+                -4,
+                7
+              ]
+            ]
+          },
+          "availableTypes": [
+            "linear"
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xca28e0a2adc35877",
+      "problemType": "3. Standard",
+      "widgetKey": "grapher 1",
+      "questionContent": "**Graph the function.**\n\n$h(x)=-\\dfrac{1}{3}x^2+2x-4$\n\n[[☃ grapher 1]]",
+      "widgetData": {
+        "type": "grapher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "step": [
+              1,
+              1
+            ],
+            "range": [
+              [
+                -10,
+                10
+              ],
+              [
+                -10,
+                10
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "snapStep": [
+              1,
+              1
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": null
+            },
+            "editableSettings": [
+              "graph",
+              "snap",
+              "image"
+            ]
+          },
+          "correct": {
+            "type": "quadratic",
+            "coords": [
+              [
+                3,
+                -1
+              ],
+              [
+                0,
+                -4
+              ]
+            ]
+          },
+          "availableTypes": [
+            "quadratic"
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x8b2f3b8a6baa7984",
+      "problemType": "Decay",
+      "widgetKey": "grapher 1",
+      "questionContent": "**Graph the function.**\n\n$f(x)=5\\cdot\\left(\\dfrac{4}{5}\\right)^x$\n\n[[☃ grapher 1]]",
+      "widgetData": {
+        "type": "grapher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "step": [
+              2,
+              2
+            ],
+            "range": [
+              [
+                -10,
+                10
+              ],
+              [
+                -10,
+                10
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "snapStep": [
+              1,
+              1
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showTooltips": false,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": null
+            },
+            "editableSettings": [
+              "graph",
+              "snap",
+              "image"
+            ]
+          },
+          "correct": {
+            "type": "exponential",
+            "coords": [
+              [
+                0,
+                5
+              ],
+              [
+                1,
+                4
+              ]
+            ],
+            "asymptote": [
+              [
+                -5,
+                0
+              ],
+              [
+                5,
+                0
+              ]
+            ]
+          },
+          "availableTypes": [
+            "exponential"
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x53dbe10b2cd8cc63",
+      "problemType": "2. Equation (-)",
+      "widgetKey": "grapher 3",
+      "questionContent": "**Graph the equation.**\n\n$y=-\\dfrac{1}{7}(x -7)(x +7)$\n\n[[☃ grapher 3]]",
+      "widgetData": {
+        "type": "grapher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "step": [
+              1,
+              1
+            ],
+            "range": [
+              [
+                -10,
+                10
+              ],
+              [
+                -10,
+                10
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "snapStep": [
+              1,
+              1
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showTooltips": false,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": null
+            },
+            "editableSettings": [
+              "graph",
+              "snap",
+              "image"
+            ]
+          },
+          "correct": {
+            "type": "quadratic",
+            "coords": [
+              [
+                0,
+                7
+              ],
+              [
+                7,
+                0
+              ]
+            ]
+          },
+          "availableTypes": [
+            "quadratic"
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xd8b00821eb6df6e2",
+      "problemType": "Growth",
+      "widgetKey": "grapher 1",
+      "questionContent": "**Graph the function.**\n\n$f(x)=4\\cdot\\left(\\dfrac{3}{2}\\right)^x$\n\n[[☃ grapher 1]]",
+      "widgetData": {
+        "type": "grapher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "step": [
+              2,
+              2
+            ],
+            "range": [
+              [
+                -10,
+                10
+              ],
+              [
+                -10,
+                10
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "snapStep": [
+              1,
+              1
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showTooltips": false,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": null
+            },
+            "editableSettings": [
+              "graph",
+              "snap",
+              "image"
+            ]
+          },
+          "correct": {
+            "type": "exponential",
+            "coords": [
+              [
+                1,
+                6
+              ],
+              [
+                0,
+                4
+              ]
+            ],
+            "asymptote": [
+              [
+                -5,
+                0
+              ],
+              [
+                5,
+                0
+              ]
+            ]
+          },
+          "availableTypes": [
+            "exponential"
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

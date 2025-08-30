@@ -1,0 +1,194 @@
+{
+  "metadata": {
+    "contentId": "x94428d0ee089a38d",
+    "contentType": "question",
+    "widgetType": "coordinatePlane",
+    "createdAt": "2025-08-30T16:18:50.735Z",
+    "aiReasoning": "The content does not involve use of a coordinate plane. It is more focused on comparing numerical ratios between animals, with additional images presented using image widgets rather than plotted on any coordinate system. Therefore, recreating a 'coordinatePlane' widget is not necessary or relevant to this content.",
+    "aiConfidence": 0
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "A ratio compares two values in a certain order.\n\nHere are some ways we could write the ratio of $\\goldE{7}$ snakes and $\\tealE{2}$ lizards.\n\n- $\\goldE{7}$ to $\\tealE{2}$\n- $\\goldE{7}:\\tealE{2}$\n- $\\goldE{7}$ snakes per $\\tealE{2}$ lizards\n- $\\goldE{7}$ snakes for every $\\tealE{2}$ lizards\n\nWe could **NOT** say $\\tealE{2}$ to $\\goldE{7}$, because that is a different order. It would mean the ratio of lizards to snakes.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "There are $\\blueE{2}$ sharks and $\\purpleD{8}$ whales.\n\nSo there are $\\blueE{2}+\\purpleD{8}=\\redE{10}$ total animals.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "The ratio of sharks to total animals is $\\blueE{2}$ to $\\redE{10}$.",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "**What is the ratio of sharks to total animals?**\n\n[[☃ image 1]]\n\n[[☃ explanation 1]]\n\n[[☃ radio 1]]",
+        "widgets": {
+          "image 1": {
+            "type": "image",
+            "graded": true,
+            "static": false,
+            "options": {
+              "alt": "2 sharks and 8 whales.",
+              "box": [
+                320,
+                180
+              ],
+              "range": [
+                [
+                  0,
+                  10
+                ],
+                [
+                  0,
+                  10
+                ]
+              ],
+              "title": "",
+              "labels": [],
+              "static": false,
+              "caption": "",
+              "backgroundImage": {
+                "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/b113e244d925c6143c090e22753016f7afac30a1",
+                "width": 320,
+                "height": 180
+              }
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "block"
+          },
+          "radio 1": {
+            "type": "radio",
+            "graded": true,
+            "static": false,
+            "options": {
+              "choices": [
+                {
+                  "content": "$2$ to $10$",
+                  "correct": true
+                },
+                {
+                  "content": "$8$ to $10$",
+                  "correct": false
+                },
+                {
+                  "content": "$2$ to $8$",
+                  "correct": false,
+                  "isNoneOfTheAbove": false
+                },
+                {
+                  "content": "$8$ to $2$",
+                  "correct": false,
+                  "isNoneOfTheAbove": false
+                }
+              ],
+              "randomize": true,
+              "countChoices": false,
+              "displayCount": null,
+              "multipleSelect": false,
+              "deselectEnabled": false,
+              "hasNoneOfTheAbove": false
+            },
+            "version": {
+              "major": 1,
+              "minor": 0
+            },
+            "alignment": "default"
+          },
+          "explanation 1": {
+            "type": "explanation",
+            "graded": true,
+            "static": false,
+            "options": {
+              "static": false,
+              "widgets": {
+                "image 1": {
+                  "type": "image",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "alt": "A shark.",
+                    "box": [
+                      100,
+                      100
+                    ],
+                    "range": [
+                      [
+                        0,
+                        10
+                      ],
+                      [
+                        0,
+                        10
+                      ]
+                    ],
+                    "title": "",
+                    "labels": [],
+                    "static": false,
+                    "caption": "",
+                    "backgroundImage": {
+                      "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/714ae8a87cadd527be07af02bcdd50f360886532",
+                      "width": 100,
+                      "height": 100
+                    }
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "block"
+                }
+              },
+              "hidePrompt": "Got it, thanks.",
+              "showPrompt": "Show me a shark.",
+              "explanation": "This is a shark.\n\n[[☃ image 1]]"
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"coordinatePlane\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"coordinatePlane\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"width\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"height\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"xAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"yAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"showQuadrantLabels\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"points\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"lines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polygons\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"distances\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polylines\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

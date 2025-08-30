@@ -1,0 +1,194 @@
+{
+  "metadata": {
+    "contentId": "xe572120d52dde32b",
+    "contentType": "question",
+    "widgetType": "coordinatePlane",
+    "createdAt": "2025-08-30T16:18:55.095Z",
+    "aiReasoning": "The provided content represents an educational question focusing on ratios with a visual representation of 5 cows and 2 chunks of cheese. Although the coordinatePlane widget typically supports elements like points and lines, here it can be used to visually represent the distribution of these items to aid in understanding the concept of ratios in a spatial manner. The elements might not explicitly use the features of coordinate graphing directly but offer support through visualization of objects.",
+    "aiConfidence": 0.7
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "A ratio compares two values in a certain order.\n\nHere are some ways we could write the ratio of $\\goldE{7}$ snakes and $\\tealE{2}$ lizards.\n\n- $\\goldE{7}$ to $\\tealE{2}$\n- $\\goldE{7}:\\tealE{2}$\n- $\\goldE{7}$ snakes per $\\tealE{2}$ lizards\n- $\\goldE{7}$ snakes for every $\\tealE{2}$ lizards\n\nWe could **NOT** say $\\tealE{2}$ to $\\goldE{7}$, because that is a different order. It would mean the ratio of lizards to snakes.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "There are $\\blueE{5}$ cows and $\\purpleD{2}$ chunks of cheese.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "The ratio of cows to chunks of cheese is $\\blueE{5}$ to $\\purpleD{2}$.",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "**What is the ratio of cows to chunks of cheese?**\n\n[[☃ image 1]]\n\n[[☃ explanation 1]]\n\n[[☃ radio 1]]",
+        "widgets": {
+          "image 1": {
+            "type": "image",
+            "graded": true,
+            "static": false,
+            "options": {
+              "alt": "5 cows and 2 chunks of cheese.",
+              "box": [
+                320,
+                180
+              ],
+              "range": [
+                [
+                  0,
+                  10
+                ],
+                [
+                  0,
+                  10
+                ]
+              ],
+              "title": "",
+              "labels": [],
+              "static": false,
+              "caption": "",
+              "backgroundImage": {
+                "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/5cd59a23aa886d78014f1c331ac588b08908cf38",
+                "width": 320,
+                "height": 180
+              }
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "block"
+          },
+          "radio 1": {
+            "type": "radio",
+            "graded": true,
+            "static": false,
+            "options": {
+              "choices": [
+                {
+                  "content": "$2$ to $4$",
+                  "correct": false
+                },
+                {
+                  "content": "$4$ to $2$",
+                  "correct": false
+                },
+                {
+                  "content": "$2$ to $5$",
+                  "correct": false,
+                  "isNoneOfTheAbove": false
+                },
+                {
+                  "content": "$5$ to $2$",
+                  "correct": true,
+                  "isNoneOfTheAbove": false
+                }
+              ],
+              "randomize": false,
+              "countChoices": false,
+              "displayCount": null,
+              "multipleSelect": false,
+              "deselectEnabled": false,
+              "hasNoneOfTheAbove": false
+            },
+            "version": {
+              "major": 1,
+              "minor": 0
+            },
+            "alignment": "default"
+          },
+          "explanation 1": {
+            "type": "explanation",
+            "graded": true,
+            "static": false,
+            "options": {
+              "static": false,
+              "widgets": {
+                "image 1": {
+                  "type": "image",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "alt": "A cow.",
+                    "box": [
+                      100,
+                      100
+                    ],
+                    "range": [
+                      [
+                        0,
+                        10
+                      ],
+                      [
+                        0,
+                        10
+                      ]
+                    ],
+                    "title": "",
+                    "labels": [],
+                    "static": false,
+                    "caption": "",
+                    "backgroundImage": {
+                      "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/53382a9afbd2c9f6d5238d9307d0b2d3a4194e64",
+                      "width": 100,
+                      "height": 100
+                    }
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "block"
+                }
+              },
+              "hidePrompt": "Got it, thanks.",
+              "showPrompt": "Show me a cow.",
+              "explanation": "This is a cow.\n\n[[☃ image 1]]"
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{\"range\":[[0,10],[0,10]],\"labels\":[],\"backgroundImage\":{\"url\":\"web+graphie://cdn.kastatic.org/ka-perseus-graphie/5cd59a23aa886d78014f1c331ac588b08908cf38\",\"width\":320,\"height\":180}}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"coordinatePlane\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"coordinatePlane\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"width\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"height\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"xAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"yAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"showQuadrantLabels\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"points\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"lines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polygons\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"distances\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polylines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"range\",\n      \"labels\",\n      \"backgroundImage\"\n    ],\n    \"path\": [],\n    \"message\": \"Unrecognized key(s) in object: 'range', 'labels', 'backgroundImage'\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

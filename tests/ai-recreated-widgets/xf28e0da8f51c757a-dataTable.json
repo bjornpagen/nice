@@ -1,0 +1,110 @@
+{
+  "metadata": {
+    "contentId": "xf28e0da8f51c757a",
+    "contentType": "question",
+    "widgetType": "dataTable",
+    "createdAt": "2025-08-30T16:18:17.889Z",
+    "aiReasoning": "The content involves presenting information in a tabular format about the time spent on different activities. The table specifically compares hours spent on various activities such as soccer practice, birthday party, and science project. This data is numerical and categorical, which fits perfectly with a dataTable widget allowing for such structured comparison of data. The dataTable would facilitate understanding and visualizing the relationships between different activities and the time spent on each effectively.",
+    "aiConfidence": 0.95
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "A ratio compares two values in a certain order.\n\nHere are some ways we could write the ratio of $\\goldE{7}$ snakes and $\\tealE{2}$ lizards.\n\n- $\\goldE{7}$ to $\\tealE{2}$\n- $\\goldE{7}:\\tealE{2}$\n- $\\goldE{7}$ per $\\tealE{2}$\n- $\\goldE{7}$ for every $\\tealE{2}$\n\nWe could **NOT** say $\\tealE{2}$ to $\\goldE{7}$, because that is a different order. It would mean the ratio of lizards to snakes.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "Sara spent $\\blueE{2}$ hours at soccer practice.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "Sara spent  $\\purpleD{3}$ hours at a birthday party.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "The ratio of hours spent at soccer practice to hours spent at a birthday party is $\\blueE{2}$ for every $\\purpleD{3}$.",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "The table shows how many hours Sara spent at several activities one Saturday.\n\nActivity| Hours\n- | - | -\nSoccer practice| $2$\nBirthday party| $3$\nScience project| $1$\n\n**What is the ratio of hours spent at soccer practice to hours spent at a birthday party?**\n\n[[☃ radio 1]]\n\n",
+        "widgets": {
+          "radio 1": {
+            "type": "radio",
+            "graded": true,
+            "static": false,
+            "options": {
+              "choices": [
+                {
+                  "content": "$1$ for every $2$",
+                  "correct": false
+                },
+                {
+                  "content": "$2$ for every $1$",
+                  "correct": false
+                },
+                {
+                  "content": "$2$ for every $3$",
+                  "correct": true,
+                  "isNoneOfTheAbove": false
+                },
+                {
+                  "content": "$3$ for every $2$",
+                  "correct": false,
+                  "isNoneOfTheAbove": false
+                }
+              ],
+              "randomize": false,
+              "countChoices": false,
+              "displayCount": null,
+              "multipleSelect": false,
+              "deselectEnabled": false,
+              "hasNoneOfTheAbove": false
+            },
+            "version": {
+              "major": 1,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{\"typeName\":\"ZodObject\",\"description\":\"Creates accessible HTML tables with mixed content types, optional row headers, and footer rows. Supports inline text/math in cells and interactive input fields. Perfect for data display, comparison tables, and exercises requiring tabular input.\",\"unknownKeys\":\"strict\",\"catchall\":{\"_def\":{\"typeName\":\"ZodNever\"},\"~standard\":{\"version\":1,\"vendor\":\"zod\"}},\"table\":[{\"Activity\":\"Soccer practice\",\"Hours\":2},{\"Activity\":\"Birthday party\",\"Hours\":3},{\"Activity\":\"Science project\",\"Hours\":1}]\"}",
+    "success": false,
+    "error": "Failed to parse input data JSON: SyntaxError: JSON Parse error: Unterminated string"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

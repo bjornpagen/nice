@@ -1,0 +1,215 @@
+{
+  "metadata": {
+    "contentId": "x15c46505967fa63e",
+    "contentType": "question",
+    "widgetType": "coordinatePlane",
+    "createdAt": "2025-08-30T16:19:41.501Z",
+    "aiReasoning": "The original content contains a tape diagram representing ratios of planted to harvested trees, but this task is to recreate input for a coordinate plane widget. The given tape diagrams could conceptually fit into a coordinate grid by representing the number of trees planted and harvested against x-y axes if the task demands a visualization transformation. However, the original content and question context do not involve elements typically represented on a coordinate plane widget such as points, lines, or specific graph axes. Based on this discrepancy, a coordinate plane is an unsuitable choice for directly representing the tape diagrams.",
+    "aiConfidence": 0.2
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "###Strategy\n\nWe can find the ratio of trees Maeve planted to trees Maeve harvested by counting the equal parts of each in the tape diagram.\n\nThen we can create an equivalent ratio by picking a number of trees for each equal part in the diagram to represent a total of $14$ trees harvested.\n\nTo make an equivalent ratio, we multiply each part of the ratio by the same number.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Identify the given ratio\n\nMaeve planted $\\maroonD{5}$ trees for every $\\blueE{2}$ trees she harvested.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Create an equivalent ratio\n\nIf each part represents $\\purpleD{7}$ trees, Maeve would have planted $35$ trees, because $\\maroonD{5}\\purpleD{\\times 7} = 35$.\n\n[[☃ image 1]]\n\nIf each part represents $\\purpleD{7}$ trees, Maeve would have harvested $14$ trees, because $\\blueE{2}\\purpleD{\\times 7} = 14$.\n",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 5 equal parts, each labeled 7. A curved bracket above the first tape is labeled Trees planted. The second tape has 2 equal parts of the same size as in the first tape, each labeled 7. A curved bracket below the second tape is labeled Trees harvested.",
+                "box": [
+                  200,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/874b4d9d45e4c2a3b6948caa241c549e5d7d097f",
+                  "width": 200,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "###Solution\n\nThe diagram with a part size of $\\purpleD{7}$ trees best shows how many trees Maeve planted on a day when she harvested $14$ trees.\n\n[[☃ image 1]]",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 5 equal parts, each labeled 7. A curved bracket above the first tape is labeled Trees planted. The second tape has 2 equal parts of the same size as in the first tape, each labeled 7. A curved bracket below the second tape is labeled Trees harvested.",
+                "box": [
+                  200,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/874b4d9d45e4c2a3b6948caa241c549e5d7d097f",
+                  "width": 200,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "The diagram shows the ratio of trees Maeve plants to the trees she harvests each day.\n\n[[☃ image 1]]\n\nAll of the following diagrams represent equivalent ratios.\n\n**Which diagram best shows how many trees Maeve planted on a day when she harvested $14$ trees?**\n\n[[☃ radio 1]]",
+        "widgets": {
+          "image 1": {
+            "type": "image",
+            "graded": true,
+            "static": false,
+            "options": {
+              "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 5 equal parts. A curved bracket above the first tape is labeled Trees planted. The second tape has 2 equal parts of the same size as in the first tape. A curved bracket below the second tape is labeled Trees harvested.",
+              "box": [
+                200,
+                168
+              ],
+              "range": [
+                [
+                  0,
+                  10
+                ],
+                [
+                  0,
+                  10
+                ]
+              ],
+              "title": "",
+              "labels": [],
+              "static": false,
+              "caption": "",
+              "backgroundImage": {
+                "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/b1d52b2318d539357b53b86a13315d1e0d373da1",
+                "width": 200,
+                "height": 168
+              }
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "block"
+          },
+          "radio 1": {
+            "type": "radio",
+            "graded": true,
+            "static": false,
+            "options": {
+              "choices": [
+                {
+                  "content": "![A tape diagram with 2 tapes of unequal lengths. The first tape has 5 equal parts, each labeled 2. A curved bracket above the first tape is labeled Trees planted. The second tape has 2 equal parts of the same size as in the first tape, each labeled 2. A curved bracket below the second tape is labeled Trees harvested.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/aa89f8020f9d4ce66740239ab244bb548c9fee13)",
+                  "correct": false
+                },
+                {
+                  "content": "![A tape diagram with 2 tapes of unequal lengths. The first tape has 5 equal parts, each labeled 5. A curved bracket above the first tape is labeled Trees planted. The second tape has 2 equal parts of the same size as in the first tape, each labeled 5. A curved bracket below the second tape is labeled Trees harvested.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/0916b48168fb536d151a1b280f0db8bc6baefc28)",
+                  "correct": false
+                },
+                {
+                  "content": "![A tape diagram with 2 tapes of unequal lengths. The first tape has 5 equal parts, each labeled 7. A curved bracket above the first tape is labeled Trees planted. The second tape has 2 equal parts of the same size as in the first tape, each labeled 7. A curved bracket below the second tape is labeled Trees harvested.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/874b4d9d45e4c2a3b6948caa241c549e5d7d097f)",
+                  "correct": true,
+                  "isNoneOfTheAbove": false
+                }
+              ],
+              "randomize": false,
+              "countChoices": false,
+              "displayCount": null,
+              "multipleSelect": false,
+              "deselectEnabled": false,
+              "hasNoneOfTheAbove": false
+            },
+            "version": {
+              "major": 1,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"coordinatePlane\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"coordinatePlane\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"width\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"height\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"xAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"yAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"showQuadrantLabels\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"points\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"lines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polygons\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"distances\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polylines\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

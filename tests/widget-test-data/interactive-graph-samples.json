@@ -1,0 +1,826 @@
+{
+  "widgetType": "interactive-graph",
+  "totalCount": 727,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.849Z",
+  "samples": [
+    {
+      "questionId": "x7c8e7b2dd73b3179",
+      "problemType": "Type 3: Graph point",
+      "widgetKey": "interactive-graph 1",
+      "questionContent": "**Drag the dot to graph $\\left(8, -5\\right)$.**\n\n[[☃ interactive-graph 1]]\n\n",
+      "widgetData": {
+        "type": "interactive-graph",
+        "graded": true,
+        "static": false,
+        "options": {
+          "step": [
+            1,
+            1
+          ],
+          "graph": {
+            "type": "point"
+          },
+          "range": [
+            [
+              -10,
+              10
+            ],
+            [
+              -10,
+              10
+            ]
+          ],
+          "labels": [
+            "x",
+            "y"
+          ],
+          "correct": {
+            "type": "point",
+            "coords": [
+              [
+                8,
+                -5
+              ]
+            ]
+          },
+          "gridStep": [
+            1,
+            1
+          ],
+          "markings": "graph",
+          "snapStep": [
+            1,
+            1
+          ],
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "showTooltips": false,
+          "showProtractor": false,
+          "backgroundImage": {
+            "url": null,
+            "left": 0,
+            "scale": 1,
+            "bottom": 0
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xb1e8937f64854ef1",
+      "problemType": "2. y_int",
+      "widgetKey": "interactive-graph 1",
+      "questionContent": "A baby bird jumps from a tree branch and flutters to the ground. The function $f$ models the bird's height (in meters) above the ground as a function of time (in seconds) after jumping.\n\n**Plot the point on the graph of $f$ that corresponds to the bird's height above the ground when it jumped.**\n\n[[...",
+      "widgetData": {
+        "type": "interactive-graph",
+        "graded": true,
+        "static": false,
+        "options": {
+          "step": [
+            1,
+            2
+          ],
+          "graph": {
+            "type": "point"
+          },
+          "range": [
+            [
+              -2,
+              4
+            ],
+            [
+              -4,
+              18
+            ]
+          ],
+          "labels": [
+            "x",
+            "y"
+          ],
+          "correct": {
+            "type": "point",
+            "coords": [
+              [
+                0,
+                12
+              ]
+            ]
+          },
+          "gridStep": [
+            0.5,
+            1
+          ],
+          "markings": "none",
+          "snapStep": [
+            0.25,
+            1
+          ],
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "showTooltips": false,
+          "showProtractor": false,
+          "backgroundImage": {
+            "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/cd6ed271d8ae39e908e3b4e0f9e6f8d7665dd8cf",
+            "width": 400,
+            "height": 400
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x5a1bbcdc",
+      "problemType": "Type 1",
+      "widgetKey": "interactive-graph 1",
+      "questionContent": "Graph the line that represents a proportional relationship between $y$ and $x$ where the *unit rate* of change of $y$ with respect to $x$ is $0.4.$  In other words, a change of $1$ unit in $x$ corresponds to a change of $0.4$ units in $y$.\n\n**Graph the line and write the equation of the line.**[[☃ i...",
+      "widgetData": {
+        "type": "interactive-graph",
+        "graded": true,
+        "options": {
+          "step": [
+            1,
+            1
+          ],
+          "graph": {
+            "type": "linear"
+          },
+          "range": [
+            [
+              -10,
+              10
+            ],
+            [
+              -10,
+              10
+            ]
+          ],
+          "labels": [
+            "x",
+            "y"
+          ],
+          "correct": {
+            "type": "linear",
+            "coords": [
+              [
+                5,
+                2
+              ],
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          "gridStep": [
+            1,
+            1
+          ],
+          "markings": "graph",
+          "snapStep": [
+            0.5,
+            0.5
+          ],
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "showProtractor": false,
+          "backgroundImage": {
+            "url": null,
+            "left": 0,
+            "scale": 1,
+            "bottom": 0
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x0b62c73fddc8c9df",
+      "problemType": "circle protractor",
+      "widgetKey": "interactive-graph 1",
+      "questionContent": "**Construct a $110^\\circ$ angle.**\n\n[[☃ interactive-graph 1]]\n\n\n\n",
+      "widgetData": {
+        "type": "interactive-graph",
+        "graded": true,
+        "static": false,
+        "options": {
+          "step": [
+            1,
+            1
+          ],
+          "graph": {
+            "type": "angle",
+            "showAngles": false,
+            "snapDegrees": 5
+          },
+          "range": [
+            [
+              -10,
+              10
+            ],
+            [
+              -10,
+              10
+            ]
+          ],
+          "labels": [
+            "x",
+            "y"
+          ],
+          "correct": {
+            "type": "angle",
+            "match": "congruent",
+            "coords": [
+              [
+                3.4209731939959758,
+                0.39904660306349626
+              ],
+              [
+                0,
+                -9
+              ],
+              [
+                -7.530523827277034,
+                -8.999999999999998
+              ]
+            ],
+            "showAngles": false,
+            "snapDegrees": 5
+          },
+          "gridStep": [
+            1,
+            1
+          ],
+          "markings": "none",
+          "snapStep": [
+            0.5,
+            0.5
+          ],
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "showTooltips": false,
+          "showProtractor": false,
+          "backgroundImage": {
+            "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/d3b579e38c7e18228339abf487a469ed2220d2cd",
+            "left": 0,
+            "scale": 1,
+            "width": 320,
+            "bottom": 0,
+            "height": 320
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x08fb21f9d9ebc404",
+      "problemType": "graphed on axis",
+      "widgetKey": "interactive-graph 1",
+      "questionContent": "**Plot the point $(0,5)$.**\n\n[[☃ interactive-graph 1]]",
+      "widgetData": {
+        "type": "interactive-graph",
+        "graded": true,
+        "static": false,
+        "options": {
+          "step": [
+            1,
+            1
+          ],
+          "graph": {
+            "type": "point",
+            "numPoints": 1
+          },
+          "range": [
+            [
+              -1,
+              10
+            ],
+            [
+              -1,
+              10
+            ]
+          ],
+          "labels": [
+            "x",
+            "y"
+          ],
+          "correct": {
+            "type": "point",
+            "coords": [
+              [
+                0,
+                5
+              ]
+            ],
+            "numPoints": 1
+          },
+          "gridStep": [
+            1,
+            1
+          ],
+          "markings": "graph",
+          "snapStep": [
+            1,
+            1
+          ],
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "showTooltips": false,
+          "showProtractor": false,
+          "backgroundImage": {
+            "url": null,
+            "left": 0,
+            "scale": 1,
+            "bottom": 0
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x1d1aa0d0",
+      "problemType": "Type 4",
+      "widgetKey": "interactive-graph 1",
+      "questionContent": "**Graph $y=0.4x$.**\n\n[[☃ interactive-graph 1]]\n\n\n**Which of the following statements are true?**\n\n[[☃ radio 1]]",
+      "widgetData": {
+        "type": "interactive-graph",
+        "graded": true,
+        "options": {
+          "step": [
+            1,
+            1
+          ],
+          "graph": {
+            "type": "linear"
+          },
+          "range": [
+            [
+              -10,
+              10
+            ],
+            [
+              -10,
+              10
+            ]
+          ],
+          "labels": [
+            "x",
+            "y"
+          ],
+          "correct": {
+            "type": "linear",
+            "coords": [
+              [
+                0,
+                0
+              ],
+              [
+                5,
+                2
+              ]
+            ]
+          },
+          "gridStep": [
+            1,
+            1
+          ],
+          "markings": "graph",
+          "snapStep": [
+            0.5,
+            0.5
+          ],
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "showProtractor": false,
+          "backgroundImage": {
+            "url": null,
+            "left": 0,
+            "scale": 1,
+            "bottom": 0
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x5e42e30c3c6a4d21",
+      "problemType": "graphed in Q1",
+      "widgetKey": "interactive-graph 1",
+      "questionContent": "**Plot the point $(1,5)$.**\n\n[[☃ interactive-graph 1]]",
+      "widgetData": {
+        "type": "interactive-graph",
+        "graded": true,
+        "static": false,
+        "options": {
+          "step": [
+            1,
+            1
+          ],
+          "graph": {
+            "type": "point",
+            "numPoints": 1
+          },
+          "range": [
+            [
+              -1,
+              10
+            ],
+            [
+              -1,
+              10
+            ]
+          ],
+          "labels": [
+            "x",
+            "y"
+          ],
+          "correct": {
+            "type": "point",
+            "coords": [
+              [
+                1,
+                5
+              ]
+            ],
+            "numPoints": 1
+          },
+          "gridStep": [
+            1,
+            1
+          ],
+          "markings": "graph",
+          "snapStep": [
+            1,
+            1
+          ],
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "showTooltips": false,
+          "showProtractor": false,
+          "backgroundImage": {
+            "url": null,
+            "left": 0,
+            "scale": 1,
+            "bottom": 0
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x746e761ee63e52a4",
+      "problemType": "Plot given distance",
+      "widgetKey": "interactive-graph 1",
+      "questionContent": "**Plot two points that are $3$ units from Point $\\blueD{C}$ and also share the same $y$-coordinate as Point $\\blueD{C}$.**\n\n[[☃ interactive-graph 1]]\n",
+      "widgetData": {
+        "type": "interactive-graph",
+        "graded": true,
+        "static": false,
+        "options": {
+          "step": [
+            2,
+            2
+          ],
+          "graph": {
+            "type": "point",
+            "numPoints": 2
+          },
+          "range": [
+            [
+              -10,
+              10
+            ],
+            [
+              -10,
+              10
+            ]
+          ],
+          "labels": [
+            "x",
+            "y"
+          ],
+          "correct": {
+            "type": "point",
+            "coords": [
+              [
+                -3,
+                -5
+              ],
+              [
+                -9,
+                -5
+              ]
+            ],
+            "numPoints": 2
+          },
+          "gridStep": [
+            1,
+            1
+          ],
+          "markings": "none",
+          "snapStep": [
+            0.5,
+            0.5
+          ],
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "showTooltips": false,
+          "showProtractor": false,
+          "backgroundImage": {
+            "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/817db13a516f76991ef21cf2b258c9778fdaab6c",
+            "left": 0,
+            "scale": 1,
+            "width": 425,
+            "bottom": 0,
+            "height": 425
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xe6bce54b4419452a",
+      "problemType": "1a. Scale factor < 1, no axes",
+      "widgetKey": "interactive-graph 1",
+      "questionContent": "**Plot the image of point $B$ under a dilation about point $P$ with a scale factor of $\\dfrac{1}{2}$.**\n\n[[☃ interactive-graph 1]]",
+      "widgetData": {
+        "type": "interactive-graph",
+        "graded": true,
+        "static": false,
+        "options": {
+          "step": [
+            1,
+            1
+          ],
+          "graph": {
+            "type": "point",
+            "numPoints": "unlimited"
+          },
+          "range": [
+            [
+              -8,
+              8
+            ],
+            [
+              -8,
+              8
+            ]
+          ],
+          "labels": [
+            "x",
+            "y"
+          ],
+          "correct": {
+            "type": "point",
+            "coords": [
+              [
+                -1,
+                1
+              ]
+            ],
+            "numPoints": "unlimited"
+          },
+          "gridStep": [
+            1,
+            1
+          ],
+          "markings": "none",
+          "snapStep": [
+            1,
+            1
+          ],
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "showTooltips": false,
+          "showProtractor": false,
+          "backgroundImage": {
+            "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/b2e498acf14a84e67e5628d67c18c098b2170aba",
+            "width": 400,
+            "height": 400
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xffab1d546bf81a65",
+      "problemType": "",
+      "widgetKey": "interactive-graph 1",
+      "questionContent": "Triangle $\\triangle L''M''N''$ is the image of $\\triangle LMN$ after a reflection over the $y$-axis, then a translation $1$ unit to the right and $3$ units down.\n\n**Draw the image $\\triangle L''M''N''$.**\n\n[[☃ interactive-graph 1]]",
+      "widgetData": {
+        "type": "interactive-graph",
+        "graded": true,
+        "static": false,
+        "options": {
+          "step": [
+            2,
+            2
+          ],
+          "graph": {
+            "type": "polygon",
+            "startCoords": [
+              [
+                3,
+                -1
+              ],
+              [
+                3,
+                -6
+              ],
+              [
+                7,
+                -4
+              ]
+            ]
+          },
+          "range": [
+            [
+              -10,
+              10
+            ],
+            [
+              -10,
+              10
+            ]
+          ],
+          "labels": [
+            "$x$",
+            "$y$"
+          ],
+          "correct": {
+            "type": "polygon",
+            "coords": [
+              [
+                -2,
+                -4
+              ],
+              [
+                -2,
+                -9
+              ],
+              [
+                -6,
+                -7
+              ]
+            ]
+          },
+          "gridStep": [
+            1,
+            1
+          ],
+          "markings": "graph",
+          "snapStep": [
+            1,
+            1
+          ],
+          "showTooltips": false,
+          "lockedFigures": [
+            {
+              "type": "polygon",
+              "color": "grayH",
+              "labels": [],
+              "points": [
+                [
+                  3,
+                  -1
+                ],
+                [
+                  3,
+                  -6
+                ],
+                [
+                  7,
+                  -4
+                ]
+              ],
+              "ariaLabel": "Polygon with 3 sides, vertices at 3 comma negative 1, 3 comma negative 6, 7 comma negative 4. ",
+              "fillStyle": "none",
+              "strokeStyle": "solid",
+              "showVertices": true
+            },
+            {
+              "type": "point",
+              "color": "grayH",
+              "coord": [
+                3,
+                -1
+              ],
+              "filled": true,
+              "labels": [
+                {
+                  "size": "medium",
+                  "text": "$L$",
+                  "type": "label",
+                  "color": "grayH",
+                  "coord": [
+                    1.5,
+                    1
+                  ]
+                }
+              ],
+              "ariaLabel": "Point upper L at 3 comma negative 1. "
+            },
+            {
+              "type": "point",
+              "color": "grayH",
+              "coord": [
+                3,
+                -6
+              ],
+              "filled": true,
+              "labels": [
+                {
+                  "size": "medium",
+                  "text": "$M$",
+                  "type": "label",
+                  "color": "grayH",
+                  "coord": [
+                    1.5,
+                    -6
+                  ]
+                }
+              ],
+              "ariaLabel": "Point upper M at 3 comma negative 6. "
+            },
+            {
+              "type": "point",
+              "color": "grayH",
+              "coord": [
+                7,
+                -4
+              ],
+              "filled": true,
+              "labels": [
+                {
+                  "size": "medium",
+                  "text": "$N$",
+                  "type": "label",
+                  "color": "grayH",
+                  "coord": [
+                    7.5,
+                    -4
+                  ]
+                }
+              ],
+              "ariaLabel": "Point upper N at 7 comma negative 4. "
+            }
+          ],
+          "showProtractor": false,
+          "backgroundImage": {
+            "url": null
+          },
+          "fullGraphAriaLabel": "Triangle L M N and its image.",
+          "fullGraphAriaDescription": "An X Y coordinate plane from X equals negative 10 to X equals positive 10 and from Y equals negative 10 to Y equals positive 10. Triangle L M N and its image. Point L is at (3 comma negative 1). Point M is at (3 comma negative 6). Point N is at (7 comma negative 4)."
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

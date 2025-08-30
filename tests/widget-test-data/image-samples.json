@@ -1,0 +1,428 @@
+{
+  "widgetType": "image",
+  "totalCount": 13733,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.843Z",
+  "samples": [
+    {
+      "questionId": "xfbe6e67084a05b59",
+      "problemType": "Growth factors and cancer cells",
+      "widgetKey": "image 1",
+      "questionContent": "The following diagram shows how cells normally respond to the presence (bottom left) and absence (bottom right) of growth factors in their culture medium.\n\n[[☃ image 1]]\n\n**Which of the following diagrams shows how *cancer* cells are likely to respond to the presence and absence of growth factors in...",
+      "widgetData": {
+        "type": "image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "alt": "The top of the diagram shows a Petri dish with three round cells on it. Two arrows point away from this Petri dish. One of the arrows is labeled \"plus growth factor\". It points to another Petri dish with many round cells on it. The other arrow is labeled \"minus growth factor\". It points to a Petri dish with three round cells on it. ",
+          "box": [
+            250,
+            216
+          ],
+          "range": [
+            [
+              0,
+              10
+            ],
+            [
+              0,
+              10
+            ]
+          ],
+          "title": "",
+          "labels": [],
+          "static": false,
+          "caption": "",
+          "backgroundImage": {
+            "url": "https://cdn.kastatic.org/ka-content-images/1246c9f10a843a66a47191a256c0de77c328f9e4.png",
+            "width": 250,
+            "height": 216
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "block"
+      }
+    },
+    {
+      "questionId": "x8f17f57ef804bce4",
+      "problemType": "Time progression",
+      "widgetKey": "image 1",
+      "questionContent": "**Which diagram correctly shows how time is represented in an evolutionary tree?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "alt": "",
+          "box": [
+            400,
+            400
+          ],
+          "range": [
+            [
+              0,
+              10
+            ],
+            [
+              0,
+              10
+            ]
+          ],
+          "title": "",
+          "labels": [],
+          "static": false,
+          "caption": "",
+          "backgroundImage": {
+            "url": null,
+            "width": 0,
+            "height": 0
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "block"
+      }
+    },
+    {
+      "questionId": "x8c0688f77425689c",
+      "problemType": "Type 2",
+      "widgetKey": "image 2",
+      "questionContent": "A refueling aircraft transfers fuel to a fighter jet flying at the same speed. The refueling aircraft's mass is ten times the fighter jet's mass.\n\n[[☃ image 2]]\n\n**If the fighter jet's kinetic energy is $0.15\\,\\text{GJ}$ ([[☃ definition 1]]), what is the refueling aircraft's kinetic energy?**\n\n[[☃ n...",
+      "widgetData": {
+        "type": "image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "alt": "A large plane and a smaller jet, connected by a long thin rod and hose, are silhouetted against the sky above clouds. ",
+          "box": [
+            350,
+            249
+          ],
+          "range": [
+            [
+              0,
+              10
+            ],
+            [
+              0,
+              10
+            ]
+          ],
+          "title": "",
+          "labels": [],
+          "static": false,
+          "caption": "",
+          "backgroundImage": {
+            "url": "https://cdn.kastatic.org/ka-content-images/c4688c9cd71af7e0113dea5752f6d6bbfab7e3b5.svg",
+            "width": 350,
+            "height": 249
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "block"
+      }
+    },
+    {
+      "questionId": "xdebc34efdc1ece48",
+      "problemType": "Adjust mass and force",
+      "widgetKey": "image 3",
+      "questionContent": "A group of students places a fan cart at one end of a track.  When the fan is switched on, a constant force is exerted on the cart. The greater the fan’s speed, the stronger the force. The students can add or remove blocks to change the cart's mass. Their setup is modeled below.\n\n[[☃ image 3]]\n\nThe ...",
+      "widgetData": {
+        "type": "image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "alt": "A track sits on top of a table. A cart is at the right end of the track. The cart has a fan attached on top of it which blows to the right. Two blocks sit on top of the cart. Five additional blocks sit on the tabletop to the right of the track.",
+          "box": [
+            450,
+            133
+          ],
+          "range": [
+            [
+              0,
+              10
+            ],
+            [
+              0,
+              10
+            ]
+          ],
+          "title": "",
+          "labels": [],
+          "static": false,
+          "caption": "",
+          "backgroundImage": {
+            "url": "https://cdn.kastatic.org/ka-content-images/33d0d8ff51d665c7998480ccd48e9e3a39ed0007.svg",
+            "width": 450,
+            "height": 133
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "block"
+      }
+    },
+    {
+      "questionId": "x9a90c63370cf14c8",
+      "problemType": "Type 3: Density is intrinsic",
+      "widgetKey": "image 2",
+      "questionContent": "Density is an intrinsic physical property of a substance. \n\nOsmium is the densest element on the periodic table. A cluster of pure osmium crystals has a density of $22.6\\text{ g/cm}^3.$\n\n [[☃ image 2]]\n\n**What is the density of an osmium crystal that is half the size of the cluster above?**\n\n[[☃ rad...",
+      "widgetData": {
+        "type": "image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "alt": "This cluster of osmium crystals has several long crystals growing from a base. It's very shiny, and silver in color. ",
+          "box": [
+            350,
+            306
+          ],
+          "range": [
+            [
+              0,
+              10
+            ],
+            [
+              0,
+              10
+            ]
+          ],
+          "title": "",
+          "labels": [],
+          "static": false,
+          "caption": "*A cluster of osmium crystals*",
+          "backgroundImage": {
+            "url": "https://cdn.kastatic.org/ka-content-images/f67af85831c628f54f3a56a58d54899ad46af66e.jpg",
+            "width": 350,
+            "height": 306
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "block"
+      }
+    },
+    {
+      "questionId": "x439f18ab7952ad51",
+      "problemType": "Identify competition",
+      "widgetKey": "image 1",
+      "questionContent": "Turkey vultures and black vultures are common scavengers found throughout North and South America. Both vulture species rely on carrion (carcasses of dead animals) for food. In turn, when both turkey vultures and black vultures find carrion, they may become aggressive and fight over the animal carca...",
+      "widgetData": {
+        "type": "image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "alt": "A black vulture (a large bird of prey with black feathers and a bare, black head) and a turkey vulture (another large bird of prey with black feathers and a bare, red head) stand over the remains of an animal carcass in a grassy field.",
+          "box": [
+            350,
+            236
+          ],
+          "range": [
+            [
+              0,
+              10
+            ],
+            [
+              0,
+              10
+            ]
+          ],
+          "title": "",
+          "labels": [],
+          "static": false,
+          "caption": "*A black vulture (left) and turkey vulture (right) standing by an animal carcass*",
+          "backgroundImage": {
+            "url": "https://cdn.kastatic.org/ka-content-images/00521b4de307a2aa70e6f2c2f12f192b083efd52.jpg",
+            "width": 350,
+            "height": 236
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "block"
+      }
+    },
+    {
+      "questionId": "xa6a6c3f527c15923",
+      "problemType": "Micrograph (cytoskeleton, plasma membrane, cytosol)",
+      "widgetKey": "image 1",
+      "questionContent": "A scientist captured the following micrograph of cells using a fluorescence microscope. The scientist used molecular techniques to make a certain internal cell part appear green under the microscope.\n\n[[☃ image 1]]\n\nThe cell part shown in green is directly involved in providing structure to the cell...",
+      "widgetData": {
+        "type": "image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "alt": "A magnified image of cells taken with a fluorescence microscope. In the center of each cell is a blue-colored circle. Many green fibers run through each cell.",
+          "box": [
+            350,
+            270
+          ],
+          "range": [
+            [
+              0,
+              10
+            ],
+            [
+              0,
+              10
+            ]
+          ],
+          "title": "",
+          "labels": [],
+          "static": false,
+          "caption": "*A fluorescence micrograph of cells. Many long fibers are shown running through each cell in green*.",
+          "backgroundImage": {
+            "url": "https://cdn.kastatic.org/ka-content-images/c03c359f301194a93a8ebd5ef62a26e14921a492.svg",
+            "width": 350,
+            "height": 270
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "block"
+      }
+    },
+    {
+      "questionId": "x9f1139ac605a55b0",
+      "problemType": "Sound wave animation",
+      "widgetKey": "image 1",
+      "questionContent": "A slow-motion model of a periodic sound wave is shown below. Each dot represents an air particle. The gray surface on the left vibrates, causing sound waves to travel through the air.\n\n [[☃ image 1]]\n\n**Analyze the model and complete the predictions.**\n\n* If the gray surface moves back and forth mor...",
+      "widgetData": {
+        "type": "image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "alt": "Animation of a sound wave shows many small dots in a tube. A surface at the left end of the tube move back and forth, right and left. This disturbs the dots nearby by pushing them back and forth. The disturbance travels from left to right along the tube as dots farther along the tube also get pushed back and forth.",
+          "box": [
+            900,
+            300
+          ],
+          "range": [
+            [
+              0,
+              10
+            ],
+            [
+              0,
+              10
+            ]
+          ],
+          "title": "",
+          "labels": [],
+          "static": false,
+          "caption": "",
+          "backgroundImage": {
+            "url": "https://cdn.kastatic.org/ka-content-images/60983896b2f63c70cdded9a7d59dd3633cf4ca08.gif",
+            "width": 900,
+            "height": 300
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "block"
+      }
+    },
+    {
+      "questionId": "x9d03948ea1994cb6",
+      "problemType": "Identify scale factor - grid",
+      "widgetKey": "image 1",
+      "questionContent": "Figure $B$ is a scaled copy of Figure $A$.  \n\n[[☃ image 1]]\n\n\n\n**What is the scale factor from Figure $A$ to Figure $B$?**\n\n[[☃ numeric-input 1]]\n\n",
+      "widgetData": {
+        "type": "image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "alt": "Two triangles are labeled as Figure A and Figure B, with Figure A being larger. Both triangles are placed on a grid as if it were the first quadrant of the coordinate plane. In Figure A, the coordinates of the vertices are (1, 4), (7, 4), and (4, 8). In Figure B, the coordinates of the vertices are (7, 2), (10, 2), and (8.5, 3).\n\n",
+          "box": [
+            325,
+            325
+          ],
+          "range": [
+            [
+              0,
+              10
+            ],
+            [
+              0,
+              10
+            ]
+          ],
+          "title": "",
+          "labels": [],
+          "static": false,
+          "caption": "",
+          "backgroundImage": {
+            "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/aef5caae0dd3cebee59ec6aec012db3f9bcf9946",
+            "width": 325,
+            "height": 325
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "block"
+      }
+    },
+    {
+      "questionId": "x258000f816767682",
+      "problemType": "Conservation of matter",
+      "widgetKey": "image 1",
+      "questionContent": "The diagram below shows the overall process of cellular respiration. The reactants are shown to the left of the arrow, and products are shown to the right.\n\n[[☃ image 1]]\n\n**Based on the diagram, which statement about atoms in the reactants and products is true?**\n\n[[☃ radio 1]]",
+      "widgetData": {
+        "type": "image",
+        "graded": true,
+        "static": false,
+        "options": {
+          "alt": "A diagram shows the overall chemical equation for cellular respiration along with models of the molecules involved. According to the equation, 1 molecule of glucose (C 6 H 12 O 6) plus 6 molecules of oxygen (O 2) produce 6 molecules of carbon dioxide (C O 2) and 6 molecules of water (H 2 O). A model shows that one molecule of glucose has 6 carbon atoms, 12 hydrogen atoms, and 6 oxygen atoms. Another model shows that each oxygen molecule has 2 oxygen atoms. So, 6 molecules of oxygen have 12 oxygen atoms total. Another model shows that each carbon dioxide molecule has 2 oxygen atoms and 1 carbon atom. So, 6 molecules of carbon dioxide have 12 oxygen atoms and 6 carbon atoms total. Another model shows that each water molecule has 2 hydrogen atoms and 1 oxygen atom. So, 6 molecules of water have 12 hydrogen atoms and 6 oxygen atoms total.",
+          "box": [
+            600,
+            299
+          ],
+          "range": [
+            [
+              0,
+              10
+            ],
+            [
+              0,
+              10
+            ]
+          ],
+          "title": "",
+          "labels": [],
+          "static": false,
+          "caption": "",
+          "backgroundImage": {
+            "url": "https://cdn.kastatic.org/ka-perseus-images/add1d5c51abcbf1fb491f67952d5dec1b6c31c17.jpg",
+            "width": 600,
+            "height": 299
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "block"
+      }
+    }
+  ]
+}

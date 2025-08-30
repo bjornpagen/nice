@@ -1,0 +1,114 @@
+{
+  "metadata": {
+    "contentId": "xb07a2297ba51f95f",
+    "contentType": "question",
+    "widgetType": "dataTable",
+    "createdAt": "2025-08-30T16:18:44.517Z",
+    "aiReasoning": "The original data provides information in a tabular format showing the number of students who play different instruments. To recreate this as a dataTable widget, we extract this tabular structure along with related content, ensuring it fits an accessible HTML table format with necessary headers. This is vital for questions that analyze data based on such tables.",
+    "aiConfidence": 0.95
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "A ratio compares two values in a certain order.\n\nHere are some ways we could write the ratio of $\\goldE{7}$ snakes and $\\tealE{2}$ lizards.\n\n- $\\goldE{7}$ to $\\tealE{2}$\n- $\\goldE{7}:\\tealE{2}$\n- $\\goldE{7}$ per $\\tealE{2}$\n- $\\goldE{7}$ for every $\\tealE{2}$\n\nWe could **NOT** say $\\tealE{2}$ to $\\goldE{7}$, because that is a different order. It would mean the ratio of lizards to snakes.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "There are $\\blueE{15}$ students who play trumpet.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "There are $\\purpleD{11}$ students who play flute.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "There are $\\blueE{15}$ students who play trumpet for every $\\purpleD{11}$ students who play flute.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "The ratio of students who play trumpet to students who play flute is $\\blueE{15}:\\purpleD{11}$.",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "The table shows the number of students who play each instrument in the marching band.  \n\nInstrument | Students\n- | - | -\nTrumpet | $15$\nSaxophone | $7$\nFlute | $11$\nDrum | $4$\n\n\n**What is the ratio of students who play trumpet to students who play flute?**\n\n[[☃ radio 2]]\n",
+        "widgets": {
+          "radio 2": {
+            "type": "radio",
+            "graded": true,
+            "static": false,
+            "options": {
+              "choices": [
+                {
+                  "content": "$15:11$",
+                  "correct": true
+                },
+                {
+                  "content": "$15:26$",
+                  "correct": false
+                },
+                {
+                  "content": "$11:15$",
+                  "isNoneOfTheAbove": false
+                },
+                {
+                  "content": "$4:7$",
+                  "isNoneOfTheAbove": false
+                }
+              ],
+              "randomize": false,
+              "countChoices": false,
+              "displayCount": null,
+              "multipleSelect": false,
+              "deselectEnabled": false,
+              "hasNoneOfTheAbove": false
+            },
+            "version": {
+              "major": 1,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{\"version\":1,\"type\":\"table\",\"tableHeaders\":[\"Instrument\",\"Students\"],\"tableContent\":[[\"Trumpet\",\"15\"],[\"Saxophone\",\"7\"],[\"Flute\",\"11\"],[\"Drum\",\"4\"]],\"rowHeaders\":false,\"columnHeaders\":true,\"footerRows\":false}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"received\": \"table\",\n    \"code\": \"invalid_literal\",\n    \"expected\": \"dataTable\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"dataTable\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"title\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"data\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"rowHeaderKey\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"footer\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"version\",\n      \"tableHeaders\",\n      \"tableContent\",\n      \"rowHeaders\",\n      \"columnHeaders\",\n      \"footerRows\"\n    ],\n    \"path\": [],\n    \"message\": \"Unrecognized key(s) in object: 'version', 'tableHeaders', 'tableContent', 'rowHeaders', 'columnHeaders', 'footerRows'\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

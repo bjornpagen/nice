@@ -1,0 +1,178 @@
+{
+  "widgetType": "python-program",
+  "totalCount": 12,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.849Z",
+  "samples": [
+    {
+      "questionId": "x087d46805b20affe",
+      "problemType": "Identify denitrification in the nitrogen cycle",
+      "widgetKey": "python-program 1",
+      "questionContent": "The following diagram describes the nitrogen cycle. Arrow A shows nitrogen moving from microorganisms in the soil to the atmosphere.\n\n[[☃ image 1]]\n\n**Which process is represented by Arrow A?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "python-program",
+        "options": {
+          "height": 400,
+          "programID": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x0a59c84e78b1700b",
+      "problemType": "Identify ammonification in the nitrogen cycle",
+      "widgetKey": "python-program 1",
+      "questionContent": "The following diagram describes the nitrogen cycle. Arrow C shows nitrogen moving from dead organisms and waste to the soil.\n\n[[☃ image 1]]\n\n**Which process is represented by Arrow C?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "python-program",
+        "options": {
+          "height": 400,
+          "programID": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x592670cd1a867d9d",
+      "problemType": "Identify nitrification in the nitrogen cycle",
+      "widgetKey": "python-program 1",
+      "questionContent": "The following diagram describes the nitrogen cycle. Arrow 2 shows nitrogen changing form from ammonia to nitrites.\n\n[[☃ image 1]]\n\n**Which process is represented by Arrow 2?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "python-program",
+        "options": {
+          "height": 400,
+          "programID": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x595da0baef5ddac0",
+      "problemType": "Identify nitrogen fixation in the nitrogen cycle",
+      "widgetKey": "python-program 1",
+      "questionContent": "The following diagram describes the nitrogen cycle. Arrow IV shows nitrogen moving from the atmosphere to microorganisms in the soil and plant roots.\n\n[[☃ image 1]]\n\n**Which process is represented by Arrow IV?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "python-program",
+        "options": {
+          "height": 400,
+          "programID": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x5375f5c491ccbc35",
+      "problemType": "Identify denitrification in the nitrogen cycle",
+      "widgetKey": "python-program 1",
+      "questionContent": "The following diagram describes the nitrogen cycle. Arrow I shows nitrogen moving from microorganisms in the soil to the atmosphere.\n\n[[☃ image 1]]\n\n**Which process is represented by Arrow I?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "python-program",
+        "options": {
+          "height": 400,
+          "programID": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "xcf063c1b4dd3c900",
+      "problemType": "Identify ammonification in the nitrogen cycle",
+      "widgetKey": "python-program 1",
+      "questionContent": "The following diagram describes the nitrogen cycle. Arrow III shows nitrogen moving from dead organisms and waste to the soil.\n\n[[☃ image 1]]\n\n**Which process is represented by Arrow III?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "python-program",
+        "options": {
+          "height": 400,
+          "programID": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x6acfab1473039ee4",
+      "problemType": "Identify nitrification in the nitrogen cycle",
+      "widgetKey": "python-program 1",
+      "questionContent": "The following diagram describes the nitrogen cycle. Arrow B shows nitrogen changing form from ammonia to nitrites.\n\n[[☃ image 1]]\n\n**Which process is represented by Arrow B?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "python-program",
+        "options": {
+          "height": 400,
+          "programID": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x63b28a55686478e1",
+      "problemType": "Identify nitrogen fixation in the nitrogen cycle",
+      "widgetKey": "python-program 1",
+      "questionContent": "The following diagram describes the nitrogen cycle. Arrow D shows nitrogen moving from the atmosphere to microorganisms in the soil and plant roots.\n\n[[☃ image 1]]\n\n**Which process is represented by Arrow D?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "python-program",
+        "options": {
+          "height": 400,
+          "programID": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x96531f51565aeaab",
+      "problemType": "Identify denitrification in the nitrogen cycle",
+      "widgetKey": "python-program 1",
+      "questionContent": "The following diagram describes the nitrogen cycle. Arrow 1 shows nitrogen moving from microorganisms in the soil to the atmosphere.\n\n[[☃ image 1]]\n\n**Which process is represented by Arrow 1?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "python-program",
+        "options": {
+          "height": 400,
+          "programID": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "xae8c9650ee5e75a8",
+      "problemType": "Identify ammonification in the nitrogen cycle",
+      "widgetKey": "python-program 1",
+      "questionContent": "The following diagram describes the nitrogen cycle. Arrow 3 shows nitrogen moving from dead organisms and waste to the soil.\n\n[[☃ image 1]]\n\n**Which process is represented by Arrow 3?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "python-program",
+        "options": {
+          "height": 400,
+          "programID": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    }
+  ]
+}

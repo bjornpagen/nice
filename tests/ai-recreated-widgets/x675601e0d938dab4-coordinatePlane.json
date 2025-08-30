@@ -1,0 +1,194 @@
+{
+  "metadata": {
+    "contentId": "x675601e0d938dab4",
+    "contentType": "question",
+    "widgetType": "coordinatePlane",
+    "createdAt": "2025-08-30T16:19:00.129Z",
+    "aiReasoning": "Given the extracted data and original content, it's clear that the main question is about the ratio of penguins to total birds, and graphical representation could assist but doesn't strictly mention coordinate geometry or graphing needs. The extracted data seems more relevant to an image widget instead of a coordinate plane, as it involves static imagery of chicks and penguins with no explicit coordinate instructions. However, if a coordinate plane is to be used, an empty graph with basic settings can be considered.",
+    "aiConfidence": 0.5
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "A ratio compares two values in a certain order.\n\nHere are some ways we could write the ratio of $\\goldE{7}$ snakes and $\\tealE{2}$ lizards.\n\n- $\\goldE{7}$ to $\\tealE{2}$\n- $\\goldE{7}:\\tealE{2}$\n- $\\goldE{7}$ snakes per $\\tealE{2}$ lizards\n- $\\goldE{7}$ snakes for every $\\tealE{2}$ lizards\n\nWe could **NOT** say $\\tealE{2}$ to $\\goldE{7}$, because that is a different order. It would mean the ratio of lizards to snakes.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "There are $\\blueE{4}$ chicks and $\\purpleD{5}$ penguins.\n\nSo there are $\\blueE{4}+\\purpleD{5}=\\redE{9}$ total birds.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "The ratio of penguins to total birds is $\\purpleD{5}$ to $\\redE{9}$.",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "**What is the ratio of penguins to total birds?**\n\n[[☃ image 1]]\n\n[[☃ explanation 1]]\n\n[[☃ radio 1]]",
+        "widgets": {
+          "image 1": {
+            "type": "image",
+            "graded": true,
+            "static": false,
+            "options": {
+              "alt": "4 chicks and 5 penguins",
+              "box": [
+                320,
+                180
+              ],
+              "range": [
+                [
+                  0,
+                  10
+                ],
+                [
+                  0,
+                  10
+                ]
+              ],
+              "title": "",
+              "labels": [],
+              "static": false,
+              "caption": "",
+              "backgroundImage": {
+                "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/3aaea8cfa726763a43bdf75ea7b9dc60823d8cf7",
+                "width": 320,
+                "height": 180
+              }
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "block"
+          },
+          "radio 1": {
+            "type": "radio",
+            "graded": true,
+            "static": false,
+            "options": {
+              "choices": [
+                {
+                  "content": "$5$ to $4$",
+                  "correct": false
+                },
+                {
+                  "content": "$4$ to $5$",
+                  "correct": false
+                },
+                {
+                  "content": "$5$ to $9$",
+                  "correct": true,
+                  "isNoneOfTheAbove": false
+                },
+                {
+                  "content": "$9$ to $5$",
+                  "correct": false,
+                  "isNoneOfTheAbove": false
+                }
+              ],
+              "randomize": true,
+              "countChoices": false,
+              "displayCount": null,
+              "multipleSelect": false,
+              "deselectEnabled": false,
+              "hasNoneOfTheAbove": false
+            },
+            "version": {
+              "major": 1,
+              "minor": 0
+            },
+            "alignment": "default"
+          },
+          "explanation 1": {
+            "type": "explanation",
+            "graded": true,
+            "static": false,
+            "options": {
+              "static": false,
+              "widgets": {
+                "image 1": {
+                  "type": "image",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "alt": "A penguin.",
+                    "box": [
+                      75,
+                      100
+                    ],
+                    "range": [
+                      [
+                        0,
+                        10
+                      ],
+                      [
+                        0,
+                        10
+                      ]
+                    ],
+                    "title": "",
+                    "labels": [],
+                    "static": false,
+                    "caption": "",
+                    "backgroundImage": {
+                      "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/2a8f54a25888bea4c9a5047f43425321a4926313",
+                      "width": 75,
+                      "height": 100
+                    }
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "block"
+                }
+              },
+              "hidePrompt": "Got it, thanks.",
+              "showPrompt": "Show me a penguin.",
+              "explanation": "This is a penguin.\n\n[[☃ image 1]]"
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"coordinatePlane\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"coordinatePlane\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"width\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"height\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"xAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"yAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"showQuadrantLabels\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"points\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"lines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polygons\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"distances\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polylines\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

@@ -1,0 +1,1126 @@
+{
+  "widgetType": "graded-group-set",
+  "totalCount": 45,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.852Z",
+  "samples": [
+    {
+      "questionId": "x0801c7a24ace1ec2",
+      "problemType": "Both objects initially moving",
+      "widgetKey": "graded-group-set 3",
+      "questionContent": "A system consists of Object $\\color{red}{\\text{A}}$ and Object $\\color{blue}{\\text{B}}$. The system experiences no external unbalanced force. \n\nThe models below represent the objects before and after they interact. The length of each momentum vector represents its magnitude.\n\n**Initial $(\\text{i})$ ...",
+      "widgetData": {
+        "type": "graded-group-set",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "gradedGroups": [
+            {
+              "hint": null,
+              "title": "This problem requires multiple steps. Check your first step here! (not scored)",
+              "images": {},
+              "content": "**What is the *total* momentum of the system before and after the interaction $(\\color{darkviolet}{\\vec{p}_\\text{\\,tot}}\\color{black}{)}$?**\n\n[[☃ radio 1]]",
+              "widgets": {
+                "radio 1": {
+                  "type": "radio",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "choices": [
+                      {
+                        "content": "![A long arrow points to the left.](https://cdn.kastatic.org/ka-content-images/c26711bea95b841421d3fd7e6cb91edd09b954ac.svg)",
+                        "correct": false
+                      },
+                      {
+                        "content": "![A short arrow points to the left.](https://cdn.kastatic.org/ka-content-images/ff1680fc6a50ed430078bd0105bd3a41c1ac7cad.svg)",
+                        "correct": false
+                      },
+                      {
+                        "content": "$\\color{darkviolet}{0}$",
+                        "correct": false,
+                        "isNoneOfTheAbove": false
+                      },
+                      {
+                        "content": "![A short arrow points to the right.](https://cdn.kastatic.org/ka-content-images/ed022b45e8fcec46be05cd6718d1f0bb89197608.svg)",
+                        "correct": true,
+                        "isNoneOfTheAbove": false
+                      },
+                      {
+                        "content": "![A long arrow points to the right.](https://cdn.kastatic.org/ka-content-images/ebedec971f768d8f4d9eddb0a53a4dbb048f3f83.svg)",
+                        "correct": false,
+                        "isNoneOfTheAbove": false
+                      }
+                    ],
+                    "randomize": false,
+                    "countChoices": false,
+                    "displayCount": null,
+                    "multipleSelect": false,
+                    "deselectEnabled": false,
+                    "hasNoneOfTheAbove": false
+                  },
+                  "version": {
+                    "major": 1,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "radio 2": {
+                  "type": "radio",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "choices": [
+                      {
+                        "content": "![A long arrow points to the left. It is the same length as the p B f arrow in the diagram above, but points in the opposite direction.](https://cdn.kastatic.org/ka-content-images/c26711bea95b841421d3fd7e6cb91edd09b954ac.svg)",
+                        "correct": false
+                      },
+                      {
+                        "content": "![A short arrow points to the left. It is the same length as the p A i arrow in the diagram above, but points in the opposite direction.](https://cdn.kastatic.org/ka-content-images/ff1680fc6a50ed430078bd0105bd3a41c1ac7cad.svg)",
+                        "correct": false
+                      },
+                      {
+                        "content": "$\\color{darkviolet}{0}$",
+                        "correct": false,
+                        "isNoneOfTheAbove": false
+                      },
+                      {
+                        "content": "![A short arrow points to the right. It is the same length as the p A i arrow in the diagram above, and points in the same direction.](https://cdn.kastatic.org/ka-content-images/ed022b45e8fcec46be05cd6718d1f0bb89197608.svg)",
+                        "correct": true,
+                        "isNoneOfTheAbove": false
+                      },
+                      {
+                        "content": "![A long arrow points to the right. It is the same length as the p B f arrow in the diagram above, and  points in the same direction.](https://cdn.kastatic.org/ka-content-images/ebedec971f768d8f4d9eddb0a53a4dbb048f3f83.svg)",
+                        "correct": false,
+                        "isNoneOfTheAbove": false
+                      }
+                    ],
+                    "randomize": false,
+                    "countChoices": false,
+                    "displayCount": null,
+                    "multipleSelect": false,
+                    "deselectEnabled": false,
+                    "hasNoneOfTheAbove": false
+                  },
+                  "version": {
+                    "major": 1,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                }
+              },
+              "widgetEnabled": true,
+              "immutableWidgets": false
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xf73cf3cae60df58b",
+      "problemType": "Type 3: Calculating specific heat using a calorimeter",
+      "widgetKey": "graded-group-set 1",
+      "questionContent": "A lab group is instructed to find the specific heat of lead. They are provided with a coffee-cup calorimeter, distilled water, and $75.0$ grams of lead shot. \n\n[[☃ image 1]]\n\nThe calorimeter is filled with $150.0$ grams of water at $22.5°\\text{C.}$ The group heats the lead to $98.9°\\text{C,}$ then p...",
+      "widgetData": {
+        "type": "graded-group-set",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "gradedGroups": [
+            {
+              "hint": null,
+              "title": "This problem requires multiple steps. Check your first steps here! (not scored)",
+              "images": {},
+              "content": "**Calculate the amount of thermal energy gained by the water.**\n\n[[☃ radio 1]]\n\n",
+              "widgets": {
+                "radio 1": {
+                  "type": "radio",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "choices": [
+                      {
+                        "content": "$344.9\\text{ J}$",
+                        "correct": false
+                      },
+                      {
+                        "content": "$689.7\\text{ J}$",
+                        "correct": true
+                      },
+                      {
+                        "content": "$14{,}797.2\\text{ J}$",
+                        "correct": false,
+                        "isNoneOfTheAbove": false
+                      },
+                      {
+                        "content": "$47{,}213.1\\text{ J}$",
+                        "correct": false,
+                        "isNoneOfTheAbove": false
+                      }
+                    ],
+                    "randomize": false,
+                    "countChoices": false,
+                    "displayCount": null,
+                    "multipleSelect": false,
+                    "deselectEnabled": false,
+                    "hasNoneOfTheAbove": false
+                  },
+                  "version": {
+                    "major": 1,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "explanation 1": {
+                  "type": "explanation",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "static": false,
+                    "widgets": {},
+                    "hidePrompt": "Hide assumptions",
+                    "showPrompt": "Assumptions",
+                    "explanation": "*1. Air resistance (drag) on rockets is significant when they're moving fast. However, assume air resistance can be ignored for this problem.*\n\n*2. A rocket's mass decreases throughout launch as it ejects propellant. However, assume the mass is constant for this problem.*"
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "explanation 2": {
+                  "type": "explanation",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "static": false,
+                    "widgets": {},
+                    "hidePrompt": "Hide equation",
+                    "showPrompt": "Specific heat equation and values",
+                    "explanation": "$q = mc∆T$\nSpecific heat capacity of water = $4.18  \\text{ J/g°C}$"
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "numeric-input 1": {
+                  "type": "numeric-input",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "size": "normal",
+                    "static": false,
+                    "answers": [
+                      {
+                        "value": 2180000,
+                        "status": "correct",
+                        "strict": false,
+                        "message": "",
+                        "maxError": null,
+                        "simplify": "required"
+                      }
+                    ],
+                    "labelText": "",
+                    "rightAlign": true,
+                    "coefficient": false
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "numeric-input 2": {
+                  "type": "numeric-input",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "size": "normal",
+                    "static": false,
+                    "answers": [
+                      {
+                        "value": 3.95,
+                        "status": "correct",
+                        "strict": false,
+                        "message": "",
+                        "maxError": 0.05,
+                        "simplify": "required"
+                      }
+                    ],
+                    "labelText": "",
+                    "rightAlign": true,
+                    "coefficient": false
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                }
+              },
+              "widgetEnabled": true,
+              "immutableWidgets": false
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x07f977dee7bd8958",
+      "problemType": "Type 4",
+      "widgetKey": "graded-group-set 3",
+      "questionContent": "A group of students is tasked with identifying three unknown liquids: A, B, and C. \n\nThe students know the liquids are propanone, hexane, and water, but they don't know which is which. They are given the following table:\n\nName | Lewis structure \n- | :-: \npropanone |  ![C 3 H 6 O; propanone has three...",
+      "widgetData": {
+        "type": "graded-group-set",
+        "graded": true,
+        "static": false,
+        "options": {
+          "gradedGroups": [
+            {
+              "hint": null,
+              "title": "This problem requires multiple steps. Check your work here (not scored).",
+              "images": {},
+              "content": "**Based on the Lewis structures in the table above, determine the strongest intermolecular force (IMF) for each known liquid.**\n\n\nName | Strongest IMF\n- | :-: \npropanone | [[☃ dropdown 2]]\nhexane | [[☃ dropdown 4]]\nwater | [[☃ dropdown 3]]\n\n\n",
+              "widgets": {
+                "dropdown 1": {
+                  "type": "dropdown",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "static": false,
+                    "choices": [
+                      {
+                        "content": "London dispersion forces",
+                        "correct": true
+                      },
+                      {
+                        "content": "dipole-dipole",
+                        "correct": false
+                      },
+                      {
+                        "content": "hydrogen bonding",
+                        "correct": false
+                      }
+                    ],
+                    "placeholder": ""
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "dropdown 2": {
+                  "type": "dropdown",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "static": false,
+                    "choices": [
+                      {
+                        "content": "London dispersion forces",
+                        "correct": false
+                      },
+                      {
+                        "content": "dipole-dipole",
+                        "correct": true
+                      },
+                      {
+                        "content": "hydrogen bonding",
+                        "correct": false
+                      }
+                    ],
+                    "placeholder": ""
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "dropdown 3": {
+                  "type": "dropdown",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "static": false,
+                    "choices": [
+                      {
+                        "content": "London dispersion forces",
+                        "correct": false
+                      },
+                      {
+                        "content": "dipole-dipole",
+                        "correct": false
+                      },
+                      {
+                        "content": "hydrogen bonding",
+                        "correct": true
+                      }
+                    ],
+                    "placeholder": ""
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "dropdown 4": {
+                  "type": "dropdown",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "static": false,
+                    "choices": [
+                      {
+                        "content": "London dispersion forces",
+                        "correct": true
+                      },
+                      {
+                        "content": "dipole-dipole",
+                        "correct": false
+                      },
+                      {
+                        "content": "hydrogen bonding",
+                        "correct": false
+                      }
+                    ],
+                    "placeholder": ""
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                }
+              },
+              "widgetEnabled": true,
+              "immutableWidgets": false
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xa1b897483f6f262a",
+      "problemType": "Extended landing time",
+      "widgetKey": "graded-group-set 2",
+      "questionContent": "Skydivers typically reduce their momentum *before* landing by opening a parachute. But in 2016, Luke Aikins completed a skydive without a parachute. He landed in a giant net above the ground.\n\n[[☃ image 1]]\n\n**Determine the net force that Luke experienced during landing.**\n\nLuke was moving at $54\\,\\...",
+      "widgetData": {
+        "type": "graded-group-set",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "gradedGroups": [
+            {
+              "hint": null,
+              "title": "This problem requires multiple steps. Check your first steps here! (not scored)",
+              "images": {},
+              "content": "**Calculate the following values.**  \n*Do not round your answers.*\n\n$\\vec{p}_{\\text{\\,i}}=$ [[☃ numeric-input 1]] $\\frac{\\text{kg}\\,\\cdot\\,\\text{m}}{\\text{s}}\\downarrow$\n\n$\\vec{p}_{\\text{\\,f}}=$ [[☃ numeric-input 2]] $\\frac{\\text{kg}\\,\\cdot\\,\\text{m}}{\\text{s}}$\n\n$\\Delta \\vec{p}=$ [[☃ numeric-input 3]] $\\frac{\\text{kg}\\,\\cdot\\,\\text{m}}{\\text{s}}\\uparrow$",
+              "widgets": {
+                "numeric-input 1": {
+                  "type": "numeric-input",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "size": "normal",
+                    "static": false,
+                    "answers": [
+                      {
+                        "value": 5130,
+                        "status": "correct",
+                        "strict": false,
+                        "message": "",
+                        "maxError": null,
+                        "simplify": "required"
+                      }
+                    ],
+                    "labelText": "",
+                    "rightAlign": true,
+                    "coefficient": false
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "numeric-input 2": {
+                  "type": "numeric-input",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "size": "normal",
+                    "static": false,
+                    "answers": [
+                      {
+                        "value": 0,
+                        "status": "correct",
+                        "strict": false,
+                        "message": "",
+                        "maxError": null,
+                        "simplify": "required"
+                      }
+                    ],
+                    "labelText": "",
+                    "rightAlign": true,
+                    "coefficient": false
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "numeric-input 3": {
+                  "type": "numeric-input",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "size": "normal",
+                    "static": false,
+                    "answers": [
+                      {
+                        "value": 5130,
+                        "status": "correct",
+                        "strict": false,
+                        "message": "",
+                        "maxError": null,
+                        "simplify": "required"
+                      }
+                    ],
+                    "labelText": "",
+                    "rightAlign": true,
+                    "coefficient": false
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                }
+              },
+              "widgetEnabled": true,
+              "immutableWidgets": false
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x2788e561f888ace2",
+      "problemType": "Athletic padding",
+      "widgetKey": "graded-group-set 1",
+      "questionContent": "Basketball shoes contain cushioning materials like foam. When a basketball player lands while wearing shoes, he collides with foam instead of wood.\n\n[[☃ image 1]]\n\n**Determine how shoes affects the amount of force on a basketball player in the scenario described below.**\n\nA basketball player jumps o...",
+      "widgetData": {
+        "type": "graded-group-set",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "gradedGroups": [
+            {
+              "hint": null,
+              "title": "This problem requires multiple steps. Check your first step here! (not scored)",
+              "images": {},
+              "content": "**Calculate the impulse.**  \n*Do not round your answer.*\n\n$\\Delta \\vec{p}=$ [[☃ numeric-input 3]] $\\frac{\\text{kg}\\,\\cdot\\,\\text{m}}{\\text{s}}\\uparrow$",
+              "widgets": {
+                "numeric-input 1": {
+                  "type": "numeric-input",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "size": "normal",
+                    "static": false,
+                    "answers": [
+                      {
+                        "value": 1890,
+                        "status": "correct",
+                        "strict": false,
+                        "message": "",
+                        "maxError": null,
+                        "simplify": "required"
+                      }
+                    ],
+                    "labelText": "",
+                    "rightAlign": true,
+                    "coefficient": false
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "numeric-input 2": {
+                  "type": "numeric-input",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "size": "normal",
+                    "static": false,
+                    "answers": [
+                      {
+                        "value": 0,
+                        "status": "correct",
+                        "strict": false,
+                        "message": "",
+                        "maxError": null,
+                        "simplify": "required"
+                      }
+                    ],
+                    "labelText": "",
+                    "rightAlign": true,
+                    "coefficient": false
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "numeric-input 3": {
+                  "type": "numeric-input",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "size": "normal",
+                    "static": false,
+                    "answers": [
+                      {
+                        "value": 320,
+                        "status": "correct",
+                        "strict": false,
+                        "message": "",
+                        "maxError": null,
+                        "simplify": "required"
+                      }
+                    ],
+                    "labelText": "",
+                    "rightAlign": true,
+                    "coefficient": false
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                }
+              },
+              "widgetEnabled": true,
+              "immutableWidgets": false
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xf784ab4cbd70365f",
+      "problemType": "Type 2",
+      "widgetKey": "graded-group-set 2",
+      "questionContent": "The boiling point of a substance is influenced by the strength of its intermolecular forces. \n\nThe table below provides information about four substances. This information can be used to compare their boiling points.\n\nChemical formula | Lewis structure | Molar mass $\\text{(g/mol)}$\n:-: | :-: | :-:\n$...",
+      "widgetData": {
+        "type": "graded-group-set",
+        "graded": true,
+        "static": false,
+        "options": {
+          "gradedGroups": [
+            {
+              "hint": null,
+              "title": "This problem requires multiple steps. Check your work here (not scored).",
+              "images": {},
+              "content": "**Based on the Lewis structures, determine the strongest intermolecular force (IMF) for each substance.**\n\nChemical formula  |Strongest IMF\n:-: | :-:\n$\\ce{He}$ | [[☃ dropdown 2]]\n$\\ce{H2S}$ | [[☃ dropdown 4]]\n$\\ce{H2Se}$ | [[☃ dropdown 3]]\n$\\ce{Ne}$| [[☃ dropdown 1]]",
+              "widgets": {
+                "dropdown 1": {
+                  "type": "dropdown",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "static": false,
+                    "choices": [
+                      {
+                        "content": "London dispersion forces",
+                        "correct": true
+                      },
+                      {
+                        "content": "dipole-dipole",
+                        "correct": false
+                      },
+                      {
+                        "content": "hydrogen bonding",
+                        "correct": false
+                      }
+                    ],
+                    "placeholder": ""
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "dropdown 2": {
+                  "type": "dropdown",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "static": false,
+                    "choices": [
+                      {
+                        "content": "London dispersion forces",
+                        "correct": true
+                      },
+                      {
+                        "content": "dipole-dipole",
+                        "correct": false
+                      },
+                      {
+                        "content": "hydrogen bonding",
+                        "correct": false
+                      }
+                    ],
+                    "placeholder": ""
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "dropdown 3": {
+                  "type": "dropdown",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "static": false,
+                    "choices": [
+                      {
+                        "content": "London dispersion forces",
+                        "correct": false
+                      },
+                      {
+                        "content": "dipole-dipole",
+                        "correct": true
+                      },
+                      {
+                        "content": "hydrogen bonding",
+                        "correct": false
+                      }
+                    ],
+                    "placeholder": ""
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "dropdown 4": {
+                  "type": "dropdown",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "static": false,
+                    "choices": [
+                      {
+                        "content": "London dispersion forces",
+                        "correct": false
+                      },
+                      {
+                        "content": "dipole-dipole",
+                        "correct": true
+                      },
+                      {
+                        "content": "hydrogen bonding",
+                        "correct": false
+                      }
+                    ],
+                    "placeholder": ""
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                }
+              },
+              "widgetEnabled": true,
+              "immutableWidgets": false
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xfa4882839c8cb0a9",
+      "problemType": "Rocket launch",
+      "widgetKey": "graded-group-set 1",
+      "questionContent": "A Falcon 9 rocket contains nine rocket engines which generate a total of $7{,}560{,}000\\space\\text{N}$ of thrust at liftoff. \n\n[[☃ image 1]]\n\n**Predict how fast the Falcon 9 described below will be moving at specific times after liftoff.**\n\nThe total mass of the Falcon 9 (with fuel and payload) is $...",
+      "widgetData": {
+        "type": "graded-group-set",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "gradedGroups": [
+            {
+              "hint": null,
+              "title": "This problem requires multiple steps. Check your first steps here! (not scored)",
+              "images": {},
+              "content": "**Calculate the following values.**\n\n$\\Sigma \\vec{F}=$ [[☃ numeric-input 1]] $\\text{N}\\uparrow$ \n\n*Enter the acceleration to the nearest one.*\n\n$\\vec{a}=$ [[☃ numeric-input 2]] $\\dfrac{\\small\\text{m}}{\\small\\text{s}^2}\\uparrow$",
+              "widgets": {
+                "explanation 1": {
+                  "type": "explanation",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "static": false,
+                    "widgets": {},
+                    "hidePrompt": "Hide assumptions",
+                    "showPrompt": "Assumptions",
+                    "explanation": "*1. Air resistance (drag) on rockets is significant when they're moving fast. However, assume air resistance can be ignored for this problem.*\n\n*2. A rocket's mass decreases throughout launch as it ejects propellant. However, assume the mass is constant for this problem.*"
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "numeric-input 1": {
+                  "type": "numeric-input",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "size": "normal",
+                    "static": false,
+                    "answers": [
+                      {
+                        "value": 2180000,
+                        "status": "correct",
+                        "strict": false,
+                        "message": "",
+                        "maxError": null,
+                        "simplify": "required"
+                      }
+                    ],
+                    "labelText": "",
+                    "rightAlign": true,
+                    "coefficient": false
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "numeric-input 2": {
+                  "type": "numeric-input",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "size": "normal",
+                    "static": false,
+                    "answers": [
+                      {
+                        "value": 4,
+                        "status": "correct",
+                        "strict": false,
+                        "message": "",
+                        "maxError": 0,
+                        "simplify": "required"
+                      }
+                    ],
+                    "labelText": "",
+                    "rightAlign": true,
+                    "coefficient": false
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                }
+              },
+              "widgetEnabled": true,
+              "immutableWidgets": false
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x95b539887713520b",
+      "problemType": "Finding molar mass by grams/mole",
+      "widgetKey": "graded-group-set 1",
+      "questionContent": "Sometimes chemists need to determine the molar mass of an unknown compound. To do this, they can use experiments that determine how many *grams* of compound are in a certain number of *moles* of that compound. Because molar mass is expressed as grams/moles, dividing the mass by the moles gives the c...",
+      "widgetData": {
+        "type": "graded-group-set",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "gradedGroups": [
+            {
+              "hint": null,
+              "title": "This problem requires two steps. Check your first step here! (not scored)",
+              "images": {},
+              "content": "**Use the table to calculate the molar mass of the salt.**  \n*Report any numeric answer to one decimal place.*\n\n[[☃ numeric-input 1]] $\\frac{\\text{g}}{\\text{moles}}$",
+              "widgets": {
+                "numeric-input 1": {
+                  "type": "numeric-input",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "size": "normal",
+                    "static": false,
+                    "answers": [
+                      {
+                        "value": 84.9,
+                        "status": "correct",
+                        "strict": false,
+                        "message": "",
+                        "maxError": 1,
+                        "simplify": "required"
+                      }
+                    ],
+                    "labelText": "",
+                    "rightAlign": false,
+                    "coefficient": false
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                }
+              },
+              "widgetEnabled": true,
+              "immutableWidgets": false
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x657df45be78f749b",
+      "problemType": "Booster landing",
+      "widgetKey": "graded-group-set 1",
+      "questionContent": "**Multistage rockets** use two or more stages to produce the thrust needed to reach space. For example, the first stage of the Falcon Heavy shown below consists of a center core and two side boosters.\n\n[[☃ image 2]]\n\nA few minutes into launch, the side boosters separate and fall back to Earth. (The ...",
+      "widgetData": {
+        "type": "graded-group-set",
+        "graded": true,
+        "static": false,
+        "options": {
+          "gradedGroups": [
+            {
+              "hint": null,
+              "title": "This problem requires multiple steps. Check your first steps here! (not scored)",
+              "images": {},
+              "content": "**Calculate the following values.**\n\n$\\vec{a}=$ [[☃ numeric-input 1]] $\\dfrac{\\small\\text{m}}{\\small\\text{s}^2}\\uparrow$\n\n$\\Sigma \\vec{F}=$ [[☃ numeric-input 2]] $\\text{N}\\uparrow$ ",
+              "widgets": {
+                "explanation 1": {
+                  "type": "explanation",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "static": false,
+                    "widgets": {},
+                    "hidePrompt": "Hide assumptions",
+                    "showPrompt": "Assumptions",
+                    "explanation": "*1. Assume acceleration and net force were constant as the engine fired.*\n\n*2. Air resistance (drag) on rockets is significant when they're moving fast. However, assume air resistance can be ignored for this problem.*"
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "numeric-input 1": {
+                  "type": "numeric-input",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "size": "normal",
+                    "static": false,
+                    "answers": [
+                      {
+                        "value": 17.8,
+                        "status": "correct",
+                        "strict": false,
+                        "message": "",
+                        "maxError": 0.2,
+                        "simplify": "required"
+                      }
+                    ],
+                    "labelText": "",
+                    "rightAlign": true,
+                    "coefficient": false
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "numeric-input 2": {
+                  "type": "numeric-input",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "size": "normal",
+                    "static": false,
+                    "answers": [
+                      {
+                        "value": 445000,
+                        "status": "correct",
+                        "strict": false,
+                        "message": "",
+                        "maxError": 5000,
+                        "simplify": "required"
+                      }
+                    ],
+                    "labelText": "",
+                    "rightAlign": true,
+                    "coefficient": false
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                }
+              },
+              "widgetEnabled": true,
+              "immutableWidgets": false
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xbf9d920ff6533af7",
+      "problemType": "Mechanical power",
+      "widgetKey": "graded-group-set 1",
+      "questionContent": "In an **internal combustion engine,** fuel is burned to produce hot gas that expands inside cylinders. The expanding gas pushes on pistons, transferring energy to them. The moving pistons transfer energy to a crankshaft. A simple model of the process is shown below.\n\n[[☃ image 1]]\n\nAn engine's **pow...",
+      "widgetData": {
+        "type": "graded-group-set",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "gradedGroups": [
+            {
+              "hint": null,
+              "title": "This problem requires multiple steps. Check your first step here! (not scored)",
+              "images": {},
+              "content": "**Calculate how much energy the engine transfers in $3\\space\\text{s}.$** \n\n*Don't round your answer.*\n\n$\\text{energy transferred}=$ [[☃ numeric-input 1]] $\\text{J}$",
+              "widgets": {
+                "explanation 1": {
+                  "type": "explanation",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "static": false,
+                    "widgets": {},
+                    "hidePrompt": "Hide conversion",
+                    "showPrompt": "Horsepower unit conversion",
+                    "explanation": "$1\\space\\text{hp}=746\\space\\frac{\\text{J}}{\\text{s}}$"
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                },
+                "numeric-input 1": {
+                  "type": "numeric-input",
+                  "graded": true,
+                  "static": false,
+                  "options": {
+                    "size": "normal",
+                    "static": false,
+                    "answers": [
+                      {
+                        "value": 1087668,
+                        "status": "correct",
+                        "strict": false,
+                        "message": "",
+                        "maxError": null,
+                        "simplify": "required"
+                      }
+                    ],
+                    "labelText": "",
+                    "rightAlign": true,
+                    "coefficient": false
+                  },
+                  "version": {
+                    "major": 0,
+                    "minor": 0
+                  },
+                  "alignment": "default"
+                }
+              },
+              "widgetEnabled": true,
+              "immutableWidgets": false
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

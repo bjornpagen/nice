@@ -1,0 +1,215 @@
+{
+  "metadata": {
+    "contentId": "x7deb3dd1e4913b9e",
+    "contentType": "question",
+    "widgetType": "coordinatePlane",
+    "createdAt": "2025-08-30T16:19:05.163Z",
+    "aiReasoning": "The content involves depicting a ratio through a visual diagram (tape diagram) which represents quantities in a manner similar to how one might depict values on a coordinate plane. However, here it's not about plotting points but about visually showing relationships similar to a graph. This aligns with the coordinatePlane widget's functionality of representing mathematical relationships visually. Nevertheless, the given information might not comply perfectly since the content seems more about set diagrams than traditional graph plotting.",
+    "aiConfidence": 0.6
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "###Strategy\n\nWe can find the ratio of knit stitches to purl stitches by counting the equal parts of each in the tape diagram.\n\nThen we can create an equivalent ratio by picking a number of stitches for each equal part in the diagram to represent a total of $8$ knit stitches.\n\nTo make an equivalent ratio, we multiply each part of the ratio by the same number.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Identify the given ratio\n\nJoel's scarf has $\\blueE{2}$ knit stitches for every $\\purpleD{7}$ purl stitches.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Create an equivalent ratio\n\nIf each part represents $\\maroonD{4}$ stitches, there will be $8$ knit stitches, because $\\blueE{2}\\maroonD{\\times 4} = 8$.\n\n[[☃ image 1]]\n\nIf each part represents $\\maroonD{4}$ stitches, there will be $28$ purl stitches, because $\\purpleD{7} \\maroonD{\\times 4} = 28$.",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 2 equal parts, each labeled 4. A curved bracket above the first tape is labeled Knit stitches. The second tape has 7 equal parts of the same size as in the first tape, each labeled 4. A curved bracket below the second tape is labeled Purl stitches.",
+                "box": [
+                  200,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/954f8535535add877fb10a035319ec7674d990c8",
+                  "width": 200,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "###Solution\n\nThe diagram with a part size of $\\maroonD{4}$ stitches best shows how many purl stitches are there if there are $8$ knit stitches in one row of Joel's scarf.\n\n[[☃ image 1]]",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 2 equal parts, each labeled 4. A curved bracket above the first tape is labeled Knit stitches. The second tape has 7 equal parts of the same size as in the first tape, each labeled 4. A curved bracket below the second tape is labeled Purl stitches.",
+                "box": [
+                  200,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/954f8535535add877fb10a035319ec7674d990c8",
+                  "width": 200,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "Joel is making a scarf. The diagram shows the ratio of knit stitches and purl stitches of Joel's scarf.\n\n[[☃ image 1]]\n\nAll of the following diagrams represent equivalent ratios.\n\n**Which diagram best shows how many purl stitches are there when there are $8$ knit stitches in one row of Joel's scarf?**\n\n[[☃ radio 1]]",
+        "widgets": {
+          "image 1": {
+            "type": "image",
+            "graded": true,
+            "static": false,
+            "options": {
+              "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 2 equal parts. A curved bracket above the first tape is labeled Knit stitches. The second tape has 7 equal parts of the same size as in the first tape. A curved bracket below the second tape is labeled Purl stitches.",
+              "box": [
+                200,
+                168
+              ],
+              "range": [
+                [
+                  0,
+                  10
+                ],
+                [
+                  0,
+                  10
+                ]
+              ],
+              "title": "",
+              "labels": [],
+              "static": false,
+              "caption": "",
+              "backgroundImage": {
+                "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/8b7c6202fcf6f70007920bf75d088aad0d395b41",
+                "width": 200,
+                "height": 168
+              }
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "block"
+          },
+          "radio 1": {
+            "type": "radio",
+            "graded": true,
+            "static": false,
+            "options": {
+              "choices": [
+                {
+                  "content": "![A tape diagram with 2 tapes of unequal lengths. The first tape has 2 equal parts, each labeled 2. A curved bracket above the first tape is labeled Knit stitches. The second tape has 7 equal parts of the same size as in the first tape, each labeled 2. A curved bracket below the second tape is labeled Purl stitches.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/e32e4cece5bf0cb119b4122d772910db26222821)",
+                  "correct": false
+                },
+                {
+                  "content": "![A tape diagram with 2 tapes of unequal lengths. The first tape has 2 equal parts, each labeled 4. A curved bracket above the first tape is labeled Knit stitches. The second tape has 7 equal parts of the same size as in the first tape, each labeled 4. A curved bracket below the second tape is labeled Purl stitches.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/954f8535535add877fb10a035319ec7674d990c8)",
+                  "correct": true
+                },
+                {
+                  "content": "![A tape diagram with 2 tapes of unequal lengths. The first tape has 2 equal parts, each labeled 8. A curved bracket above the first tape is labeled Knit stitches. The second tape has 7 equal parts of the same size as in the first tape, each labeled 8. A curved bracket below the second tape is labeled Purl stitches.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/d2db89331975ec61b38f122daf8e513b4330e865)",
+                  "correct": false,
+                  "isNoneOfTheAbove": false
+                }
+              ],
+              "randomize": false,
+              "countChoices": false,
+              "displayCount": null,
+              "multipleSelect": false,
+              "deselectEnabled": false,
+              "hasNoneOfTheAbove": false
+            },
+            "version": {
+              "major": 1,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{\"range\":[[0,10],[0,10]],\"labels\":[],\"backgroundImage\":{\"url\":\"web+graphie://cdn.kastatic.org/ka-perseus-graphie/8b7c6202fcf6f70007920bf75d088aad0d395b41\",\"width\":200,\"height\":168}}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"coordinatePlane\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"coordinatePlane\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"width\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"height\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"xAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"yAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"showQuadrantLabels\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"points\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"lines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polygons\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"distances\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polylines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"range\",\n      \"labels\",\n      \"backgroundImage\"\n    ],\n    \"path\": [],\n    \"message\": \"Unrecognized key(s) in object: 'range', 'labels', 'backgroundImage'\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

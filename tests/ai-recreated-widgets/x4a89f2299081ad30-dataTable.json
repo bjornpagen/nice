@@ -1,0 +1,110 @@
+{
+  "metadata": {
+    "contentId": "x4a89f2299081ad30",
+    "contentType": "question",
+    "widgetType": "dataTable",
+    "createdAt": "2025-08-30T16:18:32.656Z",
+    "aiReasoning": "The question presented involves displaying tabular data about the number of snacks in a vending machine, which naturally fits into the 'dataTable' widget type. The table is simple, consisting of snack types and corresponding numerical values. This structure is ideal for comparison tables, which is a main use case for the 'dataTable' widget type.",
+    "aiConfidence": 1
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "A ratio compares two values in a certain order.\n\nHere are some ways we could write the ratio of $\\goldE{7}$ snakes and $\\tealE{2}$ lizards.\n\n- $\\goldE{7}$ to $\\tealE{2}$\n- $\\goldE{7}:\\tealE{2}$\n- $\\goldE{7}$ per $\\tealE{2}$\n- $\\goldE{7}$ for every $\\tealE{2}$\n\nWe could **NOT** say $\\tealE{2}$ to $\\goldE{7}$, because that is a different order. It would mean the ratio of lizards to snakes.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "There are $\\blueE{15}$ sweet snacks in the vending machine.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "$15+7+2=24$\n\nThe vending machine has $\\redE{24}$ total snacks.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "The ratio of sweet snacks to total snacks is $\\blueE{15}$ for every $\\redE{24}$.",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "The table shows how many of each type of snack are found in a vending machine.\n\nSnack| Numbers\n- | - | -\nSweet| $15$\nSalty| $7$\nGum| $2$\n\n**What is the ratio of sweet snacks to total snacks in the vending machine?**\n\n[[☃ radio 1]]",
+        "widgets": {
+          "radio 1": {
+            "type": "radio",
+            "graded": true,
+            "static": false,
+            "options": {
+              "choices": [
+                {
+                  "content": "$15$ for every $9$",
+                  "correct": false
+                },
+                {
+                  "content": "$15$ for every $24$",
+                  "correct": true
+                },
+                {
+                  "content": "$7$ for every $9$",
+                  "correct": false,
+                  "isNoneOfTheAbove": false
+                },
+                {
+                  "content": "$7$ for every $24$",
+                  "correct": false,
+                  "isNoneOfTheAbove": false
+                }
+              ],
+              "randomize": false,
+              "countChoices": false,
+              "displayCount": null,
+              "multipleSelect": false,
+              "deselectEnabled": false,
+              "hasNoneOfTheAbove": false
+            },
+            "version": {
+              "major": 1,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{\"typeName\":\"ZodObject\",\"description\":\"Creates accessible HTML tables with mixed content types, optional row headers, and footer rows. Supports inline text/math in cells and interactive input fields. Perfect for data display, comparison tables, and exercises requiring tabular input.\",\"columns\":[{\"header\":\"Snack\",\"cells\":[\"Sweet\",\"Salty\",\"Gum\"]},{\"header\":\"Numbers\",\"cells\":[\"15\",\"7\",\"2\"]}],\"rows\":[{\"type\":\"header\",\"cells\":[\"Snack\",\"Numbers\"]},{\"type\":\"data\",\"cells\":[\"Sweet\",\"15\"]},{\"type\":\"data\",\"cells\":[\"Salty\",\"7\"]},{\"type\":\"data\",\"cells\":[\"Gum\",\"2\"]}]}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"dataTable\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"dataTable\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"title\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      0,\n      \"key\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      0,\n      \"label\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      0,\n      \"isNumeric\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"header\",\n      \"cells\"\n    ],\n    \"path\": [\n      \"columns\",\n      0\n    ],\n    \"message\": \"Unrecognized key(s) in object: 'header', 'cells'\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      1,\n      \"key\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      1,\n      \"label\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      1,\n      \"isNumeric\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"header\",\n      \"cells\"\n    ],\n    \"path\": [\n      \"columns\",\n      1\n    ],\n    \"message\": \"Unrecognized key(s) in object: 'header', 'cells'\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"data\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"rowHeaderKey\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"footer\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"typeName\",\n      \"description\",\n      \"rows\"\n    ],\n    \"path\": [],\n    \"message\": \"Unrecognized key(s) in object: 'typeName', 'description', 'rows'\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

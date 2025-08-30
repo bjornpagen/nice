@@ -92,15 +92,14 @@ test("population bar chart - auto label thinning when visible list empty", () =>
 
 	// Count x-axis labels (middle-anchored only)
 	const xTickLabelMatches = svg.match(/<text[^>]*class="tick-label"[^>]*text-anchor="middle"[^>]*>[^<]+<\/text>/g) ?? []
-	// Standardized font sizing and text-aware selection allow slightly tighter packing
-	const conservativeMaxLabels = Math.max(1, Math.floor((390 - 100) / 35)) // margin left+right ~100
+	const conservativeMaxLabels = Math.max(1, Math.floor((390 - 100) / 50)) // margin left+right ~100
 	const toleranceMaxLabels = conservativeMaxLabels + Math.max(1, Math.ceil(conservativeMaxLabels * 0.2)) // Allow tolerance for clean intervals
 	expect(xTickLabelMatches.length).toBeGreaterThan(0)
 	expect(xTickLabelMatches.length).toBeLessThanOrEqual(toleranceMaxLabels)
 
-	// Ensure the first label renders and at least one label near the end renders
+	// Ensure first and last labels render for determinism
 	expect(svg).toContain(">1990<")
-	expect(svg).toMatch(/>(2003|2004|2005)</)
+	expect(svg).toContain(">2005<")
 })
 
 test("population bar chart - bird population 2010-2015", () => {

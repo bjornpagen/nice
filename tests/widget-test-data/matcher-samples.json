@@ -1,0 +1,352 @@
+{
+  "widgetType": "matcher",
+  "totalCount": 407,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.849Z",
+  "samples": [
+    {
+      "questionId": "x6a33971d2270d9bd",
+      "problemType": "Definitions",
+      "widgetKey": "matcher 1",
+      "questionContent": "**Match each periodic wave property with its description by dragging the tiles.**\n\n[[☃ matcher 1]]",
+      "widgetData": {
+        "type": "matcher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "left": [
+            "frequency",
+            "wavelength",
+            "amplitude"
+          ],
+          "right": [
+            "number of wave cycles that pass a point in a given amount of time",
+            "distance from the beginning of one wave cycle to the beginning of the next cycle",
+            "maximum change from equilibrium as a wave passes"
+          ],
+          "labels": [
+            "**Property**",
+            "**Description**"
+          ],
+          "padding": true,
+          "orderMatters": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x6896721581dcc455",
+      "problemType": "Type 4 (Matching)",
+      "widgetKey": "matcher 1",
+      "questionContent": "\n**Match the word to the sentence it best completes:**\n\n[[☃ matcher 1]]\n\n",
+      "widgetData": {
+        "type": "matcher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "left": [
+            "regulate",
+            "contentious",
+            "align",
+            "enforce"
+          ],
+          "right": [
+            "The town council passed new rules to  _\\_\\_\\_\\_\\_\\_\\_ swimming in the lake. Now you can swim only when a lifeguard is on duty.",
+            "The conversation started in a friendly way but quickly became angry and _\\_\\_\\_\\_\\_\\_\\_.",
+            "Listen to both sides of the argument before you decide which group to _\\_\\_\\_\\_\\_\\_\\_ yourself with.",
+            "The smoke wafting through the restaurant led Enid to conclude that the city didn’t _\\_\\_\\_\\_\\_\\_\\_ its law banning indoor tobacco use."
+          ],
+          "labels": [
+            "Word",
+            "Sentence"
+          ],
+          "padding": true,
+          "orderMatters": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x5178ddbd778bc614",
+      "problemType": "Generalist versus specialist organisms",
+      "widgetKey": "matcher 1",
+      "questionContent": "**Complete the table by selecting the most likely type of organism for each characteristic.**\n\nCharacteristic | Type of organism\n- | :-:\nnarrow niche | [[☃ dropdown 1]]\nbroad niche | [[☃ dropdown 2]]\nhas large tolerance ranges for abiotic factors | [[☃ dropdown 3]]\nhas small tolerance ranges for abi...",
+      "widgetData": {
+        "type": "matcher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "left": [
+            "This type of organism has a narrow niche.",
+            "This type of organism has a broad niche.",
+            "This type of organism has large tolerance ranges for abiotic factors in their environment.",
+            "This type of organism has small tolerance ranges for abiotic factors in their environment."
+          ],
+          "right": [
+            "specialist",
+            "generalist",
+            "generalist",
+            "specialist"
+          ],
+          "labels": [
+            "Characteristic",
+            "Organism type"
+          ],
+          "padding": true,
+          "orderMatters": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x45316b8c8269ebe3",
+      "problemType": "DNA, plasma membrane, Golgi",
+      "widgetKey": "matcher 1",
+      "questionContent": "**Match each cell part with its function.**\n\n[[☃ matcher 1]]",
+      "widgetData": {
+        "type": "matcher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "left": [
+            "DNA",
+            "plasma membrane",
+            "Golgi body"
+          ],
+          "right": [
+            "encodes the cell’s genetic information",
+            "regulates what enters and exits the cell ",
+            "modifies and sorts molecules for transport"
+          ],
+          "labels": [
+            "Cell part",
+            "Function"
+          ],
+          "padding": true,
+          "orderMatters": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xd0336e18033b3eba",
+      "problemType": "Interpret parts - 7.6.6",
+      "widgetKey": "matcher 1",
+      "questionContent": "A single ticket to the magic show costs $t$ dollars, but there is a discount of $5\\%$ per ticket if a group buys $10$ tickets.\n\nThe expression $10t-10\\cdot 0.05t$ describes the total cost of buying $10$ tickets for a group.\n\n**Match each amount in the situation with the expression that represents it...",
+      "widgetData": {
+        "type": "matcher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "left": [
+            "Total discount for $10$ group tickets",
+            "Amount of discount per ticket",
+            "Number of tickets",
+            "Cost of buying $10$ single tickets"
+          ],
+          "right": [
+            "$10\\cdot 0.05t$",
+            "$0.05t$",
+            "$10$",
+            "$10t$"
+          ],
+          "labels": [
+            "Situation",
+            "Expression"
+          ],
+          "padding": true,
+          "orderMatters": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xd080e4b0083d15a7",
+      "problemType": "Type 1",
+      "widgetKey": "matcher 1",
+      "questionContent": "**Match each statement with its definition:**\n\n[[☃ matcher 1]]",
+      "widgetData": {
+        "type": "matcher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "left": [
+            "A statement given in support of some other statement(s).",
+            "A set of statements that together comprise a reason for a further statement",
+            "A statement supported by some other statement(s)."
+          ],
+          "right": [
+            "Premise",
+            "Argument",
+            "Conclusion"
+          ],
+          "labels": [
+            "",
+            ""
+          ],
+          "padding": true,
+          "orderMatters": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x0a03f1a2a926bffa",
+      "problemType": "Type 1: matcher",
+      "widgetKey": "matcher 1",
+      "questionContent": "The number line shows the freezing points of water and carbon dioxide in degrees Celsius ($\\degree \\text{C}$).\n\n[[☃ image 1]]\n\n**Match the values to their meaning.**\n\n\n[[☃ matcher 1]]",
+      "widgetData": {
+        "type": "matcher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "left": [
+            "$\\lvert-78\\rvert$",
+            "$-78$",
+            "$0$"
+          ],
+          "right": [
+            "Difference between the freezing points of water and carbon dioxide",
+            "Freezing point of carbon dioxide",
+            "Freezing point of water"
+          ],
+          "labels": [
+            "Value",
+            "Meaning"
+          ],
+          "padding": true,
+          "orderMatters": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x16a1eafacd682a47",
+      "problemType": "Wrecking ball",
+      "widgetKey": "matcher 1",
+      "questionContent": "A wrecking ball hanging from a crane is pulled up and away from a wall by a cable. The cable is released and the ball swings down. The ball smashes a hole in the wall.\n\n[[☃ image 5]]\n\n**Analyze the energy of the ball-Earth system throughout this process. Then match each event below with its associat...",
+      "widgetData": {
+        "type": "matcher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "left": [
+            "the cable raises the ball",
+            "the ball swings down after the cable is released",
+            "the ball smashes into the wall\t"
+          ],
+          "right": [
+            "increases",
+            "stays the same",
+            "decreases"
+          ],
+          "labels": [
+            "**Event**",
+            "**Total energy of ball-Earth system**"
+          ],
+          "padding": true,
+          "orderMatters": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x680c4cf7f60ee44b",
+      "problemType": "Type B - Orderer",
+      "widgetKey": "matcher 1",
+      "questionContent": "**Without using a calculator, order the following expressions from least to greatest.**\n\n[[☃ sorter 1]]\n\n\n\n\n\n\n",
+      "widgetData": {
+        "type": "matcher",
+        "graded": true,
+        "options": {
+          "left": [
+            "$A$",
+            "$B$",
+            "$C$"
+          ],
+          "right": [
+            "$-2\\pi$",
+            "$-\\dfrac{14}{3}$",
+            "$-3\\sqrt{2}$"
+          ],
+          "labels": [
+            "Label",
+            "Expression"
+          ],
+          "padding": true,
+          "orderMatters": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x56566e0275a044a1",
+      "problemType": "Matcher",
+      "widgetKey": "matcher 1",
+      "questionContent": "**Match the clocks to the correct time.**\n\n[[☃ matcher 1]]",
+      "widgetData": {
+        "type": "matcher",
+        "graded": true,
+        "static": false,
+        "options": {
+          "left": [
+            "$12{:}30$",
+            "$6{:}00$",
+            "$12{:}00$"
+          ],
+          "right": [
+            "![A clock shows the short hour hand points to 6. The long minute hand points to 12.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/854130232b1e37bf6bf5c35b5f7dec27ba7564eb)",
+            "![A clock shows the short hour hand is between 12 and 1. The long minute hand points to 6.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/3f3bbffe3df3eee168d13a8d1ced9fed79267b32)",
+            "![A clock shows the short hour hand points to 12. The long minute hand points to 12.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/536421819122ae3776c04ca58ffa474e0c3a779b)"
+          ],
+          "labels": [
+            "Time",
+            "Clock"
+          ],
+          "padding": true,
+          "orderMatters": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "metadata": {
+    "contentId": "x3892c544572424db",
+    "contentType": "question",
+    "widgetType": "coordinatePlane",
+    "createdAt": "2025-08-30T16:20:17.847Z",
+    "aiReasoning": "The content primarily involves a visual representation using a tape diagram instead of a traditional Cartesian coordinate plane. Therefore, a coordinatePlane widget type, which supports points and geometric figures, is not directly applicable. However, extracting the diagram onto a coordinate plane for Cartesian understanding could be useful in visualizing and analyzing problems similar to this one, despite the schema not being directly applicable to the available data.",
+    "aiConfidence": 0.4
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "###Strategy\n\nWe can find the ratio of distance run to total distance by counting the equal parts of each in the tape diagram.\n\nThen we can create an equivalent ratio by picking a number of meters for each equal part in the diagram to represent a total distance of $30\\,\\text{m}$.\n\nTo make an equivalent ratio, we multiply each part of the ratio by the same number.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Identify the given ratio\n\n$\\goldE{2}+\\redE{3}=\\purpleD{5}$\n\nCauã runs $\\redE{3\\,\\text{m}}$ for every $\\purpleD{5\\,\\text{m}}$ of total distance.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Create an equivalent ratio\n\nIf each part represents $\\blueE{6\\,\\text{m}}$, there will be $30\\,\\text{m}$ of total distance, because $\\purpleE{5}\\blueE{\\times 6} = 30$.\n\n[[☃ image 1]]\n\nIf each part represents $\\blueE{6\\,\\text{m}}$, there will be $18\\,\\text{m}$ of distance run, because $\\redE{3}\\blueE{\\times 6} = 18$.",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 2 equal parts, each labeled 6. A curved bracket above the first tape is labeled Distance walked. The second tape has 3 equal parts of the same size as in the first tape, each labeled 6. A curved bracket below the second tape is labeled Distance run. A curved bracket spanning both tapes is labeled Total distance.",
+                "box": [
+                  200,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/b3144b1ba876f764b36094820a97fbc11ac84757",
+                  "width": 200,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "###Solution\n\nThe diagram with a part size of $\\blueE{6\\,\\text{m}}$ best shows how far Cauã runs when he goes a total distance of $30\\,\\text{m}$ on the track.\n\n[[☃ image 1]]",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 2 equal parts, each labeled 6. A curved bracket above the first tape is labeled Distance walked. The second tape has 3 equal parts of the same size as in the first tape, each labeled 6. A curved bracket below the second tape is labeled Distance run.",
+                "box": [
+                  200,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/5619330c635b37fad45a47b00141ff38dfbb9067",
+                  "width": 200,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "Cauã alternates between walking and running on the track. The diagram shows the ratio of distances Cauã walks to runs.\n\n[[☃ image 1]]\n\nAll of the following diagrams represent equivalent ratios.\n\n**Which diagram best shows how far, in $\\text{m}$, Cauã runs when he goes a total distance of $30\\,\\text{m}$ on the track?**\n\n[[☃ radio 1]]",
+        "widgets": {
+          "image 1": {
+            "type": "image",
+            "graded": true,
+            "static": false,
+            "options": {
+              "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 2 equal parts. A curved bracket above the first tape is labeled Distance walked. The second tape has 3 equal parts of the same size as in the first tape. A curved bracket below the second tape is labeled Distance run.",
+              "box": [
+                200,
+                168
+              ],
+              "range": [
+                [
+                  0,
+                  10
+                ],
+                [
+                  0,
+                  10
+                ]
+              ],
+              "title": "",
+              "labels": [],
+              "static": false,
+              "caption": "",
+              "backgroundImage": {
+                "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f4cfc035389ff577d8c36a3b3180dcecd890e2e0",
+                "width": 200,
+                "height": 168
+              }
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "block"
+          },
+          "radio 1": {
+            "type": "radio",
+            "graded": true,
+            "static": false,
+            "options": {
+              "choices": [
+                {
+                  "content": "![A tape diagram with 2 tapes of unequal lengths. The first tape has 2 equal parts, each labeled 6. A curved bracket above the first tape is labeled Distance walked. The second tape has 3 equal parts of the same size as in the first tape, each labeled 6. A curved bracket below the second tape is labeled Distance run.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/5619330c635b37fad45a47b00141ff38dfbb9067)",
+                  "correct": true
+                },
+                {
+                  "content": "![A tape diagram with 2 tapes of unequal lengths. The first tape has 2 equal parts, each labeled 10. A curved bracket above the first tape is labeled Distance walked. The second tape has 3 equal parts of the same size as in the first tape, each labeled 10. A curved bracket below the second tape is labeled Distance run.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/84e920e06a6d355358d5ef9ed734a0f5ed93a133)",
+                  "correct": false,
+                  "isNoneOfTheAbove": false
+                },
+                {
+                  "content": "![A tape diagram with 2 tapes of unequal lengths. The first tape has 2 equal parts, each labeled 15. A curved bracket above the first tape is labeled Distance walked. The second tape has 3 equal parts of the same size as in the first tape, each labeled 15. A curved bracket below the second tape is labeled Distance run.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/1deba9506a34ceb8732c0efb690bee18b956cda0)",
+                  "correct": false,
+                  "isNoneOfTheAbove": false
+                }
+              ],
+              "randomize": false,
+              "countChoices": false,
+              "displayCount": null,
+              "multipleSelect": false,
+              "deselectEnabled": false,
+              "hasNoneOfTheAbove": false
+            },
+            "version": {
+              "major": 1,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"coordinatePlane\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"coordinatePlane\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"width\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"height\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"xAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"yAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"showQuadrantLabels\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"points\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"lines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polygons\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"distances\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polylines\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

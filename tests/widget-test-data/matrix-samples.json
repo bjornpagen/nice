@@ -1,0 +1,400 @@
+{
+  "widgetType": "matrix",
+  "totalCount": 124,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.851Z",
+  "samples": [
+    {
+      "questionId": "x5178ddbd778bc614",
+      "problemType": "Generalist versus specialist organisms",
+      "widgetKey": "matrix 1",
+      "questionContent": "**Complete the table by selecting the most likely type of organism for each characteristic.**\n\nCharacteristic | Type of organism\n- | :-:\nnarrow niche | [[☃ dropdown 1]]\nbroad niche | [[☃ dropdown 2]]\nhas large tolerance ranges for abiotic factors | [[☃ dropdown 3]]\nhas small tolerance ranges for abi...",
+      "widgetData": {
+        "type": "matrix",
+        "options": {
+          "prefix": "",
+          "suffix": "",
+          "answers": [
+            []
+          ],
+          "cursorPosition": [
+            0,
+            0
+          ],
+          "matrixBoardSize": [
+            3,
+            3
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "xcd55c6581b0e9b93",
+      "problemType": "1. No 0 or 1 coeff",
+      "widgetKey": "matrix 1",
+      "questionContent": "Consider this system of equations.\n\n$\\left\\{\\,\\begin{align}-8x+6y+2z&=22\n\\\\\\\\3x+5y+9z&=-4\n\\\\\\\\12x+16y+8z&=10\\end{align}\\right.$\n\nThe system can be represented by the following matrix equation where $\\bold A$ is a $3\\times 3$ matrix and $\\vec b$ is a 3D vector:\n\n$\\bold{A}\\left[\\begin{array}{c}\nx \\\\\\\\...",
+      "widgetData": {
+        "type": "matrix",
+        "graded": true,
+        "static": false,
+        "options": {
+          "prefix": "",
+          "static": false,
+          "suffix": "",
+          "answers": [
+            [
+              -8,
+              6,
+              2
+            ],
+            [
+              3,
+              5,
+              9
+            ],
+            [
+              12,
+              16,
+              8
+            ]
+          ],
+          "cursorPosition": [
+            0,
+            0
+          ],
+          "matrixBoardSize": [
+            3,
+            3
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x98a36e9a494f7b6b",
+      "problemType": "Find mistake",
+      "widgetKey": "matrix 1",
+      "questionContent": "Santiago tried to evaluate an expression step by step.\n\n$\\qquad\\begin{align}\n&(4 \\cdot 10^9) \\cdot 0.00003 \\\\\\\\\n\\\\\n=&(4 \\cdot 10^9) \\cdot (3\\cdot10^{-5})&\\green{\\text{Step } 1}\\\\\\\\\n\\\\\n=&(4\\cdot3)\\cdot(10^9\\cdot10^{-5})&\\blue{\\text{Step } 2}\\\\\\\\\n\\\\\n=&12 \\cdot10^{14}&\\purple{\\text{Step } 3} \\\\\\\\\n\\end{...",
+      "widgetData": {
+        "type": "matrix",
+        "graded": true,
+        "options": {
+          "prefix": "",
+          "suffix": "",
+          "answers": [
+            []
+          ],
+          "cursorPosition": [
+            0,
+            0
+          ],
+          "matrixBoardSize": [
+            3,
+            3
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "xc00791799e1b67ad",
+      "problemType": "Revised Items-2x2",
+      "widgetKey": "matrix 2",
+      "questionContent": "$\\text E = \\left[\\begin{array}{rr}-1 & 4 \\\\ 5 & 2\\end{array}\\right]$ and $\\text C = \\left[\\begin{array}{rr}1 & 2 \\\\ -1 & 1\\end{array}\\right]$. \n\n** Let $\\text {H = EC}$. Find $\\text H$. **\n\n[[☃ matrix 2]]\n",
+      "widgetData": {
+        "type": "matrix",
+        "graded": true,
+        "static": false,
+        "options": {
+          "prefix": "$\\textbf {H = }$",
+          "static": false,
+          "suffix": "",
+          "answers": [
+            [
+              -5,
+              2
+            ],
+            [
+              3,
+              12
+            ]
+          ],
+          "cursorPosition": [
+            0,
+            0
+          ],
+          "matrixBoardSize": [
+            3,
+            3
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x13b8f9f219ed6a37",
+      "problemType": "1. Map vector",
+      "widgetKey": "matrix 1",
+      "questionContent": "Consider this matrix transformation:\n\n$\\left[\\begin{array}{c}\n-4 & -2\n\\\\\\\\\n2 & 3\n\\end{array}\\right]$\n\n**What is the image of $\\left[\\begin{array}{c}\n3\n\\\\\\\\\n-1\n\\end{array}\\right]$ under this transformation?**\n\n[[☃ matrix 1]]",
+      "widgetData": {
+        "type": "matrix",
+        "graded": true,
+        "static": false,
+        "options": {
+          "prefix": "",
+          "static": false,
+          "suffix": "",
+          "answers": [
+            [
+              -10
+            ],
+            [
+              3
+            ]
+          ],
+          "cursorPosition": [
+            0,
+            0
+          ],
+          "matrixBoardSize": [
+            2,
+            1
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xbeda0d59206243d7",
+      "problemType": "1. Multiply",
+      "widgetKey": "matrix 1",
+      "questionContent": "**Find the product.**\n\n$\\dfrac12\\cdot \\left[ \\begin{array}{cc}\n-4 & 6\n\\\\\\\\\n2 & 0 \n\\end{array} \\right]=$\n\n [[☃ matrix 1]]",
+      "widgetData": {
+        "type": "matrix",
+        "graded": true,
+        "static": false,
+        "options": {
+          "prefix": "",
+          "static": false,
+          "suffix": "",
+          "answers": [
+            [
+              -2,
+              3
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "cursorPosition": [
+            0,
+            0
+          ],
+          "matrixBoardSize": [
+            2,
+            2
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x49b74e942d916a6a",
+      "problemType": "2. 1 coeff",
+      "widgetKey": "matrix 1",
+      "questionContent": "Consider this system of equations.\n\n$\\left\\{\\,\\begin{align}12x+15y+2z&=19\n\\\\\\\\x-8y+6z&=14\n\\\\\\\\15x+12y-6z&=3\\end{align}\\right.$\n\nThe system can be represented by the following matrix equation where $\\bold A$ is a $3\\times 3$ matrix and $\\vec b$ is a 3D vector:\n\n$\\bold{A}\\left[\\begin{array}{c}\nx \\\\\\\\\n...",
+      "widgetData": {
+        "type": "matrix",
+        "graded": true,
+        "static": false,
+        "options": {
+          "prefix": "",
+          "static": false,
+          "suffix": "",
+          "answers": [
+            [
+              12,
+              15,
+              2
+            ],
+            [
+              1,
+              -8,
+              6
+            ],
+            [
+              15,
+              12,
+              -6
+            ]
+          ],
+          "cursorPosition": [
+            0,
+            0
+          ],
+          "matrixBoardSize": [
+            3,
+            3
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xdd0ea238cec70931",
+      "problemType": "3. 0 coeff",
+      "widgetKey": "matrix 1",
+      "questionContent": "Consider this system of equations.\n\n$\\left\\{\\,\\begin{align}6x+5y&=22\n\\\\\\\\-10y+22z&=24\n\\\\\\\\4x-6z&=-4\\end{align}\\right.$\n\nThe system can be represented by the following matrix equation where $\\bold A$ is a $3\\times 3$ matrix and $\\vec b$ is a 3D vector:\n\n$\\bold{A}\\left[\\begin{array}{c}\nx \\\\\\\\\ny \\\\\\\\\nz...",
+      "widgetData": {
+        "type": "matrix",
+        "graded": true,
+        "static": false,
+        "options": {
+          "prefix": "",
+          "static": false,
+          "suffix": "",
+          "answers": [
+            [
+              6,
+              5,
+              0
+            ],
+            [
+              0,
+              -10,
+              22
+            ],
+            [
+              4,
+              0,
+              -6
+            ]
+          ],
+          "cursorPosition": [
+            0,
+            0
+          ],
+          "matrixBoardSize": [
+            3,
+            3
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xcbcaeed5a760f223",
+      "problemType": "2. Map 4D vector",
+      "widgetKey": "matrix 1",
+      "questionContent": "Consider this matrix transformation:\n\n$\\left[\\begin{array}{c}\n1 & 2 & 3 & 2\n\\\\\\\\\n2 & -2 & 3 & 3\n\\\\\\\\\n1 & -3 & -2 & -3\n\\\\\\\\\n-3 & 0 & 1 & 1\n\\end{array}\\right]$\n\n**What is the image of $\\left[\\begin{array}{c}\n0\n\\\\\\\\\n-3\n\\\\\\\\\n2\n\\\\\\\\\n-5\n\\end{array}\\right]$ under this transformation?**\n\n[[☃ matrix 1]]",
+      "widgetData": {
+        "type": "matrix",
+        "graded": true,
+        "static": false,
+        "options": {
+          "prefix": "",
+          "static": false,
+          "suffix": "",
+          "answers": [
+            [
+              -10
+            ],
+            [
+              -3
+            ],
+            [
+              20
+            ],
+            [
+              -3
+            ]
+          ],
+          "cursorPosition": [
+            0,
+            0
+          ],
+          "matrixBoardSize": [
+            4,
+            1
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x4409eb264b4b7407",
+      "problemType": "Type 1",
+      "widgetKey": "matrix 1",
+      "questionContent": "Consider this matrix:\n\n$\\left[\\begin{array}{c}\n2 & -8\n\\\\\\\\\n-2 & 7\n\\end{array}\\right]$\n\n**Find the inverse of the matrix.**  \n*Give exact values. Non-integers can be given as decimals or as simplified fractions.*\n\n \n[[☃ matrix 1]]",
+      "widgetData": {
+        "type": "matrix",
+        "graded": true,
+        "static": false,
+        "options": {
+          "prefix": "",
+          "static": false,
+          "suffix": "",
+          "answers": [
+            [
+              -3.5,
+              -4
+            ],
+            [
+              -1,
+              -1
+            ]
+          ],
+          "cursorPosition": [
+            0,
+            0
+          ],
+          "matrixBoardSize": [
+            2,
+            2
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

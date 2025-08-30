@@ -1,0 +1,244 @@
+{
+  "metadata": {
+    "contentId": "x92a4eee133015446",
+    "contentType": "question",
+    "widgetType": "dataTable",
+    "createdAt": "2025-08-30T16:19:38.062Z",
+    "aiReasoning": "The content describes a table that presents data about the number of prism and total blocks in two towers based on a given ratio. This is best suited for a 'dataTable' widget, which can effectively present, organize, and allow interaction with tabular data.",
+    "aiConfidence": 0.9
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "###Strategy\n\nWe can find the ratio of prisms to total blocks by counting the equal parts of each in the tape diagram.\n\nThen we can create equivalent ratios for the specific numbers of blocks in each tower.\n\nTo make an equivalent ratio, we multiply each part of the ratio by the same number.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Identify the given ratio\n\n$\\blueE{4}+\\purpleD{1}=\\maroonD{5}$\n\nThere are $\\blueE{4}$ prisms for every $\\maroonD{5}$ total blocks.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Create equivalent ratios\n\nIf each part represents $\\goldE{4}$ blocks, there will be $16$ prisms, because $\\blueE{4}\\goldE{\\times 4} = 16$.\n\n[[☃ image 1]]\n\nIf each part represents $\\goldE{4}$ blocks, there will be $20$ total blocks, because $\\maroonD{5}\\goldE{\\times 4} = 20$.",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 4 equal parts, each labeled 4. A curved bracket above the first tape is labeled Prisms. The second tape has 1 part of the same size as in the first tape, labeled 4. A curved bracket below the second tape is labeled Pyramids. A curved bracket spanning both tapes is labeled Total blocks.",
+                "box": [
+                  320,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/66c0cb08b89d131b73260d7584939298db4c5b61",
+                  "width": 320,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "If each part represents $\\goldE{7}$ blocks, there will be $28$ prisms, because $\\blueE{4}\\goldE{\\times 7} = 28$.\n\n[[☃ image 1]]\n\nIf each part represents $\\goldE{7}$ blocks, there will be $35$ total blocks, because $\\maroonD{5}\\goldE{\\times 7} = 35$.\n",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 4 equal parts, each labeled 7. A curved bracket above the first tape is labeled Prisms. The second tape has 1 part of the same size as in the first tape, labeled 7. A curved bracket below the second tape is labeled Pyramids. A curved bracket spanning both tapes is labeled Total blocks.",
+                "box": [
+                  320,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/387169137fa55f1a39ba4a64be2a583227491969",
+                  "width": 320,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "###Completed table\n\nTower | Prisms | Total blocks\n:-: | :-: | :-:\n$A$ | $16$ | $20$\n$B$ |  $28$ | $35$",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "Cora is building towers of two different sizes using prism- and pyramid-shaped blocks. The diagram shows the ratio of prisms and pyramids in each tower.\n\n[[☃ image 1]]\n\nThe table shows the number of prisms and the number of total blocks that Cora will use on each of her towers.\n\n**Based on the ratio, complete the missing values in the table.**\n\nTower | Prisms | Total blocks\n:-: | :-: | :-:\n$A$ | $16$ | [[☃ numeric-input 3]]\n$B$ |  [[☃ numeric-input 2]] | $35$",
+        "widgets": {
+          "image 1": {
+            "type": "image",
+            "graded": true,
+            "static": false,
+            "options": {
+              "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 4 equal parts. A curved bracket above the first tape is labeled Prisms. The second tape has 1 part of the same size as in the first tape. A curved bracket below the second tape is labeled Pyramids.",
+              "box": [
+                320,
+                168
+              ],
+              "range": [
+                [
+                  0,
+                  10
+                ],
+                [
+                  0,
+                  10
+                ]
+              ],
+              "title": "",
+              "labels": [],
+              "static": false,
+              "caption": "",
+              "backgroundImage": {
+                "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/9fdbdf3233542bc5ef4c9773811991fbcaaa6afb",
+                "width": 320,
+                "height": 168
+              }
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "block"
+          },
+          "numeric-input 2": {
+            "type": "numeric-input",
+            "graded": true,
+            "static": false,
+            "options": {
+              "size": "normal",
+              "static": false,
+              "answers": [
+                {
+                  "value": 28,
+                  "status": "correct",
+                  "strict": false,
+                  "message": "",
+                  "maxError": null,
+                  "simplify": "required"
+                }
+              ],
+              "labelText": "Number of prism blocks when there are 35 total blocks",
+              "rightAlign": false,
+              "coefficient": false,
+              "multipleNumberInput": false
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          },
+          "numeric-input 3": {
+            "type": "numeric-input",
+            "graded": true,
+            "static": false,
+            "options": {
+              "size": "normal",
+              "static": false,
+              "answers": [
+                {
+                  "value": 20,
+                  "status": "correct",
+                  "strict": false,
+                  "message": "",
+                  "maxError": null,
+                  "simplify": "required"
+                }
+              ],
+              "labelText": "Number of total blocks when there are 16 prism blocks",
+              "rightAlign": false,
+              "coefficient": false,
+              "multipleNumberInput": false
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{\"rows\":[{\"id\":\"row1\",\"isInputRow\":false,\"data\":[{\"type\":\"text\",\"content\":\"A\"},{\"type\":\"text\",\"content\":\"16\"},{\"type\":\"numeric-input\",\"options\":{\"size\":\"normal\",\"answers\":[{\"value\":20,\"status\":\"correct\"}]}},{\"type\":\"text\",\"content\":\"\"}]},{\"id\":\"row2\",\"isInputRow\":false,\"data\":[{\"type\":\"text\",\"content\":\"B\"},{\"type\":\"numeric-input\",\"options\":{\"size\":\"normal\",\"answers\":[{\"value\":28,\"status\":\"correct\"}]}},{\"type\":\"text\",\"content\":\"35\"},{\"type\":\"text\",\"content\":\"\"}]}],\"columns\":[{\"header\":\"Tower\",\"alignment\":\"center\",\"sortable\":false},{\"header\":\"Prisms\",\"alignment\":\"center\",\"sortable\":false},{\"header\":\"Total blocks\",\"alignment\":\"center\",\"sortable\":false}]}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"dataTable\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"dataTable\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"title\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      0,\n      \"key\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      0,\n      \"label\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      0,\n      \"isNumeric\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"header\",\n      \"alignment\",\n      \"sortable\"\n    ],\n    \"path\": [\n      \"columns\",\n      0\n    ],\n    \"message\": \"Unrecognized key(s) in object: 'header', 'alignment', 'sortable'\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      1,\n      \"key\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      1,\n      \"label\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      1,\n      \"isNumeric\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"header\",\n      \"alignment\",\n      \"sortable\"\n    ],\n    \"path\": [\n      \"columns\",\n      1\n    ],\n    \"message\": \"Unrecognized key(s) in object: 'header', 'alignment', 'sortable'\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      2,\n      \"key\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      2,\n      \"label\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      2,\n      \"isNumeric\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"header\",\n      \"alignment\",\n      \"sortable\"\n    ],\n    \"path\": [\n      \"columns\",\n      2\n    ],\n    \"message\": \"Unrecognized key(s) in object: 'header', 'alignment', 'sortable'\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"data\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"rowHeaderKey\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"footer\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"rows\"\n    ],\n    \"path\": [],\n    \"message\": \"Unrecognized key(s) in object: 'rows'\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

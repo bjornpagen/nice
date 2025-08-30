@@ -1,0 +1,402 @@
+{
+  "widgetType": "number-line",
+  "totalCount": 213,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.851Z",
+  "samples": [
+    {
+      "questionId": "x5a50ef47021aeb97",
+      "problemType": "<=",
+      "widgetKey": "number-line 1",
+      "questionContent": "**Graph  $x \\leq 5$.**\n\n[[☃ number-line 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "number-line",
+        "graded": true,
+        "static": false,
+        "options": {
+          "range": [
+            -5,
+            5
+          ],
+          "static": false,
+          "correctX": 5,
+          "initialX": -5,
+          "tickStep": 1,
+          "correctRel": "le",
+          "labelRange": [
+            null,
+            null
+          ],
+          "labelStyle": "decimal",
+          "labelTicks": true,
+          "isInequality": true,
+          "numDivisions": null,
+          "showTooltips": false,
+          "divisionRange": [
+            1,
+            12
+          ],
+          "snapDivisions": 1
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x5fcc6348804eb8f0",
+      "problemType": "2. Same numerator",
+      "widgetKey": "number-line 1",
+      "questionContent": "**Plot $\\dfrac{4}{6}$.**\n\n[[☃ number-line 1]]\n\n**Plot $\\dfrac{4}{4}$.**\n\n[[☃ number-line 2]]\n\n**Use the number lines above to compare $\\dfrac{4}{6}$ and $\\dfrac{4}{4}$.**\n\n$\\dfrac{4}{6}$ [[☃ dropdown 1]] $\\dfrac{4}{4}$",
+      "widgetData": {
+        "type": "number-line",
+        "graded": true,
+        "static": false,
+        "options": {
+          "range": [
+            0,
+            1
+          ],
+          "static": false,
+          "correctX": 0.6666666666666666,
+          "initialX": null,
+          "tickStep": null,
+          "correctRel": "eq",
+          "labelRange": [
+            null,
+            1
+          ],
+          "labelStyle": "non-reduced",
+          "labelTicks": false,
+          "numDivisions": 6,
+          "showTooltips": false,
+          "divisionRange": [
+            1,
+            12
+          ],
+          "snapDivisions": 1
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x7f4382f4374351d3",
+      "problemType": "Tenths 1",
+      "widgetKey": "number-line 1",
+      "questionContent": "**Move the dot to $0.0$ on the number line.**\n\n[[☃ number-line 1]]",
+      "widgetData": {
+        "type": "number-line",
+        "graded": true,
+        "static": false,
+        "options": {
+          "range": [
+            0,
+            1
+          ],
+          "static": false,
+          "correctX": 0,
+          "initialX": null,
+          "tickStep": null,
+          "correctRel": "eq",
+          "labelRange": [
+            0,
+            1
+          ],
+          "labelStyle": "decimal",
+          "labelTicks": false,
+          "isInequality": false,
+          "numDivisions": 10,
+          "showTooltips": false,
+          "divisionRange": [
+            1,
+            12
+          ],
+          "snapDivisions": 1
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xaf1bd665aec5020c",
+      "problemType": "plot",
+      "widgetKey": "number-line 1",
+      "questionContent": "**Move the dot to $\\dfrac{1}{6}$ on the number line.**  \n*First, change the number of divisions to create tick marks on the number line.*\n\n[[☃ number-line 1]]\n",
+      "widgetData": {
+        "type": "number-line",
+        "graded": true,
+        "static": false,
+        "options": {
+          "range": [
+            0,
+            1
+          ],
+          "static": false,
+          "correctX": 0.16666666666666666,
+          "initialX": null,
+          "tickStep": null,
+          "correctRel": "eq",
+          "isTickCtrl": true,
+          "labelRange": [
+            null,
+            null
+          ],
+          "labelStyle": "improper",
+          "labelTicks": false,
+          "numDivisions": 1,
+          "showTooltips": false,
+          "divisionRange": [
+            1,
+            12
+          ],
+          "snapDivisions": 1
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xba596f4fe927253a",
+      "problemType": "Type 2",
+      "widgetKey": "number-line 1",
+      "questionContent": "**Evaluate** $-8-3+8+ (-3)$.\n\n [[☃ numeric-input 1]]",
+      "widgetData": {
+        "type": "number-line",
+        "graded": true,
+        "options": {
+          "range": [
+            0,
+            10
+          ],
+          "correctX": null,
+          "initialX": null,
+          "tickStep": null,
+          "correctRel": "eq",
+          "labelRange": [
+            null,
+            null
+          ],
+          "labelStyle": "decimal",
+          "labelTicks": true,
+          "numDivisions": 5,
+          "divisionRange": [
+            1,
+            12
+          ],
+          "snapDivisions": 2
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x5aba438d00a24ec0",
+      "problemType": "plot one point and select correct inequalities - Lesson 3",
+      "widgetKey": "number-line 1",
+      "questionContent": "**Which of the following inequalities are correct?**\n\n[[☃ radio 2]]\n\n\n",
+      "widgetData": {
+        "type": "number-line",
+        "graded": true,
+        "options": {
+          "range": [
+            -1,
+            1
+          ],
+          "correctX": -0.375,
+          "initialX": null,
+          "tickStep": null,
+          "correctRel": "eq",
+          "isTickCtrl": false,
+          "labelRange": [
+            "",
+            ""
+          ],
+          "labelStyle": "improper",
+          "labelTicks": true,
+          "numDivisions": 8,
+          "divisionRange": [
+            1,
+            10
+          ],
+          "snapDivisions": 2
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x58ec9209e7056649",
+      "problemType": ">=",
+      "widgetKey": "number-line 1",
+      "questionContent": "**Graph  $x \\geq 3$.**\n\n[[☃ number-line 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "number-line",
+        "graded": true,
+        "static": false,
+        "options": {
+          "range": [
+            -5,
+            5
+          ],
+          "static": false,
+          "correctX": 3,
+          "initialX": null,
+          "tickStep": 1,
+          "correctRel": "ge",
+          "labelRange": [
+            null,
+            null
+          ],
+          "labelStyle": "decimal",
+          "labelTicks": true,
+          "isInequality": true,
+          "numDivisions": null,
+          "showTooltips": false,
+          "divisionRange": [
+            1,
+            12
+          ],
+          "snapDivisions": 1
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x0fc025abb201c935",
+      "problemType": "Type 1",
+      "widgetKey": "number-line 1",
+      "questionContent": "**Evaluate** $5+\\left(-3\\right)-6$.\n\n [[☃ numeric-input 1]]",
+      "widgetData": {
+        "type": "number-line",
+        "graded": true,
+        "options": {
+          "range": [
+            0,
+            10
+          ],
+          "correctX": null,
+          "initialX": null,
+          "tickStep": null,
+          "correctRel": "eq",
+          "labelRange": [
+            null,
+            null
+          ],
+          "labelStyle": "decimal",
+          "labelTicks": true,
+          "numDivisions": 5,
+          "divisionRange": [
+            1,
+            12
+          ],
+          "snapDivisions": 2
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x8c86b9504b6b5210",
+      "problemType": "NUMBER LINE",
+      "widgetKey": "number-line 1",
+      "questionContent": "**Move the dot to the number that equals $2\\times\\dfrac{5}{2}$ .** \n\n [[☃ number-line 1]]\n\n",
+      "widgetData": {
+        "type": "number-line",
+        "graded": true,
+        "static": false,
+        "options": {
+          "range": [
+            0,
+            5
+          ],
+          "static": false,
+          "correctX": 5,
+          "initialX": null,
+          "tickStep": 0.5,
+          "correctRel": "eq",
+          "isTickCtrl": false,
+          "labelRange": [
+            null,
+            null
+          ],
+          "labelStyle": "non-reduced",
+          "labelTicks": true,
+          "numDivisions": null,
+          "showTooltips": false,
+          "divisionRange": [
+            1,
+            10
+          ],
+          "snapDivisions": 1
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x7c1629e9f8955c7f",
+      "problemType": "Graph the largest number",
+      "widgetKey": "number-line 1",
+      "questionContent": "**Graph the largest whole number that will round to $20$ if we're rounding to the nearest ten.**\n\n[[☃ number-line 1]]",
+      "widgetData": {
+        "type": "number-line",
+        "graded": true,
+        "static": false,
+        "options": {
+          "range": [
+            15,
+            26
+          ],
+          "static": false,
+          "correctX": 24,
+          "initialX": 15,
+          "tickStep": 1,
+          "correctRel": "eq",
+          "labelRange": [
+            20,
+            20
+          ],
+          "labelStyle": "decimal",
+          "labelTicks": true,
+          "numDivisions": null,
+          "showTooltips": true,
+          "divisionRange": [
+            1,
+            12
+          ],
+          "snapDivisions": 1
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

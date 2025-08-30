@@ -1,0 +1,220 @@
+{
+  "widgetType": "definition",
+  "totalCount": 12321,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.844Z",
+  "samples": [
+    {
+      "questionId": "x51b62ed2af7d01f2",
+      "problemType": "1099",
+      "widgetKey": "definition 1",
+      "questionContent": "Alejandro is a [[☃ definition 1]] software developer who has been working independently, developing software for various companies.\n\n**What 1099 form should he expect to receive from each company?**\n\n[[☃ radio 1]]\n\n",
+      "widgetData": {
+        "type": "definition",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "definition": "when you work for yourself rather than a company, often doing different jobs for multiple clients ",
+          "togglePrompt": "freelance"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x8c0688f77425689c",
+      "problemType": "Type 2",
+      "widgetKey": "definition 1",
+      "questionContent": "A refueling aircraft transfers fuel to a fighter jet flying at the same speed. The refueling aircraft's mass is ten times the fighter jet's mass.\n\n[[☃ image 2]]\n\n**If the fighter jet's kinetic energy is $0.15\\,\\text{GJ}$ ([[☃ definition 1]]), what is the refueling aircraft's kinetic energy?**\n\n[[☃ n...",
+      "widgetData": {
+        "type": "definition",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "definition": "One gigajoule equals one billion joules.",
+          "togglePrompt": "gigajoules"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xb84f2973ef650bdd",
+      "problemType": "Type 1",
+      "widgetKey": "definition 1",
+      "questionContent": "\n[[☃ image 1]]\n\n##Preparing for a global tomorrow: The case for second language education\n\n1. Today's students, more than any that came before, aren't just citizens of a country. They are citizens of a deeply [[☃ definition 9]] world. They use the internet to talk with people in different countries....",
+      "widgetData": {
+        "id": null,
+        "key": null,
+        "type": "definition",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "definition": "im·mer·sion (ih-MER-zhun): the act of learning language through being surrounded by it",
+          "togglePrompt": "immersion"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x240c369299e033fe",
+      "problemType": "Type 1: Literary POV",
+      "widgetKey": "definition 1",
+      "questionContent": "[[☃ image 1]]\n\n**Miguel de Cervantes (1547-1616) is a Spanish novelist. This excerpt is from his 1605 novel, *Don Quixote.* The novel centers on Don Quixote, a nobleman so obsessed with heroic tales that he decides to become a knight himself. In this excerpt, Don Quixote and his squire Sancho Panza ...",
+      "widgetData": {
+        "type": "definition",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "definition": "squire (SKWY-er): a young man who assists a knight",
+          "togglePrompt": "squire"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x882218a30560f9bc",
+      "problemType": "Determine Author's Purpose",
+      "widgetKey": "definition 1",
+      "questionContent": "\n[[☃ image 1]]\n\nWhile the phrase \"mind control\" may conjure up images of movie supervillains, mind control is not simply science fiction. In fact, the United States' government has, at various points in time, conducted research on the potential for mind control. Perhaps the most notorious example is...",
+      "widgetData": {
+        "type": "definition",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "definition": "The Central Intelligence Agency (CIA) is an American government agency that gathers and analyzes \"intelligence\"—or information about possible threats to the safety of the U.S. or U.S. citizens—from other countries.\n",
+          "togglePrompt": "CIA"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x729d826973242979",
+      "problemType": "Type 2 (Similar POVs)",
+      "widgetKey": "definition 1",
+      "questionContent": " [[☃ image 1]]\n\n**Text 1:**\n\n**This is an excerpt from *Ultimate Greek Mythology* by L.J. Tracosas.**\n\nWhen you wonder about something, such as what lightning is or why we have certain traditions, you can look up the answer in a book or on the internet. But ancient [[☃ definition 1]] didn't have Goo...",
+      "widgetData": {
+        "type": "definition",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "definition": "civ·i·li·za·tions (siv-uh-luh-ZAY-shunz): groups of people who live together, share laws and culture, and create things like cities and inventions",
+          "togglePrompt": "civilization"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xccb273ae2e76cfc2",
+      "problemType": "Type 4",
+      "widgetKey": "definition 1",
+      "questionContent": "[[☃ image 1]]\n\nThe world’s first submarine worked, yet never managed to be successful. But how is that possible? Well, while studying at Yale University in 1775, David Bushnell started to wonder how underwater ships might change the course of the American Revolutionary War. Inspired by this idea, he...",
+      "widgetData": {
+        "type": "definition",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "definition": "Sub·merge (sub-merj): Sink under the surface of the water",
+          "togglePrompt": "submerge"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xae5c5036384f6c93",
+      "problemType": "Type 3 (Different POVs)",
+      "widgetKey": "definition 1",
+      "questionContent": " [[☃ image 1]]\n\n**Text 1:**\n\nHave you ever wished you could tell a character what to do next? Video gamers can! While traditional stories in books and movies have [[☃ definition 1]] plots, video games let players influence and shape the narrative themselves. When players make choices—like deciding h...",
+      "widgetData": {
+        "type": "definition",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "definition": "pre·set (PREE-set): already decided",
+          "togglePrompt": "preset"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x02542be7abba5f70",
+      "problemType": "Type 3 (Supporting points)",
+      "widgetKey": "definition 1",
+      "questionContent": "\n [[☃ image 1]]\n\nCould the key to curing cancer be found 254 miles above our planet? Recently, scientists working on Earth and the International Space Station have been researching a new cancer treatment. The treatment prevents blood from flowing to [[☃ definition 4]] [[☃ definition 3]], stopping th...",
+      "widgetData": {
+        "type": "definition",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "definition": "pronounced en-doh-THEE-lee-ul",
+          "togglePrompt": "endothelial"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x1476026f7b550145",
+      "problemType": " Type 4 (informational, making inferences)",
+      "widgetKey": "definition 1",
+      "questionContent": "\n[[☃ image 1]]\n\nThe next time your parents criticize you for wasting time on Minecraft, tell them you’re enhancing your creativity. \n\nMinecraft, a video game where players use simulated blocks to build virtual worlds, may be good for more than just recreation. In an experiment, people who had just p...",
+      "widgetData": {
+        "type": "definition",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "definition": "par·tic·i·pants (par-TIS-uh-pents): people who take part in an experiment",
+          "togglePrompt": "participants"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

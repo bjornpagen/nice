@@ -1,0 +1,244 @@
+{
+  "metadata": {
+    "contentId": "xc09eadc3cdc15723",
+    "contentType": "question",
+    "widgetType": "dataTable",
+    "createdAt": "2025-08-30T16:19:57.608Z",
+    "aiReasoning": "A data table widget is suitable for this scenario because it provides a structured format for displaying tabulated data, such as the number of winning and total spaces in the wheel, which can be filled out by the user. The table is a critical part of the math problem presented, serving the purpose of illustrating and interacting with ratios of winning to total spaces. The given table includes interactive components that the user must fill out, which aligns well with the capabilities of a data table.",
+    "aiConfidence": 0.95
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "###Strategy\n\nWe can find the ratio of winning spaces to total spaces by counting the equal parts of each in the tape diagram.\n\nThen we can create equivalent ratios for the specific numbers of spaces in each version of the wheel.\n\nTo make an equivalent ratio, we multiply each part of the ratio by the same number.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Identify the given ratio\n\n$\\blueE{5}+\\purpleD{6}=\\maroonD{11}$\n\nThere are $\\blueE{5}$ winning spaces for every $\\maroonD{11}$ total spaces.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Create equivalent ratios\n\nIf each part represents $\\goldE{2}$ spaces, there will be $10$ winning spaces, because $\\blueE{5}\\goldE{\\times 2} = 10$.\n\n[[☃ image 1]]\n\nIf each part represents $\\goldE{2}$ spaces, there will be $22$ total spaces, because $\\maroonD{11}\\goldE{\\times 2} = 22$.",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 5 equal parts, each labeled 2. A curved bracket above the first tape is labeled Winning spaces. The second tape has 6 equal parts of the same size as in the first tape, each labeled 2. A curved bracket below the second tape is labeled Non-winning spaces. A curved bracket spanning both tapes is labeled Total spaces.",
+                "box": [
+                  320,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/d91b6de4475a72748f676d1b4288794e8bff8713",
+                  "width": 320,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "If each part represents $\\goldE{3}$ spaces, there will be $15$ winning spaces, because $\\blueE{5}\\goldE{\\times 3} = 15$.\n\n[[☃ image 1]]\n\nIf each part represents $\\goldE{3}$ spaces, there will be $33$ total spaces, because $\\maroonD{11}\\goldE{\\times 3} = 33$.\n",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 5 equal parts, each labeled 3. A curved bracket above the first tape is labeled Winning spaces. The second tape has 6 equal parts of the same size as in the first tape, each labeled 3. A curved bracket below the second tape is labeled Non-winning spaces. A curved bracket spanning both tapes is labeled Total spaces.",
+                "box": [
+                  320,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/012fb395abc278d1884641570028a5110b219ea3",
+                  "width": 320,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "###Completed table\n\nWinning spaces | Total spaces\n:-: | :-: | :-:\n$10$ | $22$\n$15$ | $33$",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "Boden is making a prize wheel for the school fair. The diagram shows the ratio of winning spaces to non-winning spaces.\n\n[[☃ image 1]]\n\nThe table shows the numbers of winning and total spaces that could be on the wheel.\n\n**Based on the ratio, complete the missing values in the table.**\n\nWinning spaces | Total spaces\n:-: | :-: | :-:\n$10$ | [[☃ numeric-input 4]]\n [[☃ numeric-input 5]] | $33$",
+        "widgets": {
+          "image 1": {
+            "type": "image",
+            "graded": true,
+            "static": false,
+            "options": {
+              "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 5 equal parts. A curved bracket above the first tape is labeled Winning spaces. The second tape has 6 equal parts of the same size as in the first tape. A curved bracket below the second tape is labeled Non-winning spaces.",
+              "box": [
+                320,
+                168
+              ],
+              "range": [
+                [
+                  0,
+                  10
+                ],
+                [
+                  0,
+                  10
+                ]
+              ],
+              "title": "",
+              "labels": [],
+              "static": false,
+              "caption": "",
+              "backgroundImage": {
+                "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e8e6db86a48c2c3d8fc1bce629701fec4842d233",
+                "width": 320,
+                "height": 168
+              }
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "block"
+          },
+          "numeric-input 4": {
+            "type": "numeric-input",
+            "graded": true,
+            "static": false,
+            "options": {
+              "size": "normal",
+              "static": false,
+              "answers": [
+                {
+                  "value": 22,
+                  "status": "correct",
+                  "strict": false,
+                  "message": "",
+                  "maxError": null,
+                  "simplify": "required"
+                }
+              ],
+              "labelText": "Total spaces when there are 10 winning spaces",
+              "rightAlign": false,
+              "coefficient": false,
+              "multipleNumberInput": false
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          },
+          "numeric-input 5": {
+            "type": "numeric-input",
+            "graded": true,
+            "static": false,
+            "options": {
+              "size": "normal",
+              "static": false,
+              "answers": [
+                {
+                  "value": 15,
+                  "status": "correct",
+                  "strict": false,
+                  "message": "",
+                  "maxError": null,
+                  "simplify": "required"
+                }
+              ],
+              "labelText": "Winning spaces when there are 33 total spaces",
+              "rightAlign": false,
+              "coefficient": false,
+              "multipleNumberInput": false
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{\"headers\":[\"Winning spaces\",\"Total spaces\"],\"rows\":[[\"10\",\"[[☃ numeric-input 4]]\"],[\"[[☃ numeric-input 5]]\",\"33\"]],\"columnAlignments\":[\"center\",\"center\"],\"rowHeader\":false}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"dataTable\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"dataTable\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"title\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"data\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"rowHeaderKey\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"footer\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"headers\",\n      \"rows\",\n      \"columnAlignments\",\n      \"rowHeader\"\n    ],\n    \"path\": [],\n    \"message\": \"Unrecognized key(s) in object: 'headers', 'rows', 'columnAlignments', 'rowHeader'\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

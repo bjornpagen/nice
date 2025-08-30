@@ -1,0 +1,324 @@
+{
+  "widgetType": "dropdown",
+  "totalCount": 5632,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.840Z",
+  "samples": [
+    {
+      "questionId": "xc37253f770cca4e8",
+      "problemType": "Ecological pyramid definitions",
+      "widgetKey": "dropdown 1",
+      "questionContent": "**Complete the statements about ecological pyramids.**\n\n* Biomass pyramids show the [[☃ dropdown 9]] at each trophic level. One type of measurement used with these pyramids is [[☃ dropdown 8]].\n\n* Energy pyramids show the [[☃ dropdown 10]] at each trophic level. One type of measurement used with the...",
+      "widgetData": {
+        "type": "dropdown",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            {
+              "content": "Biomass pyramids",
+              "correct": false
+            },
+            {
+              "content": "Energy pyramids",
+              "correct": true
+            },
+            {
+              "content": "Numbers pyramids",
+              "correct": false
+            }
+          ],
+          "placeholder": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x38f9eeb8dc8a89cb",
+      "problemType": "Type 2: KE Relationships",
+      "widgetKey": "dropdown 1",
+      "questionContent": "**Complete the following statements.**\n\n* As the temperature of a system decreases, the kinetic energy of its particles [[☃ dropdown 1]], and those particles move [[☃ dropdown 2]].\n\n* A decrease in temperature usually makes an object [[☃ dropdown 3]].",
+      "widgetData": {
+        "type": "dropdown",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            {
+              "content": "decreases",
+              "correct": true
+            },
+            {
+              "content": "increases",
+              "correct": false
+            }
+          ],
+          "placeholder": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xe7b96a416385854b",
+      "problemType": "Cell differentiation",
+      "widgetKey": "dropdown 1",
+      "questionContent": "**Complete the statements.**\n\n* During cell differentiation, [[☃ dropdown 1]] stem cells give rise to [[☃ dropdown 2]] body cells, such as neurons and muscle cells.\n\n* Cell differentiation occurs as a result of [[☃ dropdown 3]].",
+      "widgetData": {
+        "type": "dropdown",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            {
+              "content": "specialized",
+              "correct": false
+            },
+            {
+              "content": "unspecialized",
+              "correct": true
+            }
+          ],
+          "placeholder": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x9e68a8d7fb4a98fb",
+      "problemType": "Balanced and unbalanced forces",
+      "widgetKey": "dropdown 1",
+      "questionContent": "**Complete the statements.**\n\n* If the forces acting on an object are unbalanced, the object’s motion [[☃ dropdown 1]] change.\n\n* If the forces acting on an object are balanced, the object’s motion [[☃ dropdown 2]] change.",
+      "widgetData": {
+        "type": "dropdown",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            {
+              "content": "will",
+              "correct": true
+            },
+            {
+              "content": "will not",
+              "correct": false
+            }
+          ],
+          "placeholder": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x9f1139ac605a55b0",
+      "problemType": "Sound wave animation",
+      "widgetKey": "dropdown 1",
+      "questionContent": "A slow-motion model of a periodic sound wave is shown below. Each dot represents an air particle. The gray surface on the left vibrates, causing sound waves to travel through the air.\n\n [[☃ image 1]]\n\n**Analyze the model and complete the predictions.**\n\n* If the gray surface moves back and forth mor...",
+      "widgetData": {
+        "type": "dropdown",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            {
+              "content": "amplitude",
+              "correct": false
+            },
+            {
+              "content": "speed",
+              "correct": false
+            },
+            {
+              "content": "frequency",
+              "correct": true
+            }
+          ],
+          "placeholder": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xc94c2a9da74bdc6f",
+      "problemType": "Identify outcomes of species interactions (predation, competition, mutualism, commensalism, and parasitism)",
+      "widgetKey": "dropdown 1",
+      "questionContent": "**Complete the table to describe the interactions.**\n\nInteraction | Effect on Species 1 | Effect on Species 2\n:-: | :-: | :-:\nmutualism | [[☃ dropdown 1]] | positive\ncommensalism | positive | [[☃ dropdown 3]]\nparasitism | positive | [[☃ dropdown 4]]\npredation | [[☃ dropdown 5]] | negative\ncompetitio...",
+      "widgetData": {
+        "type": "dropdown",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            {
+              "content": "negative",
+              "correct": false
+            },
+            {
+              "content": "neutral",
+              "correct": false
+            },
+            {
+              "content": "positive",
+              "correct": true
+            }
+          ],
+          "placeholder": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x140916b86c412dda",
+      "problemType": "Changes in fossil fuel consumption",
+      "widgetKey": "dropdown 1",
+      "questionContent": "One human activity, burning fossil fuels, is responsible for the majority of climate change. The graph below gives information about the use of fossil and non-fossil fuels in the United States from 1776 to 2021. The line in the graph represents the share of U.S. energy consumption that came from fos...",
+      "widgetData": {
+        "type": "dropdown",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            {
+              "content": "1850",
+              "correct": false
+            },
+            {
+              "content": "1900",
+              "correct": true
+            },
+            {
+              "content": "1950",
+              "correct": false
+            }
+          ],
+          "placeholder": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x492ef7a3bd32cf90",
+      "problemType": "Cells in the stages of human development",
+      "widgetKey": "dropdown 1",
+      "questionContent": "**Complete the table to describe the cells of a zygote, embryo, and fetus.**\n\n | Number of cells | Contains differentiated cell(s)?\n- | :-: | :-:\nembryo | [[☃ dropdown 7]] | [[☃ dropdown 8]]\nfetus | [[☃ dropdown 1]] | [[☃ dropdown 2]]\nzygote | [[☃ dropdown 3]] | [[☃ dropdown 4]]",
+      "widgetData": {
+        "type": "dropdown",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            {
+              "content": "one",
+              "correct": false
+            },
+            {
+              "content": "more than one",
+              "correct": true
+            }
+          ],
+          "placeholder": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xf38a7dd5886ba438",
+      "problemType": "het vs hom",
+      "widgetKey": "dropdown 10",
+      "questionContent": "**Use the images and descriptions below to classify each mixture as heterogeneous or homogeneous.**\n\nImage | Description | Type of mixture \n:-: | :- | -\n![a textured rock with areas of white, grey, and gold scattered throughout nonuniformly](https://cdn.kastatic.org/ka-content-images/23a1eef00576532...",
+      "widgetData": {
+        "type": "dropdown",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            {
+              "content": "heterogeneous mixture",
+              "correct": true
+            },
+            {
+              "content": "homogeneous mixture",
+              "correct": false
+            }
+          ],
+          "placeholder": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xf430fb58148e0760",
+      "problemType": "Attract and repel",
+      "widgetKey": "dropdown 1",
+      "questionContent": "**Complete the table for each pair of objects.**\n\n**Description of objects** | **Will the objects attract or repel each other?**\n:- | :-\ntwo charged objects, both with positive charge | [[☃ dropdown 1]]\ntwo charged objects, one with positive charge and the other with negative charge | [[☃ dropdown 2...",
+      "widgetData": {
+        "type": "dropdown",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "choices": [
+            {
+              "content": "attract",
+              "correct": false
+            },
+            {
+              "content": "repel",
+              "correct": true
+            }
+          ],
+          "placeholder": ""
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

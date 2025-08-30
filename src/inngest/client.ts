@@ -380,6 +380,30 @@ const events = {
 			jsonData: z.record(z.any()).optional(),
 			targetUrl: z.string().optional()
 		})
+	},
+	// Widget Reverse Engineering Events
+	"qa/widget.reverse-engineer-from-svg": {
+		data: z.object({
+			svgContent: z.string().min(1).describe("The SVG content to reverse engineer"),
+			expectedWidgetType: z.string().optional().describe("Optional hint about expected widget type"),
+			sourceId: z.string().optional().describe("Optional source identifier for tracking"),
+			generateValidation: z.boolean().default(true).describe("Whether to validate by regenerating the widget")
+		})
+	},
+	"qa/widget.reverse-engineer-batch": {
+		data: z.object({
+			courseIds: z.array(z.string().min(1)).optional().describe("Course IDs to process"),
+			widgetTypes: z.array(z.string()).optional().describe("Specific widget types to focus on"),
+			limit: z.number().positive().default(50).describe("Maximum number of SVGs to process")
+		})
+	},
+	"qa/widget.orchestrate-reverse-engineering": {
+		data: z.object({
+			courseIds: z.array(z.string().min(1)).optional().describe("Specific course IDs to process"),
+			subjects: z.array(z.enum(["science", "math", "history"])).optional().describe("Subject areas to process"),
+			limit: z.number().positive().default(100).describe("Maximum number of SVGs to process"),
+			generateValidation: z.boolean().default(true).describe("Whether to validate by regenerating widgets")
+		})
 	}
 }
 

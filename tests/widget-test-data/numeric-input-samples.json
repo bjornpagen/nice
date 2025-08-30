@@ -1,0 +1,352 @@
+{
+  "widgetType": "numeric-input",
+  "totalCount": 16777,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.847Z",
+  "samples": [
+    {
+      "questionId": "x8c0688f77425689c",
+      "problemType": "Type 2",
+      "widgetKey": "numeric-input 1",
+      "questionContent": "A refueling aircraft transfers fuel to a fighter jet flying at the same speed. The refueling aircraft's mass is ten times the fighter jet's mass.\n\n[[☃ image 2]]\n\n**If the fighter jet's kinetic energy is $0.15\\,\\text{GJ}$ ([[☃ definition 1]]), what is the refueling aircraft's kinetic energy?**\n\n[[☃ n...",
+      "widgetData": {
+        "type": "numeric-input",
+        "graded": true,
+        "static": false,
+        "options": {
+          "size": "normal",
+          "static": false,
+          "answers": [
+            {
+              "value": 1.5,
+              "status": "correct",
+              "strict": false,
+              "message": "",
+              "maxError": null,
+              "simplify": "required"
+            }
+          ],
+          "labelText": "daughter's kinetic energy in Joules",
+          "rightAlign": true,
+          "coefficient": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xe8c64be1dc7a4e29",
+      "problemType": "Frequency of natural hazards",
+      "widgetKey": "numeric-input 1",
+      "questionContent": "When a natural hazard has a negative impact on humans, it is called a natural disaster. The table below shows the number of major natural disasters that occurred worldwide in 2020.\n\nType of natural disaster | Number of occurrences\n:-: | :-:\nFlood | $193$\nStorm | $69$\nLandslide | $19$\nEarthquake | $1...",
+      "widgetData": {
+        "type": "numeric-input",
+        "graded": true,
+        "static": false,
+        "options": {
+          "size": "normal",
+          "static": false,
+          "answers": [
+            {
+              "value": 22,
+              "status": "correct",
+              "strict": false,
+              "message": "",
+              "maxError": 1,
+              "simplify": "required"
+            }
+          ],
+          "labelText": "",
+          "rightAlign": false,
+          "coefficient": false,
+          "multipleNumberInput": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x4120483d",
+      "problemType": "Find percent - 1",
+      "widgetKey": "numeric-input 1",
+      "questionContent": "A gumball machine contains $23$ green gumballs, $52$ red gumballs, $34$  blue gumballs, $61$ yellow gumballs, and $30$ pink gumballs.  \n\n**What percentage of the gumballs are red?**\n\n[[☃ numeric-input 1]] $\\%$",
+      "widgetData": {
+        "type": "numeric-input",
+        "graded": true,
+        "static": false,
+        "options": {
+          "size": "normal",
+          "static": false,
+          "answers": [
+            {
+              "value": 26,
+              "status": "correct",
+              "strict": false,
+              "message": "",
+              "maxError": null,
+              "simplify": "required"
+            }
+          ],
+          "labelText": "",
+          "rightAlign": false,
+          "coefficient": false,
+          "multipleNumberInput": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x9d03948ea1994cb6",
+      "problemType": "Identify scale factor - grid",
+      "widgetKey": "numeric-input 1",
+      "questionContent": "Figure $B$ is a scaled copy of Figure $A$.  \n\n[[☃ image 1]]\n\n\n\n**What is the scale factor from Figure $A$ to Figure $B$?**\n\n[[☃ numeric-input 1]]\n\n",
+      "widgetData": {
+        "type": "numeric-input",
+        "graded": true,
+        "static": false,
+        "options": {
+          "size": "normal",
+          "static": false,
+          "answers": [
+            {
+              "value": 0.5,
+              "status": "correct",
+              "strict": false,
+              "message": "",
+              "maxError": null,
+              "simplify": "required",
+              "answerForms": [
+                "proper",
+                "improper"
+              ]
+            }
+          ],
+          "labelText": "scale factor",
+          "rightAlign": false,
+          "coefficient": false,
+          "multipleNumberInput": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xe84e6c2d1c71706d",
+      "problemType": "Changes in CO2 concentration",
+      "widgetKey": "numeric-input 1",
+      "questionContent": "Carbon dioxide ($\\ce{CO2}$) is the main greenhouse gas causing climate change. Humans began emitting large amounts of $\\ce{CO2}$ during the Industrial Revolution, a period of development that started in the mid-1700s.\n\nThe graph below shows $\\ce{CO2}$ levels in the atmosphere before and after the st...",
+      "widgetData": {
+        "type": "numeric-input",
+        "graded": true,
+        "static": false,
+        "options": {
+          "size": "normal",
+          "static": false,
+          "answers": [
+            {
+              "value": 135,
+              "status": "correct",
+              "strict": false,
+              "message": "",
+              "maxError": 15,
+              "simplify": "required"
+            }
+          ],
+          "labelText": "",
+          "rightAlign": false,
+          "coefficient": false,
+          "multipleNumberInput": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xbab03931303107e1",
+      "problemType": "3. Altitude - quadratic methods",
+      "widgetKey": "numeric-input 1",
+      "questionContent": "**In the following triangle, find length $BW$.**  \n*Round to the nearest tenth.*\n\n[[☃ image 1]]\n\n$BW= $ [[☃ numeric-input 1]]",
+      "widgetData": {
+        "type": "numeric-input",
+        "graded": true,
+        "static": false,
+        "options": {
+          "size": "normal",
+          "static": false,
+          "answers": [
+            {
+              "value": 6.4,
+              "status": "correct",
+              "strict": false,
+              "message": "",
+              "maxError": 0.1,
+              "simplify": "optional"
+            }
+          ],
+          "labelText": "Length of B W.",
+          "rightAlign": false,
+          "coefficient": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xcdf06d9dedeb089e",
+      "problemType": "Type 1",
+      "widgetKey": "numeric-input 1",
+      "questionContent": "The equation of a circle is given below.\n\n$(x+7)^{2}+(y+8)^{2} = \\dfrac{4}{9}$\n\n** What is its center?**\n\n$($[[☃ numeric-input 1]] $,$ [[☃ numeric-input 2]]$)$\n\n\n** What is its radius?**  \n*If necessary, round your answer to two decimal places.*\n\n[[☃ numeric-input 3]] units",
+      "widgetData": {
+        "type": "numeric-input",
+        "graded": true,
+        "static": false,
+        "options": {
+          "size": "normal",
+          "static": false,
+          "answers": [
+            {
+              "value": -7,
+              "status": "correct",
+              "strict": false,
+              "message": "",
+              "maxError": null,
+              "simplify": "required"
+            }
+          ],
+          "labelText": "",
+          "rightAlign": false,
+          "coefficient": false,
+          "multipleNumberInput": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x9beced172f94de5e",
+      "problemType": "Supplementary",
+      "widgetKey": "numeric-input 1",
+      "questionContent": "$\\angle x$ and $\\angle y$ are supplementary angles.  $\\angle y$ measures $97^\\circ$.  \n\n**What is the measure of $\\angle x$?**  \n\n\n[[☃ numeric-input 1]] $\\Large{^\\circ}$",
+      "widgetData": {
+        "type": "numeric-input",
+        "graded": true,
+        "static": false,
+        "options": {
+          "size": "normal",
+          "static": false,
+          "answers": [
+            {
+              "value": 83,
+              "status": "correct",
+              "strict": false,
+              "message": "",
+              "maxError": 0,
+              "simplify": "required"
+            }
+          ],
+          "labelText": "",
+          "rightAlign": false,
+          "coefficient": false,
+          "multipleNumberInput": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x237ed3c4fbc626d2",
+      "problemType": "problem-type-5",
+      "widgetKey": "numeric-input 1",
+      "questionContent": "Ishaan is $2$ times as old as Christopher. $35$ years ago, Ishaan was $7$ times as old as Christopher. \n\n**How old is Christopher now?**\n\n[[☃ numeric-input 1]]",
+      "widgetData": {
+        "type": "numeric-input",
+        "graded": true,
+        "static": false,
+        "options": {
+          "size": "normal",
+          "static": false,
+          "answers": [
+            {
+              "value": 42,
+              "status": "correct",
+              "strict": false,
+              "message": "",
+              "maxError": 0,
+              "simplify": true
+            }
+          ],
+          "labelText": "",
+          "coefficient": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x1b1f7d76defa6955",
+      "problemType": "Type 3: Numerator/Denom ops",
+      "widgetKey": "numeric-input 1",
+      "questionContent": "**Evaluate the expression.**  \n*Do not round your answer.*\n\n$\\dfrac{17}{6^2}-\\dfrac{5}{9\\cdot4}=$ [[☃ numeric-input 1]]",
+      "widgetData": {
+        "type": "numeric-input",
+        "graded": true,
+        "static": false,
+        "options": {
+          "size": "normal",
+          "static": false,
+          "answers": [
+            {
+              "value": 0.3333333333333333,
+              "status": "correct",
+              "strict": false,
+              "message": "",
+              "maxError": null,
+              "simplify": "optional",
+              "answerForms": [
+                "proper",
+                "improper"
+              ]
+            }
+          ],
+          "labelText": "",
+          "rightAlign": false,
+          "coefficient": false,
+          "multipleNumberInput": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "metadata": {
+    "contentId": "x5ba164dfae764b0b",
+    "contentType": "question",
+    "widgetType": "coordinatePlane",
+    "createdAt": "2025-08-30T16:19:07.578Z",
+    "aiReasoning": "The content involves analyzing and comparing ratios using a visual depiction, which suggests the use of a coordinate plane to represent these relationships graphically. However, since the original content uses static images instead of a dynamic coordinate system, no direct data for a coordinate plane can be extracted.",
+    "aiConfidence": 0.2
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "###Strategy\n\nWe can find the ratio of liver biscuits to total biscuits by counting the equal parts of each in the tape diagram.\n\nThen we can create an equivalent ratio by picking a number of biscuits for each equal part in the diagram to represent a total of $24$ liver biscuits.\n\nTo make an equivalent ratio, we multiply each part of the ratio by the same number.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Identify the given ratio\n\n$\\goldE{3}+\\tealE{4}=\\purpleD{7}$\n\nLenny feeds Roo $\\tealE{4}$ liver biscuits for every $\\purpleD{7}$ total biscuits.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Create an equivalent ratio\n\nIf each part represents $\\maroonD{6}$ biscuits, there will be $42$ total biscuits, because $\\purpleD{7} \\maroonD{\\times 6} = 42$.\n\n[[☃ image 1]]\n\nIf each part represents $\\maroonD{6}$ biscuits, there will be $24$ liver biscuits, because $\\tealE{4}\\maroonD{\\times 6} = 24$.\n\n",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 3 equal parts, each labeled 6. A curved bracket above the first tape is labeled Pumpkin biscuits. The second tape has 4 equal parts of the same size as in the first tape, each labeled 6. A curved bracket below the second tape is labeled Liver biscuits.. A curved bracket spanning both tapes is labeled Total biscuits.",
+                "box": [
+                  200,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c9a08c8b8b9df6d513eb36ee60a0733a653a0583",
+                  "width": 200,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "###Solution\n\nThe diagram with a part size of $\\maroonD{6}$ biscuits best shows how many total biscuits should Lenny buy when they buy $24$ liver biscuits.\n\n[[☃ image 1]]",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 3 equal parts, each labeled 6. A curved bracket above the first tape is labeled Pumpkin biscuits. The second tape has 4 equal parts of the same size as in the first tape, each labeled 6. A curved bracket below the second tape is labeled Liver biscuits.",
+                "box": [
+                  200,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/baddfcbbff8318cf99a0e06d9a29c4cb066569b4",
+                  "width": 200,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "Lenny's dog Roo loves dog biscuits. Lenny buys two different flavors and feeds them to Roo in the ratio represented in the tape diagram.\n\n[[☃ image 1]]\n\nAll of the following diagrams represent equivalent ratios.\n\n**Which diagram best shows how many total biscuits Lenny should buy when they buy $24$ liver biscuits?**\n\n[[☃ radio 1]]",
+        "widgets": {
+          "image 1": {
+            "type": "image",
+            "graded": true,
+            "static": false,
+            "options": {
+              "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 3 equal parts. A curved bracket above the first tape is labeled Pumpkin biscuits. The second tape has 4 equal parts of the same size as in the first tape. A curved bracket below the second tape is labeled Liver biscuits.",
+              "box": [
+                200,
+                168
+              ],
+              "range": [
+                [
+                  0,
+                  10
+                ],
+                [
+                  0,
+                  10
+                ]
+              ],
+              "title": "",
+              "labels": [],
+              "static": false,
+              "caption": "",
+              "backgroundImage": {
+                "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/8952ed426ce2e54000ac71920635e4bc3ff4980e",
+                "width": 200,
+                "height": 168
+              }
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "block"
+          },
+          "radio 1": {
+            "type": "radio",
+            "graded": true,
+            "static": false,
+            "options": {
+              "choices": [
+                {
+                  "content": "![A tape diagram with 2 tapes of unequal lengths. The first tape has 3 equal parts, each labeled 6. A curved bracket above the first tape is labeled Pumpkin biscuits. The second tape has 4 equal parts of the same size as in the first tape, each labeled 6. A curved bracket below the second tape is labeled Liver biscuits.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/baddfcbbff8318cf99a0e06d9a29c4cb066569b4)",
+                  "correct": true
+                },
+                {
+                  "content": "![A tape diagram with 2 tapes of unequal lengths. The first tape has 3 equal parts, each labeled 8. A curved bracket above the first tape is labeled Pumpkin biscuits. The second tape has 4 equal parts of the same size as in the first tape, each labeled 8. A curved bracket below the second tape is labeled Liver biscuits.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/bd0dbfd3c7f6fe9b5ffef0eb7c0d8788f258e20d)",
+                  "correct": false
+                },
+                {
+                  "content": "![A tape diagram with 2 tapes of unequal lengths. The first tape has 3 equal parts, each labeled 12. A curved bracket above the first tape is labeled Pumpkin biscuits. The second tape has 4 equal parts of the same size as in the first tape, each labeled 12. A curved bracket below the second tape is labeled Liver biscuits.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/43bd2e6173bd567a7a7ccb0c059d348c1e78dbec)",
+                  "correct": false,
+                  "isNoneOfTheAbove": false
+                }
+              ],
+              "randomize": false,
+              "countChoices": false,
+              "displayCount": null,
+              "multipleSelect": false,
+              "deselectEnabled": false,
+              "hasNoneOfTheAbove": false
+            },
+            "version": {
+              "major": 1,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"coordinatePlane\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"coordinatePlane\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"width\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"height\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"xAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"yAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"showQuadrantLabels\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"points\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"lines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polygons\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"distances\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polylines\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

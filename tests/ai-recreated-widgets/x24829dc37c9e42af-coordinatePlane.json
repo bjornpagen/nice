@@ -1,0 +1,173 @@
+{
+  "metadata": {
+    "contentId": "x24829dc37c9e42af",
+    "contentType": "question",
+    "widgetType": "coordinatePlane",
+    "createdAt": "2025-08-30T16:20:35.782Z",
+    "aiReasoning": "The original content primarily discusses the use of a tape diagram to illustrate a ratio of brown to red notebooks and transforms this into finding equivalent ratios. While the primary widget of interest in the original content is an image (tape diagram), recreating a coordinate plane widget that visualizes the transformation of the given ratio is not directly applicable. Therefore, no direct translation into a coordinatePlane widget is possible from this data, as this type of visualization isn't a traditional use case for this widget type.",
+    "aiConfidence": 0
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "###Strategy\n\nWe can find the ratio of brown notebooks to red notebooks by counting the equal parts of each in the tape diagram.\n\nThen we can create an equivalent ratio by picking a number of notebooks for each equal part in the diagram to represent $24$ red notebooks.\n\nTo make an equivalent ratio, we multiply each part of the ratio by the same number.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Identify the given ratio\n\nThere are $\\goldE{5}$ brown notebooks for every $\\redE{3}$ red notebooks.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Create an equivalent ratio\n\nIf each part represents $\\purpleD{8}$ notebooks, there will be $40$ brown notebooks, because $\\goldE{5}\\purpleD{\\times 8} = 40$.\n\n[[☃ image 1]]\n\nIf each part represents $\\purpleD{8}$ notebooks, there will be $24$ red notebooks, because $\\redE{3}\\purpleD{\\times 8} = 24$.",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 5 equal parts, each labeled 8. A curved bracket above the first tape is labeled Brown notebooks. The second tape has 3 equal parts of the same size as in the first tape, each labeled 8.  A curved bracket below the second tape is labeled Red notebooks.",
+                "box": [
+                  320,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/817825defd7d4ed1ebd729ce7272196c61a28035",
+                  "width": 320,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "If there are $24$ red notebooks, then there are $40$ brown notebooks.",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "A teacher buys packs of notebooks to give to their students. The tape diagram represents the ratio of brown notebooks to red notebooks.\n\n[[☃ image 1]]\n\n**Based on the ratio, if there are $24$ red notebooks, what is the number of brown notebooks?**\n\n[[☃ numeric-input 1]]  brown notebooks",
+        "widgets": {
+          "image 1": {
+            "type": "image",
+            "graded": true,
+            "static": false,
+            "options": {
+              "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 5 equal parts. A curved bracket above the first tape is labeled Brown notebooks. The second tape has 3 equal parts of the same size as in the first tape.  A curved bracket below the second tape is labeled Red notebooks.",
+              "box": [
+                320,
+                168
+              ],
+              "range": [
+                [
+                  0,
+                  10
+                ],
+                [
+                  0,
+                  10
+                ]
+              ],
+              "title": "",
+              "labels": [],
+              "static": false,
+              "caption": "",
+              "backgroundImage": {
+                "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/3cd9e96396573313eb9367349d8835bcce0812b1",
+                "width": 320,
+                "height": 168
+              }
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "block"
+          },
+          "numeric-input 1": {
+            "type": "numeric-input",
+            "graded": true,
+            "static": false,
+            "options": {
+              "size": "normal",
+              "static": false,
+              "answers": [
+                {
+                  "value": 40,
+                  "status": "correct",
+                  "strict": false,
+                  "message": "",
+                  "maxError": null,
+                  "simplify": "required"
+                }
+              ],
+              "labelText": "number of brown notebooks",
+              "rightAlign": false,
+              "coefficient": false,
+              "multipleNumberInput": false
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"coordinatePlane\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"coordinatePlane\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"width\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"height\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"xAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"yAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"showQuadrantLabels\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"points\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"lines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polygons\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"distances\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polylines\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

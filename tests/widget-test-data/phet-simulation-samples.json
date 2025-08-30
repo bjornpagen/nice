@@ -1,0 +1,208 @@
+{
+  "widgetType": "phet-simulation",
+  "totalCount": 22,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.851Z",
+  "samples": [
+    {
+      "questionId": "x047feaa015f83388",
+      "problemType": "Greenhouse effect simulation",
+      "widgetKey": "phet-simulation 1",
+      "questionContent": "Now that we've reviewed the basics of the greenhouse effect, let's dive deeper into this phenomenon using the *Greenhouse Effect* simulation from PhET. We'll explore various aspects of the simulation as we complete a series of tasks.\n\n[[☃ explanation 1]]\n\n**Task 1**: First, let’s use the simulation ...",
+      "widgetData": {
+        "type": "phet-simulation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "url": "https://phet.colorado.edu/sims/html/greenhouse-effect/latest/greenhouse-effect_all.html?screen=3&initialScreen=3",
+          "description": "A PhET simulation entitled Greenhouse Effect allows users to modify the effect of greenhouse gases on sunlight, infrared radiation, and surface temperature."
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x0e7a6420e66d9845",
+      "problemType": "PhET simulation: natural selection",
+      "widgetKey": "phet-simulation 1",
+      "questionContent": "Now that we've reviewed the basics of natural selection and its role in adaptation, let's dive deeper into this phenomenon using the *Natural Selection* simulation from PhET. We'll explore various aspects of the simulation as we complete a series of tasks.\n\n[[☃ explanation 1]]\n\n**Task 1**: Use the s...",
+      "widgetData": {
+        "type": "phet-simulation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "url": "https://phet.colorado.edu/sims/html/natural-selection/latest/natural-selection_all.html?initialScreen=2",
+          "description": "A PhET simulation entitled Natural Selections allows users to modify and track rabbit traits over generations in relation to different environmental factors and selective pressures."
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x3a3c0c92ae580e76",
+      "problemType": "Type 1",
+      "widgetKey": "phet-simulation 1",
+      "questionContent": "Now that we've reviewed the basics of gas exchange in the lungs, let's dive deeper into this phenomenon using the *Diffusion* simulation from PhET. We'll explore various aspects of the simulation as we complete a series of tasks.\n\n[[☃ explanation 1]]\n\n**Task 1**: Use the simulation to **observe the ...",
+      "widgetData": {
+        "type": "phet-simulation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "url": "https://phet.colorado.edu/sims/html/diffusion/latest/diffusion_all.html",
+          "description": "Diffusion simulation"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xe0af84938fd8482c",
+      "problemType": "PhET simulation: Hardy-Weinberg equilibrium",
+      "widgetKey": "phet-simulation 1",
+      "questionContent": "**Task 3**: Finally, let’s use the simulation to **test whether allele and genotype frequencies change** over generations after wolves are introduced. \n\nTo do this:\n\n1. **Click** the yellow *Play* button and let the simulation run. \n2. At the start of generation $1$, **click** the *pause* button and...",
+      "widgetData": {
+        "type": "phet-simulation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "url": "https://phet.colorado.edu/sims/html/natural-selection/latest/natural-selection_all.html?initialScreen=2&labMutations=F&labPopulation=36FF,48Ff,16ff",
+          "description": "A PhET simulation entitled Natural Selections allows users to modify and track rabbit traits over generations in relation to different environmental factors and selective pressures."
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xf4d33fc0ddc1c4ab",
+      "problemType": "Greenhouse effect simulation",
+      "widgetKey": "phet-simulation 1",
+      "questionContent": "**Task 2**: Next, let’s use the simulation to explore what happens when greenhouse gases are *present* in the atmosphere. To do this, we’ll **record temperatures** and **measure energy flux** when there is $1$ *Infrared Absorbing Layer* (which represents greenhouse gases in the atmosphere).\n\nTo get ...",
+      "widgetData": {
+        "type": "phet-simulation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "url": "https://phet.colorado.edu/sims/html/greenhouse-effect/latest/greenhouse-effect_all.html?screen=3&initialScreen=3",
+          "description": "A PhET simulation entitled Greenhouse Effect allows users to modify the effect of greenhouse gases on sunlight, infrared radiation, and surface temperature."
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xd5babf9328269c88",
+      "problemType": "PhET simulation: natural selection",
+      "widgetKey": "phet-simulation 1",
+      "questionContent": "**Task 2**: Use the simulation to **track a population of rabbits** over successive generations when a mutation occurs. \n\nTo do this:\n\n1. **Click** the yellow *Add a Mate* button.\n2. At the beginning of generation $2$, **click** the *pause* button at the bottom of the screen. \n3. **Click** on the fu...",
+      "widgetData": {
+        "type": "phet-simulation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "url": "https://phet.colorado.edu/sims/html/natural-selection/latest/natural-selection_all.html?initialScreen=2",
+          "description": "A PhET simulation entitled Natural Selections allows users to modify and track rabbit traits over generations in relation to different environmental factors and selective pressures."
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xd3181f2d251e7d2b",
+      "problemType": "Type 1",
+      "widgetKey": "phet-simulation 1",
+      "questionContent": "**Task 3**: Use the simulation to **observe the effect of particle concentration on diffusion**.\n\nTo do this:\n\n1. Under *Number of particles*, **click** the *up* arrow next to the blue particle until there are $20$ blue particles.\n2. Under *Number of particles*, **click** the *up* arrow next to the ...",
+      "widgetData": {
+        "type": "phet-simulation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "url": "https://phet.colorado.edu/sims/html/diffusion/latest/diffusion_all.html",
+          "description": "Diffusion simulation"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x360936a09a6725f6",
+      "problemType": "PhET simulation: Hardy-Weinberg equilibrium",
+      "widgetKey": "phet-simulation 1",
+      "questionContent": "Now that we've reviewed the basics of Hardy-Weinberg equilibrium, let's dive deeper into this topic using a PhET simulation. We'll explore various aspects of the simulation as we complete a series of tasks.\n\n[[☃ explanation 1]]\n\n**Task 1**: First, let's use the simulation to **calculate the allele a...",
+      "widgetData": {
+        "type": "phet-simulation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "url": "https://phet.colorado.edu/sims/html/natural-selection/latest/natural-selection_all.html?initialScreen=2&labMutations=F&labPopulation=36FF,48Ff,16ff",
+          "description": "A PhET simulation entitled Natural Selections allows users to modify and track rabbit traits over generations in relation to different environmental factors and selective pressures."
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x0dd0e24f1f431c19",
+      "problemType": "Greenhouse effect simulation",
+      "widgetKey": "phet-simulation 1",
+      "questionContent": "**Task 3**: Finally, let’s use the simulation to explore what happens when the concentration of greenhouse gases in the atmosphere *increases*. To do this, we'll **record temperatures** and **measure energy flux** as more *Infrared Absorbing Layers* are added.\n\nTo get started, **click** the *Start S...",
+      "widgetData": {
+        "type": "phet-simulation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "url": "https://phet.colorado.edu/sims/html/greenhouse-effect/latest/greenhouse-effect_all.html?screen=3&initialScreen=3",
+          "description": "A PhET simulation entitled Greenhouse Effect allows users to modify the effect of greenhouse gases on sunlight, infrared radiation, and surface temperature."
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xda56d731afab2364",
+      "problemType": "PhET simulation: natural selection",
+      "widgetKey": "phet-simulation 1",
+      "questionContent": "**Task 3**: Use the simulation to **track a population of rabbits** over successive generations when a mutation occurs and predators are introduced.\n\nTo do this:\n\n1. **Click** the yellow *Add a Mate* button.\n2. **Pause** the simulation at the beginning of generation $2$. **Click** on the fur trait i...",
+      "widgetData": {
+        "type": "phet-simulation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "url": "https://phet.colorado.edu/sims/html/natural-selection/latest/natural-selection_all.html?initialScreen=2",
+          "description": "A PhET simulation entitled Natural Selections allows users to modify and track rabbit traits over generations in relation to different environmental factors and selective pressures."
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

@@ -1,0 +1,561 @@
+{
+  "widgetType": "plotter",
+  "totalCount": 194,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.851Z",
+  "samples": [
+    {
+      "questionId": "x23984c8abfb83833",
+      "problemType": "Make graph-table",
+      "widgetKey": "plotter 1",
+      "questionContent": "Dad packed clothes for a trip.  \n\nClothing type | Amount\n:- | :-: \nShirts | $5$ \nShoes |$6$  \nHats|  $7$ \nShorts | $4$ \n\n**Create a bar graph to show how many items of each type Dad packed for his trip.**\n\n[[☃ plotter 1]]\n\n",
+      "widgetData": {
+        "type": "plotter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "maxY": 10,
+          "type": "bar",
+          "labels": [
+            "Clothing types",
+            "Amount"
+          ],
+          "picUrl": "",
+          "scaleY": 1,
+          "correct": [
+            5,
+            6,
+            7,
+            4
+          ],
+          "picSize": 30,
+          "starting": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "categories": [
+            "Shirts",
+            "Shoes",
+            "Hats",
+            "Shorts"
+          ],
+          "picBoxHeight": 36,
+          "snapsPerLine": 2,
+          "labelInterval": 1,
+          "plotDimensions": [
+            380,
+            300
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xd35c97dd91183b00",
+      "problemType": "frequency table-1/2",
+      "widgetKey": "plotter 1",
+      "questionContent": "A polar bear family had a snowball throwing contest.  They measured the length of their throws to the nearest $\\dfrac{1}{2} \\text{ m}$. \n\nDistance | Number of Polar Bears\n- | - \n$9\\dfrac12\\text{ m}$| ${\\mid}$\n$10\\dfrac12\\text{ m}$ | $\\mid\\mid\\mid\\mid$\n$11\\text{ m}$ | ${\\mid\\mid\\mid}$\n$12\\dfrac{1}{2}...",
+      "widgetData": {
+        "type": "plotter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "maxY": 10,
+          "type": "dotplot",
+          "labels": [
+            "Distances (m)",
+            ""
+          ],
+          "scaleY": 1,
+          "correct": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            4,
+            3,
+            0,
+            0,
+            2,
+            0
+          ],
+          "starting": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "categories": [
+            "$8$",
+            "$$",
+            "$9$",
+            "$$",
+            "$10$",
+            "$$",
+            "$11$",
+            "$$",
+            "$12$",
+            "$$",
+            "$13$"
+          ],
+          "snapsPerLine": 2,
+          "labelInterval": 1
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x0145beff467e3f8f",
+      "problemType": "Type 3 - Frequency table",
+      "widgetKey": "plotter 1",
+      "questionContent": "The frequency table below shows the number of pets Jamal's classmates own.\n\nNumber of pets | Number of classmates\n:-: | :-: \n$0$ | $3$\n$1$ | $4$\n$2$ | $3$\n$3$ | $0$\n$4$ | $1$\n\n**Using this data, create a dot plot where each dot represents a classmate.**\n\n[[☃ plotter 1]]\n\n",
+      "widgetData": {
+        "type": "plotter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "maxY": 10,
+          "type": "dotplot",
+          "labels": [
+            "Number of pets",
+            ""
+          ],
+          "scaleY": 1,
+          "correct": [
+            3,
+            4,
+            3,
+            0,
+            1
+          ],
+          "starting": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "categories": [
+            "$0$",
+            "$1$",
+            "$2$",
+            "$3$",
+            "$4$"
+          ],
+          "snapsPerLine": 2,
+          "labelInterval": 1
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xf377cfff4d9a78ba",
+      "problemType": "Revised Questions",
+      "widgetKey": "plotter 1",
+      "questionContent": "The following data points represent the length of each song Roy the Rooster sang each morning since he changed barns.\n\n> $~2.2$, $~5.1$, $~5.7$, $~8.2$, $~2.2$, $~7.4$, $~4.3$, $~5.6$\n\n**Using the data, create a histogram.**\n*For this histogram, each bin **excludes** the left endpoint and **includes...",
+      "widgetData": {
+        "type": "plotter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "maxY": 7,
+          "type": "histogram",
+          "labels": [
+            "Length of song (in minutes)",
+            "Number of mornings"
+          ],
+          "scaleY": 1,
+          "correct": [
+            2,
+            4,
+            2
+          ],
+          "starting": [
+            0,
+            0,
+            0
+          ],
+          "categories": [
+            "$0$",
+            "$3$",
+            "$6$",
+            "$9$"
+          ],
+          "snapsPerLine": 1,
+          "labelInterval": null
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x257e4643be322e69",
+      "problemType": "Type 1 - List",
+      "widgetKey": "plotter 1",
+      "questionContent": "The following data points represent the total weight loss (in kilograms) for each member of Omar's Final Fitness Team. \n\n$\\qquad61,90,31,35,69,37,78$\n\n**Using the data, create a histogram.**\n\n[[☃ plotter 1]]\n\n",
+      "widgetData": {
+        "type": "plotter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "maxY": 6,
+          "type": "histogram",
+          "labels": [
+            "Weight loss (in kilograms)",
+            "Number of members"
+          ],
+          "scaleY": 1,
+          "correct": [
+            0,
+            3,
+            0,
+            3,
+            1
+          ],
+          "starting": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "categories": [
+            "$0$",
+            "$20$",
+            "$40$",
+            "$60$",
+            "$80$",
+            "$100$"
+          ],
+          "snapsPerLine": 1,
+          "labelInterval": null
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x29efd4a89b428c31",
+      "problemType": "Make graph-no table",
+      "widgetKey": "plotter 1",
+      "questionContent": "There are $8$ peppers, $5$ carrots, $5$ onions, and $6$ tomatoes.  \n\n**Create a bar graph to show the different types of vegetables.**\n\n[[☃ plotter 1]]\n\n",
+      "widgetData": {
+        "type": "plotter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "maxY": 10,
+          "type": "bar",
+          "labels": [
+            "Type of vegetable",
+            "Number of vegetable"
+          ],
+          "scaleY": 1,
+          "correct": [
+            8,
+            5,
+            5,
+            6
+          ],
+          "starting": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "categories": [
+            "Peppers",
+            "Carrots",
+            "Onions",
+            "Tomatoes"
+          ],
+          "snapsPerLine": 1,
+          "labelInterval": 1
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x4a3cbc87b915860c",
+      "problemType": "ruler",
+      "widgetKey": "plotter 1",
+      "questionContent": "**Measure the length of each line to the nearest $\\dfrac{1}{4}$ inch to collect data for the line plot below.**\n\n[[☃ image 1]]\n\n**Now record your measurements on a line plot.**  \n*Click above the line plot to make dots for each of your $4$ measurements.*\n\n[[☃ plotter 1]]\n\n",
+      "widgetData": {
+        "type": "plotter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "maxY": 10,
+          "type": "dotplot",
+          "labels": [
+            "Length (in)   ",
+            ""
+          ],
+          "scaleY": 1,
+          "correct": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "starting": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "categories": [
+            "$1$",
+            "$$",
+            "$$",
+            "$$",
+            "$2$",
+            "$$",
+            "$$",
+            "$$",
+            "$3$",
+            "$$",
+            "$$",
+            "$$",
+            "$4$",
+            "$$",
+            "$$",
+            "$$",
+            "$5$",
+            "$$",
+            "$$",
+            "$$",
+            "$6$"
+          ],
+          "snapsPerLine": 2,
+          "labelInterval": 1
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x87fb7a15ce0a455c",
+      "problemType": "Measure, then plot",
+      "widgetKey": "plotter 2",
+      "questionContent": "The lengths of $4$ pencils are measured below.  \n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/19c65ad8e575e5fe16effa77b8fbe7e32ae66724)\n\n**Record the length of each pencil on the line plot.**  \n*Click above the line plot to make dots for each measurement.*\n\n[[☃ plotter 2]]",
+      "widgetData": {
+        "type": "plotter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "maxY": 10,
+          "type": "dotplot",
+          "labels": [
+            "Length (centimeters)",
+            ""
+          ],
+          "scaleY": 1,
+          "correct": [
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "starting": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "categories": [
+            "$0$",
+            "$1$",
+            "$2$",
+            "$3$",
+            "$4$",
+            "$5$",
+            "$6$",
+            "$7$",
+            "$8$",
+            "$9$",
+            "$10$"
+          ],
+          "snapsPerLine": 2,
+          "labelInterval": 1
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xca7ecd5ffab8dd2a",
+      "problemType": "Picture",
+      "widgetKey": "plotter 1",
+      "questionContent": "A group of friends walked dogs for their neighbors.\n\nFriends | Dogs walked\n- | :-: | -\nRenn | $3$ \nMary | $4$ \nAl | $6$ \n\n**Create a picture graph to show how many dogs each friend walked.**\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/7b8a1b9a05a79641c5d5c89ed563898aa4b0f41b)\n\n[[☃ plotter...",
+      "widgetData": {
+        "type": "plotter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "maxY": 7,
+          "type": "pic",
+          "labels": [
+            "Friend",
+            "Dogs walked"
+          ],
+          "picUrl": "https://cdn.kastatic.org/ka-perseus-graphie/8003351b48e496d665207e00283f6d4eb58f50b1.svg",
+          "scaleY": 1,
+          "correct": [
+            3,
+            4,
+            6
+          ],
+          "starting": [
+            0,
+            0,
+            0
+          ],
+          "categories": [
+            "Renn",
+            "Mary",
+            "Al"
+          ],
+          "snapsPerLine": 2,
+          "labelInterval": 1
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xf10d4c6d4bca430c",
+      "problemType": "Table, then plot",
+      "widgetKey": "plotter 1",
+      "questionContent": "The amount of rainfall was measured in each city.   A weather woman is going to make a line plot of the data.  \n\nLocation | Rainfall ($\\text{cm}$)\n:-: | :-: | :-:\nNew York | $4$\nRochester | $6$\nAlbany | $3$\nBuffalo | $4$\nSyracuse | $5$\n\n**Graph the measurements from the table on the line plot.**   \n...",
+      "widgetData": {
+        "type": "plotter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "maxY": 10,
+          "type": "dotplot",
+          "labels": [
+            "Rainfall (cm)",
+            ""
+          ],
+          "scaleY": 1,
+          "correct": [
+            1,
+            2,
+            1,
+            1
+          ],
+          "starting": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "categories": [
+            "$3$",
+            "$4$",
+            "$5$",
+            "$6$"
+          ],
+          "snapsPerLine": 2,
+          "labelInterval": 1
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

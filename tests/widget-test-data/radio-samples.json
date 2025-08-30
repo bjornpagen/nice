@@ -1,0 +1,464 @@
+{
+  "widgetType": "radio",
+  "totalCount": 40825,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.838Z",
+  "samples": [
+    {
+      "questionId": "xc85d21ad31ebb152",
+      "problemType": "90",
+      "widgetKey": "radio 1",
+      "questionContent": "Darren wants to estimate the mean age in a population of trees. He'll sample $n$ trees and build a $90\\%$ confidence interval for the mean age. He doesn't want the margin of error to exceed $3$ years. Preliminary data suggests that the standard deviation for the ages of trees in this population is $...",
+      "widgetData": {
+        "type": "radio",
+        "graded": true,
+        "static": false,
+        "options": {
+          "choices": [
+            {
+              "clue": "The margin of error for this sample size is too high.",
+              "content": "$7$ trees",
+              "correct": false
+            },
+            {
+              "clue": "The margin of error for this sample size is too high.",
+              "content": "$20$ trees",
+              "correct": false,
+              "isNoneOfTheAbove": false
+            },
+            {
+              "clue": "The margin of error for this sample size is too high.",
+              "content": "$30$ trees",
+              "correct": false,
+              "isNoneOfTheAbove": false
+            },
+            {
+              "clue": "The margin of error for this sample size is too high.",
+              "content": "$44$ trees",
+              "correct": false,
+              "isNoneOfTheAbove": false
+            },
+            {
+              "content": "$77$ trees",
+              "correct": true,
+              "isNoneOfTheAbove": false
+            }
+          ],
+          "randomize": false,
+          "countChoices": false,
+          "displayCount": null,
+          "multipleSelect": false,
+          "deselectEnabled": false,
+          "hasNoneOfTheAbove": false
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x5458828264d254c0",
+      "problemType": "95",
+      "widgetKey": "radio 1",
+      "questionContent": "Victoria wants to estimate the mean weight of apples in her orchard. She'll sample $n$ apples and make a $95\\%$ confidence interval for the mean weight. She is willing to use $\\sigma=15$ grams as an estimate of the standard deviation, and she wants the margin of error to be no more than $5$ grams.\n\n...",
+      "widgetData": {
+        "type": "radio",
+        "graded": true,
+        "static": false,
+        "options": {
+          "choices": [
+            {
+              "clue": "The margin of error for this sample size is too high.",
+              "content": "$5$ apples",
+              "correct": false
+            },
+            {
+              "clue": "The margin of error for this sample size is too high.",
+              "content": "$15$ apples",
+              "correct": false
+            },
+            {
+              "clue": "The margin of error for this sample size is too high.",
+              "content": "$25$ apples",
+              "correct": false,
+              "isNoneOfTheAbove": false
+            },
+            {
+              "clue": "The margin of error for this sample size is too high.",
+              "content": "$30$ apples",
+              "correct": false,
+              "isNoneOfTheAbove": false
+            },
+            {
+              "content": "$35$ apples",
+              "correct": true,
+              "isNoneOfTheAbove": false
+            }
+          ],
+          "randomize": false,
+          "countChoices": false,
+          "displayCount": null,
+          "multipleSelect": false,
+          "deselectEnabled": false,
+          "hasNoneOfTheAbove": false
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xeff951382b5e3aca",
+      "problemType": "99",
+      "widgetKey": "radio 1",
+      "questionContent": "A fast-food restaurant has an automated beverage machine that dispenses a set amount of liquid based on a size setting. Suppose that on the medium setting, the standard deviation of the amounts dispensed is $\\sigma=17\\text{ mL}$. The manager of the restaurant plans on taking a sample of $n$ medium d...",
+      "widgetData": {
+        "type": "radio",
+        "graded": true,
+        "static": false,
+        "options": {
+          "choices": [
+            {
+              "clue": "The margin of error for this sample size is too high.",
+              "content": "$12$ drinks",
+              "correct": false
+            },
+            {
+              "content": "$20$ drinks",
+              "correct": true,
+              "isNoneOfTheAbove": false
+            },
+            {
+              "clue": "This gives a small enough margin of error, but there is a smaller sample size that also gives the desired margin of error.",
+              "content": "$30$ drinks",
+              "correct": false,
+              "isNoneOfTheAbove": false
+            },
+            {
+              "clue": "This gives a small enough margin of error, but there is a smaller sample size that also gives the desired margin of error.",
+              "content": "$40$ drinks",
+              "correct": false,
+              "isNoneOfTheAbove": false
+            },
+            {
+              "clue": "This gives a small enough margin of error, but there is a smaller sample size that also gives the desired margin of error.",
+              "content": "$54$ drinks",
+              "correct": false,
+              "isNoneOfTheAbove": false
+            }
+          ],
+          "randomize": false,
+          "countChoices": false,
+          "displayCount": null,
+          "multipleSelect": false,
+          "deselectEnabled": false,
+          "hasNoneOfTheAbove": false
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x401edd324c1f6f35",
+      "problemType": "457",
+      "widgetKey": "radio 1",
+      "questionContent": "457 retirement plans are available to state and local government workers.\n\n**What makes a 457 plan different from other retirement plans?**\n\n[[☃ radio 1]]\n\n",
+      "widgetData": {
+        "type": "radio",
+        "graded": true,
+        "static": false,
+        "options": {
+          "choices": [
+            {
+              "clue": "Guaranteed lifetime income is something that pensions do, but not 457 plans. ",
+              "content": "It provides a guaranteed lifetime income.",
+              "correct": false
+            },
+            {
+              "clue": "457 plan is the only retirement plan that allows early, penalty-free withdrawals when you leave your job.",
+              "content": "You can take all of your money out early, with no penalty if you leave your job.",
+              "correct": true
+            },
+            {
+              "clue": "Employer matching is a common feature of a 401(k) plan, not a 457 plan.",
+              "content": "It gives higher employer matches.",
+              "correct": false
+            },
+            {
+              "clue": "While the money you put in is tax-deferred, you will pay taxes when you take it out in retirement.",
+              "content": "You avoid paying taxes completely.",
+              "correct": false
+            }
+          ],
+          "randomize": true,
+          "countChoices": false,
+          "displayCount": null,
+          "multipleSelect": false,
+          "deselectEnabled": false,
+          "hasNoneOfTheAbove": false
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x6d210ce4c9715435",
+      "problemType": "1098",
+      "widgetKey": "radio 1",
+      "questionContent": "Ivory just completed the first year of culinary school. Her grandparents have been paying her tuition fees. \n\n**What 1098 form should they expect to receive?**\n\n[[☃ radio 1]]\n\n",
+      "widgetData": {
+        "type": "radio",
+        "graded": true,
+        "static": false,
+        "options": {
+          "choices": [
+            {
+              "clue": "Form 1098 shows mortgage interest. It doesn't have anything to do with education costs.",
+              "content": "1098",
+              "correct": false
+            },
+            {
+              "clue": "While form 1098-E is education-related, it's about interest on student loans not tuition fees.",
+              "content": "1098-E",
+              "correct": false
+            },
+            {
+              "clue": "Form 1098-T is issued by educational institutions and reports the amount of qualified education expenses (like tuition) paid during the year.",
+              "content": "1098-T",
+              "correct": true,
+              "isNoneOfTheAbove": false
+            },
+            {
+              "clue": "Form 1098-C is for charitable contributions like donated vehicles, not educational expenses.",
+              "content": "1098-C",
+              "correct": false,
+              "isNoneOfTheAbove": false
+            }
+          ],
+          "randomize": true,
+          "countChoices": false,
+          "displayCount": null,
+          "multipleSelect": false,
+          "deselectEnabled": false,
+          "hasNoneOfTheAbove": false
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x10ae2557b64aa189",
+      "problemType": "1099",
+      "widgetKey": "radio 1",
+      "questionContent": "Isabella's savings account earned some interest this year. \n\n**What kind of 1099 form is she likely to receive?**\n\n[[☃ radio 1]]\n\n",
+      "widgetData": {
+        "type": "radio",
+        "graded": true,
+        "static": false,
+        "options": {
+          "choices": [
+            {
+              "clue": "Form 1099-INT is sent when someone receives interest income, such as from a savings account.",
+              "content": "1099-INT ",
+              "correct": true
+            },
+            {
+              "clue": "Form 1099-MISC shows different types of income received, but doesn't apply to bank interest.",
+              "content": "1099-MISC",
+              "correct": false
+            },
+            {
+              "clue": "Form 1099-DIV is about dividends and distributions from investments, not interest from savings.",
+              "content": "1099-DIV",
+              "isNoneOfTheAbove": false
+            },
+            {
+              "clue": "Form 1099-G shows certain government payments, including unemployment compensation.",
+              "content": "1099-G",
+              "isNoneOfTheAbove": false
+            }
+          ],
+          "randomize": true,
+          "countChoices": false,
+          "displayCount": null,
+          "multipleSelect": false,
+          "deselectEnabled": false,
+          "hasNoneOfTheAbove": false
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x69ba49a41cc9fbff",
+      "problemType": "Mechanical vs. chemical weathering",
+      "widgetKey": "radio 1",
+      "questionContent": "Marble buildings are vulnerable to weathering by acid rain. When this rainwater falls, the acid in the water can react with the stone and dissolve it, causing damage to the structure.\n\n**Which type of weathering is this an example of?**\n\n[[☃ radio 1]]",
+      "widgetData": {
+        "type": "radio",
+        "graded": true,
+        "static": false,
+        "options": {
+          "choices": [
+            {
+              "clue": "According to the text, marble buildings are weathered through a reaction with the acid in rainwater. So, this is an example of chemical weathering.",
+              "content": "chemical weathering",
+              "correct": true
+            },
+            {
+              "clue": "According to the text, marble buildings are weathered through a reaction with the acid in rainwater. So, this is an example of *chemical*, not mechanical, weathering.",
+              "content": "mechanical weathering",
+              "correct": false
+            }
+          ],
+          "randomize": true,
+          "countChoices": false,
+          "displayCount": null,
+          "multipleSelect": false,
+          "deselectEnabled": false,
+          "hasNoneOfTheAbove": false
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x97de80c5066a4901",
+      "problemType": "Fossil and modern organisms",
+      "widgetKey": "radio 1",
+      "questionContent": "**Determine if the statement below is true or false.**\n\n>Scientists can compare the body structures of modern species, but not extinct species, to find evidence of evolution.\n\n[[☃ radio 1]]",
+      "widgetData": {
+        "type": "radio",
+        "graded": true,
+        "static": false,
+        "options": {
+          "choices": [
+            {
+              "clue": "Scientists can compare the body structures of modern *and* extinct species to find evidence of evolution. The body structures of extinct species can be seen in fossils. So, the statement is not true.",
+              "content": "true",
+              "correct": false
+            },
+            {
+              "clue": "Scientists can compare the body structures of modern *and* extinct species to find evidence of evolution. So, the statement is false.",
+              "content": "false",
+              "correct": true
+            }
+          ],
+          "randomize": false,
+          "countChoices": false,
+          "displayCount": null,
+          "multipleSelect": false,
+          "deselectEnabled": false,
+          "hasNoneOfTheAbove": false
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x24c07d8a057c06ba",
+      "problemType": "Jamestown",
+      "widgetKey": "radio 1",
+      "questionContent": "Before the late 1600s, Virginia planters generally preferred white **indentured servants** to enslaved Africans as a source of labor because\n\n[[☃ radio 1]]",
+      "widgetData": {
+        "type": "radio",
+        "graded": true,
+        "static": false,
+        "options": {
+          "choices": [
+            {
+              "clue": "Indentured servants, or laborers who worked without pay for a period of time in exchange for passage to America, usually  cost less than slaves.",
+              "content": "Indentured servants were cheaper than slaves ",
+              "correct": true
+            },
+            {
+              "clue": " Despite racism, white indentured servants had a lower price tag, since the cost of paying an indentured servant’s passage was less than the cost of buying a slave.  \n",
+              "content": "Racist ideas led planters to value white workers more than black workers",
+              "correct": false
+            },
+            {
+              "clue": "Indentured servants had labor contracts, while enslaved people had no contracts and were expected to work for life.\n",
+              "content": "The terms of indenture contracts required white servants to perform more labor than enslaved people",
+              "isNoneOfTheAbove": false
+            }
+          ],
+          "randomize": true,
+          "countChoices": false,
+          "displayCount": null,
+          "multipleSelect": false,
+          "deselectEnabled": false,
+          "hasNoneOfTheAbove": false
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xdaa5799b3c20e12a",
+      "problemType": "Cellular respiration",
+      "widgetKey": "radio 1",
+      "questionContent": "**Which of these statements about cellular respiration is true?**\n\n[[☃ radio 1]]",
+      "widgetData": {
+        "type": "radio",
+        "graded": true,
+        "static": false,
+        "options": {
+          "choices": [
+            {
+              "clue": "Cellular respiration is a series of chemical reactions that occur in the mitochondria *and* the cytosol.",
+              "content": "All of the steps of cellular respiration occur in the mitochondria.",
+              "correct": false
+            },
+            {
+              "clue": "Cellular respiration consists of *multiple* chemical reactions. Moreover, these reactions result in an overall *release* of energy.",
+              "content": "Cellular respiration consists of a single chemical reaction that stores energy.",
+              "correct": false
+            },
+            {
+              "clue": "Cellular respiration is a series of chemical reactions that rearrange atoms in food molecules, releasing usable energy.",
+              "content": "Organisms use cellular respiration to get usable energy from food.",
+              "correct": true,
+              "isNoneOfTheAbove": false
+            }
+          ],
+          "randomize": true,
+          "countChoices": false,
+          "displayCount": null,
+          "multipleSelect": false,
+          "deselectEnabled": false,
+          "hasNoneOfTheAbove": false
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

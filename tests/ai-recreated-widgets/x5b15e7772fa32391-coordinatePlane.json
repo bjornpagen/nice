@@ -1,0 +1,173 @@
+{
+  "metadata": {
+    "contentId": "x5b15e7772fa32391",
+    "contentType": "question",
+    "widgetType": "coordinatePlane",
+    "createdAt": "2025-08-30T16:20:19.992Z",
+    "aiReasoning": "The content does not require a coordinate plane or any elements typically represented using a coordinate system such as points or lines. The original content uses an image to represent a tape diagram indicating the ratio of gear teeth, which doesn't incorporate features suitable for a coordinate plane widget. Hence, the coordinatePlane widget is not applicable in this context.",
+    "aiConfidence": 0.2
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "###Strategy\n\nWe can find the ratio of teeth per smaller gear to teeth per larger gear by counting the equal parts of each in the tape diagram.\n\nThen we can create an equivalent ratio by picking a number of teeth for each equal part in the diagram to represent $72$ teeth per larger gear.\n\nTo make an equivalent ratio, we multiply each part of the ratio by the same number.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Identify the given ratio\n\nThere is $\\blueE{1}$ tooth per smaller gear for every $\\maroonD{6}$ teeth per larger gear.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Create an equivalent ratio\n\nIf each part represents $\\purpleD{12}$ teeth, there will be $72$ teeth per larger gear, because $\\maroonD{6}\\purpleD{\\times 12} = 72$.\n\n[[☃ image 1]]\n\nIf each part represents $\\purpleD{12}$ teeth, there will be $12$ teeth per smaller gear, because $\\blueE{1}\\purpleD{\\times 12} = 12$.",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 6 equal parts, each labeled 12. A curved bracket above the first tape is labeled Teeth per larger gear. The second tape has 1 part of the same size as in the first tape, labeled 12.  A curved bracket below the second tape is labeled Teeth per smaller gear.",
+                "box": [
+                  320,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/aa0a2b79da440f6accec32987283440cbd7cf970",
+                  "width": 320,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "There will be $12$ teeth on the smaller gear if there are $72$ teeth on the larger gear.",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "The diagram shows the ratio of teeth on the larger and smaller gears of Nash's fishing reel.\n\n[[☃ image 1]]\n\n**Based on the ratio, how many teeth are on the smaller gear if there are $72$ teeth on the larger gear?**\n\n[[☃ numeric-input 1]] teeth",
+        "widgets": {
+          "image 1": {
+            "type": "image",
+            "graded": true,
+            "static": false,
+            "options": {
+              "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 6 equal parts. A curved bracket above the first tape is labeled Teeth per larger gear. The second tape has 1 part of the same size as in the first tape.  A curved bracket below the second tape is labeled Teeth per smaller gear.",
+              "box": [
+                320,
+                168
+              ],
+              "range": [
+                [
+                  0,
+                  10
+                ],
+                [
+                  0,
+                  10
+                ]
+              ],
+              "title": "",
+              "labels": [],
+              "static": false,
+              "caption": "",
+              "backgroundImage": {
+                "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/b9eeb7fb443102c0604a45f3165dfb0721cb5222",
+                "width": 320,
+                "height": 168
+              }
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "block"
+          },
+          "numeric-input 1": {
+            "type": "numeric-input",
+            "graded": true,
+            "static": false,
+            "options": {
+              "size": "normal",
+              "static": false,
+              "answers": [
+                {
+                  "value": 12,
+                  "status": "correct",
+                  "strict": false,
+                  "message": "",
+                  "maxError": null,
+                  "simplify": "required"
+                }
+              ],
+              "labelText": "teeth on the smaller gear",
+              "rightAlign": false,
+              "coefficient": false,
+              "multipleNumberInput": false
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"coordinatePlane\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"coordinatePlane\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"width\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"height\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"xAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"yAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"showQuadrantLabels\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"points\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"lines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polygons\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"distances\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polylines\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

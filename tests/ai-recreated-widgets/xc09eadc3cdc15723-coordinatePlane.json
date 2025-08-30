@@ -1,0 +1,244 @@
+{
+  "metadata": {
+    "contentId": "xc09eadc3cdc15723",
+    "contentType": "question",
+    "widgetType": "coordinatePlane",
+    "createdAt": "2025-08-30T16:19:52.730Z",
+    "aiReasoning": "The content revolves around visualizing ratios using a diagram, which can be effectively represented on a coordinate plane. The background image is a tape diagram that is used to convey information about winning and non-winning spaces, hence a coordinate plane widget is appropriate to manage the visual representation. However, since the main image does not involve actual Cartesian plotting or traditional coordinate geometry, the main use of a coordinate plane widget would be to establish a context where geometry visualizations can be overlaid on the image if needed.",
+    "aiConfidence": 0.9
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "###Strategy\n\nWe can find the ratio of winning spaces to total spaces by counting the equal parts of each in the tape diagram.\n\nThen we can create equivalent ratios for the specific numbers of spaces in each version of the wheel.\n\nTo make an equivalent ratio, we multiply each part of the ratio by the same number.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Identify the given ratio\n\n$\\blueE{5}+\\purpleD{6}=\\maroonD{11}$\n\nThere are $\\blueE{5}$ winning spaces for every $\\maroonD{11}$ total spaces.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Create equivalent ratios\n\nIf each part represents $\\goldE{2}$ spaces, there will be $10$ winning spaces, because $\\blueE{5}\\goldE{\\times 2} = 10$.\n\n[[☃ image 1]]\n\nIf each part represents $\\goldE{2}$ spaces, there will be $22$ total spaces, because $\\maroonD{11}\\goldE{\\times 2} = 22$.",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 5 equal parts, each labeled 2. A curved bracket above the first tape is labeled Winning spaces. The second tape has 6 equal parts of the same size as in the first tape, each labeled 2. A curved bracket below the second tape is labeled Non-winning spaces. A curved bracket spanning both tapes is labeled Total spaces.",
+                "box": [
+                  320,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/d91b6de4475a72748f676d1b4288794e8bff8713",
+                  "width": 320,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "If each part represents $\\goldE{3}$ spaces, there will be $15$ winning spaces, because $\\blueE{5}\\goldE{\\times 3} = 15$.\n\n[[☃ image 1]]\n\nIf each part represents $\\goldE{3}$ spaces, there will be $33$ total spaces, because $\\maroonD{11}\\goldE{\\times 3} = 33$.\n",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 5 equal parts, each labeled 3. A curved bracket above the first tape is labeled Winning spaces. The second tape has 6 equal parts of the same size as in the first tape, each labeled 3. A curved bracket below the second tape is labeled Non-winning spaces. A curved bracket spanning both tapes is labeled Total spaces.",
+                "box": [
+                  320,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/012fb395abc278d1884641570028a5110b219ea3",
+                  "width": 320,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "###Completed table\n\nWinning spaces | Total spaces\n:-: | :-: | :-:\n$10$ | $22$\n$15$ | $33$",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "Boden is making a prize wheel for the school fair. The diagram shows the ratio of winning spaces to non-winning spaces.\n\n[[☃ image 1]]\n\nThe table shows the numbers of winning and total spaces that could be on the wheel.\n\n**Based on the ratio, complete the missing values in the table.**\n\nWinning spaces | Total spaces\n:-: | :-: | :-:\n$10$ | [[☃ numeric-input 4]]\n [[☃ numeric-input 5]] | $33$",
+        "widgets": {
+          "image 1": {
+            "type": "image",
+            "graded": true,
+            "static": false,
+            "options": {
+              "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 5 equal parts. A curved bracket above the first tape is labeled Winning spaces. The second tape has 6 equal parts of the same size as in the first tape. A curved bracket below the second tape is labeled Non-winning spaces.",
+              "box": [
+                320,
+                168
+              ],
+              "range": [
+                [
+                  0,
+                  10
+                ],
+                [
+                  0,
+                  10
+                ]
+              ],
+              "title": "",
+              "labels": [],
+              "static": false,
+              "caption": "",
+              "backgroundImage": {
+                "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e8e6db86a48c2c3d8fc1bce629701fec4842d233",
+                "width": 320,
+                "height": 168
+              }
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "block"
+          },
+          "numeric-input 4": {
+            "type": "numeric-input",
+            "graded": true,
+            "static": false,
+            "options": {
+              "size": "normal",
+              "static": false,
+              "answers": [
+                {
+                  "value": 22,
+                  "status": "correct",
+                  "strict": false,
+                  "message": "",
+                  "maxError": null,
+                  "simplify": "required"
+                }
+              ],
+              "labelText": "Total spaces when there are 10 winning spaces",
+              "rightAlign": false,
+              "coefficient": false,
+              "multipleNumberInput": false
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          },
+          "numeric-input 5": {
+            "type": "numeric-input",
+            "graded": true,
+            "static": false,
+            "options": {
+              "size": "normal",
+              "static": false,
+              "answers": [
+                {
+                  "value": 15,
+                  "status": "correct",
+                  "strict": false,
+                  "message": "",
+                  "maxError": null,
+                  "simplify": "required"
+                }
+              ],
+              "labelText": "Winning spaces when there are 33 total spaces",
+              "rightAlign": false,
+              "coefficient": false,
+              "multipleNumberInput": false
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{\"backgroundImage\":{\"url\":\"web+graphie://cdn.kastatic.org/ka-perseus-graphie/e8e6db86a48c2c3d8fc1bce629701fec4842d233\",\"width\":320,\"height\":168},\"range\":[[0,10],[0,10]],\"labels\":[],\"alt\":\"A tape diagram with 2 tapes of unequal lengths. The first tape has 5 equal parts. A curved bracket above the first tape is labeled Winning spaces. The second tape has 6 equal parts of the same size as in the first tape. A curved bracket below the second tape is labeled Non-winning spaces.\"}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"coordinatePlane\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"coordinatePlane\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"width\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"height\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"xAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"yAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"showQuadrantLabels\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"points\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"lines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polygons\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"distances\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polylines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"backgroundImage\",\n      \"range\",\n      \"labels\",\n      \"alt\"\n    ],\n    \"path\": [],\n    \"message\": \"Unrecognized key(s) in object: 'backgroundImage', 'range', 'labels', 'alt'\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

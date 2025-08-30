@@ -1,0 +1,244 @@
+{
+  "metadata": {
+    "contentId": "x203c92ded4f962a6",
+    "contentType": "question",
+    "widgetType": "coordinatePlane",
+    "createdAt": "2025-08-30T16:20:05.564Z",
+    "aiReasoning": "The extracted data includes a tape diagram with numeric details (3 and 5 segments), which relates to a ratio problem (blue to purple pieces), and uses a defined range. A coordinate plane can effectively illustrate these relationships and ratios by plotting these diagrams to show the segments clearly. Thus, a coordinate plane widget is suitable for visualizing segment lengths and their relationships.",
+    "aiConfidence": 0.9
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "###Strategy\n\nWe can find the ratio of purple pieces to total pieces by counting the equal parts of each in the tape diagram.\n\nThen we can create equivalent ratios for the specific numbers of pieces in each quilt.\n\nTo make an equivalent ratio, we multiply each part of the ratio by the same number.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Identify the given ratio\n\n$\\blueE{3}+\\purpleD{5}=\\maroonD{8}$\n\nThere are $\\purpleD{5}$ purple pieces for every $\\maroonD{8}$ total pieces.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Create equivalent ratios\n\nIf each part represents $\\goldE{7}$ pieces, there will be $56$ total pieces, because $\\maroonD{8}\\goldE{\\times 7} = 56$.\n\n[[☃ image 1]]\n\nIf each part represents $\\goldE{7}$ pieces, there will be $35$ purple pieces, because $\\purpleD{5}\\goldE{\\times 7} = 35$.",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 3 equal parts, each labeled 7. A curved bracket above the first tape is labeled Blue pieces. The second tape has 5 equal parts of the same size as in the first tape, each labeled 7. A curved bracket below the second tape is labeled Purple pieces. A curved bracket spanning both tapes is labeled Total pieces.",
+                "box": [
+                  320,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f94634e2c02d9bf850adbb1e69f8516bb5de8342",
+                  "width": 320,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "If each part represents $\\goldE{4}$ pieces, there will be $32$ total pieces, because $\\maroonD{8}\\goldE{\\times 4} = 32$.\n\n[[☃ image 1]]\n\nIf each part represents $\\goldE{4}$ pieces, there will be $20$ purple pieces, because $\\purpleD{5}\\goldE{\\times 4} = 20$.\n",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 3 equal parts, each labeled 4. A curved bracket above the first tape is labeled Blue pieces. The second tape has 5 equal parts of the same size as in the first tape, each labeled 4. A curved bracket below the second tape is labeled Purple pieces. A curved bracket spanning both tapes is labeled Total pieces.",
+                "box": [
+                  320,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/925302a02fc0e8d48a4e91b6b9a0154a79fa7ebf",
+                  "width": 320,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "###Completed table\n\nQuilt| Purple pieces | Total pieces\n:-: | :-: | :-:\n$A$ | $35$ | $56$\n$B$ | $20$ | $32$",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "Kenzie makes quilts from blue and purple pieces of fabric. The diagram shows the ratio of blue pieces to purple pieces.\n\n[[☃ image 1]]\n\nThe table shows the number of purple pieces and the number of total pieces that Kenzie will make on two of her quilts.\n\n**Based on the ratio, complete the missing values in the table.**\n\nQuilt| Purple pieces | Total pieces\n:-: | :-: | :-:\n$A$ | [[☃ numeric-input 4]] | $56$\n$B$ | $20$ | [[☃ numeric-input 5]] \n",
+        "widgets": {
+          "image 1": {
+            "type": "image",
+            "graded": true,
+            "static": false,
+            "options": {
+              "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 3 equal parts. A curved bracket above the first tape is labeled Blue pieces. The second tape has 5 equal parts of the same size as in the first tape. A curved bracket below the second tape is labeled Purple pieces.",
+              "box": [
+                320,
+                168
+              ],
+              "range": [
+                [
+                  0,
+                  10
+                ],
+                [
+                  0,
+                  10
+                ]
+              ],
+              "title": "",
+              "labels": [],
+              "static": false,
+              "caption": "",
+              "backgroundImage": {
+                "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/b4bc42b47489761afae55ce3f3daf7b030a4c19a",
+                "width": 320,
+                "height": 168
+              }
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "block"
+          },
+          "numeric-input 4": {
+            "type": "numeric-input",
+            "graded": true,
+            "static": false,
+            "options": {
+              "size": "normal",
+              "static": false,
+              "answers": [
+                {
+                  "value": 35,
+                  "status": "correct",
+                  "strict": false,
+                  "message": "",
+                  "maxError": null,
+                  "simplify": "required"
+                }
+              ],
+              "labelText": "Number of purple pieces when there are 56 total pieces",
+              "rightAlign": false,
+              "coefficient": false,
+              "multipleNumberInput": false
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          },
+          "numeric-input 5": {
+            "type": "numeric-input",
+            "graded": true,
+            "static": false,
+            "options": {
+              "size": "normal",
+              "static": false,
+              "answers": [
+                {
+                  "value": 32,
+                  "status": "correct",
+                  "strict": false,
+                  "message": "",
+                  "maxError": null,
+                  "simplify": "required"
+                }
+              ],
+              "labelText": "Number of total pieces when there are 20 purple pieces",
+              "rightAlign": false,
+              "coefficient": false,
+              "multipleNumberInput": false
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{\"typeName\":\"ZodObject\",\"description\":\"Creates a full-featured Cartesian coordinate plane supporting points, lines, polygons, distances, and polylines. Essential for graphing, geometry, and coordinate geometry lessons. Renders elements in layers: polygons (bottom) → distances → lines → polylines → points (top).\",\"range\":[[0,10],[0,10]],\"backgroundImage\":{\"url\":\"web+graphie://cdn.kastatic.org/ka-perseus-graphie/b4bc42b47489761afae55ce3f3daf7b030a4c19a\",\"width\":320,\"height\":168},\"labels\":[],\"alt\":\"A tape diagram with 2 tapes of unequal lengths. The first tape has 3 equal parts. A curved bracket above the first tape is labeled Blue pieces. The second tape has 5 equal parts of the same size as in the first tape. A curved bracket below the second tape is labeled Purple pieces.\"}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"coordinatePlane\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"coordinatePlane\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"width\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"height\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"xAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"yAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"showQuadrantLabels\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"points\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"lines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polygons\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"distances\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polylines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"typeName\",\n      \"description\",\n      \"range\",\n      \"backgroundImage\",\n      \"labels\",\n      \"alt\"\n    ],\n    \"path\": [],\n    \"message\": \"Unrecognized key(s) in object: 'typeName', 'description', 'range', 'backgroundImage', 'labels', 'alt'\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

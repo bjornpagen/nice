@@ -1,0 +1,244 @@
+{
+  "metadata": {
+    "contentId": "xc62f04eb5d67e2ce",
+    "contentType": "question",
+    "widgetType": "coordinatePlane",
+    "createdAt": "2025-08-30T16:19:16.172Z",
+    "aiReasoning": "In the given content, a tape diagram is used to represent a problem about finding equivalent ratios of fruit mass to biscuit mass for monkeys. This is essentially a visual representation using line segments on a coordinate plane, where each line segment can help illustrate different quantities and ratios visually in the context of graphing. The coordinatePlane widget is suitable here as it can graphically represent the segments or lines resembling the tapes in a clear, educational manner. It can effectively support the understanding of ratios by plotting points or segments that align with the tape diagram in the question.",
+    "aiConfidence": 0.85
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "###Strategy\n\nWe can find the ratio of fruit mass to biscuit mass by counting the equal parts of each in the tape diagram.\n\nThen we can create equivalent ratios for the specific masses for each monkey's food.\n\nTo make an equivalent ratio, we multiply each part of the ratio by the same number.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Identify the given ratio\n\nThe zoo feeds the monkeys $\\blueE{7}\\,\\text{g}$ of fruit for every $\\purpleD{5}\\,\\text{g}$ of biscuits.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Create equivalent ratios\n\nIf each part represents $\\goldE{4}\\,\\text{g}$ of food, there will be $28\\,\\text{g}$ of fruit, because $\\blueE{7}\\goldE{\\times 4} = 28$.\n\n[[☃ image 1]]\n\nIf each part represents $\\goldE{4}\\,\\text{g}$ of food, there will be $20\\,\\text{g}$ of biscuits, because $\\purpleD{5}\\goldE{\\times 4} = 20$.",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 7 equal parts, each labeled 4. A curved bracket above the first tape is labeled Fruit mass. The second tape has 5 equal parts of the same size as in the first tape, each labeled 4. A curved bracket below the second tape is labeled Biscuit mass.",
+                "box": [
+                  320,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c3abe8d8b4febd078f5dc934675424de226ffcba",
+                  "width": 320,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "If each part represents $\\goldE{9}\\,\\text{g}$ of food, there will be $63\\,\\text{g}$ of fruit, because $\\blueE{7}\\goldE{\\times 9} = 63$.\n\n[[☃ image 1]]\n\nIf each part represents $\\goldE{9}\\,\\text{g}$ of food, there will be $45\\,\\text{g}$ of biscuits, because $\\purpleD{5}\\goldE{\\times 9} = 45$.\n",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 7 equal parts, each labeled 9. A curved bracket above the first tape is labeled Fruit mass. The second tape has 5 equal parts of the same size as in the first tape, each labeled 9. A curved bracket below the second tape is labeled Biscuit mass.",
+                "box": [
+                  320,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/5e705a79c06d85b56b9a9072806914f1b81acb47",
+                  "width": 320,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "###Completed table\n\nMonkey| Fruit mass ($\\text{g}$)| Biscuit mass ($\\text{g}$)\n:-: | :-: | :-:\n$A$ | $28$ | $20$\n$B$ | $63$ | $45$",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "A zoo feeds its monkeys a mixture of fruits and biscuits. The diagram shows the ratio of fruit mass to biscuit mass.\n\n[[☃ image 1]]\n\nThe table shows the mass, in grams, of fruit and biscuits that the zoo fed two of the monkeys.\n\n**Based on the ratio, complete the missing values in the table.**\n\nMonkey| Fruit mass ($\\text{g}$)| Biscuit mass ($\\text{g}$)\n:-: | :-: | :-:\n$A$ | $28$ | [[☃ numeric-input 4]]\n$B$ | [[☃ numeric-input 5]] | $45$",
+        "widgets": {
+          "image 1": {
+            "type": "image",
+            "graded": true,
+            "static": false,
+            "options": {
+              "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 7 equal parts. A curved bracket above the first tape is labeled Fruit mass. The second tape has 5 equal parts of the same size as in the first tape. A curved bracket below the second tape is labeled Biscuit mass.",
+              "box": [
+                320,
+                168
+              ],
+              "range": [
+                [
+                  0,
+                  10
+                ],
+                [
+                  0,
+                  10
+                ]
+              ],
+              "title": "",
+              "labels": [],
+              "static": false,
+              "caption": "",
+              "backgroundImage": {
+                "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/ad460cf88e87eb7545e5b11b47d3a60fb0f1280a",
+                "width": 320,
+                "height": 168
+              }
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "block"
+          },
+          "numeric-input 4": {
+            "type": "numeric-input",
+            "graded": true,
+            "static": false,
+            "options": {
+              "size": "normal",
+              "static": false,
+              "answers": [
+                {
+                  "value": 20,
+                  "status": "correct",
+                  "strict": false,
+                  "message": "",
+                  "maxError": null,
+                  "simplify": "required"
+                }
+              ],
+              "labelText": "Grams of biscuits when there are 28 grams of fruit",
+              "rightAlign": false,
+              "coefficient": false,
+              "multipleNumberInput": false
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          },
+          "numeric-input 5": {
+            "type": "numeric-input",
+            "graded": true,
+            "static": false,
+            "options": {
+              "size": "normal",
+              "static": false,
+              "answers": [
+                {
+                  "value": 63,
+                  "status": "correct",
+                  "strict": false,
+                  "message": "",
+                  "maxError": null,
+                  "simplify": "required"
+                }
+              ],
+              "labelText": "Grams of fruit when there are 45 grams of biscuits",
+              "rightAlign": false,
+              "coefficient": false,
+              "multipleNumberInput": false
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{\"range\":[[0,10],[0,10]],\"labels\":[],\"backgroundImage\":{\"url\":\"web+graphie://cdn.kastatic.org/ka-perseus-graphie/ad460cf88e87eb7545e5b11b47d3a60fb0f1280a\",\"width\":320,\"height\":168}}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"coordinatePlane\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"coordinatePlane\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"width\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"height\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"xAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"yAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"showQuadrantLabels\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"points\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"lines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polygons\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"distances\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polylines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"range\",\n      \"labels\",\n      \"backgroundImage\"\n    ],\n    \"path\": [],\n    \"message\": \"Unrecognized key(s) in object: 'range', 'labels', 'backgroundImage'\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

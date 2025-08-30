@@ -1,0 +1,631 @@
+{
+  "widgetType": "orderer",
+  "totalCount": 104,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.851Z",
+  "samples": [
+    {
+      "questionId": "xceb0ab9eb1ef8ab7",
+      "problemType": "Number hints",
+      "widgetKey": "orderer 1",
+      "questionContent": "**Drag the cards to create a two-digit number that matches these rules.**  \n*Note: Not all cards will be used.*\n\n- $2$ is one of the digits\n- $10$ is the nearest ten when rounding\n\n[[☃ orderer 1]]",
+      "widgetData": {
+        "type": "orderer",
+        "graded": true,
+        "static": false,
+        "options": {
+          "height": "normal",
+          "layout": "horizontal",
+          "options": [
+            {
+              "content": "$0$"
+            },
+            {
+              "content": "$1$"
+            },
+            {
+              "content": "$2$"
+            },
+            {
+              "content": "$3$"
+            }
+          ],
+          "otherOptions": [
+            {
+              "content": "$0$"
+            },
+            {
+              "content": "$3$"
+            }
+          ],
+          "correctOptions": [
+            {
+              "content": "$1$"
+            },
+            {
+              "content": "$2$"
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x680c4cf7f60ee44b",
+      "problemType": "Type B - Orderer",
+      "widgetKey": "orderer 1",
+      "questionContent": "**Without using a calculator, order the following expressions from least to greatest.**\n\n[[☃ sorter 1]]\n\n\n\n\n\n\n",
+      "widgetData": {
+        "type": "orderer",
+        "graded": true,
+        "options": {
+          "height": "normal",
+          "layout": "horizontal",
+          "options": [
+            {
+              "content": "$x$"
+            },
+            {
+              "content": "$y$"
+            }
+          ],
+          "otherOptions": [
+            {
+              "content": "$y$"
+            }
+          ],
+          "correctOptions": [
+            {
+              "content": "$x$"
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x04a12008c278095a",
+      "problemType": "Forces resulting from interactions",
+      "widgetKey": "orderer 1",
+      "questionContent": "A woman slides a box onto a shelf.\n\n[[☃ image 1]]\n\nA free body diagram of the **box** is shown below.\n\n[[☃ image 2]]\n\n**Which forces on the box result from the box interacting with other objects?**\n\n[[☃ radio 1]]",
+      "widgetData": {
+        "type": "orderer",
+        "options": {
+          "height": "normal",
+          "layout": "horizontal",
+          "otherOptions": [
+            {
+              "content": "$y$"
+            }
+          ],
+          "correctOptions": [
+            {
+              "content": "$x$"
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x78c309dfc6ba317e",
+      "problemType": "3. D-E-B",
+      "widgetKey": "orderer 2",
+      "questionContent": "Jill's teacher gave her a flow chart (below) and asked her to find $\\displaystyle\\lim_{x\\to 5}f(x)$ for $f(x)=\\dfrac{x^2-25}{x^2-10x+25}$.\n\n![A flow chart has options A through H, as follows. Step A, direct substitution. Try to evaluate the function directly. Evaluating f of a leads to options B thr...",
+      "widgetData": {
+        "type": "orderer",
+        "graded": true,
+        "static": false,
+        "options": {
+          "height": "normal",
+          "layout": "vertical",
+          "options": [
+            {
+              "content": "A. Direct substitution"
+            },
+            {
+              "content": "B. Asymptote"
+            },
+            {
+              "content": "C. Limit found"
+            },
+            {
+              "content": "D. Indeterminate form"
+            },
+            {
+              "content": "E. Factoring"
+            },
+            {
+              "content": "F. Conjugates"
+            },
+            {
+              "content": "G. Trig identities"
+            },
+            {
+              "content": "H. Approximation"
+            }
+          ],
+          "otherOptions": [
+            {
+              "content": "A. Direct substitution"
+            },
+            {
+              "content": "B. Asymptote"
+            },
+            {
+              "content": "C. Limit found"
+            },
+            {
+              "content": "D. Indeterminate form"
+            },
+            {
+              "content": "E. Factoring"
+            },
+            {
+              "content": "F. Conjugates"
+            },
+            {
+              "content": "G. Trig identities"
+            },
+            {
+              "content": "H. Approximation"
+            }
+          ],
+          "correctOptions": [
+            {
+              "content": "A. Direct substitution"
+            },
+            {
+              "content": "D. Indeterminate form"
+            },
+            {
+              "content": "E. Factoring"
+            },
+            {
+              "content": "A. Direct substitution"
+            },
+            {
+              "content": "B. Asymptote"
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xb1da2787bf7b7b79",
+      "problemType": "4. D-E-C",
+      "widgetKey": "orderer 1",
+      "questionContent": "Thomas's teacher gave him a flow chart (below) and asked him to find $\\displaystyle\\lim_{x\\to -7}h(x)$ for $h(x)=\\dfrac{x^2+7x}{x^2+6x-7}$.\n\n![A flow chart has options A through H, as follows. Step A, direct substitution. Try to evaluate the function directly. Evaluating f of a leads to options B th...",
+      "widgetData": {
+        "type": "orderer",
+        "graded": true,
+        "static": false,
+        "options": {
+          "height": "normal",
+          "layout": "vertical",
+          "options": [
+            {
+              "content": "A. Direct substitution"
+            },
+            {
+              "content": "B. Asymptote"
+            },
+            {
+              "content": "C. Limit found"
+            },
+            {
+              "content": "D. Indeterminate form"
+            },
+            {
+              "content": "E. Factoring"
+            },
+            {
+              "content": "F. Conjugates"
+            },
+            {
+              "content": "G. Trig identities"
+            },
+            {
+              "content": "H. Approximation"
+            }
+          ],
+          "otherOptions": [
+            {
+              "content": "A. Direct substitution"
+            },
+            {
+              "content": "B. Asymptote"
+            },
+            {
+              "content": "C. Limit found"
+            },
+            {
+              "content": "D. Indeterminate form"
+            },
+            {
+              "content": "E. Factoring"
+            },
+            {
+              "content": "F. Conjugates"
+            },
+            {
+              "content": "G. Trig identities"
+            },
+            {
+              "content": "H. Approximation"
+            }
+          ],
+          "correctOptions": [
+            {
+              "content": "A. Direct substitution"
+            },
+            {
+              "content": "D. Indeterminate form"
+            },
+            {
+              "content": "E. Factoring"
+            },
+            {
+              "content": "A. Direct substitution"
+            },
+            {
+              "content": "C. Limit found"
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x08d72016262c73c3",
+      "problemType": "Type 4",
+      "widgetKey": "orderer 1",
+      "questionContent": "**Use the cards to create an expression that is equivalent to $10^6$.**  \n*Some cards may  not be used.*\n\n[[☃ orderer 1]]\n\n",
+      "widgetData": {
+        "type": "orderer",
+        "graded": true,
+        "static": false,
+        "options": {
+          "height": "normal",
+          "layout": "horizontal",
+          "options": [
+            {
+              "content": "$10$"
+            },
+            {
+              "content": "$6$"
+            },
+            {
+              "content": "$\\times$"
+            }
+          ],
+          "otherOptions": [
+            {
+              "content": "$6$"
+            }
+          ],
+          "correctOptions": [
+            {
+              "content": "$10$"
+            },
+            {
+              "content": "$\\times$"
+            },
+            {
+              "content": "$10$"
+            },
+            {
+              "content": "$\\times$"
+            },
+            {
+              "content": "$10$"
+            },
+            {
+              "content": "$\\times$"
+            },
+            {
+              "content": "$10$"
+            },
+            {
+              "content": "$\\times$"
+            },
+            {
+              "content": "$10$"
+            },
+            {
+              "content": "$\\times$"
+            },
+            {
+              "content": "$10$"
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x0af5b4eb88d951ef",
+      "problemType": "Trophic level in a food web",
+      "widgetKey": "orderer 1",
+      "questionContent": "**Which of the following statements is true about organisms in a food chain?**\n\n[[☃ radio 1]]",
+      "widgetData": {
+        "type": "orderer",
+        "graded": true,
+        "static": false,
+        "options": {
+          "height": "normal",
+          "layout": "vertical",
+          "options": [
+            {
+              "content": "Golden algae"
+            },
+            {
+              "content": "Shiner "
+            },
+            {
+              "content": "gree alga"
+            },
+            {
+              "content": "Rotifer"
+            }
+          ],
+          "otherOptions": [
+            {
+              "content": "Rotifer"
+            },
+            {
+              "content": "gree algae"
+            },
+            {
+              "content": "Shiner "
+            }
+          ],
+          "correctOptions": [
+            {
+              "content": "Golden algae"
+            },
+            {
+              "content": "Rotifer"
+            },
+            {
+              "content": "Shiner "
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xcc39b61282c884be",
+      "problemType": "A",
+      "widgetKey": "orderer 1",
+      "questionContent": "**Put $3$ sharks in the box.**\n\n[[☃ orderer 1]]",
+      "widgetData": {
+        "type": "orderer",
+        "graded": true,
+        "static": false,
+        "options": {
+          "height": "auto",
+          "layout": "horizontal",
+          "options": [
+            {
+              "images": {},
+              "content": "![A shark.](https://cdn.kastatic.org/ka-perseus-graphie/a6da94d42f602edc3421358dfc585fb1303afdd0.png)",
+              "widgets": {}
+            }
+          ],
+          "otherOptions": [],
+          "correctOptions": [
+            {
+              "images": {},
+              "content": "![A shark.](https://cdn.kastatic.org/ka-perseus-graphie/a6da94d42f602edc3421358dfc585fb1303afdd0.png)",
+              "widgets": {}
+            },
+            {
+              "images": {},
+              "content": "![A shark.](https://cdn.kastatic.org/ka-perseus-graphie/a6da94d42f602edc3421358dfc585fb1303afdd0.png)",
+              "widgets": {}
+            },
+            {
+              "images": {},
+              "content": "![A shark.](https://cdn.kastatic.org/ka-perseus-graphie/a6da94d42f602edc3421358dfc585fb1303afdd0.png)",
+              "widgets": {}
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xd4c7f919785c23bb",
+      "problemType": "1. B",
+      "widgetKey": "orderer 1",
+      "questionContent": "Abedabun's teacher gave him a flow chart (below) and asked him to find $\\displaystyle\\lim_{x\\to -2}h(x)$ for $h(x)=\\dfrac{3x+2}{x^2+11x+18}$.\n\n![A flow chart has options A through H, as follows. Step A, direct substitution. Try to evaluate the function directly. Evaluating f of a leads to options B ...",
+      "widgetData": {
+        "type": "orderer",
+        "graded": true,
+        "static": false,
+        "options": {
+          "height": "normal",
+          "layout": "vertical",
+          "options": [
+            {
+              "content": "A. Direct substitution"
+            },
+            {
+              "content": "B. Asymptote"
+            },
+            {
+              "content": "C. Limit found"
+            },
+            {
+              "content": "D. Indeterminate form"
+            },
+            {
+              "content": "E. Factoring"
+            },
+            {
+              "content": "F. Conjugates"
+            },
+            {
+              "content": "G. Trig identities"
+            },
+            {
+              "content": "H. Approximation"
+            }
+          ],
+          "otherOptions": [
+            {
+              "content": "A. Direct substitution"
+            },
+            {
+              "content": "B. Asymptote"
+            },
+            {
+              "content": "C. Limit found"
+            },
+            {
+              "content": "D. Indeterminate form"
+            },
+            {
+              "content": "E. Factoring"
+            },
+            {
+              "content": "F. Conjugates"
+            },
+            {
+              "content": "G. Trig identities"
+            },
+            {
+              "content": "H. Approximation"
+            }
+          ],
+          "correctOptions": [
+            {
+              "content": "A. Direct substitution"
+            },
+            {
+              "content": "B. Asymptote"
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xaff06b154f1f4f7b",
+      "problemType": "2. C",
+      "widgetKey": "orderer 1",
+      "questionContent": "Anastasia's teacher gave her a flow chart (below) and asked her to find $\\displaystyle\\lim_{x\\to -5}f(x)$ for $f(x)=\\dfrac{x+5}{\\sqrt{19-6x}-2}$.\n\n![A flow chart has options A through H, as follows. Step A, direct substitution. Try to evaluate the function directly. Evaluating f of a leads to option...",
+      "widgetData": {
+        "type": "orderer",
+        "graded": true,
+        "static": false,
+        "options": {
+          "height": "normal",
+          "layout": "vertical",
+          "options": [
+            {
+              "content": "A. Direct substitution"
+            },
+            {
+              "content": "B. Asymptote"
+            },
+            {
+              "content": "C. Limit found"
+            },
+            {
+              "content": "D. Indeterminate form"
+            },
+            {
+              "content": "E. Factoring"
+            },
+            {
+              "content": "F. Conjugates"
+            },
+            {
+              "content": "G. Trig identities"
+            },
+            {
+              "content": "H. Approximation"
+            }
+          ],
+          "otherOptions": [
+            {
+              "content": "A. Direct substitution"
+            },
+            {
+              "content": "B. Asymptote"
+            },
+            {
+              "content": "C. Limit found"
+            },
+            {
+              "content": "D. Indeterminate form"
+            },
+            {
+              "content": "E. Factoring"
+            },
+            {
+              "content": "F. Conjugates"
+            },
+            {
+              "content": "G. Trig identities"
+            },
+            {
+              "content": "H. Approximation"
+            }
+          ],
+          "correctOptions": [
+            {
+              "content": "A. Direct substitution"
+            },
+            {
+              "content": "C. Limit found"
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

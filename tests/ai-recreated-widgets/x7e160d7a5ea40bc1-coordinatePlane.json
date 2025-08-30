@@ -1,0 +1,244 @@
+{
+  "metadata": {
+    "contentId": "x7e160d7a5ea40bc1",
+    "contentType": "question",
+    "widgetType": "coordinatePlane",
+    "createdAt": "2025-08-30T16:20:24.781Z",
+    "aiReasoning": "The primary content revolves around understanding ratios using a tape diagram, which inherently involves visual components resembling a coordinate system. While not strictly utilizing traditional coordinate geometry, the visualization of proportions could be represented with a coordinate plane widget to depict part-to-part relationships dynamic through interactive graphing.",
+    "aiConfidence": 0.7
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "###Strategy\n\nWe can find the ratio of flies to mosquitoes by counting the equal parts of each in the tape diagram.\n\nThen we can create equivalent ratios for the specific numbers of insects in each lunch.\n\nTo make an equivalent ratio, we multiply each part of the ratio by the same number.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Identify the given ratio\n\nThe frog eats $\\blueE{3}$ flies for every $\\purpleD{7}$ mosquitoes.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Create equivalent ratios\n\nIf each part represents $\\goldE{5}$ insects, the frog eats $15$ flies, because $\\blueE{3}\\goldE{\\times 5} = 15$.\n\n[[☃ image 1]]\n\nIf each part represents $\\goldE{5}$ insects, the frog eats $35$ mosquitoes, because $\\purpleD{7}\\goldE{\\times 5} = 35$.",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 3 equal parts, each labeled 5. A curved bracket above the first tape is labeled Flies. The second tape has 7 equal parts of the same size as in the first tape, each labeled 5. A curved bracket below the second tape is labeled Mosquitoes.",
+                "box": [
+                  200,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/824c0de90b373a18c963b3e7845303fc0113ce96",
+                  "width": 200,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "If each part represents $\\goldE{2}$ insects, the frog eats $6$ flies, because $\\blueE{3}\\goldE{\\times 2} = 6$.\n\n[[☃ image 1]]\n\nIf each part represents $\\goldE{2}$ insects, the frog eats $14$ mosquitoes, because $\\purpleD{7}\\goldE{\\times 2} = 14$.\n",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 3 equal parts, each labeled 2. A curved bracket above the first tape is labeled Flies. The second tape has 7 equal parts of the same size as in the first tape, each labeled 2. A curved bracket below the second tape is labeled Mosquitoes.",
+                "box": [
+                  200,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/5f907fac1b6c52c8a9c4dc5c5a5d40a93a24c414",
+                  "width": 200,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "###Completed table\n\nDay| Flies | Mosquitoes\n:-: | :-: | :-:\nMonday | $15$ | $35$\nTuesday |  $6$ | $14$",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "A frog catches insects for their lunch. The frog likes to eat flies and mosquitoes in a certain ratio, which the diagram shows.\n\n[[☃ image 1]]\n\nThe table shows the number of flies and the number of mosquitoes that the frog eats for two lunches.\n\n**Based on the ratio, complete the missing values in the table.**\n\nDay| Flies | Mosquitoes\n:-: | :-: | :-:\nMonday | $15$ | [[☃ numeric-input 4]]\nTuesday |  [[☃ numeric-input 5]] | $14$",
+        "widgets": {
+          "image 1": {
+            "type": "image",
+            "graded": true,
+            "static": false,
+            "options": {
+              "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 3 equal parts. A curved bracket above the first tape is labeled Flies. The second tape has 7 equal parts of the same size as in the first tape. A curved bracket below the second tape is labeled Mosquitoes.",
+              "box": [
+                200,
+                168
+              ],
+              "range": [
+                [
+                  0,
+                  10
+                ],
+                [
+                  0,
+                  10
+                ]
+              ],
+              "title": "",
+              "labels": [],
+              "static": false,
+              "caption": "",
+              "backgroundImage": {
+                "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/ac9023bb1f6afa8dbdfc28fde5327623914c664b",
+                "width": 200,
+                "height": 168
+              }
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "block"
+          },
+          "numeric-input 4": {
+            "type": "numeric-input",
+            "graded": true,
+            "static": false,
+            "options": {
+              "size": "normal",
+              "static": false,
+              "answers": [
+                {
+                  "value": 35,
+                  "status": "correct",
+                  "strict": false,
+                  "message": "",
+                  "maxError": null,
+                  "simplify": "required"
+                }
+              ],
+              "labelText": "Number of mosquitos when the frog eats 15 flies",
+              "rightAlign": false,
+              "coefficient": false,
+              "multipleNumberInput": false
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          },
+          "numeric-input 5": {
+            "type": "numeric-input",
+            "graded": true,
+            "static": false,
+            "options": {
+              "size": "normal",
+              "static": false,
+              "answers": [
+                {
+                  "value": 6,
+                  "status": "correct",
+                  "strict": false,
+                  "message": "",
+                  "maxError": null,
+                  "simplify": "required"
+                }
+              ],
+              "labelText": "Number of flies when the frog eats 14 mosquitos",
+              "rightAlign": false,
+              "coefficient": false,
+              "multipleNumberInput": false
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{\"version\": 1, \"range\": [[0, 10], [0, 10]], \"labels\": [], \"backgroundImage\": {\"url\": \"web+graphie://cdn.kastatic.org/ka-perseus-graphie/ac9023bb1f6afa8dbdfc28fde5327623914c664b\", \"width\": 200, \"height\": 168}}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"coordinatePlane\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"coordinatePlane\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"width\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"height\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"xAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"yAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"showQuadrantLabels\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"points\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"lines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polygons\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"distances\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polylines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"version\",\n      \"range\",\n      \"labels\",\n      \"backgroundImage\"\n    ],\n    \"path\": [],\n    \"message\": \"Unrecognized key(s) in object: 'version', 'range', 'labels', 'backgroundImage'\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

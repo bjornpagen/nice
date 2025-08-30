@@ -1,0 +1,110 @@
+{
+  "metadata": {
+    "contentId": "x5d5aed9d6602d1c2",
+    "contentType": "question",
+    "widgetType": "dataTable",
+    "createdAt": "2025-08-30T16:18:49.034Z",
+    "aiReasoning": "The original content involves a tabular presentation of data which represents different types of movies and their counts. The question involves understanding and analyzing this tabular data to find the ratio of action movies to total movies. Hence, a dataTable widget allows for the clear representation of movie types and their associated numbers, facilitating easy data visualization and interaction which is crucial in solving the problem posed.",
+    "aiConfidence": 0.95
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "A ratio compares two values in a certain order.\n\nHere are some ways we could write the ratio of $\\goldE{7}$ snakes and $\\tealE{2}$ lizards.\n\n- $\\goldE{7}$ to $\\tealE{2}$\n- $\\goldE{7}:\\tealE{2}$\n- $\\goldE{7}$ per $\\tealE{2}$\n- $\\goldE{7}$ for every $\\tealE{2}$\n\nWe could **NOT** say $\\tealE{2}$ to $\\goldE{7}$, because that is a different order. It would mean the ratio of lizards to snakes.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "The theater is showing $\\blueE{5}$ action movies.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "$2+5+4+3=14$\n\nThe theater is showing $\\redE{14}$ total movies.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "The ratio of action movies to total movies is $\\blueE{5}$ to $\\redE{14}$.",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "The table shows how many of each type of movie that a theater is showing.\n\nType| Number\n- | - | -\nThriller| $2$\nAction| $5$\nDrama| $4$\nComedy| $3$\n\n**What is the ratio of action movies to total movies?**\n\n[[☃ radio 2]]",
+        "widgets": {
+          "radio 2": {
+            "type": "radio",
+            "graded": true,
+            "static": false,
+            "options": {
+              "choices": [
+                {
+                  "content": "$5$ to $2$",
+                  "correct": false
+                },
+                {
+                  "content": "$5$ to $4$",
+                  "correct": false
+                },
+                {
+                  "content": "$5$ to $9$",
+                  "correct": false,
+                  "isNoneOfTheAbove": false
+                },
+                {
+                  "content": "$5$ to $14$",
+                  "correct": true,
+                  "isNoneOfTheAbove": false
+                }
+              ],
+              "randomize": false,
+              "countChoices": false,
+              "displayCount": null,
+              "multipleSelect": false,
+              "deselectEnabled": false,
+              "hasNoneOfTheAbove": false
+            },
+            "version": {
+              "major": 1,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{\"rows\":[{\"Type\":\"Thriller\",\"Number\":2},{\"Type\":\"Action\",\"Number\":5},{\"Type\":\"Drama\",\"Number\":4},{\"Type\":\"Comedy\",\"Number\":3}],\"columns\":[\"Type\",\"Number\"],\"rowHeaders\":false,\"summary\":true}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"dataTable\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"dataTable\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"title\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"string\",\n    \"path\": [\n      \"columns\",\n      0\n    ],\n    \"message\": \"Expected object, received string\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"string\",\n    \"path\": [\n      \"columns\",\n      1\n    ],\n    \"message\": \"Expected object, received string\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"data\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"rowHeaderKey\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"footer\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"rows\",\n      \"rowHeaders\",\n      \"summary\"\n    ],\n    \"path\": [],\n    \"message\": \"Unrecognized key(s) in object: 'rows', 'rowHeaders', 'summary'\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

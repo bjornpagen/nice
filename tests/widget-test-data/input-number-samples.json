@@ -1,0 +1,239 @@
+{
+  "widgetType": "input-number",
+  "totalCount": 3539,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.848Z",
+  "samples": [
+    {
+      "questionId": "xb08f353b557b331a",
+      "problemType": "No image - perimeter",
+      "widgetKey": "input-number 1",
+      "questionContent": "Rectangle $ABCD$ is graphed in the coordinate plane.  The following are the vertices of the rectangle:\n$A(-6, -4),$ $B(-4,-4)$, $C(-4, -2)$, and $D(-6, -2)$.  \n\n**What is the perimeter of rectangle $ABCD$?**\n\n[[☃ input-number 1]] units",
+      "widgetData": {
+        "type": "input-number",
+        "graded": true,
+        "static": false,
+        "options": {
+          "size": "normal",
+          "value": 8,
+          "inexact": false,
+          "maxError": 0.1,
+          "simplify": "required",
+          "answerType": "number"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x602184a3905519ba",
+      "problemType": "Inside - give 3 measures",
+      "widgetKey": "input-number 2",
+      "questionContent": "Look at the image below.\n\n[[☃ image 1]]\n\n**What is the area of the triangle?**\n\n[[☃ input-number 2]] units$^2$",
+      "widgetData": {
+        "type": "input-number",
+        "graded": true,
+        "static": false,
+        "options": {
+          "size": "normal",
+          "value": 16,
+          "inexact": false,
+          "maxError": 0.1,
+          "simplify": "required",
+          "answerType": "number",
+          "rightAlign": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xb85f8e61ee003aa5",
+      "problemType": "Relate multiply and divide",
+      "widgetKey": "input-number 1",
+      "questionContent": "**Complete the equations.**\n\n$3.7 \\times 10^1=$  [[☃ input-number 1]]  \n\n$3.7 \\div 10^1=$  [[☃ input-number 2]]\n",
+      "widgetData": {
+        "type": "input-number",
+        "graded": true,
+        "static": false,
+        "options": {
+          "size": "normal",
+          "value": 37,
+          "inexact": false,
+          "maxError": 0.1,
+          "simplify": "required",
+          "answerType": "number"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x1f09a6f9994d0df8",
+      "problemType": "1. No calculation",
+      "widgetKey": "input-number 1",
+      "questionContent": "** What is the value of $x$ in the figure shown below? **\n\n\n\n[[☃ image 1]]\n\n$x = $ [[☃ input-number 1]] ",
+      "widgetData": {
+        "type": "input-number",
+        "graded": true,
+        "static": false,
+        "options": {
+          "size": "small",
+          "value": 32,
+          "inexact": false,
+          "maxError": 0.1,
+          "simplify": "required",
+          "answerType": "number",
+          "rightAlign": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xee0bb588c735c392",
+      "problemType": "Type 2 - Terminating",
+      "widgetKey": "input-number 1",
+      "questionContent": "**Select the decimal that is equivalent to $\\dfrac{11}{44}$.**\n\n[[☃ radio 1]]",
+      "widgetData": {
+        "type": "input-number",
+        "graded": true,
+        "options": {
+          "size": "normal",
+          "value": 0.25,
+          "inexact": false,
+          "maxError": 0.1,
+          "simplify": "required",
+          "answerType": "number"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x1019b658",
+      "problemType": "2. Solve contexts based on their graph",
+      "widgetKey": "input-number 1",
+      "questionContent": "The graph below describes the cycles of the Moon \nas observed from Earth during the first $60$ days of a year. \nThe percentage of the Moon which we see varies as a function of time. \nA *full moon* corresponds to $100\\%$ visibility\nand a *new moon* corresponds to $0\\%$ visibility. \n\n**Complete the fo...",
+      "widgetData": {
+        "type": "input-number",
+        "graded": true,
+        "options": {
+          "size": "small",
+          "value": 24,
+          "inexact": false,
+          "maxError": 0.1,
+          "simplify": "optional",
+          "answerType": "number"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x0fa24f1172960b3d",
+      "problemType": "Vertical ",
+      "widgetKey": "input-number 3",
+      "questionContent": "**Solve for $x$ in the diagram below.**\n\n\n\n[[☃ image 1]]\n\n$x=$ [[☃ input-number 3]] $^\\circ$\n",
+      "widgetData": {
+        "type": "input-number",
+        "graded": true,
+        "static": false,
+        "options": {
+          "size": "normal",
+          "value": 50,
+          "inexact": false,
+          "maxError": 0.1,
+          "simplify": "required",
+          "answerType": "number",
+          "rightAlign": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x10bb5c7b7617aead",
+      "problemType": "problem-type-5",
+      "widgetKey": "input-number 1",
+      "questionContent": "To get to work each morning, Emily takes a horse $10.98$ kilometers and a bike $4.06$ kilometers. \n\n **How many kilometers is Emily's journey in total?**\n\n[[☃ input-number 1]] kilometers",
+      "widgetData": {
+        "type": "input-number",
+        "graded": true,
+        "static": false,
+        "options": {
+          "size": "normal",
+          "value": 15.04,
+          "inexact": false,
+          "maxError": 0.1,
+          "simplify": "required",
+          "answerType": "number"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xeb7140b7e135baf3",
+      "problemType": "A",
+      "widgetKey": "input-number 1",
+      "questionContent": "While exploring some rocky cliffs, you notice a lighthouse in the distance that you can't quite reach. It would be nice to know how far away that lighthouse is, but there is no way to make a direct measurement over the uneven terrain. Luckily you have your trusty compass and some knowledge about par...",
+      "widgetData": {
+        "type": "input-number",
+        "graded": true,
+        "options": {
+          "size": "normal",
+          "value": 475.7,
+          "inexact": true,
+          "maxError": 6,
+          "simplify": "optional",
+          "answerType": "number"
+        }
+      }
+    },
+    {
+      "questionId": "xc1b25120",
+      "problemType": "Type 1",
+      "widgetKey": "input-number 1",
+      "questionContent": "**What number is the opposite of $\\dfrac67$?**\n\n[[☃ input-number 1]]",
+      "widgetData": {
+        "type": "input-number",
+        "graded": true,
+        "options": {
+          "size": "normal",
+          "value": -0.8571428571428571,
+          "inexact": false,
+          "maxError": 0.1,
+          "simplify": "required",
+          "answerType": "number"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    }
+  ]
+}

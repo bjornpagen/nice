@@ -1,0 +1,28 @@
+{
+  "widgetType": "video",
+  "totalCount": 1,
+  "sampleCount": 1,
+  "generatedAt": "2025-08-30T15:26:41.852Z",
+  "samples": [
+    {
+      "questionId": "xceaab72d3cde1fbb",
+      "problemType": "Type 1 (What kind of evidence?)",
+      "widgetKey": "video 1",
+      "questionContent": "\n[[☃ video 1]]\n\nIn the 13th century, Italian explorer Marco Polo heard something surprising in Asia’s Gobi Desert: the cries of evil [[☃ definition 6]]. \n\nOr, at least, that’s what he thought. Today we know that Polo was actually hearing a natural [[☃ definition 5]]: singing sand dunes. *Sand dunes*...",
+      "widgetData": {
+        "type": "video",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "location": "singing-sand-phenomenon"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "block"
+      }
+    }
+  ]
+}

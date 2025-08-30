@@ -1,0 +1,398 @@
+{
+  "widgetType": "table",
+  "totalCount": 24,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.852Z",
+  "samples": [
+    {
+      "questionId": "xe264bde43096a694",
+      "problemType": "Type 2",
+      "widgetKey": "table 1",
+      "questionContent": "Getaway Travel Agency  surveyed a random sample of $45$ of their clients about their vacation plans. Of the clients surveyed, $21$ expected that they would go on $3$ vacations in the next year. There are $516$ Getaway Travel Agency clients.\n\n**Based on the data, what is the most reasonable estimate ...",
+      "widgetData": {
+        "type": "table",
+        "graded": true,
+        "options": {
+          "rows": 4,
+          "answers": [
+            [
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              ""
+            ]
+          ],
+          "columns": 1,
+          "headers": [
+            ""
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x98a36e9a494f7b6b",
+      "problemType": "Find mistake",
+      "widgetKey": "table 1",
+      "questionContent": "Santiago tried to evaluate an expression step by step.\n\n$\\qquad\\begin{align}\n&(4 \\cdot 10^9) \\cdot 0.00003 \\\\\\\\\n\\\\\n=&(4 \\cdot 10^9) \\cdot (3\\cdot10^{-5})&\\green{\\text{Step } 1}\\\\\\\\\n\\\\\n=&(4\\cdot3)\\cdot(10^9\\cdot10^{-5})&\\blue{\\text{Step } 2}\\\\\\\\\n\\\\\n=&12 \\cdot10^{14}&\\purple{\\text{Step } 3} \\\\\\\\\n\\end{...",
+      "widgetData": {
+        "type": "table",
+        "graded": true,
+        "options": {
+          "rows": 4,
+          "answers": [
+            [
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              ""
+            ]
+          ],
+          "columns": 1,
+          "headers": [
+            ""
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "xa526f1d53709bd2d",
+      "problemType": "Type 1",
+      "widgetKey": "table 1",
+      "questionContent": "Green tides are overgrowths of algae that occur in response to many factors, including excess nutrients in marine water. Up to 10$^6$ tons of a particular algae, *E. prolifera*, can be collected from a single green tide event. Rather than waste this biomass, researchers attempt to convert the algae ...",
+      "widgetData": {
+        "type": "table",
+        "graded": true,
+        "options": {
+          "rows": 6,
+          "answers": [
+            [
+              "",
+              "hexadecanoic acid",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ]
+          ],
+          "columns": 3,
+          "headers": [
+            "Compound",
+            "",
+            ""
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "xb21da203f603f90a",
+      "problemType": "Type 4",
+      "widgetKey": "table 1",
+      "questionContent": "A group of randomly selected Apple Valley High School students were asked to pick their favorite gym class. The table below shows the results of the survey. There are $528$ students at Apple Valley High School.\n\nGym class  | Number of students\n:-: | :-: \nRacquet sports | $1$\nTeam sports | $9$ \nTrack...",
+      "widgetData": {
+        "type": "table",
+        "graded": true,
+        "options": {
+          "rows": 4,
+          "answers": [
+            [
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              ""
+            ]
+          ],
+          "columns": 1,
+          "headers": [
+            ""
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x82df8ffa5a0bf1b5",
+      "problemType": "Type 2",
+      "widgetKey": "table 1",
+      "questionContent": "Freemont Run Club surveyed a random sample of $30$ of their members about their running habits. Of the members surveyed, $9$ said that they run more than $5$ days a week.  There are $84$ Freemont Run Club members.\n\n**Based on the data, what is the most reasonable estimate for the number of Freemont ...",
+      "widgetData": {
+        "type": "table",
+        "graded": true,
+        "options": {
+          "rows": 4,
+          "answers": [
+            [
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              ""
+            ]
+          ],
+          "columns": 1,
+          "headers": [
+            ""
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "xe1928a5575008dc7",
+      "problemType": "Find mistake",
+      "widgetKey": "table 1",
+      "questionContent": "Claire tried to evaluate an expression step by step.\n\n$\\qquad\\begin{align}\n&\\dfrac{4000}{ 4 \\cdot10^{-5} }\\\\\\\\\n\\\\\n=&\\dfrac{4 \\cdot 10^2}{ 4\\cdot10^{-5}}&\\green{\\text{Step } 1}\\\\\\\\\n\\\\\n=&\\dfrac44\\cdot\\dfrac{10^2}{10^{-5}}&\\blue{\\text{Step } 2}\\\\\\\\\n\\\\\n=&1\\cdot{10^7}&\\purple{\\text{Step } 3} \\\\\\\\\n\\end{al...",
+      "widgetData": {
+        "type": "table",
+        "graded": true,
+        "options": {
+          "rows": 4,
+          "answers": [
+            [
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              ""
+            ]
+          ],
+          "columns": 1,
+          "headers": [
+            ""
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x52917d96c86dd7cf",
+      "problemType": "Type 1",
+      "widgetKey": "table 1",
+      "questionContent": "Green tides are overgrowths of algae that occur in response to many factors, including excess nutrients in marine water. Up to 10$^6$ tons of a particular algae, *E. prolifera*, can be collected from a single green tide event. Rather than waste this biomass, researchers attempt to convert the algae ...",
+      "widgetData": {
+        "type": "table",
+        "graded": true,
+        "options": {
+          "rows": 6,
+          "answers": [
+            [
+              "",
+              "hexadecanoic acid",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ]
+          ],
+          "columns": 3,
+          "headers": [
+            "Compound",
+            "",
+            ""
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x1388a2e6d7727ef7",
+      "problemType": "Type 4",
+      "widgetKey": "table 1",
+      "questionContent": "A group of randomly selected members of Mothers' Club were asked how many kids they have.  The table below shows the results of the survey. There are $120$ members in Mothers' Club.\n\nNumber of kids  | Number of mothers\n:-: | :-: \n$1$ | $9$ \n$2$ | $6$\n$3+$|  $5$\n\n\n\n**Based on the data, what is the mo...",
+      "widgetData": {
+        "type": "table",
+        "graded": true,
+        "options": {
+          "rows": 4,
+          "answers": [
+            [
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              ""
+            ]
+          ],
+          "columns": 1,
+          "headers": [
+            ""
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x29fda621be8c66fb",
+      "problemType": "Type 2",
+      "widgetKey": "table 1",
+      "questionContent": "Francis surveyed a random sample of $70$ students at Franklin High School about their favorite season. Of the students surveyed, $18$ chose fall as their favorite season. There are $1816$ students at Franklin High School.\n\n**Based on the data, what is the most reasonable estimate for the number of s...",
+      "widgetData": {
+        "type": "table",
+        "graded": true,
+        "options": {
+          "rows": 4,
+          "answers": [
+            [
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              ""
+            ]
+          ],
+          "columns": 1,
+          "headers": [
+            ""
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x7bcda147e3efe62b",
+      "problemType": "Find mistake",
+      "widgetKey": "table 1",
+      "questionContent": "Quinn tried to evaluate an expression step by step.\n\n$\\qquad\\begin{align}\n&(3 \\cdot 10^4) \\cdot 0.002 \\\\\\\\\n\\\\\n=&(3 \\cdot 10^4) \\cdot (2\\cdot10^{-3})&\\green{\\text{Step } 1}\\\\\\\\\n\\\\\n=&(3\\cdot2)\\cdot(10^4\\cdot10^{-3})&\\blue{\\text{Step } 2}\\\\\\\\\n\\\\\n=&6 \\cdot10^1&\\purple{\\text{Step } 3} \\\\\\\\\n\\end{align}$\n\n...",
+      "widgetData": {
+        "type": "table",
+        "graded": true,
+        "options": {
+          "rows": 4,
+          "answers": [
+            [
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              ""
+            ]
+          ],
+          "columns": 1,
+          "headers": [
+            ""
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    }
+  ]
+}

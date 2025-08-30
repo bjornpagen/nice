@@ -1,0 +1,116 @@
+{
+  "metadata": {
+    "contentId": "x8ac8462c372937f1",
+    "contentType": "question",
+    "widgetType": "dataTable",
+    "createdAt": "2025-08-30T16:18:40.128Z",
+    "aiReasoning": "The provided content contains a table displaying the number of people waiting in line for different rides. A dataTable widget is suitable here as it requires rendering a table format that presents numerical data and labels. The task involves understanding the ratios based on this tabular data, which enforces the choice of a dataTable for clear representation of information. The widget needs to support inline text and numbers, which aligns with the table presentation of ride names and corresponding people counts. This setup aids in understanding the math concept of ratios derived from given tabular data.",
+    "aiConfidence": 0.95
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "A ratio compares two values in a certain order.\n\nHere are some ways we could write the ratio of $\\goldE{7}$ snakes and $\\tealE{2}$ lizards.\n\n- $\\goldE{7}$ to $\\tealE{2}$\n- $\\goldE{7}:\\tealE{2}$\n- $\\goldE{7}$ per $\\tealE{2}$\n- $\\goldE{7}$ for every $\\tealE{2}$\n\nWe could **NOT** say $\\tealE{2}$ to $\\goldE{7}$, because that is a different order. It would mean the ratio of lizards to snakes.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "There are $\\blueE{12}$ people waiting in line for the Bumper cars.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "There are $\\purpleD{4}$ people waiting in line for the Slingshot.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "There are $\\blueE{12}$ people waiting in line for the Bumper cars for every $\\purpleD{4}$ people waiting in line for the Slingshot.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "The ratio of people waiting in line for the Bumper cars to people waiting in line for the Slingshot is ${\\blueE{12}}$ to ${\\purpleD{4}}$.",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "The table shows the number of people waiting in line for different rides at an amusement park.\n\nRide| People\n- | - | -\nRoller coaster| $15$\nSlingshot| $4$\nBumper cars| $12$\nRound-up|$11$\n\n**What is the ratio of people waiting in line for the Bumper cars to people waiting in line for the Slingshot?**\n\n[[☃ radio 3]]",
+        "widgets": {
+          "radio 3": {
+            "type": "radio",
+            "graded": true,
+            "static": false,
+            "options": {
+              "choices": [
+                {
+                  "content": "$4$ to $12$",
+                  "correct": false
+                },
+                {
+                  "content": "$11$ to $12$",
+                  "correct": false
+                },
+                {
+                  "content": "$12$ to $31$",
+                  "correct": false,
+                  "isNoneOfTheAbove": false
+                },
+                {
+                  "content": "$12$ to $4$",
+                  "correct": true,
+                  "isNoneOfTheAbove": false
+                }
+              ],
+              "randomize": false,
+              "countChoices": false,
+              "displayCount": null,
+              "multipleSelect": false,
+              "deselectEnabled": false,
+              "hasNoneOfTheAbove": false
+            },
+            "version": {
+              "major": 1,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{\"typeName\":\"ZodObject\",\"description\":\"Creates accessible HTML tables with mixed content types, optional row headers, and footer rows. Supports inline text/math in cells and interactive input fields. Perfect for data display, comparison tables, and exercises requiring tabular input.\"}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"dataTable\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"dataTable\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"title\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"data\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"rowHeaderKey\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"footer\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"typeName\",\n      \"description\"\n    ],\n    \"path\": [],\n    \"message\": \"Unrecognized key(s) in object: 'typeName', 'description'\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "widgetType": "passage",
+  "totalCount": 4,
+  "sampleCount": 4,
+  "generatedAt": "2025-08-30T15:26:41.852Z",
+  "samples": [
+    {
+      "questionId": "x9a35bbdda723635c",
+      "problemType": "Type 1",
+      "widgetKey": "passage 1",
+      "questionContent": "John Smith is a $30$ year old married male who feels down most of the time. He experiences frequent, intrusive thoughts that he is not good enough, despite personal and professional successes. He tries to overcompensate for his thoughts by taking on more than he can handle, which leads to failure an...",
+      "widgetData": {
+        "type": "passage",
+        "graded": true,
+        "options": {
+          "footnotes": "",
+          "passageText": "",
+          "passageTitle": "",
+          "showLineNumbers": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "xb31a06850569b765",
+      "problemType": "Type 1",
+      "widgetKey": "passage 1",
+      "questionContent": "John Smith is a $30$ year old married male who feels down most of the time. He experiences frequent, intrusive thoughts that he is not good enough, despite personal and professional successes. He tries to overcompensate for his thoughts by taking on more than he can handle, which leads to failure an...",
+      "widgetData": {
+        "type": "passage",
+        "graded": true,
+        "options": {
+          "footnotes": "",
+          "passageText": "",
+          "passageTitle": "",
+          "showLineNumbers": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x4fb4811a4e962d26",
+      "problemType": "Type 1",
+      "widgetKey": "passage 1",
+      "questionContent": "John Smith is a $30$ year old married male who feels down most of the time. He experiences frequent, intrusive thoughts that he is not good enough, despite personal and professional successes. He tries to overcompensate for his thoughts by taking on more than he can handle, which leads to failure an...",
+      "widgetData": {
+        "type": "passage",
+        "graded": true,
+        "options": {
+          "footnotes": "",
+          "passageText": "",
+          "passageTitle": "",
+          "showLineNumbers": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x2cfcc05a0514d144",
+      "problemType": "Type 1",
+      "widgetKey": "passage 1",
+      "questionContent": "John Smith is a $30$ year old married male who feels down most of the time. He experiences frequent, intrusive thoughts that he is not good enough, despite personal and professional successes. He tries to overcompensate for his thoughts by taking on more than he can handle, which leads to failure an...",
+      "widgetData": {
+        "type": "passage",
+        "graded": true,
+        "options": {
+          "footnotes": "",
+          "passageText": "",
+          "passageTitle": "",
+          "showLineNumbers": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    }
+  ]
+}

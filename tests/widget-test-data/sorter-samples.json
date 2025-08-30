@@ -1,0 +1,271 @@
+{
+  "widgetType": "sorter",
+  "totalCount": 481,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.848Z",
+  "samples": [
+    {
+      "questionId": "x2b49ea6c2b008b0d",
+      "problemType": "Trucks",
+      "widgetKey": "sorter 1",
+      "questionContent": "Three trucks start at rest, side-by-side. The trucks carry different mass loads. The three drivers press their accelerators at the same time, and the trucks experience equal strength net forces. The positions of the three trucks before starting and a short time later are modeled below.\n\n[[☃ image 1]...",
+      "widgetData": {
+        "type": "sorter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "layout": "vertical",
+          "correct": [
+            "**R**",
+            "**G**",
+            "**B**"
+          ],
+          "padding": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x5fef9f85dd80a2bf",
+      "problemType": "Order parts by level of complexity",
+      "widgetKey": "sorter 1",
+      "questionContent": "The parts of the body listed below are involved in breaking down and absorbing nutrients from food.\n\n**Order the parts from least to most complex.** \n\n**Least complex**\n\n[[☃ sorter 1]]\n\n**Most complex**",
+      "widgetData": {
+        "type": "sorter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "layout": "vertical",
+          "correct": [
+            "parietal cell",
+            "epithelial tissue",
+            "stomach",
+            "digestive system"
+          ],
+          "padding": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x65684effa83aeaf9",
+      "problemType": "Rank EM frequencies",
+      "widgetKey": "sorter 1",
+      "questionContent": "A model of the electromagnetic spectrum is shown below.\n\n[[☃ image 1]]\n\n**Rank the following electromagnetic waves from highest frequency to lowest frequency.**\n\n*highest frequency*\n\n[[☃ sorter 1]]\n\n*lowest frequency*",
+      "widgetData": {
+        "type": "sorter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "layout": "vertical",
+          "correct": [
+            "X-rays",
+            "visible light",
+            "infrared",
+            "radio"
+          ],
+          "padding": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x52118d472237bc45",
+      "problemType": "Order human development (images)",
+      "widgetKey": "sorter 1",
+      "questionContent": "**Order the stages of human development from earliest to latest.**\n\n*Note: The stages are not shown to scale.*\n\n**Earliest**\n\n[[☃ sorter 1]]\n\n**Latest**\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "sorter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "layout": "vertical",
+          "correct": [
+            "![A zygote, shown as a single cell with a nucleus enclosed in a circular capsule.](https://cdn.kastatic.org/ka-content-images/2f8a465668dc21f22532aaa77eeac6081e3a2bb3.png)",
+            "![A blastocyst, shown as a hollow ring of cells inside a circular capsule with a clump of cells towards the top of the ring.](https://cdn.kastatic.org/ka-content-images/b0e254954ce69e183371c780681627e147092f1a.png)",
+            "![A human embryo, showing an elongated and slightly curved form with a distinguishable head and body.](https://cdn.kastatic.org/ka-content-images/172474a26b0ee92fe9bdd99863e2ab70d5419bb5.png)",
+            "![A human fetus, showing a distinct head, torso, arms, legs, and umbilical cord.](https://cdn.kastatic.org/ka-content-images/46994fcf67a653c9c946b41c4463b5a44c2d1d10.png)"
+          ],
+          "padding": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xa5b00cd24c8b7e06",
+      "problemType": "Type 1",
+      "widgetKey": "sorter 1",
+      "questionContent": "**Order the following numbers from least to greatest.**  \n*Put the lowest number on the left.*\n\n[[☃ sorter 1]]",
+      "widgetData": {
+        "type": "sorter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "layout": "horizontal",
+          "correct": [
+            "$-4$",
+            "$-3$",
+            "$-2$",
+            "$-1$"
+          ],
+          "padding": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x407f7e1ad3243ea0",
+      "problemType": ">1Greatest to least",
+      "widgetKey": "sorter 1",
+      "questionContent": "The height, in meters, of three sunflowers in a garden are represented below.  \n*Each large square represents 1 meter.*\n\nSunflower name | Height\n:- | :-\nSunny | [[☃ image 1]]\nGoldie | [[☃ image 2]]\nRay | [[☃ image 3]]\n\n**Order the sunflowers by height from greatest to least.**  \n*Put the tallest sun...",
+      "widgetData": {
+        "type": "sorter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "layout": "horizontal",
+          "correct": [
+            "Goldie",
+            "Sunny",
+            "Ray"
+          ],
+          "padding": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xb800a4b74fc3dfd0",
+      "problemType": "Type 3",
+      "widgetKey": "sorter 1",
+      "questionContent": "Order the following values from least to greatest.\n\n[[☃ sorter 1]]\n\n",
+      "widgetData": {
+        "type": "sorter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "layout": "horizontal",
+          "correct": [
+            "$-7$",
+            "$|-2|$",
+            "$3$",
+            "$|4.5|$"
+          ],
+          "padding": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x92bf52431586b70b",
+      "problemType": "Order of events in M phase",
+      "widgetKey": "sorter 1",
+      "questionContent": "**Drag the tiles to place the events of the mitotic $(\\text{M})$ phase in order from first to last.**\n\n*First event*\n\n[[☃ sorter 1]]\n\n*Last event*",
+      "widgetData": {
+        "type": "sorter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "layout": "vertical",
+          "correct": [
+            "Chromosomes condense and the nuclear envelope breaks down.",
+            "The mitotic spindle helps chromosomes line up along the metaphase plate.",
+            "Sister chromatids separate into individual chromosomes, which then move to opposite ends of the cell.",
+            "The mitotic spindle breaks down and nuclear envelopes form.",
+            "The cell’s cytoplasm is split, forming two new cells."
+          ],
+          "padding": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x8b7dc878d705bdda",
+      "problemType": "1. Sorter odd",
+      "widgetKey": "sorter 1",
+      "questionContent": "The following data points represent the number of quesadillas each person at Toby's Tacos ate.\n\n*Answer $2$ questions about the data set.*\n\n1. **Sort the data from least to greatest.**\n\n[[☃ sorter 1]]\n\n2. **Find the interquartile range (IQR) of the data set.**\n\n[[☃ numeric-input 1]] quesadillas",
+      "widgetData": {
+        "type": "sorter",
+        "graded": true,
+        "static": false,
+        "options": {
+          "layout": "horizontal",
+          "correct": [
+            "$0$",
+            "$0$",
+            "$\\dfrac14$",
+            "$\\dfrac12$",
+            "$\\dfrac12$",
+            "$1$",
+            "$1$",
+            "$1$",
+            "$\\dfrac54$",
+            "$2$",
+            "$2$"
+          ],
+          "padding": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xeebc4ffe4fe2a958",
+      "problemType": "Type 3 - Orderer",
+      "widgetKey": "sorter 1",
+      "questionContent": "**Order the following numbers from least to greatest.**\n\n[[☃ sorter 1]]\n\n",
+      "widgetData": {
+        "type": "sorter",
+        "graded": true,
+        "options": {
+          "layout": "horizontal",
+          "correct": [
+            "$\\sqrt{0.52}$",
+            "$0.73$",
+            "$\\dfrac34$"
+          ],
+          "padding": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,372 @@
+{
+  "widgetType": "expression",
+  "totalCount": 3685,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.850Z",
+  "samples": [
+    {
+      "questionId": "x87ea94bac8422390",
+      "problemType": "Type 3 (8 items)",
+      "widgetKey": "expression 1",
+      "questionContent": "**Find the volume of the cylinder.**  \n*Either enter an exact answer in terms of $\\pi$ or use $3.14$ for $\\pi$.*\n\n\n\n[[☃ image 1]]\n\n\n\n[[☃ expression 1]] units$^3$",
+      "widgetData": {
+        "type": "expression",
+        "graded": true,
+        "static": false,
+        "options": {
+          "times": false,
+          "functions": [
+            "f",
+            "g",
+            "h"
+          ],
+          "buttonSets": [
+            "basic",
+            "prealgebra"
+          ],
+          "answerForms": [
+            {
+              "key": 0,
+              "form": false,
+              "value": "384\\pi",
+              "simplify": false,
+              "considered": "correct"
+            },
+            {
+              "key": 1,
+              "form": false,
+              "value": "1205.76",
+              "simplify": false,
+              "considered": "correct"
+            }
+          ]
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xa459bf1081fd7afd",
+      "problemType": "3. Quadrant III",
+      "widgetKey": "expression 1",
+      "questionContent": "The angle $\\theta_1$ is located in Quadrant $\\text{III}$, and $\\sin(\\theta_1)=-\\dfrac{12}{13}$ .\n\n**What is the value of $\\cos(\\theta_1)$?**  \n*Express your answer exactly.*\n\n$\\cos(\\theta_1)=$ [[☃ expression 1]]",
+      "widgetData": {
+        "type": "expression",
+        "graded": true,
+        "static": false,
+        "options": {
+          "times": false,
+          "functions": [
+            "f",
+            "g",
+            "h"
+          ],
+          "buttonSets": [
+            "basic",
+            "prealgebra"
+          ],
+          "answerForms": [
+            {
+              "key": 0,
+              "form": false,
+              "value": "-\\frac{5}{13}",
+              "simplify": false,
+              "considered": "correct"
+            }
+          ]
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x76e27e83fd009ded",
+      "problemType": "2. Quadrant II",
+      "widgetKey": "expression 1",
+      "questionContent": "The angle $\\theta_1$ is located in Quadrant $\\text{II}$, and $\\cos(\\theta_1)=-\\dfrac{2}{11}$ .\n\n**What is the value of $\\sin(\\theta_1)$?**  \n*Express your answer exactly.*\n\n$\\sin(\\theta_1)=$ [[☃ expression 1]]",
+      "widgetData": {
+        "type": "expression",
+        "graded": true,
+        "static": false,
+        "options": {
+          "times": false,
+          "functions": [
+            "f",
+            "g",
+            "h"
+          ],
+          "buttonSets": [
+            "basic",
+            "prealgebra"
+          ],
+          "answerForms": [
+            {
+              "key": 0,
+              "form": false,
+              "value": "\\frac{3\\sqrt{13}}{11}",
+              "simplify": false,
+              "considered": "correct"
+            }
+          ]
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x1a0da638bd762b22",
+      "problemType": "subtraction",
+      "widgetKey": "expression 1",
+      "questionContent": "**Write an equation to represent the following statement.**\n\n$33$ is $15$ less than $k$.\n\n[[☃ expression 1]]\n\n**Solve for $k$.**\n\n$k=$ [[☃ numeric-input 1]]",
+      "widgetData": {
+        "type": "expression",
+        "graded": true,
+        "static": false,
+        "options": {
+          "times": false,
+          "functions": [
+            "f",
+            "g",
+            "h"
+          ],
+          "buttonSets": [
+            "basic"
+          ],
+          "answerForms": [
+            {
+              "key": 0,
+              "form": true,
+              "value": "33=k-15",
+              "simplify": false,
+              "considered": "correct"
+            }
+          ]
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x306cf38d7b2c8265",
+      "problemType": "Type 1: Expand the expression",
+      "widgetKey": "expression 1",
+      "questionContent": "**Expand the expression $(5x-2y)^3$ using the binomial theorem.**\n\n[[☃ expression 1]]\n\n*For your convenience, here is Pascal's triangle with its first few rows filled out.*\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/5bd4d11521c4c278f8c7ebbe012ed16a5532820d)",
+      "widgetData": {
+        "type": "expression",
+        "graded": true,
+        "static": false,
+        "options": {
+          "times": false,
+          "static": false,
+          "functions": [
+            "f",
+            "g",
+            "h"
+          ],
+          "buttonSets": [
+            "basic",
+            "prealgebra"
+          ],
+          "answerForms": [
+            {
+              "key": "0",
+              "form": true,
+              "value": "125x^{3}-150x^{2}y+60xy^{2}-8y^{3}",
+              "simplify": true,
+              "considered": "correct"
+            }
+          ]
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xed4a25bb3b209105",
+      "problemType": "Type 5: Division",
+      "widgetKey": "expression 1",
+      "questionContent": "**Write an expression for \"$10$ divided by $d$.\"**\n\n[[☃ expression 1]]\n\n",
+      "widgetData": {
+        "type": "expression",
+        "graded": true,
+        "static": false,
+        "options": {
+          "times": false,
+          "functions": [
+            "f",
+            "g",
+            "h"
+          ],
+          "buttonSets": [
+            "basic"
+          ],
+          "answerForms": [
+            {
+              "key": 0,
+              "form": false,
+              "value": "\\frac{10}{d}",
+              "simplify": false,
+              "considered": "correct"
+            }
+          ]
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xf1f178018fb1d086",
+      "problemType": "addition",
+      "widgetKey": "expression 1",
+      "questionContent": "**Apply the distributive property to factor out the greatest common factor.**\n\n$24+18t =$ [[☃ expression 1]]\n\n",
+      "widgetData": {
+        "type": "expression",
+        "graded": true,
+        "options": {
+          "times": false,
+          "functions": [
+            "f",
+            "g",
+            "h"
+          ],
+          "buttonSets": [
+            "basic"
+          ],
+          "answerForms": [
+            {
+              "key": 0,
+              "form": true,
+              "value": "6\\left(4+3t\\right)",
+              "simplify": false,
+              "considered": "correct"
+            }
+          ]
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x5a1bbcdc",
+      "problemType": "Type 1",
+      "widgetKey": "expression 1",
+      "questionContent": "Graph the line that represents a proportional relationship between $y$ and $x$ where the *unit rate* of change of $y$ with respect to $x$ is $0.4.$  In other words, a change of $1$ unit in $x$ corresponds to a change of $0.4$ units in $y$.\n\n**Graph the line and write the equation of the line.**[[☃ i...",
+      "widgetData": {
+        "type": "expression",
+        "graded": true,
+        "options": {
+          "form": false,
+          "times": false,
+          "value": "y=0.4x",
+          "simplify": false,
+          "functions": [
+            "f",
+            "g",
+            "h"
+          ],
+          "buttonSets": [
+            "basic"
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 1
+        }
+      }
+    },
+    {
+      "questionId": "xa6466a27588f8ebb",
+      "problemType": "Graph",
+      "widgetKey": "expression 1",
+      "questionContent": "**Write the equation of the circle graphed below**.\n\n[[☃ expression 1]]\n\n\n\n[[☃ image 1]]\n\n",
+      "widgetData": {
+        "type": "expression",
+        "graded": true,
+        "static": false,
+        "options": {
+          "times": false,
+          "functions": [
+            "f",
+            "g",
+            "h"
+          ],
+          "buttonSets": [
+            "basic",
+            "prealgebra"
+          ],
+          "answerForms": [
+            {
+              "key": 0,
+              "form": false,
+              "value": "\\left(x+1\\right)^2+\\left(y-1\\right)^2=74",
+              "simplify": false,
+              "considered": "correct"
+            }
+          ]
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xbc77b845b941d659",
+      "problemType": "2. y-axis",
+      "widgetKey": "expression 1",
+      "questionContent": "Region $R$ is enclosed by the $x$-axis, the curve $y=\\dfrac14 x^2-1$, and the line $x=4$.\n\n![The parabola y = one fourth x squared minus 1 is graphed. The parabola moves downward with decreasing steepness to the negative y axis, then moves upward with increasing steepness through points (2, 0) and (...",
+      "widgetData": {
+        "type": "expression",
+        "graded": true,
+        "static": false,
+        "options": {
+          "times": false,
+          "functions": [
+            "f",
+            "g",
+            "h"
+          ],
+          "buttonSets": [
+            "basic",
+            "prealgebra"
+          ],
+          "answerForms": [
+            {
+              "key": 0,
+              "form": false,
+              "value": "18\\pi",
+              "simplify": false,
+              "considered": "correct"
+            }
+          ]
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

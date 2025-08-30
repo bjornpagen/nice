@@ -108,14 +108,8 @@ test("divergent bar chart - auto label thinning prevents overcrowding determinis
 	// Extract the actual dynamic width from the SVG
 	const widthMatch = svg.match(/width="(\d+)"/)
 	const actualWidth = widthMatch && widthMatch[1] ? parseInt(widthMatch[1]) : 374
-	// Align with generator's text-aware thinning heuristic (avgCharWidth≈8, padding 10)
-	const labels = input.data.map((d) => d.category)
-	const avgCharWidth = 8
-	const paddingPx = 10
-	const maxLabelWidth = Math.max(...labels.map((s) => s.length * avgCharWidth))
-	// Approximate chartWidth = width - left(80) - right(20)
-	const approximateChartWidth = Math.max(1, actualWidth - 100)
-	const expectedMaxLabels = Math.max(1, Math.floor(approximateChartWidth / (maxLabelWidth + paddingPx)))
+	// chartWidth = width - left(80) - right(20), min spacing 50
+	const expectedMaxLabels = Math.max(1, Math.floor((actualWidth - 100) / 50))
 	expect(xTickLabelMatches.length).toBeGreaterThan(0)
 	expect(xTickLabelMatches.length).toBeLessThanOrEqual(expectedMaxLabels)
 

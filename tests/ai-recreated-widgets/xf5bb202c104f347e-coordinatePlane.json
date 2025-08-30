@@ -1,0 +1,215 @@
+{
+  "metadata": {
+    "contentId": "xf5bb202c104f347e",
+    "contentType": "question",
+    "widgetType": "coordinatePlane",
+    "createdAt": "2025-08-30T16:19:10.893Z",
+    "aiReasoning": "The question content involves analyzing a tape diagram to understand the ratio of popcorn to berries in a garland, which doesn't directly correspond to elements that would be plotted on a Cartesian coordinate plane. The input data focuses on visualization with images, such as a tape diagram, rather than plotting points or lines on a coordinate plane. However, should this need conversion to coordinate plane elements, one might need to represent the segments or proportions using a coordinate-based graph.",
+    "aiConfidence": 0.3
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "###Strategy\n\nWe can find the ratio of length of the garland with popcorn kernels to total length by counting the equal parts of each in the tape diagram.\n\nThen we can create an equivalent ratio by picking a number of centimeters for each equal part in the diagram to represent a total length of $84\\,\\text{cm}$.\n\nTo make an equivalent ratio, we multiply each part of the ratio by the same number.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Identify the given ratio\n\n$\\goldE{4}+\\redE{3}=\\purpleD{7}$\n\nThere are $\\goldE{4\\,\\text{cm}}$ of popcorn kernels for every $\\purpleD{7\\,\\text{cm}}$ of total length.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "###Create an equivalent ratio\n\nIf each part represents $\\blueE{12\\,\\text{cm}}$, there will be $48\\,\\text{cm}$ of popcorn, because $\\goldE{4}\\blueE{\\times 12} = 48$.\n\n[[☃ image 1]]\n\nIf each part represents $\\blueE{12\\,\\text{cm}}$, there will be $84\\,\\text{cm}$ of total length, because $\\purpleE{7}\\blueE{\\times 12} = 84$.\n",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 4 equal parts, each labeled 12. A curved bracket above the first tape is labeled Popcorn. The second tape has 3 equal parts of the same size as in the first tape, each labeled 12. A curved bracket below the second tape is labeled Berries. A curved bracket spanning both tapes is labeled Total length.",
+                "box": [
+                  200,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/082fff97e29c1d4234b4d3bc90b125b5dffbf59b",
+                  "width": 200,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        },
+        {
+          "images": {},
+          "content": "###Solution\n\nThe diagram with a part size of $\\blueE{12\\,\\text{cm}}$ best shows how long the part of the garland with popcorn is when the whole garland is $84\\,\\text{cm}$ long.\n\n[[☃ image 1]]",
+          "replace": false,
+          "widgets": {
+            "image 1": {
+              "type": "image",
+              "graded": true,
+              "static": false,
+              "options": {
+                "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 4 equal parts, each labeled 12. A curved bracket above the first tape is labeled Popcorn. The second tape has 3 equal parts of the same size as in the first tape, each labeled 12. A curved bracket below the second tape is labeled Berries.",
+                "box": [
+                  200,
+                  168
+                ],
+                "range": [
+                  [
+                    0,
+                    10
+                  ],
+                  [
+                    0,
+                    10
+                  ]
+                ],
+                "title": "",
+                "labels": [],
+                "static": false,
+                "caption": "",
+                "backgroundImage": {
+                  "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/251cba0c3019e04dd8b41a45c38005ffd2eec6be",
+                  "width": 200,
+                  "height": 168
+                }
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              },
+              "alignment": "block"
+            }
+          }
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "Belinay is making garlands of popcorn kernels and berries to feed the wildlife. The diagram shows the ratio of lengths of the garland made from popcorn kernels to berries.\n\n[[☃ image 1]]\n\nAll of the following diagrams represent equivalent ratios.\n\n**Which diagram best shows how long, in $\\text{cm}$, the part of the garland with popcorn is when the whole garland is $84\\,\\text{cm}$ long?**\n\n[[☃ radio 1]]",
+        "widgets": {
+          "image 1": {
+            "type": "image",
+            "graded": true,
+            "static": false,
+            "options": {
+              "alt": "A tape diagram with 2 tapes of unequal lengths. The first tape has 4 equal parts. A curved bracket above the first tape is labeled Popcorn. The second tape has 3 equal parts of the same size as in the first tape. A curved bracket below the second tape is labeled Berries.",
+              "box": [
+                200,
+                168
+              ],
+              "range": [
+                [
+                  0,
+                  10
+                ],
+                [
+                  0,
+                  10
+                ]
+              ],
+              "title": "",
+              "labels": [],
+              "static": false,
+              "caption": "",
+              "backgroundImage": {
+                "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/21f0b828b004d79e819b8bf860dfd8ec7880481e",
+                "width": 200,
+                "height": 168
+              }
+            },
+            "version": {
+              "major": 0,
+              "minor": 0
+            },
+            "alignment": "block"
+          },
+          "radio 1": {
+            "type": "radio",
+            "graded": true,
+            "static": false,
+            "options": {
+              "choices": [
+                {
+                  "content": "![A tape diagram with 2 tapes of unequal lengths. The first tape has 4 equal parts, each labeled 7. A curved bracket above the first tape is labeled Popcorn. The second tape has 3 equal parts of the same size as in the first tape, each labeled 7. A curved bracket below the second tape is labeled Berries.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/c2a372524416d88c9c153f9d903b02dd01f572f5)",
+                  "correct": false
+                },
+                {
+                  "content": "![A tape diagram with 2 tapes of unequal lengths. The first tape has 4 equal parts, each labeled 12. A curved bracket above the first tape is labeled Popcorn. The second tape has 3 equal parts of the same size as in the first tape, each labeled 12. A curved bracket below the second tape is labeled Berries.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/251cba0c3019e04dd8b41a45c38005ffd2eec6be)",
+                  "correct": true,
+                  "isNoneOfTheAbove": false
+                },
+                {
+                  "content": "![A tape diagram with 2 tapes of unequal lengths. The first tape has 4 equal parts, each labeled 21. A curved bracket above the first tape is labeled Popcorn. The second tape has 3 equal parts of the same size as in the first tape, each labeled 21. A curved bracket below the second tape is labeled Berries.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/23e99255ff1cfb3ad49bc8e0883799f6e42ecbbb)",
+                  "isNoneOfTheAbove": false
+                }
+              ],
+              "randomize": false,
+              "countChoices": false,
+              "displayCount": null,
+              "multipleSelect": false,
+              "deselectEnabled": false,
+              "hasNoneOfTheAbove": false
+            },
+            "version": {
+              "major": 1,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"coordinatePlane\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"coordinatePlane\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"width\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"number\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"height\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"xAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"object\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"yAxis\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"showQuadrantLabels\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"points\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"lines\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polygons\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"distances\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"polylines\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

@@ -1,0 +1,276 @@
+{
+  "widgetType": "measurer",
+  "totalCount": 11,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.852Z",
+  "samples": [
+    {
+      "questionId": "xdf5ab297055a3efc",
+      "problemType": "A",
+      "widgetKey": "measurer 1",
+      "questionContent": "Curiosity's landing site is Gale Crater; a location notable for having a large mountain of layered rock in the center known as Aeolis Mons (*Mount Sharp*). This prevents Curiosity from traveling **directly across** due to the steep incline towards the top. Instead, it was designed to drive up and al...",
+      "widgetData": {
+        "type": "measurer",
+        "graded": true,
+        "options": {
+          "box": [
+            480,
+            480
+          ],
+          "imageTop": 0,
+          "imageUrl": "https://cdn.kastatic.org/ka-perseus-images/32d7ebe969c7ce5b241873ac172d50992ca79de3.jpeg",
+          "imageLeft": 0,
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "rulerLength": 10,
+          "rulerPixels": 40,
+          "showProtractor": true
+        }
+      }
+    },
+    {
+      "questionId": "x36bdcd19659b73b5",
+      "problemType": "Type 1",
+      "widgetKey": "measurer 1",
+      "questionContent": "Which factor might lead to inbreeding within a population?\n\n![](https://cdn.kastatic.org/ka-perseus-images/c97183b1a4e88428a30ce6368a054e14e62ddb3c.jpg)\n\n[[☃ radio 1]]\n\n",
+      "widgetData": {
+        "type": "measurer",
+        "graded": true,
+        "options": {
+          "box": [
+            480,
+            480
+          ],
+          "image": {},
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "rulerLength": 10,
+          "rulerPixels": 40,
+          "showProtractor": true
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x16fec83217c1928d",
+      "problemType": "Type 1",
+      "widgetKey": "measurer 1",
+      "questionContent": "Which of these theorists is NOT associated with conflict theory?\n\n\n\n[[☃ radio 1]]\n\n",
+      "widgetData": {
+        "type": "measurer",
+        "graded": true,
+        "options": {
+          "box": [
+            480,
+            480
+          ],
+          "image": {},
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "rulerLength": 10,
+          "rulerPixels": 40,
+          "showProtractor": true
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "xfc6d784b766a14a4",
+      "problemType": "Type 1",
+      "widgetKey": "measurer 1",
+      "questionContent": "In the absence of oxygen, plants can perform respiration by converting glucose, $C_6 H_{12} O_6$ to ethanol, $C_2 H_5 OH$, and carbon dioxide. Which of the following describes this reaction?\n\n\n\n[[☃ radio 1]]\n\n",
+      "widgetData": {
+        "type": "measurer",
+        "graded": true,
+        "options": {
+          "box": [
+            480,
+            480
+          ],
+          "image": {},
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "rulerLength": 10,
+          "rulerPixels": 40,
+          "showProtractor": true
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x605cb4a7bbbecc31",
+      "problemType": "Type 1",
+      "widgetKey": "measurer 1",
+      "questionContent": "A 55-year old woman is diagnosed with Amyotrophic Lateral Sclerosis (ALS) and reports symptoms of general weakness, muscle atrophy, and muscle twitching.  What type of nervous system dysfunction is she likely experiencing?\n\n\n\n[[☃ radio 1]]\n\n",
+      "widgetData": {
+        "type": "measurer",
+        "graded": true,
+        "options": {
+          "box": [
+            480,
+            480
+          ],
+          "image": {},
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "rulerLength": 10,
+          "rulerPixels": 40,
+          "showProtractor": true
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "xa9dc2e24f05c8b6e",
+      "problemType": "Type 1",
+      "widgetKey": "measurer 1",
+      "questionContent": "Penicillin is perhaps one of the most famous antibiotic drugs. The core structure of penicillin and its derivatives is centered around a structure known as a beta-lactam, which is a 4 membered cyclic amide. (Figure 1) A beta-lactam is able to covalently interact and inhibit Penicillin Binding Protei...",
+      "widgetData": {
+        "type": "measurer",
+        "graded": true,
+        "options": {
+          "box": [
+            480,
+            480
+          ],
+          "image": {},
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "rulerLength": 10,
+          "rulerPixels": 40,
+          "showProtractor": true
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x9a325c9bd5e8b824",
+      "problemType": "Type 1",
+      "widgetKey": "measurer 1",
+      "questionContent": "One method scientists use to classify parts of the brain is to look at the developmental origins of those parts. As the fetus grows, the neural tube develops into three primary vesicles and the spinal cord. These three vesicles are the prosencephalon, the mesencephalon, and the rhombencephalon – mor...",
+      "widgetData": {
+        "type": "measurer",
+        "graded": true,
+        "options": {
+          "box": [
+            480,
+            480
+          ],
+          "image": {},
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "rulerLength": 10,
+          "rulerPixels": 40,
+          "showProtractor": true
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "xaa2ae5f5d8791008",
+      "problemType": "Type 1",
+      "widgetKey": "measurer 1",
+      "questionContent": "**With respect to the binding of regulatory compounds, what properties define an enzyme as being allosteric?**\n\n\n\n[[☃ radio 1]]\n\n",
+      "widgetData": {
+        "type": "measurer",
+        "graded": true,
+        "options": {
+          "box": [
+            480,
+            480
+          ],
+          "image": {},
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "rulerLength": 10,
+          "rulerPixels": 40,
+          "showProtractor": true
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "xb8e66fd61515fabe",
+      "problemType": "Type 1",
+      "widgetKey": "measurer 1",
+      "questionContent": "In which organisms does glycolysis occur?\n\n \n\n[[☃ radio 1]] ",
+      "widgetData": {
+        "type": "measurer",
+        "graded": true,
+        "options": {
+          "box": [
+            480,
+            480
+          ],
+          "image": {},
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "rulerLength": 10,
+          "rulerPixels": 40,
+          "showProtractor": true
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x99536cfea1020590",
+      "problemType": "Type 1",
+      "widgetKey": "measurer 1",
+      "questionContent": "Which of the following is both an endocrine and exocrine gland?\n\n\n\n[[☃ radio 1]]\n\n",
+      "widgetData": {
+        "type": "measurer",
+        "graded": true,
+        "options": {
+          "box": [
+            480,
+            480
+          ],
+          "image": {},
+          "showRuler": false,
+          "rulerLabel": "",
+          "rulerTicks": 10,
+          "rulerLength": 10,
+          "rulerPixels": 40,
+          "showProtractor": true
+        },
+        "version": {
+          "major": 1,
+          "minor": 0
+        }
+      }
+    }
+  ]
+}

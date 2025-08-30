@@ -1,0 +1,233 @@
+{
+  "widgetType": "group",
+  "totalCount": 16,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.852Z",
+  "samples": [
+    {
+      "questionId": "xc437cf77d4da1ad2",
+      "problemType": "Anaerobic respiration",
+      "widgetKey": "group 1",
+      "questionContent": "Certain aquatic ecosystems, such as marshes and mudflats, often smell like rotten eggs.\n\n[[☃ image 1]]\n\nThis odor comes from certain bacteria found in the muddy soil, where oxygen is absent. These bacteria consume (break down) organic matter in the soil, such as dead plants. In the process, the bact...",
+      "widgetData": {
+        "type": "group",
+        "options": {
+          "images": {},
+          "content": "",
+          "widgets": {}
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x6f6a7ff2eda522ef",
+      "problemType": "Approximating using orders of magnitude",
+      "widgetKey": "group 1",
+      "questionContent": "There are about $31{,}500{,}000$ seconds in a year.  \n\n\n**Choose the best approximation of the number of seconds in a year.**\n[[☃ radio 1]]\n\nLight travels at a rate of about $9{,}460{,}528{,}400{,}000{,}000 \\text{ m}$ per year.\n\n**Choose the best approximation of how many meters light travels per ye...",
+      "widgetData": {
+        "type": "group",
+        "graded": true,
+        "options": {
+          "images": {},
+          "content": "Question 1:\n\n[[☃ radio 1]]",
+          "widgets": {
+            "radio 1": {
+              "type": "radio",
+              "graded": true,
+              "options": {
+                "choices": [
+                  {},
+                  {}
+                ],
+                "randomize": false,
+                "onePerLine": true,
+                "displayCount": null,
+                "multipleSelect": false,
+                "noneOfTheAbove": false,
+                "deselectEnabled": false
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              }
+            }
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "xb34bd9efe7f7b167",
+      "problemType": "+",
+      "widgetKey": "group 1",
+      "questionContent": "Consider the following number line.  \n\n[[☃ image 1]]\n\n\n**What is the sign of $B + A$?**\n\n[[☃ radio 1]]",
+      "widgetData": {
+        "type": "group",
+        "options": {
+          "images": {},
+          "content": "",
+          "widgets": {}
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "xa9143648aaa9da49",
+      "problemType": "problem-type-0",
+      "widgetKey": "group 1",
+      "questionContent": "**What is the measure of $\\angle x$?**  \n*Angles are not necessarily drawn to scale.*\n\n[[☃ image 1]]\n\n\n\n\n\n$x = $ [[☃ numeric-input 1]] $\\Large{\\degree}$",
+      "widgetData": {
+        "type": "group",
+        "options": {
+          "images": {},
+          "content": "",
+          "widgets": {}
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x6c115eefe7cc2360",
+      "problemType": "Type 3 - Additive Inverse",
+      "widgetKey": "group 1",
+      "questionContent": "**Which of the following are true statements about the expression $6 - (-6)$?**\n\n[[☃ radio 1]]\n\n\n[[☃ image 1]]\n\n\n",
+      "widgetData": {
+        "type": "group",
+        "options": {
+          "images": {},
+          "content": "",
+          "widgets": {}
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x5002129330c32c4e",
+      "problemType": "Type 1",
+      "widgetKey": "group 1",
+      "questionContent": "There are many ways to categorize the planets in our solar system. One way is to sort them into the inner and outer planets, groups that share some important characteristics. \n\nSort the planets into the correct category, then match the characteristics with each group. \n\n[[☃ categorizer 1]]\n\n",
+      "widgetData": {
+        "type": "group",
+        "graded": true,
+        "options": {
+          "images": {},
+          "content": "",
+          "widgets": {}
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x2303e1e7ce324859",
+      "problemType": "Old Items to Keep",
+      "widgetKey": "group 1",
+      "questionContent": "John wants to know the volume of his gold ring in cubic centimeters. He gets a glass in the shape of a rectangular prism with a base $3\\text{ cm}$ by $2\\text{ cm}$ and fills the glass with $3.1\\text{ cm}$ of water. John drops his gold ring in the glass and measures the new height of the water to be ...",
+      "widgetData": {
+        "type": "group",
+        "options": {
+          "images": {},
+          "content": "",
+          "widgets": {}
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x4cc1eb977b08715c",
+      "problemType": "Anaerobic respiration",
+      "widgetKey": "group 1",
+      "questionContent": "In the southeast Atlantic Ocean, ocean water sometimes turns green and smells like rotten eggs.\n\nThis phenomenon involves bottom-dwelling bacteria that consume (break down) dead organisms (such as phytoplankton) on the ocean floor. After the bacteria use up all the dissolved oxygen in the water, dif...",
+      "widgetData": {
+        "type": "group",
+        "options": {
+          "images": {},
+          "content": "",
+          "widgets": {}
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x6f6a7ff2eda522ef",
+      "problemType": "Approximating using orders of magnitude",
+      "widgetKey": "group 2",
+      "questionContent": "There are about $31{,}500{,}000$ seconds in a year.  \n\n\n**Choose the best approximation of the number of seconds in a year.**\n[[☃ radio 1]]\n\nLight travels at a rate of about $9{,}460{,}528{,}400{,}000{,}000 \\text{ m}$ per year.\n\n**Choose the best approximation of how many meters light travels per ye...",
+      "widgetData": {
+        "type": "group",
+        "graded": true,
+        "options": {
+          "images": {},
+          "content": "HEY\n\n[[☃ radio 1]]\n\n",
+          "widgets": {
+            "radio 1": {
+              "type": "radio",
+              "graded": true,
+              "options": {
+                "choices": [
+                  {},
+                  {}
+                ],
+                "randomize": false,
+                "onePerLine": true,
+                "displayCount": null,
+                "multipleSelect": false,
+                "noneOfTheAbove": false,
+                "deselectEnabled": false
+              },
+              "version": {
+                "major": 0,
+                "minor": 0
+              }
+            }
+          }
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "xf3baed3f2242b10b",
+      "problemType": "Anaerobic respiration",
+      "widgetKey": "group 1",
+      "questionContent": "Cows burp—a lot! However, when cows burp, they mainly release methane instead of carbon dioxide.\n\n[[☃ image 1]]\n\nThe methane in cow burps comes from microorganisms in the cow’s rumen, part of its digestive system. Microorganisms in the rumen help to digest tough plant fibers (such as cellulose) that...",
+      "widgetData": {
+        "type": "group",
+        "options": {
+          "images": {},
+          "content": "",
+          "widgets": {}
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    }
+  ]
+}

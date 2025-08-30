@@ -1,0 +1,358 @@
+{
+  "widgetType": "iframe",
+  "totalCount": 193,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.851Z",
+  "samples": [
+    {
+      "questionId": "xd965fbea0a6da6cd",
+      "problemType": "Type 1",
+      "widgetKey": "iframe 1",
+      "questionContent": "The program below generates a strip of color using one-dimensional noise. You can move the numbered control points up and down to change their value, and uses the sliders to change the number of subdivisions and color.\n\n*Change the parameters so the result color strip matches the target.*\n\n[[☃ ifram...",
+      "widgetData": {
+        "type": "iframe",
+        "graded": true,
+        "static": false,
+        "options": {
+          "url": "4852210854",
+          "width": "425",
+          "height": "410",
+          "static": false,
+          "settings": [
+            {
+              "name": "hue",
+              "value": "90"
+            },
+            {
+              "name": "subdivisions",
+              "value": "3"
+            },
+            {
+              "name": "points",
+              "value": "0.4, 0.35, -0.4, 0.35, 0.4"
+            },
+            {
+              "name": "",
+              "value": ""
+            }
+          ],
+          "allowFullScreen": true
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x57fadf85cf8dfe88",
+      "problemType": "Rotate and find pixel",
+      "widgetKey": "iframe 1",
+      "questionContent": "In the interactive below you can select a ray by clicking on the grid on the left. You can rotate the house by clicking and dragging on the right half of the window.\n\nSelect a ray which hits **the back of the house** and creates a **orange** pixel.\n\n[[☃ iframe 1]]",
+      "widgetData": {
+        "type": "iframe",
+        "graded": true,
+        "static": false,
+        "options": {
+          "url": "5920838284",
+          "width": "400",
+          "height": "300",
+          "static": false,
+          "settings": [
+            {
+              "name": "targetColor",
+              "value": "orange"
+            },
+            {
+              "name": "targetPosition",
+              "value": "back wall left"
+            },
+            {
+              "name": "",
+              "value": ""
+            }
+          ],
+          "allowFullScreen": false,
+          "allowTopNavigation": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x7ddcfe579c76bb60",
+      "problemType": "Find the pixel",
+      "widgetKey": "iframe 1",
+      "questionContent": "In the interactive below you can select a ray by clicking on the grid on the left. You can rotate the house by clicking and dragging on the right half of the window.\n\nSelect a ray that hits the house and creates a **brown** pixel. \n\n[[☃ iframe 1]]",
+      "widgetData": {
+        "type": "iframe",
+        "graded": true,
+        "static": false,
+        "options": {
+          "url": "6500474647871488",
+          "width": "400",
+          "height": "300",
+          "static": false,
+          "settings": [
+            {
+              "name": "targetColor",
+              "value": "brown"
+            },
+            {
+              "name": "",
+              "value": ""
+            }
+          ],
+          "allowFullScreen": false,
+          "allowTopNavigation": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xbfab311e0751c9c3",
+      "problemType": "Contrast matching",
+      "widgetKey": "iframe 1",
+      "questionContent": "This image from the film has been washed out. Use the contrast control to fix it.\n\n[[☃ iframe 1]]",
+      "widgetData": {
+        "type": "iframe",
+        "graded": true,
+        "static": false,
+        "options": {
+          "url": "6490840801083392",
+          "width": "400",
+          "height": "400",
+          "static": false,
+          "settings": [
+            {
+              "name": "offset",
+              "value": "-80"
+            },
+            {
+              "name": "imageN",
+              "value": "1"
+            },
+            {
+              "name": "",
+              "value": ""
+            }
+          ],
+          "allowFullScreen": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x28a6f4d7e7368eba",
+      "problemType": "Ratios",
+      "widgetKey": "iframe 1",
+      "questionContent": "In the interactive diagram below, is $\\dfrac{AQ}{AB} = \\dfrac{PR}{QR}$ \n\n[[☃ radio 1]]\n\n[[☃ iframe 1]]",
+      "widgetData": {
+        "type": "iframe",
+        "graded": false,
+        "static": false,
+        "options": {
+          "url": "6486958418296832",
+          "width": "420",
+          "height": "440",
+          "static": false,
+          "settings": [
+            {
+              "name": "step",
+              "value": "1"
+            },
+            {
+              "name": "",
+              "value": ""
+            }
+          ],
+          "allowFullScreen": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xd03860f5ce0b402a",
+      "problemType": "Posing",
+      "widgetKey": "iframe 1",
+      "questionContent": "Now we have our lamp rigged, let's pose him. To start with, the director wants the lamp to look sad.\n\n_Use the deformer controls so the model matches the pink outline. When the outline goes green, click the Check Answer button._\n\n[[☃ iframe 1]]",
+      "widgetData": {
+        "type": "iframe",
+        "graded": true,
+        "static": false,
+        "options": {
+          "url": "6263250262556672",
+          "width": "425",
+          "height": "405",
+          "static": false,
+          "settings": [
+            {
+              "name": "deformers",
+              "value": "R-head,R-arm2,R-arm1,R-base"
+            },
+            {
+              "name": "targetValues",
+              "value": "36"
+            },
+            {
+              "name": "",
+              "value": ""
+            }
+          ],
+          "allowFullScreen": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x4c4affab7f68bf9e",
+      "problemType": "Changing lengths",
+      "widgetKey": "iframe 1",
+      "questionContent": "In the interactive diagram below, does changing the parameter $t$ affect the length of line $AQ$?\n\n[[☃ radio 1]]\n\n[[☃ iframe 1]]",
+      "widgetData": {
+        "type": "iframe",
+        "graded": false,
+        "static": false,
+        "options": {
+          "url": "6486958418296832",
+          "width": "420",
+          "height": "440",
+          "static": false,
+          "settings": [
+            {
+              "name": "step",
+              "value": "1"
+            },
+            {
+              "name": "",
+              "value": ""
+            }
+          ],
+          "allowFullScreen": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x458eb1b084630003",
+      "problemType": "Find colour",
+      "widgetKey": "iframe 1",
+      "questionContent": "In the interactive below you can select a ray by clicking on the grid on the left. You can rotate the house by clicking and dragging on the right half of the window.\n\nWith the vertical and horizontal angle at $0$, what is the color of pixel $(12, 14)$?\n\n[[☃ radio 1]]\n\n[[☃ iframe 1]]",
+      "widgetData": {
+        "type": "iframe",
+        "graded": false,
+        "static": false,
+        "options": {
+          "url": "6500474647871488",
+          "width": "400",
+          "height": "300",
+          "static": false,
+          "settings": [
+            {
+              "name": "",
+              "value": ""
+            },
+            {
+              "name": "",
+              "value": ""
+            }
+          ],
+          "allowFullScreen": false,
+          "allowTopNavigation": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xe4182344675366c3",
+      "problemType": "Interactive",
+      "widgetKey": "iframe 1",
+      "questionContent": "The camera lead has seen the shot and decided the **focus should be just on the girl**. The other elements should be blurred so they are less distracting.\n\n[[☃ iframe 1]]\n\nUse the camera controls to change the scene. When the scene meets the requirements, you'll get a green tick and you can click th...",
+      "widgetData": {
+        "type": "iframe",
+        "graded": true,
+        "static": false,
+        "options": {
+          "url": "5477661334700032",
+          "width": "840",
+          "height": "300",
+          "static": false,
+          "settings": [
+            {
+              "name": "inFocus",
+              "value": "2"
+            },
+            {
+              "name": "",
+              "value": ""
+            }
+          ],
+          "allowFullScreen": false,
+          "allowTopNavigation": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x0f4f75e18df7ca20",
+      "problemType": "Pick timing chart",
+      "widgetKey": "iframe 1",
+      "questionContent": "We have animated a ball falling to the ground:\n\n[[☃ iframe 1]]\n\nBelow are two timing charts for the avar controlling the $y$ coordinate of the a ball. Which was used to create this animation?\n\n[[☃ radio 1]]",
+      "widgetData": {
+        "type": "iframe",
+        "graded": false,
+        "static": false,
+        "options": {
+          "url": "5219109039112192",
+          "width": "400",
+          "height": "200",
+          "static": false,
+          "settings": [
+            {
+              "name": "",
+              "value": ""
+            }
+          ],
+          "allowFullScreen": false
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

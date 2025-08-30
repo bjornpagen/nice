@@ -1,0 +1,26 @@
+{
+  "widgetType": "passage-ref",
+  "totalCount": 1,
+  "sampleCount": 1,
+  "generatedAt": "2025-08-30T15:26:41.852Z",
+  "samples": [
+    {
+      "questionId": "x6993cce8cad30632",
+      "problemType": "Types of biomolecules",
+      "widgetKey": "passage-ref 1",
+      "questionContent": "**Match each set of functions to the correct type of biomolecule.**\n\n[[☃ matcher 1]]",
+      "widgetData": {
+        "type": "passage-ref",
+        "options": {
+          "summaryText": "",
+          "passageNumber": 1,
+          "referenceNumber": 1
+        },
+        "version": {
+          "major": 0,
+          "minor": 1
+        }
+      }
+    }
+  ]
+}

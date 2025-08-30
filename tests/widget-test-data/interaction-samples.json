@@ -1,0 +1,1486 @@
+{
+  "widgetType": "interaction",
+  "totalCount": 76,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.851Z",
+  "samples": [
+    {
+      "questionId": "x32e58b54bfcd9d8b",
+      "problemType": "1. Standard form",
+      "widgetKey": "interaction 1",
+      "questionContent": "**Find the solution to the system of equations.**  \n*You can use the interactive graph below to find the solution.*\n\n$\\begin{cases}\n-7x-2y=14\n\\\\\\\\\n6x+6y=18\n\\end{cases}$\n\n$x= $  [[☃ numeric-input 1]]\n\n$y= $  [[☃ numeric-input 2]]\n\n[[☃ interaction 1]]",
+      "widgetData": {
+        "type": "interaction",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "box": [
+              280,
+              280
+            ],
+            "range": [
+              [
+                -8,
+                8
+              ],
+              [
+                -8,
+                8
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "snapStep": [
+              1,
+              1
+            ],
+            "tickStep": [
+              1,
+              1
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showTooltips": false,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": null,
+              "width": 0,
+              "height": 0
+            },
+            "editableSettings": [
+              "canvas",
+              "graph"
+            ]
+          },
+          "static": false,
+          "elements": [
+            {
+              "key": "movable-point-b71473",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "-1",
+                "startY": "4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 0,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-56a42a",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "1",
+                "startY": "4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 1,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-a8848f",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "-1",
+                "startY": "-4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 2,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-97acf7",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "1",
+                "startY": "-4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 3,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "line-c115d6",
+              "type": "line",
+              "options": {
+                "endX": "8",
+                "endY": "\\frac{y_1-y_0}{x_1-x_0}\\left(8-x_0\\right)+y_0",
+                "color": "#6495ED",
+                "arrows": "",
+                "startX": "-8",
+                "startY": "\\frac{y_1-y_0}{x_1-x_0}\\left(-8-x_0\\right)+y_0",
+                "strokeWidth": 2,
+                "strokeDasharray": ""
+              }
+            },
+            {
+              "key": "line-1b605a",
+              "type": "line",
+              "options": {
+                "endX": "8",
+                "endY": "\\frac{y_3-y_2}{x_3-x_2}\\left(8-x_2\\right)+y_2",
+                "color": "#FF00AF",
+                "arrows": "",
+                "startX": "-8",
+                "startY": "\\frac{y_3-y_2}{x_3-x_2}\\left(-8-x_2\\right)+y_2",
+                "strokeWidth": 2,
+                "strokeDasharray": ""
+              }
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xbafa92b7a1e8edc2",
+      "problemType": "Type 1",
+      "widgetKey": "interaction 3",
+      "questionContent": "Drag the sliders. \n\n[[☃ interaction 3]]\n\n**Which slider creates scale copies of the shape?**\n\n[[☃ radio 1]]",
+      "widgetData": {
+        "type": "interaction",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "box": [
+              280,
+              182
+            ],
+            "range": [
+              [
+                0,
+                10
+              ],
+              [
+                -0.5,
+                6
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              0.5,
+              0.5
+            ],
+            "markings": "none",
+            "snapStep": [
+              1,
+              1
+            ],
+            "tickStep": [
+              1,
+              1
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showTooltips": false,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": null,
+              "width": 0,
+              "height": 0
+            },
+            "editableSettings": [
+              "canvas",
+              "graph"
+            ]
+          },
+          "static": false,
+          "elements": [
+            {
+              "key": "line-b94ab7",
+              "type": "line",
+              "options": {
+                "endX": "4.5",
+                "endY": "0",
+                "color": "black",
+                "arrows": "",
+                "startX": "0",
+                "startY": "0",
+                "strokeWidth": 2,
+                "strokeDasharray": ""
+              }
+            },
+            {
+              "key": "movable-point-e2240d",
+              "type": "movable-point",
+              "options": {
+                "snap": 0.5,
+                "startX": "0",
+                "startY": "0",
+                "constraint": "y",
+                "constraintFn": "0",
+                "varSubscript": 0,
+                "constraintXMax": "4.5",
+                "constraintXMin": "0",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "rectangle-4c4637",
+              "type": "rectangle",
+              "options": {
+                "color": "#9AB8ED",
+                "width": "4-x_0\\cdot0.8",
+                "coordX": "0",
+                "coordY": "1",
+                "height": "4-x_0\\cdot0.8"
+              }
+            },
+            {
+              "key": "line-2659bd",
+              "type": "line",
+              "options": {
+                "endX": "10",
+                "endY": "0",
+                "color": "black",
+                "arrows": "",
+                "startX": "5.5",
+                "startY": "0",
+                "strokeWidth": 2,
+                "strokeDasharray": ""
+              }
+            },
+            {
+              "key": "movable-point-a8165f",
+              "type": "movable-point",
+              "options": {
+                "snap": 0.5,
+                "startX": "5.5",
+                "startY": "0",
+                "constraint": "y",
+                "constraintFn": "0",
+                "varSubscript": 1,
+                "constraintXMax": "10",
+                "constraintXMin": "5.5",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "rectangle-c97d9b",
+              "type": "rectangle",
+              "options": {
+                "color": "#9BEDCE",
+                "width": "1.5",
+                "coordX": "7",
+                "coordY": "5.5-\\left(2+\\left(x_1-5.5\\right)\\cdot\\frac{6}{9}\\right)",
+                "height": "2+\\left(x_1-5.5\\right)\\cdot\\frac{6}{9}"
+              }
+            },
+            {
+              "key": "label-8cbad0",
+              "type": "label",
+              "options": {
+                "color": "black",
+                "label": "$\\text{Shape A}$",
+                "coordX": "2.25",
+                "coordY": "-.75"
+              }
+            },
+            {
+              "key": "label-edb6fb",
+              "type": "label",
+              "options": {
+                "color": "black",
+                "label": "$\\text{Shape B}$",
+                "coordX": "7.75",
+                "coordY": "-0.75"
+              }
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xd53997a12fc2d3d3",
+      "problemType": "2. No solutions",
+      "widgetKey": "interaction 1",
+      "questionContent": "**How many solutions does the system have?**  \n*You can use the interactive graph below to find the answer.*\n\n$\\begin{cases}\ny=-5x-1\n\\\\\\\\\ny=-5x+7\n\\end{cases}$\n\n[[☃ radio 2]]\n\n[[☃ interaction 1]]",
+      "widgetData": {
+        "type": "interaction",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "box": [
+              280,
+              280
+            ],
+            "range": [
+              [
+                -8,
+                8
+              ],
+              [
+                -8,
+                8
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "snapStep": [
+              1,
+              1
+            ],
+            "tickStep": [
+              1,
+              1
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showTooltips": false,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": null,
+              "width": 0,
+              "height": 0
+            },
+            "editableSettings": [
+              "canvas",
+              "graph"
+            ]
+          },
+          "static": false,
+          "elements": [
+            {
+              "key": "movable-point-b71473",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "-1",
+                "startY": "4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 0,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-56a42a",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "1",
+                "startY": "4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 1,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-a8848f",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "-1",
+                "startY": "-4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 2,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-97acf7",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "1",
+                "startY": "-4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 3,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "line-c115d6",
+              "type": "line",
+              "options": {
+                "endX": "8",
+                "endY": "\\frac{y_1-y_0}{x_1-x_0}\\left(8-x_0\\right)+y_0",
+                "color": "#6495ED",
+                "arrows": "",
+                "startX": "-8",
+                "startY": "\\frac{y_1-y_0}{x_1-x_0}\\left(-8-x_0\\right)+y_0",
+                "strokeWidth": 2,
+                "strokeDasharray": ""
+              }
+            },
+            {
+              "key": "line-1b605a",
+              "type": "line",
+              "options": {
+                "endX": "8",
+                "endY": "\\frac{y_3-y_2}{x_3-x_2}\\left(8-x_2\\right)+y_2",
+                "color": "#FF00AF",
+                "arrows": "",
+                "startX": "-8",
+                "startY": "\\frac{y_3-y_2}{x_3-x_2}\\left(-8-x_2\\right)+y_2",
+                "strokeWidth": 2,
+                "strokeDasharray": ""
+              }
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x9ed7c1d417207dd7",
+      "problemType": "1. One solution",
+      "widgetKey": "interaction 1",
+      "questionContent": "**How many solutions does the system have?**  \n*You can use the interactive graph below to find the answer.*\n\n$\\begin{cases}\n2x+3y=-6\n\\\\\\\\\n3x-4y=-12\n\\end{cases}$\n\n[[☃ radio 2]]\n\n[[☃ interaction 1]]",
+      "widgetData": {
+        "type": "interaction",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "box": [
+              280,
+              280
+            ],
+            "range": [
+              [
+                -8,
+                8
+              ],
+              [
+                -8,
+                8
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "snapStep": [
+              1,
+              1
+            ],
+            "tickStep": [
+              1,
+              1
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showTooltips": false,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": null,
+              "width": 0,
+              "height": 0
+            },
+            "editableSettings": [
+              "canvas",
+              "graph"
+            ]
+          },
+          "static": false,
+          "elements": [
+            {
+              "key": "movable-point-b71473",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "-1",
+                "startY": "4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 0,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-56a42a",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "1",
+                "startY": "4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 1,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-a8848f",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "-1",
+                "startY": "-4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 2,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-97acf7",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "1",
+                "startY": "-4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 3,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "line-c115d6",
+              "type": "line",
+              "options": {
+                "endX": "8",
+                "endY": "\\frac{y_1-y_0}{x_1-x_0}\\left(8-x_0\\right)+y_0",
+                "color": "#6495ED",
+                "arrows": "",
+                "startX": "-8",
+                "startY": "\\frac{y_1-y_0}{x_1-x_0}\\left(-8-x_0\\right)+y_0",
+                "strokeWidth": 2,
+                "strokeDasharray": ""
+              }
+            },
+            {
+              "key": "line-1b605a",
+              "type": "line",
+              "options": {
+                "endX": "8",
+                "endY": "\\frac{y_3-y_2}{x_3-x_2}\\left(8-x_2\\right)+y_2",
+                "color": "#FF00AF",
+                "arrows": "",
+                "startX": "-8",
+                "startY": "\\frac{y_3-y_2}{x_3-x_2}\\left(-8-x_2\\right)+y_2",
+                "strokeWidth": 2,
+                "strokeDasharray": ""
+              }
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xf6c333c465c4dec4",
+      "problemType": "Adding vectors",
+      "widgetKey": "interaction 1",
+      "questionContent": "Two vectors, $\\blue{\\vec{a}}$ and $\\green{\\vec{b}}$, are drawn on a graph below.\n\n[[☃ interaction 1]]\n\nIf $\\pink{\\vec{c}} = \\blue{\\vec{a}} + \\green{\\vec{b}}$, and the base of $\\pink{\\vec{c}}$ is at $(0, 0)$, where is its head?\n\n$($[[☃ numeric-input 1]], [[☃ numeric-input 2]]$)$\n\n",
+      "widgetData": {
+        "type": "interaction",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "box": [
+              240,
+              240
+            ],
+            "range": [
+              [
+                -3,
+                9
+              ],
+              [
+                -3,
+                9
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "snapStep": [
+              0.5,
+              1
+            ],
+            "tickStep": [
+              1,
+              1
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": null,
+              "width": 0,
+              "height": 0
+            },
+            "editableSettings": [
+              "canvas",
+              "graph"
+            ]
+          },
+          "static": false,
+          "elements": [
+            {
+              "key": "line-b01833",
+              "type": "line",
+              "options": {
+                "endX": "2",
+                "endY": "4",
+                "color": "#6495ED",
+                "arrows": "->",
+                "startX": "0",
+                "startY": "0",
+                "strokeWidth": 3,
+                "strokeDasharray": ""
+              }
+            },
+            {
+              "key": "line-f7769d",
+              "type": "line",
+              "options": {
+                "endX": "5",
+                "endY": "1",
+                "color": "#28AE7B",
+                "arrows": "->",
+                "startX": "0",
+                "startY": "0",
+                "strokeWidth": 3,
+                "strokeDasharray": ""
+              }
+            },
+            {
+              "key": "label-76bfb4",
+              "type": "label",
+              "options": {
+                "color": "#6495ED",
+                "label": "$\\vec{a}$",
+                "coordX": "1",
+                "coordY": "3.3"
+              }
+            },
+            {
+              "key": "label-127dc3",
+              "type": "label",
+              "options": {
+                "color": "#28AE7B",
+                "label": "$\\vec{b}$",
+                "coordX": "3.5",
+                "coordY": "1.3"
+              }
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x9cc0dff24f31f01d",
+      "problemType": "Find t",
+      "widgetKey": "interaction 1",
+      "questionContent": "We can parameterize the ray from $C$ through $P$ as a function of $t$:\n\n$\\qquad R(t) = (1-t)C + tP$\n\nUsing the graph below, find the value of $t^*$ such that $R(t^*) = I$.\n\n$t^* =$ [[☃ numeric-input 1]]\n\n[[☃ interaction 1]]\n\n",
+      "widgetData": {
+        "type": "interaction",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "box": [
+              400,
+              400
+            ],
+            "range": [
+              [
+                -10,
+                10
+              ],
+              [
+                -10,
+                10
+              ]
+            ],
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "tickStep": [
+              1,
+              1
+            ]
+          },
+          "static": false,
+          "elements": [
+            {
+              "key": "line-4aa0bd",
+              "type": "line",
+              "options": {
+                "endX": "-3",
+                "endY": "-11",
+                "color": "#6495ED",
+                "arrows": "",
+                "startX": "6",
+                "startY": "7",
+                "strokeWidth": 2,
+                "strokeDasharray": ""
+              }
+            },
+            {
+              "key": "point-921e7c",
+              "type": "point",
+              "options": {
+                "color": "#6495ED",
+                "coordX": "6",
+                "coordY": "7"
+              }
+            },
+            {
+              "key": "point-e27bd7",
+              "type": "point",
+              "options": {
+                "color": "#28AE7B",
+                "coordX": "5",
+                "coordY": "5"
+              }
+            },
+            {
+              "key": "point-954364",
+              "type": "point",
+              "options": {
+                "color": "#FF00AF",
+                "coordX": "1.5",
+                "coordY": "-2"
+              }
+            },
+            {
+              "key": "label-ceb874",
+              "type": "label",
+              "options": {
+                "color": "black",
+                "label": "C",
+                "coordX": "6.7",
+                "coordY": "7"
+              }
+            },
+            {
+              "key": "label-568fab",
+              "type": "label",
+              "options": {
+                "color": "black",
+                "label": "P",
+                "coordX": "5.5",
+                "coordY": "4.5"
+              }
+            },
+            {
+              "key": "label-f05af4",
+              "type": "label",
+              "options": {
+                "color": "black",
+                "label": "I",
+                "coordX": "2",
+                "coordY": "-2.5"
+              }
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x571eb5d86582fbb0",
+      "problemType": "Mentally plot then find neighboring point",
+      "widgetKey": "interaction 1",
+      "questionContent": "**Point $M$ is located at  $(-6, 6)$.**  \n$$  \n\n\n\n[[☃ image 1]]\n\n**What is located $5$ units from point $M?$**  \n\n[[☃ radio 1]]\n\n",
+      "widgetData": {
+        "type": "interaction",
+        "graded": true,
+        "options": {
+          "graph": {
+            "box": [
+              400,
+              400
+            ],
+            "range": [
+              [
+                -10,
+                10
+              ],
+              [
+                -10,
+                10
+              ]
+            ],
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "tickStep": [
+              1,
+              1
+            ]
+          },
+          "elements": [
+            {
+              "key": "point-58be31",
+              "type": "point",
+              "options": {
+                "color": "#6495ED",
+                "coordX": "-3",
+                "coordY": "2"
+              }
+            },
+            {
+              "key": "point-76fcfd",
+              "type": "point",
+              "options": {
+                "color": "#6495ED",
+                "coordX": "8",
+                "coordY": "-8"
+              }
+            },
+            {
+              "key": "point-123abf",
+              "type": "point",
+              "options": {
+                "color": "#6495ED",
+                "coordX": "9",
+                "coordY": "8"
+              }
+            },
+            {
+              "key": "label-1f27d2",
+              "type": "label",
+              "options": {
+                "color": "black",
+                "label": "A",
+                "coordX": "-3.5",
+                "coordY": "2.5"
+              }
+            },
+            {
+              "key": "label-a3dc10",
+              "type": "label",
+              "options": {
+                "color": "black",
+                "label": "B",
+                "coordX": "2.5",
+                "coordY": "7.5"
+              }
+            },
+            {
+              "key": "label-230bbe",
+              "type": "label",
+              "options": {
+                "color": "black",
+                "label": "C",
+                "coordX": "8.5",
+                "coordY": "-5.5"
+              }
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        }
+      }
+    },
+    {
+      "questionId": "x17655e79f69878da",
+      "problemType": "2. Slope-intercept form",
+      "widgetKey": "interaction 1",
+      "questionContent": "**Find the solution to the system of equations.**  \n*You can use the interactive graph below to find the solution.*\n\n$\\begin{cases}\ny=-7x+3\n\\\\\\\\\ny=-x-3\n\\end{cases}$\n\n$x= $  [[☃ numeric-input 1]]\n\n$y= $  [[☃ numeric-input 2]]\n\n[[☃ interaction 1]]",
+      "widgetData": {
+        "type": "interaction",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "box": [
+              280,
+              280
+            ],
+            "range": [
+              [
+                -8,
+                8
+              ],
+              [
+                -8,
+                8
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "snapStep": [
+              1,
+              1
+            ],
+            "tickStep": [
+              1,
+              1
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showTooltips": false,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": null,
+              "width": 0,
+              "height": 0
+            },
+            "editableSettings": [
+              "canvas",
+              "graph"
+            ]
+          },
+          "static": false,
+          "elements": [
+            {
+              "key": "movable-point-b71473",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "-1",
+                "startY": "4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 0,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-56a42a",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "1",
+                "startY": "4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 1,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-a8848f",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "-1",
+                "startY": "-4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 2,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-97acf7",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "1",
+                "startY": "-4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 3,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "line-c115d6",
+              "type": "line",
+              "options": {
+                "endX": "8",
+                "endY": "\\frac{y_1-y_0}{x_1-x_0}\\left(8-x_0\\right)+y_0",
+                "color": "#6495ED",
+                "arrows": "",
+                "startX": "-8",
+                "startY": "\\frac{y_1-y_0}{x_1-x_0}\\left(-8-x_0\\right)+y_0",
+                "strokeWidth": 2,
+                "strokeDasharray": ""
+              }
+            },
+            {
+              "key": "line-1b605a",
+              "type": "line",
+              "options": {
+                "endX": "8",
+                "endY": "\\frac{y_3-y_2}{x_3-x_2}\\left(8-x_2\\right)+y_2",
+                "color": "#FF00AF",
+                "arrows": "",
+                "startX": "-8",
+                "startY": "\\frac{y_3-y_2}{x_3-x_2}\\left(-8-x_2\\right)+y_2",
+                "strokeWidth": 2,
+                "strokeDasharray": ""
+              }
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x4ef928f8ac523fdf",
+      "problemType": "3. Estimate MC",
+      "widgetKey": "interaction 1",
+      "questionContent": "**Estimate the solution to the system of equations.**  \n*You can use the interactive graph below to find the solution.*\n\n$\\begin{cases}\ny=-2x-5\n\\\\\\\\\ny=2x-2\n\\end{cases}$\n\n[[☃ radio 1]]\n\n[[☃ interaction 1]]",
+      "widgetData": {
+        "type": "interaction",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "box": [
+              280,
+              280
+            ],
+            "range": [
+              [
+                -7,
+                7
+              ],
+              [
+                -7,
+                7
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "snapStep": [
+              1,
+              1
+            ],
+            "tickStep": [
+              1,
+              1
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showTooltips": false,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": null,
+              "width": 0,
+              "height": 0
+            },
+            "editableSettings": [
+              "canvas",
+              "graph"
+            ]
+          },
+          "static": false,
+          "elements": [
+            {
+              "key": "movable-point-b71473",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "-1",
+                "startY": "4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 0,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-56a42a",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "1",
+                "startY": "4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 1,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-a8848f",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "-1",
+                "startY": "-4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 2,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-97acf7",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "1",
+                "startY": "-4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 3,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "line-c115d6",
+              "type": "line",
+              "options": {
+                "endX": "8",
+                "endY": "\\frac{y_1-y_0}{x_1-x_0}\\left(8-x_0\\right)+y_0",
+                "color": "#6495ED",
+                "arrows": "",
+                "startX": "-8",
+                "startY": "\\frac{y_1-y_0}{x_1-x_0}\\left(-8-x_0\\right)+y_0",
+                "strokeWidth": 2,
+                "strokeDasharray": ""
+              }
+            },
+            {
+              "key": "line-1b605a",
+              "type": "line",
+              "options": {
+                "endX": "8",
+                "endY": "\\frac{y_3-y_2}{x_3-x_2}\\left(8-x_2\\right)+y_2",
+                "color": "#FF00AF",
+                "arrows": "",
+                "startX": "-8",
+                "startY": "\\frac{y_3-y_2}{x_3-x_2}\\left(-8-x_2\\right)+y_2",
+                "strokeWidth": 2,
+                "strokeDasharray": ""
+              }
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xaffdfd83fb89fd38",
+      "problemType": "3. Infinite solutions",
+      "widgetKey": "interaction 1",
+      "questionContent": "**How many solutions does the system have?**  \n*You can use the interactive graph below to find the answer.*\n\n$\\begin{cases}\n4x-10y=-20\n\\\\\\\\\n6x-15y=-30\n\\end{cases}$\n\n[[☃ radio 2]]\n\n[[☃ interaction 1]]",
+      "widgetData": {
+        "type": "interaction",
+        "graded": true,
+        "static": false,
+        "options": {
+          "graph": {
+            "box": [
+              280,
+              280
+            ],
+            "range": [
+              [
+                -8,
+                8
+              ],
+              [
+                -8,
+                8
+              ]
+            ],
+            "valid": true,
+            "labels": [
+              "x",
+              "y"
+            ],
+            "gridStep": [
+              1,
+              1
+            ],
+            "markings": "graph",
+            "snapStep": [
+              1,
+              1
+            ],
+            "tickStep": [
+              1,
+              1
+            ],
+            "showRuler": false,
+            "rulerLabel": "",
+            "rulerTicks": 10,
+            "showTooltips": false,
+            "showProtractor": false,
+            "backgroundImage": {
+              "url": null,
+              "width": 0,
+              "height": 0
+            },
+            "editableSettings": [
+              "canvas",
+              "graph"
+            ]
+          },
+          "static": false,
+          "elements": [
+            {
+              "key": "movable-point-b71473",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "-1",
+                "startY": "4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 0,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-56a42a",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "1",
+                "startY": "4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 1,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-a8848f",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "-1",
+                "startY": "-4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 2,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "movable-point-97acf7",
+              "type": "movable-point",
+              "options": {
+                "snap": 1,
+                "startX": "1",
+                "startY": "-4",
+                "constraint": "snap",
+                "constraintFn": "0",
+                "varSubscript": 3,
+                "constraintXMax": "10",
+                "constraintXMin": "-10",
+                "constraintYMax": "10",
+                "constraintYMin": "-10"
+              }
+            },
+            {
+              "key": "line-c115d6",
+              "type": "line",
+              "options": {
+                "endX": "8",
+                "endY": "\\frac{y_1-y_0}{x_1-x_0}\\left(8-x_0\\right)+y_0",
+                "color": "#6495ED",
+                "arrows": "",
+                "startX": "-8",
+                "startY": "\\frac{y_1-y_0}{x_1-x_0}\\left(-8-x_0\\right)+y_0",
+                "strokeWidth": 2,
+                "strokeDasharray": ""
+              }
+            },
+            {
+              "key": "line-1b605a",
+              "type": "line",
+              "options": {
+                "endX": "8",
+                "endY": "\\frac{y_3-y_2}{x_3-x_2}\\left(8-x_2\\right)+y_2",
+                "color": "#FF00AF",
+                "arrows": "",
+                "startX": "-8",
+                "startY": "\\frac{y_3-y_2}{x_3-x_2}\\left(-8-x_2\\right)+y_2",
+                "strokeWidth": 2,
+                "strokeDasharray": ""
+              }
+            }
+          ]
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "metadata": {
+    "contentId": "x94ef62f7a929ee6b",
+    "contentType": "question",
+    "widgetType": "dataTable",
+    "createdAt": "2025-08-30T16:18:26.464Z",
+    "aiReasoning": "The widget type 'dataTable' is selected because the question involves presenting data in a tabular format specific to the number of students who ate different foods for lunch. Each food item and its corresponding number of students can be directly represented in rows and columns, making it appropriate for a dataTable. The provided table within the original content displays different types of foods and the number of students who ate each, which is information that fits well within the schema of a data table. Additionally, the extraction already includes the content for such a table, which can be directly mapped into inputData for the widget.",
+    "aiConfidence": 1
+  },
+  "originalData": {
+    "parsedData": {
+      "hints": [
+        {
+          "images": {},
+          "content": "A ratio compares two values in a certain order.\n\nHere are some ways we could write the ratio of $\\goldE{7}$ snakes and $\\tealE{2}$ lizards.\n\n- $\\goldE{7}$ to $\\tealE{2}$\n- $\\goldE{7}:\\tealE{2}$\n- $\\goldE{7}$ per $\\tealE{2}$\n- $\\goldE{7}$ for every $\\tealE{2}$\n\nWe could **NOT** say $\\tealE{2}$ to $\\goldE{7}$, because that is a different order. It would mean the ratio of lizards to snakes.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "There are $\\blueE{13}$ students who ate pizza.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "There are $\\purpleD{6}$ students who ate mac and cheese.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "There are $\\blueE{13}$ students who ate pizza for every $\\purpleD{6}$ students who ate mac and cheese.",
+          "replace": false,
+          "widgets": {}
+        },
+        {
+          "images": {},
+          "content": "The ratio of students who ate pizza to students who ate mac and cheese is $\\blueE{13}:\\purpleD{6}$.",
+          "replace": false,
+          "widgets": {}
+        }
+      ],
+      "question": {
+        "images": {},
+        "content": "The table shows the number of students who ate different foods for lunch.  \n\nFood| Students\n- | - | -\nMac and cheese| $6$\nBurger| $7$\nPizza| $13$\nSalad| $4$\n\n\n**What is the ratio of students who ate pizza  to students who ate mac and cheese?**\n\n[[☃ radio 2]]\n",
+        "widgets": {
+          "radio 2": {
+            "type": "radio",
+            "graded": true,
+            "static": false,
+            "options": {
+              "choices": [
+                {
+                  "content": "$6:13$",
+                  "correct": false
+                },
+                {
+                  "content": "$6:30$",
+                  "correct": false
+                },
+                {
+                  "content": "$13:6$",
+                  "correct": true,
+                  "isNoneOfTheAbove": false
+                },
+                {
+                  "content": "$13:17$",
+                  "correct": false,
+                  "isNoneOfTheAbove": false
+                }
+              ],
+              "randomize": false,
+              "countChoices": false,
+              "displayCount": null,
+              "multipleSelect": false,
+              "deselectEnabled": false,
+              "hasNoneOfTheAbove": false
+            },
+            "version": {
+              "major": 1,
+              "minor": 0
+            },
+            "alignment": "default"
+          }
+        }
+      },
+      "answerArea": {
+        "tTable": false,
+        "zTable": false,
+        "chi2Table": false,
+        "calculator": false,
+        "periodicTable": false
+      },
+      "itemDataVersion": {
+        "major": 0,
+        "minor": 1
+      }
+    }
+  },
+  "recreatedWidget": {
+    "inputData": "{\"rows\":[{\"cells\":[{\"content\":\"Mac and cheese\"},{\"content\":\"6\"}]},{\"cells\":[{\"content\":\"Burger\"},{\"content\":\"7\"}]},{\"cells\":[{\"content\":\"Pizza\"},{\"content\":\"13\"}]},{\"cells\":[{\"content\":\"Salad\"},{\"content\":\"4\"}]}],\"columns\":[{\"content\":\"Food\"},{\"content\":\"Students\"}],\"rowHeaders\":false,\"columnHeaders\":true,\"footerRows\":0}",
+    "success": false,
+    "error": "Schema validation failed: [\n  {\n    \"code\": \"invalid_literal\",\n    \"expected\": \"dataTable\",\n    \"path\": [\n      \"type\"\n    ],\n    \"message\": \"Invalid literal value, expected \\\"dataTable\\\"\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"title\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      0,\n      \"key\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      0,\n      \"label\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      0,\n      \"isNumeric\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"content\"\n    ],\n    \"path\": [\n      \"columns\",\n      0\n    ],\n    \"message\": \"Unrecognized key(s) in object: 'content'\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      1,\n      \"key\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      1,\n      \"label\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"columns\",\n      1,\n      \"isNumeric\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"content\"\n    ],\n    \"path\": [\n      \"columns\",\n      1\n    ],\n    \"message\": \"Unrecognized key(s) in object: 'content'\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"data\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"rowHeaderKey\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"array\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"footer\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"unrecognized_keys\",\n    \"keys\": [\n      \"rows\",\n      \"rowHeaders\",\n      \"columnHeaders\",\n      \"footerRows\"\n    ],\n    \"path\": [],\n    \"message\": \"Unrecognized key(s) in object: 'rows', 'rowHeaders', 'columnHeaders', 'footerRows'\"\n  }\n]"
+  },
+  "generated": {
+    "svg": "",
+    "svgLength": 0,
+    "containsValidSvg": false
+  },
+  "validation": {
+    "hasRequiredElements": false,
+    "hasContent": false,
+    "isWellFormed": false
+  }
+}

@@ -44,6 +44,8 @@ import { orchestrateCourseVisualQAReview } from "@/inngest/functions/qa/orchestr
 // Import Visual QA workers
 import { orchestrateVisualQAReview } from "@/inngest/functions/qa/orchestrate-visual-qa-review"
 import { reviewQuestionRendering } from "@/inngest/functions/qa/review-question-rendering"
+import { reverseEngineerWidgetFromSvg, reverseEngineerBatchFromDatabase } from "@/inngest/functions/qa/reverse-engineer-widget-from-svg"
+import { orchestrateWidgetReverseEngineering } from "@/inngest/functions/qa/orchestrate-widget-reverse-engineering"
 import { testPerseusTextarea } from "@/inngest/functions/qa/test-perseus-textarea"
 // ✅ ADD: Import the new batch differentiation and assembly functions
 import { assembleDifferentiatedItemsAndCreateTests } from "@/inngest/functions/qti/assemble-differentiated-items-and-create-tests"
@@ -129,6 +131,9 @@ export const { GET, POST, PUT } = serve({
 		orchestrateVisualQAReview,
 		orchestrateCourseVisualQAReview,
 		reviewQuestionRendering,
+		reverseEngineerWidgetFromSvg,
+		reverseEngineerBatchFromDatabase,
+		orchestrateWidgetReverseEngineering,
 		testPerseusTextarea
 	]
 })

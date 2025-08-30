@@ -1,0 +1,238 @@
+{
+  "widgetType": "explanation",
+  "totalCount": 6007,
+  "sampleCount": 10,
+  "generatedAt": "2025-08-30T15:26:41.843Z",
+  "samples": [
+    {
+      "questionId": "xfbe6e67084a05b59",
+      "problemType": "Growth factors and cancer cells",
+      "widgetKey": "explanation 1",
+      "questionContent": "The following diagram shows how cells normally respond to the presence (bottom left) and absence (bottom right) of growth factors in their culture medium.\n\n[[☃ image 1]]\n\n**Which of the following diagrams shows how *cancer* cells are likely to respond to the presence and absence of growth factors in...",
+      "widgetData": {
+        "type": "explanation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "widgets": {},
+          "hidePrompt": "Hide diagram credits",
+          "showPrompt": "Diagram credits",
+          "explanation": "Created with [BioRender.com](https://www.biorender.com/)"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x8f17f57ef804bce4",
+      "problemType": "Time progression",
+      "widgetKey": "explanation 1",
+      "questionContent": "**Which diagram correctly shows how time is represented in an evolutionary tree?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "explanation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "widgets": {},
+          "hidePrompt": "Hide image credit",
+          "showPrompt": "Image credit",
+          "explanation": "Images created with [Biorender.com](BioRender.com)"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xe8c64be1dc7a4e29",
+      "problemType": "Frequency of natural hazards",
+      "widgetKey": "explanation 1",
+      "questionContent": "When a natural hazard has a negative impact on humans, it is called a natural disaster. The table below shows the number of major natural disasters that occurred worldwide in 2020.\n\nType of natural disaster | Number of occurrences\n:-: | :-:\nFlood | $193$\nStorm | $69$\nLandslide | $19$\nEarthquake | $1...",
+      "widgetData": {
+        "type": "explanation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "widgets": {},
+          "hidePrompt": "Hide data source",
+          "showPrompt": "Data source",
+          "explanation": "[2020 Global Natural Disaster Assessment Report](https://www.preventionweb.net/publication/2020-global-natural-disaster-assessment-report)"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x9a90c63370cf14c8",
+      "problemType": "Type 3: Density is intrinsic",
+      "widgetKey": "explanation 1",
+      "questionContent": "Density is an intrinsic physical property of a substance. \n\nOsmium is the densest element on the periodic table. A cluster of pure osmium crystals has a density of $22.6\\text{ g/cm}^3.$\n\n [[☃ image 2]]\n\n**What is the density of an osmium crystal that is half the size of the cluster above?**\n\n[[☃ rad...",
+      "widgetData": {
+        "type": "explanation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "widgets": {},
+          "hidePrompt": "Hide image credit",
+          "showPrompt": "Image credit",
+          "explanation": "“[Osmium Cluster](https://en.m.wikipedia.org/wiki/File:Osmium_cluster.jpg)” by PeriodicTableRU, [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x439f18ab7952ad51",
+      "problemType": "Identify competition",
+      "widgetKey": "explanation 1",
+      "questionContent": "Turkey vultures and black vultures are common scavengers found throughout North and South America. Both vulture species rely on carrion (carcasses of dead animals) for food. In turn, when both turkey vultures and black vultures find carrion, they may become aggressive and fight over the animal carca...",
+      "widgetData": {
+        "type": "explanation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "widgets": {},
+          "hidePrompt": "Hide image credit",
+          "showPrompt": "Image credit",
+          "explanation": "\"[Black vulture with turkey vulture](https://commons.wikimedia.org/wiki/File:Black_vulture_with_turkey_vulture_-_50726963283.jpg)\" by Wildreturn, [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/deed.en)"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "xa6a6c3f527c15923",
+      "problemType": "Micrograph (cytoskeleton, plasma membrane, cytosol)",
+      "widgetKey": "explanation 1",
+      "questionContent": "A scientist captured the following micrograph of cells using a fluorescence microscope. The scientist used molecular techniques to make a certain internal cell part appear green under the microscope.\n\n[[☃ image 1]]\n\nThe cell part shown in green is directly involved in providing structure to the cell...",
+      "widgetData": {
+        "type": "explanation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "widgets": {},
+          "hidePrompt": "Hide image credit",
+          "showPrompt": "Image credit",
+          "explanation": "Modified from \"[SK8-18-2 human derived cells, fluorescence microscopy](https://commons.wikimedia.org/wiki/File:SK8-18-2_human_derived_cells,_fluorescence_microscopy_%2829942101073%29.jpg)\" by ZEISS Microscopy from Germany, [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/deed.en)"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x9f1139ac605a55b0",
+      "problemType": "Sound wave animation",
+      "widgetKey": "explanation 1",
+      "questionContent": "A slow-motion model of a periodic sound wave is shown below. Each dot represents an air particle. The gray surface on the left vibrates, causing sound waves to travel through the air.\n\n [[☃ image 1]]\n\n**Analyze the model and complete the predictions.**\n\n* If the gray surface moves back and forth mor...",
+      "widgetData": {
+        "type": "explanation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "widgets": {},
+          "hidePrompt": "Hide animation credit",
+          "showPrompt": "Animation credit",
+          "explanation": "\"[Longitudinal wave](https://www.acs.psu.edu/drussell/demos/waves/wavemotion.html)\" by Dan Russell, [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x48a0b3431b2fde6f",
+      "problemType": "Type 3: Pure Substances",
+      "widgetKey": "explanation 1",
+      "questionContent": "**Which of the following samples depicts a pure substance?**\n\n[[☃ radio 1]]\n\n[[☃ explanation 1]]",
+      "widgetData": {
+        "type": "explanation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "widgets": {},
+          "hidePrompt": "Hide image credit",
+          "showPrompt": "Image credit",
+          "explanation": "“[Sodium bromide](https://commons.wikimedia.org/wiki/File:Sodium-bromide-3D-ionic.png)” by Benjah-bmm27, [Public Domain](https://en.wikipedia.org/wiki/Public_domain)"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x98b1dc62db614765",
+      "problemType": "Obligate mutualism",
+      "widgetKey": "explanation 1",
+      "questionContent": "Termites, such as the ones shown below, have unicellular protozoans living in their gut. These protozoans help the termites digest wood.\n\n[[☃ image 1]]\n\nTermites cannot survive without the protozoans. Similarly, the protozoans are found living only in the guts of termites.\n\n**Which statement best de...",
+      "widgetData": {
+        "type": "explanation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "widgets": {},
+          "hidePrompt": "Hide image credit",
+          "showPrompt": "Image credit",
+          "explanation": "\"[Nasute termite soldiers](https://commons.wikimedia.org/wiki/File:Nasute_termite_soldiers.png)\" by Filipe Fortes, [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en)"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    },
+    {
+      "questionId": "x140916b86c412dda",
+      "problemType": "Changes in fossil fuel consumption",
+      "widgetKey": "explanation 1",
+      "questionContent": "One human activity, burning fossil fuels, is responsible for the majority of climate change. The graph below gives information about the use of fossil and non-fossil fuels in the United States from 1776 to 2021. The line in the graph represents the share of U.S. energy consumption that came from fos...",
+      "widgetData": {
+        "type": "explanation",
+        "graded": true,
+        "static": false,
+        "options": {
+          "static": false,
+          "widgets": {},
+          "hidePrompt": "Hide data source",
+          "showPrompt": "Data source",
+          "explanation": "[U.S. Energy Information Administration](https://www.eia.gov/)"
+        },
+        "version": {
+          "major": 0,
+          "minor": 0
+        },
+        "alignment": "default"
+      }
+    }
+  ]
+}
