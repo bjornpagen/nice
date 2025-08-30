@@ -332,7 +332,7 @@ export async function getEnrollmentsForUser(userSourcedId: string) {
 		return ensureActiveStatus(enrollments)
 	}
 	// User data is more volatile, so use a shorter cache duration
-	return redisCache(operation, ["oneroster-getEnrollmentsForUser", userSourcedId], { revalidate: 60 }) // 1 minute cache
+	return redisCache(operation, ["oneroster-getEnrollmentsForUser", userSourcedId], { revalidate: 10 }) // 10 seconds cache
 }
 
 export async function getActiveEnrollmentsForUser(userSourcedId: string) {
@@ -373,5 +373,5 @@ export async function getActiveEnrollmentsForUser(userSourcedId: string) {
 		})
 	}
 	// User data is more volatile, so use a shorter cache duration
-	return redisCache(operation, ["oneroster-getActiveEnrollmentsForUser", userSourcedId], { revalidate: 60 }) // 1 minute cache
+	return redisCache(operation, ["oneroster-getActiveEnrollmentsForUser", userSourcedId], { revalidate: 10 }) // 10 seconds cache
 }
