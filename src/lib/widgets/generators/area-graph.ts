@@ -148,14 +148,85 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	const bottomPath = `M${leftX},${toSvgY(yAxis.min)} ${pointsStr} L${rightX},${toSvgY(yAxis.min)} Z`
 	const topPath = `M${leftX},${toSvgY(yAxis.max)} ${pointsStr} L${rightX},${toSvgY(yAxis.max)} Z`
 
-	// 1. Compute safe label anchors using median x-value
-	const medianXValue = dataPoints.length > 0 
-		? dataPoints[Math.floor(dataPoints.length / 2)]?.x ?? ((xAxis.min + xAxis.max) / 2)
-		: (xAxis.min + xAxis.max) / 2
-	const topLabelX = toSvgX(medianXValue)
-	const topLabelY = toSvgY(yAxis.max * 0.75) // Position in upper area
-	const bottomLabelX = toSvgX(medianXValue)
-	const bottomLabelY = toSvgY(yAxis.max * 0.25) // Position in lower area
+	// 1. Compute label anchors using area-weighted center of mass along x
+	// Weight each segment by its horizontal span and area thickness
+	let topWeightedX = 0
+	let topTotalWeight = 0
+	let bottomWeightedX = 0
+	let bottomTotalWeight = 0
+	for (let i = 0; i < dataPoints.length - 1; i++) {
+		const p0 = dataPoints[i]
+		const p1 = dataPoints[i + 1]
+		if (!p0 || !p1) {
+			logger.error("area graph missing segment point", { index: i })
+			throw errors.new("invalid data points")
+		}
+		const dx = Math.abs(p1.x - p0.x)
+		if (dx === 0) {
+			logger.error("area graph invalid segment", { index: i })
+			throw errors.new("invalid data points")
+		}
+		const midX = (p0.x + p1.x) / 2
+		const topThick0 = yAxis.max - p0.y
+		const topThick1 = yAxis.max - p1.y
+		const bottomThick0 = p0.y - yAxis.min
+		const bottomThick1 = p1.y - yAxis.min
+		if (topThick0 < 0 || topThick1 < 0 || bottomThick0 < 0 || bottomThick1 < 0) {
+			logger.error("area graph y outside bounds", { index: i })
+			throw errors.new("y out of bounds")
+		}
+		const topAvgThick = (topThick0 + topThick1) / 2
+		const bottomAvgThick = (bottomThick0 + bottomThick1) / 2
+		topWeightedX += midX * dx * topAvgThick
+		topTotalWeight += dx * topAvgThick
+		bottomWeightedX += midX * dx * bottomAvgThick
+		bottomTotalWeight += dx * bottomAvgThick
+	}
+	if (topTotalWeight <= 0) {
+		logger.error("area graph zero top area", { count: dataPoints.length })
+		throw errors.new("invalid top area")
+	}
+	if (bottomTotalWeight <= 0) {
+		logger.error("area graph zero bottom area", { count: dataPoints.length })
+		throw errors.new("invalid bottom area")
+	}
+	const topCenterXVal = topWeightedX / topTotalWeight
+	const bottomCenterXVal = bottomWeightedX / bottomTotalWeight
+
+	// Interpolate boundary y-value at an arbitrary x using piecewise linear segments
+	function interpolateBoundaryY(x: number): number {
+		for (let i = 0; i < dataPoints.length - 1; i++) {
+			const p0 = dataPoints[i]
+			const p1 = dataPoints[i + 1]
+			if (!p0 || !p1) {
+				logger.error("area graph missing segment point", { index: i })
+				throw errors.new("invalid data points")
+			}
+			const within = (p0.x <= x && x <= p1.x) || (p1.x <= x && x <= p0.x)
+			if (within) {
+				const span = p1.x - p0.x
+				if (span === 0) {
+					logger.error("area graph zero-length span", { index: i })
+					throw errors.new("invalid data points")
+				}
+				const t = (x - p0.x) / span
+				return p0.y + t * (p1.y - p0.y)
+			}
+		}
+		logger.error("area graph interpolation x outside range", { x })
+		throw errors.new("interpolation out of range")
+	}
+
+	// Bias the top label position toward the y-axis to avoid clashing with the boundary line on the right
+	const topLabelXVal = xAxis.min + (topCenterXVal - xAxis.min) * 0.4
+	const topBoundaryYVal = interpolateBoundaryY(topLabelXVal)
+	const bottomBoundaryYVal = interpolateBoundaryY(bottomCenterXVal)
+
+	const topLabelX = toSvgX(topLabelXVal)
+	const bottomLabelX = toSvgX(bottomCenterXVal)
+	// Position labels comfortably within each area band
+	const topLabelY = toSvgY(yAxis.max - (yAxis.max - topBoundaryYVal) * 0.25)
+	const bottomLabelY = toSvgY(yAxis.min + (bottomBoundaryYVal - yAxis.min) * 0.25)
 
 	// 2. Build clipped and unclipped content separately
 	let clippedContent = ""
