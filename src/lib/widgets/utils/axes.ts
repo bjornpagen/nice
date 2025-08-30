@@ -175,9 +175,8 @@ export function computeAndRenderYAxis(
 				yTickLabels.push(label)
 			}
 
-			// Suppress gridline at 0 only if it would overdraw the main axis, but never the tick/label
-			const isZeroOverlappingAxis = (t === 0 && xAxisSpec.domain.min <= 0 && xAxisSpec.domain.max >= 0)
-			if (spec.showGridLines && !isZeroOverlappingAxis) {
+			// Always render horizontal gridlines for all ticks when enabled
+			if (spec.showGridLines) {
 				markup += `<line x1="${chartArea.left}" y1="${y}" x2="${chartArea.left + chartArea.width}" y2="${y}" stroke="${theme.colors.gridMajor}" stroke-width="${GRID_STROKE_WIDTH_PX}"/>`
 			}
 		})

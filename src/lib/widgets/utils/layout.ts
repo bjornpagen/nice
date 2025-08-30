@@ -445,28 +445,9 @@ export function includeRotatedYAxisLabel(
 
 export function calculateIntersectionAwareTicks(tickValues: number[], _isXAxis: boolean): Set<number> {
 	const labeledIndices = new Set<number>()
-
-	// Find the first negative value (closest to intersection)
-	let hasSkippedFirstNegative = false
 	for (let i = 0; i < tickValues.length; i++) {
-		const value = tickValues[i]
-		if (value === undefined) continue
-
-		// ALWAYS include 0 tick - never skip the origin
-		if (value === 0) {
-			labeledIndices.add(i)
-			continue
-		}
-
-		// Skip first negative to avoid intersection collision
-		if (value < 0 && !hasSkippedFirstNegative) {
-			hasSkippedFirstNegative = true
-			continue // Skip this one
-		}
-
-		// Label all other values
+		if (tickValues[i] === undefined) continue
 		labeledIndices.add(i)
 	}
-
 	return labeledIndices
 }

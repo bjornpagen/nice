@@ -551,7 +551,8 @@ export function generateCoordinatePlaneBaseV2(
 	const yProbe = computeAndRenderYAxis(yAxisLegacySpec, probeArea, xAxisLegacySpec)
 	const xProbe = computeAndRenderXAxis(xAxisSpec, probeArea)
 
-	const outsideTopPx = hasTitle ? titleHeight : 0
+	const extraTopFromAxes = Math.max(yProbe.pads.top, xProbe.pads.top)
+	const outsideTopPx = (hasTitle ? titleHeight : 0) + extraTopFromAxes
 	const outsideBottomPx = xProbe.pads.bottom
 	const leftOutsidePx = yProbe.pads.left
 
