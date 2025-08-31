@@ -404,6 +404,20 @@ const events = {
 			limit: z.number().positive().default(100).describe("Maximum number of SVGs to process"),
 			generateValidation: z.boolean().default(true).describe("Whether to validate by regenerating widgets")
 		})
+	},
+	// New simplified widget test generation events
+	"qa/svg.reverse-engineer-to-widget": {
+		data: z.object({
+			svgBase64: z.string().min(1).describe("Base64 encoded SVG content"),
+			sourceId: z.string().describe("Unique identifier for tracking (e.g., questionId-svgIndex)"),
+			expectedWidgetType: z.string().optional().describe("Optional hint about expected widget type")
+		})
+	},
+	"qa/qti.extract-and-process-svgs": {
+		data: z.object({
+			courseIds: z.array(z.string().min(1)).describe("Course IDs to process for SVG extraction"),
+			limit: z.number().positive().default(100).describe("Maximum number of SVGs to process")
+		})
 	}
 }
 
