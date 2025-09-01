@@ -1,0 +1,61 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`box-grid - Experimental probability 1`] = `
+"<svg width="240" height="120" viewBox="-20 0 240 120" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><style>
+        .cell-text {
+            font-size: 14px;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+    </style><text x="25" y="30" class="cell-text">3</text><text x="75" y="30" class="cell-text">6</text><text x="125" y="30" class="cell-text">1</text><text x="175" y="30" class="cell-text">4</text><text x="25" y="90" class="cell-text">2</text><text x="75" y="90" class="cell-text">3</text><text x="125" y="90" class="cell-text">7</text><text x="175" y="90" class="cell-text">2</text><rect x="0" y="0" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="50" y="0" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="100" y="0" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="150" y="0" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="0" y="60" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="50" y="60" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="100" y="60" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="150" y="60" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /></svg>"
+`;
+
+exports[`box-grid - Creating frequency tables 1`] = `
+"<svg width="240" height="120" viewBox="-20 0 240 120" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><style>
+        .cell-text {
+            font-size: 14px;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+    </style><text x="25" y="30" class="cell-text">4</text><text x="75" y="30" class="cell-text">4</text><text x="125" y="30" class="cell-text">5</text><text x="175" y="30" class="cell-text">4</text><text x="25" y="90" class="cell-text">5</text><text x="75" y="90" class="cell-text">4</text><text x="125" y="90" class="cell-text">3</text><text x="175" y="90" class="cell-text">4</text><rect x="0" y="0" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="50" y="0" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="100" y="0" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="150" y="0" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="0" y="60" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="50" y="60" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="100" y="60" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="150" y="60" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /></svg>"
+`;
+
+exports[`box-grid - Creating frequency tables 2`] = `
+"<svg width="200" height="160" viewBox="-20 0 200 160" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><style>
+        .cell-text {
+            font-size: 14px;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+    </style><text x="26.666666666666668" y="26.666666666666668" class="cell-text">2</text><text x="80" y="26.666666666666668" class="cell-text">2</text><text x="133.33333333333334" y="26.666666666666668" class="cell-text">2</text><text x="26.666666666666668" y="80" class="cell-text">2</text><text x="80" y="80" class="cell-text">0</text><text x="133.33333333333334" y="80" class="cell-text">2</text><text x="26.666666666666668" y="133.33333333333334" class="cell-text">2</text><text x="80" y="133.33333333333334" class="cell-text">3</text><text x="133.33333333333334" y="133.33333333333334" class="cell-text">2</text><rect x="0" y="0" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="53.333333333333336" y="0" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="106.66666666666667" y="0" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="0" y="53.333333333333336" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="53.333333333333336" y="53.333333333333336" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="106.66666666666667" y="53.333333333333336" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="0" y="106.66666666666667" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="53.333333333333336" y="106.66666666666667" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="106.66666666666667" y="106.66666666666667" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /></svg>"
+`;
+
+exports[`box-grid - Creating frequency tables 3`] = `
+"<svg width="200" height="160" viewBox="-20 0 200 160" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><style>
+        .cell-text {
+            font-size: 14px;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+    </style><text x="26.666666666666668" y="26.666666666666668" class="cell-text">2</text><text x="80" y="26.666666666666668" class="cell-text">1</text><text x="133.33333333333334" y="26.666666666666668" class="cell-text">4</text><text x="26.666666666666668" y="80" class="cell-text">4</text><text x="80" y="80" class="cell-text">4</text><text x="133.33333333333334" y="80" class="cell-text">4</text><text x="26.666666666666668" y="133.33333333333334" class="cell-text">2</text><text x="80" y="133.33333333333334" class="cell-text">3</text><text x="133.33333333333334" y="133.33333333333334" class="cell-text">3</text><rect x="0" y="0" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="53.333333333333336" y="0" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="106.66666666666667" y="0" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="0" y="53.333333333333336" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="53.333333333333336" y="53.333333333333336" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="106.66666666666667" y="53.333333333333336" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="0" y="106.66666666666667" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="53.333333333333336" y="106.66666666666667" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="106.66666666666667" y="106.66666666666667" width="53.333333333333336" height="53.333333333333336" fill="none" stroke="#e0e0e0" stroke-width="1.5" /></svg>"
+`;
+
+exports[`box-grid - Creating frequency tables 4`] = `
+"<svg width="240" height="200" viewBox="-20 0 240 200" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><style>
+        .cell-text {
+            font-size: 14px;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+    </style><text x="33.333333333333336" y="33.333333333333336" class="cell-text">43</text><text x="100" y="33.333333333333336" class="cell-text">43</text><text x="166.66666666666669" y="33.333333333333336" class="cell-text">45</text><text x="33.333333333333336" y="100" class="cell-text">44</text><text x="100" y="100" class="cell-text">46</text><text x="166.66666666666669" y="100" class="cell-text">45</text><text x="33.333333333333336" y="166.66666666666669" class="cell-text">44</text><text x="100" y="166.66666666666669" class="cell-text">42</text><text x="166.66666666666669" y="166.66666666666669" class="cell-text">45</text><rect x="0" y="0" width="66.66666666666667" height="66.66666666666667" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="66.66666666666667" y="0" width="66.66666666666667" height="66.66666666666667" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="133.33333333333334" y="0" width="66.66666666666667" height="66.66666666666667" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="0" y="66.66666666666667" width="66.66666666666667" height="66.66666666666667" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="66.66666666666667" y="66.66666666666667" width="66.66666666666667" height="66.66666666666667" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="133.33333333333334" y="66.66666666666667" width="66.66666666666667" height="66.66666666666667" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="0" y="133.33333333333334" width="66.66666666666667" height="66.66666666666667" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="66.66666666666667" y="133.33333333333334" width="66.66666666666667" height="66.66666666666667" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="133.33333333333334" y="133.33333333333334" width="66.66666666666667" height="66.66666666666667" fill="none" stroke="#e0e0e0" stroke-width="1.5" /></svg>"
+`;
+
+exports[`box-grid - Creating frequency tables 5`] = `
+"<svg width="240" height="120" viewBox="-20 0 240 120" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><style>
+        .cell-text {
+            font-size: 14px;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+    </style><text x="25" y="30" class="cell-text">6</text><text x="75" y="30" class="cell-text">7</text><text x="125" y="30" class="cell-text">8</text><text x="175" y="30" class="cell-text">7</text><text x="25" y="90" class="cell-text">7</text><text x="75" y="90" class="cell-text">8</text><text x="125" y="90" class="cell-text">7</text><text x="175" y="90" class="cell-text">6</text><rect x="0" y="0" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="50" y="0" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="100" y="0" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="150" y="0" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="0" y="60" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="50" y="60" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="100" y="60" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /><rect x="150" y="60" width="50" height="60" fill="none" stroke="#e0e0e0" stroke-width="1.5" /></svg>"
+`;
