@@ -3,6 +3,7 @@ import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { z } from "zod"
 import { sql } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
@@ -92,10 +93,132 @@ function parseCsv(content: string): CsvRow[] {
 	return rows
 }
 
+// --- NGSS CASE backfill helpers ---
+const CfItemSchema = z.object({
+    humanCodingScheme: z.string(),
+    sourcedId: z.string()
+})
+
+const ResponseSchema = z.object({
+    CFPackage: z.object({
+        CFItems: z.array(z.unknown())
+    })
+})
+
+async function readCaseJson(absolutePath: string): Promise<{ items: Array<{ humanCodingScheme: string; sourcedId: string }>; invalidCount: number }> {
+    const readResult = await errors.try(fs.readFile(absolutePath, "utf-8"))
+    if (readResult.error) {
+        logger.error("file read", { error: readResult.error, file: absolutePath })
+        throw errors.wrap(readResult.error, "file read")
+    }
+
+    const parseResult = errors.trySync(() => JSON.parse(readResult.data))
+    if (parseResult.error) {
+        logger.error("json parse", { error: parseResult.error, file: absolutePath })
+        throw errors.wrap(parseResult.error, "json parse")
+    }
+
+    const safe = ResponseSchema.safeParse(parseResult.data)
+    if (!safe.success) {
+        logger.error("response validation", { error: safe.error })
+        throw errors.wrap(safe.error, "response validation")
+    }
+    const rawItems = safe.data.CFPackage.CFItems
+    const items: Array<{ humanCodingScheme: string; sourcedId: string }> = []
+    let invalidCount = 0
+    for (const it of rawItems) {
+        const parsed = CfItemSchema.safeParse(it)
+        if (parsed.success) items.push(parsed.data)
+        else invalidCount++
+    }
+    return { items, invalidCount }
+}
+
+function deriveBaseStandardId(standardId: string): string {
+    const dotIndex = standardId.indexOf(".")
+    if (dotIndex === -1) return standardId
+    return standardId.slice(0, dotIndex)
+}
+
+async function backfillNgssCaseIds(opts: { dryRun: boolean }): Promise<void> {
+    const repoRoot = process.cwd()
+    const inputPath = path.join(repoRoot, "docs/ngss-case-standards.json")
+
+    logger.info("reading case json for ngss backfill", { file: inputPath })
+    const caseData = await readCaseJson(inputPath)
+    logger.info("parsed case json", { validItems: caseData.items.length, invalidItems: caseData.invalidCount })
+
+    const baseToCaseId = new Map<string, string>()
+    for (const it of caseData.items) {
+        const id = it.humanCodingScheme
+        if (!id) continue
+        if ((id.startsWith("MS-") || id.startsWith("HS-")) && !id.includes(".")) {
+            if (!baseToCaseId.has(id)) baseToCaseId.set(id, it.sourcedId)
+        }
+    }
+
+    const emptyRowsResult = await errors.try(
+        db
+            .select({ id: schema.niceCommonCoreStandards.id, setId: schema.niceCommonCoreStandards.setId, standardId: schema.niceCommonCoreStandards.standardId, caseId: schema.niceCommonCoreStandards.caseId })
+            .from(schema.niceCommonCoreStandards)
+            .where(sql`${schema.niceCommonCoreStandards.caseId} = '' AND (${schema.niceCommonCoreStandards.setId} = 'NGSS.MS' OR ${schema.niceCommonCoreStandards.setId} = 'NGSS.HS')`)
+    )
+    if (emptyRowsResult.error) {
+        logger.error("db query", { error: emptyRowsResult.error })
+        throw errors.wrap(emptyRowsResult.error, "db query")
+    }
+    const candidates = emptyRowsResult.data
+
+    const updates: Array<{ standardId: string; newCaseId: string }> = []
+    for (const row of candidates) {
+        const base = deriveBaseStandardId(row.standardId)
+        const caseId = baseToCaseId.get(base)
+        if (caseId !== undefined) {
+            updates.push({ standardId: row.standardId, newCaseId: caseId })
+        }
+    }
+
+    logger.info("ngss backfill analysis", { candidates: candidates.length, updates: updates.length })
+
+    if (opts.dryRun || updates.length === 0) {
+        return
+    }
+
+    const BATCH_SIZE = 200
+    for (let i = 0; i < updates.length; i += BATCH_SIZE) {
+        const batch = updates.slice(i, i + BATCH_SIZE)
+        logger.info("applying ngss backfill batch", { index: i, size: batch.length })
+        const tuples = batch.map((u) => sql`(${u.standardId}, ${u.newCaseId})`)
+        const execResult = await errors.try(
+            db.execute(sql`
+                update ${schema.niceCommonCoreStandards} as ccs
+                set case_id = v.case_id
+                from (
+                    values ${sql.join(tuples, sql`, `)}
+                ) as v(standard_id, case_id)
+                where ccs.standard_id = v.standard_id
+                  and ccs.case_id = ''
+                  and (ccs.set_id = 'NGSS.MS' or ccs.set_id = 'NGSS.HS')
+            `)
+        )
+        if (execResult.error) {
+            logger.error("db batch update", { error: execResult.error })
+            throw errors.wrap(execResult.error, "db batch update")
+        }
+    }
+    logger.info("ngss backfill applied", { count: updates.length })
+}
+
 async function main() {
 	logger.info("starting common core standards seeding")
 
-	const csvPath = path.join(process.cwd(), "common-core-math-standard-mappings.csv")
+	const args = process.argv.slice(2)
+	const dryRun = args.includes("--dry-run") || args.includes("-n")
+	if (dryRun) {
+		logger.info("running in dry-run mode")
+	}
+
+	const csvPath = path.join(process.cwd(), "docs/ngss-standard-mappings.csv")
 	const readResult = await errors.try(fs.readFile(csvPath, "utf-8"))
 	if (readResult.error) {
 		logger.error("failed to read csv file", { file: csvPath, error: readResult.error })
@@ -117,6 +240,15 @@ async function main() {
 	const deduped = Array.from(uniqueMap.values())
 	if (deduped.length !== records.length) {
 		logger.info("deduplicated csv rows", { count: deduped.length })
+	}
+
+	if (dryRun) {
+		const sample = deduped.slice(0, 3)
+		logger.info("dry run summary", { parsedCount: records.length, dedupedCount: deduped.length, sample })
+		// Analyze NGSS backfill without applying changes
+		await backfillNgssCaseIds({ dryRun: true })
+		logger.info("skipping database writes due to dry run")
+		return
 	}
 
 	// Upsert in batches to avoid huge single insert
@@ -149,6 +281,9 @@ async function main() {
 			throw errors.wrap(insertResult.error, "db upsert")
 		}
 	}
+
+	// After upsert, apply NGSS backfill for sub-standards
+	await backfillNgssCaseIds({ dryRun: false })
 
 	logger.info("completed common core standards seeding")
 }

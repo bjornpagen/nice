@@ -11,6 +11,7 @@ import * as schema from "@/db/schemas"
 type CliOptions = {
 	files: string[]
 	apply: boolean
+	csvPath: string
 }
 
 const CfItemSchema = z.object({
@@ -32,9 +33,10 @@ type ExtractResult = {
 }
 
 function parseArgs(argv: string[]): CliOptions {
-	// Default: pull from both combined CASE JSON files
-	let files = ["docs/case-items1.json", "docs/case-items2.json"]
+	// Default inputs
+	let files = ["docs/ngss-case-standards.json"]
 	let apply = false
+	let csvPath = "docs/khan-standards-case.csv"
 
 	for (let i = 0; i < argv.length; i++) {
 		const arg = argv[i]
@@ -61,9 +63,21 @@ function parseArgs(argv: string[]): CliOptions {
 			if (parts.length > 0) files = parts
 			continue
 		}
+		if (arg === "--csv") {
+			const next = argv[i + 1]
+			if (next) {
+				csvPath = next
+				i++
+			}
+			continue
+		}
+		if (arg.startsWith("--csv=")) {
+			csvPath = arg.slice("--csv=".length)
+			continue
+		}
 	}
 
-	return { files, apply }
+	return { files, apply, csvPath }
 }
 
 async function readJsonFile<T = unknown>(absolutePath: string): Promise<T> {
@@ -134,10 +148,11 @@ async function main(): Promise<void> {
 	const argv = process.argv.slice(2)
 	const opts = parseArgs(argv)
 
-	logger.info(opts.apply ? "starting apply run" : "starting dry run", { files: opts.files })
+	logger.info(opts.apply ? "starting apply run" : "starting dry run", { files: opts.files, csv: opts.csvPath })
 
 	const repoRoot = process.cwd()
 	const absoluteFiles = opts.files.map((f) => (path.isAbsolute(f) ? f : path.join(repoRoot, f)))
+	const absoluteCsv = path.isAbsolute(opts.csvPath) ? opts.csvPath : path.join(repoRoot, opts.csvPath)
 
 	// Read and merge items from all files
 	let allItems: ValidItem[] = []
@@ -211,7 +226,8 @@ async function main(): Promise<void> {
 			.select({
 				id: schema.niceCommonCoreStandards.id,
 				standardId: schema.niceCommonCoreStandards.standardId,
-				caseId: schema.niceCommonCoreStandards.caseId
+				caseId: schema.niceCommonCoreStandards.caseId,
+				setId: schema.niceCommonCoreStandards.setId
 			})
 			.from(schema.niceCommonCoreStandards)
 			.where(eq(schema.niceCommonCoreStandards.caseId, ""))
@@ -250,9 +266,58 @@ async function main(): Promise<void> {
 		pendingUpdates.push({ standardId, existingCaseId: row.caseId, newCaseId })
 	}
 
-	// Compute DB rows that will remain without a case_id after this run (i.e., still empty and not matched by input)
-	const inputStandardsSet = new Set(uniqueStandards)
-	const notUpdatedDbRows = emptyRows.filter((r) => !inputStandardsSet.has(r.standardId))
+	// CSV fallback for NGSS.MS / NGSS.HS standards missing sourcedId in CASE JSON
+	const csvReadResult = await errors.try(fs.readFile(absoluteCsv, "utf8"))
+	if (csvReadResult.error) {
+		logger.error("file read", { error: csvReadResult.error, file: absoluteCsv })
+		throw errors.wrap(csvReadResult.error, "file read")
+	}
+	// Parse simple CSV (header: khan standard id,case id)
+	const csvLines = csvReadResult.data.split(/\r?\n/).filter((l) => l.trim().length > 0)
+	const csvHeader = csvLines[0]
+	if (csvHeader === undefined) {
+		logger.error("csv header line missing", { file: absoluteCsv })
+		throw errors.new("csv header line missing")
+	}
+	const headerNormalized = csvHeader.replace(/^\uFEFF/, "").trim().toLowerCase()
+	const expectedHeader = "khan standard id,case id"
+	if (headerNormalized !== expectedHeader) {
+		logger.warn("csv header unexpected; continuing", { header: csvHeader })
+	}
+	const khanToCase = new Map<string, string>()
+	for (let i = 1; i < csvLines.length; i++) {
+		const line = csvLines[i]
+		if (!line || line.trim() === "") continue
+		const idx = line.indexOf(",")
+		if (idx < 0) continue
+		const std = line.slice(0, idx).trim()
+		const caseId = line.slice(idx + 1).trim()
+		if (std !== "" && caseId !== "" && !khanToCase.has(std)) {
+			khanToCase.set(std, caseId)
+		}
+	}
+
+	const alreadyUpdating = new Set(pendingUpdates.map((u) => u.standardId))
+	let csvFallbackAdded = 0
+	for (const r of emptyRows) {
+		if (r.setId !== "NGSS.MS" && r.setId !== "NGSS.HS") continue
+		if (alreadyUpdating.has(r.standardId)) continue
+		const mappedHumanId = khanToCase.get(r.standardId)
+		if (mappedHumanId === undefined) continue
+		const sourcedIds = standardToSourcedIds.get(mappedHumanId)
+		if (sourcedIds === undefined || sourcedIds.size === 0) {
+			logger.warn("csv fallback target not found in CASE json", { standardId: r.standardId, mappedHumanId })
+			continue
+		}
+		const [sourcedId] = Array.from(sourcedIds)
+		if (!sourcedId) continue
+		pendingUpdates.push({ standardId: r.standardId, existingCaseId: r.caseId, newCaseId: sourcedId })
+		csvFallbackAdded++
+	}
+
+	// Compute DB rows that will remain without a case_id after this run (still empty and not matched by input or CSV)
+	const pendingSet = new Set(pendingUpdates.map((p) => p.standardId))
+	const notUpdatedDbRows = emptyRows.filter((r) => !pendingSet.has(r.standardId))
 
 	const report: AnalysisReport & {
 		summary: {
@@ -263,6 +328,7 @@ async function main(): Promise<void> {
 			unchanged: number
 			dbEmptyCaseIdTotal: number
 			dbWillRemainUnset: number
+			csvFallbackAdded: number
 		}
 		notUpdatedDbRows: Array<{ id: string; standardId: string }>
 	} = {
@@ -293,11 +359,12 @@ async function main(): Promise<void> {
 		summary: {
 			matched: rows.length,
 			missingInDb: missingStandards.length,
-			pendingInsert: willInsert,
+			pendingInsert: willInsert + csvFallbackAdded,
 			pendingOverwrite: willOverwrite,
 			unchanged: unchanged.length,
 			dbEmptyCaseIdTotal: emptyRows.length,
-			dbWillRemainUnset: notUpdatedDbRows.length
+			dbWillRemainUnset: notUpdatedDbRows.length,
+			csvFallbackAdded
 		},
 		notUpdatedDbRows: notUpdatedDbRows.map((r) => ({ id: r.id, standardId: r.standardId }))
 	}
