@@ -2,7 +2,7 @@
 // EXTRACTED TEST FILE - AUTO-GENERATED
 // ============================================================================
 // This file was automatically generated from database structured_json data
-// Generated on: 2025-09-01T22:27:08.784Z
+// Generated on: 2025-09-01T22:43:40.171Z
 // Widget Type: boxGrid
 // Source: Real questions from database
 //
@@ -20,93 +20,6 @@ import type { z } from "zod"
 import { generateBoxGrid, BoxGridPropsSchema } from "@/lib/widgets/generators"
 
 type BoxGridInput = z.input<typeof BoxGridPropsSchema>
-
-
-// Extracted from question: xe7f56d1a649b62e0
-// Course: 7th grade math
-// Exercise: Experimental probability
-// Widget key: image_1
-test("box-grid - Experimental probability", () => {
-	const input = {
-	"data": [
-		[
-			{
-				"content": {
-					"type": "text",
-					"content": "3"
-				},
-				"backgroundColor": null
-			},
-			{
-				"content": {
-					"type": "text",
-					"content": "6"
-				},
-				"backgroundColor": null
-			},
-			{
-				"content": {
-					"type": "text",
-					"content": "1"
-				},
-				"backgroundColor": null
-			},
-			{
-				"content": {
-					"type": "text",
-					"content": "4"
-				},
-				"backgroundColor": null
-			}
-		],
-		[
-			{
-				"content": {
-					"type": "text",
-					"content": "2"
-				},
-				"backgroundColor": null
-			},
-			{
-				"content": {
-					"type": "text",
-					"content": "3"
-				},
-				"backgroundColor": null
-			},
-			{
-				"content": {
-					"type": "text",
-					"content": "7"
-				},
-				"backgroundColor": null
-			},
-			{
-				"content": {
-					"type": "text",
-					"content": "2"
-				},
-				"backgroundColor": null
-			}
-		]
-	],
-	"width": 200,
-	"height": 120,
-	"showGridLines": true,
-	"type": "boxGrid"
-} satisfies BoxGridInput
-
-	// Validate the input
-	const parseResult = BoxGridPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted boxGrid:", parseResult.error)
-		return
-	}
-
-	// Generate the widget
-	const svg = generateBoxGrid(parseResult.data)
-	expect(svg).toMatchSnapshot()
-})
 
 
 // Extracted from question: xf66ab2278e4a05f2

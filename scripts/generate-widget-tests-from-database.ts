@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 import * as fs from "node:fs/promises"
 import * as path from "node:path"
-import { and, eq, inArray, isNotNull, sql } from "drizzle-orm"
+import { and, eq, inArray, isNotNull, or, sql } from "drizzle-orm"
 import { db } from "@/db"
 import { niceCourses, niceExercises, niceLessonContents, niceLessons, niceQuestions, niceUnits } from "@/db/schemas"
 
@@ -87,11 +87,36 @@ function createTestName(widgetData: any, questionId: string, exerciseTitle: stri
 	return `${kebabType} - ${shortTitle}`.replace(/[^a-zA-Z0-9\s\-_]/g, '').replace(/\s+/g, ' ').trim()
 }
 
-async function generateWidgetTestsFromDatabase(courseIds: string[]) {
+async function generateWidgetTestsFromDatabase(courseIds: string[], onlyWidgetTypes?: string[]) {
 	console.log("Starting widget test generation from database", {
 		courseIds,
-		courseCount: courseIds.length
+		courseCount: courseIds.length,
+		onlyWidgetTypes: onlyWidgetTypes || 'all'
 	})
+
+	// Build the WHERE conditions
+	const whereConditions = [
+		inArray(niceCourses.id, courseIds),
+		isNotNull(niceQuestions.structuredJson)
+	]
+
+	// If onlyWidgetTypes is specified, filter at the database level
+	if (onlyWidgetTypes && onlyWidgetTypes.length > 0) {
+		// Create conditions that check if any widget in the widgets object has one of the specified types
+		const widgetTypeConditions = onlyWidgetTypes.map(widgetType =>
+			sql`exists(select 1 from jsonb_object_keys(${niceQuestions.structuredJson}::jsonb -> 'widgets') as k where (${niceQuestions.structuredJson}::jsonb -> 'widgets' -> k ->> 'type') = ${widgetType})`
+		)
+		if (widgetTypeConditions.length === 1) {
+			whereConditions.push(widgetTypeConditions[0]!)
+		} else {
+			whereConditions.push(sql`(${sql.join(widgetTypeConditions, sql.raw(' or '))})`)
+		}
+		// Also ensure widgets exist
+		whereConditions.push(sql`${niceQuestions.structuredJson}::jsonb -> 'widgets' != '{}'::jsonb`)
+	} else {
+		// Default condition: just check that widgets exist
+		whereConditions.push(sql`${niceQuestions.structuredJson}::jsonb -> 'widgets' != '{}'::jsonb`)
+	}
 
 	// Get all questions with widgets from the specified courses
 	const questions = await db
@@ -107,11 +132,7 @@ async function generateWidgetTestsFromDatabase(courseIds: string[]) {
 		.innerJoin(niceLessons, eq(niceLessonContents.lessonId, niceLessons.id))
 		.innerJoin(niceUnits, eq(niceLessons.unitId, niceUnits.id))
 		.innerJoin(niceCourses, eq(niceUnits.courseId, niceCourses.id))
-		.where(and(
-			inArray(niceCourses.id, courseIds),
-			isNotNull(niceQuestions.structuredJson),
-			sql`${niceQuestions.structuredJson}::jsonb -> 'widgets' != '{}'::jsonb`
-		))
+		.where(and(...whereConditions))
 
 	console.log("Found questions with widgets", { count: questions.length })
 
@@ -138,6 +159,12 @@ async function generateWidgetTestsFromDatabase(courseIds: string[]) {
 
 		for (const [widgetKey, widgetData] of Object.entries(structured.widgets)) {
 			const widgetType = (widgetData as any)?.type || 'unknown'
+
+			// Skip this widget if we're filtering and it doesn't match
+			if (onlyWidgetTypes && !onlyWidgetTypes.includes(widgetType)) {
+				continue
+			}
+
 			totalWidgets++
 
 			if (!widgetsByType.has(widgetType)) {
@@ -314,26 +341,60 @@ async function main() {
 
 	if (args.length === 0) {
 		console.log(`
-Usage: bun run scripts/generate-widget-tests-from-database.ts <course-id> [course-id...]
+Usage: bun run scripts/generate-widget-tests-from-database.ts <course-id> [course-id...] [--only <widget-type> [widget-type...]]
+
+Options:
+  --only <widget-type> [widget-type...]    Only generate tests for specified widget types
 
 Examples:
   bun run scripts/generate-widget-tests-from-database.ts x0267d782 x6b17ba59 x7c7044d7
   bun run scripts/generate-widget-tests-from-database.ts $(cat course-ids.txt)
+  bun run scripts/generate-widget-tests-from-database.ts x0267d782 --only dataTable numberLine
+  bun run scripts/generate-widget-tests-from-database.ts x0267d782 x6b17ba59 --only scatterPlot histogram
 
 This script will:
 1. Query the database for questions from the specified courses
-2. Extract widget configurations from structured_json
+2. Extract widget configurations from structured_json (filtered by widget types if --only is used)
 3. Generate test files in tests/widgets/*.extracted.test.ts
 4. Create snapshot tests using real production data
 `)
 		process.exit(0)
 	}
 
-	const courseIds = args
-	console.log("Starting test generation", { courseIds })
+	// Parse arguments to separate course IDs from --only flag
+	let courseIds: string[] = []
+	let onlyWidgetTypes: string[] | undefined
+
+	for (let i = 0; i < args.length; i++) {
+		const arg = args[i]
+		if (!arg) continue
+
+		if (arg === '--only') {
+			// Everything after --only are widget types
+			const remainingArgs = args.slice(i + 1)
+			onlyWidgetTypes = remainingArgs.filter((a): a is string => a !== undefined && a !== null)
+			break
+		} else if (!arg.startsWith('--')) {
+			// This is a course ID
+			courseIds.push(arg)
+		} else {
+			console.error(`Unknown option: ${arg}`)
+			process.exit(1)
+		}
+	}
+
+	if (courseIds.length === 0) {
+		console.error("Error: No course IDs provided")
+		process.exit(1)
+	}
+
+	console.log("Starting test generation", {
+		courseIds,
+		onlyWidgetTypes: onlyWidgetTypes || 'all'
+	})
 
 	try {
-		await generateWidgetTestsFromDatabase(courseIds)
+		await generateWidgetTestsFromDatabase(courseIds, onlyWidgetTypes)
 	} catch (error) {
 		console.error("Test generation failed", { error })
 		process.exit(1)
