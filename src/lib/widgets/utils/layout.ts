@@ -1,6 +1,12 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { estimateWrappedTextDimensions } from "@/lib/widgets/utils/text"
+import {
+	LABEL_AVG_CHAR_WIDTH_PX,
+	TICK_LABEL_FONT_PX,
+	X_AXIS_MIN_LABEL_PADDING_PX,
+	Y_AXIS_MIN_LABEL_GAP_PX,
+} from "@/lib/widgets/utils/constants"
 import type { Path2D } from "./path-builder"
 
 // NEW: 2D extents and finalized SVG types
@@ -528,107 +534,75 @@ export function calculateLineLegendLayout(
 }
 
 /**
- * Intelligent label selection based on actual text width rather than hardcoded spacing.
- * Provides uniform visual spacing and prevents cramped or overlapping labels.
- * @param labels - Array of label strings to potentially display
- * @param positions - Array of x-positions (in pixels) where labels would be placed
- * @param chartWidthPx - Available chart width for label placement
- * @param avgCharWidthPx - Average character width for text estimation (default: 8px)
- * @param paddingPx - Minimum padding between labels (default: 10px)
- * @returns Set of indices indicating which labels to display
+ * Selects a deterministic, non-overlapping subset of labels for an axis.
+ * This is the unified function for all numeric and categorical axes.
+ * It ensures visually uniform spacing by calculating a single `step` and applying it
+ * consistently across all candidate labels.
  */
-export function calculateTextAwareLabelSelection(
-	labels: string[],
-	positions: number[],
-	chartWidthPx: number,
-	avgCharWidthPx = 8,
-	paddingPx = 10
-): Set<number> {
-	if (labels.length === 0 || positions.length === 0) {
-		return new Set<number>()
-	}
+export function selectAxisLabels(inputs: {
+	labels: string[];
+	positions: number[];
+	axisLengthPx: number;
+	orientation: "horizontal" | "vertical";
+	fontPx: number;
+	minGapPx: number;
+	avgCharWidthPx?: number;
+}): Set<number> {
+	const { labels, positions, axisLengthPx, orientation, fontPx, minGapPx } = inputs;
+	const avgCharWidthPx = inputs.avgCharWidthPx ?? LABEL_AVG_CHAR_WIDTH_PX;
 
 	if (labels.length !== positions.length) {
-		logger.error("label and position arrays must have same length", {
-			labelsLength: labels.length,
-			positionsLength: positions.length
-		})
-		throw errors.new("label and position arrays must have same length")
+		logger.error("labels and positions arrays must have the same length", {
+			labels: labels.length,
+			positions: positions.length,
+		});
+		throw errors.new("mismatched input lengths for selectAxisLabels");
 	}
 
-	// Calculate estimated width for each label
-	const labelWidths = labels.map((label) => label.length * avgCharWidthPx)
+	const n = labels.length;
+	if (n === 0) {
+		return new Set();
+	}
 
-	// Find indices that have actual content (non-empty labels)
+	const sizesPx =
+		orientation === "horizontal"
+			? labels.map((label) => (label ? label.length * avgCharWidthPx : 0))
+			: labels.map(() => fontPx);
+
 	const nonEmptyIndices = labels
-		.map((label, i) => ({ index: i, hasContent: label.trim() !== "" }))
-		.filter((item) => item.hasContent)
-		.map((item) => item.index)
+		.map((_, i) => i)
+		.filter((i) => !!labels[i]);
 
 	if (nonEmptyIndices.length === 0) {
-		return new Set<number>()
+		return new Set();
 	}
 
-	// Check if all labels can fit without overlap
-	let allLabelsCanFit = true
-	for (let i = 1; i < nonEmptyIndices.length; i++) {
-		const currentIdx = nonEmptyIndices[i]
-		const prevIdx = nonEmptyIndices[i - 1]
+	const avgSize =
+		nonEmptyIndices.reduce((sum, i) => sum + (sizesPx[i] ?? 0), 0) / nonEmptyIndices.length;
 
-		if (currentIdx === undefined || prevIdx === undefined) continue
+	const maxLabelsThatCanFit = Math.floor(axisLengthPx / (avgSize + minGapPx));
 
-		const currentPos = positions[currentIdx]
-		const prevPos = positions[prevIdx]
-		const currentWidth = labelWidths[currentIdx]
-		const prevWidth = labelWidths[prevIdx]
+	if (nonEmptyIndices.length <= maxLabelsThatCanFit) {
+		return new Set(nonEmptyIndices);
+	}
 
-		if (currentPos === undefined || prevPos === undefined || currentWidth === undefined || prevWidth === undefined)
-			continue
-
-		// Calculate minimum spacing needed between these two labels
-		const prevRightEdge = prevPos + prevWidth / 2
-		const currentLeftEdge = currentPos - currentWidth / 2
-		const actualSpacing = currentLeftEdge - prevRightEdge
-
-		if (actualSpacing < paddingPx) {
-			allLabelsCanFit = false
-			break
+	const step = Math.ceil(nonEmptyIndices.length / maxLabelsThatCanFit);
+	const selected = new Set<number>();
+	for (let i = 0; i < nonEmptyIndices.length; i += step) {
+		const idx = nonEmptyIndices[i];
+		if (idx !== undefined) {
+			selected.add(idx);
 		}
 	}
 
-	if (allLabelsCanFit) {
-		// All labels fit with adequate spacing
-		return new Set(nonEmptyIndices)
-	}
-
-	// Labels would clash - use uniform intermittent pattern
-	// Calculate how many labels can reasonably fit
-	const maxLabelWidth = Math.max(...labelWidths)
-	const approximateLabelsPerChart = Math.floor(chartWidthPx / (maxLabelWidth + paddingPx))
-	const targetCount = Math.max(1, Math.min(approximateLabelsPerChart, nonEmptyIndices.length))
-
-	// Select uniform spacing from available labels
-	const step = Math.max(1, Math.ceil(nonEmptyIndices.length / targetCount))
-	const uniformIndices = nonEmptyIndices.filter((_, i) => i % step === 0)
-
-	return new Set(uniformIndices)
+	return selected;
 }
 
-/**
- * Determines which tick values should have labels to avoid intersection collisions.
- * Systematically skips the first negative value on both axes to create a label-free
- * zone around the coordinate plane intersection.
- * @param tickValues - Array of tick values for this axis
- * @param isXAxis - Whether this is the x-axis (affects collision logic)
- * @returns Set of indices indicating which ticks should have labels
- */
-// --- REMOVED: includeRotatedYAxisLabel (deprecated extent tracking function) ---
 
-export function calculateIntersectionAwareTicks(tickValues: number[], _isXAxis: boolean): Set<number> {
-	const labeledIndices = new Set<number>()
-	for (let i = 0; i < tickValues.length; i++) {
-		if (tickValues[i] === undefined) continue
-		labeledIndices.add(i)
-	}
-	return labeledIndices
-}
+
+
+
+
+
+
+

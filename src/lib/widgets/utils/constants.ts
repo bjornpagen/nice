@@ -26,3 +26,7 @@ export const CHART_TITLE_FONT_PX = 18
 export const AXIS_TITLE_FONT_PX = 16
 export const TICK_LABEL_FONT_PX = 12
 export const LABEL_AVG_CHAR_WIDTH_PX = 7
+
+// New constants for numeric axis label thinning
+export const X_AXIS_MIN_LABEL_PADDING_PX = 10
+export const Y_AXIS_MIN_LABEL_GAP_PX = 4

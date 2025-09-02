@@ -5,7 +5,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { calculateTextAwareLabelSelection } from "@/lib/widgets/utils/layout"
+import { selectAxisLabels } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 import { buildTicks } from "@/lib/widgets/utils/ticks"
 
@@ -72,7 +72,14 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	// Ticks and labels with text-aware selection
 	const { values, labels: tickLabels } = buildTicks(min, max, tickInterval)
 	const tickPositions = values.map(toSvgX)
-	const selectedLabels = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartWidth, 8, 5)
+	const selectedLabels = selectAxisLabels({
+		labels: tickLabels,
+		positions: tickPositions,
+		axisLengthPx: chartWidth,
+		orientation: "horizontal",
+		fontPx: 12,
+		minGapPx: 5,
+	})
 
 	values.forEach((t, i) => {
 		const x = toSvgX(t)

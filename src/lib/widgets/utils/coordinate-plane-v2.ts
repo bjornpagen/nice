@@ -1,6 +1,12 @@
-import { PADDING, TICK_LABEL_FONT_PX } from "@/lib/widgets/utils/constants"
+import {
+	PADDING,
+	TICK_LABEL_FONT_PX,
+	LABEL_AVG_CHAR_WIDTH_PX,
+	X_AXIS_MIN_LABEL_PADDING_PX,
+	Y_AXIS_MIN_LABEL_GAP_PX,
+} from "@/lib/widgets/utils/constants"
 import type { Canvas } from "@/lib/widgets/utils/layout"
-import { calculateIntersectionAwareTicks } from "@/lib/widgets/utils/layout"
+import { selectAxisLabels } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 import { abbreviateMonth } from "./labels"
 import { buildTicks } from "./ticks"
@@ -93,8 +99,17 @@ export function setupCoordinatePlaneV2(
 	canvas.drawLine(zeroX, margin.top, zeroX, height - margin.bottom, { stroke: theme.colors.axis, strokeWidth: 1.5 })
 
 	// X-axis ticks and labels
-	const { values: xValues, labels: xLabels } = buildTicks(xAxis.min, xAxis.max, xAxis.tickInterval)
-	const selectedXTicks = calculateIntersectionAwareTicks(xValues, true)
+	const { values: xValues, labels: xLabels } = buildTicks(xAxis.min, xAxis.max, xAxis.tickInterval);
+	const xTickPositions = xValues.map(toSvgX);
+
+	const selectedXTicks = selectAxisLabels({
+		labels: xLabels,
+		positions: xTickPositions,
+		axisLengthPx: chartWidth,
+		orientation: "horizontal",
+		fontPx: TICK_LABEL_FONT_PX,
+		minGapPx: X_AXIS_MIN_LABEL_PADDING_PX,
+	});
 	xValues.forEach((t, i) => {
 		if (Math.abs(t) < 1e-9) return // Skip origin
 		const x = toSvgX(t)
@@ -113,8 +128,17 @@ export function setupCoordinatePlaneV2(
 	})
 
 	// Y-axis ticks and labels
-	const { values: yValues, labels: yLabels } = buildTicks(yAxis.min, yAxis.max, yAxis.tickInterval)
-	const selectedYTicks = calculateIntersectionAwareTicks(yValues, false)
+	const { values: yValues, labels: yLabels } = buildTicks(yAxis.min, yAxis.max, yAxis.tickInterval);
+	const yTickPositions = yValues.map(toSvgY);
+
+	const selectedYTicks = selectAxisLabels({
+		labels: yLabels,
+		positions: yTickPositions,
+		axisLengthPx: chartHeight,
+		orientation: "vertical",
+		fontPx: TICK_LABEL_FONT_PX,
+		minGapPx: Y_AXIS_MIN_LABEL_GAP_PX,
+	});
 	yValues.forEach((t, i) => {
 		if (Math.abs(t) < 1e-9) return // Skip origin
 		const y = toSvgY(t)

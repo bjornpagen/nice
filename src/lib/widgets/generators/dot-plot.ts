@@ -6,7 +6,7 @@ import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { calculateTextAwareLabelSelection, calculateXAxisLayout } from "@/lib/widgets/utils/layout"
+import { selectAxisLabels, calculateXAxisLayout } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 import { buildTicks } from "@/lib/widgets/utils/ticks"
 
@@ -156,7 +156,14 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	// Draw tick marks and labels
 	const { values, labels: tickLabels } = buildTicks(axis.min, axis.max, axis.tickInterval)
 	const tickPositions = values.map(toSvgX)
-	const selectedLabels = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartWidth, 10, 18)
+	const selectedLabels = selectAxisLabels({
+		labels: tickLabels,
+		positions: tickPositions,
+		axisLengthPx: chartWidth,
+		orientation: "horizontal",
+		fontPx: 12,
+		minGapPx: 18,
+	})
 
 	values.forEach((t, i) => {
 		const pos = toSvgX(t)

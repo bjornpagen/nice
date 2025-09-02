@@ -6,7 +6,7 @@ import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { calculateTextAwareLabelSelection, calculateXAxisLayout } from "@/lib/widgets/utils/layout"
+import { selectAxisLabels, calculateXAxisLayout } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidRange = errors.new("axis min must be less than axis max")
@@ -172,7 +172,14 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 	// Add text-aware label selection
 	// Draw tick marks and labels
 	const tickPositions = axis.tickLabels.map(toSvgX)
-	const selectedLabels = calculateTextAwareLabelSelection(axis.tickLabels.map(String), tickPositions, chartWidth)
+	const selectedLabels = selectAxisLabels({
+		labels: axis.tickLabels.map(String),
+		positions: tickPositions,
+		axisLengthPx: chartWidth,
+		orientation: "horizontal",
+		fontPx: 12,
+		minGapPx: 10,
+	})
 
 	axis.tickLabels.forEach((t, i) => {
 		const pos = toSvgX(t)

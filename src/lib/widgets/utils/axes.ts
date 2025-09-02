@@ -9,12 +9,13 @@ import {
 	TICK_LABEL_FONT_PX,
 	TICK_LABEL_PADDING_PX,
 	TICK_LENGTH_PX,
-	X_AXIS_TITLE_PADDING_PX
+	X_AXIS_TITLE_PADDING_PX,
+	X_AXIS_MIN_LABEL_PADDING_PX,
+	Y_AXIS_MIN_LABEL_GAP_PX,
 } from "@/lib/widgets/utils/constants"
 import {
 	type Canvas,
-	calculateIntersectionAwareTicks,
-	calculateTextAwareLabelSelection
+	selectAxisLabels
 } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 import { buildTicks } from "@/lib/widgets/utils/ticks"
@@ -159,7 +160,16 @@ export function computeAndRenderYAxis(
 		}
 	} else {
 		const { values, labels } = buildTicks(spec.domain.min, spec.domain.max, spec.tickInterval)
-		const selected = calculateIntersectionAwareTicks(values, false)
+		const tickPositions = values.map(toSvgYNumeric)
+
+		const selected = selectAxisLabels({
+			labels,
+			positions: tickPositions,
+			axisLengthPx: chartArea.height,
+			orientation: "vertical",
+			fontPx: TICK_LABEL_FONT_PX,
+			minGapPx: Y_AXIS_MIN_LABEL_GAP_PX,
+		})
 
 		values.forEach((t, i) => {
 			const y = toSvgYNumeric(t)
@@ -283,79 +293,62 @@ export function computeAndRenderXAxis(
 		}
 	}
 
+	let tickLabels: string[];
+	let tickPositions: number[];
+	let tickValues: number[] | undefined;
+
 	switch (spec.xScaleType) {
 		case "categoryBand":
 		case "categoryPoint": {
-			const tickPositions: number[] = []
-			const tickLabels: string[] = []
-			for (let i = 0; i < spec.categories.length; i++) {
-				const x = toSvgX(i)
-				tickPositions.push(x)
-				tickLabels.push(spec.categories[i] as string)
-			}
-			const selected = calculateTextAwareLabelSelection(
-				tickLabels,
-				tickPositions,
-				chartArea.width,
-				LABEL_AVG_CHAR_WIDTH_PX
-			)
-			for (let i = 0; i < tickPositions.length; i++) {
-				const x = tickPositions[i] as number
-				canvas.drawLine(x, axisY, x, axisY + tickLength, {
-					stroke: theme.colors.axis,
-					strokeWidth: AXIS_STROKE_WIDTH_PX
-				})
-				if (spec.showTickLabels && selected.has(i)) {
-					const label = tickLabels[i] as string
-					canvas.drawText({
-						x: x,
-						y: axisY + tickLength + TICK_LABEL_PADDING_PX,
-						text: label,
-						anchor: "middle",
-						dominantBaseline: "hanging",
-						fontPx: TICK_LABEL_FONT_PX,
-						fill: theme.colors.axisLabel
-					})
-				}
-			}
-			break
+			tickLabels = spec.categories;
+			tickPositions = spec.categories.map((_, i) => toSvgX(i));
+			break;
 		}
 		case "numeric": {
-			const { values, labels } = buildTicks(spec.domain.min, spec.domain.max, spec.tickInterval)
-			const selected = calculateIntersectionAwareTicks(values, true)
-			for (let i = 0; i < values.length; i++) {
-				const t = values[i]
-				if (t === undefined) continue
+			const { values, labels } = buildTicks(spec.domain.min, spec.domain.max, spec.tickInterval);
+			tickLabels = labels;
+			tickPositions = values.map(toSvgX);
+			tickValues = values;
+			break;
+		}
+	}
 
-				const x = toSvgX(t)
-				// Draw the tick mark (length may be 0 if disabled)
-				canvas.drawLine(x, axisY, x, axisY + tickLength, {
-					stroke: theme.colors.axis,
-					strokeWidth: AXIS_STROKE_WIDTH_PX
-				})
+	const selected = selectAxisLabels({
+		labels: tickLabels,
+		positions: tickPositions,
+		axisLengthPx: chartArea.width,
+		orientation: "horizontal",
+		fontPx: TICK_LABEL_FONT_PX,
+		minGapPx: X_AXIS_MIN_LABEL_PADDING_PX,
+		avgCharWidthPx: LABEL_AVG_CHAR_WIDTH_PX,
+	});
 
-				if (spec.showTickLabels && selected.has(i)) {
-					const label = spec.labelFormatter ? spec.labelFormatter(t) : labels[i]!
-					canvas.drawText({
-						x: x,
-						y: axisY + tickLength + TICK_LABEL_PADDING_PX,
-						text: label,
-						anchor: "middle",
-						dominantBaseline: "hanging",
-						fontPx: TICK_LABEL_FONT_PX,
-						fill: theme.colors.axisLabel
-					})
-				}
-
-				// Always render vertical gridlines for all ticks when enabled, including at x = 0
-				if (spec.showGridLines) {
-					canvas.drawLine(x, chartArea.top, x, chartArea.top + chartArea.height, {
-						stroke: theme.colors.gridMajor,
-						strokeWidth: GRID_STROKE_WIDTH_PX
-					})
-				}
-			}
-			break
+	for (let i = 0; i < tickPositions.length; i++) {
+		const x = tickPositions[i]!;
+		canvas.drawLine(x, axisY, x, axisY + tickLength, {
+			stroke: theme.colors.axis,
+			strokeWidth: AXIS_STROKE_WIDTH_PX,
+		});
+		if (spec.showTickLabels && selected.has(i)) {
+			const label = spec.xScaleType === "numeric" && spec.labelFormatter && tickValues
+				? spec.labelFormatter(tickValues[i]!)
+				: tickLabels[i]!;
+			canvas.drawText({
+				x: x,
+				y: axisY + tickLength + TICK_LABEL_PADDING_PX,
+				text: label,
+				anchor: "middle",
+				dominantBaseline: "hanging",
+				fontPx: TICK_LABEL_FONT_PX,
+				fill: theme.colors.axisLabel,
+			});
+		}
+		// Gridline logic for numeric axes only
+		if (spec.xScaleType === "numeric" && spec.showGridLines) {
+			canvas.drawLine(x, chartArea.top, x, chartArea.top + chartArea.height, {
+				stroke: theme.colors.gridMajor,
+				strokeWidth: GRID_STROKE_WIDTH_PX,
+			});
 		}
 	}
 
