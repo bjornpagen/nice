@@ -1,4 +1,4 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`partitioned-shape - Percents from fraction models 1`] = `"<svg width="195" height="103" viewBox="-21 -21 195 103" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="30.8" height="62" fill="#01a995" stroke="#e0e0e0" stroke-width="1" fill-opacity="1"/><rect x="30.8" y="0" width="30.8" height="62" fill="#01a995" stroke="#e0e0e0" stroke-width="1" fill-opacity="1"/><rect x="61.6" y="0" width="30.8" height="62" fill="#01a995" stroke="#e0e0e0" stroke-width="1" fill-opacity="1"/><rect x="92.4" y="0" width="30.8" height="62" fill="#01a995" stroke="#e0e0e0" stroke-width="1" fill-opacity="1"/><rect x="123.2" y="0" width="30.8" height="62" fill="#01a995" stroke="#e0e0e0" stroke-width="1" fill-opacity="1"/></svg>"`;
 
