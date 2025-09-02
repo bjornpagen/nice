@@ -12,6 +12,7 @@ import {
 	fixMathMLOperators,
 	stripXmlComments
 } from "@/lib/qti-generation/xml-fixes"
+import { resolveRelativeLinksToCanonicalDomain } from "@/lib/qti-generation/link-resolver"
 
 const OPENAI_MODEL = "gpt-5"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
@@ -107,7 +108,9 @@ export async function generateXmlForStimulus(
 	cleanedXml = fixInequalityOperators(cleanedXml, logger)
 	cleanedXml = fixKhanGraphieUrls(cleanedXml, logger)
 
-	return extractAndValidateXml(cleanedXml, "qti-assessment-stimulus", logger)
+	const extracted = extractAndValidateXml(cleanedXml, "qti-assessment-stimulus", logger)
+	const withCanonicalLinks = await resolveRelativeLinksToCanonicalDomain(extracted, logger)
+	return withCanonicalLinks
 }
 
 /**
@@ -422,6 +425,10 @@ Perseus uses special notation like [[☃ widget-name 1]] for interactive widgets
     - \`&amp;\` for ampersand (&) when it appears in content
     - \`&quot;\` for double quote (") when it appears in content or attribute values
     - \`&apos;\` for single quote/apostrophe (') when it appears in content or attribute values
+
+6. **WORKS-CITED LISTS MUST BE ORDERED:** Works-cited lists MUST use ordered lists (\`<ol>\`), never unordered lists (\`<ul>\`).
+
+7. **ABSOLUTE LINKS ONLY:** All links MUST be absolute HTTPS URLs. Convert any relative paths (e.g., "/science/...") to \`https://nice.academy/...\`.
 
 ---
 ### ABSOLUTE XML RULES - NON-NEGOTIABLE ###
