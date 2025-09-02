@@ -8,7 +8,7 @@ import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import { calculateTextAwareLabelSelection, calculateXAxisLayout } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
-import { buildTicks, formatTickInt } from "@/lib/widgets/utils/ticks"
+import { buildTicks } from "@/lib/widgets/utils/ticks"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
 
@@ -154,9 +154,8 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	}
 
 	// Draw tick marks and labels
-	const { values, ints, scale: tickScale } = buildTicks(axis.min, axis.max, axis.tickInterval)
+	const { values, labels: tickLabels } = buildTicks(axis.min, axis.max, axis.tickInterval)
 	const tickPositions = values.map(toSvgX)
-	const tickLabels = ints.map((vI) => formatTickInt(vI, tickScale))
 	const selectedLabels = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartWidth, 10, 18)
 
 	values.forEach((t, i) => {

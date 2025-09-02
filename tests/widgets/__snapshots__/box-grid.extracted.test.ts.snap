@@ -1,7 +1,7 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`box-grid - Creating frequency tables 1`] = `
-"<svg width="241.5" height="161.5" viewBox="-20.75 -20.75 241.5 161.5" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><defs><style>
+"<svg width="242" height="162" viewBox="-21 -21 242 162" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><defs><style>
         .cell-text {
             font-size: 14px;
             text-anchor: middle;
@@ -11,7 +11,7 @@ exports[`box-grid - Creating frequency tables 1`] = `
 `;
 
 exports[`box-grid - Creating frequency tables 2`] = `
-"<svg width="201.5" height="201.5" viewBox="-20.75 -20.75 201.5 201.5" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><defs><style>
+"<svg width="202" height="202" viewBox="-21 -21 202 202" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><defs><style>
         .cell-text {
             font-size: 14px;
             text-anchor: middle;
@@ -21,7 +21,7 @@ exports[`box-grid - Creating frequency tables 2`] = `
 `;
 
 exports[`box-grid - Creating frequency tables 3`] = `
-"<svg width="201.5" height="201.5" viewBox="-20.75 -20.75 201.5 201.5" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><defs><style>
+"<svg width="202" height="202" viewBox="-21 -21 202 202" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><defs><style>
         .cell-text {
             font-size: 14px;
             text-anchor: middle;
@@ -31,7 +31,7 @@ exports[`box-grid - Creating frequency tables 3`] = `
 `;
 
 exports[`box-grid - Creating frequency tables 4`] = `
-"<svg width="241.5" height="241.5" viewBox="-20.75 -20.75 241.5 241.5" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><defs><style>
+"<svg width="242" height="242" viewBox="-21 -21 242 242" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><defs><style>
         .cell-text {
             font-size: 14px;
             text-anchor: middle;
@@ -41,7 +41,7 @@ exports[`box-grid - Creating frequency tables 4`] = `
 `;
 
 exports[`box-grid - Creating frequency tables 5`] = `
-"<svg width="241.5" height="161.5" viewBox="-20.75 -20.75 241.5 161.5" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><defs><style>
+"<svg width="242" height="162" viewBox="-21 -21 242 162" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><defs><style>
         .cell-text {
             font-size: 14px;
             text-anchor: middle;

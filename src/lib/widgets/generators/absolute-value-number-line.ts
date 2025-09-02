@@ -7,7 +7,7 @@ import { PADDING } from "@/lib/widgets/utils/constants"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { calculateTextAwareLabelSelection } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
-import { buildTicks, formatTickInt } from "@/lib/widgets/utils/ticks"
+import { buildTicks } from "@/lib/widgets/utils/ticks"
 
 export const ErrInvalidRange = errors.new("min must be less than max")
 
@@ -70,9 +70,8 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	})
 
 	// Ticks and labels with text-aware selection
-	const { values, ints, scale: tickScale } = buildTicks(min, max, tickInterval)
+	const { values, labels: tickLabels } = buildTicks(min, max, tickInterval)
 	const tickPositions = values.map(toSvgX)
-	const tickLabels = ints.map((vI) => formatTickInt(vI, tickScale))
 	const selectedLabels = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartWidth, 8, 5)
 
 	values.forEach((t, i) => {

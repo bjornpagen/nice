@@ -17,7 +17,7 @@ import {
 	calculateTextAwareLabelSelection
 } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
-import { buildTicks, formatTickInt } from "@/lib/widgets/utils/ticks"
+import { buildTicks } from "@/lib/widgets/utils/ticks"
 
 export const ErrInvalidAxisDomain = errors.new("axis domain min must be less than max")
 export const ErrInvalidTickInterval = errors.new("axis tick interval must be positive")
@@ -158,12 +158,10 @@ export function computeAndRenderYAxis(
 			}
 		}
 	} else {
-		const { values, ints, scale } = buildTicks(spec.domain.min, spec.domain.max, spec.tickInterval)
+		const { values, labels } = buildTicks(spec.domain.min, spec.domain.max, spec.tickInterval)
 		const selected = calculateIntersectionAwareTicks(values, false)
 
 		values.forEach((t, i) => {
-			const vI = ints[i]
-			if (vI === undefined) return
 			const y = toSvgYNumeric(t)
 			// Draw the tick mark (length may be 0 if disabled)
 			canvas.drawLine(axisX - tickLength, y, axisX, y, {
@@ -172,7 +170,7 @@ export function computeAndRenderYAxis(
 			})
 
 			if (spec.showTickLabels && selected.has(i)) {
-				const label = spec.labelFormatter ? spec.labelFormatter(t) : formatTickInt(vI, scale)
+				const label = spec.labelFormatter ? spec.labelFormatter(t) : labels[i]!
 				canvas.drawText({
 					x: axisX - TICK_LABEL_PADDING_PX,
 					y: y + 4,
@@ -323,12 +321,11 @@ export function computeAndRenderXAxis(
 			break
 		}
 		case "numeric": {
-			const { values, ints, scale } = buildTicks(spec.domain.min, spec.domain.max, spec.tickInterval)
+			const { values, labels } = buildTicks(spec.domain.min, spec.domain.max, spec.tickInterval)
 			const selected = calculateIntersectionAwareTicks(values, true)
 			for (let i = 0; i < values.length; i++) {
 				const t = values[i]
-				const vI = ints[i]
-				if (t === undefined || vI === undefined) continue
+				if (t === undefined) continue
 
 				const x = toSvgX(t)
 				// Draw the tick mark (length may be 0 if disabled)
@@ -338,7 +335,7 @@ export function computeAndRenderXAxis(
 				})
 
 				if (spec.showTickLabels && selected.has(i)) {
-					const label = spec.labelFormatter ? spec.labelFormatter(t) : formatTickInt(vI, scale)
+					const label = spec.labelFormatter ? spec.labelFormatter(t) : labels[i]!
 					canvas.drawText({
 						x: x,
 						y: axisY + tickLength + TICK_LABEL_PADDING_PX,
@@ -351,7 +348,7 @@ export function computeAndRenderXAxis(
 				}
 
 				// Suppress gridline at 0 only if it would overdraw the main axis, but never the tick/label
-				const isZeroOverlappingAxis = vI === 0
+				const isZeroOverlappingAxis = Math.abs(t) < 1e-9
 				if (spec.showGridLines && !isZeroOverlappingAxis) {
 					canvas.drawLine(x, chartArea.top, x, chartArea.top + chartArea.height, {
 						stroke: theme.colors.gridMajor,

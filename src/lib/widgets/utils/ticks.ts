@@ -1,6 +1,79 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
+const ErrUnsupportedInterval = errors.new("unsupported non-terminating tick interval")
+const MAX_TICKS = 10_000
+
+const EPSILON = 1e-12
+
+/**
+ * Checks if a number has a finite decimal representation within a given precision.
+ */
+function isFiniteDecimal(n: number, maxDigits = 12): boolean {
+	if (!Number.isFinite(n)) return false
+	let scaled = n
+	for (let i = 0; i < maxDigits; i++) {
+		if (Math.abs(scaled - Math.round(scaled)) < EPSILON) {
+			return true
+		}
+		scaled *= 10
+	}
+	return Math.abs(scaled - Math.round(scaled)) < EPSILON
+}
+
+/**
+ * Checks if an interval is a multiple of a base fraction (e.g., 1/3 or 1/6).
+ * @returns The integer multiplier `k` if it is a multiple, otherwise null.
+ */
+function isMultipleOf(interval: number, baseDenominator: 3 | 6): number | null {
+	const ratio = interval * baseDenominator
+	const k = Math.round(ratio)
+	if (Math.abs(ratio - k) < EPSILON && k !== 0) {
+		return k
+	}
+	return null
+}
+
+/**
+ * Converts a number to a BigInt in a scaled integer space and validates grid alignment.
+ */
+function toGridInt(n: number, D: bigint): bigint {
+	const scaled = n * Number(D)
+	const rounded = Math.round(scaled)
+	if (Math.abs(scaled - rounded) > EPSILON) {
+		logger.error("value is not aligned to the tick grid", { n, D })
+		throw errors.new(`value ${n} is not aligned to the tick grid`)
+	}
+	return BigInt(rounded)
+}
+
+/**
+ * Formats a rational number (numerator/denominator) into a decimal string with limited precision.
+ */
+function formatRational(p: bigint, D: bigint, maxDigits = 12): string {
+	if (D === 0n) throw errors.new("denominator cannot be zero")
+	if (p === 0n) return "0"
+
+	const sign = p < 0n ? "-" : ""
+	const absP = p < 0n ? -p : p
+
+	const integerPart = absP / D
+	let remainder = absP % D
+
+	if (remainder === 0n) {
+		return `${sign}${integerPart}`
+	}
+
+	let fractionalPart = ""
+	for (let i = 0; i < maxDigits && remainder !== 0n; i++) {
+		remainder *= 10n
+		fractionalPart += String(remainder / D)
+		remainder %= D
+	}
+
+	return `${sign}${integerPart}.${fractionalPart.replace(/0+$/, "")}`
+}
+
 /**
  * Computes a decimal scale factor (power of 10) sufficient to represent all input numbers as integers.
  * Handles scientific notation and fractional parts.
@@ -34,60 +107,83 @@ export function ceilDiv(a: number, b: number): number {
 	return Math.ceil(a / b)
 }
 
-export type TickInfo = {
-	values: number[] // Floating-point values for plotting
-	ints: number[] // Integer-space values for logic
-	scale: number // The common scale factor used
-}
-
 /**
  * Generates ticks by performing calculations in a scaled integer space to avoid floating-point drift.
+ * Now supports exact rational intervals for multiples of 1/3 and 1/6.
  */
-export function buildTicks(min: number, max: number, interval: number): TickInfo {
-	if (min > max) {
-		logger.error("invalid tick parameters: min > max", { min, max, interval })
-		throw errors.new("invalid tick parameters: min cannot be greater than max")
-	}
-	if (interval <= 0) {
-		logger.error("invalid tick parameters: interval <= 0", { min, max, interval })
-		throw errors.new("invalid tick parameters: interval must be positive")
-	}
-
-	const scale = computeDecimalScale(min, max, interval)
-	const minI = Math.round(min * scale)
-	const maxI = Math.round(max * scale)
-	const stepI = Math.round(interval * scale)
-
-	if (stepI <= 0) {
-		logger.error("invalid tick parameters: scaled interval is non-positive", { min, max, interval, stepI })
-		throw errors.new("invalid tick parameters: interval is too small relative to precision")
-	}
-	if (
-		minI > Number.MAX_SAFE_INTEGER ||
-		maxI > Number.MAX_SAFE_INTEGER ||
-		stepI > Number.MAX_SAFE_INTEGER
-	) {
-		logger.error("scaled tick values exceed MAX_SAFE_INTEGER", { min, max, interval })
-		throw errors.new("tick generation failed due to precision overflow")
+export function buildTicks(
+	min: number,
+	max: number,
+	interval: number
+): { values: number[]; labels: string[] } {
+	if (min > max || interval <= 0) {
+		logger.error("invalid tick parameters", { min, max, interval })
+		return { values: [], labels: [] }
 	}
 
-	const startI = ceilDiv(minI, stepI) * stepI
-	const ints: number[] = []
-	const values: number[] = []
+	// PATH 1: Finite Decimal Intervals (existing logic)
+	if (isFiniteDecimal(interval)) {
+		const scale = computeDecimalScale(min, max, interval)
+		const minI = Math.round(min * scale)
+		const maxI = Math.round(max * scale)
+		const stepI = Math.round(interval * scale)
 
-	for (let vI = startI; vI <= maxI; vI += stepI) {
-		ints.push(vI)
-		values.push(vI / scale)
+		if (stepI === 0) return { values: [], labels: [] }
+
+		const startI = ceilDiv(minI, stepI) * stepI
+		const values: number[] = []
+		const labels: string[] = []
+
+		for (let vI = startI; vI <= maxI && values.length < MAX_TICKS; vI += stepI) {
+			values.push(vI / scale)
+			labels.push(formatTickInt(vI, scale))
+		}
+		return { values, labels }
 	}
 
-	return { ints, values, scale }
+	// PATH 2: Exact Rational Intervals (1/3 and 1/6)
+	const k3 = isMultipleOf(interval, 3)
+	const k6 = isMultipleOf(interval, 6)
+
+	if (k3 !== null || k6 !== null) {
+		const baseDenominator = k6 !== null ? 6 : 3
+		const k = k6 !== null ? k6 : k3!
+
+		const decimalScaleForMinMax = 10 ** Math.max(
+			(String(min).split('.')[1] || '').length,
+			(String(max).split('.')[1] || '').length
+		);
+		const D = BigInt(baseDenominator * decimalScaleForMinMax)
+
+		const minBI = toGridInt(min, D)
+		const maxBI = toGridInt(max, D)
+		const stepBI = BigInt(k * decimalScaleForMinMax);
+
+		if (stepBI === 0n) return { values: [], labels: [] }
+
+		const startBI = (minBI + stepBI - 1n) / stepBI * stepBI
+
+		const values: number[] = []
+		const labels: string[] = []
+
+		for (let vBI = startBI; vBI <= maxBI && values.length < MAX_TICKS; vBI += stepBI) {
+			values.push(Number(vBI) / Number(D))
+			labels.push(formatRational(vBI, D))
+		}
+		return { values, labels }
+	}
+
+	// PATH 3: Unsupported non-terminating interval
+	logger.error("unsupported non-terminating tick interval", { interval })
+	throw errors.wrap(ErrUnsupportedInterval, `interval: ${interval}`)
 }
 
 /**
  * Formats a scaled integer tick value into a clean string representation.
  * Avoids floating point tails and ensures no "-0".
+ * Kept as internal helper for finite-decimal path.
  */
-export function formatTickInt(vI: number, scale: number): string {
+function formatTickInt(vI: number, scale: number): string {
 	if (vI === 0) return "0"
 
 	const sign = vI < 0 ? "-" : ""

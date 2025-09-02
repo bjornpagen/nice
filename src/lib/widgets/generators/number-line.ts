@@ -4,7 +4,7 @@ import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
-import { buildTicks, formatTickInt } from "@/lib/widgets/utils/ticks"
+import { buildTicks } from "@/lib/widgets/utils/ticks"
 
 const Point = z
 	.object({
@@ -134,15 +134,13 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 			strokeWidth: theme.stroke.width.thick
 		})
 		const minorTickInterval = majorTickInterval / (minorTicksPerInterval + 1)
-		const { values, ints, scale: tickScale } = buildTicks(min, max, minorTickInterval)
+		const { values, labels } = buildTicks(min, max, minorTickInterval)
 		const specialLabelsMap = new Map(specialTickLabels.map((stl) => [stl.value, stl.label]))
 
 		values.forEach((t, i) => {
-			const vI = ints[i]
-			if (vI === undefined) return
-
 			const x = toSvgX(t)
-			const isMajor = (vI * (minorTickInterval * tickScale)) % (majorTickInterval * tickScale) < 1e-9
+			// Determine if this is a major tick by checking if tick value modulo major interval is close to zero
+			const isMajor = Math.abs((t - min) % majorTickInterval) < 1e-9 || Math.abs(t % majorTickInterval) < 1e-9
 
 			const tickHeight = isMajor ? 8 : 4
 			canvas.drawLine(x, yPos - tickHeight, x, yPos + tickHeight, {
@@ -155,7 +153,7 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 				if (specialLabel) {
 					canvas.drawText({ x, y: yPos + 25, text: specialLabel, anchor: "middle", fill: theme.colors.axisLabel, fontWeight: theme.font.weight.bold })
 				} else {
-					canvas.drawText({ x, y: yPos + 25, text: formatTickInt(vI, tickScale), anchor: "middle", fill: theme.colors.axisLabel })
+					canvas.drawText({ x, y: yPos + 25, text: labels[i]!, anchor: "middle", fill: theme.colors.axisLabel })
 				}
 			}
 		})
@@ -224,15 +222,13 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 			strokeWidth: theme.stroke.width.base
 		})
 		const minorTickInterval = majorTickInterval / (minorTicksPerInterval + 1)
-		const { values, ints, scale: tickScale } = buildTicks(min, max, minorTickInterval)
+		const { values, labels } = buildTicks(min, max, minorTickInterval)
 		const specialLabelsMap = new Map(specialTickLabels.map((stl) => [stl.value, stl.label]))
 
 		values.forEach((t, i) => {
-			const vI = ints[i]
-			if (vI === undefined) return
-
 			const y = toSvgY(t)
-			const isMajor = (vI * (minorTickInterval * tickScale)) % (majorTickInterval * tickScale) < 1e-9
+			// Determine if this is a major tick by checking if tick value modulo major interval is close to zero
+			const isMajor = Math.abs((t - min) % majorTickInterval) < 1e-9 || Math.abs(t % majorTickInterval) < 1e-9
 			const tickWidth = isMajor ? 8 : 4
 			canvas.drawLine(xPos - tickWidth, y, xPos + tickWidth, y, {
 				stroke: theme.colors.axis,
@@ -245,7 +241,7 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 				if (specialLabel) {
 					canvas.drawText({ x: labelX, y: y + 4, text: specialLabel, anchor: "end", fill: theme.colors.axisLabel, fontWeight: theme.font.weight.bold })
 				} else {
-					canvas.drawText({ x: labelX, y: y + 4, text: formatTickInt(vI, tickScale), anchor: "end", fill: theme.colors.axisLabel })
+					canvas.drawText({ x: labelX, y: y + 4, text: labels[i]!, anchor: "end", fill: theme.colors.axisLabel })
 				}
 			}
 		})

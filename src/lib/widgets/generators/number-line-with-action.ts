@@ -4,7 +4,7 @@ import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
-import { buildTicks, formatTickInt } from "@/lib/widgets/utils/ticks"
+import { buildTicks } from "@/lib/widgets/utils/ticks"
 
 const Label = z
 	.object({
@@ -129,13 +129,10 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			strokeWidth: theme.stroke.width.thick
 		})
 
-		const { values, ints, scale } = buildTicks(min, max, tickInterval)
+		const { values, labels: tickLabels } = buildTicks(min, max, tickInterval)
 		const customLabelsMap = new Map(customLabels.map(l => [l.value, l.text]))
 
 		values.forEach((t, i) => {
-			const vI = ints[i]
-			if (vI === undefined) return
-
 			const x = toSvgX(t)
 			canvas.drawLine(x, yPos - 5, x, yPos + 5, {
 				stroke: theme.colors.axis,
@@ -146,7 +143,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			if (customLabel) {
 				canvas.drawText({ x: x, y: yPos + 20, text: customLabel, fill: theme.colors.axis, anchor: "middle", fontWeight: theme.font.weight.bold })
 			} else {
-				canvas.drawText({ x: x, y: yPos + 20, text: formatTickInt(vI, scale), fill: theme.colors.axis, anchor: "middle", fontPx: theme.font.size.small })
+				canvas.drawText({ x: x, y: yPos + 20, text: tickLabels[i]!, fill: theme.colors.axis, anchor: "middle", fontPx: theme.font.size.small })
 			}
 		})
 
@@ -228,13 +225,10 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			strokeWidth: theme.stroke.width.thick
 		})
 
-		const { values, ints, scale } = buildTicks(min, max, tickInterval)
+		const { values, labels: tickLabels } = buildTicks(min, max, tickInterval)
 		const customLabelsMap = new Map(customLabels.map(l => [l.value, l.text]))
 
 		values.forEach((t, i) => {
-			const vI = ints[i]
-			if (vI === undefined) return
-
 			const y = toSvgY(t)
 			canvas.drawLine(xPos - 5, y, xPos + 5, y, {
 				stroke: theme.colors.axis,
@@ -246,7 +240,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			if (customLabel) {
 				canvas.drawText({ x: labelX, y: y + 4, text: customLabel, fill: theme.colors.axis, anchor: "end", fontWeight: theme.font.weight.bold })
 			} else {
-				canvas.drawText({ x: labelX, y: y + 4, text: formatTickInt(vI, scale), fill: theme.colors.axis, anchor: "end", fontPx: theme.font.size.small })
+				canvas.drawText({ x: labelX, y: y + 4, text: tickLabels[i]!, fill: theme.colors.axis, anchor: "end", fontPx: theme.font.size.small })
 			}
 		})
 
