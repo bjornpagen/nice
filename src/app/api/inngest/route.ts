@@ -52,6 +52,7 @@ import { testPerseusTextarea } from "@/inngest/functions/qa/test-perseus-textare
 // ✅ ADD: Import the new batch differentiation and assembly functions
 import { assembleDifferentiatedItemsAndCreateTests } from "@/inngest/functions/qti/assemble-differentiated-items-and-create-tests"
 import { backfillItemsAndStimuli } from "@/inngest/functions/qti/backfill-items-and-stimuli"
+import { backfillStimuliOnly } from "@/inngest/functions/qti/backfill-stimuli"
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
 import { convertPerseusQuestionToDifferentiatedQtiItems } from "@/inngest/functions/qti/convert-perseus-question-to-differentiated-qti-items"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
@@ -115,6 +116,7 @@ export const { GET, POST, PUT } = serve({
 		// QTI Functions
 		clearAllAssessmentItemData,
 		backfillItemsAndStimuli,
+		backfillStimuliOnly,
 		convertPerseusArticleToQtiStimulus,
 		convertPerseusQuestionToQtiItem,
 		convertPerseusQuestionToDifferentiatedQtiItems,

@@ -113,6 +113,10 @@ const events = {
 	"qti/database.backfill-items-and-stimuli": {
 		data: z.object({})
 	},
+	// ✅ ADD: New event to trigger a backfill of only stimuli from the DB.
+	"qti/database.backfill-stimuli": {
+		data: z.object({})
+	},
 	// ✅ ADD: New event to trigger the validation of all question XML
 	"qti/questions.validate-all": {
 		data: z.object({})
