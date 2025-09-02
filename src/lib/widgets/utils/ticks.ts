@@ -168,9 +168,67 @@ export function buildTicks(
 
 		for (let vBI = startBI; vBI <= maxBI && values.length < MAX_TICKS; vBI += stepBI) {
 			values.push(Number(vBI) / Number(D))
-			labels.push(formatRational(vBI, D))
+			// Render fractions for non-terminating decimals (denominators with primes other than 2 or 5)
+			const g = gcdBigInt(vBI < 0n ? -vBI : vBI, D)
+			const pRed = vBI / g
+			const dRed = D / g
+			const dNoTwoFive = stripTwoFiveFactors(dRed)
+			if (dNoTwoFive !== 1n) {
+				labels.push(formatFractionLabel(pRed, dRed))
+			} else {
+				labels.push(formatRational(vBI, D))
+			}
 		}
 		return { values, labels }
+	}
+
+	// PATH 2b: Pi-based Intervals (rational multiples of π, e.g., π/2)
+	// Detect if interval ≈ (p/q) * π for small integers p, q
+	// This enables common math axes like tickInterval = π/2
+	{
+		const rationalPairs: Array<{ p: number; q: number }> = [
+			{ p: 1, q: 1 }, // π
+			{ p: 1, q: 2 }, // π/2
+			{ p: 1, q: 3 }, // π/3
+			{ p: 1, q: 4 }, // π/4
+			{ p: 1, q: 6 }, // π/6
+			{ p: 2, q: 1 }, // 2π
+			{ p: 3, q: 2 } // 3π/2
+		]
+
+		let isPiMultiple = false
+		let matchedInterval = interval
+		let matchedP = 1
+		let matchedQ = 1
+		for (const { p, q } of rationalPairs) {
+			const candidate = (p * Math.PI) / q
+			if (Math.abs(interval - candidate) < EPSILON) {
+				isPiMultiple = true
+				matchedInterval = candidate
+				matchedP = p
+				matchedQ = q
+				break
+			}
+		}
+
+		if (isPiMultiple) {
+			const values: number[] = []
+			const labels: string[] = []
+
+			// Work in integer step space using k such that tick = k * matchedInterval
+			// Guard with MAX_TICKS and tolerance to avoid drift
+			const startK = Math.ceil(min / matchedInterval - EPSILON)
+			const endK = Math.floor(max / matchedInterval + EPSILON)
+
+			for (let k = startK; k <= endK && values.length < MAX_TICKS; k++) {
+				const v = k * matchedInterval
+				if (v < min - 1e-9 || v > max + 1e-9) continue
+				values.push(v)
+				labels.push(formatPiMultipleLabel(BigInt(k), BigInt(matchedP), BigInt(matchedQ)))
+			}
+
+			return { values, labels }
+		}
 	}
 
 	// PATH 3: Unsupported non-terminating interval
@@ -201,4 +259,62 @@ function formatTickInt(vI: number, scale: number): string {
 	frac = frac.replace(/0+$/, "") // Strip trailing zeros
 
 	return `${sign}${q}.${frac}`
+}
+
+/**
+ * Formats a floating value into a decimal string with limited precision,
+ * stripping trailing zeros and the decimal point when unnecessary.
+ */
+function formatDecimalLabel(n: number, maxDigits = 12): string {
+	if (Number.isInteger(n)) return String(n)
+	// Use toFixed then strip trailing zeros
+	return n.toFixed(maxDigits).replace(/\.0+$/, "").replace(/(\..*?)0+$/, "$1")
+}
+
+// --- Helpers for fraction/π labeling ---
+function gcdBigInt(a: bigint, b: bigint): bigint {
+	let x = a < 0n ? -a : a
+	let y = b < 0n ? -b : b
+	while (y !== 0n) {
+		const t = y
+		y = x % y
+		x = t
+	}
+	return x
+}
+
+function stripTwoFiveFactors(n: bigint): bigint {
+	let d = n
+	while (d % 2n === 0n) d /= 2n
+	while (d % 5n === 0n) d /= 5n
+	return d
+}
+
+function formatFractionLabel(p: bigint, q: bigint): string {
+	if (q === 0n) return ""
+	const sign = p < 0n ? "-" : ""
+	const ap = p < 0n ? -p : p
+	const g = gcdBigInt(ap, q)
+	const num = ap / g
+	const den = q / g
+	if (den === 1n) return `${sign}${num}`
+	return `${sign}${num}/${den}`
+}
+
+function formatPiMultipleLabel(k: bigint, p: bigint, q: bigint): string {
+	// value = (k * p / q) * π
+	const numRaw = k * p
+	if (numRaw === 0n) return "0"
+	const sign = numRaw < 0n ? "-" : ""
+	const anum = numRaw < 0n ? -numRaw : numRaw
+	const g = gcdBigInt(anum, q)
+	const num = anum / g
+	const den = q / g
+	if (den === 1n) {
+		if (num === 1n) return `${sign}π`
+		return `${sign}${num}π`
+	}
+	// For numerator 1, prefer "π/den" over "1π/den"
+	const coef = num === 1n ? "" : `${num}`
+	return `${sign}${coef}π/${den}`
 }
