@@ -139,7 +139,7 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 			canvas.drawPath(sectorPath, {
 				fill: group.color,
 				stroke: theme.colors.black,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				strokeWidth: theme.stroke.width.base
 			})
 
 			// Add emoji if it exists
@@ -180,7 +180,7 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 		canvas.drawPolygon(pointerPoints, {
 			fill: theme.colors.textSecondary,
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+			strokeWidth: theme.stroke.width.thin
 		})
 	})
 
@@ -188,7 +188,7 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 	canvas.drawCircle(cx, cy, pointerWidth, {
 		fill: theme.colors.background,
 		stroke: theme.colors.black,
-		strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		strokeWidth: theme.stroke.width.thick
 	})
 
 	// NEW: Finalize the canvas and construct the root SVG element

@@ -198,7 +198,7 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 	frontOutlinePath.lineTo(frontLeft, frontTop + boxHeight)
 	canvas.drawPath(frontOutlinePath, {
 		stroke: theme.colors.black,
-		strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		strokeWidth: theme.stroke.width.thick
 	})
 
 	// Hidden back edges (dashed if enabled) - combined like Khan Academy
@@ -217,7 +217,7 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 		backVerticalPath.lineTo(backLeft, backTop)
 		canvas.drawPath(backVerticalPath, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 		const backDiagonalPath = new Path2D()
 		backDiagonalPath.moveTo(backLeft, backTop)
@@ -240,7 +240,7 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 	connectingEdgesPath.lineTo(frontRight + boxDepth, frontTop - boxDepth * 0.5)
 	canvas.drawPath(connectingEdgesPath, {
 		stroke: theme.colors.black,
-		strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		strokeWidth: theme.stroke.width.thick
 	})
 
 	// Face fills - Khan Academy approach: simple solid shapes, not hollow frames
@@ -258,8 +258,8 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 		canvas.drawPath(frontFaceFillPath, {
 			fill: purpleColor,
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
-			fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+			strokeWidth: theme.stroke.width.thick,
+			fillOpacity: theme.opacity.overlayLow
 		})
 	}
 
@@ -303,35 +303,35 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 		canvas.drawPath(leftSidePath, {
 			fill: purpleColor,
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
-			fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+			strokeWidth: theme.stroke.width.thick,
+			fillOpacity: theme.opacity.overlayLow
 		})
 		canvas.drawPath(topFacePath, {
 			fill: grayColor,
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
-			fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+			strokeWidth: theme.stroke.width.thick,
+			fillOpacity: theme.opacity.overlayLow
 		})
 	} else if (shadedFace === "top_face") {
 		canvas.drawPath(leftSidePath, {
 			fill: grayColor,
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
-			fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+			strokeWidth: theme.stroke.width.thick,
+			fillOpacity: theme.opacity.overlayLow
 		})
 		canvas.drawPath(topFacePath, {
 			fill: purpleColor,
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
-			fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+			strokeWidth: theme.stroke.width.thick,
+			fillOpacity: theme.opacity.overlayLow
 		})
 	} else if (shadedFace !== "") {
 		// Default: both faces gray, combined like Khan Academy
 		canvas.drawPath(combinedSideTopPath, {
 			fill: grayColor,
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
-			fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+			strokeWidth: theme.stroke.width.thick,
+			fillOpacity: theme.opacity.overlayLow
 		})
 	}
 
@@ -340,15 +340,15 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 		canvas.drawPath(rightSidePath, {
 			fill: purpleColor,
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
-			fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+			strokeWidth: theme.stroke.width.thick,
+			fillOpacity: theme.opacity.overlayLow
 		})
 	} else if (shadedFace !== "") {
 		canvas.drawPath(rightSidePath, {
 			fill: grayColor,
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
-			fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+			strokeWidth: theme.stroke.width.thick,
+			fillOpacity: theme.opacity.overlayLow
 		})
 	}
 
@@ -380,7 +380,7 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 
 			canvas.drawLine(from.x, from.y, to.x, to.y, {
 				stroke: theme.colors.black,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+				strokeWidth: theme.stroke.width.thick,
 				dash: strokeDashArray.replace(' stroke-dasharray="', "").replace('"', "")
 			})
 
@@ -392,7 +392,7 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 					y: midY,
 					text: d.label,
 					anchor: "middle",
-					fontPx: Number.parseFloat(theme.font.size.base.replace("px", ""))
+					fontPx: theme.font.size.base
 				})
 			}
 		}
@@ -409,7 +409,7 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 					y: textY,
 					text: lab.text,
 					anchor: "end",
-					fontPx: Number.parseFloat(theme.font.size.base.replace("px", ""))
+					fontPx: theme.font.size.base
 				})
 			}
 			if (lab.target === "width") {
@@ -420,7 +420,7 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 					y: textY,
 					text: lab.text,
 					anchor: "middle",
-					fontPx: Number.parseFloat(theme.font.size.base.replace("px", ""))
+					fontPx: theme.font.size.base
 				})
 			}
 			if (lab.target === "length") {
@@ -431,7 +431,7 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 					y: textY,
 					text: lab.text,
 					anchor: "middle",
-					fontPx: Number.parseFloat(theme.font.size.base.replace("px", ""))
+					fontPx: theme.font.size.base
 				})
 			}
 			if (lab.target === "thickness") {
@@ -442,7 +442,7 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 					y: textY,
 					text: lab.text,
 					anchor: "start",
-					fontPx: Number.parseFloat(theme.font.size.small.replace("px", ""))
+					fontPx: theme.font.size.small
 				})
 			}
 		}

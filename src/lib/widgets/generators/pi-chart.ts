@@ -110,7 +110,7 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 			y: titleY,
 			text: abbreviateMonth(chart.title),
 			maxWidthPx: maxTextWidth,
-			fontPx: Number.parseFloat(theme.font.size.large.replace("px", "")),
+			fontPx: theme.font.size.large,
 			fontWeight: theme.font.weight.bold,
 			anchor: "middle"
 		})
@@ -156,7 +156,7 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 			canvas.drawPath(slicePath, {
 				fill: slice.color,
 				stroke: theme.colors.black,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+				strokeWidth: theme.stroke.width.thin
 			})
 
 			// Prepare label info
@@ -251,7 +251,7 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 				y: textY,
 				text: item.text,
 				anchor: textAnchor,
-				fontPx: Number.parseFloat(theme.font.size.small.replace("px", ""))
+				fontPx: theme.font.size.small
 			})
 		}
 

@@ -111,7 +111,7 @@ export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof Number
 
 	canvas.drawLine(padding.horizontal, yPos, width - padding.horizontal, yPos, {
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		strokeWidth: theme.stroke.width.base
 	})
 
 	for (const t of ticks) {
@@ -119,7 +119,7 @@ export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof Number
 		const tickHeight = t.isMajor ? 8 : 4
 		canvas.drawLine(x, yPos - tickHeight, x, yPos + tickHeight, {
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			strokeWidth: theme.stroke.width.base
 		})
 		if (t.label !== "") {
 			canvas.drawText({
@@ -143,7 +143,7 @@ export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof Number
 
 		canvas.drawRect(startPos, segmentY, segmentWidth, segmentHeight, {
 			fill: s.color,
-			fillOpacity: Number.parseFloat(theme.opacity.overlay),
+			fillOpacity: theme.opacity.overlay,
 			stroke: theme.colors.axis,
 			strokeWidth: 0.5
 		})

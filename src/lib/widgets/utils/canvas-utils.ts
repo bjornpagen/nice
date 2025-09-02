@@ -200,10 +200,10 @@ export function renderPoints(
 		const py = toSvgY(p.y)
 		const fill = p.style === "open" ? theme.colors.white : p.color
 
-		canvas.drawCircle(px, py, Number.parseFloat(theme.geometry.pointRadius.base), {
+		canvas.drawCircle(px, py, theme.geometry.pointRadius.base, {
 			fill,
 			stroke: p.color,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			strokeWidth: theme.stroke.width.base
 		})
 
 		canvas.drawText({
@@ -262,7 +262,7 @@ export function renderLines(
 		canvas.drawInClippedRegion((clippedCanvas) => {
 			clippedCanvas.drawLine(x1Svg, toSvgY(y1), x2Svg, toSvgY(y2), {
 				stroke: l.color,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+				strokeWidth: theme.stroke.width.thick,
 				dash: dash
 			})
 		})
@@ -295,12 +295,12 @@ export function renderPolygons(
 					clippedCanvas.drawPolygon(polyPoints, {
 						fill: poly.fillColor,
 						stroke: poly.strokeColor,
-						strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+						strokeWidth: theme.stroke.width.thick
 					})
 				} else {
 					clippedCanvas.drawPolyline(polyPoints, {
 						stroke: poly.strokeColor,
-						strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+						strokeWidth: theme.stroke.width.thick
 					})
 				}
 
@@ -314,7 +314,7 @@ export function renderPolygons(
 					y: labelY,
 					text: abbreviateMonth(poly.label),
 					anchor: "middle",
-					fontPx: Number.parseFloat(theme.font.size.medium.replace("px", "")),
+					fontPx: theme.font.size.medium,
 					fontWeight: "500",
 					fill: poly.strokeColor
 				})
@@ -349,7 +349,7 @@ export function renderDistances(
 		// Hypotenuse
 		canvas.drawLine(p1Svg.x, p1Svg.y, p2Svg.x, p2Svg.y, {
 			stroke: dist.color,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			strokeWidth: theme.stroke.width.base,
 			dash: dash
 		})
 
@@ -357,12 +357,12 @@ export function renderDistances(
 			// Horizontal and Vertical Legs
 			canvas.drawLine(p1Svg.x, p1Svg.y, cornerSvg.x, cornerSvg.y, {
 				stroke: dist.color,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base),
+				strokeWidth: theme.stroke.width.base,
 				dash: dash
 			})
 			canvas.drawLine(cornerSvg.x, cornerSvg.y, p2Svg.x, p2Svg.y, {
 				stroke: dist.color,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base),
+				strokeWidth: theme.stroke.width.base,
 				dash: dash
 			})
 		}
@@ -389,7 +389,7 @@ export function renderPolylines(
 				const dash = polyline.style === "dashed" ? "5 3" : undefined
 				clippedCanvas.drawPolyline(points, {
 					stroke: polyline.color,
-					strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+					strokeWidth: theme.stroke.width.thick,
 					dash: dash
 				})
 			}

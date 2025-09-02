@@ -92,14 +92,14 @@ export const generateNumberLineForOpposites: WidgetGenerator<typeof NumberLineFo
 	// axis and ticks
 	canvas.drawLine(PADDING, yPos, width - PADDING, yPos, {
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		strokeWidth: theme.stroke.width.base
 	})
 
 	for (let t = min; t <= max; t += tickInterval) {
 		const x = toSvgX(t)
 		canvas.drawLine(x, yPos - 5, x, yPos + 5, {
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			strokeWidth: theme.stroke.width.base
 		})
 		canvas.drawText({
 			x: x,
@@ -114,12 +114,12 @@ export const generateNumberLineForOpposites: WidgetGenerator<typeof NumberLineFo
 		const arrowY = yPos - 10
 		canvas.drawLine(zeroPos, arrowY, posPos, arrowY, {
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			strokeWidth: theme.stroke.width.base,
 			markerEnd: "url(#arrowhead)"
 		})
 		canvas.drawLine(zeroPos, arrowY, negPos, arrowY, {
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			strokeWidth: theme.stroke.width.base,
 			markerEnd: "url(#arrowhead)"
 		})
 	}

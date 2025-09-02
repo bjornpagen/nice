@@ -169,7 +169,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	canvas.drawPolygon(squareCPoints, {
 		fill: squareC.color,
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+		strokeWidth: theme.stroke.width.thin
 	})
 
 	// Add grid lines for square C using helper function
@@ -206,7 +206,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	canvas.drawRect(rectB_x, rectB_y, sb, sb, {
 		fill: squareB.color,
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+		strokeWidth: theme.stroke.width.thin
 	})
 
 	// Add grid lines for square B using helper function
@@ -242,7 +242,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	canvas.drawRect(rectA_x, rectA_y, sa, sa, {
 		fill: squareA.color,
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+		strokeWidth: theme.stroke.width.thin
 	})
 
 	// Add grid lines for square A using helper function
@@ -281,7 +281,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	canvas.drawPolygon(trianglePoints, {
 		fill: theme.colors.background,
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		strokeWidth: theme.stroke.width.thick
 	})
 
 	// NEW: Finalize the canvas and construct the root SVG element

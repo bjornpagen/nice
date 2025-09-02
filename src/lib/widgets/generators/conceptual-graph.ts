@@ -120,12 +120,12 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 	const xAxisY = baseInfo.chartArea.top + baseInfo.chartArea.height
 	canvas.drawLine(yAxisX, xAxisY, yAxisX, baseInfo.chartArea.top, {
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+		strokeWidth: theme.stroke.width.thick,
 		markerEnd: "url(#graph-arrow)"
 	})
 	canvas.drawLine(yAxisX, xAxisY, baseInfo.chartArea.left + baseInfo.chartArea.width, xAxisY, {
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+		strokeWidth: theme.stroke.width.thick,
 		markerEnd: "url(#graph-arrow)"
 	})
 
@@ -147,7 +147,7 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 		const polylinePoints = curvePoints.map((p) => ({ x: baseInfo.toSvgX(p.x), y: baseInfo.toSvgY(p.y) }))
 		clippedCanvas.drawPolyline(polylinePoints, {
 			stroke: curveColor,
-			strokeWidth: Number.parseFloat(theme.stroke.width.xxthick),
+			strokeWidth: theme.stroke.width.xxthick,
 			strokeLinejoin: "round",
 			strokeLinecap: "round"
 		})
@@ -207,11 +207,11 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 			anchor: "end",
 			dominantBaseline: "middle",
 			fontWeight: theme.font.weight.bold,
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+			fontPx: theme.font.size.medium
 		})
 		// Include vertical extents for the circle and label (dominant-baseline=middle)
 		includeCircleY(cy, highlightPointRadius)
-		const fontPx = Number.parseInt(theme.font.size.medium, 10)
+		const fontPx = theme.font.size.medium
 		includeTextY(cy, fontPx)
 	}
 

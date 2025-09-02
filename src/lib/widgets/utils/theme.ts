@@ -8,11 +8,11 @@ export const theme = {
 			mono: "'Courier New', monospace"
 		},
 		size: {
-			small: "11px",
-			base: "12px",
-			medium: "14px",
-			large: "16px",
-			xlarge: "18px"
+			small: 11,
+			base: 12,
+			medium: 14,
+			large: 16,
+			xlarge: 18
 		},
 		weight: {
 			thin: "100",
@@ -53,20 +53,20 @@ export const theme = {
 
 	// OPACITY TOKENS
 	opacity: {
-		overlayLow: "0.4",
-		overlay: "0.6",
-		overlayHigh: "0.9"
+		overlayLow: 0.4,
+		overlay: 0.6,
+		overlayHigh: 0.9
 	},
 
 	// STROKE AND LINE TOKENS
 	stroke: {
 		width: {
-			thin: "1",
-			base: "1.5",
-			thick: "2",
-			xthick: "2.5",
-			xxthick: "3",
-			xxxthick: "4"
+			thin: 1,
+			base: 1.5,
+			thick: 2,
+			xthick: 2.5,
+			xxthick: 3,
+			xxxthick: 4
 		},
 		dasharray: {
 			dotted: "2 6",
@@ -81,13 +81,13 @@ export const theme = {
 	// GEOMETRY AND SIZING TOKENS
 	geometry: {
 		pointRadius: {
-			small: "3",
-			base: "4",
-			large: "5"
+			small: 3,
+			base: 4,
+			large: 5
 		},
 		tickLength: {
-			minor: "4",
-			major: "8"
+			minor: 4,
+			major: 8
 		}
 	},
 

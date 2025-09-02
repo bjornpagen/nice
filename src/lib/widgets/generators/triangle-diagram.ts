@@ -242,7 +242,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 	canvas.drawPolygon(mainTrianglePoints, {
 		fill: "none",
 		stroke: theme.colors.black,
-		strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		strokeWidth: theme.stroke.width.thick
 	})
 
 	// Layer 3: Internal Lines
@@ -259,7 +259,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 		}
 		canvas.drawLine(from.x, from.y, to.x, to.y, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			strokeWidth: theme.stroke.width.base,
 			dash
 		})
 	}
@@ -344,7 +344,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 				canvas.drawPath(markerPath, {
 					fill: "none",
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+					strokeWidth: theme.stroke.width.thick
 				})
 			} else {
 				const arcStartX = vertex.x + scaledArcRadius * Math.cos(startAngle)
@@ -365,7 +365,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 				canvas.drawPath(arcPath, {
 					fill: "none",
 					stroke: angle.color,
-					strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+					strokeWidth: theme.stroke.width.thick
 				})
 			}
 		}
@@ -496,7 +496,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 
 				canvas.drawLine(t1x, t1y, t2x, t2y, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+					strokeWidth: theme.stroke.width.thick
 				})
 			}
 		}
@@ -520,7 +520,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 				y: textY,
 				text: point.label,
 				fill: theme.colors.black,
-				fontPx: Number.parseFloat(theme.font.size.large),
+				fontPx: theme.font.size.large,
 				fontWeight: theme.font.weight.bold
 			})
 		}

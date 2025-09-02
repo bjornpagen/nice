@@ -266,7 +266,7 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 					fill,
 					fillOpacity: opacity,
 					stroke: theme.colors.border,
-					strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+					strokeWidth: theme.stroke.width.thin
 				})
 
 				if (isHatched) {
@@ -281,7 +281,7 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 					canvas.drawRect(rectX, rectY, cellW, cellH, {
 						fill: `url(#${cellId})`,
 						stroke: theme.colors.border,
-						strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+						strokeWidth: theme.stroke.width.thin
 					})
 				}
 			}
@@ -327,14 +327,14 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 					canvas.drawPath(sectorPath, {
 						fill: `url(#${cellId})`,
 						stroke: theme.colors.border,
-						strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+						strokeWidth: theme.stroke.width.thin
 					})
 				} else {
 					canvas.drawPath(sectorPath, {
 						fill: fill,
 						fillOpacity: opacity,
 						stroke: theme.colors.border,
-						strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+						strokeWidth: theme.stroke.width.thin
 					})
 				}
 			}
@@ -363,7 +363,7 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 
 				canvas.drawLine(fromX, fromY, toX, toY, {
 					stroke: line.color,
-					strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+					strokeWidth: theme.stroke.width.thick,
 					dash: strokeDasharray
 				})
 			}
@@ -401,7 +401,7 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 		const x = col * cellWidth
 		canvas.drawLine(x, 0, x, height, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thin),
+			strokeWidth: theme.stroke.width.thin,
 			opacity: grid.opacity
 		})
 	}
@@ -410,7 +410,7 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 		const y = row * cellHeight
 		canvas.drawLine(0, y, width, y, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thin),
+			strokeWidth: theme.stroke.width.thin,
 			opacity: grid.opacity
 		})
 	}
@@ -422,7 +422,7 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 		canvas.drawPolygon(pixelPoints, {
 			fill: fig.fillColor ?? "none",
 			stroke: fig.strokeColor ?? theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 	}
 
@@ -440,7 +440,7 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 
 		canvas.drawLine(fromPixel.x, fromPixel.y, toPixel.x, toPixel.y, {
 			stroke: line.color,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			strokeWidth: theme.stroke.width.thick,
 			dash: strokeDasharray
 		})
 	}

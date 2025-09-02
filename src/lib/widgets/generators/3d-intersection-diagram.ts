@@ -457,7 +457,7 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 			const p2 = toSvg(proj2)
 			canvas.drawLine(p1.x, p1.y, p2.x, p2.y, {
 				stroke: theme.colors.hiddenEdge,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base),
+				strokeWidth: theme.stroke.width.base,
 				dash: theme.stroke.dasharray.dashed
 			})
 		}
@@ -473,7 +473,7 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 		const p2 = toSvg(proj2)
 		canvas.drawLine(p1.x, p1.y, p2.x, p2.y, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			strokeWidth: theme.stroke.width.base
 		})
 	}
 
@@ -486,7 +486,7 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 		canvas.drawPolygon(polygonPoints, {
 			fill: intersectionColor,
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 	}
 

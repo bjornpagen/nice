@@ -159,7 +159,7 @@ export const generateBoxGrid: WidgetGenerator<typeof BoxGridPropsSchema> = (prop
 				canvas.drawRect(x, y, cellWidth, cellHeight, {
 					fill: "none",
 					stroke: theme.colors.border,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base)
+					strokeWidth: theme.stroke.width.base
 				})
 			}
 		}

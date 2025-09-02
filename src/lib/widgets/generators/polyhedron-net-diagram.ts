@@ -267,7 +267,7 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 		canvas.drawRect(x, y, w, h, {
 			fill: "rgba(200,200,200,0.3)",
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 	}
 
@@ -282,7 +282,7 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 		canvas.drawPolygon(polygonPoints, {
 			fill: "rgba(200,200,200,0.3)",
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 	}
 

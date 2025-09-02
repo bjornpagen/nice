@@ -65,7 +65,7 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	// MODIFIED: Replace svgBody string concatenation with canvas calls
 	canvas.drawLine(PADDING, yPos, width - PADDING, yPos, {
 		stroke: theme.colors.black,
-		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		strokeWidth: theme.stroke.width.base
 	})
 
 	// Ticks and labels with text-aware selection (calculateTextAwareLabelSelection remains)
@@ -82,7 +82,7 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 		const x = toSvgX(t)
 		canvas.drawLine(x, yPos - 5, x, yPos + 5, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+			strokeWidth: theme.stroke.width.thin
 		})
 		if (selectedLabels.has(i)) {
 			canvas.drawText({ x, y: yPos + 20, text: String(t), fill: theme.colors.text, anchor: "middle" })
@@ -110,10 +110,10 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 		})
 	}
 
-	canvas.drawCircle(toSvgX(value), yPos, Number.parseFloat(theme.geometry.pointRadius.large), {
+	canvas.drawCircle(toSvgX(value), yPos, theme.geometry.pointRadius.large, {
 		fill: highlightColor,
 		stroke: theme.colors.black,
-		strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+		strokeWidth: theme.stroke.width.thin
 	})
 
 	// NEW: Finalize the canvas and construct the root SVG element

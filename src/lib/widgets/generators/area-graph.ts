@@ -277,7 +277,7 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 		y: topLabelY,
 		text: abbreviateMonth(topArea.label),
 		maxWidthPx: baseInfo.chartArea.width,
-		fontPx: Number.parseFloat(theme.font.size.medium.replace("px", "")),
+		fontPx: theme.font.size.medium,
 		anchor: "middle",
 		fill: theme.colors.text
 	})
@@ -286,7 +286,7 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 		y: bottomLabelY,
 		text: abbreviateMonth(bottomArea.label),
 		maxWidthPx: baseInfo.chartArea.width,
-		fontPx: Number.parseFloat(theme.font.size.medium.replace("px", "")),
+		fontPx: theme.font.size.medium,
 		anchor: "middle",
 		fill: theme.colors.text
 	})

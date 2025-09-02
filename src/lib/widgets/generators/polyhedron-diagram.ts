@@ -198,7 +198,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 				canvas.drawPolygon(polygonPoints, {
 					fill: shadedFace === faceName ? face.color : "none",
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base)
+					strokeWidth: theme.stroke.width.base
 				})
 			}
 
@@ -211,19 +211,19 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 				if (p[0] && p[4])
 					canvas.drawLine(p[0].x, p[0].y, p[4].x, p[4].y, {
 						stroke: theme.colors.black,
-						strokeWidth: Number.parseFloat(theme.stroke.width.base),
+						strokeWidth: theme.stroke.width.base,
 						dash: theme.stroke.dasharray.dashedShort
 					})
 				if (p[4] && p[5])
 					canvas.drawLine(p[4].x, p[4].y, p[5].x, p[5].y, {
 						stroke: theme.colors.black,
-						strokeWidth: Number.parseFloat(theme.stroke.width.base),
+						strokeWidth: theme.stroke.width.base,
 						dash: theme.stroke.dasharray.dashedShort
 					})
 				if (p[4] && p[7])
 					canvas.drawLine(p[4].x, p[4].y, p[7].x, p[7].y, {
 						stroke: theme.colors.black,
-						strokeWidth: Number.parseFloat(theme.stroke.width.base),
+						strokeWidth: theme.stroke.width.base,
 						dash: theme.stroke.dasharray.dashedShort
 					})
 			}
@@ -247,7 +247,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 
 				canvas.drawLine(from.x, from.y, to.x, to.y, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base),
+					strokeWidth: theme.stroke.width.base,
 					dash
 				})
 
@@ -264,7 +264,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 						fill: theme.colors.black,
 						anchor: "middle",
 						dominantBaseline: "middle",
-						fontPx: Number.parseFloat(theme.font.size.base),
+						fontPx: theme.font.size.base,
 						stroke: theme.colors.white,
 						strokeWidth: 3,
 						paintOrder: "stroke fill"
@@ -329,7 +329,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 				canvas.drawPolygon(polygonPoints, {
 					fill: shadedFace === faceName ? face.color : "none",
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base)
+					strokeWidth: theme.stroke.width.base
 				})
 			}
 
@@ -342,19 +342,19 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 				if (p[3] && p[4])
 					canvas.drawLine(p[3].x, p[3].y, p[4].x, p[4].y, {
 						stroke: theme.colors.black,
-						strokeWidth: Number.parseFloat(theme.stroke.width.base),
+						strokeWidth: theme.stroke.width.base,
 						dash: theme.stroke.dasharray.dashedShort
 					})
 				if (p[3] && p[5])
 					canvas.drawLine(p[3].x, p[3].y, p[5].x, p[5].y, {
 						stroke: theme.colors.black,
-						strokeWidth: Number.parseFloat(theme.stroke.width.base),
+						strokeWidth: theme.stroke.width.base,
 						dash: theme.stroke.dasharray.dashedShort
 					})
 				if (p[4] && p[5])
 					canvas.drawLine(p[4].x, p[4].y, p[5].x, p[5].y, {
 						stroke: theme.colors.black,
-						strokeWidth: Number.parseFloat(theme.stroke.width.base),
+						strokeWidth: theme.stroke.width.base,
 						dash: theme.stroke.dasharray.dashedShort
 					})
 			}
@@ -380,7 +380,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 
 				canvas.drawLine(from.x, from.y, to.x, to.y, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base),
+					strokeWidth: theme.stroke.width.base,
 					dash
 				})
 
@@ -397,7 +397,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 						fill: theme.colors.black,
 						anchor: "middle",
 						dominantBaseline: "middle",
-						fontPx: Number.parseFloat(theme.font.size.base),
+						fontPx: theme.font.size.base,
 						stroke: theme.colors.white,
 						strokeWidth: 3,
 						paintOrder: "stroke fill"
@@ -459,7 +459,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 				canvas.drawPolygon(polygonPoints, {
 					fill: shadedFace === faceName ? face.color : "none",
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base)
+					strokeWidth: theme.stroke.width.base
 				})
 			}
 
@@ -473,20 +473,20 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 				if (p[0] && p[3])
 					canvas.drawLine(p[0].x, p[0].y, p[3].x, p[3].y, {
 						stroke: theme.colors.black,
-						strokeWidth: Number.parseFloat(theme.stroke.width.base),
+						strokeWidth: theme.stroke.width.base,
 						dash: theme.stroke.dasharray.dashedShort
 					})
 				if (p[3] && p[2])
 					canvas.drawLine(p[3].x, p[3].y, p[2].x, p[2].y, {
 						stroke: theme.colors.black,
-						strokeWidth: Number.parseFloat(theme.stroke.width.base),
+						strokeWidth: theme.stroke.width.base,
 						dash: theme.stroke.dasharray.dashedShort
 					})
 				// Hidden edge from back left base to apex
 				if (p[3] && p[4])
 					canvas.drawLine(p[3].x, p[3].y, p[4].x, p[4].y, {
 						stroke: theme.colors.black,
-						strokeWidth: Number.parseFloat(theme.stroke.width.base),
+						strokeWidth: theme.stroke.width.base,
 						dash: theme.stroke.dasharray.dashedShort
 					})
 			}
@@ -500,17 +500,17 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			if (p[0] && p[1])
 				canvas.drawLine(p[0].x, p[0].y, p[1].x, p[1].y, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base)
+					strokeWidth: theme.stroke.width.base
 				})
 			if (p[1] && p[2])
 				canvas.drawLine(p[1].x, p[1].y, p[2].x, p[2].y, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base)
+					strokeWidth: theme.stroke.width.base
 				})
 			if (p[2] && p[4])
 				canvas.drawLine(p[2].x, p[2].y, p[4].x, p[4].y, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base)
+					strokeWidth: theme.stroke.width.base
 				})
 
 			// Draw diagonals if specified
@@ -528,7 +528,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 
 				canvas.drawLine(from.x, from.y, to.x, to.y, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base),
+					strokeWidth: theme.stroke.width.base,
 					dash
 				})
 
@@ -545,7 +545,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 						fill: theme.colors.black,
 						anchor: "middle",
 						dominantBaseline: "middle",
-						fontPx: Number.parseFloat(theme.font.size.base),
+						fontPx: theme.font.size.base,
 						stroke: theme.colors.white,
 						strokeWidth: 3,
 						paintOrder: "stroke fill"
@@ -570,7 +570,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 						const baseCenterY = (p[0].y + p[2].y) / 2
 						canvas.drawLine(baseCenterX, baseCenterY, p[4].x, p[4].y, {
 							stroke: theme.colors.gridMinor,
-							strokeWidth: Number.parseFloat(theme.stroke.width.thin),
+							strokeWidth: theme.stroke.width.thin,
 							dash: theme.stroke.dasharray.dotted
 						})
 						const textX = baseCenterX - 10
@@ -629,7 +629,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 				canvas.drawPolygon(polygonPoints, {
 					fill: shadedFace === faceName ? face.color : "none",
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base)
+					strokeWidth: theme.stroke.width.base
 				})
 			}
 
@@ -643,20 +643,20 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 				if (p[0] && p[2])
 					canvas.drawLine(p[0].x, p[0].y, p[2].x, p[2].y, {
 						stroke: theme.colors.black,
-						strokeWidth: Number.parseFloat(theme.stroke.width.base),
+						strokeWidth: theme.stroke.width.base,
 						dash: theme.stroke.dasharray.dashedShort
 					}) // Back-left base edge
 				if (p[1] && p[2])
 					canvas.drawLine(p[1].x, p[1].y, p[2].x, p[2].y, {
 						stroke: theme.colors.black,
-						strokeWidth: Number.parseFloat(theme.stroke.width.base),
+						strokeWidth: theme.stroke.width.base,
 						dash: theme.stroke.dasharray.dashedShort
 					}) // Back-right base edge
 				// Edge from the back base vertex to the apex
 				if (p[2] && p[3])
 					canvas.drawLine(p[2].x, p[2].y, p[3].x, p[3].y, {
 						stroke: theme.colors.black,
-						strokeWidth: Number.parseFloat(theme.stroke.width.base),
+						strokeWidth: theme.stroke.width.base,
 						dash: theme.stroke.dasharray.dashedShort
 					})
 			}
@@ -671,17 +671,17 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			if (p[0] && p[1])
 				canvas.drawLine(p[0].x, p[0].y, p[1].x, p[1].y, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base)
+					strokeWidth: theme.stroke.width.base
 				}) // Front base edge
 			if (p[0] && p[3])
 				canvas.drawLine(p[0].x, p[0].y, p[3].x, p[3].y, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base)
+					strokeWidth: theme.stroke.width.base
 				}) // Front-left edge to apex
 			if (p[1] && p[3])
 				canvas.drawLine(p[1].x, p[1].y, p[3].x, p[3].y, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base)
+					strokeWidth: theme.stroke.width.base
 				}) // Front-right edge to apex
 
 			// Draw diagonals if specified
@@ -699,7 +699,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 
 				canvas.drawLine(from.x, from.y, to.x, to.y, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base),
+					strokeWidth: theme.stroke.width.base,
 					dash
 				})
 
@@ -716,7 +716,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 						fill: theme.colors.black,
 						anchor: "middle",
 						dominantBaseline: "middle",
-						fontPx: Number.parseFloat(theme.font.size.base),
+						fontPx: theme.font.size.base,
 						stroke: theme.colors.white,
 						strokeWidth: 3,
 						paintOrder: "stroke fill"
@@ -738,7 +738,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 					const mid_p0_p1_y = (p[0].y + p[1].y) / 2
 					canvas.drawLine(mid_p0_p1_x, mid_p0_p1_y, p[2].x, p[2].y, {
 						stroke: theme.colors.gridMinor,
-						strokeWidth: Number.parseFloat(theme.stroke.width.thin),
+						strokeWidth: theme.stroke.width.thin,
 						dash: theme.stroke.dasharray.dotted
 					})
 					const textX = (mid_p0_p1_x + p[2].x) / 2 + 10
@@ -751,7 +751,7 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 					const base_centroid_y_for_label = (p[0].y + p[1].y + p[2].y) / 3
 					canvas.drawLine(base_centroid_x_for_label, base_centroid_y_for_label, p[3].x, p[3].y, {
 						stroke: theme.colors.gridMinor,
-						strokeWidth: Number.parseFloat(theme.stroke.width.thin),
+						strokeWidth: theme.stroke.width.thin,
 						dash: theme.stroke.dasharray.dotted
 					})
 					const textX = base_centroid_x_for_label - 10

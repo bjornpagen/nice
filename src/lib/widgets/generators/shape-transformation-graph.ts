@@ -217,8 +217,8 @@ export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTrans
 		clippedCanvas.drawPolygon(preImagePoints, {
 			fill: preImage.color,
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base),
-			fillOpacity: Number.parseFloat(theme.opacity.overlay)
+			strokeWidth: theme.stroke.width.base,
+			fillOpacity: theme.opacity.overlay
 		})
 
 		// 3. Calculate Transformed Vertices
@@ -269,9 +269,9 @@ export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTrans
 		}))
 		clippedCanvas.drawPolygon(imagePoints, {
 			fill: preImage.color,
-			fillOpacity: Number.parseFloat(theme.opacity.overlay),
+			fillOpacity: theme.opacity.overlay,
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			strokeWidth: theme.stroke.width.base,
 			dash: theme.stroke.dasharray.dashed
 		})
 	})
@@ -281,7 +281,7 @@ export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTrans
 		const c = transformation.center
 		const cx = baseInfo.toSvgX(c.x)
 		const cy = baseInfo.toSvgY(c.y)
-		canvas.drawCircle(cx, cy, Number.parseFloat(theme.geometry.pointRadius.base), {
+		canvas.drawCircle(cx, cy, theme.geometry.pointRadius.base, {
 			fill: theme.colors.actionSecondary
 		})
 	}

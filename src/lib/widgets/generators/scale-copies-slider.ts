@@ -130,7 +130,7 @@ export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSlider
 		canvas.drawRect(beforeX, beforeY, beforeW, beforeH, {
 			fill: shape.color,
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+			strokeWidth: theme.stroke.width.thin
 		})
 		const beforeLabelX = padding.left + shapeWidth / 2
 		canvas.drawText({ x: beforeLabelX, y: yOffset + rowHeight + 15, text: "Before", anchor: "middle" })
@@ -151,7 +151,7 @@ export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSlider
 		canvas.drawRect(afterX, afterY, afterW, afterH, {
 			fill: shape.color,
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+			strokeWidth: theme.stroke.width.thin
 		})
 		const afterLabelX = padding.left + shapeWidth + colGap + shapeWidth / 2
 		canvas.drawText({ x: afterLabelX, y: yOffset + rowHeight + 15, text: "After", anchor: "middle" })

@@ -161,7 +161,7 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 				clippedCanvas.drawRect(barX, y, innerBarWidth, barHeight, {
 					fill: "none",
 					stroke: barColor,
-					strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+					strokeWidth: theme.stroke.width.thick,
 					dash: theme.stroke.dasharray.dashed
 				})
 			}

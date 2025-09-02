@@ -172,7 +172,7 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 	// 1. Draw Axis Line
 	canvas.drawLine(padding.left, yPosAxis, width - padding.right, yPosAxis, {
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		strokeWidth: theme.stroke.width.base
 	})
 
 	// 2. Draw Ticks and Labels
@@ -181,7 +181,7 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 		const tickHeight = tick.isMajor ? 8 : 4
 		canvas.drawLine(x, yPosAxis - tickHeight, x, yPosAxis + tickHeight, {
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			strokeWidth: theme.stroke.width.base
 		})
 		if (tick.topLabel !== "") {
 			canvas.drawText({
@@ -229,7 +229,7 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 				const cellX = padding.left + cellCounter * cellWidth
 				canvas.drawRect(cellX, modelY, cellWidth, modelHeight, {
 					fill: group.color,
-					fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+					fillOpacity: theme.opacity.overlayLow
 				})
 				cellCounter++
 			}
@@ -241,7 +241,7 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 			canvas.drawRect(currentX, modelY, cellWidth, modelHeight, {
 				fill: "none",
 				stroke: theme.colors.black,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+				strokeWidth: theme.stroke.width.thick
 			})
 			currentX += cellWidth
 		}
@@ -253,15 +253,15 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 			const bracketEndX = padding.left + chartWidth
 			canvas.drawLine(bracketStartX, bracketY + 5, bracketStartX, bracketY - 5, {
 				stroke: theme.colors.black,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				strokeWidth: theme.stroke.width.base
 			})
 			canvas.drawLine(bracketStartX, bracketY, bracketEndX, bracketY, {
 				stroke: theme.colors.black,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				strokeWidth: theme.stroke.width.base
 			})
 			canvas.drawLine(bracketEndX, bracketY + 5, bracketEndX, bracketY - 5, {
 				stroke: theme.colors.black,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				strokeWidth: theme.stroke.width.base
 			})
 			canvas.drawText({
 				x: width / 2,

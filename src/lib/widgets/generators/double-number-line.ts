@@ -125,7 +125,7 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 	// Top line
 	canvas.drawLine(PADDING, topY, width - PADDING, topY, {
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		strokeWidth: theme.stroke.width.base
 	})
 	if (topLine.label !== null) {
 		const labelText = abbreviateMonth(topLine.label)
@@ -144,7 +144,7 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 		const x = PADDING + i * tickSpacing
 		canvas.drawLine(x, topY - TICK_MARK_HEIGHT, x, topY + TICK_MARK_HEIGHT, {
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			strokeWidth: theme.stroke.width.base
 		})
 		const labelText = String(t)
 		const labelY = topY + TOP_LINE_TICK_LABEL_Y_OFFSET
@@ -160,7 +160,7 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 	// Bottom line
 	canvas.drawLine(PADDING, bottomY, width - PADDING, bottomY, {
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		strokeWidth: theme.stroke.width.base
 	})
 	if (bottomLine.label !== null) {
 		const labelText = abbreviateMonth(bottomLine.label)
@@ -179,7 +179,7 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 		const x = PADDING + i * tickSpacing
 		canvas.drawLine(x, bottomY - TICK_MARK_HEIGHT, x, bottomY + TICK_MARK_HEIGHT, {
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			strokeWidth: theme.stroke.width.base
 		})
 		const labelText = String(t)
 		const labelY = bottomY + BOTTOM_LINE_TICK_LABEL_Y_OFFSET
@@ -197,7 +197,7 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 		const x = PADDING + i * tickSpacing
 		canvas.drawLine(x, topY + TICK_MARK_HEIGHT, x, bottomY - TICK_MARK_HEIGHT, {
 			stroke: theme.colors.gridMinor,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			strokeWidth: theme.stroke.width.base,
 			dash: theme.stroke.dasharray.gridMinor
 		})
 	}

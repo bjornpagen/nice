@@ -242,7 +242,7 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		canvas.drawPolygon(outerPoints, {
 			fill: "none",
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 	}
 
@@ -303,7 +303,7 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 			fill: theme.colors.text,
 			anchor: "middle",
 			dominantBaseline: "middle",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", "")),
+			fontPx: theme.font.size.medium,
 			fontWeight: theme.font.weight.bold
 		})
 	}
@@ -316,7 +316,7 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		const dash = s.style === "dashed" ? "4 2" : undefined
 		canvas.drawLine(from.x, from.y, to.x, to.y, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			strokeWidth: theme.stroke.width.base,
 			dash: dash
 		})
 		if (s.label !== null) {
@@ -333,7 +333,7 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 				fill: theme.colors.text,
 				anchor: "middle",
 				dominantBaseline: "middle",
-				fontPx: Number.parseFloat(theme.font.size.base.replace("px", "")),
+				fontPx: theme.font.size.base,
 				stroke: theme.colors.background,
 				strokeWidth: 3,
 				paintOrder: "stroke fill"
@@ -350,7 +350,7 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 			fill: theme.colors.text,
 			anchor: "middle",
 			dominantBaseline: "middle",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", "")),
+			fontPx: theme.font.size.medium,
 			fontWeight: theme.font.weight.bold
 		})
 	}
@@ -387,7 +387,7 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		canvas.drawPath(markerPath, {
 			fill: "none",
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			strokeWidth: theme.stroke.width.base
 		})
 	}
 

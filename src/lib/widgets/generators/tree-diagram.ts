@@ -148,7 +148,7 @@ export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema>
 		const dash = edge.style === "dashed" ? "5 3" : undefined
 		canvas.drawLine(fromNode.position.x, fromNode.position.y, toNode.position.x, toNode.position.y, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			strokeWidth: theme.stroke.width.thick,
 			dash: dash
 		})
 	}
@@ -161,7 +161,7 @@ export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema>
 		canvas.drawCircle(x, y, nodeRadius, {
 			fill: theme.colors.white,
 			stroke: node.color,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 
 		// Draw the text label only if it exists

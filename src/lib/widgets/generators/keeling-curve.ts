@@ -202,7 +202,7 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 	const points = CO2_DATA.map((p) => ({ x: baseInfo.toSvgX(p.year), y: baseInfo.toSvgY(p.ppm) }))
 	canvas.drawPolyline(points, {
 		stroke: theme.colors.black,
-		strokeWidth: Number.parseFloat(theme.stroke.width.xthick)
+		strokeWidth: theme.stroke.width.xthick
 	})
 
 	// Annotations (text outside clip, arrows outside clip)
@@ -214,7 +214,7 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 		const textY = baseInfo.chartArea.top + 40 + index * 60
 		canvas.drawLine(textX, textY + 20, targetX, targetY, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			strokeWidth: theme.stroke.width.base,
 			markerEnd: "url(#co2-arrow)"
 		})
 

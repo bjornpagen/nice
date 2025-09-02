@@ -195,7 +195,7 @@ export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof Pentago
 
 		canvas.drawLine(current.x, current.y, next.x, next.y, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 	}
 
@@ -211,7 +211,7 @@ export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof Pentago
 
 		canvas.drawLine(fromPoint.x, fromPoint.y, toPoint.x, toPoint.y, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 	}
 
@@ -226,7 +226,7 @@ export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof Pentago
 		canvas.drawPath(arcPath, {
 			fill: "none",
 			stroke: arc.color,
-			strokeWidth: Number.parseFloat(theme.stroke.width.xthick)
+			strokeWidth: theme.stroke.width.xthick
 		})
 
 		// Calculate label position at the center of the arc but just outside its edge
@@ -252,7 +252,7 @@ export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof Pentago
 				fill: theme.colors.black,
 				anchor: "middle",
 				dominantBaseline: "middle",
-				fontPx: Number.parseFloat(theme.font.size.medium)
+				fontPx: theme.font.size.medium
 			})
 		}
 	}

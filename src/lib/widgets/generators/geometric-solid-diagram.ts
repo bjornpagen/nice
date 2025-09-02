@@ -135,32 +135,32 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		// Side lines
 		canvas.drawLine(cx - r, topY, cx - r, bottomY, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 		canvas.drawLine(cx + r, topY, cx + r, bottomY, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 
 		// Bottom base (draw back dashed part first, then front solid part)
 		const bottomBackPath = new Path2D().moveTo(cx - r, bottomY).arcTo(r, ry, 0, 0, 0, cx + r, bottomY)
 		canvas.drawPath(bottomBackPath, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			strokeWidth: theme.stroke.width.thick,
 			dash: theme.stroke.dasharray.dashed
 		})
 		const bottomFrontPath = new Path2D().moveTo(cx - r, bottomY).arcTo(r, ry, 0, 0, 1, cx + r, bottomY)
 		canvas.drawPath(bottomFrontPath, {
 			fill: "rgba(200, 200, 200, 0.2)",
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 
 		// Top base
 		canvas.drawEllipse(cx, topY, r, ry, {
 			fill: "rgba(220, 220, 220, 0.4)",
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 
 		for (const l of labels) {
@@ -168,7 +168,7 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 				// Dashed line for radius on the bottom base
 				canvas.drawLine(cx, bottomY, cx + r, bottomY, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base),
+					strokeWidth: theme.stroke.width.base,
 					dash: theme.stroke.dasharray.backEdge
 				})
 				const textY = Math.min(bottomY + 18, height - 10) // Ensure text stays within bounds
@@ -185,7 +185,7 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 				const lineX = Math.min(cx + r + 15, width - 50) // Ensure it stays within bounds
 				canvas.drawLine(lineX, topY, lineX, bottomY, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base),
+					strokeWidth: theme.stroke.width.base,
 					markerStart: "url(#arrow)",
 					markerEnd: "url(#arrow)"
 				})
@@ -213,25 +213,25 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		// Generator lines
 		canvas.drawLine(cx - r, baseY, cx, apexY, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 		canvas.drawLine(cx + r, baseY, cx, apexY, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 
 		// Base (draw back dashed part first, then front solid part)
 		const baseBackPath = new Path2D().moveTo(cx - r, baseY).arcTo(r, ry, 0, 0, 0, cx + r, baseY)
 		canvas.drawPath(baseBackPath, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			strokeWidth: theme.stroke.width.thick,
 			dash: theme.stroke.dasharray.dashed
 		})
 		const baseFrontPath = new Path2D().moveTo(cx - r, baseY).arcTo(r, ry, 0, 0, 1, cx + r, baseY)
 		canvas.drawPath(baseFrontPath, {
 			fill: "rgba(200, 200, 200, 0.2)",
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 
 		for (const l of labels) {
@@ -239,7 +239,7 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 				// Dashed line from center to right for radius
 				canvas.drawLine(cx, baseY, cx + r, baseY, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base),
+					strokeWidth: theme.stroke.width.base,
 					dash: theme.stroke.dasharray.backEdge
 				})
 				const textY = Math.min(baseY + 18, height - 10) // Ensure text stays within bounds
@@ -255,7 +255,7 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 				// Dashed line from apex to center for height
 				canvas.drawLine(cx, apexY, cx, baseY, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base),
+					strokeWidth: theme.stroke.width.base,
 					dash: theme.stroke.dasharray.backEdge
 				})
 				// Right angle indicator
@@ -266,7 +266,7 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 					.lineTo(cx, baseY - indicatorSize)
 				canvas.drawPath(indicatorPath, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+					strokeWidth: theme.stroke.width.thin
 				})
 				canvas.drawText({
 					x: cx - 10,
@@ -291,20 +291,20 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		canvas.drawEllipse(cx, cy, r, r, {
 			fill: "rgba(220, 220, 220, 0.4)",
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 
 		// Internal equator for 3D effect (dashed back, solid front)
 		const equatorBackPath = new Path2D().moveTo(cx - r, cy).arcTo(r, ry, 0, 0, 0, cx + r, cy)
 		canvas.drawPath(equatorBackPath, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			strokeWidth: theme.stroke.width.base,
 			dash: theme.stroke.dasharray.dashed
 		})
 		const equatorFrontPath = new Path2D().moveTo(cx - r, cy).arcTo(r, ry, 0, 0, 1, cx + r, cy)
 		canvas.drawPath(equatorFrontPath, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			strokeWidth: theme.stroke.width.base
 		})
 
 		for (const l of labels) {
@@ -312,7 +312,7 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 				// Dashed line from center to circumference for radius
 				canvas.drawLine(cx, cy, cx + r, cy, {
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base),
+					strokeWidth: theme.stroke.width.base,
 					dash: theme.stroke.dasharray.backEdge
 				})
 				canvas.drawText({

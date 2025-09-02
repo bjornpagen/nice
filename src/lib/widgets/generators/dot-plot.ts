@@ -137,7 +137,7 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	// Axis line
 	canvas.drawLine(margin.left, axisY, width - margin.right, axisY, {
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		strokeWidth: theme.stroke.width.base
 	})
 
 	// Axis label
@@ -148,7 +148,7 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 			text: abbreviateMonth(axis.label),
 			fill: theme.colors.axisLabel,
 			anchor: "middle",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+			fontPx: theme.font.size.medium
 		})
 	}
 
@@ -171,7 +171,7 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 		const x = toSvgX(t)
 		canvas.drawLine(x, axisY - 5, x, axisY + 5, {
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			strokeWidth: theme.stroke.width.base
 		})
 		if (selectedLabels.has(i)) {
 			const label = t.toFixed(decimals)

@@ -124,7 +124,7 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 	})
 	canvas.drawLine(beamStartX, beamY, beamEndX, beamY, {
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.xxthick)
+		strokeWidth: theme.stroke.width.xxthick
 	})
 
 	const drawWeight = (x: number, y: number, weight: (typeof leftSide)[0]) => {
@@ -189,7 +189,7 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 			const weightY = weightYStart + i * weightHeight
 			canvas.drawLine(sideCenterX, i === 0 ? beamY : weightY - weightHeight + weightGap, sideCenterX, weightY, {
 				stroke: theme.colors.axis,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				strokeWidth: theme.stroke.width.base
 			})
 		})
 	}

@@ -377,7 +377,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 				text: shape.label,
 				anchor: "middle",
 				dominantBaseline: "middle",
-				fontPx: Number.parseFloat(theme.font.size.medium),
+				fontPx: theme.font.size.medium,
 				fontWeight: theme.font.weight.bold,
 				fill: theme.colors.text
 			})
@@ -398,7 +398,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 
 		canvas.drawLine(toSvgX(line.from.x), toSvgY(line.from.y), toSvgX(line.to.x), toSvgY(line.to.y), {
 			stroke: line.color,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			strokeWidth: theme.stroke.width.thick,
 			dash,
 			markerEnd
 		})
@@ -425,7 +425,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 
 		canvas.drawPath(arcPath, {
 			stroke: theme.colors.actionSecondary,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			strokeWidth: theme.stroke.width.thick,
 			fill: "none",
 			markerEnd: "url(#arrowhead)"
 		})
@@ -470,7 +470,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 				text: label,
 				anchor: "middle",
 				dominantBaseline: "middle",
-				fontPx: Number.parseFloat(theme.font.size.medium),
+				fontPx: theme.font.size.medium,
 				fontWeight: theme.font.weight.bold,
 				fill: theme.colors.text
 			})
@@ -564,7 +564,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			canvas.drawCircle(svgX, svgY, radius, {
 				fill: "none",
 				stroke: theme.colors.text,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+				strokeWidth: theme.stroke.width.thick
 			})
 		} else {
 			// dot style
@@ -582,7 +582,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 				text: point.label,
 				anchor: "middle",
 				dominantBaseline: "baseline",
-				fontPx: Number.parseFloat(theme.font.size.medium),
+				fontPx: theme.font.size.medium,
 				fontWeight: theme.font.weight.bold,
 				fill: theme.colors.text
 			})
@@ -774,15 +774,15 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 
 						canvas.drawCircle(preSvgX, preSvgY, preVertexRadius, {
 							fill: theme.colors.highlightPrimary,
-							fillOpacity: Number.parseFloat(theme.opacity.overlay),
+							fillOpacity: theme.opacity.overlay,
 							stroke: theme.colors.white,
-							strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+							strokeWidth: theme.stroke.width.thin
 						})
 						// Image vertices: larger, more prominent
 						canvas.drawCircle(imgSvgX, imgSvgY, imageVertexRadius, {
 							fill: theme.colors.highlightPrimary,
 							stroke: theme.colors.white,
-							strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+							strokeWidth: theme.stroke.width.thin
 						})
 					}
 				}
@@ -796,7 +796,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			canvas.drawCircle(centerSvgX, centerSvgY, centerRadius, {
 				fill: theme.colors.highlightPrimary,
 				stroke: theme.colors.white,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				strokeWidth: theme.stroke.width.base
 			})
 			break
 		}
@@ -810,7 +810,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			canvas.drawCircle(centerSvgX, centerSvgY, centerRadius, {
 				fill: theme.colors.highlightPrimary,
 				stroke: theme.colors.white,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+				strokeWidth: theme.stroke.width.thin
 			})
 
 			// Draw rotation arc to show angle and direction
@@ -850,11 +850,11 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 						// Add small circles at vertices
 						canvas.drawCircle(preSvgX, preSvgY, vertexRadius, {
 							fill: theme.colors.textSecondary,
-							opacity: Number.parseFloat(theme.opacity.overlay)
+							opacity: theme.opacity.overlay
 						})
 						canvas.drawCircle(imgSvgX, imgSvgY, vertexRadius, {
 							fill: theme.colors.textSecondary,
-							opacity: Number.parseFloat(theme.opacity.overlay)
+							opacity: theme.opacity.overlay
 						})
 					}
 				}

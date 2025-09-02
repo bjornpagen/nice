@@ -120,12 +120,12 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 	const xAxisY = baseInfo.chartArea.top + baseInfo.chartArea.height
 	canvas.drawLine(yAxisX, xAxisY, yAxisX, baseInfo.chartArea.top, {
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+		strokeWidth: theme.stroke.width.thick,
 		markerEnd: "url(#graph-arrow)"
 	})
 	canvas.drawLine(yAxisX, xAxisY, baseInfo.chartArea.left + baseInfo.chartArea.width, xAxisY, {
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+		strokeWidth: theme.stroke.width.thick,
 		markerEnd: "url(#graph-arrow)"
 	})
 
@@ -134,7 +134,7 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 		const beforePoints = beforeSegment.points.map((p) => ({ x: baseInfo.toSvgX(p.x), y: baseInfo.toSvgY(p.y) }))
 		canvas.drawPolyline(beforePoints, {
 			stroke: beforeSegment.color,
-			strokeWidth: Number.parseFloat(theme.stroke.width.xxthick),
+			strokeWidth: theme.stroke.width.xxthick,
 			strokeLinejoin: "round",
 			strokeLinecap: "round"
 		})
@@ -143,7 +143,7 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 		const afterPoints = afterSegment.points.map((p) => ({ x: baseInfo.toSvgX(p.x), y: baseInfo.toSvgY(p.y) }))
 		canvas.drawPolyline(afterPoints, {
 			stroke: afterSegment.color,
-			strokeWidth: Number.parseFloat(theme.stroke.width.xxthick),
+			strokeWidth: theme.stroke.width.xxthick,
 			dash: theme.stroke.dasharray.dashedLong,
 			strokeLinejoin: "round",
 			strokeLinecap: "round"
@@ -174,7 +174,7 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 			// Drawing with Canvas calls below
 			canvas.drawLine(x1, y, x2, y, {
 				stroke: item.color,
-				strokeWidth: Number.parseFloat(theme.stroke.width.xxthick),
+				strokeWidth: theme.stroke.width.xxthick,
 				dash: item.dashed ? "8 6" : undefined
 			})
 			canvas.drawText({

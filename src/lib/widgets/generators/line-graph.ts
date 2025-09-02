@@ -195,7 +195,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 			if (s.style === "dotted") dash = "2 6"
 			clippedCanvas.drawPolyline(points, {
 				stroke: s.color,
-				strokeWidth: Number.parseFloat(theme.stroke.width.xthick),
+				strokeWidth: theme.stroke.width.xthick,
 				dash: dash
 			})
 		}
@@ -208,7 +208,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 			const cx = toSvgX(i)
 			const cy = toSvgY(v)
 			if (s.pointShape === "circle") {
-				canvas.drawCircle(cx, cy, Number.parseFloat(theme.geometry.pointRadius.base), {
+				canvas.drawCircle(cx, cy, theme.geometry.pointRadius.base, {
 					fill: s.color
 				})
 			} else if (s.pointShape === "square") {
@@ -244,7 +244,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 					label: s.name,
 					sample: {
 						stroke: s.color,
-						strokeWidth: Number.parseFloat(theme.stroke.width.xthick),
+						strokeWidth: theme.stroke.width.xthick,
 						dash: dash,
 						marker: s.pointShape
 					}

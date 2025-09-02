@@ -221,7 +221,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		const outerPoints = [vertices[0], vertices[1], vertices[2], vertices[3]].filter((p) => p !== undefined)
 		canvas.drawPolygon(outerPoints, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 
 		// Draw height line (dashed)
@@ -230,7 +230,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		if (v3 && v4) {
 			canvas.drawLine(v3.x, v3.y, v4.x, v4.y, {
 				stroke: theme.colors.black,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base),
+				strokeWidth: theme.stroke.width.base,
 				dash: theme.stroke.dasharray.dashedShort
 			})
 		}
@@ -244,7 +244,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 				.lineTo(v4.x, v4.y - markerSize)
 			canvas.drawPath(markerPath, {
 				stroke: theme.colors.black,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				strokeWidth: theme.stroke.width.base
 			})
 		}
 
@@ -258,7 +258,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			y: baseLabelY,
 			text: baseLabel,
 			anchor: "middle",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+			fontPx: theme.font.size.medium
 		})
 
 		// Right side label
@@ -270,7 +270,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			y: rightLabelY,
 			text: rightLabel,
 			anchor: "start",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+			fontPx: theme.font.size.medium
 		})
 
 		// Top base label
@@ -281,7 +281,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			y: topLabelY,
 			text: baseLabel,
 			anchor: "middle",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+			fontPx: theme.font.size.medium
 		})
 
 		// Left side label
@@ -293,7 +293,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			y: leftLabelY,
 			text: leftLabel,
 			anchor: "end",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+			fontPx: theme.font.size.medium
 		})
 
 		// Height label
@@ -306,7 +306,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 				y: heightLabelY,
 				text: heightLabel,
 				anchor: "end",
-				fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+				fontPx: theme.font.size.medium
 			})
 		}
 	} else if (shape.type === "trapezoidRight") {
@@ -333,7 +333,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		const outerPoints = [vertices[0], vertices[1], vertices[2], vertices[3]].filter((p) => p !== undefined)
 		canvas.drawPolygon(outerPoints, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 
 		// Draw height line (dashed)
@@ -342,7 +342,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		if (v3t && v4t) {
 			canvas.drawLine(v3t.x, v3t.y, v4t.x, v4t.y, {
 				stroke: theme.colors.black,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base),
+				strokeWidth: theme.stroke.width.base,
 				dash: theme.stroke.dasharray.dashedShort
 			})
 		}
@@ -356,7 +356,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 				.lineTo(v4t.x + markerSize, v4t.y)
 			canvas.drawPath(markerPath, {
 				stroke: theme.colors.black,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				strokeWidth: theme.stroke.width.base
 			})
 		}
 
@@ -373,7 +373,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			y: bottomLabelY,
 			text: bottomLabel,
 			anchor: "middle",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+			fontPx: theme.font.size.medium
 		})
 
 		// Right side label
@@ -385,7 +385,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			y: rightLabelY,
 			text: rightLabel,
 			anchor: "start",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+			fontPx: theme.font.size.medium
 		})
 
 		// Top base label
@@ -397,7 +397,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			y: topLabelY,
 			text: topLabel,
 			anchor: "middle",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+			fontPx: theme.font.size.medium
 		})
 
 		// Left side label
@@ -409,7 +409,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			y: leftLabelY,
 			text: leftLabel,
 			anchor: "end",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+			fontPx: theme.font.size.medium
 		})
 
 		// Height label
@@ -421,7 +421,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			y: heightLabelY,
 			text: heightLabel,
 			anchor: "end",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+			fontPx: theme.font.size.medium
 		})
 	} else {
 		// shape.type === "trapezoid" - general trapezoid with both sides slanted
@@ -456,7 +456,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		const outerPoints = [vertices[0], vertices[1], vertices[2], vertices[3]].filter((p) => p !== undefined)
 		canvas.drawPolygon(outerPoints, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 
 		// Draw height line (dashed)
@@ -465,7 +465,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		if (v3g && v4g) {
 			canvas.drawLine(v3g.x, v3g.y, v4g.x, v4g.y, {
 				stroke: theme.colors.black,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base),
+				strokeWidth: theme.stroke.width.base,
 				dash: theme.stroke.dasharray.dashedShort
 			})
 		}
@@ -479,7 +479,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 				.lineTo(v4g.x, v4g.y - markerSize)
 			canvas.drawPath(markerPath, {
 				stroke: theme.colors.black,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				strokeWidth: theme.stroke.width.base
 			})
 		}
 
@@ -496,7 +496,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			y: bottomLabelY,
 			text: bottomLabel,
 			anchor: "middle",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+			fontPx: theme.font.size.medium
 		})
 
 		// Right side label
@@ -508,7 +508,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			y: rightLabelY,
 			text: rightLabel,
 			anchor: "start",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+			fontPx: theme.font.size.medium
 		})
 
 		// Top base label
@@ -520,7 +520,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			y: topLabelY,
 			text: topLabel,
 			anchor: "middle",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+			fontPx: theme.font.size.medium
 		})
 
 		// Left side label
@@ -532,7 +532,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			y: leftLabelY,
 			text: leftLabel,
 			anchor: "end",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+			fontPx: theme.font.size.medium
 		})
 
 		// Height label
@@ -545,7 +545,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 				y: heightLabelY,
 				text: heightLabel,
 				anchor: "end",
-				fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+				fontPx: theme.font.size.medium
 			})
 		}
 	}

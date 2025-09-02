@@ -278,7 +278,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 				canvas.drawPath(markerPath, {
 					fill: "none",
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.base)
+					strokeWidth: theme.stroke.width.base
 				})
 			}
 		}
@@ -296,7 +296,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 			canvas.drawPath(semicirclePath, {
 				fill: fillColor,
 				stroke: strokeColor,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+				strokeWidth: theme.stroke.width.thick
 			})
 			break
 		}
@@ -314,7 +314,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 			canvas.drawPath(quarterCirclePath, {
 				fill: fillColor,
 				stroke: strokeColor,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+				strokeWidth: theme.stroke.width.thick
 			})
 			break
 		}
@@ -322,7 +322,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 			canvas.drawCircle(cx, cy, r, {
 				fill: fillColor,
 				stroke: strokeColor,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+				strokeWidth: theme.stroke.width.thick
 			})
 			break
 		}
@@ -334,7 +334,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 		canvas.drawCircle(cx, cy, rInner, {
 			fill: theme.colors.white,
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 	}
 
@@ -348,7 +348,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 			canvas.drawPath(arcPath, {
 				fill: "none",
 				stroke: arc.strokeColor,
-				strokeWidth: Number.parseFloat(theme.stroke.width.xxthick)
+				strokeWidth: theme.stroke.width.xxthick
 			})
 			if (arc.label !== null) {
 				const midAngle = (arc.startAngle + arc.endAngle) / 2
@@ -359,7 +359,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 					x: finalX,
 					y: finalY,
 					text: arc.label,
-					fontPx: Number.parseFloat(theme.font.size.medium.replace("px", "")),
+					fontPx: theme.font.size.medium,
 					fontWeight: theme.font.weight.bold,
 					fill: theme.colors.text,
 					anchor: "middle",
@@ -386,7 +386,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 
 			canvas.drawLine(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y, {
 				stroke: seg.color,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+				strokeWidth: theme.stroke.width.thick
 			})
 
 			if (seg.label) {
@@ -403,7 +403,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 					x: finalX,
 					y: finalY,
 					text: seg.label,
-					fontPx: Number.parseFloat(theme.font.size.base.replace("px", "")),
+					fontPx: theme.font.size.base,
 					fill: theme.colors.text,
 					anchor: "middle",
 					dominantBaseline: "middle"
@@ -413,7 +413,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 	}
 
 	if (showCenterDot) {
-		canvas.drawCircle(cx, cy, Number.parseFloat(theme.geometry.pointRadius.small), {
+		canvas.drawCircle(cx, cy, theme.geometry.pointRadius.small, {
 			fill: theme.colors.black
 		})
 	}
@@ -424,7 +424,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 			x: cx,
 			y: cy + yOffset,
 			text: areaLabel,
-			fontPx: Number.parseFloat(theme.font.size.large.replace("px", "")),
+			fontPx: theme.font.size.large,
 			fontWeight: theme.font.weight.bold,
 			fill: theme.colors.text,
 			anchor: "middle",

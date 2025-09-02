@@ -161,7 +161,7 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 	// Axis and Ticks
 	canvas.drawLine(PADDING, yPos, width - PADDING, yPos, {
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.base),
+		strokeWidth: theme.stroke.width.base,
 		markerStart: "url(#arrow)",
 		markerEnd: "url(#arrow)"
 	})
@@ -171,7 +171,7 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 		// Match tick sizing with standard number line widget for visual consistency
 		canvas.drawLine(x, yPos - 8, x, yPos + 8, {
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			strokeWidth: theme.stroke.width.base
 		})
 		canvas.drawText({
 			x: x,
@@ -199,7 +199,7 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 
 		canvas.drawLine(startPos, yPos, endPos, yPos, {
 			stroke: r.color,
-			strokeWidth: Number.parseFloat(theme.stroke.width.xthick),
+			strokeWidth: theme.stroke.width.xthick,
 			strokeLinecap: "butt",
 			markerStart: markerStart,
 			markerEnd: markerEnd
@@ -211,7 +211,7 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 			canvas.drawCircle(startPos, yPos, 5, {
 				fill: fill,
 				stroke: r.color,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				strokeWidth: theme.stroke.width.base
 			})
 		}
 		if (r.end.type === "bounded") {
@@ -219,7 +219,7 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 			canvas.drawCircle(endPos, yPos, 5, {
 				fill: fill,
 				stroke: r.color,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				strokeWidth: theme.stroke.width.base
 			})
 		}
 	}

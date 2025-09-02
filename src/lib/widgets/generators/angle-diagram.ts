@@ -179,7 +179,7 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 
 		canvas.drawLine(from.x, from.y, to.x, to.y, {
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 	}
 
@@ -217,7 +217,7 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			canvas.drawPath(path, {
 				fill: "none",
 				stroke: angle.color,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+				strokeWidth: theme.stroke.width.thick
 			})
 		}
 
@@ -245,7 +245,7 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			canvas.drawPath(path, {
 				fill: "none",
 				stroke: angle.color,
-				strokeWidth: Number.parseFloat(theme.stroke.width.xthick)
+				strokeWidth: theme.stroke.width.xthick
 			})
 		}
 
@@ -294,7 +294,7 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 				paintOrder: "stroke fill",
 				anchor: "middle",
 				dominantBaseline: "middle",
-				fontPx: Number.parseFloat(theme.font.size.medium.replace("px", "")),
+				fontPx: theme.font.size.medium,
 				fontWeight: "500"
 			})
 		}
@@ -306,16 +306,16 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			canvas.drawEllipse(
 				point.x,
 				point.y,
-				Number.parseFloat(theme.geometry.pointRadius.base),
-				Number.parseFloat(theme.geometry.pointRadius.base),
+				theme.geometry.pointRadius.base,
+				theme.geometry.pointRadius.base,
 				{
 					fill: theme.colors.black,
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+					strokeWidth: theme.stroke.width.thick
 				}
 			)
 		} else {
-			canvas.drawCircle(point.x, point.y, Number.parseFloat(theme.geometry.pointRadius.base), {
+			canvas.drawCircle(point.x, point.y, theme.geometry.pointRadius.base, {
 				fill: theme.colors.black
 			})
 		}
@@ -332,7 +332,7 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 					y: textY,
 					text: point.label,
 					fill: theme.colors.text,
-					fontPx: Number.parseFloat(theme.font.size.large.replace("px", "")),
+					fontPx: theme.font.size.large,
 					fontWeight: theme.font.weight.bold
 				})
 			} else {
@@ -382,7 +382,7 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 					y: textY,
 					text: point.label,
 					fill: theme.colors.text,
-					fontPx: Number.parseFloat(theme.font.size.large.replace("px", "")),
+					fontPx: theme.font.size.large,
 					fontWeight: theme.font.weight.bold
 				})
 			}

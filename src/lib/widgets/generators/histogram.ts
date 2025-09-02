@@ -195,7 +195,7 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 			clippedCanvas.drawRect(x, y, binWidth, barHeight, {
 				fill: theme.colors.highlightPrimary,
 				stroke: theme.colors.axis,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+				strokeWidth: theme.stroke.width.thin
 			})
 		})
 	})

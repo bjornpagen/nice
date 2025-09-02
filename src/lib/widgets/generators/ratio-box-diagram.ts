@@ -198,7 +198,7 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 			canvas.drawEllipse(cx, cy, iconRadiusX, iconRadiusY, {
 				fill,
 				stroke,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+				strokeWidth: theme.stroke.width.thick
 			})
 		}
 
@@ -215,7 +215,7 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 				canvas.drawRect(x, y, boxWidth, boxHeight, {
 					fill: "none",
 					stroke: theme.colors.black,
-					strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+					strokeWidth: theme.stroke.width.thick
 				})
 			}
 
@@ -265,7 +265,7 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 			canvas.drawEllipse(cx, cy, iconRadiusX, iconRadiusY, {
 				fill,
 				stroke,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+				strokeWidth: theme.stroke.width.thick
 			})
 		}
 
@@ -280,7 +280,7 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 			canvas.drawRect(x, y, boxWidth, boxHeight, {
 				fill: "none",
 				stroke: theme.colors.black,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+				strokeWidth: theme.stroke.width.thick
 			})
 		}
 

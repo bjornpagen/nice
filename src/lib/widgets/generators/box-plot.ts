@@ -153,7 +153,7 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 	const axisY = height - margin.bottom
 	canvas.drawLine(margin.left, axisY, width - margin.right, axisY, {
 		stroke: theme.colors.axis,
-		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		strokeWidth: theme.stroke.width.base
 	})
 
 	if (axis.label && axis.label !== "") {
@@ -165,7 +165,7 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 			text: abbreviateMonth(axis.label),
 			fill: theme.colors.axisLabel,
 			anchor: "middle",
-			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+			fontPx: theme.font.size.medium
 		})
 	}
 
@@ -178,7 +178,7 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 		const pos = toSvgX(t)
 		canvas.drawLine(pos, axisY - 5, pos, axisY + 5, {
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			strokeWidth: theme.stroke.width.base
 		})
 		if (selectedLabels.has(i)) {
 			// Check if label should be rendered
@@ -196,33 +196,33 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 	// Whiskers
 	canvas.drawLine(minPos, yCenter, q1Pos, yCenter, {
 		stroke: theme.colors.black,
-		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		strokeWidth: theme.stroke.width.base
 	})
 	canvas.drawLine(q3Pos, yCenter, maxPos, yCenter, {
 		stroke: theme.colors.black,
-		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		strokeWidth: theme.stroke.width.base
 	})
 
 	canvas.drawLine(minPos, yCenter - 10, minPos, yCenter + 10, {
 		stroke: theme.colors.black,
-		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		strokeWidth: theme.stroke.width.base
 	})
 	canvas.drawLine(maxPos, yCenter - 10, maxPos, yCenter + 10, {
 		stroke: theme.colors.black,
-		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		strokeWidth: theme.stroke.width.base
 	})
 
 	// Main box
 	canvas.drawRect(q1Pos, yCenter - plotHeight / 2, q3Pos - q1Pos, plotHeight, {
 		fill: boxColor,
 		stroke: theme.colors.black,
-		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		strokeWidth: theme.stroke.width.base
 	})
 
 	// Median line
 	canvas.drawLine(medianPos, yCenter - plotHeight / 2, medianPos, yCenter + plotHeight / 2, {
 		stroke: medianColor,
-		strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		strokeWidth: theme.stroke.width.thick
 	})
 
 	// NEW: Finalize the canvas and construct the root SVG element

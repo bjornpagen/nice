@@ -125,14 +125,14 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 		// Axis and Ticks
 		canvas.drawLine(PADDING, yPos, width - PADDING, yPos, {
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 
 		for (let t = min; t <= max; t += tickInterval) {
 			const x = toSvgX(t)
 			canvas.drawLine(x, yPos - 5, x, yPos + 5, {
 				stroke: theme.colors.axis,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				strokeWidth: theme.stroke.width.base
 			})
 			// Draw default numeric labels if no custom label exists for this position
 			const hasCustomLabel = customLabels.some((label) => label.value === t)
@@ -143,7 +143,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 					text: String(t),
 					fill: theme.colors.axis,
 					anchor: "middle",
-					fontPx: Number.parseFloat(theme.font.size.small.replace("px", ""))
+					fontPx: theme.font.size.small
 				})
 			}
 		}
@@ -163,10 +163,10 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 
 		// Start value marker
 		const startX = toSvgX(startValue)
-		canvas.drawCircle(startX, yPos, Number.parseFloat(theme.geometry.pointRadius.small), {
+		canvas.drawCircle(startX, yPos, theme.geometry.pointRadius.small, {
 			fill: theme.colors.actionPrimary,
 			stroke: theme.colors.actionPrimary,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+			strokeWidth: theme.stroke.width.thin
 		})
 
 		// Action arrows - sequential with stacked labels
@@ -190,7 +190,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			canvas.drawPath(arrowPath, {
 				fill: "none",
 				stroke: theme.colors.actionPrimary,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base),
+				strokeWidth: theme.stroke.width.base,
 				markerEnd: "url(#action-arrow)"
 			})
 
@@ -201,7 +201,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 				text: action.label,
 				fill: theme.colors.actionPrimary,
 				anchor: "middle",
-				fontPx: Number.parseFloat(theme.font.size.small.replace("px", "")),
+				fontPx: theme.font.size.small,
 				fontWeight: theme.font.weight.bold
 			})
 
@@ -210,10 +210,10 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 
 		// Final value marker
 		const finalX = toSvgX(currentValue)
-		canvas.drawCircle(finalX, yPos, Number.parseFloat(theme.geometry.pointRadius.small), {
+		canvas.drawCircle(finalX, yPos, theme.geometry.pointRadius.small, {
 			fill: theme.colors.actionSecondary,
 			stroke: theme.colors.actionSecondary,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+			strokeWidth: theme.stroke.width.thin
 		})
 	} else {
 		// Vertical orientation
@@ -223,14 +223,14 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 		// Axis and Ticks
 		canvas.drawLine(xPos, PADDING, xPos, height - PADDING, {
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 
 		for (let t = min; t <= max; t += tickInterval) {
 			const y = toSvgY(t)
 			canvas.drawLine(xPos - 5, y, xPos + 5, y, {
 				stroke: theme.colors.axis,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				strokeWidth: theme.stroke.width.base
 			})
 			// Draw default numeric labels if no custom label exists for this position
 			const hasCustomLabel = customLabels.some((label) => label.value === t)
@@ -242,7 +242,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 					text: String(t),
 					fill: theme.colors.axis,
 					anchor: "end",
-					fontPx: Number.parseFloat(theme.font.size.small.replace("px", ""))
+					fontPx: theme.font.size.small
 				})
 			}
 		}
@@ -263,10 +263,10 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 
 		// Start value marker
 		const startY = toSvgY(startValue)
-		canvas.drawCircle(xPos, startY, Number.parseFloat(theme.geometry.pointRadius.small), {
+		canvas.drawCircle(xPos, startY, theme.geometry.pointRadius.small, {
 			fill: theme.colors.actionPrimary,
 			stroke: theme.colors.actionPrimary,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+			strokeWidth: theme.stroke.width.thin
 		})
 
 		// Action arrows - sequential with stacked labels
@@ -290,7 +290,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			canvas.drawPath(arrowPath, {
 				fill: "none",
 				stroke: theme.colors.actionPrimary,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base),
+				strokeWidth: theme.stroke.width.base,
 				markerEnd: "url(#action-arrow)"
 			})
 
@@ -302,7 +302,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 				text: action.label,
 				fill: theme.colors.actionPrimary,
 				anchor: "middle",
-				fontPx: Number.parseFloat(theme.font.size.small.replace("px", "")),
+				fontPx: theme.font.size.small,
 				fontWeight: theme.font.weight.bold,
 				rotate: { angle: -90, cx: labelX, cy: midY }
 			})
@@ -312,10 +312,10 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 
 		// Final value marker
 		const finalY = toSvgY(currentValue)
-		canvas.drawCircle(xPos, finalY, Number.parseFloat(theme.geometry.pointRadius.small), {
+		canvas.drawCircle(xPos, finalY, theme.geometry.pointRadius.small, {
 			fill: theme.colors.actionSecondary,
 			stroke: theme.colors.actionSecondary,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+			strokeWidth: theme.stroke.width.thin
 		})
 	}
 

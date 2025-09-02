@@ -130,7 +130,7 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 		// Draw the main line using Canvas API
 		canvas.drawLine(PADDING, yPos, width - PADDING, yPos, {
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			strokeWidth: theme.stroke.width.thick
 		})
 		const minorTickSpacing = (majorTickInterval / (minorTicksPerInterval + 1)) * scale
 		for (let t = min; t <= max; t += majorTickInterval) {
@@ -138,7 +138,7 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 			// Canvas automatically tracks extents
 			canvas.drawLine(x, yPos - 8, x, yPos + 8, {
 				stroke: theme.colors.axis,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				strokeWidth: theme.stroke.width.base
 			})
 			if (!specialTickLabels.some((stl) => stl.value === t)) {
 				canvas.drawText({ x, y: yPos + 25, text: String(t), anchor: "middle", fill: theme.colors.axisLabel })
@@ -148,7 +148,7 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 				if (mPos < width - PADDING)
 					canvas.drawLine(mPos, yPos - 4, mPos, yPos + 4, {
 						stroke: theme.colors.axis,
-						strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+						strokeWidth: theme.stroke.width.thin
 					})
 			}
 		}
@@ -190,10 +190,10 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 				default:
 					labelY -= 15 // default to above
 			}
-			canvas.drawCircle(cx, yPos, Number.parseFloat(theme.geometry.pointRadius.large), {
+			canvas.drawCircle(cx, yPos, theme.geometry.pointRadius.large, {
 				fill: p.color,
 				stroke: theme.colors.axis,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+				strokeWidth: theme.stroke.width.thin
 			})
 			if (p.label) {
 				canvas.drawText({
@@ -214,14 +214,14 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 		// Draw the main vertical line using Canvas API
 		canvas.drawLine(xPos, PADDING, xPos, height - PADDING, {
 			stroke: theme.colors.axis,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			strokeWidth: theme.stroke.width.base
 		})
 		const minorTickSpacing = (majorTickInterval / (minorTicksPerInterval + 1)) * scale
 		for (let t = min; t <= max; t += majorTickInterval) {
 			const y = toSvgY(t)
 			canvas.drawLine(xPos - 8, y, xPos + 8, y, {
 				stroke: theme.colors.axis,
-				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				strokeWidth: theme.stroke.width.base
 			})
 			if (!specialTickLabels.some((stl) => stl.value === t)) {
 				const labelX = xPos - 15
@@ -232,7 +232,7 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 				if (mPos > PADDING)
 					canvas.drawLine(xPos - 4, mPos, xPos + 4, mPos, {
 						stroke: theme.colors.axis,
-						strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+						strokeWidth: theme.stroke.width.thin
 					})
 			}
 		}
@@ -269,10 +269,10 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 					labelX += 15
 					anchor = "start" // default to right
 			}
-			canvas.drawCircle(xPos, cy, Number.parseFloat(theme.geometry.pointRadius.large), {
+			canvas.drawCircle(xPos, cy, theme.geometry.pointRadius.large, {
 				fill: p.color,
 				stroke: theme.colors.axis,
-				strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+				strokeWidth: theme.stroke.width.thin
 			})
 			if (p.label) {
 				canvas.drawText({

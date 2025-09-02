@@ -111,12 +111,12 @@ export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema>
 	// Circles (semi-transparent for overlap visibility)
 	canvas.drawCircle(cxA, cy, r, {
 		fill: circleA.color,
-		fillOpacity: Number.parseFloat(theme.opacity.overlay),
+		fillOpacity: theme.opacity.overlay,
 		stroke: theme.colors.axis
 	})
 	canvas.drawCircle(cxB, cy, r, {
 		fill: circleB.color,
-		fillOpacity: Number.parseFloat(theme.opacity.overlay),
+		fillOpacity: theme.opacity.overlay,
 		stroke: theme.colors.axis
 	})
 

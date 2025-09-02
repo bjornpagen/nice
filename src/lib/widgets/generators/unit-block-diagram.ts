@@ -102,7 +102,7 @@ export const generateUnitBlockDiagram: WidgetGenerator<typeof UnitBlockDiagramPr
 		canvas.drawRect(bx, by, blockWidth, blockHeight, {
 			fill: "none",
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+			strokeWidth: theme.stroke.width.thin
 		})
 	}
 

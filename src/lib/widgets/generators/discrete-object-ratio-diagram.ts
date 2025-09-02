@@ -100,7 +100,7 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 	canvas.drawRect(containerX, containerY, containerWidth, containerHeight, {
 		fill: theme.colors.background,
 		stroke: theme.colors.border,
-		strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		strokeWidth: theme.stroke.width.thick
 	})
 
 	// Draw the title using Canvas API
@@ -111,7 +111,7 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 			text: abbreviateMonth(title),
 			maxWidthPx: width - 40,
 			anchor: "middle",
-			fontPx: Number.parseFloat(theme.font.size.base) * 1.1
+			fontPx: theme.font.size.base * 1.1
 		})
 	}
 

@@ -514,16 +514,16 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		const py = baseInfo.toSvgY(p.y)
 
 		// Data points and labels
-		canvas.drawCircle(px, py, Number.parseFloat(theme.geometry.pointRadius.large), {
+		canvas.drawCircle(px, py, theme.geometry.pointRadius.large, {
 			fill: theme.colors.black,
-			fillOpacity: Number.parseFloat(theme.opacity.overlayHigh)
+			fillOpacity: theme.opacity.overlayHigh
 		})
 		canvas.drawText({
 			x: px + 5,
 			y: py - 5,
 			text: abbreviateMonth(p.label),
 			fill: theme.colors.text,
-			fontPx: Number.parseFloat(theme.font.size.small.replace("px", ""))
+			fontPx: theme.font.size.small
 		})
 	}
 

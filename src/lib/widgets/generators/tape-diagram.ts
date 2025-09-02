@@ -187,15 +187,15 @@ export const generateTapeDiagram: WidgetGenerator<typeof TapeDiagramPropsSchema>
 
 		canvas.drawLine(padding, bracketY, padding + totalTapeLength, bracketY, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			strokeWidth: theme.stroke.width.base
 		})
 		canvas.drawLine(padding, bracketY - 5, padding, bracketY + 5, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			strokeWidth: theme.stroke.width.base
 		})
 		canvas.drawLine(padding + totalTapeLength, bracketY - 5, padding + totalTapeLength, bracketY + 5, {
 			stroke: theme.colors.black,
-			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			strokeWidth: theme.stroke.width.base
 		})
 		if (totalLabel !== null) {
 			canvas.drawText({
