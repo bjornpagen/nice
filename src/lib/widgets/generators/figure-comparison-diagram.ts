@@ -249,7 +249,7 @@ function drawFigure(
 	// Canvas automatically tracks extents
 
 	// Draw the figure shape
-	const points = transformedVertices.map((v) => `${v.x},${v.y}`).join(" ")
+	const points = transformedVertices.map((v) => ({ x: v.x, y: v.y }))
 	const strokeWidth = figure.strokeWidth * scale
 
 	canvas.drawPolygon(points, { fill: figure.fillColor, stroke: figure.strokeColor, strokeWidth })

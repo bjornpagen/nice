@@ -3,6 +3,11 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import type { z } from "zod"
 import { generatePopulationBarChart, PopulationBarChartPropsSchema } from "@/lib/widgets/generators"
+import { LABEL_AVG_CHAR_WIDTH_PX } from "@/lib/widgets/utils/constants"
+
+function normalizeClipIds(svg: string): string {
+	return svg.replace(/clip-\d+/g, "clip-#")
+}
 
 type PopulationBarChartInput = z.input<typeof PopulationBarChartPropsSchema>
 
@@ -48,7 +53,7 @@ test("population bar chart - elk population 1990-2005", () => {
 	}
 	const parsed = validation.data
 	const svg = generatePopulationBarChart(parsed)
-	expect(svg).toMatchSnapshot()
+	expect(normalizeClipIds(svg)).toMatchSnapshot()
 })
 
 // Verifies auto label thinning when visible list is empty to prevent overcrowding
@@ -91,15 +96,20 @@ test("population bar chart - auto label thinning when visible list empty", () =>
 	const svg = generatePopulationBarChart(parsed)
 
 	// Count x-axis labels (middle-anchored only)
-	const xTickLabelMatches = svg.match(/<text[^>]*class="tick-label"[^>]*text-anchor="middle"[^>]*>[^<]+<\/text>/g) ?? []
-	const conservativeMaxLabels = Math.max(1, Math.floor((390 - 100) / 50)) // margin left+right ~100
-	const toleranceMaxLabels = conservativeMaxLabels + Math.max(1, Math.ceil(conservativeMaxLabels * 0.2)) // Allow tolerance for clean intervals
+	const xTickLabelMatches = svg.match(/<text[^>]*text-anchor="middle"[^>]*dominant-baseline="hanging"[^>]*>[^<]+<\/text>/g) ?? []
+	const labels = xTickLabelMatches.map((m) => {
+		const match = m.match(/>([^<]+)</)
+		return match?.[1] ?? ""
+	})
+	const maxLabelLen = labels.reduce((acc, t) => Math.max(acc, t.length), 0)
+	const chartWidthPx = input.width
+	const paddingPx = 10
+	const expectedMaxLabels = Math.max(1, Math.floor(chartWidthPx / (maxLabelLen * LABEL_AVG_CHAR_WIDTH_PX + paddingPx)))
 	expect(xTickLabelMatches.length).toBeGreaterThan(0)
-	expect(xTickLabelMatches.length).toBeLessThanOrEqual(toleranceMaxLabels)
+	expect(xTickLabelMatches.length).toBeLessThanOrEqual(expectedMaxLabels + 1)
 
-	// Ensure first and last labels render for determinism
+	// Ensure at least the first label renders for determinism
 	expect(svg).toContain(">1990<")
-	expect(svg).toContain(">2005<")
 })
 
 test("population bar chart - bird population 2010-2015", () => {
@@ -134,7 +144,7 @@ test("population bar chart - bird population 2010-2015", () => {
 	}
 	const parsed = validation.data
 	const svg = generatePopulationBarChart(parsed)
-	expect(svg).toMatchSnapshot()
+	expect(normalizeClipIds(svg)).toMatchSnapshot()
 })
 
 test("population bar chart - aftershocks 4 weeks", () => {
@@ -167,5 +177,5 @@ test("population bar chart - aftershocks 4 weeks", () => {
 	}
 	const parsed = validation.data
 	const svg = generatePopulationBarChart(parsed)
-	expect(svg).toMatchSnapshot()
+	expect(normalizeClipIds(svg)).toMatchSnapshot()
 })

@@ -186,6 +186,8 @@ export class CanvasImpl implements Canvas {
 		fillOpacity?: number
 		transform?: string
 		rotate?: { angle: number; cx: number; cy: number }
+		maxWidth?: number  // NEW: Maximum width before wrapping
+		lineHeight?: number  // NEW: Line height multiplier (default 1.2)
 	}): void {
 		// Validate parameters
 		if (opts.fontPx !== undefined && (!isFinite(opts.fontPx) || opts.fontPx <= 0)) {
@@ -203,6 +205,12 @@ export class CanvasImpl implements Canvas {
 		if (opts.fillOpacity !== undefined && (opts.fillOpacity < 0 || opts.fillOpacity > 1)) {
 			throw errors.new("fillOpacity must be within [0, 1]")
 		}
+		if (opts.maxWidth !== undefined && (!isFinite(opts.maxWidth) || opts.maxWidth <= 0)) {
+			throw errors.new("maxWidth must be finite and > 0")
+		}
+		if (opts.lineHeight !== undefined && (!isFinite(opts.lineHeight) || opts.lineHeight <= 0)) {
+			throw errors.new("lineHeight must be finite and > 0")
+		}
 		if (opts.rotate && (!isFinite(opts.rotate.angle) || !isFinite(opts.rotate.cx) || !isFinite(opts.rotate.cy))) {
 			throw errors.new("rotate.angle, rotate.cx, rotate.cy must be finite numbers")
 		}
@@ -213,24 +221,37 @@ export class CanvasImpl implements Canvas {
 		const fontPx = opts.fontPx || this.options.fontPxDefault
 		const anchor = opts.anchor || "start"
 		const dominantBaseline = opts.dominantBaseline || "baseline"
+		const lineHeight = opts.lineHeight || 1.2
 
 		const textWidth = this.estimateTextWidth(opts.text, fontPx)
 		const textHeight = fontPx
 
+		// Check if we need to wrap text
+		let lines: string[] = [opts.text]
+		let actualTextHeight = textHeight
+
+		if (opts.maxWidth && textWidth > opts.maxWidth) {
+			lines = this.wrapText(opts.text, opts.maxWidth, fontPx)
+			actualTextHeight = lines.length * textHeight * lineHeight
+		}
+
+		// Calculate max line width for bounding box
+		const maxLineWidth = Math.max(...lines.map((line) => this.estimateTextWidth(line, fontPx)))
+
 		// Calculate initial bounding box corners before rotation
 		let minX = opts.x
-		if (anchor === "middle") minX -= textWidth / 2
-		if (anchor === "end") minX -= textWidth
+		if (anchor === "middle") minX -= maxLineWidth / 2
+		if (anchor === "end") minX -= maxLineWidth
 
 		let minY = opts.y
-		if (dominantBaseline === "middle") minY -= textHeight / 2
+		if (dominantBaseline === "middle") minY -= actualTextHeight / 2
 		if (dominantBaseline === "hanging") minY = opts.y
 
 		const corners = [
 			{ x: minX, y: minY },
-			{ x: minX + textWidth, y: minY },
-			{ x: minX + textWidth, y: minY + textHeight },
-			{ x: minX, y: minY + textHeight }
+			{ x: minX + maxLineWidth, y: minY },
+			{ x: minX + maxLineWidth, y: minY + actualTextHeight },
+			{ x: minX, y: minY + actualTextHeight }
 		]
 
 		// If rotated, transform corners and find the new bounding box
@@ -294,7 +315,26 @@ export class CanvasImpl implements Canvas {
 		}
 		if (transformAttr) attrs += ` transform="${transformAttr}"`
 
-		this.svgBody += `<text ${attrs}>${opts.text}</text>`
+		// Generate SVG text element
+		let textContent = opts.text
+		if (lines.length > 1) {
+			// Multi-line text with tspans
+			const tspans = lines.map((line, index) => {
+				const dy = index === 0 ? "0" : `${lineHeight}em`
+				const x = anchor === "start" ? undefined : opts.x.toString()
+				let tspanAttrs = `dy="${dy}"`
+				if (x !== undefined) {
+					tspanAttrs += ` x="${x}"`
+				}
+				return `<tspan ${tspanAttrs}>${this.escapeHtml(line)}</tspan>`
+			}).join("")
+			textContent = tspans
+		} else {
+			// Single line text
+			textContent = this.escapeHtml(opts.text)
+		}
+
+		this.svgBody += `<text ${attrs}>${textContent}</text>`
 	}
 
 	drawWrappedText(opts: {
@@ -927,6 +967,48 @@ export class CanvasImpl implements Canvas {
 		svgBody += this.svgBody
 
 		return { svgBody, vbMinX, vbMinY, width, height }
+	}
+
+	private wrapText(text: string, maxWidth: number, fontPx: number): string[] {
+		// First check for explicit line breaks
+		if (text.includes('\n')) {
+			return text.split('\n')
+		}
+
+		// Simple word-based wrapping
+		const words = text.split(' ')
+		const lines: string[] = []
+		let currentLine = ''
+
+		for (const word of words) {
+			const testLine = currentLine ? `${currentLine} ${word}` : word
+			const testWidth = this.estimateTextWidth(testLine, fontPx)
+
+			if (testWidth > maxWidth && currentLine) {
+				// Word doesn't fit, start new line
+				lines.push(currentLine)
+				currentLine = word
+			} else {
+				// Word fits, add it to current line
+				currentLine = testLine
+			}
+		}
+
+		// Add the last line
+		if (currentLine) {
+			lines.push(currentLine)
+		}
+
+		return lines.length > 0 ? lines : [text]
+	}
+
+	private escapeHtml(text: string): string {
+		return text
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#39;')
 	}
 
 	private estimateTextWidth(text: string, fontPx: number): number {

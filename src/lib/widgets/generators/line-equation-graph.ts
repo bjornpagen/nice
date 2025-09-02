@@ -86,7 +86,7 @@ export const generateLineEquationGraph: WidgetGenerator<typeof LineEquationGraph
 				tickInterval: yAxis.tickInterval,
 				showGridLines: yAxis.showGridLines
 			},
-			showQuadrantLabels: true
+			showQuadrantLabels: showQuadrantLabels
 		},
 		canvas
 	)
@@ -94,10 +94,8 @@ export const generateLineEquationGraph: WidgetGenerator<typeof LineEquationGraph
 	// Create point map for ID resolution
 	const pointMap = new Map(points.map((pt) => [pt.id, pt]))
 
-	// Render clipped lines
-	canvas.drawInClippedRegion((clippedCanvas) => {
-		renderLines(lines, xAxis, yAxis, baseInfo.toSvgX, baseInfo.toSvgY, clippedCanvas)
-	})
+	// Render lines (renderLines manages clipping internally)
+	renderLines(lines, xAxis, yAxis, baseInfo.toSvgX, baseInfo.toSvgY, canvas)
 
 	// Render unclipped points on the main canvas
 	renderPoints(points, baseInfo.toSvgX, baseInfo.toSvgY, canvas)

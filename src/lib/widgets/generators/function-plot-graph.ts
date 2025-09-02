@@ -86,15 +86,13 @@ export const generateFunctionPlotGraph: WidgetGenerator<typeof FunctionPlotGraph
 				tickInterval: yAxis.tickInterval,
 				showGridLines: yAxis.showGridLines
 			},
-			showQuadrantLabels: true
+			showQuadrantLabels: showQuadrantLabels
 		},
 		canvas
 	)
 
-	// Render clipped polylines
-	canvas.drawInClippedRegion((clippedCanvas) => {
-		renderPolylines(polylines, baseInfo.toSvgX, baseInfo.toSvgY, clippedCanvas)
-	})
+	// Render polylines (renderPolylines manages clipping internally)
+	renderPolylines(polylines, baseInfo.toSvgX, baseInfo.toSvgY, canvas)
 
 	// Render unclipped points on the main canvas
 	renderPoints(points, baseInfo.toSvgX, baseInfo.toSvgY, canvas)

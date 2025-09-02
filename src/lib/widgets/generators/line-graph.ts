@@ -167,12 +167,15 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 
 		const yCenter = baseInfo.chartArea.top + baseInfo.chartArea.height / 2
 		const labelX = rightAxisX + 30
+		// Estimate available width for text (space between axis and chart edge)
+		const availableWidth = Math.max(50, baseInfo.chartArea.width - (rightAxisX - baseInfo.chartArea.left))
 		canvas.drawText({
 			x: labelX,
 			y: yCenter,
 			text: abbreviateMonth(yAxisRight.label),
 			anchor: "middle",
 			fontPx: 16,
+			maxWidth: availableWidth,
 			rotate: { angle: -90, cx: labelX, cy: yCenter }
 		})
 	}

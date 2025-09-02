@@ -136,7 +136,7 @@ export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarCha
 	const barPadding = 0.3
 	const innerBarWidth = bandWidth * (1 - barPadding)
 
-	// Handle visible labels logic
+	// Handle visible labels logic (deterministic: inputs define category labels; thinning is applied upstream in axis renderer)
 	const visibleLabelSet = new Set<string>(xAxisVisibleLabels)
 	const useAutoThinning = xAxisVisibleLabels.length === 0
 

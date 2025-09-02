@@ -219,14 +219,15 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 		})
 
 		// Draw annotation text (multi-line)
-		anno.text.forEach((line, lineIndex) => {
-			canvas.drawText({
-				x: textX,
-				y: textY + lineIndex * 16,
-				text: line,
-				anchor: "start",
-				fontPx: 12
-			})
+		const fullText = anno.text.join('\n')
+		canvas.drawText({
+			x: textX,
+			y: textY,
+			text: fullText,
+			anchor: "start",
+			fontPx: 12,
+			maxWidth: 150, // Reasonable width for annotation text
+			lineHeight: 1.2
 		})
 	})
 

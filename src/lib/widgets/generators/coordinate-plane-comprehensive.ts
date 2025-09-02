@@ -125,7 +125,7 @@ export const generateCoordinatePlaneComprehensive: WidgetGenerator<typeof Coordi
 				tickInterval: yAxis.tickInterval,
 				showGridLines: yAxis.showGridLines
 			},
-			showQuadrantLabels: true
+			showQuadrantLabels: showQuadrantLabels
 		},
 		canvas
 	)
@@ -139,17 +139,15 @@ export const generateCoordinatePlaneComprehensive: WidgetGenerator<typeof Coordi
 
 	// Render all elements using Canvas API
 	// Render clipped geometry
-	canvas.drawInClippedRegion((clippedCanvas) => {
-		if (polygons.length > 0) {
-			renderPolygons(polygons, pointMap, baseInfo.toSvgX, baseInfo.toSvgY, clippedCanvas)
-		}
-		if (lines.length > 0) {
-			renderLines(lines, xAxis, yAxis, baseInfo.toSvgX, baseInfo.toSvgY, clippedCanvas)
-		}
-		if (polylines.length > 0) {
-			renderPolylines(polylines, baseInfo.toSvgX, baseInfo.toSvgY, clippedCanvas)
-		}
-	})
+	if (polygons.length > 0) {
+		renderPolygons(polygons, pointMap, baseInfo.toSvgX, baseInfo.toSvgY, canvas)
+	}
+	if (lines.length > 0) {
+		renderLines(lines, xAxis, yAxis, baseInfo.toSvgX, baseInfo.toSvgY, canvas)
+	}
+	if (polylines.length > 0) {
+		renderPolylines(polylines, baseInfo.toSvgX, baseInfo.toSvgY, canvas)
+	}
 
 	// Render unclipped points and distances on the main canvas
 	if (points.length > 0) {

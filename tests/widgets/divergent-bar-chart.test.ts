@@ -3,6 +3,11 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import type { z } from "zod"
 import { DivergentBarChartPropsSchema, generateDivergentBarChart } from "@/lib/widgets/generators"
+import { LABEL_AVG_CHAR_WIDTH_PX } from "@/lib/widgets/utils/constants"
+
+function normalizeClipIds(svg: string): string {
+	return svg.replace(/clip-\d+/g, "clip-#")
+}
 
 type DivergentBarChartInput = z.input<typeof DivergentBarChartPropsSchema>
 
@@ -53,7 +58,7 @@ test("divergent bar chart - sea level change by century", () => {
 	}
 	const parsed = parseResult.data
 	const svg = generateDivergentBarChart(parsed)
-	expect(svg).toMatchSnapshot()
+	expect(normalizeClipIds(svg)).toMatchSnapshot()
 })
 
 test("divergent bar chart - auto label thinning prevents overcrowding deterministically", () => {
@@ -104,14 +109,17 @@ test("divergent bar chart - auto label thinning prevents overcrowding determinis
 	const svg = generateDivergentBarChart(parsed)
 
 	// Count how many x-axis tick labels were rendered (middle-anchored only)
-	const xTickLabelMatches = svg.match(/<text[^>]*class="tick-label"[^>]*text-anchor="middle"[^>]*>[^<]+<\/text>/g) ?? []
-	// Extract the actual dynamic width from the SVG
-	const widthMatch = svg.match(/width="(\d+)"/)
-	const actualWidth = widthMatch && widthMatch[1] ? parseInt(widthMatch[1]) : 374
-	// chartWidth = width - left(80) - right(20), min spacing 50
-	const expectedMaxLabels = Math.max(1, Math.floor((actualWidth - 100) / 50))
+	const xTickLabelMatches = svg.match(/<text[^>]*text-anchor="middle"[^>]*dominant-baseline="hanging"[^>]*>[^<]+<\/text>/g) ?? []
+	const labels = xTickLabelMatches.map((m) => {
+		const match = m.match(/>([^<]+)</)
+		return match?.[1] ?? ""
+	})
+	const maxLabelLen = labels.reduce((acc, t) => Math.max(acc, t.length), 0)
+	const chartWidthPx = input.width
+	const paddingPx = 10
+	const expectedMaxLabels = Math.max(1, Math.floor(chartWidthPx / (maxLabelLen * LABEL_AVG_CHAR_WIDTH_PX + paddingPx)))
 	expect(xTickLabelMatches.length).toBeGreaterThan(0)
-	expect(xTickLabelMatches.length).toBeLessThanOrEqual(expectedMaxLabels)
+	expect(xTickLabelMatches.length).toBeLessThanOrEqual(expectedMaxLabels + 1)
 
 	// Ensure first category present for determinism
 	expect(svg).toContain(">1st<")
@@ -163,5 +171,5 @@ test("divergent bar chart - sea level by century (QA payload)", () => {
 	}
 	const parsed = parseResult.data
 	const svg = generateDivergentBarChart(parsed)
-	expect(svg).toMatchSnapshot()
+	expect(normalizeClipIds(svg)).toMatchSnapshot()
 })

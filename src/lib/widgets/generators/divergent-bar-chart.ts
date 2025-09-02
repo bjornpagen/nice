@@ -134,7 +134,7 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	const barPadding = 0.4
 	const innerBarWidth = bandWidth * (1 - barPadding)
 
-	// Draw bars within the clipped region
+	// Draw bars within the clipped region (deterministic order by index)
 	canvas.drawInClippedRegion((clippedCanvas) => {
 		chartData.forEach((d, i) => {
 			const xCenter = baseInfo.toSvgX(i)
