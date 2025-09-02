@@ -426,11 +426,9 @@ Perseus uses special notation like [[☃ widget-name 1]] for interactive widgets
     - \`&quot;\` for double quote (") when it appears in content or attribute values
     - \`&apos;\` for single quote/apostrophe (') when it appears in content or attribute values
 
-6. **WORKS-CITED LISTS MUST BE ORDERED:** Works-cited lists MUST use ordered lists (\`<ol>\`), never unordered lists (\`<ul>\`).
+6. **WORKS-CITED LISTS MUST BE ORDERED:** Works-cited lists MUST use ordered lists (\`<ol>\`), never unordered lists (\`<ul>\`). This should only be for works cited sections, NOT for anything else like lists of references, attributions, etc.
 
-7. **ABSOLUTE LINKS ONLY:** All links MUST be absolute HTTPS URLs. Convert any relative paths (e.g., "/science/...") to \`https://nice.academy/...\`.
-
-8. **DROPDOWNS MUST USE DETAILS/SUMMARY:** Convert Perseus explanation widgets (e.g., \`[[☃ explanation X]]\`) into semantic HTML5 \`<details>\` with a \`<summary>\` for the prompt and the explanation content inside \`<details>\`. Do NOT use generic \`<div>\`/\`<h3>\` structures.
+7. **DROPDOWNS MUST USE DETAILS/SUMMARY:** Convert Perseus explanation widgets (e.g., \`[[☃ explanation X]]\`) into semantic HTML5 \`<details>\` with a \`<summary>\` for the prompt and the explanation content inside \`<details>\`. Do NOT use generic \`<div>\`/\`<h3>\` structures.
 
 ---
 ### ABSOLUTE XML RULES - NON-NEGOTIABLE ###
