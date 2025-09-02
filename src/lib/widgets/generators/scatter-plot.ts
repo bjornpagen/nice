@@ -4,7 +4,7 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
-import { setupCoordinatePlaneBaseV2 } from "@/lib/widgets/utils/coordinate-plane-utils"
+import { setupCoordinatePlaneV2 } from "@/lib/widgets/utils/coordinate-plane-v2"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import { Path2D } from "@/lib/widgets/utils/path-builder"
@@ -349,28 +349,25 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		lineHeightDefault: 1.2
 	})
 
-	const baseInfo = setupCoordinatePlaneBaseV2(
+	const baseInfo = setupCoordinatePlaneV2(
 		{
 			width,
 			height,
-			title,
 			xAxis: {
-				xScaleType: "numeric",
 				label: xAxis.label,
 				min: xAxis.min,
 				max: xAxis.max,
 				tickInterval: xAxis.tickInterval,
-				showGridLines: xAxis.gridLines,
-				showTickLabels: true
+				showGridLines: xAxis.gridLines
 			},
 			yAxis: {
 				label: yAxis.label,
 				min: yAxis.min,
 				max: yAxis.max,
 				tickInterval: yAxis.tickInterval,
-				showGridLines: yAxis.gridLines,
-				showTickLabels: true
-			}
+				showGridLines: yAxis.gridLines
+			},
+			showQuadrantLabels: false
 		},
 		canvas
 	)

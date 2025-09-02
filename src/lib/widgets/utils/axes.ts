@@ -95,7 +95,7 @@ export function computeAndRenderYAxis(
 	spec: AxisSpec,
 	chartArea: { top: number; left: number; width: number; height: number },
 	xAxisSpec: AxisSpec,
-	canvas: Canvas // NEW
+	canvas: Canvas,
 ): AxisResult {
 	const tickLength = spec.showTicks === false ? 0 : TICK_LENGTH_PX
 	const isCategorical = !!(spec.categories && spec.categories.length > 0)
@@ -181,7 +181,7 @@ export function computeAndRenderYAxis(
 				})
 			}
 
-			// Always render horizontal gridlines for all ticks when enabled
+			// Always render horizontal gridlines for all ticks when enabled, including at y = 0
 			if (spec.showGridLines) {
 				canvas.drawLine(chartArea.left, y, chartArea.left + chartArea.width, y, {
 					stroke: theme.colors.gridMajor,
@@ -214,7 +214,7 @@ export function computeAndRenderYAxis(
 export function computeAndRenderXAxis(
 	spec: AxisSpecX,
 	chartArea: { top: number; left: number; width: number; height: number },
-	canvas: Canvas // NEW
+	canvas: Canvas,
 ): AxisResult {
 	const tickLength = spec.showTicks === false ? 0 : TICK_LENGTH_PX
 	// The `xScaleType` is guaranteed to exist by the type system.
@@ -347,9 +347,8 @@ export function computeAndRenderXAxis(
 					})
 				}
 
-				// Suppress gridline at 0 only if it would overdraw the main axis, but never the tick/label
-				const isZeroOverlappingAxis = Math.abs(t) < 1e-9
-				if (spec.showGridLines && !isZeroOverlappingAxis) {
+				// Always render vertical gridlines for all ticks when enabled, including at x = 0
+				if (spec.showGridLines) {
 					canvas.drawLine(x, chartArea.top, x, chartArea.top + chartArea.height, {
 						stroke: theme.colors.gridMajor,
 						strokeWidth: GRID_STROKE_WIDTH_PX
