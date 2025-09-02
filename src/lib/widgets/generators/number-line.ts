@@ -4,6 +4,7 @@ import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
+import { buildTicks, formatTickInt } from "@/lib/widgets/utils/ticks"
 
 const Point = z
 	.object({
@@ -132,26 +133,32 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 			stroke: theme.colors.axis,
 			strokeWidth: theme.stroke.width.thick
 		})
-		const minorTickSpacing = (majorTickInterval / (minorTicksPerInterval + 1)) * scale
-		for (let t = min; t <= max; t += majorTickInterval) {
+		const minorTickInterval = majorTickInterval / (minorTicksPerInterval + 1)
+		const { values, ints, scale: tickScale } = buildTicks(min, max, minorTickInterval)
+		const specialLabelsMap = new Map(specialTickLabels.map((stl) => [stl.value, stl.label]))
+
+		values.forEach((t, i) => {
+			const vI = ints[i]
+			if (vI === undefined) return
+
 			const x = toSvgX(t)
-			// Canvas automatically tracks extents
-			canvas.drawLine(x, yPos - 8, x, yPos + 8, {
+			const isMajor = (vI * (minorTickInterval * tickScale)) % (majorTickInterval * tickScale) < 1e-9
+
+			const tickHeight = isMajor ? 8 : 4
+			canvas.drawLine(x, yPos - tickHeight, x, yPos + tickHeight, {
 				stroke: theme.colors.axis,
-				strokeWidth: theme.stroke.width.base
+				strokeWidth: isMajor ? theme.stroke.width.base : theme.stroke.width.thin
 			})
-			if (!specialTickLabels.some((stl) => stl.value === t)) {
-				canvas.drawText({ x, y: yPos + 25, text: String(t), anchor: "middle", fill: theme.colors.axisLabel })
+
+			if (isMajor) {
+				const specialLabel = specialLabelsMap.get(t)
+				if (specialLabel) {
+					canvas.drawText({ x, y: yPos + 25, text: specialLabel, anchor: "middle", fill: theme.colors.axisLabel, fontWeight: theme.font.weight.bold })
+				} else {
+					canvas.drawText({ x, y: yPos + 25, text: formatTickInt(vI, tickScale), anchor: "middle", fill: theme.colors.axisLabel })
+				}
 			}
-			for (let m = 1; m <= minorTicksPerInterval; m++) {
-				const mPos = x + m * minorTickSpacing
-				if (mPos < width - PADDING)
-					canvas.drawLine(mPos, yPos - 4, mPos, yPos + 4, {
-						stroke: theme.colors.axis,
-						strokeWidth: theme.stroke.width.thin
-					})
-			}
-		}
+		})
 		// Special Labels
 		for (const s of specialTickLabels) {
 			if (s.label !== "") {
@@ -216,26 +223,32 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 			stroke: theme.colors.axis,
 			strokeWidth: theme.stroke.width.base
 		})
-		const minorTickSpacing = (majorTickInterval / (minorTicksPerInterval + 1)) * scale
-		for (let t = min; t <= max; t += majorTickInterval) {
+		const minorTickInterval = majorTickInterval / (minorTicksPerInterval + 1)
+		const { values, ints, scale: tickScale } = buildTicks(min, max, minorTickInterval)
+		const specialLabelsMap = new Map(specialTickLabels.map((stl) => [stl.value, stl.label]))
+
+		values.forEach((t, i) => {
+			const vI = ints[i]
+			if (vI === undefined) return
+
 			const y = toSvgY(t)
-			canvas.drawLine(xPos - 8, y, xPos + 8, y, {
+			const isMajor = (vI * (minorTickInterval * tickScale)) % (majorTickInterval * tickScale) < 1e-9
+			const tickWidth = isMajor ? 8 : 4
+			canvas.drawLine(xPos - tickWidth, y, xPos + tickWidth, y, {
 				stroke: theme.colors.axis,
-				strokeWidth: theme.stroke.width.base
+				strokeWidth: isMajor ? theme.stroke.width.base : theme.stroke.width.thin
 			})
-			if (!specialTickLabels.some((stl) => stl.value === t)) {
+
+			if (isMajor) {
+				const specialLabel = specialLabelsMap.get(t)
 				const labelX = xPos - 15
-				canvas.drawText({ x: labelX, y: y + 4, text: String(t), anchor: "end", fill: theme.colors.axisLabel })
+				if (specialLabel) {
+					canvas.drawText({ x: labelX, y: y + 4, text: specialLabel, anchor: "end", fill: theme.colors.axisLabel, fontWeight: theme.font.weight.bold })
+				} else {
+					canvas.drawText({ x: labelX, y: y + 4, text: formatTickInt(vI, tickScale), anchor: "end", fill: theme.colors.axisLabel })
+				}
 			}
-			for (let m = 1; m <= minorTicksPerInterval; m++) {
-				const mPos = y - m * minorTickSpacing
-				if (mPos > PADDING)
-					canvas.drawLine(xPos - 4, mPos, xPos + 4, mPos, {
-						stroke: theme.colors.axis,
-						strokeWidth: theme.stroke.width.thin
-					})
-			}
-		}
+		})
 		// Special Labels
 		for (const s of specialTickLabels) {
 			if (s.label !== "") {

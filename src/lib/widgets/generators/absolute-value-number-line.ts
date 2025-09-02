@@ -7,6 +7,7 @@ import { PADDING } from "@/lib/widgets/utils/constants"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { calculateTextAwareLabelSelection } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
+import { buildTicks, formatTickInt } from "@/lib/widgets/utils/ticks"
 
 export const ErrInvalidRange = errors.new("min must be less than max")
 
@@ -68,24 +69,23 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 		strokeWidth: theme.stroke.width.base
 	})
 
-	// Ticks and labels with text-aware selection (calculateTextAwareLabelSelection remains)
-	const tickValues: number[] = []
-	const tickPositions: number[] = []
-	for (let t = min; t <= max; t += tickInterval) {
-		tickValues.push(t)
-		tickPositions.push(toSvgX(t))
-	}
-	const tickLabels = tickValues.map(String)
+	// Ticks and labels with text-aware selection
+	const { values, ints, scale: tickScale } = buildTicks(min, max, tickInterval)
+	const tickPositions = values.map(toSvgX)
+	const tickLabels = ints.map((vI) => formatTickInt(vI, tickScale))
 	const selectedLabels = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartWidth, 8, 5)
 
-	tickValues.forEach((t, i) => {
+	values.forEach((t, i) => {
 		const x = toSvgX(t)
 		canvas.drawLine(x, yPos - 5, x, yPos + 5, {
 			stroke: theme.colors.black,
 			strokeWidth: theme.stroke.width.thin
 		})
 		if (selectedLabels.has(i)) {
-			canvas.drawText({ x, y: yPos + 20, text: String(t), fill: theme.colors.text, anchor: "middle" })
+			const label = tickLabels[i]
+			if (label !== undefined) {
+				canvas.drawText({ x, y: yPos + 20, text: label, fill: theme.colors.text, anchor: "middle" })
+			}
 		}
 	})
 

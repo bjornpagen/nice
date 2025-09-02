@@ -955,10 +955,10 @@ export class CanvasImpl implements Canvas {
 	}
 
 	finalize(padPx: number): FinalizedSvg {
-		const vbMinX = this.extents.minX - padPx
-		const vbMinY = this.extents.minY - padPx
-		const width = this.extents.maxX - this.extents.minX + 2 * padPx
-		const height = this.extents.maxY - this.extents.minY + 2 * padPx
+		const vbMinX = Math.floor(this.extents.minX - padPx)
+		const vbMinY = Math.floor(this.extents.minY - padPx)
+		const width = Math.ceil(this.extents.maxX - this.extents.minX + 2 * padPx)
+		const height = Math.ceil(this.extents.maxY - this.extents.minY + 2 * padPx)
 
 		let svgBody = ""
 		if (this.defs) {

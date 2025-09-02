@@ -4,6 +4,7 @@ import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
+import { buildTicks, formatTickInt } from "@/lib/widgets/utils/ticks"
 
 const Label = z
 	.object({
@@ -128,25 +129,26 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			strokeWidth: theme.stroke.width.thick
 		})
 
-		for (let t = min; t <= max; t += tickInterval) {
+		const { values, ints, scale } = buildTicks(min, max, tickInterval)
+		const customLabelsMap = new Map(customLabels.map(l => [l.value, l.text]))
+
+		values.forEach((t, i) => {
+			const vI = ints[i]
+			if (vI === undefined) return
+
 			const x = toSvgX(t)
 			canvas.drawLine(x, yPos - 5, x, yPos + 5, {
 				stroke: theme.colors.axis,
 				strokeWidth: theme.stroke.width.base
 			})
-			// Draw default numeric labels if no custom label exists for this position
-			const hasCustomLabel = customLabels.some((label) => label.value === t)
-			if (!hasCustomLabel) {
-				canvas.drawText({
-					x: x,
-					y: yPos + 20,
-					text: String(t),
-					fill: theme.colors.axis,
-					anchor: "middle",
-					fontPx: theme.font.size.small
-				})
+
+			const customLabel = customLabelsMap.get(t)
+			if (customLabel) {
+				canvas.drawText({ x: x, y: yPos + 20, text: customLabel, fill: theme.colors.axis, anchor: "middle", fontWeight: theme.font.weight.bold })
+			} else {
+				canvas.drawText({ x: x, y: yPos + 20, text: formatTickInt(vI, scale), fill: theme.colors.axis, anchor: "middle", fontPx: theme.font.size.small })
 			}
-		}
+		})
 
 		// Custom Labels
 		for (const label of customLabels) {
@@ -226,26 +228,27 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			strokeWidth: theme.stroke.width.thick
 		})
 
-		for (let t = min; t <= max; t += tickInterval) {
+		const { values, ints, scale } = buildTicks(min, max, tickInterval)
+		const customLabelsMap = new Map(customLabels.map(l => [l.value, l.text]))
+
+		values.forEach((t, i) => {
+			const vI = ints[i]
+			if (vI === undefined) return
+
 			const y = toSvgY(t)
 			canvas.drawLine(xPos - 5, y, xPos + 5, y, {
 				stroke: theme.colors.axis,
 				strokeWidth: theme.stroke.width.base
 			})
-			// Draw default numeric labels if no custom label exists for this position
-			const hasCustomLabel = customLabels.some((label) => label.value === t)
-			if (!hasCustomLabel) {
-				const labelX = xPos - 10
-				canvas.drawText({
-					x: labelX,
-					y: y + 4,
-					text: String(t),
-					fill: theme.colors.axis,
-					anchor: "end",
-					fontPx: theme.font.size.small
-				})
+
+			const customLabel = customLabelsMap.get(t)
+			const labelX = xPos - 10
+			if (customLabel) {
+				canvas.drawText({ x: labelX, y: y + 4, text: customLabel, fill: theme.colors.axis, anchor: "end", fontWeight: theme.font.weight.bold })
+			} else {
+				canvas.drawText({ x: labelX, y: y + 4, text: formatTickInt(vI, scale), fill: theme.colors.axis, anchor: "end", fontPx: theme.font.size.small })
 			}
-		}
+		})
 
 		// Custom Labels
 		for (const label of customLabels) {

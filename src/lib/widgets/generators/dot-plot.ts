@@ -8,6 +8,7 @@ import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import { calculateTextAwareLabelSelection, calculateXAxisLayout } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
+import { buildTicks, formatTickInt } from "@/lib/widgets/utils/ticks"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
 
@@ -152,36 +153,29 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 		})
 	}
 
-	// MODIFIED: Replace manual thinning with text-aware selection
-	const tickValues: number[] = []
-	const tickPositions: number[] = []
-	for (let t = axis.min; t <= axis.max + 1e-9; t += axis.tickInterval) {
-		tickValues.push(t)
-		tickPositions.push(toSvgX(t))
-	}
+	// Draw tick marks and labels
+	const { values, ints, scale: tickScale } = buildTicks(axis.min, axis.max, axis.tickInterval)
+	const tickPositions = values.map(toSvgX)
+	const tickLabels = ints.map((vI) => formatTickInt(vI, tickScale))
+	const selectedLabels = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartWidth, 10, 18)
 
-	// Determine decimal places for formatting based on tickInterval
-	const intervalStr = String(axis.tickInterval)
-	const decimals = intervalStr.includes(".") ? (intervalStr.split(".")[1] ?? "").length : 0
-
-	const tickLabels = tickValues.map((t) => t.toFixed(decimals))
-	const selectedLabels = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartWidth, 10, 18) // more padding for numbers
-
-	tickValues.forEach((t, i) => {
-		const x = toSvgX(t)
-		canvas.drawLine(x, axisY - 5, x, axisY + 5, {
+	values.forEach((t, i) => {
+		const pos = toSvgX(t)
+		canvas.drawLine(pos, axisY - 5, pos, axisY + 5, {
 			stroke: theme.colors.axis,
 			strokeWidth: theme.stroke.width.base
 		})
 		if (selectedLabels.has(i)) {
-			const label = t.toFixed(decimals)
-			canvas.drawText({
-				x: x,
-				y: axisY + 20,
-				text: label,
-				fill: theme.colors.axisLabel,
-				anchor: "middle"
-			})
+			const label = tickLabels[i]
+			if (label !== undefined) {
+				canvas.drawText({
+					x: pos,
+					y: axisY + 20,
+					text: label,
+					fill: theme.colors.axisLabel,
+					anchor: "middle"
+				})
+			}
 		}
 	})
 

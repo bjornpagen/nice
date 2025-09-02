@@ -3,6 +3,7 @@ import type { Canvas } from "@/lib/widgets/utils/layout"
 import { calculateIntersectionAwareTicks } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 import { abbreviateMonth } from "./labels"
+import { buildTicks, formatTickInt } from "./ticks"
 
 // Re-export types that are needed for the render functions
 export type AxisOptions = {
@@ -65,24 +66,26 @@ export function setupCoordinatePlaneV2(
 
 	// Grid lines
 	if (xAxis.showGridLines) {
-		for (let t = xAxis.min; t <= xAxis.max; t += xAxis.tickInterval) {
-			if (t === 0) continue
+		const { values, ints } = buildTicks(xAxis.min, xAxis.max, xAxis.tickInterval)
+		values.forEach((t, i) => {
+			if (ints[i] === 0) return
 			const x = toSvgX(t)
 			canvas.drawLine(x, margin.top, x, height - margin.bottom, {
 				stroke: theme.colors.gridMajor,
 				strokeWidth: 1
 			})
-		}
+		})
 	}
 	if (yAxis.showGridLines) {
-		for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
-			if (t === 0) continue
+		const { values, ints } = buildTicks(yAxis.min, yAxis.max, yAxis.tickInterval)
+		values.forEach((t, i) => {
+			if (ints[i] === 0) return
 			const y = toSvgY(t)
 			canvas.drawLine(margin.left, y, width - margin.right, y, {
 				stroke: theme.colors.gridMajor,
 				strokeWidth: 1
 			})
-		}
+		})
 	}
 
 	// Axes lines
@@ -90,17 +93,15 @@ export function setupCoordinatePlaneV2(
 	canvas.drawLine(zeroX, margin.top, zeroX, height - margin.bottom, { stroke: theme.colors.axis, strokeWidth: 1.5 })
 
 	// X-axis ticks and labels
-	const xTickValues: number[] = []
-	for (let t = xAxis.min; t <= xAxis.max; t += xAxis.tickInterval) {
-		xTickValues.push(t)
-	}
-	const selectedXTicks = calculateIntersectionAwareTicks(xTickValues, true)
-	xTickValues.forEach((t, i) => {
-		if (t === 0) return // Skip origin
+	const { values: xValues, ints: xInts, scale: xScale } = buildTicks(xAxis.min, xAxis.max, xAxis.tickInterval)
+	const selectedXTicks = calculateIntersectionAwareTicks(xValues, true)
+	xValues.forEach((t, i) => {
+		const vI = xInts[i]
+		if (vI === undefined || vI === 0) return // Skip origin
 		const x = toSvgX(t)
 		canvas.drawLine(x, zeroY - 4, x, zeroY + 4, { stroke: theme.colors.axis, strokeWidth: 1 })
 		if (selectedXTicks.has(i)) {
-			const label = formatPiLabel(t)
+			const label = formatTickInt(vI, xScale)
 			canvas.drawText({
 				x: x,
 				y: zeroY + 15,
@@ -113,17 +114,15 @@ export function setupCoordinatePlaneV2(
 	})
 
 	// Y-axis ticks and labels
-	const yTickValues: number[] = []
-	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
-		yTickValues.push(t)
-	}
-	const selectedYTicks = calculateIntersectionAwareTicks(yTickValues, false)
-	yTickValues.forEach((t, i) => {
-		if (t === 0) return // Skip origin
+	const { values: yValues, ints: yInts, scale: yScale } = buildTicks(yAxis.min, yAxis.max, yAxis.tickInterval)
+	const selectedYTicks = calculateIntersectionAwareTicks(yValues, false)
+	yValues.forEach((t, i) => {
+		const vI = yInts[i]
+		if (vI === undefined || vI === 0) return // Skip origin
 		const y = toSvgY(t)
 		canvas.drawLine(zeroX - 4, y, zeroX + 4, y, { stroke: theme.colors.axis, strokeWidth: 1 })
 		if (selectedYTicks.has(i)) {
-			const label = formatPiLabel(t)
+			const label = formatTickInt(vI, yScale)
 			canvas.drawText({
 				x: zeroX - 8,
 				y: y + 4,
