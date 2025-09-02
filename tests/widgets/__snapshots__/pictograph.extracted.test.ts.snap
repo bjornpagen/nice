@@ -1,4 +1,4 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`pictograph - Calculating the mean data displays 1`] = `"<div style="font-family: sans-serif; border: 1px solid #e0e0e0; padding: 8px; border-radius: 5px;"><h3 style="text-align: center; margin-top: 0;">Key</h3><table style="width: 100%; border-collapse: collapse;"><tbody></tbody></table><div style="text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #ccc;"><span style="font-size: 1.5em;">⚾</span> = 1 home run</div></div>"`;
 

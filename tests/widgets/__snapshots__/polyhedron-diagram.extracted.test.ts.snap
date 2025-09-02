@@ -1,4 +1,4 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`polyhedron-diagram - Identify parts of 3D shapes 1`] = `"<svg width="205" height="280" viewBox="-20 -20 205 280" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12"><line x1="58" y1="144" x2="82" y2="132" stroke="#000000" stroke-width="1.5" stroke-dasharray="4 2"/><line x1="82" y1="132" x2="107" y2="132" stroke="#000000" stroke-width="1.5" stroke-dasharray="4 2"/><line x1="82" y1="132" x2="82" y2="72" stroke="#000000" stroke-width="1.5" stroke-dasharray="4 2"/><polygon points="58,144 83,144 83,84 58,84" fill="none" stroke="#000000" stroke-width="1.5"/><polygon points="58,84 83,84 107,72 82,72" fill="none" stroke="#000000" stroke-width="1.5"/><polygon points="83,144 107,132 107,72 83,84" fill="none" stroke="#000000" stroke-width="1.5"/></svg>"`;
 
