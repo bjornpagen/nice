@@ -150,21 +150,17 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 		})
 	}
 
-	// Legend content (outside clip)
+	// Legend content (move to right side, outside clip)
 	if (showLegend) {
 		const legendItems = [
 			{ label: beforeSegment.label, color: beforeSegment.color, dashed: false },
 			{ label: afterSegment.label, color: afterSegment.color, dashed: true }
 		]
-		const estimateTextWidth = (text: string) => text.length * 7
 		const legendLineLength = 30
 		const legendGapX = 8
 		const legendItemHeight = 18
-		const maxTextWidth = Math.max(...legendItems.map((i) => estimateTextWidth(i.label)))
-		const legendBoxWidth = legendLineLength + legendGapX + maxTextWidth
-		let legendStartX = (width - legendBoxWidth) / 2
-		if (legendStartX < 10) legendStartX = 10
-		const legendStartY = baseInfo.chartArea.top + baseInfo.chartArea.height + 50
+		const legendStartX = baseInfo.chartArea.left + baseInfo.chartArea.width + 15
+		const legendStartY = baseInfo.chartArea.top + 10
 		for (const [i, item] of legendItems.entries()) {
 			const y = legendStartY + i * legendItemHeight
 			const textY = y + 5

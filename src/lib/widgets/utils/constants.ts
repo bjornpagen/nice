@@ -17,7 +17,7 @@ export const GRID_STROKE_WIDTH_PX = 1
 export const CHART_TITLE_TOP_PADDING_PX = 20
 export const CHART_TITLE_BOTTOM_PADDING_PX = 15
 export const TICK_LABEL_PADDING_PX = 8
-export const AXIS_TITLE_PADDING_PX = 15
+export const AXIS_TITLE_PADDING_PX = 25
 export const X_AXIS_TITLE_PADDING_PX = 22
 export const ESTIMATED_BOTTOM_MARGIN_PX = 60
 
