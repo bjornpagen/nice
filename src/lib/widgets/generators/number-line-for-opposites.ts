@@ -1,7 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 
 // strict schema with no nullables or fallbacks
@@ -79,50 +79,83 @@ export const generateNumberLineForOpposites: WidgetGenerator<typeof NumberLineFo
 	const negPos = toSvgX(negativeValue)
 	const zeroPos = toSvgX(0)
 
-	const ext = initExtents(width)
-	let svgBody = `<defs><marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}"/></marker></defs>`
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
+	canvas.addDef(
+		`<marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}"/></marker>`
+	)
 
 	// axis and ticks
-	// Track the main line endpoints
-	includePointX(ext, PADDING)
-	includePointX(ext, width - PADDING)
-	svgBody += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
+	canvas.drawLine(PADDING, yPos, width - PADDING, yPos, {
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+	})
+
 	for (let t = min; t <= max; t += tickInterval) {
 		const x = toSvgX(t)
-		includePointX(ext, x)
-		svgBody += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="${theme.colors.axis}"/>`
-		svgBody += `<text x="${x}" y="${yPos + 20}" fill="${theme.colors.black}" text-anchor="middle">${t}</text>`
-		includeText(ext, x, String(t), "middle", 7)
+		canvas.drawLine(x, yPos - 5, x, yPos + 5, {
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		})
+		canvas.drawText({
+			x: x,
+			y: yPos + 20,
+			text: String(t),
+			fill: theme.colors.black,
+			anchor: "middle"
+		})
 	}
 
 	if (showArrows) {
 		const arrowY = yPos - 10
-		includePointX(ext, zeroPos)
-		includePointX(ext, posPos)
-		includePointX(ext, negPos)
-		svgBody += `<line x1="${zeroPos}" y1="${arrowY}" x2="${posPos}" y2="${arrowY}" stroke="${theme.colors.axis}" marker-end="url(#arrowhead)"/>`
-		svgBody += `<line x1="${zeroPos}" y1="${arrowY}" x2="${negPos}" y2="${arrowY}" stroke="${theme.colors.axis}" marker-end="url(#arrowhead)"/>`
+		canvas.drawLine(zeroPos, arrowY, posPos, arrowY, {
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			markerEnd: "url(#arrowhead)"
+		})
+		canvas.drawLine(zeroPos, arrowY, negPos, arrowY, {
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			markerEnd: "url(#arrowhead)"
+		})
 	}
 
-	includePointX(ext, posPos)
-	includePointX(ext, negPos)
-	svgBody += `<circle cx="${posPos}" cy="${yPos}" r="5" fill="${theme.colors.black}"/>`
-	svgBody += `<circle cx="${negPos}" cy="${yPos}" r="5" fill="${theme.colors.black}"/>`
+	canvas.drawCircle(posPos, yPos, 5, {
+		fill: theme.colors.black
+	})
+	canvas.drawCircle(negPos, yPos, 5, {
+		fill: theme.colors.black
+	})
 
 	const posLab = positiveLabel
 	const negLab = negativeLabel
 	if (posLab !== null) {
-		svgBody += `<text x="${posPos}" y="${yPos - 25}" fill="${theme.colors.black}" text-anchor="middle" font-weight="bold">${posLab}</text>`
-		includeText(ext, posPos, posLab, "middle", 7)
+		canvas.drawText({
+			x: posPos,
+			y: yPos - 25,
+			text: posLab,
+			fill: theme.colors.black,
+			anchor: "middle",
+			fontWeight: theme.font.weight.bold
+		})
 	}
 	if (negLab !== null) {
-		svgBody += `<text x="${negPos}" y="${yPos - 25}" fill="${theme.colors.black}" text-anchor="middle" font-weight="bold">${negLab}</text>`
-		includeText(ext, negPos, negLab, "middle", 7)
+		canvas.drawText({
+			x: negPos,
+			y: yPos - 25,
+			text: negLab,
+			fill: theme.colors.black,
+			anchor: "middle",
+			fontWeight: theme.font.weight.bold
+		})
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="12">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="12">${svgBody}</svg>`
 }

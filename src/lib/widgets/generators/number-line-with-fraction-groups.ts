@@ -1,8 +1,8 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
 
 const Tick = z
@@ -12,9 +12,7 @@ const Tick = z
 			.describe("Position of this tick mark on the number line (e.g., 0, 0.5, 1, 1.5). Must be between min and max."),
 		label: z
 			.string()
-			.describe(
-				"Text label for this tick (e.g., '0', '1/2', '1', '1 1/2'). To show no label, use an empty string."
-			),
+			.describe("Text label for this tick (e.g., '0', '1/2', '1', '1 1/2'). To show no label, use an empty string."),
 		isMajor: z
 			.boolean()
 			.describe(
@@ -105,21 +103,32 @@ export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof Number
 	const scale = chartWidth / (max - min)
 	const toSvgX = (val: number) => padding.horizontal + (val - min) * scale
 
-	const ext = initExtents(width)
-	let svgBody = ""
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
-	includePointX(ext, padding.horizontal)
-	includePointX(ext, width - padding.horizontal)
-	svgBody += `<line x1="${padding.horizontal}" y1="${yPos}" x2="${width - padding.horizontal}" y2="${yPos}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
+	canvas.drawLine(padding.horizontal, yPos, width - padding.horizontal, yPos, {
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+	})
 
 	for (const t of ticks) {
 		const x = toSvgX(t.value)
-		includePointX(ext, x)
 		const tickHeight = t.isMajor ? 8 : 4
-		svgBody += `<line x1="${x}" y1="${yPos - tickHeight}" x2="${x}" y2="${yPos + tickHeight}" stroke="${theme.colors.axis}"/>`
+		canvas.drawLine(x, yPos - tickHeight, x, yPos + tickHeight, {
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		})
 		if (t.label !== "") {
-			svgBody += `<text x="${x}" y="${yPos + 25}" fill="${theme.colors.axisLabel}" text-anchor="middle">${t.label}</text>`
-			includeText(ext, x, t.label, "middle", 7)
+			canvas.drawText({
+				x: x,
+				y: yPos + 25,
+				text: t.label,
+				fill: theme.colors.axisLabel,
+				anchor: "middle"
+			})
 		}
 	}
 
@@ -132,22 +141,30 @@ export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof Number
 		// Stagger segments vertically to avoid overlap if needed
 		const segmentY = yPos - segmentHeight / 2 - (i % 2) * (segmentHeight + 2)
 
-		// Track the horizontal extent of the segment
-		includePointX(ext, startPos)
-		includePointX(ext, endPos)
+		canvas.drawRect(startPos, segmentY, segmentWidth, segmentHeight, {
+			fill: s.color,
+			fillOpacity: Number.parseFloat(theme.opacity.overlay),
+			stroke: theme.colors.axis,
+			strokeWidth: 0.5
+		})
 
-		svgBody += `<rect x="${startPos}" y="${segmentY}" width="${segmentWidth}" height="${segmentHeight}" fill="${s.color}" fill-opacity="${theme.opacity.overlay}" stroke="${theme.colors.axis}" stroke-width="0.5"/>`
 		if (s.label !== null) {
 			const textColor = theme.colors.white // Assuming dark segment colors
 			const textX = startPos + segmentWidth / 2
-			svgBody += `<text x="${textX}" y="${segmentY + segmentHeight / 2}" fill="${textColor}" text-anchor="middle" dominant-baseline="middle" font-weight="${theme.font.weight.bold}">${s.label}</text>`
-			includeText(ext, textX, s.label, "middle", 7)
+			canvas.drawText({
+				x: textX,
+				y: segmentY + segmentHeight / 2,
+				text: s.label,
+				fill: textColor,
+				anchor: "middle",
+				dominantBaseline: "middle",
+				fontWeight: theme.font.weight.bold
+			})
 		}
 	})
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

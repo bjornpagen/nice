@@ -2,14 +2,9 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import {
-	computeDynamicWidth,
-	includeText,
-	includePointX,
-	initExtents
-} from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrMismatchedTickCounts = errors.new("top and bottom lines must have the same number of ticks")
@@ -119,61 +114,96 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 
 	const tickSpacing = lineLength / (numTicks - 1)
 
-	const ext = initExtents(width) // NEW: Initialize extents
-	let svgBody = "<style>.line-label { font-size: 14px; font-weight: bold; text-anchor: middle; }</style>"
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height: adjustedHeight },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
-	// Track the horizontal bounds of the lines
-	includePointX(ext, PADDING)
-	includePointX(ext, width - PADDING)
+	canvas.addStyle(".line-label { font-size: 14px; font-weight: bold; text-anchor: middle; }")
 
 	// Top line
-	svgBody += `<line x1="${PADDING}" y1="${topY}" x2="${width - PADDING}" y2="${topY}" stroke="${theme.colors.axis}"/>`
+	canvas.drawLine(PADDING, topY, width - PADDING, topY, {
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+	})
 	if (topLine.label !== null) {
-		const labelText = abbreviateMonth(topLine.label) // MODIFIED: Abbreviate
+		const labelText = abbreviateMonth(topLine.label)
 		const labelX = width / 2
 		const labelY = topY + TOP_LINE_LABEL_Y_OFFSET
-		svgBody += `<text x="${labelX}" y="${labelY}" class="line-label">${labelText}</text>`
-		includeText(ext, labelX, labelText, "middle") // NEW: Track text
+		canvas.drawText({
+			x: labelX,
+			y: labelY,
+			text: labelText,
+			fontPx: 14,
+			fontWeight: theme.font.weight.bold,
+			anchor: "middle"
+		})
 	}
 	topLine.ticks.forEach((t, i) => {
 		const x = PADDING + i * tickSpacing
-		includePointX(ext, x) // Track tick position
-		svgBody += `<line x1="${x}" y1="${topY - TICK_MARK_HEIGHT}" x2="${x}" y2="${topY + TICK_MARK_HEIGHT}" stroke="${theme.colors.axis}"/>`
+		canvas.drawLine(x, topY - TICK_MARK_HEIGHT, x, topY + TICK_MARK_HEIGHT, {
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		})
 		const labelText = String(t)
 		const labelY = topY + TOP_LINE_TICK_LABEL_Y_OFFSET
-		svgBody += `<text x="${x}" y="${labelY}" fill="${theme.colors.axisLabel}" text-anchor="middle">${labelText}</text>`
-		includeText(ext, x, labelText, "middle") // NEW: Track text
+		canvas.drawText({
+			x: x,
+			y: labelY,
+			text: labelText,
+			fill: theme.colors.axisLabel,
+			anchor: "middle"
+		})
 	})
 
 	// Bottom line
-	svgBody += `<line x1="${PADDING}" y1="${bottomY}" x2="${width - PADDING}" y2="${bottomY}" stroke="${theme.colors.axis}"/>`
+	canvas.drawLine(PADDING, bottomY, width - PADDING, bottomY, {
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+	})
 	if (bottomLine.label !== null) {
-		const labelText = abbreviateMonth(bottomLine.label) // MODIFIED: Abbreviate
+		const labelText = abbreviateMonth(bottomLine.label)
 		const labelX = width / 2
 		const labelY = bottomY + BOTTOM_LINE_LABEL_Y_OFFSET
-		svgBody += `<text x="${labelX}" y="${labelY}" class="line-label">${labelText}</text>`
-		includeText(ext, labelX, labelText, "middle") // NEW: Track text
+		canvas.drawText({
+			x: labelX,
+			y: labelY,
+			text: labelText,
+			fontPx: 14,
+			fontWeight: theme.font.weight.bold,
+			anchor: "middle"
+		})
 	}
 	bottomLine.ticks.forEach((t, i) => {
 		const x = PADDING + i * tickSpacing
-		includePointX(ext, x) // Track tick position
-		svgBody += `<line x1="${x}" y1="${bottomY - TICK_MARK_HEIGHT}" x2="${x}" y2="${bottomY + TICK_MARK_HEIGHT}" stroke="${theme.colors.axis}"/>`
+		canvas.drawLine(x, bottomY - TICK_MARK_HEIGHT, x, bottomY + TICK_MARK_HEIGHT, {
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		})
 		const labelText = String(t)
 		const labelY = bottomY + BOTTOM_LINE_TICK_LABEL_Y_OFFSET
-		svgBody += `<text x="${x}" y="${labelY}" fill="${theme.colors.axisLabel}" text-anchor="middle">${labelText}</text>`
-		includeText(ext, x, labelText, "middle") // NEW: Track text
+		canvas.drawText({
+			x: x,
+			y: labelY,
+			text: labelText,
+			fill: theme.colors.axisLabel,
+			anchor: "middle"
+		})
 	})
 
 	// Alignment lines (optional, but good for clarity)
 	for (let i = 0; i < numTicks; i++) {
 		const x = PADDING + i * tickSpacing
-		svgBody += `<line x1="${x}" y1="${topY + TICK_MARK_HEIGHT}" x2="${x}" y2="${bottomY - TICK_MARK_HEIGHT}" stroke="${theme.colors.gridMinor}" stroke-dasharray="${theme.stroke.dasharray.gridMinor}"/>`
+		canvas.drawLine(x, topY + TICK_MARK_HEIGHT, x, bottomY - TICK_MARK_HEIGHT, {
+			stroke: theme.colors.gridMinor,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			dash: theme.stroke.dasharray.gridMinor
+		})
 	}
 
-	// NEW: Apply dynamic width at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, adjustedHeight, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${adjustedHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${adjustedHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

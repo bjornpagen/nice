@@ -1,10 +1,10 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
+import { setupCoordinatePlaneBaseV2 } from "@/lib/widgets/utils/coordinate-plane-utils"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
-import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 // Factory helpers to avoid schema reuse and $ref generation
 function createPointSchema() {
@@ -78,58 +78,79 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 		return `<svg width="${width}" height="${height}"></svg>`
 	}
 
-	const base = generateCoordinatePlaneBaseV2(
-		width,
-		height,
-		null, // No title for this widget
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
+	const baseInfo = setupCoordinatePlaneBaseV2(
 		{
-			xScaleType: "numeric", // Set the scale type
-			label: xAxisLabel,
-			min: xAxisMin, // Required for numeric
-			max: xAxisMax, // Required for numeric
-			tickInterval: (xAxisMax - xAxisMin) / 5, // Required for numeric
-			showGridLines: false,
-			showTickLabels: false, // Conceptual, no numeric labels
-			showTicks: false
+			width,
+			height,
+			title: null, // No title for this widget
+			xAxis: {
+				xScaleType: "numeric",
+				label: xAxisLabel,
+				min: xAxisMin,
+				max: xAxisMax,
+				tickInterval: (xAxisMax - xAxisMin) / 5,
+				showGridLines: false,
+				showTickLabels: false, // Conceptual, no numeric labels
+				showTicks: false
+			},
+			yAxis: {
+				label: yAxisLabel,
+				min: yAxisMin,
+				max: yAxisMax,
+				tickInterval: (yAxisMax - yAxisMin) / 5,
+				showGridLines: false,
+				showTickLabels: false, // Conceptual, no numeric labels
+				showTicks: false
+			}
 		},
-		{
-			label: yAxisLabel,
-			min: yAxisMin,
-			max: yAxisMax,
-			tickInterval: (yAxisMax - yAxisMin) / 5,
-			showGridLines: false,
-			showTickLabels: false, // Conceptual, no numeric labels
-			showTicks: false
-		}
+		canvas
 	)
 
 	// Axis arrows outside clip
-	let arrows = `<defs><marker id="graph-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}"/></marker></defs>`
-	const yAxisX = base.chartArea.left
-	const xAxisY = base.chartArea.top + base.chartArea.height
-	arrows += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${yAxisX}" y2="${base.chartArea.top}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}" marker-end="url(#graph-arrow)"/>`
-	arrows += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${base.chartArea.left + base.chartArea.width}" y2="${xAxisY}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}" marker-end="url(#graph-arrow)"/>`
-	includePointX(base.ext, base.chartArea.left + base.chartArea.width)
+	canvas.addDef(
+		`<marker id="graph-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}"/></marker>`
+	)
+	const yAxisX = baseInfo.chartArea.left
+	const xAxisY = baseInfo.chartArea.top + baseInfo.chartArea.height
+	canvas.drawLine(yAxisX, xAxisY, yAxisX, baseInfo.chartArea.top, {
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+		markerEnd: "url(#graph-arrow)"
+	})
+	canvas.drawLine(yAxisX, xAxisY, baseInfo.chartArea.left + baseInfo.chartArea.width, xAxisY, {
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+		markerEnd: "url(#graph-arrow)"
+	})
 
-	// Curves inside clip
-	let content = ""
+	// Curves using Canvas API
 	if (beforeSegment.points.length > 0) {
-		beforeSegment.points.forEach((p) => {
-			includePointX(base.ext, base.toSvgX(p.x))
+		const beforePoints = beforeSegment.points.map((p) => ({ x: baseInfo.toSvgX(p.x), y: baseInfo.toSvgY(p.y) }))
+		canvas.drawPolyline(beforePoints, {
+			stroke: beforeSegment.color,
+			strokeWidth: Number.parseFloat(theme.stroke.width.xxthick),
+			strokeLinejoin: "round",
+			strokeLinecap: "round"
 		})
-		const beforePointsStr = beforeSegment.points.map((p) => `${base.toSvgX(p.x)},${base.toSvgY(p.y)}`).join(" ")
-		content += `<polyline points="${beforePointsStr}" fill="none" stroke="${beforeSegment.color}" stroke-width="${theme.stroke.width.xxthick}" stroke-linejoin="round" stroke-linecap="round"/>`
 	}
 	if (afterSegment.points.length > 0) {
-		afterSegment.points.forEach((p) => {
-			includePointX(base.ext, base.toSvgX(p.x))
+		const afterPoints = afterSegment.points.map((p) => ({ x: baseInfo.toSvgX(p.x), y: baseInfo.toSvgY(p.y) }))
+		canvas.drawPolyline(afterPoints, {
+			stroke: afterSegment.color,
+			strokeWidth: Number.parseFloat(theme.stroke.width.xxthick),
+			dash: theme.stroke.dasharray.dashedLong,
+			strokeLinejoin: "round",
+			strokeLinecap: "round"
 		})
-		const afterPointsStr = afterSegment.points.map((p) => `${base.toSvgX(p.x)},${base.toSvgY(p.y)}`).join(" ")
-		content += `<polyline points="${afterPointsStr}" fill="none" stroke="${afterSegment.color}" stroke-width="${theme.stroke.width.xxthick}" stroke-dasharray="${theme.stroke.dasharray.dashedLong}" stroke-linejoin="round" stroke-linecap="round"/>`
 	}
 
 	// Legend content (outside clip)
-	let legendContent = ""
 	if (showLegend) {
 		const legendItems = [
 			{ label: beforeSegment.label, color: beforeSegment.color, dashed: false },
@@ -143,29 +164,30 @@ export const generatePopulationChangeEventGraph: WidgetGenerator<typeof Populati
 		const legendBoxWidth = legendLineLength + legendGapX + maxTextWidth
 		let legendStartX = (width - legendBoxWidth) / 2
 		if (legendStartX < 10) legendStartX = 10
-		const legendStartY = base.chartArea.top + base.chartArea.height + 50
+		const legendStartY = baseInfo.chartArea.top + baseInfo.chartArea.height + 50
 		for (const [i, item] of legendItems.entries()) {
 			const y = legendStartY + i * legendItemHeight
 			const textY = y + 5
 			const x1 = legendStartX
 			const x2 = legendStartX + legendLineLength
 			const textX = x2 + legendGapX
-			const dash = item.dashed ? ' stroke-dasharray="8 6"' : ""
-			legendContent += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${item.color}" stroke-width="${theme.stroke.width.xxthick}"${dash}/>`
-			legendContent += `<text x="${textX}" y="${textY}">${item.label}</text>`
-			includeText(base.ext, textX, item.label, "start", 7)
+			// Drawing with Canvas calls below
+			canvas.drawLine(x1, y, x2, y, {
+				stroke: item.color,
+				strokeWidth: Number.parseFloat(theme.stroke.width.xxthick),
+				dash: item.dashed ? "8 6" : undefined
+			})
+			canvas.drawText({
+				x: textX,
+				y: textY,
+				text: item.label,
+				anchor: "start"
+			})
 		}
 	}
 
-	let svgBody = base.svgBody
-	svgBody += arrows
-	svgBody += wrapInClippedGroup(base.clipId, content)
-	svgBody += legendContent
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(AXIS_VIEWBOX_PADDING)
 
-	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, totalHeight, AXIS_VIEWBOX_PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.large}">` +
-		svgBody +
-		`</svg>`
-	return finalSvg
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.large}">${svgBody}</svg>`
 }

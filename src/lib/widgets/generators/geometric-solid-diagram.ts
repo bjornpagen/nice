@@ -1,7 +1,8 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
 
 const Cylinder = z
@@ -105,10 +106,16 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 	// --- NEW SCALING AND DRAWING LOGIC ---
 
 	const labelSpace = labels.length > 0 ? 40 : 0 // Extra space for external labels
-	
-	const ext = initExtents(width)
-	
-	let svgBody = `<defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}" /></marker></defs>`
+
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
+	canvas.addDef(
+		`<marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}" /></marker>`
+	)
 
 	const availableWidth = width - 2 * PADDING - labelSpace
 	const availableHeight = height - 2 * PADDING - labelSpace
@@ -123,36 +130,72 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		const topY = (height - h) / 2
 		const bottomY = topY + h
 
-		// --- ADDED ---
-		includePointX(ext, cx - r)
-		includePointX(ext, cx + r)
-		// --- END ADDED ---
+		// Canvas automatically tracks extents
 
 		// Side lines
-		svgBody += `<line x1="${cx - r}" y1="${topY}" x2="${cx - r}" y2="${bottomY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
-		svgBody += `<line x1="${cx + r}" y1="${topY}" x2="${cx + r}" y2="${bottomY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+		canvas.drawLine(cx - r, topY, cx - r, bottomY, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
+		canvas.drawLine(cx + r, topY, cx + r, bottomY, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
 
 		// Bottom base (draw back dashed part first, then front solid part)
-		svgBody += `<path d="M ${cx - r} ${bottomY} A ${r} ${ry} 0 0 0 ${cx + r} ${bottomY}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}" stroke-dasharray="${theme.stroke.dasharray.dashed}"/>`
-		svgBody += `<path d="M ${cx - r} ${bottomY} A ${r} ${ry} 0 0 1 ${cx + r} ${bottomY}" fill="rgba(200, 200, 200, 0.2)" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+		const bottomBackPath = new Path2D().moveTo(cx - r, bottomY).arcTo(r, ry, 0, 0, 0, cx + r, bottomY)
+		canvas.drawPath(bottomBackPath, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			dash: theme.stroke.dasharray.dashed
+		})
+		const bottomFrontPath = new Path2D().moveTo(cx - r, bottomY).arcTo(r, ry, 0, 0, 1, cx + r, bottomY)
+		canvas.drawPath(bottomFrontPath, {
+			fill: "rgba(200, 200, 200, 0.2)",
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
 
 		// Top base
-		svgBody += `<ellipse cx="${cx}" cy="${topY}" rx="${r}" ry="${ry}" fill="rgba(220, 220, 220, 0.4)" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+		canvas.drawEllipse(cx, topY, r, ry, {
+			fill: "rgba(220, 220, 220, 0.4)",
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
 
 		for (const l of labels) {
 			if (l.target === "radius") {
 				// Dashed line for radius on the bottom base
-				svgBody += `<line x1="${cx}" y1="${bottomY}" x2="${cx + r}" y2="${bottomY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.backEdge}"/>`
+				canvas.drawLine(cx, bottomY, cx + r, bottomY, {
+					stroke: theme.colors.black,
+					strokeWidth: Number.parseFloat(theme.stroke.width.base),
+					dash: theme.stroke.dasharray.backEdge
+				})
 				const textY = Math.min(bottomY + 18, height - 10) // Ensure text stays within bounds
-				svgBody += `<text x="${cx + r / 2}" y="${textY}" fill="${theme.colors.text}" text-anchor="middle">${l.text}</text>`
-				includeText(ext, cx + r / 2, String(l.text), "middle", 7)
+				canvas.drawText({
+					x: cx + r / 2,
+					y: textY,
+					text: l.text,
+					anchor: "middle",
+					fontPx: 7
+				})
 			}
 			if (l.target === "height") {
 				// External line with arrows for height
 				const lineX = Math.min(cx + r + 15, width - 50) // Ensure it stays within bounds
-				svgBody += `<line x1="${lineX}" y1="${topY}" x2="${lineX}" y2="${bottomY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
-				svgBody += `<text x="${lineX + 10}" y="${height / 2}" fill="${theme.colors.text}" dominant-baseline="middle">${l.text}</text>`
-				includeText(ext, lineX + 10, String(l.text), "start", 7)
+				canvas.drawLine(lineX, topY, lineX, bottomY, {
+					stroke: theme.colors.black,
+					strokeWidth: Number.parseFloat(theme.stroke.width.base),
+					markerStart: "url(#arrow)",
+					markerEnd: "url(#arrow)"
+				})
+				canvas.drawText({
+					x: lineX + 10,
+					y: height / 2,
+					text: l.text,
+					anchor: "start",
+					fontPx: 7
+				})
 			}
 		}
 	} else if (shape.type === "cone") {
@@ -165,35 +208,73 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		const apexY = (height - h) / 2
 		const baseY = apexY + h
 
-		// --- ADDED ---
-		includePointX(ext, cx - r)
-		includePointX(ext, cx + r)
-		// --- END ADDED ---
+		// Canvas automatically tracks extents
 
 		// Generator lines
-		svgBody += `<line x1="${cx - r}" y1="${baseY}" x2="${cx}" y2="${apexY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
-		svgBody += `<line x1="${cx + r}" y1="${baseY}" x2="${cx}" y2="${apexY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+		canvas.drawLine(cx - r, baseY, cx, apexY, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
+		canvas.drawLine(cx + r, baseY, cx, apexY, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
 
 		// Base (draw back dashed part first, then front solid part)
-		svgBody += `<path d="M ${cx - r} ${baseY} A ${r} ${ry} 0 0 0 ${cx + r} ${baseY}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}" stroke-dasharray="${theme.stroke.dasharray.dashed}"/>`
-		svgBody += `<path d="M ${cx - r} ${baseY} A ${r} ${ry} 0 0 1 ${cx + r} ${baseY}" fill="rgba(200, 200, 200, 0.2)" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+		const baseBackPath = new Path2D().moveTo(cx - r, baseY).arcTo(r, ry, 0, 0, 0, cx + r, baseY)
+		canvas.drawPath(baseBackPath, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			dash: theme.stroke.dasharray.dashed
+		})
+		const baseFrontPath = new Path2D().moveTo(cx - r, baseY).arcTo(r, ry, 0, 0, 1, cx + r, baseY)
+		canvas.drawPath(baseFrontPath, {
+			fill: "rgba(200, 200, 200, 0.2)",
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
 
 		for (const l of labels) {
 			if (l.target === "radius") {
 				// Dashed line from center to right for radius
-				svgBody += `<line x1="${cx}" y1="${baseY}" x2="${cx + r}" y2="${baseY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.backEdge}"/>`
+				canvas.drawLine(cx, baseY, cx + r, baseY, {
+					stroke: theme.colors.black,
+					strokeWidth: Number.parseFloat(theme.stroke.width.base),
+					dash: theme.stroke.dasharray.backEdge
+				})
 				const textY = Math.min(baseY + 18, height - 10) // Ensure text stays within bounds
-				svgBody += `<text x="${cx + r / 2}" y="${textY}" fill="${theme.colors.text}" text-anchor="middle">${l.text}</text>`
-				includeText(ext, cx + r / 2, String(l.text), "middle", 7)
+				canvas.drawText({
+					x: cx + r / 2,
+					y: textY,
+					text: l.text,
+					anchor: "middle",
+					fontPx: 7
+				})
 			}
 			if (l.target === "height") {
 				// Dashed line from apex to center for height
-				svgBody += `<line x1="${cx}" y1="${apexY}" x2="${cx}" y2="${baseY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.backEdge}"/>`
+				canvas.drawLine(cx, apexY, cx, baseY, {
+					stroke: theme.colors.black,
+					strokeWidth: Number.parseFloat(theme.stroke.width.base),
+					dash: theme.stroke.dasharray.backEdge
+				})
 				// Right angle indicator
 				const indicatorSize = Math.min(10, r * 0.2)
-				svgBody += `<path d="M ${cx + indicatorSize} ${baseY} L ${cx + indicatorSize} ${baseY - indicatorSize} L ${cx} ${baseY - indicatorSize}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thin}"/>`
-				svgBody += `<text x="${cx - 10}" y="${height / 2}" fill="${theme.colors.text}" text-anchor="end" dominant-baseline="middle">${l.text}</text>`
-				includeText(ext, cx - 10, String(l.text), "end", 7)
+				const indicatorPath = new Path2D()
+					.moveTo(cx + indicatorSize, baseY)
+					.lineTo(cx + indicatorSize, baseY - indicatorSize)
+					.lineTo(cx, baseY - indicatorSize)
+				canvas.drawPath(indicatorPath, {
+					stroke: theme.colors.black,
+					strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+				})
+				canvas.drawText({
+					x: cx - 10,
+					y: height / 2,
+					text: l.text,
+					anchor: "end",
+					fontPx: 7
+				})
 			}
 		}
 	} else if (shape.type === "sphere") {
@@ -204,31 +285,49 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		const cx = width / 2
 		const cy = height / 2
 
-		// --- ADDED ---
-		includePointX(ext, cx - r)
-		includePointX(ext, cx + r)
-		// --- END ADDED ---
+		// Canvas automatically tracks extents
 
 		// Main sphere outline
-		svgBody += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="rgba(220, 220, 220, 0.4)" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+		canvas.drawEllipse(cx, cy, r, r, {
+			fill: "rgba(220, 220, 220, 0.4)",
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
 
 		// Internal equator for 3D effect (dashed back, solid front)
-		svgBody += `<path d="M ${cx - r} ${cy} A ${r} ${ry} 0 0 0 ${cx + r} ${cy}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.dashed}"/>`
-		svgBody += `<path d="M ${cx - r} ${cy} A ${r} ${ry} 0 0 1 ${cx + r} ${cy}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"/>`
+		const equatorBackPath = new Path2D().moveTo(cx - r, cy).arcTo(r, ry, 0, 0, 0, cx + r, cy)
+		canvas.drawPath(equatorBackPath, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			dash: theme.stroke.dasharray.dashed
+		})
+		const equatorFrontPath = new Path2D().moveTo(cx - r, cy).arcTo(r, ry, 0, 0, 1, cx + r, cy)
+		canvas.drawPath(equatorFrontPath, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		})
 
 		for (const l of labels) {
 			if (l.target === "radius") {
 				// Dashed line from center to circumference for radius
-				svgBody += `<line x1="${cx}" y1="${cy}" x2="${cx + r}" y2="${cy}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.backEdge}"/>`
-				svgBody += `<text x="${cx + r / 2}" y="${cy - 10}" fill="${theme.colors.text}" text-anchor="middle">${l.text}</text>`
-				includeText(ext, cx + r / 2, String(l.text), "middle", 7)
+				canvas.drawLine(cx, cy, cx + r, cy, {
+					stroke: theme.colors.black,
+					strokeWidth: Number.parseFloat(theme.stroke.width.base),
+					dash: theme.stroke.dasharray.backEdge
+				})
+				canvas.drawText({
+					x: cx + r / 2,
+					y: cy - 10,
+					text: l.text,
+					anchor: "middle",
+					fontPx: 7
+				})
 			}
 		}
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">${svgBody}</svg>`
 }

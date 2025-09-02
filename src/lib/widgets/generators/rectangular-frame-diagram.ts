@@ -2,8 +2,9 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidDimensions = errors.new("invalid frame dimensions")
@@ -155,8 +156,11 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 		)
 	}
 
-	const ext = initExtents(width)
-	let svgContent = ""
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	// Scale based on the provided dimensions, similar to Khan Academy approach
 	const boxWidth = outerWidth * 25
@@ -179,25 +183,65 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 	const backBottom = frontBottom - boxDepth * 0.5
 	const backTop = frontTop - boxDepth * 0.5
 
-	// Track all vertices
-	includePointX(ext, frontLeft)
-	includePointX(ext, frontRight)
-	includePointX(ext, backLeft)
-	includePointX(ext, backRight)
+	// Canvas automatically tracks extents
 
 	// Khan Academy style: Use efficient SVG path commands with single paths containing multiple shapes
 	// Front face outline (main rectangular face) - exactly like Khan Academy
-	svgContent += `<path fill="none" stroke="${theme.colors.black}" d="M${frontLeft} ${frontBottom}h${boxWidth}M${frontRight} ${frontBottom}V${frontTop}M${frontRight} ${frontTop}H${frontLeft}M${frontLeft} ${frontTop}v${boxHeight}" stroke-width="${theme.stroke.width.thick}"/>`
+	const frontOutlinePath = new Path2D()
+	frontOutlinePath.moveTo(frontLeft, frontBottom)
+	frontOutlinePath.lineTo(frontLeft + boxWidth, frontBottom)
+	frontOutlinePath.moveTo(frontRight, frontBottom)
+	frontOutlinePath.lineTo(frontRight, frontTop)
+	frontOutlinePath.moveTo(frontRight, frontTop)
+	frontOutlinePath.lineTo(frontLeft, frontTop)
+	frontOutlinePath.moveTo(frontLeft, frontTop)
+	frontOutlinePath.lineTo(frontLeft, frontTop + boxHeight)
+	canvas.drawPath(frontOutlinePath, {
+		stroke: theme.colors.black,
+		strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+	})
 
 	// Hidden back edges (dashed if enabled) - combined like Khan Academy
 	if (showHiddenEdges) {
-		svgContent += `<path fill="none" stroke="${theme.colors.black}" d="M${backLeft} ${backBottom}h${boxWidth}" stroke-dasharray="${theme.stroke.dasharray.backEdge}"/>`
-		svgContent += `<path fill="none" stroke="${theme.colors.black}" d="M${backRight} ${backBottom}V${backTop}M${backRight} ${backTop}H${backLeft}" stroke-width="${theme.stroke.width.thick}"/>`
-		svgContent += `<path fill="none" stroke="${theme.colors.black}" d="M${backLeft} ${backTop}v${boxHeight}M${frontLeft} ${frontBottom}l${boxDepth} ${-boxDepth * 0.5}" stroke-dasharray="${theme.stroke.dasharray.backEdge}"/>`
+		const backEdgePath = new Path2D()
+		backEdgePath.moveTo(backLeft, backBottom)
+		backEdgePath.lineTo(backLeft + boxWidth, backBottom)
+		canvas.drawPath(backEdgePath, {
+			stroke: theme.colors.black,
+			dash: theme.stroke.dasharray.backEdge
+		})
+		const backVerticalPath = new Path2D()
+		backVerticalPath.moveTo(backRight, backBottom)
+		backVerticalPath.lineTo(backRight, backTop)
+		backVerticalPath.moveTo(backRight, backTop)
+		backVerticalPath.lineTo(backLeft, backTop)
+		canvas.drawPath(backVerticalPath, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
+		const backDiagonalPath = new Path2D()
+		backDiagonalPath.moveTo(backLeft, backTop)
+		backDiagonalPath.lineTo(backLeft, backTop + boxHeight)
+		backDiagonalPath.moveTo(frontLeft, frontBottom)
+		backDiagonalPath.lineTo(frontLeft + boxDepth, frontBottom - boxDepth * 0.5)
+		canvas.drawPath(backDiagonalPath, {
+			stroke: theme.colors.black,
+			dash: theme.stroke.dasharray.backEdge
+		})
 	}
 
 	// Visible connecting edges (front to back) - combined into single path like Khan Academy
-	svgContent += `<path fill="none" stroke="${theme.colors.black}" d="M${frontLeft} ${frontTop}l${boxDepth} ${-boxDepth * 0.5}M${frontRight} ${frontBottom}l${boxDepth} ${-boxDepth * 0.5}M${frontRight} ${frontTop}l${boxDepth} ${-boxDepth * 0.5}" stroke-width="${theme.stroke.width.thick}"/>`
+	const connectingEdgesPath = new Path2D()
+	connectingEdgesPath.moveTo(frontLeft, frontTop)
+	connectingEdgesPath.lineTo(frontLeft + boxDepth, frontTop - boxDepth * 0.5)
+	connectingEdgesPath.moveTo(frontRight, frontBottom)
+	connectingEdgesPath.lineTo(frontRight + boxDepth, frontBottom - boxDepth * 0.5)
+	connectingEdgesPath.moveTo(frontRight, frontTop)
+	connectingEdgesPath.lineTo(frontRight + boxDepth, frontTop - boxDepth * 0.5)
+	canvas.drawPath(connectingEdgesPath, {
+		stroke: theme.colors.black,
+		strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+	})
 
 	// Face fills - Khan Academy approach: simple solid shapes, not hollow frames
 	const purpleColor = theme.colors.highlightPrimary
@@ -205,34 +249,107 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 
 	// Front face fill (if shaded)
 	if (shadedFace === "front_face") {
-		svgContent += `<path fill="${purpleColor}" stroke="${theme.colors.black}" d="M${frontLeft} ${frontBottom}V${frontTop}h${boxWidth}v${boxHeight}z" stroke-width="${theme.stroke.width.thick}" fill-opacity="${theme.opacity.overlayLow}"/>`
+		const frontFaceFillPath = new Path2D()
+		frontFaceFillPath.moveTo(frontLeft, frontBottom)
+		frontFaceFillPath.lineTo(frontLeft, frontTop)
+		frontFaceFillPath.lineTo(frontLeft + boxWidth, frontTop)
+		frontFaceFillPath.lineTo(frontLeft + boxWidth, frontTop + boxHeight)
+		frontFaceFillPath.closePath()
+		canvas.drawPath(frontFaceFillPath, {
+			fill: purpleColor,
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+		})
 	}
 
 	// Combined faces in single paths like Khan Academy - this matches their exact approach
 	// Left side face + Top face combined into single path element
-	const leftSidePath = `M${frontLeft} ${frontBottom}V${frontTop}l${boxDepth} ${-boxDepth * 0.5}v${boxHeight}z`
-	const topFacePath = `M${backLeft} ${backTop}v${boxHeight}h${boxWidth}V${backTop}z`
-	const rightSidePath = `M${frontRight} ${frontBottom}V${frontTop}l${boxDepth} ${-boxDepth * 0.5}v${boxHeight}z`
+	const leftSidePath = new Path2D()
+	leftSidePath.moveTo(frontLeft, frontBottom)
+	leftSidePath.lineTo(frontLeft, frontTop)
+	leftSidePath.lineTo(frontLeft + boxDepth, frontTop - boxDepth * 0.5)
+	leftSidePath.lineTo(frontLeft + boxDepth, frontTop - boxDepth * 0.5 + boxHeight)
+	leftSidePath.closePath()
+
+	const topFacePath = new Path2D()
+	topFacePath.moveTo(backLeft, backTop)
+	topFacePath.lineTo(backLeft, backTop + boxHeight)
+	topFacePath.lineTo(backLeft + boxWidth, backTop + boxHeight)
+	topFacePath.lineTo(backLeft + boxWidth, backTop)
+	topFacePath.closePath()
+
+	const rightSidePath = new Path2D()
+	rightSidePath.moveTo(frontRight, frontBottom)
+	rightSidePath.lineTo(frontRight, frontTop)
+	rightSidePath.lineTo(frontRight + boxDepth, frontTop - boxDepth * 0.5)
+	rightSidePath.lineTo(frontRight + boxDepth, frontTop - boxDepth * 0.5 + boxHeight)
+	rightSidePath.closePath()
 
 	// Combine left side and top face into single path like Khan Academy does
-	const combinedSideTopPath = `${leftSidePath}M${backLeft} ${backTop}v${boxHeight}h${boxWidth}V${backTop}z`
+	const combinedSideTopPath = new Path2D()
+	combinedSideTopPath.moveTo(frontLeft, frontBottom)
+	combinedSideTopPath.lineTo(frontLeft, frontTop)
+	combinedSideTopPath.lineTo(frontLeft + boxDepth, frontTop - boxDepth * 0.5)
+	combinedSideTopPath.lineTo(frontLeft + boxDepth, frontTop - boxDepth * 0.5 + boxHeight)
+	combinedSideTopPath.closePath()
+	combinedSideTopPath.moveTo(backLeft, backTop)
+	combinedSideTopPath.lineTo(backLeft, backTop + boxHeight)
+	combinedSideTopPath.lineTo(backLeft + boxWidth, backTop + boxHeight)
+	combinedSideTopPath.lineTo(backLeft + boxWidth, backTop)
+	combinedSideTopPath.closePath()
 
 	if (shadedFace === "side_face") {
-		svgContent += `<path fill="${purpleColor}" stroke="${theme.colors.black}" d="${leftSidePath}" stroke-width="${theme.stroke.width.thick}" fill-opacity="${theme.opacity.overlayLow}"/>`
-		svgContent += `<path fill="${grayColor}" stroke="${theme.colors.black}" d="${topFacePath}" stroke-width="${theme.stroke.width.thick}" fill-opacity="${theme.opacity.overlayLow}"/>`
+		canvas.drawPath(leftSidePath, {
+			fill: purpleColor,
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+		})
+		canvas.drawPath(topFacePath, {
+			fill: grayColor,
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+		})
 	} else if (shadedFace === "top_face") {
-		svgContent += `<path fill="${grayColor}" stroke="${theme.colors.black}" d="${leftSidePath}" stroke-width="${theme.stroke.width.thick}" fill-opacity="${theme.opacity.overlayLow}"/>`
-		svgContent += `<path fill="${purpleColor}" stroke="${theme.colors.black}" d="${topFacePath}" stroke-width="${theme.stroke.width.thick}" fill-opacity="${theme.opacity.overlayLow}"/>`
+		canvas.drawPath(leftSidePath, {
+			fill: grayColor,
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+		})
+		canvas.drawPath(topFacePath, {
+			fill: purpleColor,
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+		})
 	} else if (shadedFace !== "") {
 		// Default: both faces gray, combined like Khan Academy
-		svgContent += `<path fill="${grayColor}" stroke="${theme.colors.black}" d="${combinedSideTopPath}" stroke-width="${theme.stroke.width.thick}" fill-opacity="${theme.opacity.overlayLow}"/>`
+		canvas.drawPath(combinedSideTopPath, {
+			fill: grayColor,
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+		})
 	}
 
 	// Right side face
 	if (shadedFace === "bottom_face") {
-		svgContent += `<path fill="${purpleColor}" stroke="${theme.colors.black}" d="${rightSidePath}" stroke-width="${theme.stroke.width.thick}" fill-opacity="${theme.opacity.overlayLow}"/>`
+		canvas.drawPath(rightSidePath, {
+			fill: purpleColor,
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+		})
 	} else if (shadedFace !== "") {
-		svgContent += `<path fill="${grayColor}" stroke="${theme.colors.black}" d="${rightSidePath}" stroke-width="${theme.stroke.width.thick}" fill-opacity="${theme.opacity.overlayLow}"/>`
+		canvas.drawPath(rightSidePath, {
+			fill: grayColor,
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+		})
 	}
 
 	// Render diagonals if any exist
@@ -261,16 +378,22 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 				strokeDashArray = ' stroke-dasharray="2 3"'
 			}
 
-			// Track diagonal endpoints
-			includePointX(ext, from.x)
-			includePointX(ext, to.x)
-			svgContent += `<path fill="none" stroke="${theme.colors.black}" d="M${from.x} ${from.y}L${to.x} ${to.y}" stroke-width="${theme.stroke.width.thick}"${strokeDashArray}/>`
+			canvas.drawLine(from.x, from.y, to.x, to.y, {
+				stroke: theme.colors.black,
+				strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+				dash: strokeDashArray.replace(' stroke-dasharray="', "").replace('"', "")
+			})
 
 			if (d.label) {
 				const midX = (from.x + to.x) / 2
 				const midY = (from.y + to.y) / 2
-				svgContent += `<text x="${midX}" y="${midY}" fill="${theme.colors.black}" text-anchor="middle" dominant-baseline="middle" font-size="${theme.font.size.base}">${d.label}</text>`
-				includeText(ext, midX, d.label, "middle")
+				canvas.drawText({
+					x: midX,
+					y: midY,
+					text: d.label,
+					anchor: "middle",
+					fontPx: Number.parseFloat(theme.font.size.base.replace("px", ""))
+				})
 			}
 		}
 	}
@@ -281,34 +404,52 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 			if (lab.target === "height") {
 				const textX = frontLeft - 15
 				const textY = frontTop + boxHeight / 2
-				svgContent += `<text x="${textX}" y="${textY}" text-anchor="end" dominant-baseline="middle" font-size="${theme.font.size.base}">${lab.text}</text>`
-				includeText(ext, textX, lab.text, "end")
+				canvas.drawText({
+					x: textX,
+					y: textY,
+					text: lab.text,
+					anchor: "end",
+					fontPx: Number.parseFloat(theme.font.size.base.replace("px", ""))
+				})
 			}
 			if (lab.target === "width") {
 				const textX = frontLeft + boxWidth / 2
 				const textY = frontBottom + 20
-				svgContent += `<text x="${textX}" y="${textY}" text-anchor="middle" font-size="${theme.font.size.base}">${lab.text}</text>`
-				includeText(ext, textX, lab.text, "middle")
+				canvas.drawText({
+					x: textX,
+					y: textY,
+					text: lab.text,
+					anchor: "middle",
+					fontPx: Number.parseFloat(theme.font.size.base.replace("px", ""))
+				})
 			}
 			if (lab.target === "length") {
 				const textX = frontRight + boxDepth / 2
 				const textY = frontBottom - boxDepth * 0.25
-				svgContent += `<text x="${textX}" y="${textY}" text-anchor="middle" font-size="${theme.font.size.base}">${lab.text}</text>`
-				includeText(ext, textX, lab.text, "middle")
+				canvas.drawText({
+					x: textX,
+					y: textY,
+					text: lab.text,
+					anchor: "middle",
+					fontPx: Number.parseFloat(theme.font.size.base.replace("px", ""))
+				})
 			}
 			if (lab.target === "thickness") {
 				const textX = frontLeft + 10
 				const textY = frontBottom + 15
-				svgContent += `<text x="${textX}" y="${textY}" text-anchor="start" font-size="${theme.font.size.small}">${lab.text}</text>`
-				includeText(ext, textX, lab.text, "start")
+				canvas.drawText({
+					x: textX,
+					y: textY,
+					text: lab.text,
+					anchor: "start",
+					fontPx: Number.parseFloat(theme.font.size.small.replace("px", ""))
+				})
 			}
 		}
 	}
 
-	// Final assembly with dynamic width
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-	svg += svgContent
-	svg += "</svg>"
-	return svg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

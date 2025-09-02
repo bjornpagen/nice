@@ -1,9 +1,9 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
+import { setupCoordinatePlaneBaseV2 } from "@/lib/widgets/utils/coordinate-plane-utils"
 import { theme } from "@/lib/widgets/utils/theme"
-import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 const AnnotationSchema = z.object({
 	year: z.number().describe("The year on the x-axis that the annotation arrow should point to."),
@@ -155,68 +155,83 @@ export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchem
 		return p1.ppm + t * (p2.ppm - p1.ppm)
 	}
 
-	const base = generateCoordinatePlaneBaseV2(
-		width,
-		height,
-		null, // No title for this widget
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
+	const baseInfo = setupCoordinatePlaneBaseV2(
 		{
-			xScaleType: "numeric", // Set the scale type
-			label: xAxisLabel,
-			min: 1, // Required for numeric
-			max: 2021, // Required for numeric
-			tickInterval: 500, // Custom intervals for years, required for numeric
-			showGridLines: false,
-			showTickLabels: true,
-			labelFormatter: (val: number) => {
-				if (val === 1 || val === 500 || val === 1000 || val === 1500 || val === 2021) {
-					return String(Math.round(val))
+			width,
+			height,
+			title: null, // No title for this widget
+			xAxis: {
+				xScaleType: "numeric",
+				label: xAxisLabel,
+				min: 1,
+				max: 2021,
+				tickInterval: 500, // Custom intervals for years
+				showGridLines: false,
+				showTickLabels: true,
+				labelFormatter: (val: number) => {
+					if (val === 1 || val === 500 || val === 1000 || val === 1500 || val === 2021) {
+						return String(Math.round(val))
+					}
+					return ""
 				}
-				return ""
+			},
+			yAxis: {
+				label: yAxisLabel,
+				min: 240,
+				max: 420,
+				tickInterval: 20,
+				showGridLines: true,
+				showTickLabels: true
 			}
 		},
-		{
-			label: yAxisLabel,
-			min: 240,
-			max: 420,
-			tickInterval: 20,
-			showGridLines: true,
-			showTickLabels: true
-		}
+		canvas
 	)
 
-	// Data line content (inside clip)
-	let clippedContent = ""
-	clippedContent += `<defs><marker id="co2-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}"/></marker></defs>`
-	CO2_DATA.forEach((p) => {
-		includePointX(base.ext, base.toSvgX(p.year))
+	// Add arrow marker
+	canvas.addDef(
+		`<marker id="co2-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}"/></marker>`
+	)
+
+	// Data line content using Canvas API
+	const points = CO2_DATA.map((p) => ({ x: baseInfo.toSvgX(p.year), y: baseInfo.toSvgY(p.ppm) }))
+	canvas.drawPolyline(points, {
+		stroke: theme.colors.black,
+		strokeWidth: Number.parseFloat(theme.stroke.width.xthick)
 	})
-	const pointsStr = CO2_DATA.map((p) => `${base.toSvgX(p.year)},${base.toSvgY(p.ppm)}`).join(" ")
-	clippedContent += `<polyline points="${pointsStr}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.xthick}"/>`
 
 	// Annotations (text outside clip, arrows outside clip)
-	let outsideContent = ""
 	annotations.forEach((anno, index) => {
 		const ppm = getPpmForYear(anno.year)
-		const targetX = base.toSvgX(anno.year)
-		const targetY = base.toSvgY(ppm)
-		const textX = base.chartArea.left + 40
-		const textY = base.chartArea.top + 40 + index * 60
-		outsideContent += `<line x1="${textX}" y1="${textY + 20}" x2="${targetX}" y2="${targetY}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" marker-end="url(#co2-arrow)"/>`
-		outsideContent += `<text x="${textX}" y="${textY}" class="annotation-label" text-anchor="start"><tspan x="${textX}" dy="0">${anno.text[0] ?? ""}</tspan>${(anno.text.slice(1) || []).map(line => `<tspan x="${textX}" dy="1.2em">${line}</tspan>`).join("")}</text>`
-		for (const line of anno.text) {
-			includeText(base.ext, textX, line, "start", 7)
-		}
-		includePointX(base.ext, Math.max(textX, targetX))
+		const targetX = baseInfo.toSvgX(anno.year)
+		const targetY = baseInfo.toSvgY(ppm)
+		const textX = baseInfo.chartArea.left + 40
+		const textY = baseInfo.chartArea.top + 40 + index * 60
+		canvas.drawLine(textX, textY + 20, targetX, targetY, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			markerEnd: "url(#co2-arrow)"
+		})
+
+		// Draw annotation text (multi-line)
+		anno.text.forEach((line, lineIndex) => {
+			canvas.drawText({
+				x: textX,
+				y: textY + lineIndex * 16,
+				text: line,
+				anchor: "start",
+				fontPx: 12
+			})
+		})
 	})
 
-	let svgBody = base.svgBody
-	svgBody += wrapInClippedGroup(base.clipId, clippedContent)
-	svgBody += outsideContent
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(AXIS_VIEWBOX_PADDING)
 
-	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, totalHeight, AXIS_VIEWBOX_PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">` +
-		svgBody +
-		`</svg>`
-	return finalSvg
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">${svgBody}</svg>`
 }

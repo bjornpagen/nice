@@ -1,7 +1,8 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
 
 const Label = z
@@ -107,40 +108,66 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 	if (min >= max) return `<svg width="${width}" height="${height}"></svg>`
 	const scale = lineLength / (max - min)
 
-	const ext = initExtents(width)
-	let svgBody = `<defs><marker id="action-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.axis}"/></marker></defs>`
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
+	canvas.addDef(
+		`<marker id="action-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.axis}"/></marker>`
+	)
 
 	if (isHorizontal) {
 		const yPos = height / 2
 		const toSvgX = (val: number) => PADDING + (val - min) * scale
 
 		// Axis and Ticks
-		includePointX(ext, PADDING)
-		includePointX(ext, width - PADDING)
-		svgBody += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
+		canvas.drawLine(PADDING, yPos, width - PADDING, yPos, {
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
+
 		for (let t = min; t <= max; t += tickInterval) {
 			const x = toSvgX(t)
-			includePointX(ext, x)
-			svgBody += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="${theme.colors.axis}"/>`
+			canvas.drawLine(x, yPos - 5, x, yPos + 5, {
+				stroke: theme.colors.axis,
+				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			})
 			// Draw default numeric labels if no custom label exists for this position
 			const hasCustomLabel = customLabels.some((label) => label.value === t)
 			if (!hasCustomLabel) {
-				svgBody += `<text x="${x}" y="${yPos + 20}" fill="${theme.colors.axis}" text-anchor="middle" font-size="${theme.font.size.small}">${t}</text>`
-				includeText(ext, x, String(t), "middle", 7)
+				canvas.drawText({
+					x: x,
+					y: yPos + 20,
+					text: String(t),
+					fill: theme.colors.axis,
+					anchor: "middle",
+					fontPx: Number.parseFloat(theme.font.size.small.replace("px", ""))
+				})
 			}
 		}
 
 		// Custom Labels
 		for (const label of customLabels) {
 			const x = toSvgX(label.value)
-			svgBody += `<text x="${x}" y="${yPos + 20}" fill="${theme.colors.axis}" text-anchor="middle" font-weight="${theme.font.weight.bold}">${label.text}</text>`
-			includeText(ext, x, label.text, "middle", 7)
+			canvas.drawText({
+				x: x,
+				y: yPos + 20,
+				text: label.text,
+				fill: theme.colors.axis,
+				anchor: "middle",
+				fontWeight: theme.font.weight.bold
+			})
 		}
 
 		// Start value marker
 		const startX = toSvgX(startValue)
-		includePointX(ext, startX)
-		svgBody += `<circle cx="${startX}" cy="${yPos}" r="${theme.geometry.pointRadius.small}" fill="${theme.colors.actionPrimary}" stroke="${theme.colors.actionPrimary}" stroke-width="${theme.stroke.width.thin}"/>`
+		canvas.drawCircle(startX, yPos, Number.parseFloat(theme.geometry.pointRadius.small), {
+			fill: theme.colors.actionPrimary,
+			stroke: theme.colors.actionPrimary,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+		})
 
 		// Action arrows - sequential with stacked labels
 		let currentValue = startValue
@@ -159,40 +186,64 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const controlY = arrowY - controlOffset * Math.sign(action.delta || 1)
 
 			// Draw curved arrow
-			svgBody += `<path d="M ${actionStartX} ${arrowY} Q ${midX} ${controlY} ${actionEndX} ${arrowY}" fill="none" stroke="${theme.colors.actionPrimary}" stroke-width="${theme.stroke.width.base}" marker-end="url(#action-arrow)"/>`
+			const arrowPath = new Path2D().moveTo(actionStartX, arrowY).quadraticCurveTo(midX, controlY, actionEndX, arrowY)
+			canvas.drawPath(arrowPath, {
+				fill: "none",
+				stroke: theme.colors.actionPrimary,
+				strokeWidth: Number.parseFloat(theme.stroke.width.base),
+				markerEnd: "url(#action-arrow)"
+			})
 
 			// Arrow label
-			svgBody += `<text x="${midX}" y="${controlY - 5}" fill="${theme.colors.actionPrimary}" text-anchor="middle" font-size="${theme.font.size.small}" font-weight="${theme.font.weight.bold}">${action.label}</text>`
-			includeText(ext, midX, action.label, "middle", 7)
-			includePointX(ext, actionStartX)
-			includePointX(ext, actionEndX)
-			// Track the arc control point (peak of the curve)
-			includePointX(ext, midX)
+			canvas.drawText({
+				x: midX,
+				y: controlY - 5,
+				text: action.label,
+				fill: theme.colors.actionPrimary,
+				anchor: "middle",
+				fontPx: Number.parseFloat(theme.font.size.small.replace("px", "")),
+				fontWeight: theme.font.weight.bold
+			})
 
 			currentValue += action.delta
 		}
 
 		// Final value marker
 		const finalX = toSvgX(currentValue)
-		includePointX(ext, finalX)
-		svgBody += `<circle cx="${finalX}" cy="${yPos}" r="${theme.geometry.pointRadius.small}" fill="${theme.colors.actionSecondary}" stroke="${theme.colors.actionSecondary}" stroke-width="${theme.stroke.width.thin}"/>`
+		canvas.drawCircle(finalX, yPos, Number.parseFloat(theme.geometry.pointRadius.small), {
+			fill: theme.colors.actionSecondary,
+			stroke: theme.colors.actionSecondary,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+		})
 	} else {
 		// Vertical orientation
 		const xPos = width / 2
 		const toSvgY = (val: number) => height - PADDING - (val - min) * scale
 
 		// Axis and Ticks
-		includePointX(ext, xPos)
-		svgBody += `<line x1="${xPos}" y1="${PADDING}" x2="${xPos}" y2="${height - PADDING}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
+		canvas.drawLine(xPos, PADDING, xPos, height - PADDING, {
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
+
 		for (let t = min; t <= max; t += tickInterval) {
 			const y = toSvgY(t)
-			svgBody += `<line x1="${xPos - 5}" y1="${y}" x2="${xPos + 5}" y2="${y}" stroke="${theme.colors.axis}"/>`
+			canvas.drawLine(xPos - 5, y, xPos + 5, y, {
+				stroke: theme.colors.axis,
+				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			})
 			// Draw default numeric labels if no custom label exists for this position
 			const hasCustomLabel = customLabels.some((label) => label.value === t)
 			if (!hasCustomLabel) {
 				const labelX = xPos - 10
-				svgBody += `<text x="${labelX}" y="${y + 4}" fill="${theme.colors.axis}" text-anchor="end" font-size="${theme.font.size.small}">${t}</text>`
-				includeText(ext, labelX, String(t), "end", 7)
+				canvas.drawText({
+					x: labelX,
+					y: y + 4,
+					text: String(t),
+					fill: theme.colors.axis,
+					anchor: "end",
+					fontPx: Number.parseFloat(theme.font.size.small.replace("px", ""))
+				})
 			}
 		}
 
@@ -200,13 +251,23 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 		for (const label of customLabels) {
 			const y = toSvgY(label.value)
 			const labelX = xPos - 10
-			svgBody += `<text x="${labelX}" y="${y + 4}" fill="${theme.colors.axis}" text-anchor="end" font-weight="${theme.font.weight.bold}">${label.text}</text>`
-			includeText(ext, labelX, label.text, "end", 7)
+			canvas.drawText({
+				x: labelX,
+				y: y + 4,
+				text: label.text,
+				fill: theme.colors.axis,
+				anchor: "end",
+				fontWeight: theme.font.weight.bold
+			})
 		}
 
 		// Start value marker
 		const startY = toSvgY(startValue)
-		svgBody += `<circle cx="${xPos}" cy="${startY}" r="${theme.geometry.pointRadius.small}" fill="${theme.colors.actionPrimary}" stroke="${theme.colors.actionPrimary}" stroke-width="${theme.stroke.width.thin}"/>`
+		canvas.drawCircle(xPos, startY, Number.parseFloat(theme.geometry.pointRadius.small), {
+			fill: theme.colors.actionPrimary,
+			stroke: theme.colors.actionPrimary,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+		})
 
 		// Action arrows - sequential with stacked labels
 		let currentValue = startValue
@@ -225,26 +286,41 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const controlX = arrowX + controlOffset
 
 			// Draw curved arrow
-			svgBody += `<path d="M ${arrowX} ${actionStartY} Q ${controlX} ${midY} ${arrowX} ${actionEndY}" fill="none" stroke="${theme.colors.actionPrimary}" stroke-width="${theme.stroke.width.base}" marker-end="url(#action-arrow)"/>`
+			const arrowPath = new Path2D().moveTo(arrowX, actionStartY).quadraticCurveTo(controlX, midY, arrowX, actionEndY)
+			canvas.drawPath(arrowPath, {
+				fill: "none",
+				stroke: theme.colors.actionPrimary,
+				strokeWidth: Number.parseFloat(theme.stroke.width.base),
+				markerEnd: "url(#action-arrow)"
+			})
 
 			// Arrow label (rotated for vertical layout)
 			const labelX = controlX + 5
-			svgBody += `<text x="${labelX}" y="${midY}" fill="${theme.colors.actionPrimary}" text-anchor="middle" font-size="${theme.font.size.small}" font-weight="${theme.font.weight.bold}" transform="rotate(-90, ${labelX}, ${midY})">${action.label}</text>`
-			includeText(ext, labelX, action.label, "middle", 7)
-			includePointX(ext, arrowX)
-			includePointX(ext, controlX)
+			canvas.drawText({
+				x: labelX,
+				y: midY,
+				text: action.label,
+				fill: theme.colors.actionPrimary,
+				anchor: "middle",
+				fontPx: Number.parseFloat(theme.font.size.small.replace("px", "")),
+				fontWeight: theme.font.weight.bold,
+				rotate: { angle: -90, cx: labelX, cy: midY }
+			})
 
 			currentValue += action.delta
 		}
 
 		// Final value marker
 		const finalY = toSvgY(currentValue)
-		svgBody += `<circle cx="${xPos}" cy="${finalY}" r="${theme.geometry.pointRadius.small}" fill="${theme.colors.actionSecondary}" stroke="${theme.colors.actionSecondary}" stroke-width="${theme.stroke.width.thin}"/>`
+		canvas.drawCircle(xPos, finalY, Number.parseFloat(theme.geometry.pointRadius.small), {
+			fill: theme.colors.actionSecondary,
+			stroke: theme.colors.actionSecondary,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+		})
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

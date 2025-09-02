@@ -310,7 +310,6 @@ export {
 	GeometricSolidDiagramPropsSchema,
 	HangerDiagramPropsSchema,
 	HistogramPropsSchema,
-
 	InequalityNumberLinePropsSchema,
 	KeelingCurvePropsSchema,
 	LineEquationGraphPropsSchema,
@@ -382,7 +381,6 @@ export {
 	generateGeometricSolidDiagram,
 	generateHangerDiagram,
 	generateHistogram,
-
 	generateInequalityNumberLine,
 	generateKeelingCurve,
 	generateLineGraph,

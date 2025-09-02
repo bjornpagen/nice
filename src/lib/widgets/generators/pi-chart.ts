@@ -1,15 +1,10 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import {
-	computeDynamicWidth,
-	includePointX,
-	includeText,
-	initExtents
-} from "@/lib/widgets/utils/layout"
-import { renderWrappedText } from "@/lib/widgets/utils/text"
+import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
 
 // Defines a single slice within a pie chart.
@@ -82,8 +77,6 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 	const { width, height, charts, spacing } = props
 	const numCharts = charts.length
 
-	// We will ignore provided width when needed and expand to accommodate labels.
-	let content = ""
 	const styleTag =
 		"<style>.title { font-size: 1.1em; font-weight: bold; text-anchor: middle; } .label-text { font-size: 0.9em; } .leader { stroke: black; fill: none; }</style>"
 
@@ -91,8 +84,11 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 	const chartAreaWidth = width
 	const chartAreaHeight = (height - (numCharts - 1) * spacing) / numCharts
 
-	// Initialize extents tracker
-	const ext = initExtents(width)
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	for (let index = 0; index < charts.length; index++) {
 		const chart = charts[index]
@@ -109,9 +105,15 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 
 		// Draw title (width-aware wrapping)
 		const maxTextWidth = chartAreaWidth - 40
-		content += renderWrappedText(abbreviateMonth(chart.title), cx, titleY, "title", "1.1em", maxTextWidth, 8)
-		// Track title extents
-		includeText(ext, cx, abbreviateMonth(chart.title), "middle", 8)
+		canvas.drawWrappedText({
+			x: cx,
+			y: titleY,
+			text: abbreviateMonth(chart.title),
+			maxWidthPx: maxTextWidth,
+			fontPx: Number.parseFloat(theme.font.size.large.replace("px", "")),
+			fontWeight: theme.font.weight.bold,
+			anchor: "middle"
+		})
 
 		const totalValue = chart.slices.reduce((sum, slice) => sum + slice.value, 0)
 		let startAngle = -90 // Start from the top
@@ -130,10 +132,6 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 		const labelsRight: LabelInfo[] = []
 		const labelsLeft: LabelInfo[] = []
 
-		// Track the pie circle itself
-		includePointX(ext, cx - radius)
-		includePointX(ext, cx + radius)
-
 		for (const slice of chart.slices) {
 			const percentage = (slice.value / totalValue) * 100
 			const sliceAngle = (slice.value / totalValue) * 360
@@ -147,11 +145,19 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 			const x2 = cx + radius * Math.cos(endRad)
 			const y2 = cy + radius * Math.sin(endRad)
 
-			const largeArcFlag = sliceAngle > 180 ? 1 : 0
+			const largeArcFlag: 0 | 1 = sliceAngle > 180 ? 1 : 0
 
 			// Draw the slice
-			const pathData = `M ${cx},${cy} L ${x1},${y1} A ${radius},${radius} 0 ${largeArcFlag} 1 ${x2},${y2} Z`
-			content += `<path d="${pathData}" fill="${slice.color}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thin}"/>`
+			const slicePath = new Path2D()
+				.moveTo(cx, cy)
+				.lineTo(x1, y1)
+				.arcTo(radius, radius, 0, largeArcFlag, 1, x2, y2)
+				.closePath()
+			canvas.drawPath(slicePath, {
+				fill: slice.color,
+				stroke: theme.colors.black,
+				strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+			})
 
 			// Prepare label info
 			const midAngle = startAngle + sliceAngle / 2
@@ -227,21 +233,34 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 			const textAnchor = item.side === "right" ? "start" : "end"
 			const textX = endX + (item.side === "right" ? textPad : -textPad)
 			const textY = endY + 4
-			// Leader polyline: start at arc edge -> elbow -> horizontal endpoint
-			content += `<polyline class="leader" points="${item.startX},${item.startY} ${elbowX},${elbowY} ${endX},${endY}" />`
-			content += `<text x="${textX}" y="${textY}" text-anchor="${textAnchor}" class="label-text">${item.text}</text>`
 
-			// Track label extents
-			includeText(ext, textX, item.text, textAnchor, 7)
+			// Leader polyline using Canvas API
+			const leaderPoints = [
+				{ x: item.startX, y: item.startY },
+				{ x: elbowX, y: elbowY },
+				{ x: endX, y: endY }
+			]
+			canvas.drawPolyline(leaderPoints, {
+				stroke: theme.colors.black,
+				strokeWidth: 1
+			})
+
+			// Label text using Canvas API
+			canvas.drawText({
+				x: textX,
+				y: textY,
+				text: item.text,
+				anchor: textAnchor,
+				fontPx: Number.parseFloat(theme.font.size.small.replace("px", ""))
+			})
 		}
 
 		for (const item of placedRight) drawLabel(item)
 		for (const item of placedLeft) drawLabel(item)
 	}
 
-	// Compute dynamic width and viewBox using shared utility
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
 
-	const svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">${styleTag}${content}</svg>`
-	return svg
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">${styleTag}${svgBody}</svg>`
 }

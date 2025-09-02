@@ -1,8 +1,9 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
 
 function createWeightSchema() {
@@ -73,8 +74,12 @@ export type HangerDiagramProps = z.infer<typeof HangerDiagramPropsSchema>
 export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSchema> = (data) => {
 	const { width, height, leftSide, rightSide } = data
 	const centerX = width / 2
-	
-	const ext = initExtents(width)
+
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	// Dynamic vertical layout to avoid clipping for small heights
 	const maxStack = Math.max(leftSide.length, rightSide.length, 1)
@@ -104,55 +109,77 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 	const beamStartX = centerX - beamWidth / 2
 	const beamEndX = centerX + beamWidth / 2
 
-	let svgBody = ""
-
 	// Hook and beam
-	svgBody += `<line x1="${centerX}" y1="10" x2="${centerX}" y2="${beamY}" stroke="${theme.colors.axis}" stroke-width="0.6667"/>`
-	svgBody += `<path d="M ${centerX - 5} 10 L ${centerX} 5 L ${centerX + 5} 10 Z" fill="${theme.colors.axis}" />` // Triangle at top of hook
-	svgBody += `<line x1="${beamStartX}" y1="${beamY}" x2="${beamEndX}" y2="${beamY}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.xxthick}"/>`
-	// --- ADDED ---
-	includePointX(ext, beamStartX)
-	includePointX(ext, beamEndX)
-	// --- END ADDED ---
+	canvas.drawLine(centerX, 10, centerX, beamY, {
+		stroke: theme.colors.axis,
+		strokeWidth: 0.6667
+	})
+	const hookPath = new Path2D()
+		.moveTo(centerX - 5, 10)
+		.lineTo(centerX, 5)
+		.lineTo(centerX + 5, 10)
+		.closePath()
+	canvas.drawPath(hookPath, {
+		fill: theme.colors.axis
+	})
+	canvas.drawLine(beamStartX, beamY, beamEndX, beamY, {
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.xxthick)
+	})
 
 	const drawWeight = (x: number, y: number, weight: (typeof leftSide)[0]) => {
-		// --- ADDED ---
-		// Track the bounding box for each weight shape
-		includePointX(ext, x - size / 2)
-		includePointX(ext, x + size / 2)
-		// --- END ADDED ---
-		let shapeSvg = ""
 		switch (weight.shape) {
 			case "circle":
-				shapeSvg = `<circle cx="${x}" cy="${y + size / 2}" r="${size / 2}" fill="${weight.color}" stroke="${theme.colors.axis}"/>`
+				canvas.drawCircle(x, y + size / 2, size / 2, {
+					fill: weight.color,
+					stroke: theme.colors.axis
+				})
 				break
 			case "triangle":
-				shapeSvg = `<polygon points="${x - size / 2},${y + size} ${x + size / 2},${y + size} ${x},${y}" fill="${weight.color}" stroke="${theme.colors.axis}"/>`
+				canvas.drawPolygon(
+					[
+						{ x: x - size / 2, y: y + size },
+						{ x: x + size / 2, y: y + size },
+						{ x: x, y: y }
+					],
+					{
+						fill: weight.color,
+						stroke: theme.colors.axis
+					}
+				)
 				break
 			case "pentagon": {
 				// Simplified pentagon
-				const p_pts = [
-					[x, y],
-					[x + size / 2, y + size * 0.4],
-					[x + size * 0.3, y + size],
-					[x - size * 0.3, y + size],
-					[x - size / 2, y + size * 0.4]
+				const pentagonPoints = [
+					{ x: x, y: y },
+					{ x: x + size / 2, y: y + size * 0.4 },
+					{ x: x + size * 0.3, y: y + size },
+					{ x: x - size * 0.3, y: y + size },
+					{ x: x - size / 2, y: y + size * 0.4 }
 				]
-					.map((pt) => pt.join(","))
-					.join(" ")
-				shapeSvg = `<polygon points="${p_pts}" fill="${weight.color}" stroke="${theme.colors.axis}"/>`
+				canvas.drawPolygon(pentagonPoints, {
+					fill: weight.color,
+					stroke: theme.colors.axis
+				})
 				break
 			}
 			default:
-				shapeSvg = `<rect x="${x - size / 2}" y="${y}" width="${size}" height="${size}" fill="${weight.color}" stroke="${theme.colors.axis}"/>`
+				canvas.drawRect(x - size / 2, y, size, size, {
+					fill: weight.color,
+					stroke: theme.colors.axis
+				})
 				break
 		}
-		let textSvg = ""
 		if (weight.label !== null) {
-			textSvg = `<text x="${x}" y="${y + size / 2 + 4}" fill="${theme.colors.axis}" text-anchor="middle" font-weight="bold">${weight.label}</text>`
-			includeText(ext, x, String(weight.label), "middle", 7)
+			canvas.drawText({
+				x: x,
+				y: y + size / 2 + 4,
+				text: String(weight.label),
+				fill: theme.colors.axis,
+				anchor: "middle",
+				fontWeight: theme.font.weight.bold
+			})
 		}
-		return shapeSvg + textSvg
 	}
 
 	// First, draw all the lines
@@ -160,7 +187,10 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 		const sideCenterX = isLeft ? beamStartX + beamWidth / 4 : beamEndX - beamWidth / 4
 		weights.forEach((_w, i) => {
 			const weightY = weightYStart + i * weightHeight
-			svgBody += `<line x1="${sideCenterX}" y1="${i === 0 ? beamY : weightY - weightHeight + weightGap}" x2="${sideCenterX}" y2="${weightY}" stroke="${theme.colors.axis}"/>`
+			canvas.drawLine(sideCenterX, i === 0 ? beamY : weightY - weightHeight + weightGap, sideCenterX, weightY, {
+				stroke: theme.colors.axis,
+				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			})
 		})
 	}
 
@@ -169,7 +199,7 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 		const sideCenterX = isLeft ? beamStartX + beamWidth / 4 : beamEndX - beamWidth / 4
 		weights.forEach((w, i) => {
 			const weightY = weightYStart + i * weightHeight
-			svgBody += drawWeight(sideCenterX, weightY, w)
+			drawWeight(sideCenterX, weightY, w)
 		})
 	}
 
@@ -181,9 +211,8 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 	renderShapes(leftSide, true)
 	renderShapes(rightSide, false)
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="12">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="12">${svgBody}</svg>`
 }

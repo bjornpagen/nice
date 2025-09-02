@@ -1,8 +1,8 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includeText, includePointX, initExtents } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
 
 function createSegmentSchema() {
@@ -127,34 +127,48 @@ export const generateTapeDiagram: WidgetGenerator<typeof TapeDiagramPropsSchema>
 		scale = chartWidth / maxTotalLength
 	}
 
-	const ext = initExtents(width)
-	
-	let svgBody = ""
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	const drawTape = (tape: typeof topTape, yPos: number) => {
 		if (tape.label) {
-			svgBody += `<text x="${padding}" y="${yPos - 5}" fill="${theme.colors.text}" text-anchor="start" font-weight="${theme.font.weight.bold}">${tape.label}</text>`
-			includeText(ext, padding, tape.label, "start", 7)
+			canvas.drawText({
+				x: padding,
+				y: yPos - 5,
+				text: tape.label,
+				fill: theme.colors.text,
+				anchor: "start",
+				fontWeight: theme.font.weight.bold
+			})
 		}
 
 		// If no segments, don't render anything for this tape
 		if (tape.segments.length === 0) return
 
 		let currentX = padding
-		// Track the start of the tape
-		includePointX(ext, currentX)
 
 		for (const s of tape.segments) {
 			const segmentWidth = modelType === "ratio" ? s.length * unitWidth : s.length * scale
-			svgBody += `<rect x="${currentX}" y="${yPos}" width="${segmentWidth}" height="${tapeHeight}" fill="${tape.color}" stroke="${theme.colors.black}"/>`
+			canvas.drawRect(currentX, yPos, segmentWidth, tapeHeight, {
+				fill: tape.color,
+				stroke: theme.colors.black
+			})
 			if (s.label !== null) {
-				svgBody += `<text x="${currentX + segmentWidth / 2}" y="${yPos + tapeHeight / 2}" fill="${theme.colors.white}" text-anchor="middle" dominant-baseline="middle" font-weight="${theme.font.weight.bold}">${s.label}</text>`
-				includeText(ext, currentX + segmentWidth / 2, s.label, "middle", 7)
+				canvas.drawText({
+					x: currentX + segmentWidth / 2,
+					y: yPos + tapeHeight / 2,
+					text: s.label,
+					fill: theme.colors.white,
+					anchor: "middle",
+					dominantBaseline: "middle",
+					fontWeight: theme.font.weight.bold
+				})
 			}
 			currentX += segmentWidth
 		}
-		// Track the end of the tape
-		includePointX(ext, currentX)
 	}
 
 	const topY = padding + 20
@@ -171,18 +185,32 @@ export const generateTapeDiagram: WidgetGenerator<typeof TapeDiagramPropsSchema>
 		const bracketY = (hasBottomTape ? bottomY : topY) + tapeHeight + 20
 		const totalTapeLength = modelType === "ratio" ? Math.max(topTotalLength, bottomTotalLength) * unitWidth : chartWidth
 
-		svgBody += `<line x1="${padding}" y1="${bracketY}" x2="${padding + totalTapeLength}" y2="${bracketY}" stroke="${theme.colors.black}"/>`
-		svgBody += `<line x1="${padding}" y1="${bracketY - 5}" x2="${padding}" y2="${bracketY + 5}" stroke="${theme.colors.black}"/>`
-		svgBody += `<line x1="${padding + totalTapeLength}" y1="${bracketY - 5}" x2="${padding + totalTapeLength}" y2="${bracketY + 5}" stroke="${theme.colors.black}"/>`
+		canvas.drawLine(padding, bracketY, padding + totalTapeLength, bracketY, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		})
+		canvas.drawLine(padding, bracketY - 5, padding, bracketY + 5, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		})
+		canvas.drawLine(padding + totalTapeLength, bracketY - 5, padding + totalTapeLength, bracketY + 5, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		})
 		if (totalLabel !== null) {
-			svgBody += `<text x="${padding + totalTapeLength / 2}" y="${bracketY + 15}" fill="${theme.colors.text}" text-anchor="middle" font-weight="${theme.font.weight.bold}">${totalLabel}</text>`
-			includeText(ext, padding + totalTapeLength / 2, totalLabel, "middle", 7)
+			canvas.drawText({
+				x: padding + totalTapeLength / 2,
+				y: bracketY + 15,
+				text: totalLabel,
+				fill: theme.colors.text,
+				anchor: "middle",
+				fontWeight: theme.font.weight.bold
+			})
 		}
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

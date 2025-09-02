@@ -1,4 +1,7 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
+import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import {
 	createAxisOptionsSchema,
 	createDistanceSchema,
@@ -6,18 +9,17 @@ import {
 	createPlotPointSchema,
 	createPolygonSchema,
 	createPolylineSchema,
-	ErrInvalidDimensions,
-	generateCoordinatePlaneBase,
 	renderDistances,
 	renderLines,
 	renderPoints,
 	renderPolygons,
 	renderPolylines
-} from "@/lib/widgets/generators/coordinate-plane-base"
-import type { WidgetGenerator } from "@/lib/widgets/types"
+} from "@/lib/widgets/utils/canvas-utils"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
+import { setupCoordinatePlaneV2 } from "@/lib/widgets/utils/coordinate-plane-v2"
 import { theme } from "@/lib/widgets/utils/theme"
+
+export const ErrInvalidDimensions = errors.new("invalid dimensions")
 
 export const CoordinatePlaneComprehensivePropsSchema = z
 	.object({
@@ -80,8 +82,7 @@ export const CoordinatePlaneComprehensivePropsSchema = z
 
 export type CoordinatePlaneComprehensiveProps = z.infer<typeof CoordinatePlaneComprehensivePropsSchema>
 
-// Re-export the error constant for compatibility
-export { ErrInvalidDimensions }
+// Error constant defined above
 
 /**
  * Generates a versatile Cartesian coordinate plane for plotting points, lines, and polygons.
@@ -100,41 +101,66 @@ export const generateCoordinatePlaneComprehensive: WidgetGenerator<typeof Coordi
 	const { width, height, xAxis, yAxis, showQuadrantLabels, points, lines, polygons, distances, polylines } = props
 
 	// 1. Call the base generator and get the body content and extents object
-	const base = generateCoordinatePlaneBase(width, height, xAxis, yAxis, showQuadrantLabels, points)
-	
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
+	const baseInfo = setupCoordinatePlaneV2(
+		{
+			width,
+			height,
+			xAxis: {
+				label: xAxis.label,
+				min: xAxis.min,
+				max: xAxis.max,
+				tickInterval: xAxis.tickInterval,
+				showGridLines: xAxis.showGridLines
+			},
+			yAxis: {
+				label: yAxis.label,
+				min: yAxis.min,
+				max: yAxis.max,
+				tickInterval: yAxis.tickInterval,
+				showGridLines: yAxis.showGridLines
+			},
+			showQuadrantLabels: true
+		},
+		canvas
+	)
+
+	// Create point map for ID resolution
+	const pointMap = new Map(points.map((pt) => [pt.id, pt]))
+
 	// 2. Separate clipped geometry from unclipped elements
 	let clippedContent = ""
 	let unclippedContent = ""
 
-	// Polygons go in clipped content
-	if (polygons.length > 0) {
-		clippedContent += renderPolygons(polygons, base.pointMap, base.toSvgX, base.toSvgY, base.ext)
-	}
-	// Lines go in clipped content
-	if (lines.length > 0) {
-		clippedContent += renderLines(lines, xAxis, yAxis, base.toSvgX, base.toSvgY, base.ext)
-	}
-	// Polylines go in clipped content
-	if (polylines.length > 0) {
-		clippedContent += renderPolylines(polylines, base.toSvgX, base.toSvgY, base.ext)
-	}
-	
-	// Points go in unclipped content to prevent being cut off at boundaries
+	// Render all elements using Canvas API
+	// Render clipped geometry
+	canvas.drawInClippedRegion((clippedCanvas) => {
+		if (polygons.length > 0) {
+			renderPolygons(polygons, pointMap, baseInfo.toSvgX, baseInfo.toSvgY, clippedCanvas)
+		}
+		if (lines.length > 0) {
+			renderLines(lines, xAxis, yAxis, baseInfo.toSvgX, baseInfo.toSvgY, clippedCanvas)
+		}
+		if (polylines.length > 0) {
+			renderPolylines(polylines, baseInfo.toSvgX, baseInfo.toSvgY, clippedCanvas)
+		}
+	})
+
+	// Render unclipped points and distances on the main canvas
 	if (points.length > 0) {
-		unclippedContent += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
+		renderPoints(points, baseInfo.toSvgX, baseInfo.toSvgY, canvas)
 	}
-	// Distances go in unclipped content (they include labels)
 	if (distances.length > 0) {
-		unclippedContent += renderDistances(distances, base.pointMap, base.toSvgX, base.toSvgY, base.ext)
+		renderDistances(distances, pointMap, baseInfo.toSvgX, baseInfo.toSvgY, canvas)
 	}
 
-	// 3. Compute final width and assemble the complete SVG
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, PADDING)
-	let finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-	finalSvg += base.svgBody
-	finalSvg += wrapInClippedGroup("chartArea", clippedContent)
-	finalSvg += unclippedContent // Add unclipped points and labels
-	finalSvg += `</svg>`
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
 
-	return finalSvg
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

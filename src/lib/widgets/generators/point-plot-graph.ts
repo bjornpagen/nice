@@ -1,13 +1,9 @@
 import { z } from "zod"
-import {
-	createAxisOptionsSchema,
-	createPlotPointSchema,
-	generateCoordinatePlaneBase,
-	renderPoints
-} from "@/lib/widgets/generators/coordinate-plane-base"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
+import { createAxisOptionsSchema, createPlotPointSchema, renderPoints } from "@/lib/widgets/utils/canvas-utils"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth } from "@/lib/widgets/utils/layout"
+import { setupCoordinatePlaneV2 } from "@/lib/widgets/utils/coordinate-plane-v2"
 import { theme } from "@/lib/widgets/utils/theme"
 
 export const PointPlotGraphPropsSchema = z
@@ -55,17 +51,40 @@ export const generatePointPlotGraph: WidgetGenerator<typeof PointPlotGraphPropsS
 	const { width, height, xAxis, yAxis, showQuadrantLabels, points } = props
 
 	// 1. Call the base generator and get the body content and extents object
-	const base = generateCoordinatePlaneBase(width, height, xAxis, yAxis, showQuadrantLabels, points)
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
-	// 2. Render elements in order, passing the extents object to each helper
-	let content = renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
+	const baseInfo = setupCoordinatePlaneV2(
+		{
+			width,
+			height,
+			xAxis: {
+				label: xAxis.label,
+				min: xAxis.min,
+				max: xAxis.max,
+				tickInterval: xAxis.tickInterval,
+				showGridLines: xAxis.showGridLines
+			},
+			yAxis: {
+				label: yAxis.label,
+				min: yAxis.min,
+				max: yAxis.max,
+				tickInterval: yAxis.tickInterval,
+				showGridLines: yAxis.showGridLines
+			},
+			showQuadrantLabels: true
+		},
+		canvas
+	)
 
-	// 3. Compute final width and assemble the complete SVG
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, PADDING)
-	let finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-	finalSvg += base.svgBody
-	finalSvg += content
-	finalSvg += `</svg>`
+	// Render elements using Canvas API
+	renderPoints(points, baseInfo.toSvgX, baseInfo.toSvgY, canvas)
 
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

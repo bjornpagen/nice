@@ -2,11 +2,10 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
-import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { computeDynamicWidth, includePointX, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
+import { setupCoordinatePlaneBaseV2 } from "@/lib/widgets/utils/coordinate-plane-utils"
 import { theme } from "@/lib/widgets/utils/theme"
-import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 const Bin = z
 	.object({
@@ -142,62 +141,67 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		tickInterval = Math.min(...deltas)
 	}
 
-	const base = generateCoordinatePlaneBaseV2(
-		width,
-		height,
-		title,
-		{
-			xScaleType: "numeric", // Set scale type - histograms use numeric separators, not categories
-			label: xAxis.label,
-			min: separators[0] ?? 0, // Required for numeric
-			max: separators[separators.length - 1] ?? 1, // Required for numeric
-			tickInterval, // Required for numeric
-			showGridLines: false,
-			showTickLabels: true
-		},
-		{
-			label: yAxis.label,
-			min: 0,
-			max: yAxis.max,
-			tickInterval: yAxis.tickInterval,
-			showGridLines: false,
-			showTickLabels: true
-		}
-	)
-
-	// Histogram bars using numeric separators to calculate bin positions and widths
-	let bars = ""
-
-	bins.forEach((b, i) => {
-		const barHeight = (b.frequency / yAxis.max) * base.chartArea.height
-		
-		// Calculate bin boundaries from separators
-		const leftSeparator = separators[i]
-		const rightSeparator = separators[i + 1]
-		if (leftSeparator === undefined || rightSeparator === undefined) {
-			logger.error("histogram separator index out of range", { index: i, separatorsLength: separators.length })
-			throw errors.new("histogram: separator index out of range")
-		}
-		
-		// Convert separator values to SVG coordinates
-		const x = base.toSvgX(leftSeparator)
-		const rightX = base.toSvgX(rightSeparator)
-		const binWidth = rightX - x
-		const y = base.chartArea.top + base.chartArea.height - barHeight
-
-		includePointX(base.ext, x)
-		includePointX(base.ext, rightX)
-
-		bars += `<rect x="${x}" y="${y}" width="${binWidth}" height="${barHeight}" fill="${theme.colors.highlightPrimary}" stroke="${theme.colors.axis}"/>`
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
 	})
 
-	let svgBody = base.svgBody
-	svgBody += wrapInClippedGroup(base.clipId, bars)
+	const baseInfo = setupCoordinatePlaneBaseV2(
+		{
+			width,
+			height,
+			title,
+			xAxis: {
+				xScaleType: "numeric", // Set scale type - histograms use numeric separators, not categories
+				label: xAxis.label,
+				min: separators[0] ?? 0,
+				max: separators[separators.length - 1] ?? 1,
+				tickInterval,
+				showGridLines: false,
+				showTickLabels: true
+			},
+			yAxis: {
+				label: yAxis.label,
+				min: 0,
+				max: yAxis.max,
+				tickInterval: yAxis.tickInterval,
+				showGridLines: false,
+				showTickLabels: true
+			}
+		},
+		canvas
+	)
 
-	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, totalHeight, AXIS_VIEWBOX_PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">` +
-		svgBody +
-		`</svg>`
-	return finalSvg
+	// Draw histogram bars within the clipped region
+	canvas.drawInClippedRegion((clippedCanvas) => {
+		bins.forEach((b, i) => {
+			const barHeight = (b.frequency / yAxis.max) * baseInfo.chartArea.height
+
+			// Calculate bin boundaries from separators
+			const leftSeparator = separators[i]
+			const rightSeparator = separators[i + 1]
+			if (leftSeparator === undefined || rightSeparator === undefined) {
+				logger.error("histogram separator index out of range", { index: i, separatorsLength: separators.length })
+				throw errors.new("histogram: separator index out of range")
+			}
+
+			// Convert separator values to SVG coordinates
+			const x = baseInfo.toSvgX(leftSeparator)
+			const rightX = baseInfo.toSvgX(rightSeparator)
+			const binWidth = rightX - x
+			const y = baseInfo.chartArea.top + baseInfo.chartArea.height - barHeight
+
+			clippedCanvas.drawRect(x, y, binWidth, barHeight, {
+				fill: theme.colors.highlightPrimary,
+				stroke: theme.colors.axis,
+				strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+			})
+		})
+	})
+
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(AXIS_VIEWBOX_PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

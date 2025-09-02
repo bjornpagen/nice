@@ -2,9 +2,10 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
 
 const KAArc = z
@@ -144,12 +145,11 @@ export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof Pentago
 	const { width, height, pentagonPoints, intersectionLines, khanArcs } = data
 
 	// Initialize extents
-	const ext = initExtents(width)
-
-	// Track all pentagon vertices
-	for (const point of pentagonPoints) {
-		includePointX(ext, point.x)
-	}
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	// Track intersection line endpoints
 	for (const line of intersectionLines) {
@@ -165,39 +165,25 @@ export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof Pentago
 			throw errors.new(`point not found: ${line.to}`)
 		}
 
-		includePointX(ext, fromPoint.x)
-		includePointX(ext, toPoint.x)
+		// Canvas automatically tracks extents
 	}
 
-	// Track arc endpoints and labels
+	// Canvas automatically tracks arc extents
 	for (const arc of khanArcs) {
-		// Track arc start point
-		includePointX(ext, arc.startX)
-		
-		// Track arc end point
-		const arcEndX = arc.startX + arc.endDeltaX
-		includePointX(ext, arcEndX)
-
 		// Track label position if label exists
 		if (arc.label) {
 			const arcCenterX = arc.startX + arc.endDeltaX / 2
 			const arcCenterY = arc.startY + arc.endDeltaY / 2
-			
+
 			const perpX = -arc.endDeltaY / Math.sqrt(arc.endDeltaX * arc.endDeltaX + arc.endDeltaY * arc.endDeltaY)
 			const labelOffset = arc.rx + 8
 			const labelX = arcCenterX + perpX * labelOffset
-			
-			includeText(ext, labelX, arc.label, "middle", 7)
+
+			// Canvas automatically tracks text extents
 		}
 	}
 
-	// Compute dynamic width and viewBox
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-
-	// Start building SVG with computed dimensions
-	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-
-	// Draw pentagon perimeter
+	// Draw pentagon perimeter using Canvas API
 	for (let i = 0; i < pentagonPoints.length; i++) {
 		const current = pentagonPoints[i]
 		const next = pentagonPoints[(i + 1) % pentagonPoints.length]
@@ -207,7 +193,10 @@ export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof Pentago
 			throw errors.new(`pentagon point missing at index ${i}`)
 		}
 
-		svg += `<line x1="${current.x}" y1="${current.y}" x2="${next.x}" y2="${next.y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+		canvas.drawLine(current.x, current.y, next.x, next.y, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
 	}
 
 	// Draw intersection lines
@@ -220,13 +209,25 @@ export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof Pentago
 			continue
 		}
 
-		svg += `<line x1="${fromPoint.x}" y1="${fromPoint.y}" x2="${toPoint.x}" y2="${toPoint.y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+		canvas.drawLine(fromPoint.x, fromPoint.y, toPoint.x, toPoint.y, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
 	}
 
 	// Draw Khan Academy style arcs using exact SVG arc parameters
 	for (const arc of khanArcs) {
 		// Create the exact SVG path using Khan Academy's arc format
-		svg += `<path d="M ${arc.startX} ${arc.startY}a${arc.rx} ${arc.ry} ${arc.xAxisRotation} ${arc.largeArcFlag} ${arc.sweepFlag} ${arc.endDeltaX} ${arc.endDeltaY}" fill="none" stroke="${arc.color}" stroke-width="${theme.stroke.width.xthick}"/>`
+		const endX = arc.startX + arc.endDeltaX
+		const endY = arc.startY + arc.endDeltaY
+		const arcPath = new Path2D()
+			.moveTo(arc.startX, arc.startY)
+			.arcTo(arc.rx, arc.ry, arc.xAxisRotation, arc.largeArcFlag as 0 | 1, arc.sweepFlag as 0 | 1, endX, endY)
+		canvas.drawPath(arcPath, {
+			fill: "none",
+			stroke: arc.color,
+			strokeWidth: Number.parseFloat(theme.stroke.width.xthick)
+		})
 
 		// Calculate label position at the center of the arc but just outside its edge
 		// Find the center point of the arc path
@@ -244,15 +245,25 @@ export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof Pentago
 			const labelX = arcCenterX + perpX * labelOffset
 			const labelY = arcCenterY + perpY * labelOffset
 
-			svg += `<text x="${labelX}" y="${labelY}" fill="${theme.colors.black}" text-anchor="middle" dominant-baseline="middle" font-size="${theme.font.size.medium}">${arc.label}</text>`
+			canvas.drawText({
+				x: labelX,
+				y: labelY,
+				text: arc.label,
+				fill: theme.colors.black,
+				anchor: "middle",
+				dominantBaseline: "middle",
+				fontPx: Number.parseFloat(theme.font.size.medium)
+			})
 		}
 	}
 
 	// Draw pentagon points
 	for (const point of pentagonPoints) {
-		svg += `<circle cx="${point.x}" cy="${point.y}" r="4" fill="${theme.colors.black}"/>`
+		canvas.drawCircle(point.x, point.y, 4, { fill: theme.colors.black })
 	}
 
-	svg += "</svg>"
-	return svg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">${svgBody}</svg>`
 }

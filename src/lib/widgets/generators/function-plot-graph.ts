@@ -1,15 +1,15 @@
 import { z } from "zod"
+import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import {
 	createAxisOptionsSchema,
 	createPlotPointSchema,
 	createPolylineSchema,
-	generateCoordinatePlaneBase,
 	renderPoints,
 	renderPolylines
-} from "@/lib/widgets/generators/coordinate-plane-base"
-import type { WidgetGenerator } from "@/lib/widgets/types"
+} from "@/lib/widgets/utils/canvas-utils"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
+import { setupCoordinatePlaneV2 } from "@/lib/widgets/utils/coordinate-plane-v2"
 import { theme } from "@/lib/widgets/utils/theme"
 
 export const FunctionPlotGraphPropsSchema = z
@@ -62,25 +62,45 @@ export const generateFunctionPlotGraph: WidgetGenerator<typeof FunctionPlotGraph
 	const { width, height, xAxis, yAxis, showQuadrantLabels, polylines, points } = props
 
 	// 1. Call the base generator and get the body content and extents object
-	const base = generateCoordinatePlaneBase(width, height, xAxis, yAxis, showQuadrantLabels, points)
-	
-	// 2. Separate clipped polylines from unclipped points
-	let clippedContent = ""
-	let unclippedContent = ""
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
-	// Render polylines in clipped content (background)
-	clippedContent += renderPolylines(polylines, base.toSvgX, base.toSvgY, base.ext)
+	const baseInfo = setupCoordinatePlaneV2(
+		{
+			width,
+			height,
+			xAxis: {
+				label: xAxis.label,
+				min: xAxis.min,
+				max: xAxis.max,
+				tickInterval: xAxis.tickInterval,
+				showGridLines: xAxis.showGridLines
+			},
+			yAxis: {
+				label: yAxis.label,
+				min: yAxis.min,
+				max: yAxis.max,
+				tickInterval: yAxis.tickInterval,
+				showGridLines: yAxis.showGridLines
+			},
+			showQuadrantLabels: true
+		},
+		canvas
+	)
 
-	// Render points in unclipped content (foreground) - for highlighting key points on the functions
-	unclippedContent += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
+	// Render clipped polylines
+	canvas.drawInClippedRegion((clippedCanvas) => {
+		renderPolylines(polylines, baseInfo.toSvgX, baseInfo.toSvgY, clippedCanvas)
+	})
 
-	// 3. Compute final width and assemble the complete SVG
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, PADDING)
-	let finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-	finalSvg += base.svgBody
-	finalSvg += wrapInClippedGroup("chartArea", clippedContent)
-	finalSvg += unclippedContent // Add unclipped points
-	finalSvg += `</svg>`
+	// Render unclipped points on the main canvas
+	renderPoints(points, baseInfo.toSvgX, baseInfo.toSvgY, canvas)
 
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

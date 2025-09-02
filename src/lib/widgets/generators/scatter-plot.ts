@@ -2,12 +2,13 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
+import { setupCoordinatePlaneBaseV2 } from "@/lib/widgets/utils/coordinate-plane-utils"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { computeDynamicWidth, includePointX, includeText, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
+import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
-import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 // Defines a single data point on the scatter plot
 const ScatterPointSchema = z
@@ -342,37 +343,43 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		}
 	}
 
-	const base = generateCoordinatePlaneBaseV2(
-		width,
-		height,
-		title,
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
+	const baseInfo = setupCoordinatePlaneBaseV2(
 		{
-			xScaleType: "numeric", // Set the scale type
-			label: xAxis.label,
-			min: xAxis.min, // Required for numeric
-			max: xAxis.max, // Required for numeric
-			tickInterval: xAxis.tickInterval, // Required for numeric
-			showGridLines: xAxis.gridLines,
-			showTickLabels: true
+			width,
+			height,
+			title,
+			xAxis: {
+				xScaleType: "numeric",
+				label: xAxis.label,
+				min: xAxis.min,
+				max: xAxis.max,
+				tickInterval: xAxis.tickInterval,
+				showGridLines: xAxis.gridLines,
+				showTickLabels: true
+			},
+			yAxis: {
+				label: yAxis.label,
+				min: yAxis.min,
+				max: yAxis.max,
+				tickInterval: yAxis.tickInterval,
+				showGridLines: yAxis.gridLines,
+				showTickLabels: true
+			}
 		},
-		{
-			label: yAxis.label,
-			min: yAxis.min,
-			max: yAxis.max,
-			tickInterval: yAxis.tickInterval,
-			showGridLines: yAxis.gridLines,
-			showTickLabels: true
-		}
+		canvas
 	)
 
-	const styleAttrs = (style: LineStyle): string => {
-		const dash = style.dash ? ` stroke-dasharray="5 5"` : ""
-		return ` stroke="${style.color}" stroke-width="${style.strokeWidth}"${dash}`
-	}
-
-	// Render line overlays - linear lines don't need clipping, curves do
-	let linearLineContent = ""
-	let curveLineContent = ""
+	// Render line overlays - curves and extended lines need clipping
+	type ClippedLineData =
+		| { path: Path2D; line: (typeof lines)[number] }
+		| { x1: number; y1: number; x2: number; y2: number; line: (typeof lines)[number] }
+	const clippedLines: Array<() => ClippedLineData> = []
 
 	for (const line of lines) {
 		if (line.type === "bestFit") {
@@ -382,106 +389,149 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 					// Linear lines span exact chart range - no clipping needed
 					const y1 = coeff.slope * xAxis.min + coeff.yIntercept
 					const y2 = coeff.slope * xAxis.max + coeff.yIntercept
-					const x1Svg = base.toSvgX(xAxis.min)
-					const x2Svg = base.toSvgX(xAxis.max)
-					
-					// Track the regression line endpoints
-					includePointX(base.ext, x1Svg)
-					includePointX(base.ext, x2Svg)
-					
-					linearLineContent += `<line x1="${x1Svg}" y1="${base.toSvgY(y1)}" x2="${x2Svg}" y2="${base.toSvgY(y2)}"${styleAttrs(
-						line.style
-					)} />`
+					const x1Svg = baseInfo.toSvgX(xAxis.min)
+					const x2Svg = baseInfo.toSvgX(xAxis.max)
+
+					canvas.drawLine(x1Svg, baseInfo.toSvgY(y1), x2Svg, baseInfo.toSvgY(y2), {
+						stroke: line.style.color,
+						strokeWidth: line.style.strokeWidth,
+						dash: line.style.dash ? "5 5" : undefined
+					})
 				}
 			}
 			if (line.method === "quadratic") {
 				const coeff = computeQuadraticRegression(points)
 				if (coeff) {
 					// Render full mathematical curve - clipping will handle bounds
-					const steps = 100
-					let path = ""
-					for (let i = 0; i <= steps; i++) {
-						const xVal = xAxis.min + (i / steps) * (xAxis.max - xAxis.min)
-						const yVal = coeff.a * xVal ** 2 + coeff.b * xVal + coeff.c
-						const px = base.toSvgX(xVal)
-						const py = base.toSvgY(yVal)
-						path += `${i === 0 ? "M" : "L"} ${px} ${py} `
-						
-						// Track the x-extent of each point on the curve
-						includePointX(base.ext, px)
-					}
-					curveLineContent += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
+					clippedLines.push(() => {
+						const steps = 100
+						const curvePoints: Array<{ x: number; y: number }> = []
+						for (let i = 0; i <= steps; i++) {
+							const xVal = xAxis.min + (i / steps) * (xAxis.max - xAxis.min)
+							const yVal = coeff.a * xVal ** 2 + coeff.b * xVal + coeff.c
+							const px = baseInfo.toSvgX(xVal)
+							const py = baseInfo.toSvgY(yVal)
+							curvePoints.push({ x: px, y: py })
+						}
+
+						// Build path for curve
+						const path = new Path2D()
+						for (const [i, point] of curvePoints.entries()) {
+							if (i === 0) {
+								path.moveTo(point.x, point.y)
+							} else {
+								path.lineTo(point.x, point.y)
+							}
+						}
+						return { path, line }
+					})
 				}
 			}
 			if (line.method === "exponential") {
 				const coeff = computeExponentialRegression(points)
 				if (coeff) {
 					// Render exponential curve: y = ae^(bx) - clipping prevents infinite values
-					const steps = 100
-					let path = ""
-					for (let i = 0; i <= steps; i++) {
-						const xVal = xAxis.min + (i / steps) * (xAxis.max - xAxis.min)
-						const yVal = coeff.a * Math.exp(coeff.b * xVal)
-						const px = base.toSvgX(xVal)
-						const py = base.toSvgY(yVal)
-						path += `${i === 0 ? "M" : "L"} ${px} ${py} `
-						
-						// Track the x-extent of each point on the curve
-						includePointX(base.ext, px)
-					}
-					curveLineContent += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
+					clippedLines.push(() => {
+						const steps = 100
+						const curvePoints: Array<{ x: number; y: number }> = []
+						for (let i = 0; i <= steps; i++) {
+							const xVal = xAxis.min + (i / steps) * (xAxis.max - xAxis.min)
+							const yVal = coeff.a * Math.exp(coeff.b * xVal)
+							const px = baseInfo.toSvgX(xVal)
+							const py = baseInfo.toSvgY(yVal)
+							curvePoints.push({ x: px, y: py })
+						}
+
+						// Build path for exponential curve
+						const path = new Path2D()
+						for (const [i, point] of curvePoints.entries()) {
+							if (i === 0) {
+								path.moveTo(point.x, point.y)
+							} else {
+								path.lineTo(point.x, point.y)
+							}
+						}
+						return { path, line }
+					})
 				}
 			}
 		} else if (line.type === "twoPoints") {
 			const { a, b } = line
 			if (a.x === b.x) {
-				// vertical line across full y-domain - no clipping needed
-				const xSvg = base.toSvgX(a.x)
-				includePointX(base.ext, xSvg)
-				linearLineContent += `<line x1="${xSvg}" y1="${base.toSvgY(yAxis.min)}" x2="${xSvg}" y2="${base.toSvgY(yAxis.max)}"${styleAttrs(
-					line.style
-				)} />`
+				// vertical line across full y-domain - draw directly with canvas
+				const xSvg = baseInfo.toSvgX(a.x)
+				canvas.drawLine(xSvg, baseInfo.toSvgY(yAxis.min), xSvg, baseInfo.toSvgY(yAxis.max), {
+					stroke: line.style.color,
+					strokeWidth: line.style.strokeWidth,
+					dash: line.style.dash ? "5 5" : undefined
+				})
 			} else {
-				// twoPoints lines can extend beyond bounds - use clipping
-				const slope = (b.y - a.y) / (b.x - a.x)
-				const intercept = a.y - slope * a.x
-				const yAtMin = slope * xAxis.min + intercept
-				const yAtMax = slope * xAxis.max + intercept
-				const x1Svg = base.toSvgX(xAxis.min)
-				const x2Svg = base.toSvgX(xAxis.max)
-				
-				// Track the line endpoints
-				includePointX(base.ext, x1Svg)
-				includePointX(base.ext, x2Svg)
-				
-				curveLineContent += `<line x1="${x1Svg}" y1="${base.toSvgY(yAtMin)}" x2="${x2Svg}" y2="${base.toSvgY(yAtMax)}"${styleAttrs(
-					line.style
-				)} />`
+				// twoPoints lines can extend beyond bounds - add to clipped content
+				clippedLines.push(() => {
+					const slope = (b.y - a.y) / (b.x - a.x)
+					const intercept = a.y - slope * a.x
+					const yAtMin = slope * xAxis.min + intercept
+					const yAtMax = slope * xAxis.max + intercept
+					const x1Svg = baseInfo.toSvgX(xAxis.min)
+					const x2Svg = baseInfo.toSvgX(xAxis.max)
+					const y1Svg = baseInfo.toSvgY(yAtMin)
+					const y2Svg = baseInfo.toSvgY(yAtMax)
+
+					return { x1: x1Svg, y1: y1Svg, x2: x2Svg, y2: y2Svg, line }
+				})
 			}
 		}
 	}
 
-	// Separate unclipped data points and labels
-	let unclippedPointsContent = ""
+	// Draw all clipped content within the clipped region
+	if (clippedLines.length > 0) {
+		canvas.drawInClippedRegion((clippedCanvas) => {
+			for (const getLineData of clippedLines) {
+				const data = getLineData()
+				if ("path" in data) {
+					// It's a curve (quadratic or exponential)
+					clippedCanvas.drawPath(data.path, {
+						fill: "none",
+						stroke: data.line.style.color,
+						strokeWidth: data.line.style.strokeWidth,
+						dash: data.line.style.dash ? "5 5" : undefined
+					})
+				} else if ("x1" in data) {
+					// It's a two-point line
+					clippedCanvas.drawLine(data.x1, data.y1, data.x2, data.y2, {
+						stroke: data.line.style.color,
+						strokeWidth: data.line.style.strokeWidth,
+						dash: data.line.style.dash ? "5 5" : undefined
+					})
+				}
+			}
+		})
+	}
+
+	// Render data points and labels
 	for (const p of points) {
-		const px = base.toSvgX(p.x)
-		const py = base.toSvgY(p.y)
-		
-		// Track the x-extent of the point
-		includePointX(base.ext, px)
-		
-		// Data points and labels go in unclipped content to prevent being cut off at boundaries
-		unclippedPointsContent += `<circle cx="${px}" cy="${py}" r="${theme.geometry.pointRadius.large}" fill="${theme.colors.black}" fill-opacity="${theme.opacity.overlayHigh}"/>`
-		unclippedPointsContent += `<text x="${px + 5}" y="${py - 5}" fill="${theme.colors.text}" font-size="${theme.font.size.small}">${abbreviateMonth(p.label)}</text>`
-		// Track the label's extent
-		includeText(base.ext, px + 5, abbreviateMonth(p.label), "start", 7)
+		const px = baseInfo.toSvgX(p.x)
+		const py = baseInfo.toSvgY(p.y)
+
+		// Data points and labels
+		canvas.drawCircle(px, py, Number.parseFloat(theme.geometry.pointRadius.large), {
+			fill: theme.colors.black,
+			fillOpacity: Number.parseFloat(theme.opacity.overlayHigh)
+		})
+		canvas.drawText({
+			x: px + 5,
+			y: py - 5,
+			text: abbreviateMonth(p.label),
+			fill: theme.colors.text,
+			fontPx: Number.parseFloat(theme.font.size.small.replace("px", ""))
+		})
 	}
 
 	// Line legend content
 	let legendContent = ""
 	if (lines.length > 0) {
-		const legendStartX = base.chartArea.left + base.chartArea.width + 15
-		const legendStartY = base.chartArea.top + 10
+		const legendStartX = baseInfo.chartArea.left + baseInfo.chartArea.width + 15
+		const legendStartY = baseInfo.chartArea.top + 10
 
 		for (let i = 0; i < lines.length; i++) {
 			const line = lines[i]
@@ -493,26 +543,26 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 			const lineCenterY = legendY - 3
 
 			// Draw small line sample with same style as the actual line
-			const styleStr = styleAttrs(line.style)
-			legendContent += `<line x1="${lineStartX}" y1="${lineCenterY}" x2="${lineEndX}" y2="${lineCenterY}"${styleStr}/>`
+			const dash = line.style.dash ? "5 5" : undefined
+			canvas.drawLine(lineStartX, lineCenterY, lineEndX, lineCenterY, {
+				stroke: line.style.color,
+				strokeWidth: line.style.strokeWidth,
+				dash: dash
+			})
 
 			// Label positioned after the line sample
-			legendContent += `<text x="${lineEndX + 5}" y="${legendY}" fill="${theme.colors.black}" text-anchor="start">${abbreviateMonth(line.label)}</text>`
-			includeText(base.ext, lineEndX + 5, abbreviateMonth(line.label), "start", 7)
+			canvas.drawText({
+				x: lineEndX + 5,
+				y: legendY,
+				text: abbreviateMonth(line.label),
+				fill: theme.colors.black,
+				anchor: "start"
+			})
 		}
 	}
 
-	let svgBody = base.svgBody
-	svgBody += linearLineContent
-	if (curveLineContent) {
-		svgBody += wrapInClippedGroup(base.clipId, curveLineContent)
-	}
-	svgBody += unclippedPointsContent // Add unclipped data points and labels
-	svgBody += legendContent
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(AXIS_VIEWBOX_PADDING)
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, AXIS_VIEWBOX_PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">` +
-		svgBody +
-		`</svg>`
-	return finalSvg
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

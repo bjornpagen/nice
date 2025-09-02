@@ -1,9 +1,9 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const Node = z
 	.object({
@@ -125,16 +125,16 @@ export type TreeDiagramProps = z.infer<typeof TreeDiagramPropsSchema>
 export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema> = (props) => {
 	const { width, height, nodes, edges, nodeFontSize, nodeRadius } = props
 
-	// Initialize extents tracking
-	const ext = initExtents(width)
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: nodeFontSize,
+		lineHeightDefault: 1.2
+	})
 
 	// Handle empty nodes case
 	if (nodes.length === 0) {
 		return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}"></svg>`
 	}
-
-	// Start with standard viewBox
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
 
 	// Create a map for quick node lookup by ID
 	const nodeMap = new Map(nodes.map((node) => [node.id, node]))
@@ -145,40 +145,41 @@ export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema>
 		const toNode = nodeMap.get(edge.to)
 		if (!fromNode || !toNode) continue
 
-		// Track edge endpoints
-		includePointX(ext, fromNode.position.x)
-		includePointX(ext, toNode.position.x)
-
-		const dash = edge.style === "dashed" ? 'stroke-dasharray="5 3"' : ""
-		svg += `<line x1="${fromNode.position.x}" y1="${fromNode.position.y}" x2="${toNode.position.x}" y2="${toNode.position.y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}" ${dash}/>`
+		const dash = edge.style === "dashed" ? "5 3" : undefined
+		canvas.drawLine(fromNode.position.x, fromNode.position.y, toNode.position.x, toNode.position.y, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			dash: dash
+		})
 	}
 
 	// 2. Draw Nodes (on top of edges)
 	for (const node of nodes) {
 		const { x, y } = node.position
-		
-		// Track node circle (left and right edges)
-		includePointX(ext, x - nodeRadius)
-		includePointX(ext, x + nodeRadius)
-		
+
 		// Draw a circle for all nodes
-		svg += `<circle cx="${x}" cy="${y}" r="${nodeRadius}" fill="${theme.colors.white}" stroke="${node.color}" stroke-width="${theme.stroke.width.thick}"/>`
+		canvas.drawCircle(x, y, nodeRadius, {
+			fill: theme.colors.white,
+			stroke: node.color,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
+
 		// Draw the text label only if it exists
 		if (node.label !== null) {
-			// Track node label
-			includeText(ext, x, node.label, "middle", nodeFontSize)
-			
-			svg += `<text x="${x}" y="${y}" fill="${node.color}" font-size="${nodeFontSize}px" text-anchor="middle" dominant-baseline="middle">${node.label}</text>`
+			canvas.drawText({
+				x: x,
+				y: y,
+				text: node.label,
+				fill: node.color,
+				fontPx: nodeFontSize,
+				anchor: "middle",
+				dominantBaseline: "middle"
+			})
 		}
 	}
 
-	svg += "</svg>"
-	
-	// MODIFICATION: Apply dynamic width and viewBox at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSVG = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
-	
-	// Rebuild SVG with correct viewBox and width
-	svg = finalSVG + svg.substring(svg.indexOf(">") + 1)
-	return svg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">${svgBody}</svg>`
 }

@@ -1,7 +1,7 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 export const EmojiImagePropsSchema = z
 	.object({
@@ -35,28 +35,26 @@ export type EmojiImageProps = z.infer<typeof EmojiImagePropsSchema>
 export const generateEmojiImage: WidgetGenerator<typeof EmojiImagePropsSchema> = (data) => {
 	const { emoji, size } = data
 
-	// MODIFICATION START
-	// Use dynamic width calculation instead of fixed size.
-	const ext = initExtents(size)
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width: size, height: size },
+		fontPxDefault: size * 0.9,
+		lineHeightDefault: 1.2
+	})
 	const cx = size / 2
-	const cy = size / 2
-
-	// Track the emoji text for accurate width calculation.
-	// Emojis are treated as single characters, but their rendered width can vary.
-	// Using a larger font size estimate for avgCharWidthPx.
-	includeText(ext, cx, emoji, "middle", size * 0.9)
-
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, size, PADDING)
-
-	let svg = `<svg width="${dynamicWidth}" height="${size}" viewBox="${vbMinX} 0 ${dynamicWidth} ${size}" xmlns="http://www.w3.org/2000/svg">`
-
-	// Center the emoji in the available space
 	const emojiY = size * 0.85 // Adjust for emoji baseline
 
 	// Render the emoji
-	svg += `<text x="${cx}" y="${emojiY}" font-size="${size * 0.9}" text-anchor="middle" dominant-baseline="middle">${emoji}</text>`
+	canvas.drawText({
+		x: cx,
+		y: emojiY,
+		text: emoji,
+		fontPx: size * 0.9,
+		anchor: "middle",
+		dominantBaseline: "middle"
+	})
 
-	svg += "</svg>"
-	return svg
-	// MODIFICATION END
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg">${svgBody}</svg>`
 }

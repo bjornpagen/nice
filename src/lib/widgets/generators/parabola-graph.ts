@@ -2,12 +2,11 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
-import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { computeDynamicWidth, includePointX, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
+import { setupCoordinatePlaneBaseV2 } from "@/lib/widgets/utils/coordinate-plane-utils"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
-import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 function createAxisOptionsSchema() {
 	return z
@@ -78,51 +77,63 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 		throw errors.new("invalid parabola shape")
 	}
 
-	const base = generateCoordinatePlaneBaseV2(
-		width,
-		height,
-		null, // No title for this widget
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
+	const baseInfo = setupCoordinatePlaneBaseV2(
 		{
-			xScaleType: "numeric", // Set the scale type
-			label: xAxis.label,
-			min: xAxis.min, // Required for numeric
-			max: xAxis.max, // Required for numeric
-			tickInterval: xAxis.tickInterval, // Required for numeric
-			showGridLines: false,
-			showTickLabels: xAxis.showTickLabels
+			width,
+			height,
+			title: null, // No title for this widget
+			xAxis: {
+				xScaleType: "numeric",
+				label: xAxis.label,
+				min: xAxis.min,
+				max: xAxis.max,
+				tickInterval: xAxis.tickInterval,
+				showGridLines: false,
+				showTickLabels: xAxis.showTickLabels
+			},
+			yAxis: {
+				label: yAxis.label,
+				min: yAxis.min,
+				max: yAxis.max,
+				tickInterval: yAxis.tickInterval,
+				showGridLines: yAxis.showGridLines,
+				showTickLabels: yAxis.showTickLabels
+			}
 		},
-		{
-			label: yAxis.label,
-			min: yAxis.min,
-			max: yAxis.max,
-			tickInterval: yAxis.tickInterval,
-			showGridLines: yAxis.showGridLines,
-			showTickLabels: yAxis.showTickLabels
-		}
+		canvas
 	)
 
 	// Parabola curve content - clip to first quadrant (x >= 0, y >= 0)
-	let parabolaContent = ""
 	const steps = 200
-	let pointsStr = ""
+	const parabolaPoints: Array<{ x: number; y: number }> = []
 	for (let i = 0; i <= steps; i++) {
 		const x = xAxis.min + (i / steps) * (xAxis.max - xAxis.min)
 		const y = a * (x - h) * (x - h) + k
 		if (x >= 0 && y >= 0) {
-			// Track the x-extent of the parabola point
-			includePointX(base.ext, base.toSvgX(x))
-			pointsStr += `${base.toSvgX(x)},${base.toSvgY(y)} `
+			parabolaPoints.push({ x: baseInfo.toSvgX(x), y: baseInfo.toSvgY(y) })
 		}
 	}
-	const dash = parabola.style === "dashed" ? ' stroke-dasharray="8 6"' : ""
-	parabolaContent += `<polyline points="${pointsStr.trim()}" fill="none" stroke="${parabola.color}" stroke-width="2.5" ${dash}/>`
 
-	let svgBody = base.svgBody
-	svgBody += wrapInClippedGroup(base.clipId, parabolaContent)
+	// Draw parabola within the clipped region
+	if (parabolaPoints.length > 0) {
+		canvas.drawInClippedRegion((clippedCanvas) => {
+			const dash = parabola.style === "dashed" ? "8 6" : undefined
+			clippedCanvas.drawPolyline(parabolaPoints, {
+				stroke: parabola.color,
+				strokeWidth: 2.5,
+				dash: dash
+			})
+		})
+	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, AXIS_VIEWBOX_PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="12">` +
-		svgBody +
-		`</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(AXIS_VIEWBOX_PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="12">${svgBody}</svg>`
 }

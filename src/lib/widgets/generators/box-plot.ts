@@ -2,17 +2,11 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import {
-	calculateTextAwareLabelSelection,
-	calculateXAxisLayout,
-	computeDynamicWidth,
-	includeText,
-	includePointX,
-	initExtents
-} from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
+import { calculateTextAwareLabelSelection, calculateXAxisLayout } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidRange = errors.new("axis min must be less than axis max")
@@ -127,18 +121,24 @@ export type BoxPlotProps = z.infer<typeof BoxPlotPropsSchema>
  */
 export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data) => {
 	const { width, height, axis, summary, boxColor, medianColor } = data
-	
+
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true, 15) // has tick labels, less padding
 	const margin = { top: PADDING, right: PADDING, bottom: bottomMargin, left: PADDING }
-	
+
 	const plotHeight = height - margin.top - margin.bottom
 	const chartWidth = width - margin.left - margin.right
 	const yCenter = margin.top + plotHeight / 2
-	
+
 	if (axis.min >= axis.max) {
 		logger.error("invalid axis range for box plot", { axisMin: axis.min, axisMax: axis.max })
 		throw errors.wrap(ErrInvalidRange, `axis.min (${axis.min}) must be less than axis.max (${axis.max})`)
 	}
+
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	const scale = chartWidth / (axis.max - axis.min)
 	const toSvgX = (val: number) => margin.left + (val - axis.min) * scale
@@ -149,57 +149,84 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 	const q3Pos = toSvgX(summary.q3)
 	const maxPos = toSvgX(summary.max)
 
-	const ext = initExtents(width) // NEW: Initialize extents tracking
-	let svgBody = ""
-
-	// MODIFIED: Use dynamic axisY and label positioning
+	// Draw axis
 	const axisY = height - margin.bottom
-	svgBody += `<line x1="${margin.left}" y1="${axisY}" x2="${width - margin.right}" y2="${axisY}" stroke="${theme.colors.axis}"/>`
+	canvas.drawLine(margin.left, axisY, width - margin.right, axisY, {
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+	})
+
 	if (axis.label && axis.label !== "") {
 		const labelX = margin.left + chartWidth / 2
 		const labelY = height - margin.bottom + xAxisTitleY
-		svgBody += `<text x="${labelX}" y="${labelY}" fill="${theme.colors.axisLabel}" text-anchor="middle" font-size="${theme.font.size.medium}">${abbreviateMonth(axis.label)}</text>`
-		includeText(ext, labelX, abbreviateMonth(axis.label), "middle", 7)
+		canvas.drawText({
+			x: labelX,
+			y: labelY,
+			text: abbreviateMonth(axis.label),
+			fill: theme.colors.axisLabel,
+			anchor: "middle",
+			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+		})
 	}
-	
+
 	// Add text-aware label selection
 	// Draw tick marks and labels
-	const tickPositions = axis.tickLabels.map(toSvgX);
-	const selectedLabels = calculateTextAwareLabelSelection(axis.tickLabels.map(String), tickPositions, chartWidth);
+	const tickPositions = axis.tickLabels.map(toSvgX)
+	const selectedLabels = calculateTextAwareLabelSelection(axis.tickLabels.map(String), tickPositions, chartWidth)
 
 	axis.tickLabels.forEach((t, i) => {
 		const pos = toSvgX(t)
-		svgBody += `<line x1="${pos}" y1="${axisY - 5}" x2="${pos}" y2="${axisY + 5}" stroke="${theme.colors.axis}"/>`
-		if (selectedLabels.has(i)) { // Check if label should be rendered
-			svgBody += `<text x="${pos}" y="${axisY + 20}" fill="${theme.colors.axisLabel}" text-anchor="middle">${t}</text>`
-			includeText(ext, pos, String(t), "middle", 7)
+		canvas.drawLine(pos, axisY - 5, pos, axisY + 5, {
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		})
+		if (selectedLabels.has(i)) {
+			// Check if label should be rendered
+			canvas.drawText({
+				x: pos,
+				y: axisY + 20,
+				text: String(t),
+				fill: theme.colors.axisLabel,
+				anchor: "middle"
+			})
 		}
 	})
 
 	// Box plot elements
 	// Whiskers
-	svgBody += `<line x1="${minPos}" y1="${yCenter}" x2="${q1Pos}" y2="${yCenter}" stroke="${theme.colors.black}"/>`
-	svgBody += `<line x1="${q3Pos}" y1="${yCenter}" x2="${maxPos}" y2="${yCenter}" stroke="${theme.colors.black}"/>`
+	canvas.drawLine(minPos, yCenter, q1Pos, yCenter, {
+		stroke: theme.colors.black,
+		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+	})
+	canvas.drawLine(q3Pos, yCenter, maxPos, yCenter, {
+		stroke: theme.colors.black,
+		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+	})
 
-	svgBody += `<line x1="${minPos}" y1="${yCenter - 10}" x2="${minPos}" y2="${yCenter + 10}" stroke="${theme.colors.black}"/>`
-	svgBody += `<line x1="${maxPos}" y1="${yCenter - 10}" x2="${maxPos}" y2="${yCenter + 10}" stroke="${theme.colors.black}"/>`
+	canvas.drawLine(minPos, yCenter - 10, minPos, yCenter + 10, {
+		stroke: theme.colors.black,
+		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+	})
+	canvas.drawLine(maxPos, yCenter - 10, maxPos, yCenter + 10, {
+		stroke: theme.colors.black,
+		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+	})
 
-	// Add tracking for the min/max whisker positions
-	includePointX(ext, minPos)
-	includePointX(ext, maxPos)
+	// Main box
+	canvas.drawRect(q1Pos, yCenter - plotHeight / 2, q3Pos - q1Pos, plotHeight, {
+		fill: boxColor,
+		stroke: theme.colors.black,
+		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+	})
 
-	// Include the main box in extent tracking
-	includePointX(ext, q1Pos)
-	includePointX(ext, q3Pos)
+	// Median line
+	canvas.drawLine(medianPos, yCenter - plotHeight / 2, medianPos, yCenter + plotHeight / 2, {
+		stroke: medianColor,
+		strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+	})
 
-	svgBody += `<rect x="${q1Pos}" y="${yCenter - plotHeight / 2}" width="${q3Pos - q1Pos}" height="${plotHeight}" fill="${boxColor}" stroke="${theme.colors.black}"/>`
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
 
-	svgBody += `<line x1="${medianPos}" y1="${yCenter - plotHeight / 2}" x2="${medianPos}" y2="${yCenter + plotHeight / 2}" stroke="${medianColor}" stroke-width="${theme.stroke.width.thick}"/>`
-
-	// NEW: Apply dynamic width at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

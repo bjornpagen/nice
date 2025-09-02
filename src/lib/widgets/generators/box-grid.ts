@@ -1,9 +1,9 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
-import { computeDynamicWidth, includeText, includePointX, initExtents } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 
 // Defines the content and styling for a single cell in the grid.
@@ -104,17 +104,19 @@ export const generateBoxGrid: WidgetGenerator<typeof BoxGridPropsSchema> = (prop
 	const cellWidth = width / numCols
 	const cellHeight = height / numRows
 
-	const ext = initExtents(width)
-	let svgContent = "" // Use a temporary string for the SVG body
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 14,
+		lineHeightDefault: 1.2
+	})
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
-	const style = `<style>
+	canvas.addStyle(`
         .cell-text {
             font-size: 14px;
             text-anchor: middle;
             dominant-baseline: middle;
         }
-    </style>`
+    `)
 
 	// Loop through data to draw backgrounds and text content
 	for (let r = 0; r < numRows; r++) {
@@ -127,19 +129,24 @@ export const generateBoxGrid: WidgetGenerator<typeof BoxGridPropsSchema> = (prop
 
 			// Draw background rectangle for highlighting, if specified
 			if (cell.backgroundColor && cell.backgroundColor !== "") {
-				svgContent += `<rect x="${x}" y="${y}" width="${cellWidth}" height="${cellHeight}" fill="${cell.backgroundColor}" />`
+				canvas.drawRect(x, y, cellWidth, cellHeight, {
+					fill: cell.backgroundColor
+				})
 			}
 
 			// Draw the text content (render text directly; for math, render a simple text fallback by stripping tags)
 			const textX = x + cellWidth / 2
 			const textY = y + cellHeight / 2
 			const label = getCellLabel(cell.content)
-			svgContent += `<text x="${textX}" y="${textY}" class="cell-text">${label}</text>`
-			includeText(ext, textX, label, "middle", 7)
-			
-			// Track the actual cell boundaries based on where content is placed
-			includePointX(ext, x) // Left edge of the cell
-			includePointX(ext, x + cellWidth) // Right edge of the cell
+			canvas.drawText({
+				x: textX,
+				y: textY,
+				text: label,
+				fontPx: 14,
+				anchor: "middle",
+				dominantBaseline: "middle",
+				fill: theme.colors.text
+			})
 		}
 	}
 
@@ -149,15 +156,17 @@ export const generateBoxGrid: WidgetGenerator<typeof BoxGridPropsSchema> = (prop
 			for (let c = 0; c < numCols; c++) {
 				const x = c * cellWidth
 				const y = r * cellHeight
-				svgContent += `<rect x="${x}" y="${y}" width="${cellWidth}" height="${cellHeight}" fill="none" stroke="${theme.colors.border}" stroke-width="${theme.stroke.width.base}" />`
+				canvas.drawRect(x, y, cellWidth, cellHeight, {
+					fill: "none",
+					stroke: theme.colors.border,
+					strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				})
 			}
 		}
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
-	svg += style
-	svg += svgContent
-	svg += "</svg>"
-	return svg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">${svgBody}</svg>`
 }

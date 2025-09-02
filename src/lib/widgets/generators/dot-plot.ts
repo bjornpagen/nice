@@ -2,17 +2,11 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import {
-	calculateTextAwareLabelSelection,
-	calculateXAxisLayout,
-	computeDynamicWidth,
-	includeText,
-	includePointX,
-	initExtents
-} from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
+import { calculateTextAwareLabelSelection, calculateXAxisLayout } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
@@ -111,7 +105,7 @@ export type DotPlotProps = z.infer<typeof DotPlotPropsSchema>
  */
 export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data) => {
 	const { width, height, axis, data: plotData, dotColor, dotRadius } = data
-	
+
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true)
 	const margin = { top: PADDING, right: PADDING, bottom: bottomMargin, left: PADDING }
 
@@ -134,16 +128,28 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	const scale = chartWidth / (axis.max - axis.min)
 	const toSvgX = (val: number) => margin.left + (val - axis.min) * scale
 
-	const ext = initExtents(width) // NEW: Initialize extents tracking
-	let svgBody = ""
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	// Axis line
-	svgBody += `<line x1="${margin.left}" y1="${axisY}" x2="${width - margin.right}" y2="${axisY}" stroke="${theme.colors.axis}"/>`
+	canvas.drawLine(margin.left, axisY, width - margin.right, axisY, {
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+	})
 
 	// Axis label
 	if (axis.label !== null) {
-		svgBody += `<text x="${width / 2}" y="${height - margin.bottom + xAxisTitleY}" fill="${theme.colors.axisLabel}" text-anchor="middle" font-size="${theme.font.size.medium}">${abbreviateMonth(axis.label)}</text>`
-		includeText(ext, width / 2, abbreviateMonth(axis.label), "middle", 7)
+		canvas.drawText({
+			x: width / 2,
+			y: height - margin.bottom + xAxisTitleY,
+			text: abbreviateMonth(axis.label),
+			fill: theme.colors.axisLabel,
+			anchor: "middle",
+			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+		})
 	}
 
 	// MODIFIED: Replace manual thinning with text-aware selection
@@ -153,21 +159,29 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 		tickValues.push(t)
 		tickPositions.push(toSvgX(t))
 	}
-	
+
 	// Determine decimal places for formatting based on tickInterval
 	const intervalStr = String(axis.tickInterval)
 	const decimals = intervalStr.includes(".") ? (intervalStr.split(".")[1] ?? "").length : 0
-	
+
 	const tickLabels = tickValues.map((t) => t.toFixed(decimals))
 	const selectedLabels = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartWidth, 10, 18) // more padding for numbers
 
 	tickValues.forEach((t, i) => {
 		const x = toSvgX(t)
-		svgBody += `<line x1="${x}" y1="${axisY - 5}" x2="${x}" y2="${axisY + 5}" stroke="${theme.colors.axis}"/>`
+		canvas.drawLine(x, axisY - 5, x, axisY + 5, {
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		})
 		if (selectedLabels.has(i)) {
 			const label = t.toFixed(decimals)
-			svgBody += `<text x="${x}" y="${axisY + 20}" fill="${theme.colors.axisLabel}" text-anchor="middle">${label}</text>`
-			includeText(ext, x, label, "middle", 7)
+			canvas.drawText({
+				x: x,
+				y: axisY + 20,
+				text: label,
+				fill: theme.colors.axisLabel,
+				anchor: "middle"
+			})
 		}
 	})
 
@@ -177,19 +191,17 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	for (const dp of plotData) {
 		if (dp.count > 0) {
 			const x = toSvgX(dp.value)
-			// Track the horizontal position of the dot stack
-			includePointX(ext, x)
 			for (let i = 0; i < dp.count; i++) {
 				const y = axisY - dotRadius - baseOffset - i * (dotDiameter + dotSpacing)
-				svgBody += `<circle cx="${x}" cy="${y}" r="${dotRadius}" fill="${dotColor}"/>`
+				canvas.drawCircle(x, y, dotRadius, {
+					fill: dotColor
+				})
 			}
 		}
 	}
 
-	// NEW: Apply dynamic width at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

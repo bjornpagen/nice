@@ -1,8 +1,8 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, initExtents } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
 
 export const UnitBlockDiagramPropsSchema = z
@@ -73,19 +73,17 @@ export const generateUnitBlockDiagram: WidgetGenerator<typeof UnitBlockDiagramPr
 	const svgWidth = blocksPerRow * blockWidth + (blocksPerRow - 1) * gap
 	const svgHeight = numRows * blockHeight + (numRows - 1) * gap
 
-	const ext = initExtents(svgWidth)
-	
-	let svgBody = ""
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width: svgWidth, height: svgHeight },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	for (let b = 0; b < totalBlocks; b++) {
 		const blockRow = Math.floor(b / blocksPerRow)
 		const blockCol = b % blocksPerRow
 		const bx = blockCol * (blockWidth + gap)
 		const by = blockRow * (blockHeight + gap)
-		
-		// Track the horizontal extent of the block
-		includePointX(ext, bx)
-		includePointX(ext, bx + blockWidth)
 
 		const cellW = blockWidth / 10
 		const cellH = blockHeight / 10
@@ -94,15 +92,22 @@ export const generateUnitBlockDiagram: WidgetGenerator<typeof UnitBlockDiagramPr
 			const row = Math.floor(i / 10)
 			const col = i % 10
 			const fill = i < shadedUnitsPerBlock ? shadeColor : "none"
-			svgBody += `<rect x="${bx + col * cellW}" y="${by + row * cellH}" width="${cellW}" height="${cellH}" fill="${fill}" stroke="${theme.colors.gridMinor}" stroke-width="0.5"/>`
+			canvas.drawRect(bx + col * cellW, by + row * cellH, cellW, cellH, {
+				fill: fill,
+				stroke: theme.colors.gridMinor,
+				strokeWidth: 0.5
+			})
 		}
 		// Add a border around the whole block
-		svgBody += `<rect x="${bx}" y="${by}" width="${blockWidth}" height="${blockHeight}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thin}"/>`
+		canvas.drawRect(bx, by, blockWidth, blockHeight, {
+			fill: "none",
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+		})
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, svgHeight, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${svgHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${svgHeight}" xmlns="http://www.w3.org/2000/svg">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg">${svgBody}</svg>`
 }

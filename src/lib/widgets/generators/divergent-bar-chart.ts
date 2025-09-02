@@ -2,12 +2,12 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
+import { setupCoordinatePlaneBaseV2 } from "@/lib/widgets/utils/coordinate-plane-utils"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { computeDynamicWidth, includePointX, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
-import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -78,41 +78,55 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 		throw errors.wrap(ErrInvalidDimensions, "chart data must not be empty and y-axis min must be less than max")
 	}
 
-	const base = generateCoordinatePlaneBaseV2(
-		width,
-		height,
-		null, // No title for this widget
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
+	const baseInfo = setupCoordinatePlaneBaseV2(
 		{
-			xScaleType: "categoryBand", // Set the scale type
-			label: xAxisLabel,
-			categories: chartData.map((d) => abbreviateMonth(d.category)), // This is now type-checked
-			showGridLines: false,
-			showTickLabels: true
+			width,
+			height,
+			title: null, // No title for this widget
+			xAxis: {
+				xScaleType: "categoryBand",
+				label: xAxisLabel,
+				categories: chartData.map((d) => abbreviateMonth(d.category)),
+				showGridLines: false,
+				showTickLabels: true
+			},
+			yAxis: {
+				label: yAxis.label,
+				min: yAxis.min,
+				max: yAxis.max,
+				tickInterval: yAxis.tickInterval,
+				showGridLines: true,
+				showTickLabels: true
+			}
 		},
-		{
-			label: yAxis.label,
-			min: yAxis.min,
-			max: yAxis.max,
-			tickInterval: yAxis.tickInterval,
-			showGridLines: true,
-			showTickLabels: true
-		}
+		canvas
 	)
 
 	// Override grid lines with custom color
-	let customAxisContent = ""
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
-		const y = base.toSvgY(t)
-		customAxisContent += `<line x1="${base.chartArea.left}" y1="${y}" x2="${base.chartArea.left + base.chartArea.width}" y2="${y}" stroke="${gridColor}" stroke-width="1"/>`
+		if (t === 0) continue // Skip zero line, we'll draw it separately
+		const y = baseInfo.toSvgY(t)
+		canvas.drawLine(baseInfo.chartArea.left, y, baseInfo.chartArea.left + baseInfo.chartArea.width, y, {
+			stroke: gridColor,
+			strokeWidth: 1
+		})
 	}
 
 	// Prominent zero line
-	const yZero = base.toSvgY(0)
-	customAxisContent += `<line x1="${base.chartArea.left}" y1="${yZero}" x2="${base.chartArea.left + base.chartArea.width}" y2="${yZero}" stroke="${theme.colors.axis}" stroke-width="2"/>`
+	const yZero = baseInfo.toSvgY(0)
+	canvas.drawLine(baseInfo.chartArea.left, yZero, baseInfo.chartArea.left + baseInfo.chartArea.width, yZero, {
+		stroke: theme.colors.axis,
+		strokeWidth: 2
+	})
 
 	// Bar rendering
-	let bars = ""
-	let bandWidth = base.bandWidth
+	let bandWidth = baseInfo.bandWidth
 	if (bandWidth === undefined) {
 		logger.error("bandWidth missing for categorical x-axis in divergent bar chart", { length: chartData.length })
 		throw errors.wrap(ErrInvalidDimensions, "categorical x-axis requires defined bandWidth")
@@ -120,36 +134,32 @@ export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChart
 	const barPadding = 0.4
 	const innerBarWidth = bandWidth * (1 - barPadding)
 
-	chartData.forEach((d, i) => {
-		const xCenter = base.toSvgX(i)
-		const barX = xCenter - innerBarWidth / 2
-		const barAbsHeight = Math.abs(d.value) / (yAxis.max - yAxis.min) * base.chartArea.height
+	// Draw bars within the clipped region
+	canvas.drawInClippedRegion((clippedCanvas) => {
+		chartData.forEach((d, i) => {
+			const xCenter = baseInfo.toSvgX(i)
+			const barX = xCenter - innerBarWidth / 2
+			const barAbsHeight = (Math.abs(d.value) / (yAxis.max - yAxis.min)) * baseInfo.chartArea.height
 
-		includePointX(base.ext, barX)
-		includePointX(base.ext, barX + innerBarWidth)
+			let y: number
+			let color: string
 
-		let y: number
-		let color: string
+			if (d.value >= 0) {
+				y = yZero - barAbsHeight
+				color = positiveBarColor
+			} else {
+				y = yZero
+				color = negativeBarColor
+			}
 
-		if (d.value >= 0) {
-			y = yZero - barAbsHeight
-			color = positiveBarColor
-		} else {
-			y = yZero
-			color = negativeBarColor
-		}
-
-		bars += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barAbsHeight}" fill="${color}"/>`
+			clippedCanvas.drawRect(barX, y, innerBarWidth, barAbsHeight, {
+				fill: color
+			})
+		})
 	})
 
-	let svgBody = base.svgBody
-	svgBody += customAxisContent
-	svgBody += wrapInClippedGroup(base.clipId, bars)
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(AXIS_VIEWBOX_PADDING)
 
-	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, totalHeight, AXIS_VIEWBOX_PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">` +
-		svgBody +
-		`</svg>`
-	return finalSvg
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">${svgBody}</svg>`
 }

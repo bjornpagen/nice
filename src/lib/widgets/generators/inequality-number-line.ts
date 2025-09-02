@@ -2,9 +2,9 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidRange = errors.new("min must be less than max")
@@ -137,68 +137,95 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 
 	const scale = chartWidth / (max - min)
 	const toSvgX = (val: number) => PADDING + (val - min) * scale
-	
-	const ext = initExtents(width)
-	let svgBody = ""
 
-	// Axis and Ticks
-	svgBody += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	// Define markers for arrows
-	svgBody += "<defs>"
-	svgBody += `<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.axis}"/></marker>`
+	canvas.addDef(
+		`<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.axis}"/></marker>`
+	)
 
 	// Add colored arrow markers for ranges
 	const uniqueColors = new Set(ranges.map((r) => r.color))
 	for (const color of uniqueColors) {
 		const colorId = color.replace(/[^a-zA-Z0-9]/g, "")
-		svgBody += `<marker id="arrow-${colorId}" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="3" markerHeight="3" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${color}"/></marker>`
+		canvas.addDef(
+			`<marker id="arrow-${colorId}" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="3" markerHeight="3" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${color}"/></marker>`
+		)
 	}
-	svgBody += "</defs>"
+
+	// Axis and Ticks
+	canvas.drawLine(PADDING, yPos, width - PADDING, yPos, {
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.base),
+		markerStart: "url(#arrow)",
+		markerEnd: "url(#arrow)"
+	})
 
 	for (let t = min; t <= max; t += tickInterval) {
 		const x = toSvgX(t)
 		// Match tick sizing with standard number line widget for visual consistency
-		svgBody += `<line x1="${x}" y1="${yPos - 8}" x2="${x}" y2="${yPos + 8}" stroke="${theme.colors.axis}"/>`
-		svgBody += `<text x="${x}" y="${yPos + 25}" fill="${theme.colors.axisLabel}" text-anchor="middle">${t}</text>`
-		includeText(ext, x, String(t), "middle", 7)
+		canvas.drawLine(x, yPos - 8, x, yPos + 8, {
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		})
+		canvas.drawText({
+			x: x,
+			y: yPos + 25,
+			text: String(t),
+			fill: theme.colors.axisLabel,
+			anchor: "middle"
+		})
 	}
 
 	for (const r of ranges) {
 		const startPos = r.start.type === "bounded" ? toSvgX(r.start.at.value) : PADDING
 		const endPos = r.end.type === "bounded" ? toSvgX(r.end.at.value) : width - PADDING
 		const colorId = r.color.replace(/[^a-zA-Z0-9]/g, "")
-		
-		// Track the horizontal extent of the range
-		includePointX(ext, startPos)
-		includePointX(ext, endPos)
 
 		// Add markers for unbounded cases
-		let markerStart = ""
-		let markerEnd = ""
+		let markerStart
+		let markerEnd
 		if (r.start.type === "unbounded") {
-			markerStart = `marker-start="url(#arrow-${colorId})"`
+			markerStart = `url(#arrow-${colorId})`
 		}
 		if (r.end.type === "unbounded") {
-			markerEnd = `marker-end="url(#arrow-${colorId})"`
+			markerEnd = `url(#arrow-${colorId})`
 		}
 
-		svgBody += `<line x1="${startPos}" y1="${yPos}" x2="${endPos}" y2="${yPos}" stroke="${r.color}" stroke-width="${theme.stroke.width.xthick}" stroke-linecap="butt" ${markerStart} ${markerEnd}/>`
+		canvas.drawLine(startPos, yPos, endPos, yPos, {
+			stroke: r.color,
+			strokeWidth: Number.parseFloat(theme.stroke.width.xthick),
+			strokeLinecap: "butt",
+			markerStart: markerStart,
+			markerEnd: markerEnd
+		})
 
 		// Boundary circles
 		if (r.start.type === "bounded") {
 			const fill = r.start.at.type === "closed" ? r.color : theme.colors.background
-			svgBody += `<circle cx="${startPos}" cy="${yPos}" r="5" fill="${fill}" stroke="${r.color}" stroke-width="${theme.stroke.width.base}"/>`
+			canvas.drawCircle(startPos, yPos, 5, {
+				fill: fill,
+				stroke: r.color,
+				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			})
 		}
 		if (r.end.type === "bounded") {
 			const fill = r.end.at.type === "closed" ? r.color : theme.colors.white
-			svgBody += `<circle cx="${endPos}" cy="${yPos}" r="5" fill="${fill}" stroke="${r.color}" stroke-width="${theme.stroke.width.base}"/>`
+			canvas.drawCircle(endPos, yPos, 5, {
+				fill: fill,
+				stroke: r.color,
+				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			})
 		}
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

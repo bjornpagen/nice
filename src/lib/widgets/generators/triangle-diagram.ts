@@ -2,10 +2,11 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 
 const Point = z
 	.object({
@@ -195,7 +196,11 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 	const { width, height, points, sides, angles, internalLines, shadedRegions } = props
 
 	// Initialize extents tracking
-	const ext = initExtents(width)
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	if (points.length < 3) {
 		logger.error("triangle diagram insufficient points", { pointCount: points.length })
@@ -208,7 +213,6 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 	const minY = Math.min(...points.map((p) => p.y)) - padding
 	const maxY = Math.max(...points.map((p) => p.y)) + padding
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="${minX} ${minY} ${maxX - minX} ${maxY - minY}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">`
 	const pointMap = new Map(points.map((p) => [p.id, p]))
 
 	// Compute centroid of the main triangle (first 3 points) to infer outward direction
@@ -229,45 +233,35 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 			.map((id) => pointMap.get(id))
 			.filter((p): p is NonNullable<typeof p> => p !== undefined)
 		if (regionPoints.length < 3) continue
-		
-		// Track shaded region vertices
-		regionPoints.forEach((p) => {
-			includePointX(ext, p.x)
-		})
-		
-		const pointsStr = regionPoints.map((p) => `${p.x},${p.y}`).join(" ")
-		svg += `<polygon points="${pointsStr}" fill="${region.color}" stroke="none"/>`
+
+		canvas.drawPolygon(regionPoints, { fill: region.color, stroke: "none" })
 	}
 
 	// Layer 2: Main Triangle Outline (assumes first 3 points form the main triangle)
-	// Track main triangle vertices
-	points.slice(0, 3).forEach((p) => {
-		includePointX(ext, p.x)
+	const mainTrianglePoints = points.slice(0, 3)
+	canvas.drawPolygon(mainTrianglePoints, {
+		fill: "none",
+		stroke: theme.colors.black,
+		strokeWidth: Number.parseFloat(theme.stroke.width.thick)
 	})
-	
-	const mainTrianglePoints = points
-		.slice(0, 3)
-		.map((p) => `${p.x},${p.y}`)
-		.join(" ")
-	svg += `<polygon points="${mainTrianglePoints}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 
 	// Layer 3: Internal Lines
 	for (const line of internalLines) {
 		const from = pointMap.get(line.from)
 		const to = pointMap.get(line.to)
 		if (!from || !to) continue
-		
-		// Track internal line endpoints
-		includePointX(ext, from.x)
-		includePointX(ext, to.x)
-		
-		let dash = ""
+
+		let dash: string | undefined
 		if (line.style === "dashed") {
-			dash = 'stroke-dasharray="4 3"'
+			dash = "4 3"
 		} else if (line.style === "dotted") {
-			dash = 'stroke-dasharray="2 4"'
+			dash = "2 4"
 		}
-		svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" ${dash}/>`
+		canvas.drawLine(from.x, from.y, to.x, to.y, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			dash
+		})
 	}
 
 	// Layer 4: Angle Markers
@@ -343,28 +337,36 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 				const m2y = vertex.y + u2y * markerSize
 				const m3x = vertex.x + (u1x + u2x) * markerSize
 				const m3y = vertex.y + (u1y + u2y) * markerSize
-				
-				// Track right angle marker vertices
-				includePointX(ext, m1x)
-				includePointX(ext, m2x)
-				includePointX(ext, m3x)
-				
-				svg += `<path d="M ${m1x} ${m1y} L ${m3x} ${m3y} L ${m2x} ${m2y}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+
+				// Canvas automatically tracks extents
+
+				const markerPath = new Path2D().moveTo(m1x, m1y).lineTo(m3x, m3y).lineTo(m2x, m2y)
+				canvas.drawPath(markerPath, {
+					fill: "none",
+					stroke: theme.colors.black,
+					strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+				})
 			} else {
 				const arcStartX = vertex.x + scaledArcRadius * Math.cos(startAngle)
 				const arcStartY = vertex.y + scaledArcRadius * Math.sin(startAngle)
 				const arcEndX = vertex.x + scaledArcRadius * Math.cos(endAngle)
 				const arcEndY = vertex.y + scaledArcRadius * Math.sin(endAngle)
-				
+
 				// Track angle arc endpoints
-				includePointX(ext, arcStartX)
-				includePointX(ext, arcEndX)
-				
+				// Canvas automatically tracks extents
+
 				let angleDiff = endAngle - startAngle
 				if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI
 				if (angleDiff < -Math.PI) angleDiff += 2 * Math.PI
-				const sweepFlag = angleDiff > 0 ? 1 : 0
-				svg += `<path d="M ${arcStartX} ${arcStartY} A ${scaledArcRadius} ${scaledArcRadius} 0 0 ${sweepFlag} ${arcEndX} ${arcEndY}" fill="none" stroke="${angle.color}" stroke-width="${theme.stroke.width.thick}"/>`
+				const sweepFlag: 0 | 1 = angleDiff > 0 ? 1 : 0
+				const arcPath = new Path2D()
+					.moveTo(arcStartX, arcStartY)
+					.arcTo(scaledArcRadius, scaledArcRadius, 0, 0, sweepFlag, arcEndX, arcEndY)
+				canvas.drawPath(arcPath, {
+					fill: "none",
+					stroke: angle.color,
+					strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+				})
 			}
 		}
 
@@ -410,11 +412,17 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 
 			const labelX = vertex.x + labelRadius * Math.cos(labelAngle)
 			const labelY = vertex.y + labelRadius * Math.sin(labelAngle)
-			
-			// Track angle label
-			includeText(ext, labelX, angle.label, "middle", 14)
-			
-			svg += `<text x="${labelX}" y="${labelY}" fill="${theme.colors.black}" text-anchor="middle" dominant-baseline="middle">${angle.label}</text>`
+
+			// Canvas automatically tracks extents
+
+			canvas.drawText({
+				x: labelX,
+				y: labelY,
+				text: angle.label,
+				fill: theme.colors.black,
+				anchor: "middle",
+				dominantBaseline: "middle"
+			})
 		}
 	}
 
@@ -460,11 +468,17 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 
 			const labelX = midX + perpX * labelOffset
 			const labelY = midY + perpY * labelOffset
-			
-			// Track side label
-			includeText(ext, labelX, side.label, "middle", 14)
-			
-			svg += `<text x="${labelX}" y="${labelY}" fill="${theme.colors.black}" text-anchor="middle" dominant-baseline="middle">${side.label}</text>`
+
+			// Canvas automatically tracks extents
+
+			canvas.drawText({
+				x: labelX,
+				y: labelY,
+				text: side.label,
+				fill: theme.colors.black,
+				anchor: "middle",
+				dominantBaseline: "middle"
+			})
 		}
 		if (side.tickMarks > 0) {
 			const tickSize = 6
@@ -477,43 +491,42 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 				const t1y = midY + (dy / len) * tickOffset - ny * (tickSize / 2)
 				const t2x = midX + (dx / len) * tickOffset + nx * (tickSize / 2)
 				const t2y = midY + (dy / len) * tickOffset + ny * (tickSize / 2)
-				
-				// Track tick mark endpoints
-				includePointX(ext, t1x)
-				includePointX(ext, t2x)
-				
-				svg += `<line x1="${t1x}" y1="${t1y}" x2="${t2x}" y2="${t2y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+
+				// Canvas automatically tracks extents
+
+				canvas.drawLine(t1x, t1y, t2x, t2y, {
+					stroke: theme.colors.black,
+					strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+				})
 			}
 		}
 	}
 
 	// Layer 6: Points and their labels (drawn last to be on top)
 	for (const point of points) {
-		// Track point position
-		includePointX(ext, point.x)
-		
-		svg += `<circle cx="${point.x}" cy="${point.y}" r="4" fill="${theme.colors.black}"/>`
+		// Canvas automatically tracks extents
+
+		canvas.drawCircle(point.x, point.y, 4, {
+			fill: theme.colors.black
+		})
 		if (point.label) {
 			const textX = point.x + 8
 			const textY = point.y - 8
-			
-			// Track point label
-			includeText(ext, textX, point.label, "start", 16)
-			
-			svg += `<text x="${textX}" y="${textY}" fill="${theme.colors.black}" font-size="${theme.font.size.large}" font-weight="${theme.font.weight.bold}">${point.label}</text>`
+
+			// Canvas automatically tracks extents
+
+			canvas.drawText({
+				x: textX,
+				y: textY,
+				text: point.label,
+				fill: theme.colors.black,
+				fontPx: Number.parseFloat(theme.font.size.large),
+				fontWeight: theme.font.weight.bold
+			})
 		}
 	}
 
-	svg += "</svg>"
-	
-	// Apply dynamic width calculation
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, padding)
-	
-	// Update SVG with dynamic width and viewBox
-	svg = svg.replace(
-		`width="${width}" height="${height}" viewBox="${minX} ${minY} ${maxX - minX} ${maxY - minY}"`,
-		`width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} ${minY} ${dynamicWidth} ${maxY - minY}"`
-	)
-	
-	return svg
+	// Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(padding)
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">${svgBody}</svg>`
 }

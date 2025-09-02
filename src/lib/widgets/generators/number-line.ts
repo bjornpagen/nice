@@ -1,8 +1,8 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
 
 const Point = z
@@ -40,9 +40,7 @@ const SpecialTick = z
 			),
 		label: z
 			.string()
-			.describe(
-				"Custom label for this tick position (e.g., 'π', '√2', '2½', 'e'). Replaces the numeric label."
-			)
+			.describe("Custom label for this tick position (e.g., 'π', '√2', '2½', 'e'). Replaces the numeric label.")
 	})
 	.strict()
 
@@ -119,44 +117,58 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 	if (min >= max || lineLength <= 0) return `<svg width="${width}" height="${height}"></svg>`
 	const scale = lineLength / (max - min)
 
-	const ext = initExtents(width)
-	let svgBody = ""
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	if (isHorizontal) {
 		const yPos = height / 2
 		const toSvgX = (val: number) => PADDING + (val - min) * scale
-		
-		// Track the main line endpoints
-		includePointX(ext, PADDING)
-		includePointX(ext, width - PADDING)
-		
-		svgBody += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="${theme.colors.axis}"/>`
+
+		// Draw the main line using Canvas API
+		canvas.drawLine(PADDING, yPos, width - PADDING, yPos, {
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
 		const minorTickSpacing = (majorTickInterval / (minorTicksPerInterval + 1)) * scale
 		for (let t = min; t <= max; t += majorTickInterval) {
 			const x = toSvgX(t)
-			includePointX(ext, x)
-			svgBody += `<line x1="${x}" y1="${yPos - 8}" x2="${x}" y2="${yPos + 8}" stroke="${theme.colors.axis}"/>`
+			// Canvas automatically tracks extents
+			canvas.drawLine(x, yPos - 8, x, yPos + 8, {
+				stroke: theme.colors.axis,
+				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			})
 			if (!specialTickLabels.some((stl) => stl.value === t)) {
-				svgBody += `<text x="${x}" y="${yPos + 25}" fill="${theme.colors.axisLabel}" text-anchor="middle">${t}</text>`
-				includeText(ext, x, String(t), "middle", 7)
+				canvas.drawText({ x, y: yPos + 25, text: String(t), anchor: "middle", fill: theme.colors.axisLabel })
 			}
 			for (let m = 1; m <= minorTicksPerInterval; m++) {
 				const mPos = x + m * minorTickSpacing
 				if (mPos < width - PADDING)
-					svgBody += `<line x1="${mPos}" y1="${yPos - 4}" x2="${mPos}" y2="${yPos + 4}" stroke="${theme.colors.axis}"/>`
+					canvas.drawLine(mPos, yPos - 4, mPos, yPos + 4, {
+						stroke: theme.colors.axis,
+						strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+					})
 			}
 		}
 		// Special Labels
 		for (const s of specialTickLabels) {
 			if (s.label !== "") {
 				const x = toSvgX(s.value)
-				svgBody += `<text x="${x}" y="${yPos + 25}" fill="${theme.colors.axisLabel}" text-anchor="middle" font-weight="${theme.font.weight.bold}">${s.label}</text>`
-				includeText(ext, x, s.label, "middle", 7)
+				canvas.drawText({
+					x,
+					y: yPos + 25,
+					text: s.label,
+					anchor: "middle",
+					fill: theme.colors.axisLabel,
+					fontWeight: theme.font.weight.bold
+				})
 			}
 		}
 		for (const p of points) {
 			const cx = toSvgX(p.value)
-			includePointX(ext, cx)
+			// Canvas automatically tracks extents
 			let labelX = cx
 			let labelY = yPos
 			let anchor: "start" | "middle" | "end" = "middle"
@@ -178,46 +190,69 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 				default:
 					labelY -= 15 // default to above
 			}
-			svgBody += `<circle cx="${cx}" cy="${yPos}" r="${theme.geometry.pointRadius.large}" fill="${p.color}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thin}"/>`
+			canvas.drawCircle(cx, yPos, Number.parseFloat(theme.geometry.pointRadius.large), {
+				fill: p.color,
+				stroke: theme.colors.axis,
+				strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+			})
 			if (p.label) {
-				svgBody += `<text x="${labelX}" y="${labelY}" fill="${theme.colors.axisLabel}" text-anchor="${anchor}" dominant-baseline="middle">${p.label}</text>`
-				includeText(ext, labelX, p.label, anchor, 7)
+				canvas.drawText({
+					x: labelX,
+					y: labelY,
+					text: p.label,
+					anchor,
+					dominantBaseline: "middle",
+					fill: theme.colors.axisLabel
+				})
 			}
 		}
 	} else {
 		// Vertical
 		const xPos = width / 2
 		const toSvgY = (val: number) => height - PADDING - (val - min) * scale
-		
-		// Track the vertical line
-		includePointX(ext, xPos)
-		
-		svgBody += `<line x1="${xPos}" y1="${PADDING}" x2="${xPos}" y2="${height - PADDING}" stroke="${theme.colors.axis}"/>`
+
+		// Draw the main vertical line using Canvas API
+		canvas.drawLine(xPos, PADDING, xPos, height - PADDING, {
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		})
 		const minorTickSpacing = (majorTickInterval / (minorTicksPerInterval + 1)) * scale
 		for (let t = min; t <= max; t += majorTickInterval) {
 			const y = toSvgY(t)
-			svgBody += `<line x1="${xPos - 8}" y1="${y}" x2="${xPos + 8}" y2="${y}" stroke="${theme.colors.axis}"/>`
+			canvas.drawLine(xPos - 8, y, xPos + 8, y, {
+				stroke: theme.colors.axis,
+				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			})
 			if (!specialTickLabels.some((stl) => stl.value === t)) {
 				const labelX = xPos - 15
-				svgBody += `<text x="${labelX}" y="${y + 4}" fill="${theme.colors.axisLabel}" text-anchor="end">${t}</text>`
-				includeText(ext, labelX, String(t), "end", 7)
+				canvas.drawText({ x: labelX, y: y + 4, text: String(t), anchor: "end", fill: theme.colors.axisLabel })
 			}
 			for (let m = 1; m <= minorTicksPerInterval; m++) {
 				const mPos = y - m * minorTickSpacing
-				if (mPos > PADDING) svgBody += `<line x1="${xPos - 4}" y1="${mPos}" x2="${xPos + 4}" y2="${mPos}" stroke="${theme.colors.axis}"/>`
+				if (mPos > PADDING)
+					canvas.drawLine(xPos - 4, mPos, xPos + 4, mPos, {
+						stroke: theme.colors.axis,
+						strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+					})
 			}
 		}
 		// Special Labels
 		for (const s of specialTickLabels) {
 			if (s.label !== "") {
 				const labelX = xPos - 15
-				svgBody += `<text x="${labelX}" y="${toSvgY(s.value) + 4}" fill="${theme.colors.axisLabel}" text-anchor="end" font-weight="${theme.font.weight.bold}">${s.label}</text>`
-				includeText(ext, labelX, s.label, "end", 7)
+				canvas.drawText({
+					x: labelX,
+					y: toSvgY(s.value) + 4,
+					text: s.label,
+					anchor: "end",
+					fill: theme.colors.axisLabel,
+					fontWeight: theme.font.weight.bold
+				})
 			}
 		}
 		for (const p of points) {
 			const cy = toSvgY(p.value)
-			includePointX(ext, xPos)
+			// Canvas automatically tracks extents
 			let labelX = xPos
 			let labelY = cy
 			let anchor: "start" | "middle" | "end" = "middle"
@@ -234,17 +269,26 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 					labelX += 15
 					anchor = "start" // default to right
 			}
-			svgBody += `<circle cx="${xPos}" cy="${cy}" r="${theme.geometry.pointRadius.large}" fill="${p.color}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thin}"/>`
+			canvas.drawCircle(xPos, cy, Number.parseFloat(theme.geometry.pointRadius.large), {
+				fill: p.color,
+				stroke: theme.colors.axis,
+				strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+			})
 			if (p.label) {
-				svgBody += `<text x="${labelX}" y="${labelY}" fill="${theme.colors.axisLabel}" text-anchor="${anchor}" dominant-baseline="middle">${p.label}</text>`
-				includeText(ext, labelX, p.label, anchor, 7)
+				canvas.drawText({
+					x: labelX,
+					y: labelY,
+					text: p.label,
+					anchor,
+					dominantBaseline: "middle",
+					fill: theme.colors.axisLabel
+				})
 			}
 		}
 	}
-	
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="12">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="12">${svgBody}</svg>`
 }

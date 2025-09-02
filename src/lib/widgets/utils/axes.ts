@@ -4,22 +4,19 @@ import {
 	AXIS_STROKE_WIDTH_PX,
 	AXIS_TITLE_FONT_PX,
 	AXIS_TITLE_PADDING_PX,
-	X_AXIS_TITLE_PADDING_PX,
 	GRID_STROKE_WIDTH_PX,
 	LABEL_AVG_CHAR_WIDTH_PX,
 	TICK_LABEL_FONT_PX,
 	TICK_LABEL_PADDING_PX,
-	TICK_LENGTH_PX
+	TICK_LENGTH_PX,
+	X_AXIS_TITLE_PADDING_PX
 } from "@/lib/widgets/utils/constants"
 import {
-	includePointX,
-	includeText,
-	calculateTextAwareLabelSelection,
+	type Canvas,
 	calculateIntersectionAwareTicks,
-	type Extents
+	calculateTextAwareLabelSelection
 } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
-import { renderWrappedText } from "@/lib/widgets/utils/text"
 
 export const ErrInvalidAxisDomain = errors.new("axis domain min must be less than max")
 export const ErrInvalidTickInterval = errors.new("axis tick interval must be positive")
@@ -80,10 +77,8 @@ export type AxisSpec = {
 	labelFormatter?: (value: number) => string
 }
 
+// MODIFIED: Return type no longer includes markup or extent registration.
 export type AxisResult = {
-	pads: { left: number; right: number; top: number; bottom: number }
-	markup: string
-	registerExtents(ext: Extents): void
 	toSvg: (val: number) => number
 	bandWidth?: number
 }
@@ -94,10 +89,12 @@ function clampTickCount(range: number, interval: number): number {
 	return Math.min(MAX_TICKS, possible)
 }
 
+// MODIFIED: Both functions must now accept a Canvas instance and return the simplified AxisResult.
 export function computeAndRenderYAxis(
 	spec: AxisSpec,
 	chartArea: { top: number; left: number; width: number; height: number },
-	xAxisSpec: AxisSpec
+	xAxisSpec: AxisSpec,
+	canvas: Canvas // NEW
 ): AxisResult {
 	const tickLength = spec.showTicks === false ? 0 : TICK_LENGTH_PX
 	const isCategorical = !!(spec.categories && spec.categories.length > 0)
@@ -117,7 +114,6 @@ export function computeAndRenderYAxis(
 		}
 	}
 
-	const pads = { left: tickLength + (spec.showTickLabels ? (TICK_LABEL_PADDING_PX + TICK_LABEL_FONT_PX) : 0) + AXIS_TITLE_PADDING_PX + AXIS_TITLE_FONT_PX, right: 0, top: 0, bottom: 0 }
 	const axisX = chartArea.left
 
 	const yRange = spec.domain.max - spec.domain.min
@@ -126,28 +122,38 @@ export function computeAndRenderYAxis(
 		return chartArea.top + chartArea.height - frac * chartArea.height
 	}
 
-	let bandWidth: number | undefined = undefined
-	let toSvgYCategorical: ((idx: number) => number) | undefined = undefined
+	let bandWidth: number | undefined
+	let toSvgYCategorical: ((idx: number) => number) | undefined
 	if (isCategorical) {
 		bandWidth = chartArea.height / (spec.categories as string[]).length
 		toSvgYCategorical = (idx: number) => chartArea.top + (idx + 0.5) * (bandWidth as number)
 	}
 
-	let markup = ""
-	markup += `<line x1="${axisX}" y1="${chartArea.top}" x2="${axisX}" y2="${chartArea.top + chartArea.height}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
+	// MODIFIED: Replace all markup generation with canvas calls.
+	canvas.drawLine(axisX, chartArea.top, axisX, chartArea.top + chartArea.height, {
+		stroke: theme.colors.axis,
+		strokeWidth: AXIS_STROKE_WIDTH_PX
+	})
 
-	const yTickPositions: number[] = []
-	const yTickLabels: string[] = []
 	if (isCategorical) {
 		const cats = spec.categories as string[]
 		for (let i = 0; i < cats.length; i++) {
-			const y = toSvgYCategorical!(i)
-			markup += `<line x1="${axisX - tickLength}" y1="${y}" x2="${axisX}" y2="${y}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
+			const y = toSvgYCategorical?.(i)
+			if (y === undefined) continue
+			canvas.drawLine(axisX - tickLength, y, axisX, y, {
+				stroke: theme.colors.axis,
+				strokeWidth: AXIS_STROKE_WIDTH_PX
+			})
 			if (spec.showTickLabels) {
 				const label = cats[i] as string
-				markup += `<text class="tick-label" x="${axisX - TICK_LABEL_PADDING_PX}" y="${y + 4}" text-anchor="end" font-size="${TICK_LABEL_FONT_PX}px">${label}</text>`
-				yTickPositions.push(y)
-				yTickLabels.push(label)
+				canvas.drawText({
+					x: axisX - TICK_LABEL_PADDING_PX,
+					y: y + 4,
+					text: label,
+					anchor: "end",
+					fontPx: TICK_LABEL_FONT_PX,
+					fill: theme.colors.axisLabel
+				})
 			}
 		}
 	} else {
@@ -161,8 +167,11 @@ export function computeAndRenderYAxis(
 		tickValues.forEach((t, i) => {
 			const y = toSvgYNumeric(t)
 			// Draw the tick mark (length may be 0 if disabled)
-			markup += `<line x1="${axisX - tickLength}" y1="${y}" x2="${axisX}" y2="${y}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
-			
+			canvas.drawLine(axisX - tickLength, y, axisX, y, {
+				stroke: theme.colors.axis,
+				strokeWidth: AXIS_STROKE_WIDTH_PX
+			})
+
 			if (spec.showTickLabels && selected.has(i)) {
 				let label: string
 				if (spec.labelFormatter) {
@@ -170,51 +179,50 @@ export function computeAndRenderYAxis(
 				} else {
 					label = String(t)
 				}
-				markup += `<text class="tick-label" x="${axisX - TICK_LABEL_PADDING_PX}" y="${y + 4}" text-anchor="end" font-size="${TICK_LABEL_FONT_PX}px">${label}</text>`
-				yTickPositions.push(y)
-				yTickLabels.push(label)
+				canvas.drawText({
+					x: axisX - TICK_LABEL_PADDING_PX,
+					y: y + 4,
+					text: label,
+					anchor: "end",
+					fontPx: TICK_LABEL_FONT_PX,
+					fill: theme.colors.axisLabel
+				})
 			}
 
 			// Always render horizontal gridlines for all ticks when enabled
 			if (spec.showGridLines) {
-				markup += `<line x1="${chartArea.left}" y1="${y}" x2="${chartArea.left + chartArea.width}" y2="${y}" stroke="${theme.colors.gridMajor}" stroke-width="${GRID_STROKE_WIDTH_PX}"/>`
+				canvas.drawLine(chartArea.left, y, chartArea.left + chartArea.width, y, {
+					stroke: theme.colors.gridMajor,
+					strokeWidth: GRID_STROKE_WIDTH_PX
+				})
 			}
 		})
 	}
 
-	// Compute required top padding from top-most tick label baseline to avoid clipping
-	if (spec.showTickLabels && yTickPositions.length > 0) {
-		const BASELINE_OFFSET_PX = 4
-		const topMostBaselineY = Math.min(...yTickPositions) + BASELINE_OFFSET_PX
-		const approximateAscentPx = Math.ceil(TICK_LABEL_FONT_PX * 0.8)
-		const overflowAboveTop = Math.max(0, (chartArea.top + approximateAscentPx) - topMostBaselineY)
-		if (overflowAboveTop > 0) {
-			pads.top = Math.max(pads.top, overflowAboveTop)
-		}
-	}
-
 	// Y-axis title (rotated)
-	const yAxisLabelX = axisX - (tickLength + TICK_LABEL_PADDING_PX + TICK_LABEL_FONT_PX + AXIS_TITLE_PADDING_PX + AXIS_TITLE_FONT_PX / 2)
+	const yAxisLabelX =
+		axisX - (tickLength + TICK_LABEL_PADDING_PX + TICK_LABEL_FONT_PX + AXIS_TITLE_PADDING_PX + AXIS_TITLE_FONT_PX / 2)
 	const yAxisLabelY = chartArea.top + chartArea.height / 2
-	const title = renderWrappedText(spec.label, yAxisLabelX, yAxisLabelY, "axis-label")
-	const rotatedTitle = title.replace("<text ", `<text transform="rotate(-90, ${yAxisLabelX}, ${yAxisLabelY})" `)
-	markup += rotatedTitle
+	canvas.drawWrappedText({
+		x: yAxisLabelX,
+		y: yAxisLabelY,
+		text: spec.label,
+		maxWidthPx: chartArea.height, // Max width for wrapped text is chart height
+		rotate: { angle: -90, cx: yAxisLabelX, cy: yAxisLabelY },
+		fontPx: AXIS_TITLE_FONT_PX,
+		anchor: "middle",
+		fill: theme.colors.axisLabel
+	})
 
-	const registerExtents = (ext: Extents) => {
-		includePointX(ext, axisX - TICK_LENGTH_PX)
-		includePointX(ext, axisX)
-		for (let i = 0; i < yTickPositions.length; i++) {
-			includeText(ext, axisX - TICK_LABEL_PADDING_PX, yTickLabels[i] as string, "end", LABEL_AVG_CHAR_WIDTH_PX)
-		}
-		includeText(ext, yAxisLabelX, spec.label, "middle", LABEL_AVG_CHAR_WIDTH_PX)
-	}
-
-	return { pads, markup, registerExtents, toSvg: (val: number) => (isCategorical ? toSvgYCategorical!(val) : toSvgYNumeric(val)), bandWidth }
+	// REMOVED: `registerExtents` function is no longer needed.
+	return { toSvg: isCategorical ? toSvgYCategorical! : toSvgYNumeric, bandWidth }
 }
 
+// MODIFIED: Apply the same transformation to computeAndRenderXAxis.
 export function computeAndRenderXAxis(
-	spec: AxisSpecX, // Use the new discriminated union type
-	chartArea: { top: number; left: number; width: number; height: number }
+	spec: AxisSpecX,
+	chartArea: { top: number; left: number; width: number; height: number },
+	canvas: Canvas // NEW
 ): AxisResult {
 	const tickLength = spec.showTicks === false ? 0 : TICK_LENGTH_PX
 	// The `xScaleType` is guaranteed to exist by the type system.
@@ -224,7 +232,10 @@ export function computeAndRenderXAxis(
 			// `spec.domain` and `spec.tickInterval` are now guaranteed to be present.
 			if (spec.domain.min >= spec.domain.max) {
 				logger.error("invalid x-axis domain for numeric scale", { domain: spec.domain })
-				throw errors.wrap(ErrInvalidAxisDomain, `x-axis min ${spec.domain.min} must be less than max ${spec.domain.max}`)
+				throw errors.wrap(
+					ErrInvalidAxisDomain,
+					`x-axis min ${spec.domain.min} must be less than max ${spec.domain.max}`
+				)
 			}
 			if (spec.tickInterval <= 0) {
 				logger.error("invalid x-axis tick interval for numeric scale", { tickInterval: spec.tickInterval })
@@ -241,14 +252,15 @@ export function computeAndRenderXAxis(
 			break
 	}
 
-	let markup = ""
-	const pads = { left: 0, right: 0, top: 0, bottom: TICK_LENGTH_PX + TICK_LABEL_PADDING_PX + TICK_LABEL_FONT_PX + X_AXIS_TITLE_PADDING_PX + AXIS_TITLE_FONT_PX }
 	const axisY = chartArea.top + chartArea.height
 
-	markup += `<line x1="${chartArea.left}" y1="${axisY}" x2="${chartArea.left + chartArea.width}" y2="${axisY}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
+	canvas.drawLine(chartArea.left, axisY, chartArea.left + chartArea.width, axisY, {
+		stroke: theme.colors.axis,
+		strokeWidth: AXIS_STROKE_WIDTH_PX
+	})
 
 	let toSvgX: (val: number) => number
-	let bandWidth: number | undefined = undefined
+	let bandWidth: number | undefined
 
 	switch (spec.xScaleType) {
 		case "numeric": {
@@ -267,7 +279,7 @@ export function computeAndRenderXAxis(
 		}
 		case "categoryPoint": {
 			const N = spec.categories.length
-			const step = (N <= 1) ? 0 : chartArea.width / (N - 1)
+			const step = N <= 1 ? 0 : chartArea.width / (N - 1)
 			toSvgX = (i: number) => {
 				if (N === 1) {
 					// Single point is centered in the chart area
@@ -279,24 +291,39 @@ export function computeAndRenderXAxis(
 		}
 	}
 
-	const tickPositions: number[] = []
-	const tickLabels: string[] = []
-
 	switch (spec.xScaleType) {
 		case "categoryBand":
 		case "categoryPoint": {
+			const tickPositions: number[] = []
+			const tickLabels: string[] = []
 			for (let i = 0; i < spec.categories.length; i++) {
 				const x = toSvgX(i)
 				tickPositions.push(x)
 				tickLabels.push(spec.categories[i] as string)
 			}
-			const selected = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartArea.width, LABEL_AVG_CHAR_WIDTH_PX)
+			const selected = calculateTextAwareLabelSelection(
+				tickLabels,
+				tickPositions,
+				chartArea.width,
+				LABEL_AVG_CHAR_WIDTH_PX
+			)
 			for (let i = 0; i < tickPositions.length; i++) {
 				const x = tickPositions[i] as number
-				markup += `<line x1="${x}" y1="${axisY}" x2="${x}" y2="${axisY + tickLength}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
+				canvas.drawLine(x, axisY, x, axisY + tickLength, {
+					stroke: theme.colors.axis,
+					strokeWidth: AXIS_STROKE_WIDTH_PX
+				})
 				if (spec.showTickLabels && selected.has(i)) {
 					const label = tickLabels[i] as string
-					markup += `<text class="tick-label" x="${x}" y="${axisY + tickLength + TICK_LABEL_PADDING_PX}" text-anchor="middle" dominant-baseline="hanging" font-size="${TICK_LABEL_FONT_PX}px">${label}</text>`
+					canvas.drawText({
+						x: x,
+						y: axisY + tickLength + TICK_LABEL_PADDING_PX,
+						text: label,
+						anchor: "middle",
+						dominantBaseline: "hanging",
+						fontPx: TICK_LABEL_FONT_PX,
+						fill: theme.colors.axisLabel
+					})
 				}
 			}
 			break
@@ -311,23 +338,34 @@ export function computeAndRenderXAxis(
 				const t = ticks[i] as number
 				const x = toSvgX(t)
 				// Draw the tick mark (length may be 0 if disabled)
-				markup += `<line x1="${x}" y1="${axisY}" x2="${x}" y2="${axisY + tickLength}" stroke="${theme.colors.axis}" stroke-width="${AXIS_STROKE_WIDTH_PX}"/>`
-				
+				canvas.drawLine(x, axisY, x, axisY + tickLength, {
+					stroke: theme.colors.axis,
+					strokeWidth: AXIS_STROKE_WIDTH_PX
+				})
+
 				if (spec.showTickLabels && selected.has(i)) {
 					let label = String(t)
 					if (spec.labelFormatter) {
 						label = spec.labelFormatter(t)
 					}
-					markup += `<text class="tick-label" x="${x}" y="${axisY + tickLength + TICK_LABEL_PADDING_PX}" text-anchor="middle" dominant-baseline="hanging" font-size="${TICK_LABEL_FONT_PX}px">${label}</text>`
-					// Track positions and labels for extent registration
-					tickPositions.push(x)
-					tickLabels.push(label)
+					canvas.drawText({
+						x: x,
+						y: axisY + tickLength + TICK_LABEL_PADDING_PX,
+						text: label,
+						anchor: "middle",
+						dominantBaseline: "hanging",
+						fontPx: TICK_LABEL_FONT_PX,
+						fill: theme.colors.axisLabel
+					})
 				}
 
 				// Suppress gridline at 0 only if it would overdraw the main axis, but never the tick/label
-				const isZeroOverlappingAxis = (t === 0)
+				const isZeroOverlappingAxis = t === 0
 				if (spec.showGridLines && !isZeroOverlappingAxis) {
-					markup += `<line x1="${x}" y1="${chartArea.top}" x2="${x}" y2="${chartArea.top + chartArea.height}" stroke="${theme.colors.gridMajor}" stroke-width="${GRID_STROKE_WIDTH_PX}"/>`
+					canvas.drawLine(x, chartArea.top, x, chartArea.top + chartArea.height, {
+						stroke: theme.colors.gridMajor,
+						strokeWidth: GRID_STROKE_WIDTH_PX
+					})
 				}
 			}
 			break
@@ -335,18 +373,15 @@ export function computeAndRenderXAxis(
 	}
 
 	const xAxisLabelY = axisY + TICK_LENGTH_PX + TICK_LABEL_PADDING_PX + TICK_LABEL_FONT_PX + X_AXIS_TITLE_PADDING_PX
-	markup += renderWrappedText(spec.label, chartArea.left + chartArea.width / 2, xAxisLabelY, "axis-label")
+	canvas.drawWrappedText({
+		x: chartArea.left + chartArea.width / 2,
+		y: xAxisLabelY,
+		text: spec.label,
+		maxWidthPx: chartArea.width,
+		anchor: "middle",
+		fontPx: AXIS_TITLE_FONT_PX,
+		fill: theme.colors.axisLabel
+	})
 
-	const registerExtents = (ext: Extents) => {
-		for (let i = 0; i < tickPositions.length; i++) {
-			if (spec.showTickLabels) {
-				includeText(ext, tickPositions[i] as number, tickLabels[i] as string, "middle", LABEL_AVG_CHAR_WIDTH_PX)
-			}
-		}
-		includeText(ext, chartArea.left + chartArea.width / 2, spec.label, "middle", LABEL_AVG_CHAR_WIDTH_PX)
-	}
-
-	return { pads, markup, registerExtents, toSvg: toSvgX, bandWidth }
+	return { toSvg: toSvgX, bandWidth }
 }
-
-

@@ -1,8 +1,8 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includeText, includePointX, initExtents } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
 
 function createStyleSchema() {
@@ -74,10 +74,16 @@ export type NumberSetDiagramProps = z.infer<typeof NumberSetDiagramPropsSchema>
  */
 export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPropsSchema> = (data) => {
 	const { width, height, sets } = data
-	
-	const ext = initExtents(width)
 
-	let svgBody = "<style>.set-label { font-size: 14px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; fill: black; }</style>"
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 14,
+		lineHeightDefault: 1.2
+	})
+
+	canvas.addStyle(
+		".set-label { font-size: 14px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; fill: black; }"
+	)
 
 	const mainCenterX = width * 0.4
 	const mainCenterY = height / 2
@@ -90,48 +96,79 @@ export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPr
 	const irrationalRy = height * 0.3
 
 	// Rational Numbers (outermost of the nested set)
-	includePointX(ext, mainCenterX - rationalRx)
-	includePointX(ext, mainCenterX + rationalRx)
-	svgBody += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${rationalRx}" ry="${rationalRy}" fill="${sets.rational.color}" stroke="${theme.colors.black}" />`
+	canvas.drawEllipse(mainCenterX, mainCenterY, rationalRx, rationalRy, {
+		fill: sets.rational.color,
+		stroke: theme.colors.black
+	})
 	if (sets.rational.label !== null) {
-		svgBody += `<text x="${mainCenterX}" y="${mainCenterY - rationalRy + 20}" class="set-label">${sets.rational.label}</text>`
-		includeText(ext, mainCenterX, sets.rational.label, "middle", 7)
+		canvas.drawText({
+			x: mainCenterX,
+			y: mainCenterY - rationalRy + 20,
+			text: sets.rational.label,
+			fontPx: 14,
+			fontWeight: theme.font.weight.bold,
+			anchor: "middle",
+			dominantBaseline: "middle"
+		})
 	}
 
 	// Integer Numbers
 	const integerRx = rationalRx * 0.7
 	const integerRy = rationalRy * 0.7
-	includePointX(ext, mainCenterX - integerRx)
-	includePointX(ext, mainCenterX + integerRx)
-	svgBody += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${integerRx}" ry="${integerRy}" fill="${sets.integer.color}" stroke="${theme.colors.black}" />`
+	canvas.drawEllipse(mainCenterX, mainCenterY, integerRx, integerRy, {
+		fill: sets.integer.color,
+		stroke: theme.colors.black
+	})
 	if (sets.integer.label !== null) {
-		svgBody += `<text x="${mainCenterX}" y="${mainCenterY - integerRy + (rationalRy - integerRy) / 2}" class="set-label">${sets.integer.label}</text>`
-		includeText(ext, mainCenterX, sets.integer.label, "middle", 7)
+		canvas.drawText({
+			x: mainCenterX,
+			y: mainCenterY - integerRy + (rationalRy - integerRy) / 2,
+			text: sets.integer.label,
+			fontPx: 14,
+			fontWeight: theme.font.weight.bold,
+			anchor: "middle",
+			dominantBaseline: "middle"
+		})
 	}
 
 	// Whole Numbers
 	const wholeRx = integerRx * 0.6
 	const wholeRy = integerRy * 0.6
-	includePointX(ext, mainCenterX - wholeRx)
-	includePointX(ext, mainCenterX + wholeRx)
-	svgBody += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${wholeRx}" ry="${wholeRy}" fill="${sets.whole.color}" stroke="${theme.colors.black}" />`
+	canvas.drawEllipse(mainCenterX, mainCenterY, wholeRx, wholeRy, {
+		fill: sets.whole.color,
+		stroke: theme.colors.black
+	})
 	if (sets.whole.label !== null) {
-		svgBody += `<text x="${mainCenterX}" y="${mainCenterY}" class="set-label">${sets.whole.label}</text>`
-		includeText(ext, mainCenterX, sets.whole.label, "middle", 7)
+		canvas.drawText({
+			x: mainCenterX,
+			y: mainCenterY,
+			text: sets.whole.label,
+			fontPx: 14,
+			fontWeight: theme.font.weight.bold,
+			anchor: "middle",
+			dominantBaseline: "middle"
+		})
 	}
 
 	// Irrational Numbers (separate)
-	includePointX(ext, irrationalCenterX - irrationalRx)
-	includePointX(ext, irrationalCenterX + irrationalRx)
-	svgBody += `<ellipse cx="${irrationalCenterX}" cy="${irrationalCenterY}" rx="${irrationalRx}" ry="${irrationalRy}" fill="${sets.irrational.color}" stroke="${theme.colors.black}" />`
+	canvas.drawEllipse(irrationalCenterX, irrationalCenterY, irrationalRx, irrationalRy, {
+		fill: sets.irrational.color,
+		stroke: theme.colors.black
+	})
 	if (sets.irrational.label !== null) {
-		svgBody += `<text x="${irrationalCenterX}" y="${irrationalCenterY}" class="set-label">${sets.irrational.label}</text>`
-		includeText(ext, irrationalCenterX, sets.irrational.label, "middle", 7)
+		canvas.drawText({
+			x: irrationalCenterX,
+			y: irrationalCenterY,
+			text: sets.irrational.label,
+			fontPx: 14,
+			fontWeight: theme.font.weight.bold,
+			anchor: "middle",
+			dominantBaseline: "middle"
+		})
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">${svgBody}</svg>`
 }

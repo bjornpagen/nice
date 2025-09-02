@@ -2,9 +2,10 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
 
 function createShapeSchema() {
@@ -216,14 +217,17 @@ export type TransformationDiagramProps = z.infer<typeof TransformationDiagramPro
 export const generateTransformationDiagram: WidgetGenerator<typeof TransformationDiagramPropsSchema> = (props) => {
 	const { width, height, preImage, transformation, additionalPoints } = props
 
-	// Initialize extents tracking
-	const ext = initExtents(width)
+	// Initialize the canvas
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	// Validation now handled by schema; preImage already guaranteed to have >=3 vertices and matching labels
-
-	// 1. Use a fixed, predictable coordinate system
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
-	svg += `<defs><marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.highlightPrimary}"/></marker></defs>`
+	canvas.addDef(
+		`<marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.highlightPrimary}"/></marker>`
+	)
 
 	// Helper function needed for coordinate calculations
 	const calculateCentroid = (vertices: Array<{ x: number; y: number }>) => {
@@ -353,44 +357,51 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	const toSvgY = (y: number) => svgCenterY - (y - dataCenterY) * scale // Flip Y axis
 
 	const drawPolygon = (shape: TransformationDiagramProps["preImage"], isImage: boolean) => {
-		// Track polygon vertices
-		shape.vertices.forEach((p) => {
-			includePointX(ext, toSvgX(p.x))
-		})
-		
-		const pointsStr = shape.vertices.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
+		const polygonPoints = shape.vertices.map((p) => ({ x: toSvgX(p.x), y: toSvgY(p.y) }))
 		const strokeWidth = isImage ? 2.5 : 2
 
-		let polySvg = `<polygon points="${pointsStr}" fill="${shape.fillColor}" stroke="${shape.strokeColor}" stroke-width="${strokeWidth}"/>`
+		canvas.drawPolygon(polygonPoints, {
+			fill: shape.fillColor,
+			stroke: shape.strokeColor,
+			strokeWidth: strokeWidth
+		})
 
 		// Add shape label at centroid if provided
 		if (shape.label) {
 			const centroid = calculateCentroid(shape.vertices)
 			const svgCentroidX = toSvgX(centroid.x)
 			const svgCentroidY = toSvgY(centroid.y)
-			includeText(ext, svgCentroidX, shape.label, "middle", 14)
-			polySvg += `<text x="${svgCentroidX}" y="${svgCentroidY}" text-anchor="middle" dominant-baseline="middle" font-size="${theme.font.size.medium}" font-weight="${theme.font.weight.bold}" fill="${theme.colors.text}">${shape.label}</text>`
+			canvas.drawText({
+				x: svgCentroidX,
+				y: svgCentroidY,
+				text: shape.label,
+				anchor: "middle",
+				dominantBaseline: "middle",
+				fontPx: Number.parseFloat(theme.font.size.medium),
+				fontWeight: theme.font.weight.bold,
+				fill: theme.colors.text
+			})
 		}
-
-		return polySvg
 	}
 
 	const drawLine = (
 		line: { from: { x: number; y: number }; to: { x: number; y: number }; style: string; color: string },
 		hasArrow: boolean
 	) => {
-		// Track line endpoints
-		includePointX(ext, toSvgX(line.from.x))
-		includePointX(ext, toSvgX(line.to.x))
-		
-		let strokeDash = ""
+		let dash: string | undefined
 		if (line.style === "dashed") {
-			strokeDash = 'stroke-dasharray="8 6"'
+			dash = "8 6"
 		} else if (line.style === "dotted") {
-			strokeDash = 'stroke-dasharray="2 4"'
+			dash = "2 4"
 		}
-		const marker = hasArrow ? 'marker-end="url(#arrowhead)"' : ""
-		return `<line x1="${toSvgX(line.from.x)}" y1="${toSvgY(line.from.y)}" x2="${toSvgX(line.to.x)}" y2="${toSvgY(line.to.y)}" stroke="${line.color}" stroke-width="${theme.stroke.width.thick}" ${strokeDash} ${marker}/>`
+		const markerEnd = hasArrow ? "url(#arrowhead)" : undefined
+
+		canvas.drawLine(toSvgX(line.from.x), toSvgY(line.from.y), toSvgX(line.to.x), toSvgY(line.to.y), {
+			stroke: line.color,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			dash,
+			markerEnd
+		})
 	}
 
 	const drawRotationArc = (center: { x: number; y: number }, startPoint: { x: number; y: number }, angle: number) => {
@@ -405,22 +416,26 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		const endX = toSvgX(center.x + arcRadius * Math.cos(endAngle))
 		const endY = toSvgY(center.y + arcRadius * Math.sin(endAngle))
 
-		// Track arc endpoints
-		includePointX(ext, startX)
-		includePointX(ext, endX)
-		
-		const largeArcFlag = Math.abs(angle) > 180 ? 1 : 0
-		const sweepFlag = angle > 0 ? 0 : 1 // Flip sweep direction for Y-axis flip in SVG coordinates
+		const largeArcFlag: 0 | 1 = Math.abs(angle) > 180 ? 1 : 0
+		const sweepFlag: 0 | 1 = angle > 0 ? 0 : 1 // Flip sweep direction for Y-axis flip in SVG coordinates
 
-		return `<path d="M ${startX} ${startY} A ${arcRadius * scale} ${arcRadius * scale} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}" stroke="${theme.colors.actionSecondary}" stroke-width="${theme.stroke.width.thick}" fill="none" marker-end="url(#arrowhead)"/>`
+		const arcPath = new Path2D()
+			.moveTo(startX, startY)
+			.arcTo(arcRadius * scale, arcRadius * scale, 0, largeArcFlag, sweepFlag, endX, endY)
+
+		canvas.drawPath(arcPath, {
+			stroke: theme.colors.actionSecondary,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			fill: "none",
+			markerEnd: "url(#arrowhead)"
+		})
 	}
 
 	const drawVertexLabels = (shape: TransformationDiagramProps["preImage"]) => {
 		if (shape.vertexLabels.length === 0) {
-			return ""
+			return
 		}
 
-		let labelsSvg = ""
 		const labelOffset = 16 // Offset in SVG pixels, not data coordinates
 
 		for (let i = 0; i < shape.vertices.length; i++) {
@@ -449,13 +464,17 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			const labelX = svgX + offsetX
 			const labelY = svgY + offsetY
 
-			// Track vertex label
-			includeText(ext, labelX, label, "middle", 13)
-			
-			labelsSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="${theme.font.size.medium}" font-weight="${theme.font.weight.bold}" fill="${theme.colors.text}">${label}</text>`
+			canvas.drawText({
+				x: labelX,
+				y: labelY,
+				text: label,
+				anchor: "middle",
+				dominantBaseline: "middle",
+				fontPx: Number.parseFloat(theme.font.size.medium),
+				fontWeight: theme.font.weight.bold,
+				fill: theme.colors.text
+			})
 		}
-
-		return labelsSvg
 	}
 
 	const drawAngleMark = (
@@ -464,7 +483,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		strokeColor: string
 	) => {
 		if (mark.vertexIndex < 0 || mark.vertexIndex >= vertices.length) {
-			return ""
+			return
 		}
 
 		const vertex = vertices[mark.vertexIndex]
@@ -472,7 +491,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		const nextVertex = vertices[(mark.vertexIndex + 1) % vertices.length]
 
 		if (!vertex || !prevVertex || !nextVertex) {
-			return ""
+			return
 		}
 
 		// Calculate angles for the arc in data coordinates
@@ -503,14 +522,18 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		const endX = svgVertexX + svgRadius * Math.cos(endAngle)
 		const endY = svgVertexY + svgRadius * Math.sin(-endAngle) // Flip Y
 
-		// Track angle mark arc
-		includePointX(ext, startX)
-		includePointX(ext, endX)
-		
-		const largeArcFlag = Math.abs(endAngle - startAngle) > Math.PI ? 1 : 0
-		const sweepFlag = 0 // Use 0 for correct direction in flipped Y coordinates
+		const largeArcFlag: 0 | 1 = Math.abs(endAngle - startAngle) > Math.PI ? 1 : 0
+		const sweepFlag: 0 | 1 = 0 // Use 0 for correct direction in flipped Y coordinates
 
-		let markSvg = `<path d="M ${startX} ${startY} A ${svgRadius} ${svgRadius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}" stroke="${strokeColor}" stroke-width="${Math.max(1, 1.5)}" fill="none"/>`
+		const markPath = new Path2D()
+			.moveTo(startX, startY)
+			.arcTo(svgRadius, svgRadius, 0, largeArcFlag, sweepFlag, endX, endY)
+
+		canvas.drawPath(markPath, {
+			stroke: strokeColor,
+			strokeWidth: Math.max(1, 1.5),
+			fill: "none"
+		})
 
 		// Add label if provided
 		if (mark.label) {
@@ -520,48 +543,57 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			const labelY = svgVertexY + svgLabelDistance * Math.sin(-midAngle) // Flip Y
 			const fontSize = Math.max(11, 13)
 
-			// Track angle label
-			includeText(ext, labelX, mark.label, "middle", fontSize)
-			
-			markSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}px" fill="${theme.colors.text}">${mark.label}</text>`
+			canvas.drawText({
+				x: labelX,
+				y: labelY,
+				text: mark.label,
+				anchor: "middle",
+				dominantBaseline: "middle",
+				fontPx: fontSize,
+				fill: theme.colors.text
+			})
 		}
-
-		return markSvg
 	}
 
 	const drawAdditionalPoint = (point: { x: number; y: number; label: string | null; style: string }) => {
-		let pointSvg = ""
 		const radius = 4
 		const svgX = toSvgX(point.x)
 		const svgY = toSvgY(point.y)
 
-		// Track additional point
-		includePointX(ext, svgX)
-		
 		if (point.style === "circle") {
-			pointSvg += `<circle cx="${svgX}" cy="${svgY}" r="${radius}" fill="none" stroke="${theme.colors.text}" stroke-width="${theme.stroke.width.thick}"/>`
+			canvas.drawCircle(svgX, svgY, radius, {
+				fill: "none",
+				stroke: theme.colors.text,
+				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			})
 		} else {
 			// dot style
-			pointSvg += `<circle cx="${svgX}" cy="${svgY}" r="${radius}" fill="${theme.colors.text}"/>`
+			canvas.drawCircle(svgX, svgY, radius, {
+				fill: theme.colors.text
+			})
 		}
 
 		// Label offset to avoid overlapping with the point
 		if (point.label) {
 			const labelOffset = 12
-			// Track additional point label (using y - labelOffset for positioning)
-			includeText(ext, svgX, point.label, "middle", 13)
-			pointSvg += `<text x="${svgX}" y="${svgY - labelOffset}" text-anchor="middle" dominant-baseline="bottom" font-size="${theme.font.size.medium}" font-weight="${theme.font.weight.bold}" fill="${theme.colors.text}">${point.label}</text>`
+			canvas.drawText({
+				x: svgX,
+				y: svgY - labelOffset,
+				text: point.label,
+				anchor: "middle",
+				dominantBaseline: "baseline",
+				fontPx: Number.parseFloat(theme.font.size.medium),
+				fontWeight: theme.font.weight.bold,
+				fill: theme.colors.text
+			})
 		}
-
-		return pointSvg
 	}
 
 	const drawSideLengths = (shape: TransformationDiagramProps["preImage"]) => {
 		if (shape.sideLengths.length === 0) {
-			return ""
+			return
 		}
 
-		let lengthsSvg = ""
 		const fontSize = Math.max(11, 13)
 
 		for (let i = 0; i < shape.vertices.length; i++) {
@@ -637,18 +669,22 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			// Always orient text horizontally (angle = 0) so it faces down/right
 			const angle = 0
 
-			// Track side length label
-			includeText(ext, labelX, sideLength.value, "middle", fontSize)
-			
-			lengthsSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}px" fill="${theme.colors.text}" transform="rotate(${angle} ${labelX} ${labelY})">${sideLength.value}</text>`
+			canvas.drawText({
+				x: labelX,
+				y: labelY,
+				text: sideLength.value,
+				anchor: "middle",
+				dominantBaseline: "middle",
+				fontPx: fontSize,
+				fill: theme.colors.text,
+				transform: `rotate(${angle} ${labelX} ${labelY})`
+			})
 		}
-
-		return lengthsSvg
 	}
 
 	// 4. Draw Transformation-Specific Background Elements (like lines and rays)
 	if (transformation.type === "reflection") {
-		svg += drawLine(transformation.lineOfReflection, false)
+		drawLine(transformation.lineOfReflection, false)
 	}
 
 	// Draw dilation rays BEHIND the shapes for proper layering
@@ -676,7 +712,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 				const extendedY = center.y + (dy / rayLength) * (rayLength + extensionLength)
 
 				// Draw ray from center through both vertices (behind shapes)
-				svg += drawLine(
+				drawLine(
 					{
 						from: center,
 						to: { x: extendedX, y: extendedY },
@@ -690,23 +726,23 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	}
 
 	// 5. Draw Main Shapes with proper layering
-	svg += drawPolygon(preImage, false)
-	svg += drawPolygon(image, true)
+	drawPolygon(preImage, false)
+	drawPolygon(image, true)
 
 	// 5a. Draw angle marks for both shapes
 	for (const mark of preImage.angleMarks) {
-		svg += drawAngleMark(preImage.vertices, mark, preImage.strokeColor)
+		drawAngleMark(preImage.vertices, mark, preImage.strokeColor)
 	}
 	for (const mark of image.angleMarks) {
-		svg += drawAngleMark(image.vertices, mark, image.strokeColor)
+		drawAngleMark(image.vertices, mark, image.strokeColor)
 	}
 
 	// 5b. Draw vertex labels for both shapes
-	svg += drawVertexLabels(preImage)
-	svg += drawVertexLabels(image)
+	drawVertexLabels(preImage)
+	drawVertexLabels(image)
 
 	// 5c. Draw side lengths for both shapes
-	svg += drawSideLengths(preImage)
+	drawSideLengths(preImage)
 	// Intentionally avoid copying side lengths to image since dilation changes values
 
 	// 6. Draw Transformation-Specific Foreground Elements (vectors, centers, vertex indicators)
@@ -733,14 +769,21 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 						const preSvgY = toSvgY(preVertex.y)
 						const imgSvgX = toSvgX(imageVertex.x)
 						const imgSvgY = toSvgY(imageVertex.y)
-						
-						// Track vertex indicator positions
-						includePointX(ext, preSvgX)
-						includePointX(ext, imgSvgX)
-						
-						svg += `<circle cx="${preSvgX}" cy="${preSvgY}" r="${preVertexRadius}" fill="${theme.colors.highlightPrimary}" opacity="${theme.opacity.overlay}" stroke="${theme.colors.white}" stroke-width="${theme.stroke.width.thin}"/>`
+
+						// Draw vertex correspondence indicators
+
+						canvas.drawCircle(preSvgX, preSvgY, preVertexRadius, {
+							fill: theme.colors.highlightPrimary,
+							fillOpacity: Number.parseFloat(theme.opacity.overlay),
+							stroke: theme.colors.white,
+							strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+						})
 						// Image vertices: larger, more prominent
-						svg += `<circle cx="${imgSvgX}" cy="${imgSvgY}" r="${imageVertexRadius}" fill="${theme.colors.highlightPrimary}" stroke="${theme.colors.white}" stroke-width="${theme.stroke.width.thin}"/>`
+						canvas.drawCircle(imgSvgX, imgSvgY, imageVertexRadius, {
+							fill: theme.colors.highlightPrimary,
+							stroke: theme.colors.white,
+							strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+						})
 					}
 				}
 			}
@@ -748,11 +791,13 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			// Draw center point on top of everything
 			const centerSvgX = toSvgX(center.x)
 			const centerSvgY = toSvgY(center.y)
-			
-			// Track center point
-			includePointX(ext, centerSvgX)
-			
-			svg += `<circle cx="${centerSvgX}" cy="${centerSvgY}" r="${centerRadius}" fill="${theme.colors.highlightPrimary}" stroke="${theme.colors.white}" stroke-width="${theme.stroke.width.base}"/>`
+
+			// Draw center point on top of everything
+			canvas.drawCircle(centerSvgX, centerSvgY, centerRadius, {
+				fill: theme.colors.highlightPrimary,
+				stroke: theme.colors.white,
+				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			})
 			break
 		}
 		case "rotation": {
@@ -760,17 +805,19 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			const centerRadius = 4
 			const centerSvgX = toSvgX(center.x)
 			const centerSvgY = toSvgY(center.y)
-			
-			// Track rotation center
-			includePointX(ext, centerSvgX)
-			
-			svg += `<circle cx="${centerSvgX}" cy="${centerSvgY}" r="${centerRadius}" fill="${theme.colors.highlightPrimary}" stroke="${theme.colors.white}" stroke-width="${theme.stroke.width.thin}"/>`
+
+			// Draw center point
+			canvas.drawCircle(centerSvgX, centerSvgY, centerRadius, {
+				fill: theme.colors.highlightPrimary,
+				stroke: theme.colors.white,
+				strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+			})
 
 			// Draw rotation arc to show angle and direction
 			if (preImage.vertices.length > 0) {
 				const refPoint = preImage.vertices[0] // Use first vertex as reference
 				if (refPoint) {
-					svg += drawRotationArc(center, refPoint, transformation.angle)
+					drawRotationArc(center, refPoint, transformation.angle)
 				}
 			}
 			break
@@ -783,7 +830,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 					const imageVertex = image.vertices[i]
 					if (preVertex && imageVertex) {
 						// Draw light dotted lines showing perpendicular distances
-						svg += drawLine(
+						drawLine(
 							{
 								from: preVertex,
 								to: imageVertex,
@@ -799,13 +846,16 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 						const preSvgY = toSvgY(preVertex.y)
 						const imgSvgX = toSvgX(imageVertex.x)
 						const imgSvgY = toSvgY(imageVertex.y)
-						
-						// Track reflection vertex indicators
-						includePointX(ext, preSvgX)
-						includePointX(ext, imgSvgX)
-						
-						svg += `<circle cx="${preSvgX}" cy="${preSvgY}" r="${vertexRadius}" fill="${theme.colors.textSecondary}" opacity="${theme.opacity.overlay}"/>`
-						svg += `<circle cx="${imgSvgX}" cy="${imgSvgY}" r="${vertexRadius}" fill="${theme.colors.textSecondary}" opacity="${theme.opacity.overlay}"/>`
+
+						// Add small circles at vertices
+						canvas.drawCircle(preSvgX, preSvgY, vertexRadius, {
+							fill: theme.colors.textSecondary,
+							opacity: Number.parseFloat(theme.opacity.overlay)
+						})
+						canvas.drawCircle(imgSvgX, imgSvgY, vertexRadius, {
+							fill: theme.colors.textSecondary,
+							opacity: Number.parseFloat(theme.opacity.overlay)
+						})
 					}
 				}
 			}
@@ -815,19 +865,11 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 
 	// 7. Draw additional points (last so they appear on top)
 	for (const point of additionalPoints) {
-		svg += drawAdditionalPoint(point)
+		drawAdditionalPoint(point)
 	}
 
-	svg += "</svg>"
-	
-	// Apply dynamic width calculation
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	
-	// Update SVG with dynamic width and viewBox
-	svg = svg.replace(
-		`width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"`,
-		`width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}"`
-	)
-	
-	return svg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">${svgBody}</svg>`
 }

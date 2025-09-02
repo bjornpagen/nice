@@ -1,15 +1,9 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { abbreviateMonth } from "@/lib/widgets/utils/labels" // NEW
-import {
-	computeDynamicWidth,
-	includePointX,
-	includeText,
-	initExtents,
-	type Extents
-} from "@/lib/widgets/utils/layout" // NEW
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import { theme } from "@/lib/widgets/utils/theme"
 
 const Point = z
@@ -193,9 +187,12 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 	const viewBoxY = 0
 	const viewBoxWidth = width
 	const viewBoxHeight = height
-	
-	const ext = initExtents(width) // NEW: Initialize extents
-	let svgBody = ""
+
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	// Calculate starting position to center the content
 	const startX = (width - scaledContentWidth) / 2
@@ -215,7 +212,7 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 		const offsetY = currentY - bounds.minY * scale
 
 		// Draw the figure
-		svgBody += drawFigure(figure, offsetX, offsetY, scale, ext) // MODIFIED: Pass extents
+		drawFigure(figure, offsetX, offsetY, scale, canvas) // MODIFIED: Pass canvas
 
 		// Move to next position
 		if (layout === "horizontal") {
@@ -225,19 +222,23 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 		}
 	}
 
-	// NEW: Apply dynamic width at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${viewBoxHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${viewBoxHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">${svgBody}</svg>`
 }
 
 /**
  * Draws a single figure with all its properties
  */
-function drawFigure(figure: z.infer<typeof Figure>, offsetX: number, offsetY: number, scale: number, ext: Extents): string { // MODIFIED: Accept extents
-	let svg = ""
+function drawFigure(
+	figure: z.infer<typeof Figure>,
+	offsetX: number,
+	offsetY: number,
+	scale: number,
+	canvas: any
+): void {
+	// MODIFIED: Accept canvas
 
 	// Transform vertices
 	const transformedVertices = figure.vertices.map((v) => ({
@@ -245,19 +246,13 @@ function drawFigure(figure: z.infer<typeof Figure>, offsetX: number, offsetY: nu
 		y: v.y * scale + offsetY
 	}))
 
-	// --- ADDED ---
-	// Track all transformed vertices to ensure the figure is within the dynamic bounds
-	for (const vertex of transformedVertices) {
-		includePointX(ext, vertex.x)
-	}
-	// --- END ADDED ---
+	// Canvas automatically tracks extents
 
 	// Draw the figure shape
 	const points = transformedVertices.map((v) => `${v.x},${v.y}`).join(" ")
-	const fillAttr = `fill="${figure.fillColor}"`
 	const strokeWidth = figure.strokeWidth * scale
 
-	svg += `<polygon points="${points}" ${fillAttr} stroke="${figure.strokeColor}" stroke-width="${strokeWidth}"/>`
+	canvas.drawPolygon(points, { fill: figure.fillColor, stroke: figure.strokeColor, strokeWidth })
 
 	// Draw side labels
 	for (let i = 0; i < Math.min(figure.sideLabels.length, transformedVertices.length); i++) {
@@ -296,8 +291,16 @@ function drawFigure(figure: z.infer<typeof Figure>, offsetX: number, offsetY: nu
 		const labelY = midY + outwardNormalY * labelOffset
 
 		const fontSize = Math.max(10, 14 * scale)
-		svg += `<text x="${labelX}" y="${labelY}" fill="${figure.strokeColor}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}" font-weight="${theme.font.weight.bold}">${label}</text>`
-		includeText(ext, labelX, label, "middle") // NEW: Track text
+		canvas.drawText({
+			x: labelX,
+			y: labelY,
+			text: label,
+			fill: figure.strokeColor,
+			anchor: "middle",
+			dominantBaseline: "middle",
+			fontPx: fontSize,
+			fontWeight: theme.font.weight.bold
+		})
 	}
 
 	// Draw figure label
@@ -337,8 +340,14 @@ function drawFigure(figure: z.infer<typeof Figure>, offsetX: number, offsetY: nu
 	const labelText = abbreviateMonth(rawLabelText) // MODIFIED: Abbreviate
 
 	const fontSize = Math.max(12, 16 * scale)
-	svg += `<text x="${labelX}" y="${labelY}" fill="${figure.strokeColor}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}" font-weight="bold">${labelText}</text>`
-	includeText(ext, labelX, labelText, "middle") // NEW: Track text
-
-	return svg
+	canvas.drawText({
+		x: labelX,
+		y: labelY,
+		text: labelText,
+		fill: figure.strokeColor,
+		anchor: "middle",
+		dominantBaseline: "middle",
+		fontPx: fontSize,
+		fontWeight: "bold"
+	})
 }

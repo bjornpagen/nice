@@ -1,14 +1,14 @@
-import { z } from "zod"
-import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
-import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { computeDynamicWidth, includePointX, includeText, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
-import { renderWrappedText } from "@/lib/widgets/utils/text"
-import { theme } from "@/lib/widgets/utils/theme"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
+import { z } from "zod"
+import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
+import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
+import { setupCoordinatePlaneBaseV2 } from "@/lib/widgets/utils/coordinate-plane-utils"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { abbreviateMonth } from "@/lib/widgets/utils/labels"
+import { Path2D } from "@/lib/widgets/utils/path-builder"
+import { theme } from "@/lib/widgets/utils/theme"
 
 const PointSchema = z.object({
 	x: z.number().describe("The x-coordinate (horizontal value) of the data point."),
@@ -74,8 +74,6 @@ export const AreaGraphPropsSchema = z
 
 export type AreaGraphProps = z.infer<typeof AreaGraphPropsSchema>
 
-
-
 export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (props) => {
 	const { width, height, title, xAxis, yAxis, dataPoints, bottomArea, topArea, boundaryLine } = props
 
@@ -103,35 +101,42 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	// Relaxed: if non-uniform, we won't throw; we use a reasonable tickInterval fallback
 	const tickInterval = nonUniform ? Math.max(1e-9, Math.min(...deltas.map((d) => Math.abs(d)))) : Math.abs(first)
 
-	const base = generateCoordinatePlaneBaseV2(
-		width,
-		height,
-		title,
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
+	const baseInfo = setupCoordinatePlaneBaseV2(
 		{
-			xScaleType: "numeric", // Set the scale type
-			label: xAxis.label,
-			min: xAxis.min, // Required for numeric
-			max: xAxis.max, // Required for numeric
-			tickInterval, // Required for numeric
-			showGridLines: false,
-			showTickLabels: true
+			width,
+			height,
+			title,
+			xAxis: {
+				xScaleType: "numeric",
+				label: xAxis.label,
+				min: xAxis.min,
+				max: xAxis.max,
+				tickInterval,
+				showGridLines: false,
+				showTickLabels: true
+			},
+			yAxis: {
+				label: yAxis.label,
+				min: yAxis.min,
+				max: yAxis.max,
+				tickInterval: yAxis.tickInterval,
+				showGridLines: yAxis.showGridLines,
+				showTickLabels: true
+			}
 		},
-		{
-			label: yAxis.label,
-			min: yAxis.min,
-			max: yAxis.max,
-			tickInterval: yAxis.tickInterval,
-			showGridLines: yAxis.showGridLines,
-			showTickLabels: true
-		}
+		canvas
 	)
 
-	const toSvgX = base.toSvgX
-	const toSvgY = base.toSvgY
+	const toSvgX = baseInfo.toSvgX
+	const toSvgY = baseInfo.toSvgY
 
-	dataPoints.forEach((p) => {
-		includePointX(base.ext, toSvgX(p.x))
-	})
+	// Track data points for extent calculation (handled by Canvas now)
 	const pointsStr = dataPoints.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
 	const firstPoint = dataPoints[0]
 	if (!firstPoint) {
@@ -146,8 +151,23 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	const leftX = toSvgX(firstPoint.x)
 	const rightX = toSvgX(lastPoint.x)
 
-	const bottomPath = `M${leftX},${toSvgY(yAxis.min)} ${pointsStr} L${rightX},${toSvgY(yAxis.min)} Z`
-	const topPath = `M${leftX},${toSvgY(yAxis.max)} ${pointsStr} L${rightX},${toSvgY(yAxis.max)} Z`
+	// Build bottom area path
+	const bottomPath = new Path2D()
+	bottomPath.moveTo(leftX, toSvgY(yAxis.min))
+	for (const point of dataPoints) {
+		bottomPath.lineTo(toSvgX(point.x), toSvgY(point.y))
+	}
+	bottomPath.lineTo(rightX, toSvgY(yAxis.min))
+	bottomPath.closePath()
+
+	// Build top area path
+	const topPath = new Path2D()
+	topPath.moveTo(leftX, toSvgY(yAxis.max))
+	for (const point of dataPoints) {
+		topPath.lineTo(toSvgX(point.x), toSvgY(point.y))
+	}
+	topPath.lineTo(rightX, toSvgY(yAxis.max))
+	topPath.closePath()
 
 	// 1. Compute label anchors using area-weighted center of mass along x
 	// Weight each segment by its horizontal span and area thickness
@@ -229,27 +249,50 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	const topLabelY = toSvgY(yAxis.max - (yAxis.max - topBoundaryYVal) * 0.25)
 	const bottomLabelY = toSvgY(yAxis.min + (bottomBoundaryYVal - yAxis.min) * 0.25)
 
-	// 2. Build clipped and unclipped content separately
-	let clippedContent = ""
-	clippedContent += `<path d="${bottomPath}" fill="${bottomArea.color}" stroke="none"/>`
-	clippedContent += `<path d="${topPath}" fill="${topArea.color}" stroke="none"/>`
-	clippedContent += `<polyline points="${pointsStr}" fill="none" stroke="${boundaryLine.color}" stroke-width="${boundaryLine.strokeWidth}"/>`
+	// 2. Draw area fills and boundary line using Canvas, within a clipped region
+	canvas.drawInClippedRegion((clippedCanvas) => {
+		// Draw bottom area fill
+		clippedCanvas.drawPath(bottomPath, {
+			fill: bottomArea.color,
+			stroke: "none"
+		})
 
-	let unclippedContent = ""
-	unclippedContent += renderWrappedText(abbreviateMonth(topArea.label), topLabelX, topLabelY, "area-label", theme.font.size.medium, base.chartArea.width, 8)
-	includeText(base.ext, topLabelX, abbreviateMonth(topArea.label), "middle", 8)
-	unclippedContent += renderWrappedText(abbreviateMonth(bottomArea.label), bottomLabelX, bottomLabelY, "area-label", theme.font.size.medium, base.chartArea.width, 8)
-	includeText(base.ext, bottomLabelX, abbreviateMonth(bottomArea.label), "middle", 8)
+		// Draw top area fill
+		clippedCanvas.drawPath(topPath, {
+			fill: topArea.color,
+			stroke: "none"
+		})
 
-	// 3. Assemble SVG
-	let svgBody = base.svgBody
-	svgBody += wrapInClippedGroup(base.clipId, clippedContent)
-	svgBody += unclippedContent // Add unclipped labels
+		// Draw boundary line
+		const boundaryPoints = dataPoints.map((p) => ({ x: toSvgX(p.x), y: toSvgY(p.y) }))
+		clippedCanvas.drawPolyline(boundaryPoints, {
+			stroke: boundaryLine.color,
+			strokeWidth: boundaryLine.strokeWidth
+		})
+	})
 
-	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, totalHeight, AXIS_VIEWBOX_PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">` +
-		svgBody +
-		`</svg>`
-	return finalSvg
+	// Add unclipped labels using the main Canvas
+	canvas.drawWrappedText({
+		x: topLabelX,
+		y: topLabelY,
+		text: abbreviateMonth(topArea.label),
+		maxWidthPx: baseInfo.chartArea.width,
+		fontPx: Number.parseFloat(theme.font.size.medium.replace("px", "")),
+		anchor: "middle",
+		fill: theme.colors.text
+	})
+	canvas.drawWrappedText({
+		x: bottomLabelX,
+		y: bottomLabelY,
+		text: abbreviateMonth(bottomArea.label),
+		maxWidthPx: baseInfo.chartArea.width,
+		fontPx: Number.parseFloat(theme.font.size.medium.replace("px", "")),
+		anchor: "middle",
+		fill: theme.colors.text
+	})
+
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(AXIS_VIEWBOX_PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">${svgBody}</svg>`
 }

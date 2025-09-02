@@ -1,8 +1,8 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includeText, includePointX, initExtents } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
 
 function createSideSquareSchema() {
@@ -103,28 +103,27 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	const v_a_end = { x: offsetX, y: offsetY + sb } // End of horizontal leg 'a'
 	const v_b_end = { x: offsetX + sa, y: offsetY } // End of vertical leg 'b'
 
-	const ext = initExtents(width)
-	
-	let svgBody = "<style>.area-label { font-size: 16px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; } .side-label { font-size: 14px; text-anchor: middle; dominant-baseline: middle; } .grid-line { stroke: #888888; stroke-width: 0.5; opacity: 0.5; }</style>"
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	// Helper function to generate grid lines for a rectangular square
-	const generateRectangularGrid = (x: number, y: number, width: number, height: number, sideLength: number): string => {
-		let gridSvg = ""
+	const generateRectangularGrid = (x: number, y: number, width: number, height: number, sideLength: number): void => {
 		const unitSize = width / sideLength
 
 		// Vertical grid lines
 		for (let i = 1; i < sideLength; i++) {
 			const lineX = x + i * unitSize
-			gridSvg += `<line x1="${lineX}" y1="${y}" x2="${lineX}" y2="${y + height}" class="grid-line"/>`
+			canvas.drawLine(lineX, y, lineX, y + height, { stroke: "#888888", strokeWidth: 0.5, opacity: 0.5 })
 		}
 
 		// Horizontal grid lines
 		for (let i = 1; i < sideLength; i++) {
 			const lineY = y + i * unitSize
-			gridSvg += `<line x1="${x}" y1="${lineY}" x2="${x + width}" y2="${lineY}" class="grid-line"/>`
+			canvas.drawLine(x, lineY, x + width, lineY, { stroke: "#888888", strokeWidth: 0.5, opacity: 0.5 })
 		}
-
-		return gridSvg
 	}
 
 	// Helper function to generate grid lines for a rotated square (hypotenuse)
@@ -133,9 +132,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 		v2: { x: number; y: number },
 		v4: { x: number; y: number },
 		sideLength: number
-	): string => {
-		let gridSvg = ""
-
+	): void => {
 		// Calculate the basis vectors for the rotated coordinate system
 		// v1 -> v2 is one edge, v1 -> v4 is the adjacent perpendicular edge
 		const u = { x: (v2.x - v1.x) / sideLength, y: (v2.y - v1.y) / sideLength }
@@ -146,15 +143,13 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 			// Lines parallel to edge v1-v2
 			const start1 = { x: v1.x + i * v.x, y: v1.y + i * v.y }
 			const end1 = { x: v2.x + i * v.x, y: v2.y + i * v.y }
-			gridSvg += `<line x1="${start1.x}" y1="${start1.y}" x2="${end1.x}" y2="${end1.y}" class="grid-line"/>`
+			canvas.drawLine(start1.x, start1.y, end1.x, end1.y, { stroke: "#888888", strokeWidth: 0.5, opacity: 0.5 })
 
 			// Lines parallel to edge v1-v4
 			const start2 = { x: v1.x + i * u.x, y: v1.y + i * u.y }
 			const end2 = { x: v4.x + i * u.x, y: v4.y + i * u.y }
-			gridSvg += `<line x1="${start2.x}" y1="${start2.y}" x2="${end2.x}" y2="${end2.y}" class="grid-line"/>`
+			canvas.drawLine(start2.x, start2.y, end2.x, end2.y, { stroke: "#888888", strokeWidth: 0.5, opacity: 0.5 })
 		}
-
-		return gridSvg
 	}
 
 	// --- Square C (Hypotenuse) ---
@@ -163,76 +158,134 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	const v_c1 = { x: v_b_end.x + perpVec.x, y: v_b_end.y + perpVec.y }
 	const v_c2 = { x: v_a_end.x + perpVec.x, y: v_a_end.y + perpVec.y }
 
-	includePointX(ext, v_a_end.x)
-	includePointX(ext, v_b_end.x)
-	includePointX(ext, v_c1.x)
-	includePointX(ext, v_c2.x)
+	// Canvas automatically tracks extents
 
-	svgBody += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_b_end.x},${v_b_end.y} ${v_c1.x},${v_c1.y} ${v_c2.x},${v_c2.y}" fill="${squareC.color}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thin}"/>`
+	const squareCPoints = [
+		{ x: v_a_end.x, y: v_a_end.y },
+		{ x: v_b_end.x, y: v_b_end.y },
+		{ x: v_c1.x, y: v_c1.y },
+		{ x: v_c2.x, y: v_c2.y }
+	]
+	canvas.drawPolygon(squareCPoints, {
+		fill: squareC.color,
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+	})
 
-	// Add grid lines for square C
-	svgBody += generateRotatedGrid(v_a_end, v_b_end, v_c2, c)
+	// Add grid lines for square C using helper function
+	generateRotatedGrid(v_a_end, v_b_end, v_c2, c)
 
 	const centerC = { x: (v_a_end.x + v_c1.x) / 2, y: (v_a_end.y + v_c1.y) / 2 }
-	svgBody += `<text x="${centerC.x}" y="${centerC.y}" class="area-label">${squareC.area}</text>`
-	includeText(ext, centerC.x, String(squareC.area), "middle", 7)
+	canvas.drawText({
+		x: centerC.x,
+		y: centerC.y,
+		text: String(squareC.area),
+		anchor: "middle",
+		dominantBaseline: "middle",
+		fontPx: 16,
+		fontWeight: "700"
+	})
 	if (squareC.sideLabel) {
 		const midHyp = { x: (v_a_end.x + v_b_end.x) / 2, y: (v_a_end.y + v_b_end.y) / 2 }
 		// Place "c" label on the hypotenuse side of the triangle
-		svgBody += `<text x="${midHyp.x}" y="${midHyp.y - 10}" class="side-label">${squareC.sideLabel}</text>`
-		includeText(ext, midHyp.x, squareC.sideLabel, "middle", 7)
+		canvas.drawText({
+			x: midHyp.x,
+			y: midHyp.y - 10,
+			text: squareC.sideLabel,
+			anchor: "middle",
+			dominantBaseline: "middle",
+			fontPx: 14
+		})
 	}
 
 	// --- Square B (on leg 'b') ---
 	const rectB_x = v_right.x
 	const rectB_y = v_b_end.y
-	includePointX(ext, rectB_x)
-	includePointX(ext, rectB_x + sb)
+	// Canvas automatically tracks extents
 
-	svgBody += `<rect x="${rectB_x}" y="${rectB_y}" width="${sb}" height="${sb}" fill="${squareB.color}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thin}"/>`
+	canvas.drawRect(rectB_x, rectB_y, sb, sb, {
+		fill: squareB.color,
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+	})
 
-	// Add grid lines for square B
-	svgBody += generateRectangularGrid(v_right.x, v_b_end.y, sb, sb, b)
+	// Add grid lines for square B using helper function
+	generateRectangularGrid(v_right.x, v_b_end.y, sb, sb, b)
 
 	const centerB = { x: v_right.x + sb / 2, y: v_b_end.y + sb / 2 }
-	svgBody += `<text x="${centerB.x}" y="${centerB.y}" class="area-label">${squareB.area}</text>`
-	includeText(ext, centerB.x, String(squareB.area), "middle", 7)
+	canvas.drawText({
+		x: centerB.x,
+		y: centerB.y,
+		text: String(squareB.area),
+		anchor: "middle",
+		dominantBaseline: "middle",
+		fontPx: 16,
+		fontWeight: "700"
+	})
 	if (squareB.sideLabel) {
 		const midB = { x: (v_right.x + v_b_end.x) / 2, y: (v_right.y + v_b_end.y) / 2 }
-		svgBody += `<text x="${midB.x + 10}" y="${midB.y}" class="side-label">${squareB.sideLabel}</text>`
-		includeText(ext, midB.x + 10, squareB.sideLabel, "middle", 7)
+		canvas.drawText({
+			x: midB.x + 10,
+			y: midB.y,
+			text: squareB.sideLabel,
+			anchor: "middle",
+			dominantBaseline: "middle",
+			fontPx: 14
+		})
 	}
 
 	// --- Square A (on leg 'a') ---
 	const rectA_x = v_a_end.x
 	const rectA_y = v_a_end.y
-	includePointX(ext, rectA_x)
-	includePointX(ext, rectA_x + sa)
+	// Canvas automatically tracks extents
 
-	svgBody += `<rect x="${rectA_x}" y="${rectA_y}" width="${sa}" height="${sa}" fill="${squareA.color}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thin}"/>`
+	canvas.drawRect(rectA_x, rectA_y, sa, sa, {
+		fill: squareA.color,
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+	})
 
-	// Add grid lines for square A
-	svgBody += generateRectangularGrid(v_a_end.x, v_a_end.y, sa, sa, a)
+	// Add grid lines for square A using helper function
+	generateRectangularGrid(v_a_end.x, v_a_end.y, sa, sa, a)
 
 	const centerA = { x: v_a_end.x + sa / 2, y: v_a_end.y + sa / 2 }
-	svgBody += `<text x="${centerA.x}" y="${centerA.y}" class="area-label">${squareA.area}</text>`
-	includeText(ext, centerA.x, String(squareA.area), "middle", 7)
+	canvas.drawText({
+		x: centerA.x,
+		y: centerA.y,
+		text: String(squareA.area),
+		anchor: "middle",
+		dominantBaseline: "middle",
+		fontPx: 16,
+		fontWeight: "700"
+	})
 	if (squareA.sideLabel) {
 		const midA = { x: (v_right.x + v_a_end.x) / 2, y: (v_right.y + v_a_end.y) / 2 }
-		svgBody += `<text x="${midA.x}" y="${midA.y + 10}" class="side-label">${squareA.sideLabel}</text>`
-		includeText(ext, midA.x, squareA.sideLabel, "middle", 7)
+		canvas.drawText({
+			x: midA.x,
+			y: midA.y + 10,
+			text: squareA.sideLabel,
+			anchor: "middle",
+			dominantBaseline: "middle",
+			fontPx: 14
+		})
 	}
 
 	// --- Central Triangle (drawn on top) ---
-	includePointX(ext, v_a_end.x)
-	includePointX(ext, v_right.x)
-	includePointX(ext, v_b_end.x)
+	// Canvas automatically tracks extents
 
-	svgBody += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_right.x},${v_right.y} ${v_b_end.x},${v_b_end.y}" fill="${theme.colors.background}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
+	const trianglePoints = [
+		{ x: v_a_end.x, y: v_a_end.y },
+		{ x: v_right.x, y: v_right.y },
+		{ x: v_b_end.x, y: v_b_end.y }
+	]
+	canvas.drawPolygon(trianglePoints, {
+		fill: theme.colors.background,
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+	})
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">${svgBody}</svg>`
 }

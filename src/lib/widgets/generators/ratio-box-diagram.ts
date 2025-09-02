@@ -1,8 +1,8 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, initExtents } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
 
 const Item = z
@@ -134,8 +134,11 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 	const chartWidth = width - padding.left - padding.right
 	const chartHeight = height - padding.top - padding.bottom
 
-	const ext = initExtents(width)
-	let svgContent = ""
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	if (layout === "grouped") {
 		// --- Grouped Layout Logic ---
@@ -187,13 +190,16 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 			const cx = padding.left + col * cellWidth + cellWidth / 2
 			const cy = padding.top + row * cellHeight + cellHeight / 2
 
-			includePointX(ext, cx - iconRadiusX)
-			includePointX(ext, cx + iconRadiusX)
+			// Canvas automatically tracks extents
 
 			const fill = item.style === "filled" ? item.color : "none"
 			const stroke = item.color
 
-			svgContent += `<ellipse cx="${cx}" cy="${cy}" rx="${iconRadiusX}" ry="${iconRadiusY}" fill="${fill}" stroke="${stroke}" stroke-width="${theme.stroke.width.thick}"/>`
+			canvas.drawEllipse(cx, cy, iconRadiusX, iconRadiusY, {
+				fill,
+				stroke,
+				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			})
 		}
 
 		// Draw boxes
@@ -205,9 +211,12 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 				const y = padding.top + startRow * cellHeight - boxPadding / 2
 				const boxWidth = (endCol - startCol + 1) * cellWidth + boxPadding
 				const boxHeight = (endRow - startRow + 1) * cellHeight + boxPadding
-				includePointX(ext, x)
-				includePointX(ext, x + boxWidth)
-				svgContent += `<rect x="${x}" y="${y}" width="${boxWidth}" height="${boxHeight}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+				// Canvas automatically tracks extents
+				canvas.drawRect(x, y, boxWidth, boxHeight, {
+					fill: "none",
+					stroke: theme.colors.black,
+					strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+				})
 			}
 
 			// Draw outer box first (so it appears behind inner box)
@@ -245,8 +254,7 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 			const cx = padding.left + col * cellWidth + cellWidth / 2
 			const cy = padding.top + row * cellHeight + cellHeight / 2
 
-			includePointX(ext, cx - iconRadiusX)
-			includePointX(ext, cx + iconRadiusX)
+			// Canvas automatically tracks extents
 
 			const item = flatItems[i]
 			if (!item) continue
@@ -254,7 +262,11 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 			const fill = item.style === "filled" ? item.color : "none"
 			const stroke = item.color
 
-			svgContent += `<ellipse cx="${cx}" cy="${cy}" rx="${iconRadiusX}" ry="${iconRadiusY}" fill="${fill}" stroke="${stroke}" stroke-width="${theme.stroke.width.thick}"/>`
+			canvas.drawEllipse(cx, cy, iconRadiusX, iconRadiusY, {
+				fill,
+				stroke,
+				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			})
 		}
 
 		// Helper function to draw a box based on grid cell coordinates
@@ -264,9 +276,12 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 			const y = padding.top + startRow * cellHeight + boxPadding / 2
 			const boxWidth = (endCol - startCol + 1) * cellWidth - boxPadding
 			const boxHeight = (endRow - startRow + 1) * cellHeight - boxPadding
-			includePointX(ext, x)
-			includePointX(ext, x + boxWidth)
-			svgContent += `<rect x="${x}" y="${y}" width="${boxWidth}" height="${boxHeight}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+			// Canvas automatically tracks extents
+			canvas.drawRect(x, y, boxWidth, boxHeight, {
+				fill: "none",
+				stroke: theme.colors.black,
+				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			})
 		}
 
 		// 2. Render Partition Boxes
@@ -302,9 +317,8 @@ export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramProp
 		}
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg">`
-	svg += svgContent
-	svg += "</svg>"
-	return svg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg">${svgBody}</svg>`
 }

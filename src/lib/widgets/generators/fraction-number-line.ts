@@ -1,8 +1,8 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
 
 const Tick = z
@@ -148,9 +148,6 @@ export type FractionNumberLineProps = z.infer<typeof FractionNumberLinePropsSche
 export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLinePropsSchema> = (props) => {
 	const { width, height, min, max, ticks, segments, model } = props
 
-	// Initialize extents tracking
-	const ext = initExtents(width)
-
 	const padding = { top: 80, right: 20, bottom: 40, left: 20 }
 	const chartWidth = width - padding.left - padding.right
 	const yPosAxis = height - padding.bottom - 20
@@ -159,67 +156,50 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 		return `<svg width="${width}" height="${height}" />`
 	}
 
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
+	canvas.addStyle(
+		".label-top { font-size: 11px; } .label-bottom { font-weight: bold; } .model-label { font-size: 13px; font-weight: bold; }"
+	)
+
 	const scale = chartWidth / (max - min)
 	const toSvgX = (val: number) => padding.left + (val - min) * scale
 
-	// Track number line endpoints
-	includePointX(ext, padding.left)
-	includePointX(ext, width - padding.right)
-
-	// Track tick positions and labels
-	for (const tick of ticks) {
-		const x = toSvgX(tick.value)
-		includePointX(ext, x)
-		
-		if (tick.topLabel !== "") {
-			includeText(ext, x, tick.topLabel, "middle", 6)
-		}
-		if (tick.bottomLabel !== "") {
-			includeText(ext, x, tick.bottomLabel, "middle", 7)
-		}
-	}
-
-	// Track segment endpoints
-	for (const segment of segments) {
-		const startX = toSvgX(segment.start)
-		const endX = toSvgX(segment.end)
-		includePointX(ext, startX)
-		includePointX(ext, endX)
-	}
-
-	// Track model bar boundaries and label
-	if (model !== null) {
-		// Track the left and right edges of the model bar
-		includePointX(ext, padding.left)
-		includePointX(ext, padding.left + chartWidth)
-		
-		// Track bracket label if present
-		if (model.bracketLabel !== "") {
-			includeText(ext, width / 2, model.bracketLabel, "middle", 7)
-		}
-	}
-
-	// Compute dynamic width
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	
-	// Build SVG with computed dimensions
-	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-	svg +=
-		"<style>.label-top { font-size: 11px; } .label-bottom { font-weight: bold; } .model-label { font-size: 13px; font-weight: bold; }</style>"
-
 	// 1. Draw Axis Line
-	svg += `<line x1="${padding.left}" y1="${yPosAxis}" x2="${width - padding.right}" y2="${yPosAxis}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
+	canvas.drawLine(padding.left, yPosAxis, width - padding.right, yPosAxis, {
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+	})
 
 	// 2. Draw Ticks and Labels
 	for (const tick of ticks) {
 		const x = toSvgX(tick.value)
 		const tickHeight = tick.isMajor ? 8 : 4
-		svg += `<line x1="${x}" y1="${yPosAxis - tickHeight}" x2="${x}" y2="${yPosAxis + tickHeight}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.base}"/>`
+		canvas.drawLine(x, yPosAxis - tickHeight, x, yPosAxis + tickHeight, {
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		})
 		if (tick.topLabel !== "") {
-			svg += `<text x="${x}" y="${yPosAxis - 15}" class="label-top" text-anchor="middle">${tick.topLabel}</text>`
+			canvas.drawText({
+				x: x,
+				y: yPosAxis - 15,
+				text: tick.topLabel,
+				anchor: "middle",
+				fontPx: 11
+			})
 		}
 		if (tick.bottomLabel !== "") {
-			svg += `<text x="${x}" y="${yPosAxis + 25}" class="label-bottom" text-anchor="middle">${tick.bottomLabel}</text>`
+			canvas.drawText({
+				x: x,
+				y: yPosAxis + 25,
+				text: tick.bottomLabel,
+				anchor: "middle",
+				fontWeight: theme.font.weight.bold
+			})
 		}
 	}
 
@@ -228,7 +208,10 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 		for (const segment of segments) {
 			const startX = toSvgX(segment.start)
 			const endX = toSvgX(segment.end)
-			svg += `<line x1="${startX}" y1="${yPosAxis}" x2="${endX}" y2="${yPosAxis}" stroke="${segment.color}" stroke-width="5"/>`
+			canvas.drawLine(startX, yPosAxis, endX, yPosAxis, {
+				stroke: segment.color,
+				strokeWidth: 5
+			})
 		}
 	}
 
@@ -244,7 +227,10 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 		for (const group of model.cellGroups) {
 			for (let i = 0; i < group.count; i++) {
 				const cellX = padding.left + cellCounter * cellWidth
-				svg += `<rect x="${cellX}" y="${modelY}" width="${cellWidth}" height="${modelHeight}" fill="${group.color}" fill-opacity="${theme.opacity.overlayLow}"/>`
+				canvas.drawRect(cellX, modelY, cellWidth, modelHeight, {
+					fill: group.color,
+					fillOpacity: Number.parseFloat(theme.opacity.overlayLow)
+				})
 				cellCounter++
 			}
 		}
@@ -252,7 +238,11 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 		// Render cell borders on top for a clean look
 		currentX = padding.left
 		for (let i = 0; i < model.totalCells; i++) {
-			svg += `<rect x="${currentX}" y="${modelY}" width="${cellWidth}" height="${modelHeight}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+			canvas.drawRect(currentX, modelY, cellWidth, modelHeight, {
+				fill: "none",
+				stroke: theme.colors.black,
+				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			})
 			currentX += cellWidth
 		}
 
@@ -261,13 +251,31 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 			const bracketY = modelY - 15
 			const bracketStartX = padding.left
 			const bracketEndX = padding.left + chartWidth
-			svg += `<line x1="${bracketStartX}" y1="${bracketY + 5}" x2="${bracketStartX}" y2="${bracketY - 5}" stroke="${theme.colors.black}"/>`
-			svg += `<line x1="${bracketStartX}" y1="${bracketY}" x2="${bracketEndX}" y2="${bracketY}" stroke="${theme.colors.black}"/>`
-			svg += `<line x1="${bracketEndX}" y1="${bracketY + 5}" x2="${bracketEndX}" y2="${bracketY - 5}" stroke="${theme.colors.black}"/>`
-			svg += `<text x="${width / 2}" y="${bracketY - 8}" class="model-label" text-anchor="middle">${model.bracketLabel}</text>`
+			canvas.drawLine(bracketStartX, bracketY + 5, bracketStartX, bracketY - 5, {
+				stroke: theme.colors.black,
+				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			})
+			canvas.drawLine(bracketStartX, bracketY, bracketEndX, bracketY, {
+				stroke: theme.colors.black,
+				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			})
+			canvas.drawLine(bracketEndX, bracketY + 5, bracketEndX, bracketY - 5, {
+				stroke: theme.colors.black,
+				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			})
+			canvas.drawText({
+				x: width / 2,
+				y: bracketY - 8,
+				text: model.bracketLabel,
+				anchor: "middle",
+				fontPx: 13,
+				fontWeight: theme.font.weight.bold
+			})
 		}
 	}
 
-	svg += "</svg>"
-	return svg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

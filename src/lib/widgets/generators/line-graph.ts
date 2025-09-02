@@ -2,12 +2,12 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
+import { setupCoordinatePlaneBaseV2 } from "@/lib/widgets/utils/coordinate-plane-utils"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { computeDynamicWidth, includePointX, includeText, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
-import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 export const ErrMismatchedDataLength = errors.new("series data must have the same length as x-axis categories")
 
@@ -100,131 +100,158 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	}
 
 	// Use V2 base for left axis only (dual Y-axis not supported in V2 yet)
-	const base = generateCoordinatePlaneBaseV2(
-		width,
-		height,
-		title,
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
+	const baseInfo = setupCoordinatePlaneBaseV2(
 		{
-			xScaleType: "categoryPoint", // Set the scale type
-			label: xAxis.label,
-			categories: xAxis.categories.map(cat => abbreviateMonth(cat)), // This is now type-checked
-			showGridLines: false,
-			showTickLabels: true
+			width,
+			height,
+			title,
+			xAxis: {
+				xScaleType: "categoryPoint",
+				label: xAxis.label,
+				categories: xAxis.categories.map((cat) => abbreviateMonth(cat)),
+				showGridLines: false,
+				showTickLabels: true
+			},
+			yAxis: {
+				label: yAxis.label,
+				min: yAxis.min,
+				max: yAxis.max,
+				tickInterval: yAxis.tickInterval,
+				showGridLines: yAxis.showGridLines,
+				showTickLabels: true
+			}
 		},
-		{
-			label: yAxis.label,
-			min: yAxis.min,
-			max: yAxis.max,
-			tickInterval: yAxis.tickInterval,
-			showGridLines: yAxis.showGridLines,
-			showTickLabels: true
-		}
+		canvas
 	)
 
 	// Handle right Y-axis manually if present
-	let rightAxisContent = ""
 	let toSvgYRight = (_val: number) => 0
 	if (yAxisRight) {
-		const rightAxisX = base.chartArea.left + base.chartArea.width
+		const rightAxisX = baseInfo.chartArea.left + baseInfo.chartArea.width
 		toSvgYRight = (val: number) => {
 			const frac = (val - yAxisRight.min) / (yAxisRight.max - yAxisRight.min)
-			return base.chartArea.top + base.chartArea.height - frac * base.chartArea.height
+			return baseInfo.chartArea.top + baseInfo.chartArea.height - frac * baseInfo.chartArea.height
 		}
-		
-		rightAxisContent += `<line x1="${rightAxisX}" y1="${base.chartArea.top}" x2="${rightAxisX}" y2="${base.chartArea.top + base.chartArea.height}" stroke="${theme.colors.axis}" stroke-width="1.5"/>`
-		
+
+		canvas.drawLine(
+			rightAxisX,
+			baseInfo.chartArea.top,
+			rightAxisX,
+			baseInfo.chartArea.top + baseInfo.chartArea.height,
+			{
+				stroke: theme.colors.axis,
+				strokeWidth: 1.5
+			}
+		)
+
 		for (let t = yAxisRight.min; t <= yAxisRight.max; t += yAxisRight.tickInterval) {
 			const y = toSvgYRight(t)
-			rightAxisContent += `<line x1="${rightAxisX}" y1="${y}" x2="${rightAxisX + 5}" y2="${y}" stroke="${theme.colors.axis}" stroke-width="1.5"/>`
-			rightAxisContent += `<text x="${rightAxisX + 10}" y="${y + 4}" text-anchor="start" font-size="12px">${t}</text>`
-			includeText(base.ext, rightAxisX + 10, String(t), "start", 7)
+			canvas.drawLine(rightAxisX, y, rightAxisX + 5, y, {
+				stroke: theme.colors.axis,
+				strokeWidth: 1.5
+			})
+			canvas.drawText({
+				x: rightAxisX + 10,
+				y: y + 4,
+				text: String(t),
+				anchor: "start",
+				fontPx: 12
+			})
 		}
-		
-		const yCenter = base.chartArea.top + base.chartArea.height / 2
+
+		const yCenter = baseInfo.chartArea.top + baseInfo.chartArea.height / 2
 		const labelX = rightAxisX + 30
-		rightAxisContent += `<text x="${labelX}" y="${yCenter}" text-anchor="middle" font-size="16px" transform="rotate(-90, ${labelX}, ${yCenter})">${abbreviateMonth(yAxisRight.label)}</text>`
-		includeText(base.ext, labelX, abbreviateMonth(yAxisRight.label), "middle", 7)
+		canvas.drawText({
+			x: labelX,
+			y: yCenter,
+			text: abbreviateMonth(yAxisRight.label),
+			anchor: "middle",
+			fontPx: 16,
+			rotate: { angle: -90, cx: labelX, cy: yCenter }
+		})
 	}
 
 	// Use axis engine's toSvgX for positioning (no manual stepX calculation)
-	const toSvgX = (index: number) => base.toSvgX(index)
+	const toSvgX = (index: number) => baseInfo.toSvgX(index)
 
-	// Separate clipped polylines from unclipped markers
-	let clippedContent = ""
-	let unclippedContent = ""
-	
+	// Draw series polylines within the clipped region
+	canvas.drawInClippedRegion((clippedCanvas) => {
+		for (const s of series) {
+			const toSvgY = s.yAxis === "right" ? toSvgYRight : baseInfo.toSvgY
+			const points = s.values.map((v, i) => ({ x: toSvgX(i), y: toSvgY(v) }))
+
+			// Draw polyline
+			let dash: string | undefined
+			if (s.style === "dashed") dash = "8 4"
+			if (s.style === "dotted") dash = "2 6"
+			clippedCanvas.drawPolyline(points, {
+				stroke: s.color,
+				strokeWidth: Number.parseFloat(theme.stroke.width.xthick),
+				dash: dash
+			})
+		}
+	})
+
+	// Render data point markers on the main canvas (unclipped)
 	for (const s of series) {
-		const toSvgY = s.yAxis === "right" ? toSvgYRight : base.toSvgY
-		const pointsStr = s.values.map((v, i) => `${toSvgX(i)},${toSvgY(v)}`).join(" ")
-
-		s.values.forEach((_, i) => {
-			includePointX(base.ext, toSvgX(i))
-		})
-
-		// Polyline goes in clipped content
-		let dasharray = ""
-		if (s.style === "dashed") dasharray = 'stroke-dasharray="8 4"'
-		if (s.style === "dotted") dasharray = 'stroke-dasharray="2 6"'
-		clippedContent += `<polyline points="${pointsStr}" fill="none" stroke="${s.color}" stroke-width="${theme.stroke.width.xthick}" ${dasharray}/>`
-
-		// Data point markers go in unclipped content to prevent being cut off at boundaries
+		const toSvgY = s.yAxis === "right" ? toSvgYRight : baseInfo.toSvgY
 		for (const [i, v] of s.values.entries()) {
 			const cx = toSvgX(i)
 			const cy = toSvgY(v)
 			if (s.pointShape === "circle") {
-				unclippedContent += `<circle cx="${cx}" cy="${cy}" r="${theme.geometry.pointRadius.base}" fill="${s.color}"/>`
+				canvas.drawCircle(cx, cy, Number.parseFloat(theme.geometry.pointRadius.base), {
+					fill: s.color
+				})
 			} else if (s.pointShape === "square") {
-				unclippedContent += `<rect x="${cx - 4}" y="${cy - 4}" width="8" height="8" fill="${s.color}"/>`
+				canvas.drawRect(cx - 4, cy - 4, 8, 8, {
+					fill: s.color
+				})
 			}
 		}
 	}
 
 	// Legend content
-	let legendContent = ""
 	if (showLegend) {
 		const legendItemHeight = 18
 		const legendLineLength = 30
-		const legendGapX = 8
 		const estimateTextWidth = (text: string) => text.length * 7
 		const maxTextWidth = Math.max(...series.map((s) => estimateTextWidth(s.name)))
-		const legendBoxWidth = legendLineLength + 12 + legendGapX + maxTextWidth
+		const legendBoxWidth = legendLineLength + 12 + 8 + maxTextWidth
 
 		let legendStartX = (width - legendBoxWidth) / 2
 		if (legendStartX < 10) legendStartX = 10
 
-		const legendStartY = base.chartArea.top + base.chartArea.height + 50
+		const legendStartY = baseInfo.chartArea.top + baseInfo.chartArea.height + 50
 
-		series.forEach((s, idx) => {
-			const y = legendStartY + idx * legendItemHeight
-			const x1 = legendStartX
-			const x2 = legendStartX + legendLineLength
-			const markerCx = x1 + legendLineLength / 2
-			const textX = x2 + legendGapX + 12
-
-			let dash = ""
-			if (s.style === "dashed") dash = ' stroke-dasharray="8 4"'
-			if (s.style === "dotted") dash = ' stroke-dasharray="2 6"'
-			legendContent += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${s.color}" stroke-width="${theme.stroke.width.xthick}"${dash}/>`
-			if (s.pointShape === "circle") {
-				legendContent += `<circle cx="${markerCx}" cy="${y}" r="${theme.geometry.pointRadius.base}" fill="${s.color}"/>`
-			} else if (s.pointShape === "square") {
-				legendContent += `<rect x="${markerCx - 4}" y="${y - 4}" width="8" height="8" fill="${s.color}"/>`
-			}
-			legendContent += `<text x="${textX}" y="${y + 4}">${s.name}</text>`
-			includeText(base.ext, textX, s.name, "start", 7)
+		canvas.drawLegendBlock({
+			startX: legendStartX,
+			startY: legendStartY,
+			rowGapPx: legendItemHeight - 12,
+			rows: series.map((s) => {
+				let dash: string | undefined
+				if (s.style === "dashed") dash = "8 4"
+				if (s.style === "dotted") dash = "2 6"
+				return {
+					label: s.name,
+					sample: {
+						stroke: s.color,
+						strokeWidth: Number.parseFloat(theme.stroke.width.xthick),
+						dash: dash,
+						marker: s.pointShape
+					}
+				}
+			})
 		})
 	}
 
-	let svgBody = base.svgBody
-	svgBody += rightAxisContent
-	svgBody += wrapInClippedGroup(base.clipId, clippedContent)
-	svgBody += unclippedContent // Add unclipped markers
-	svgBody += legendContent
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(AXIS_VIEWBOX_PADDING)
 
-	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, totalHeight, AXIS_VIEWBOX_PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">` +
-		svgBody +
-		`</svg>`
-	return finalSvg
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

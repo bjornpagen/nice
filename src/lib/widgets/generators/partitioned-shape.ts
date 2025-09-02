@@ -2,9 +2,10 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, initExtents } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidPartitionGeometry = errors.new("invalid partition geometry")
@@ -229,8 +230,11 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 	const totalWidth = layout === "horizontal" ? shapes.length * shapeWidth + (shapes.length - 1) * gap : shapeWidth
 	const totalHeight = layout === "vertical" ? shapes.length * shapeHeight + (shapes.length - 1) * gap : shapeHeight
 
-	const ext = initExtents(totalWidth)
-	let svgBody = ""
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width: totalWidth, height: totalHeight },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	shapes.forEach((s, idx) => {
 		const xOffset = layout === "horizontal" ? idx * (shapeWidth + gap) : 0
@@ -256,28 +260,37 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 				const rectX = xOffset + col * cellW
 				const rectY = yOffset + row * cellH
 
-				// Track the horizontal extent of the rectangle
-				includePointX(ext, rectX)
-				includePointX(ext, rectX + cellW)
+				// Canvas automatically tracks extents
 
-				svgBody += `<rect x="${rectX}" y="${rectY}" width="${cellW}" height="${cellH}" fill="${fill}" fill-opacity="${opacity}" stroke="${theme.colors.border}" stroke-width="${theme.stroke.width.thin}"/>`
+				canvas.drawRect(rectX, rectY, cellW, cellH, {
+					fill,
+					fillOpacity: opacity,
+					stroke: theme.colors.border,
+					strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+				})
 
 				if (isHatched) {
 					const cellId = `hatch-${idx}-${i}`
-					svgBody += `<defs><pattern id="${cellId}" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
-						<rect width="2" height="4" fill="${theme.colors.textSecondary}" opacity="${theme.opacity.overlayHigh}"/>
-					</pattern></defs>`
-					svgBody += `<rect x="${rectX}" y="${rectY}" width="${cellW}" height="${cellH}" fill="url(#${cellId})" stroke="${theme.colors.border}" stroke-width="${theme.stroke.width.thin}"/>`
+					canvas.addHatchPattern({
+						id: cellId,
+						color: theme.colors.textSecondary,
+						strokeWidth: 2,
+						spacing: 4,
+						angleDeg: 45
+					})
+					canvas.drawRect(rectX, rectY, cellW, cellH, {
+						fill: `url(#${cellId})`,
+						stroke: theme.colors.border,
+						strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+					})
 				}
 			}
 		} else if (s.type === "circle") {
 			const cx = xOffset + shapeWidth / 2
 			const cy = yOffset + shapeHeight / 2
 			const r = Math.min(shapeWidth, shapeHeight) / 2 - 5
-			
-			// Track the horizontal extent of the circle
-			includePointX(ext, cx - r)
-			includePointX(ext, cx + r)
+
+			// Canvas automatically tracks extents
 			const angleStep = 360 / s.totalParts
 
 			const shadedSet = new Set(s.shadedCells)
@@ -288,7 +301,7 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 				const endAngle = (i + 1) * angleStep - 90
 				const startRad = rad(startAngle)
 				const endRad = rad(endAngle)
-				const largeArc = angleStep > 180 ? 1 : 0
+				const largeArc: 0 | 1 = angleStep > 180 ? 1 : 0
 				const isShaded = shadedSet.has(i)
 				const isHatched = hatchedSet.has(i)
 
@@ -300,14 +313,29 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 				const x2 = cx + r * Math.cos(endRad)
 				const y2 = cy + r * Math.sin(endRad)
 
-				svgBody += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${fill}" fill-opacity="${opacity}" stroke="${theme.colors.border}" stroke-width="${theme.stroke.width.thin}"/>`
+				const sectorPath = new Path2D().moveTo(cx, cy).lineTo(x1, y1).arcTo(r, r, 0, largeArc, 1, x2, y2).closePath()
 
 				if (isHatched) {
 					const cellId = `hatch-circle-${idx}-${i}`
-					svgBody += `<defs><pattern id="${cellId}" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
-						<rect width="2" height="4" fill="${theme.colors.textSecondary}" opacity="${theme.opacity.overlayHigh}"/>
-					</pattern></defs>`
-					svgBody += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="url(#${cellId})" stroke="${theme.colors.border}" stroke-width="${theme.stroke.width.thin}"/>`
+					canvas.addHatchPattern({
+						id: cellId,
+						color: theme.colors.textSecondary,
+						strokeWidth: 2,
+						spacing: 4,
+						angleDeg: 45
+					})
+					canvas.drawPath(sectorPath, {
+						fill: `url(#${cellId})`,
+						stroke: theme.colors.border,
+						strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+					})
+				} else {
+					canvas.drawPath(sectorPath, {
+						fill: fill,
+						fillOpacity: opacity,
+						stroke: theme.colors.border,
+						strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+					})
 				}
 			}
 		}
@@ -333,22 +361,28 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 					strokeDasharray = theme.stroke.dasharray.dotted
 				}
 
-				svgBody += `<line x1="${fromX}" y1="${fromY}" x2="${toX}" y2="${toY}" stroke="${line.color}" stroke-width="${theme.stroke.width.thick}" stroke-dasharray="${strokeDasharray}"/>`
+				canvas.drawLine(fromX, fromY, toX, toY, {
+					stroke: line.color,
+					strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+					dash: strokeDasharray
+				})
 			}
 		}
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, totalHeight, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg">${svgBody}</svg>`
 }
 
 const generateGeometryView = (props: GeometryModeProps): string => {
 	const { width, height, grid, figures, lines } = props
-	const ext = initExtents(width)
-	let svgBody = ""
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	const cellWidth = width / grid.columns
 	const cellHeight = height / grid.rows
@@ -365,27 +399,31 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 	// Vertical lines
 	for (let col = 0; col <= grid.columns; col++) {
 		const x = col * cellWidth
-		svgBody += `<line x1="${x}" y1="0" x2="${x}" y2="${height}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thin}" opacity="${grid.opacity}"/>`
+		canvas.drawLine(x, 0, x, height, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thin),
+			opacity: grid.opacity
+		})
 	}
 	// Horizontal lines
 	for (let row = 0; row <= grid.rows; row++) {
 		const y = row * cellHeight
-		svgBody += `<line x1="0" y1="${y}" x2="${width}" y2="${y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thin}" opacity="${grid.opacity}"/>`
+		canvas.drawLine(0, y, width, y, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thin),
+			opacity: grid.opacity
+		})
 	}
 
 	// 2. Draw figures
 	for (const fig of figures) {
 		const pixelPoints = fig.vertices.map((p) => gridToPixel(p))
-		
-		// Track the x-extents of all vertices
-		pixelPoints.forEach((pixel) => {
-			includePointX(ext, pixel.x)
+
+		canvas.drawPolygon(pixelPoints, {
+			fill: fig.fillColor ?? "none",
+			stroke: fig.strokeColor ?? theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
 		})
-		
-		const pointsStr = pixelPoints
-			.map((pixel) => `${pixel.x},${pixel.y}`)
-			.join(" ")
-		svgBody += `<polygon points="${pointsStr}" fill="${fig.fillColor ?? "none"}" stroke="${fig.strokeColor ?? theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
 	}
 
 	// 3. Draw lines
@@ -400,14 +438,17 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 			strokeDasharray = theme.stroke.dasharray.dotted
 		}
 
-		svgBody += `<line x1="${fromPixel.x}" y1="${fromPixel.y}" x2="${toPixel.x}" y2="${toPixel.y}" stroke="${line.color}" stroke-width="${theme.stroke.width.thick}" stroke-dasharray="${strokeDasharray}"/>`
+		canvas.drawLine(fromPixel.x, fromPixel.y, toPixel.x, toPixel.y, {
+			stroke: line.color,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+			dash: strokeDasharray
+		})
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg">${svgBody}</svg>`
 }
 
 // MODIFIED: The main generator function is now a switcher

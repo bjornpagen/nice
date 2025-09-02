@@ -1,10 +1,10 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
+import { setupCoordinatePlaneBaseV2 } from "@/lib/widgets/utils/coordinate-plane-utils"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
-import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
 
 // Factory functions to avoid schema instance reuse which causes $ref in JSON Schema
 function createPointSchema() {
@@ -77,47 +77,61 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 	const maxY = Math.max(...allPoints.map((p) => p.y))
 
 	// Use V2 base with conceptual (non-numeric) axes
-	const base = generateCoordinatePlaneBaseV2(
-		width,
-		height,
-		null, // No title for conceptual graphs
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
+	const baseInfo = setupCoordinatePlaneBaseV2(
 		{
-			xScaleType: "numeric", // Set the scale type
-			label: xAxisLabel,
-			min: minX, // Required for numeric
-			max: maxX, // Required for numeric
-			tickInterval: (maxX - minX) / 4, // Arbitrary spacing, required for numeric
-			showGridLines: false,
-			showTickLabels: false, // Conceptual, no numeric labels
-			showTicks: false
+			width,
+			height,
+			title: null, // No title for conceptual graphs
+			xAxis: {
+				xScaleType: "numeric",
+				label: xAxisLabel,
+				min: minX,
+				max: maxX,
+				tickInterval: (maxX - minX) / 4, // Arbitrary spacing
+				showGridLines: false,
+				showTickLabels: false, // Conceptual, no numeric labels
+				showTicks: false
+			},
+			yAxis: {
+				label: yAxisLabel,
+				min: minY,
+				max: maxY,
+				tickInterval: (maxY - minY) / 4, // Arbitrary spacing
+				showGridLines: false,
+				showTickLabels: false, // Conceptual, no numeric labels
+				showTicks: false
+			}
 		},
-		{
-			label: yAxisLabel,
-			min: minY,
-			max: maxY,
-			tickInterval: (maxY - minY) / 4, // Arbitrary spacing
-			showGridLines: false,
-			showTickLabels: false, // Conceptual, no numeric labels
-			showTicks: false
-		}
+		canvas
 	)
 
 	// Add arrow markers (outside clipped area)
-	let arrows = `<defs><marker id="graph-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}"/></marker></defs>`
+	canvas.addDef(
+		`<marker id="graph-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}"/></marker>`
+	)
 
-	const yAxisX = base.chartArea.left
-	const xAxisY = base.chartArea.top + base.chartArea.height
-	arrows += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${yAxisX}" y2="${base.chartArea.top}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}" marker-end="url(#graph-arrow)"/>`
-	arrows += `<line x1="${yAxisX}" y1="${xAxisY}" x2="${base.chartArea.left + base.chartArea.width}" y2="${xAxisY}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}" marker-end="url(#graph-arrow)"/>`
-	includePointX(base.ext, base.chartArea.left + base.chartArea.width)
-
-	// Separate clipped geometry from unclipped markers and labels
-	let clippedContent = ""
-	let unclippedContent = ""
+	const yAxisX = baseInfo.chartArea.left
+	const xAxisY = baseInfo.chartArea.top + baseInfo.chartArea.height
+	canvas.drawLine(yAxisX, xAxisY, yAxisX, baseInfo.chartArea.top, {
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+		markerEnd: "url(#graph-arrow)"
+	})
+	canvas.drawLine(yAxisX, xAxisY, baseInfo.chartArea.left + baseInfo.chartArea.width, xAxisY, {
+		stroke: theme.colors.axis,
+		strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+		markerEnd: "url(#graph-arrow)"
+	})
 
 	// Track vertical extents for unclipped content so we can grow the viewBox vertically
 	let minYExtent = 0
-	let maxYExtent = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
+	let maxYExtent = baseInfo.chartArea.top + baseInfo.chartArea.height + 60
 	function includeCircleY(cy: number, r: number) {
 		minYExtent = Math.min(minYExtent, cy - r)
 		maxYExtent = Math.max(maxYExtent, cy + r)
@@ -127,13 +141,17 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 		minYExtent = Math.min(minYExtent, cy - half)
 		maxYExtent = Math.max(maxYExtent, cy + half)
 	}
-	
-	// Main curve goes in clipped content
-	const pointsStr = curvePoints.map((p) => `${base.toSvgX(p.x)},${base.toSvgY(p.y)}`).join(" ")
-	clippedContent += `<polyline points="${pointsStr}" fill="none" stroke="${curveColor}" stroke-width="${theme.stroke.width.xxthick}" stroke-linejoin="round" stroke-linecap="round"/>`
-	for (const p of curvePoints) {
-		includePointX(base.ext, base.toSvgX(p.x))
-	}
+
+	// Main curve goes in the clipped region
+	canvas.drawInClippedRegion((clippedCanvas) => {
+		const polylinePoints = curvePoints.map((p) => ({ x: baseInfo.toSvgX(p.x), y: baseInfo.toSvgY(p.y) }))
+		clippedCanvas.drawPolyline(polylinePoints, {
+			stroke: curveColor,
+			strokeWidth: Number.parseFloat(theme.stroke.width.xxthick),
+			strokeLinejoin: "round",
+			strokeLinecap: "round"
+		})
+	})
 
 	// Precompute cumulative lengths and provide a safe pointAtT
 	const cumulativeLengths: number[] = [0]
@@ -177,29 +195,28 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 	// Highlight points and labels go in unclipped content to prevent being cut off at boundaries
 	for (const hp of highlightPoints) {
 		const pt = pointAtT(hp.t)
-		const cx = base.toSvgX(pt.x)
-		const cy = base.toSvgY(pt.y)
-		includePointX(base.ext, cx)
-		unclippedContent += `<circle cx="${cx}" cy="${cy}" r="${highlightPointRadius}" fill="${highlightPointColor}"/>`
-		unclippedContent += `<text x="${cx - highlightPointRadius - 5}" y="${cy}" text-anchor="end" dominant-baseline="middle" font-weight="${theme.font.weight.bold}" font-size="${theme.font.size.medium}">${hp.label}</text>`
-		includeText(base.ext, cx - highlightPointRadius - 5, hp.label, "end", 7)
+		const cx = baseInfo.toSvgX(pt.x)
+		const cy = baseInfo.toSvgY(pt.y)
+		canvas.drawCircle(cx, cy, highlightPointRadius, {
+			fill: highlightPointColor
+		})
+		canvas.drawText({
+			x: cx - highlightPointRadius - 5,
+			y: cy,
+			text: hp.label,
+			anchor: "end",
+			dominantBaseline: "middle",
+			fontWeight: theme.font.weight.bold,
+			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", ""))
+		})
 		// Include vertical extents for the circle and label (dominant-baseline=middle)
 		includeCircleY(cy, highlightPointRadius)
 		const fontPx = Number.parseInt(theme.font.size.medium, 10)
 		includeTextY(cy, fontPx)
 	}
 
-	let svgBody = base.svgBody
-	svgBody += arrows
-	svgBody += wrapInClippedGroup(base.clipId, clippedContent)
-	svgBody += unclippedContent // Add unclipped markers and labels
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(AXIS_VIEWBOX_PADDING)
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, base.chartArea.top + base.chartArea.height + base.outsideBottomPx, AXIS_VIEWBOX_PADDING)
-	// Compute vertical viewBox adjustments based on unclipped content extents
-	const vbMinY = Math.min(0, Math.floor(minYExtent - AXIS_VIEWBOX_PADDING))
-	const dynamicHeight = Math.max(1, Math.ceil(maxYExtent + AXIS_VIEWBOX_PADDING) - vbMinY)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${dynamicHeight}" viewBox="${vbMinX} ${vbMinY} ${dynamicWidth} ${dynamicHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.large}">` +
-		svgBody +
-		`</svg>`
-	return finalSvg
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.large}">${svgBody}</svg>`
 }

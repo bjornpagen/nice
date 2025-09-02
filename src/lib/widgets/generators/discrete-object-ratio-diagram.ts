@@ -1,9 +1,9 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { calculateTitleLayout, computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
-import { renderWrappedText } from "@/lib/widgets/utils/text"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
+import { calculateTitleLayout } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 
 // Defines a type of object to be rendered
@@ -75,18 +75,19 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 	data
 ) => {
 	const { width, height, objects, layout, title } = data
-	
+
 	// Use dynamic layout for title and top margin
 	const { titleY, topMargin } = calculateTitleLayout(title ?? undefined, width - 40)
 	const padding = { top: topMargin, right: PADDING, bottom: PADDING, left: PADDING }
-	
+
 	const chartWidth = width - padding.left - padding.right
 	const chartHeight = height - padding.top - padding.bottom
 
-	const ext = initExtents(width)
-	let svgContent = ""
-
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">`
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	// Add a clean background container with rounded corners and subtle border
 	const containerPadding = 10
@@ -95,26 +96,40 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 	const containerWidth = chartWidth + 2 * containerPadding
 	const containerHeight = chartHeight + 2 * containerPadding
 
-	let containerRect = `<rect x="${containerX}" y="${containerY}" width="${containerWidth}" height="${containerHeight}" fill="${theme.colors.background}" stroke="${theme.colors.border}" stroke-width="${theme.stroke.width.thick}" rx="8" ry="8"/>`
+	// Draw container background using Canvas API
+	canvas.drawRect(containerX, containerY, containerWidth, containerHeight, {
+		fill: theme.colors.background,
+		stroke: theme.colors.border,
+		strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+	})
 
-	// Use renderWrappedText for the title
-	let titleContent = ""
+	// Draw the title using Canvas API
 	if (title !== null) {
-		titleContent = renderWrappedText(abbreviateMonth(title), width / 2, titleY, "title", "1.1em", width - 40, 8)
-		// Track the title text
-		includeText(ext, width / 2, abbreviateMonth(title), "middle", 8)
+		canvas.drawWrappedText({
+			x: width / 2,
+			y: titleY,
+			text: abbreviateMonth(title),
+			maxWidthPx: width - 40,
+			anchor: "middle",
+			fontPx: Number.parseFloat(theme.font.size.base) * 1.1
+		})
 	}
 
 	const iconSize = 28 // Larger for better emoji visibility
 	const iconPadding = 8 // More breathing room
 	const step = iconSize + iconPadding
 
-	// Function to draw emojis with better positioning
+	// Function to draw emojis with better positioning using Canvas API
 	const drawIcon = (x: number, y: number, emoji: string) => {
-		includePointX(ext, x)
-		includePointX(ext, x + iconSize)
 		const fontSize = iconSize * 0.9 // Better emoji sizing
-		return `<text x="${x + iconSize / 2}" y="${y + iconSize / 2}" font-size="${fontSize}" text-anchor="middle" dominant-baseline="central">${emoji}</text>`
+		canvas.drawText({
+			x: x + iconSize / 2,
+			y: y + iconSize / 2,
+			text: emoji,
+			fontPx: fontSize,
+			anchor: "middle",
+			dominantBaseline: "middle"
+		})
 	}
 
 	let currentX = padding.left
@@ -127,7 +142,7 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 					currentX = padding.left
 					currentY += step
 				}
-				svgContent += drawIcon(currentX, currentY, obj.emoji)
+				drawIcon(currentX, currentY, obj.emoji)
 				currentX += step
 			}
 		}
@@ -145,18 +160,14 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 					currentX = startX
 					currentY += step
 				}
-				svgContent += drawIcon(currentX, currentY, obj.emoji)
+				drawIcon(currentX, currentY, obj.emoji)
 				currentX += step
 			}
 		}
 	}
 
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
 
-	svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">`
-	svg += containerRect
-	svg += titleContent
-	svg += svgContent
-	svg += "</svg>"
-	return svg
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.medium}">${svgBody}</svg>`
 }

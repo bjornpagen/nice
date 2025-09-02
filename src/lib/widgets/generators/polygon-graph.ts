@@ -1,15 +1,15 @@
 import { z } from "zod"
+import type { WidgetGenerator } from "@/lib/widgets/types"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import {
 	createAxisOptionsSchema,
 	createPlotPointSchema,
 	createPolygonSchema,
-	generateCoordinatePlaneBase,
 	renderPoints,
 	renderPolygons
-} from "@/lib/widgets/generators/coordinate-plane-base"
-import type { WidgetGenerator } from "@/lib/widgets/types"
+} from "@/lib/widgets/utils/canvas-utils"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
+import { setupCoordinatePlaneV2 } from "@/lib/widgets/utils/coordinate-plane-v2"
 import { theme } from "@/lib/widgets/utils/theme"
 
 export const PolygonGraphPropsSchema = z
@@ -62,39 +62,44 @@ export const generatePolygonGraph: WidgetGenerator<typeof PolygonGraphPropsSchem
 	const { width, height, xAxis, yAxis, showQuadrantLabels, points, polygons } = props
 
 	// 1. Call the base generator and get the body content and extents object
-	const base = generateCoordinatePlaneBase(width, height, xAxis, yAxis, showQuadrantLabels, points)
-	
-	// 2. Separate clipped polygons from unclipped points
-	let clippedContent = ""
-	let unclippedContent = ""
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
-	// Render polygons in clipped content (geometry)
-	clippedContent += renderPolygons(polygons, base.pointMap, base.toSvgX, base.toSvgY, base.ext)
+	const baseInfo = setupCoordinatePlaneV2(
+		{
+			width,
+			height,
+			xAxis: {
+				label: xAxis.label,
+				min: xAxis.min,
+				max: xAxis.max,
+				tickInterval: xAxis.tickInterval,
+				showGridLines: xAxis.showGridLines
+			},
+			yAxis: {
+				label: yAxis.label,
+				min: yAxis.min,
+				max: yAxis.max,
+				tickInterval: yAxis.tickInterval,
+				showGridLines: yAxis.showGridLines
+			},
+			showQuadrantLabels: true
+		},
+		canvas
+	)
 
-	// Render points in unclipped content (foreground) to prevent being cut off at boundaries
-	unclippedContent += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
+	// Create point map for ID resolution
+	const pointMap = new Map(points.map((pt) => [pt.id, pt]))
 
-	// 3. Compute final width and assemble the complete SVG (ensure clipPath defs appear before usage)
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, PADDING)
-	let finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
+	// Render elements using Canvas API
+	renderPolygons(polygons, pointMap, baseInfo.toSvgX, baseInfo.toSvgY, canvas)
+	renderPoints(points, baseInfo.toSvgX, baseInfo.toSvgY, canvas)
 
-	// Extract <defs> containing the chartArea clip path so we can reference it before usage
-	const defsStart = base.svgBody.indexOf("<defs>")
-	const defsEnd = base.svgBody.indexOf("</defs>")
-	let defs = ""
-	let bodyWithoutDefs = base.svgBody
-	if (defsStart !== -1 && defsEnd !== -1 && defsEnd > defsStart) {
-		const endIdx = defsEnd + "</defs>".length
-		defs = base.svgBody.slice(defsStart, endIdx)
-		bodyWithoutDefs = base.svgBody.slice(0, defsStart) + base.svgBody.slice(endIdx)
-	}
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
 
-	// Place defs first, then geometry (clipped), then remaining axes/labels, finally points
-	finalSvg += defs
-	finalSvg += wrapInClippedGroup("chartArea", clippedContent)
-	finalSvg += bodyWithoutDefs
-	finalSvg += unclippedContent
-	finalSvg += `</svg>`
-
-	return finalSvg
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

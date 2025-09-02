@@ -2,15 +2,10 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import {
-	calculateTextAwareLabelSelection,
-	computeDynamicWidth,
-	includePointX,
-	includeText,
-	initExtents,
-} from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { calculateTextAwareLabelSelection } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidRange = errors.new("min must be less than max")
@@ -48,9 +43,14 @@ export type AbsoluteValueNumberLineProps = z.infer<typeof AbsoluteValueNumberLin
  * a distance from zero, perfect for introductory questions on the topic.
  */
 export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteValueNumberLinePropsSchema> = (data) => {
-	const { width, height, min, max, tickInterval, value, highlightColor, showDistanceLabel } = data
+	const { width, min, max, tickInterval, value, highlightColor, showDistanceLabel } = data
 	const absValue = Math.abs(value)
-	
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height: 0 },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
 	const chartWidth = width - PADDING * 2
 
 	if (min >= max) {
@@ -60,20 +60,15 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 
 	const scale = chartWidth / (max - min)
 	const toSvgX = (val: number) => PADDING + (val - min) * scale
-	const yPos = height - PADDING
+	const yPos = 50 // A fixed vertical position within the dynamic canvas
 
-	const zeroPos = toSvgX(0)
-	const valuePos = toSvgX(value)
+	// MODIFIED: Replace svgBody string concatenation with canvas calls
+	canvas.drawLine(PADDING, yPos, width - PADDING, yPos, {
+		stroke: theme.colors.black,
+		strokeWidth: Number.parseFloat(theme.stroke.width.base)
+	})
 
-	const ext = initExtents(width) // Initialize extents tracking
-	let svgBody = ""
-	
-	// Track the main line endpoints
-	includePointX(ext, PADDING)
-	includePointX(ext, width - PADDING)
-	svgBody += `<line x1="${PADDING}" y1="${yPos}" x2="${width - PADDING}" y2="${yPos}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"/>`
-
-	// Ticks and labels with text-aware selection
+	// Ticks and labels with text-aware selection (calculateTextAwareLabelSelection remains)
 	const tickValues: number[] = []
 	const tickPositions: number[] = []
 	for (let t = min; t <= max; t += tickInterval) {
@@ -82,37 +77,47 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	}
 	const tickLabels = tickValues.map(String)
 	const selectedLabels = calculateTextAwareLabelSelection(tickLabels, tickPositions, chartWidth, 8, 5)
-	
+
 	tickValues.forEach((t, i) => {
 		const x = toSvgX(t)
-		includePointX(ext, x)
-		svgBody += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thin}"/>`
+		canvas.drawLine(x, yPos - 5, x, yPos + 5, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+		})
 		if (selectedLabels.has(i)) {
-			svgBody += `<text x="${x}" y="${yPos + 20}" fill="${theme.colors.text}" text-anchor="middle">${t}</text>`
-			includeText(ext, x, String(t), "middle", 8)
+			canvas.drawText({ x, y: yPos + 20, text: String(t), fill: theme.colors.text, anchor: "middle" })
 		}
 	})
 
 	// Distance highlight
-	includePointX(ext, zeroPos)
-	includePointX(ext, valuePos)
-	svgBody += `<line x1="${zeroPos}" y1="${yPos}" x2="${valuePos}" y2="${yPos}" stroke="${highlightColor}" stroke-width="4" stroke-linecap="round"/>`
+	canvas.drawLine(toSvgX(0), yPos, toSvgX(value), yPos, {
+		stroke: highlightColor,
+		strokeWidth: 4,
+		strokeLinecap: "round"
+	})
 
 	// Distance label
 	if (showDistanceLabel) {
-		const labelX = (zeroPos + valuePos) / 2
+		const labelX = (toSvgX(0) + toSvgX(value)) / 2
 		const labelText = `|${value}| = ${absValue}`
-		svgBody += `<text x="${labelX}" y="${yPos - 15}" fill="${theme.colors.text}" text-anchor="middle" font-weight="${theme.font.weight.bold}">${labelText}</text>`
-		includeText(ext, labelX, labelText, "middle", 8)
+		canvas.drawText({
+			x: labelX,
+			y: yPos - 15,
+			text: labelText,
+			fill: theme.colors.text,
+			anchor: "middle",
+			fontWeight: theme.font.weight.bold
+		})
 	}
 
-	includePointX(ext, valuePos)
-	svgBody += `<circle cx="${valuePos}" cy="${yPos}" r="${theme.geometry.pointRadius.large}" fill="${highlightColor}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thin}"/>`
+	canvas.drawCircle(toSvgX(value), yPos, Number.parseFloat(theme.geometry.pointRadius.large), {
+		fill: highlightColor,
+		stroke: theme.colors.black,
+		strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+	})
 
-	// Apply dynamic width at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

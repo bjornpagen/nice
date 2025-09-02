@@ -6,7 +6,7 @@
 export const PADDING = 20
 
 // Default padding for the dynamic viewBox calculation for coordinate plane widgets.
-export const AXIS_VIEWBOX_PADDING = 10
+export const AXIS_VIEWBOX_PADDING = 8
 
 // AXIS HARDWARE CONSTANTS
 export const TICK_LENGTH_PX = 5

@@ -1,110 +1,327 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { estimateWrappedTextDimensions } from "@/lib/widgets/utils/text"
+import type { Path2D } from "./path-builder"
 
-export type Extents = { minX: number; maxX: number }
+// NEW: 2D extents and finalized SVG types
+export type Extents2D = { minX: number; maxX: number; minY: number; maxY: number }
 
-export function initExtents(initialWidth: number): Extents {
-	return { minX: 0, maxX: initialWidth }
+export type FinalizedSvg = {
+	svgBody: string
+	vbMinX: number
+	vbMinY: number
+	width: number
+	height: number
 }
 
-export function approxTextWidth(text: string, avgCharWidthPx = 7): number {
-	return Math.max(0, text.length * avgCharWidthPx)
+// NEW: Options for constructing a Canvas implementation
+export interface CanvasOptions {
+	chartArea: { left: number; top: number; width: number; height: number }
+	fontPxDefault: number
+	lineHeightDefault: number
 }
 
-export function includeText(
-	ext: Extents,
-	absoluteX: number,
-	text: string,
-	anchor: "start" | "middle" | "end",
-	avgCharWidthPx = 7
-): void {
-	const w = approxTextWidth(text, avgCharWidthPx)
-	if (anchor === "start") {
-		ext.maxX = Math.max(ext.maxX, absoluteX + w)
-		ext.minX = Math.min(ext.minX, absoluteX)
-	} else if (anchor === "end") {
-		ext.maxX = Math.max(ext.maxX, absoluteX)
-		ext.minX = Math.min(ext.minX, absoluteX - w)
-	} else {
-		// middle
-		ext.maxX = Math.max(ext.maxX, absoluteX + w / 2)
-		ext.minX = Math.min(ext.minX, absoluteX - w / 2)
-	}
+// --- REMOVED: Legacy type for backward compatibility ---
+// export type Extents = { minX: number; maxX: number }
+
+// NEW: Full Canvas interface as the single source of truth for rendering.
+// Text drawing must account for rotation and baseline when updating extents.
+// All methods append markup and synchronously update shared Extents2D.
+export interface Canvas {
+	// Geometry (clipped rendering region)
+	clipId: string
+	// Scoped clipping method - use this instead of manual SVG string construction
+	drawInClippedRegion(renderFn: (clippedCanvas: Canvas) => void): void
+
+	// Text primitives
+	drawText(opts: {
+		x: number
+		y: number
+		text: string
+		anchor?: "start" | "middle" | "end"
+		dominantBaseline?: "hanging" | "middle" | "baseline"
+		fontPx?: number
+		fontWeight?: "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900"
+		paintOrder?: "stroke fill"
+		stroke?: string
+		strokeWidth?: number
+		fill?: string
+		opacity?: number
+		strokeOpacity?: number
+		fillOpacity?: number
+		transform?: string
+		rotate?: { angle: number; cx: number; cy: number }
+	}): void
+
+	drawWrappedText(opts: {
+		x: number
+		y: number
+		text: string
+		className?: string
+		maxWidthPx: number
+		anchor?: "start" | "middle" | "end"
+		fontPx?: number
+		lineHeight?: number
+		fontWeight?: "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900"
+		paintOrder?: "stroke fill"
+		stroke?: string
+		strokeWidth?: number
+		fill?: string
+		opacity?: number
+		strokeOpacity?: number
+		fillOpacity?: number
+		transform?: string
+		rotate?: { angle: number; cx: number; cy: number }
+	}): void
+
+	// Basic shapes
+	drawLine(
+		x1: number,
+		y1: number,
+		x2: number,
+		y2: number,
+		style: {
+			stroke: string
+			strokeWidth: number
+			dash?: string
+			strokeLinecap?: "butt" | "round" | "square"
+			strokeLinejoin?: "miter" | "round" | "bevel"
+			strokeMiterlimit?: number
+			markerStart?: string
+			markerMid?: string
+			markerEnd?: string
+			opacity?: number
+			strokeOpacity?: number
+			transform?: string
+		}
+	): void
+
+	drawCircle(
+		cx: number,
+		cy: number,
+		r: number,
+		style: {
+			fill?: string
+			stroke?: string
+			strokeWidth?: number
+			dash?: string
+			fillPatternId?: string
+			opacity?: number
+			fillOpacity?: number
+			strokeOpacity?: number
+			transform?: string
+		}
+	): void
+
+	drawRect(
+		x: number,
+		y: number,
+		w: number,
+		h: number,
+		style: {
+			fill?: string
+			stroke?: string
+			strokeWidth?: number
+			dash?: string
+			fillPatternId?: string
+			opacity?: number
+			fillOpacity?: number
+			strokeOpacity?: number
+			transform?: string
+		}
+	): void
+
+	drawEllipse(
+		cx: number,
+		cy: number,
+		rx: number,
+		ry: number,
+		style: {
+			fill?: string
+			stroke?: string
+			strokeWidth?: number
+			dash?: string
+			fillPatternId?: string
+			opacity?: number
+			fillOpacity?: number
+			strokeOpacity?: number
+			transform?: string
+		}
+	): void
+
+	// Complex paths (unclipped)
+	drawPath(
+		path: Path2D,
+		style: {
+			fill?: string
+			stroke?: string
+			strokeWidth?: number
+			dash?: string
+			strokeLinecap?: "butt" | "round" | "square"
+			strokeLinejoin?: "miter" | "round" | "bevel"
+			strokeMiterlimit?: number
+			fillRule?: "nonzero" | "evenodd"
+			markerStart?: string
+			markerMid?: string
+			markerEnd?: string
+			opacity?: number
+			fillOpacity?: number
+			strokeOpacity?: number
+			transform?: string
+		}
+	): void
+
+	// Polygon/polyline convenience (arrays for robust extent tracking)
+	drawPolygon(
+		points: Array<{ x: number; y: number }>,
+		style: {
+			fill?: string
+			stroke?: string
+			strokeWidth?: number
+			dash?: string
+			fillRule?: "nonzero" | "evenodd"
+			strokeLinejoin?: "miter" | "round" | "bevel"
+			strokeMiterlimit?: number
+			opacity?: number
+			fillOpacity?: number
+			strokeOpacity?: number
+			transform?: string
+		}
+	): void
+
+	drawPolyline(
+		points: Array<{ x: number; y: number }>,
+		style: {
+			stroke: string
+			strokeWidth: number
+			dash?: string
+			strokeLinecap?: "butt" | "round" | "square"
+			strokeLinejoin?: "miter" | "round" | "bevel"
+			strokeMiterlimit?: number
+			opacity?: number
+			strokeOpacity?: number
+			transform?: string
+		}
+	): void
+
+	// Complex content
+	drawForeignObject(opts: { x: number; y: number; width: number; height: number; content: string }): void
+
+	// Images
+	drawImage(opts: {
+		x: number
+		y: number
+		width: number
+		height: number
+		href: string
+		preserveAspectRatio?: string
+		opacity?: number
+		transform?: string
+	}): void
+
+	// Legends/blocks
+	drawLegendBlock(opts: {
+		startX: number
+		startY: number
+		rows: Array<{
+			sample: { stroke: string; strokeWidth: number; dash?: string; marker?: "circle" | "square" }
+			label: string
+		}>
+		rowGapPx: number
+		labelFontPx?: number
+		sampleLengthPx?: number
+	}): void
+
+	// Advanced SVG structure utilities
+	addDef(def: string): void // append raw content to <defs>
+	addStyle(cssRules: string): void // append a <style> block to <defs>
+	withTransform(transform: string, renderFn: () => void): void // wrap a <g transform="..."> around renderFn output
+
+	// Patterns and gradients helpers
+	addHatchPattern(opts: { id: string; color: string; strokeWidth: number; spacing?: number; angleDeg?: number }): void
+	addLinearGradient(opts: {
+		id: string
+		stops: Array<{ offset: string; color: string }>
+		x1?: string
+		y1?: string
+		x2?: string
+		y2?: string
+		gradientUnits?: "objectBoundingBox" | "userSpaceOnUse"
+	}): void
+	addRadialGradient(opts: {
+		id: string
+		stops: Array<{ offset: string; color: string }>
+		cx?: string
+		cy?: string
+		r?: string
+		fx?: string
+		fy?: string
+		gradientUnits?: "objectBoundingBox" | "userSpaceOnUse"
+	}): void
+
+	// Finalization: derive final size strictly from tracked Extents2D; never rescale chartArea
+	finalize(padPx: number): FinalizedSvg
 }
 
-export function includePointX(ext: Extents, absoluteX: number): void {
-	ext.maxX = Math.max(ext.maxX, absoluteX)
-	ext.minX = Math.min(ext.minX, absoluteX)
-}
-
-export function computeDynamicWidth(
-	ext: Extents,
-	_height: number,
-	pad = 10
-): { vbMinX: number; vbMaxX: number; dynamicWidth: number } {
-	const vbMinX = Math.min(0, Math.floor(ext.minX - pad))
-	const vbMaxX = Math.max(0, Math.ceil(ext.maxX + pad))
-	const dynamicWidth = Math.max(1, vbMaxX - vbMinX)
-	return { vbMinX, vbMaxX, dynamicWidth }
-}
+// --- REMOVED: All deprecated 1D extent tracking functions ---
+// export function initExtents(initialWidth: number): Extents
+// export function includeText(ext: Extents, absoluteX: number, text: string, anchor: "start" | "middle" | "end", avgCharWidthPx = 7): void
+// export function includePointX(ext: Extents, absoluteX: number): void
+// export function computeDynamicWidth(ext: Extents, _height: number, pad = 10): { vbMinX: number; vbMaxX: number; dynamicWidth: number }
 
 export interface AxisPlacementOptions {
-	axisPlacement: "leftEdge" | "internalZero";
-	titlePadding?: number;
-	tickLength?: number;
-	labelPadding?: number;
-	axisTitleFontPx?: number;
+	axisPlacement: "leftEdge" | "internalZero"
+	titlePadding?: number
+	tickLength?: number
+	labelPadding?: number
+	axisTitleFontPx?: number
 }
 
 export function calculateYAxisLayoutAxisAware(
-  yAxis: { max: number; min: number; tickInterval: number; label: string },
-  xAxis: { min: number; max: number },
-  svgWidth: number,
-  chartHeightPx: number,
-  pads: { top: number; right: number; bottom: number },
-  opts: AxisPlacementOptions
+	yAxis: { max: number; min: number; tickInterval: number; label: string },
+	xAxis: { min: number; max: number },
+	svgWidth: number,
+	chartHeightPx: number,
+	pads: { top: number; right: number; bottom: number },
+	opts: AxisPlacementOptions
 ): { leftMargin: number; yAxisLabelX: number; anchorX: number } {
-	const T = opts.tickLength ?? 5;
-	const LP = opts.labelPadding ?? 8;
-	const TP = opts.titlePadding ?? 12;
-	const TITLE_PX = opts.axisTitleFontPx ?? 16;
+	const T = opts.tickLength ?? 5
+	const LP = opts.labelPadding ?? 8
+	const TP = opts.titlePadding ?? 12
+	const TITLE_PX = opts.axisTitleFontPx ?? 16
 
-	const { height: wrappedTitleHeight } = estimateWrappedTextDimensions(yAxis.label, chartHeightPx, TITLE_PX, 1.1, 8);
+	const { height: wrappedTitleHeight } = estimateWrappedTextDimensions(yAxis.label, chartHeightPx, TITLE_PX, 1.1, 8)
 
-	let maxTickLabelWidth = 0;
+	let maxTickLabelWidth = 0
 	if (yAxis.tickInterval > 0) {
 		for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
-			const s = String(t);
-			maxTickLabelWidth = Math.max(maxTickLabelWidth, s.length * 7); // Heuristic
+			const s = String(t)
+			maxTickLabelWidth = Math.max(maxTickLabelWidth, s.length * 7) // Heuristic
 		}
 	}
 
-	const spaceLeftOfAnchor = T + LP + maxTickLabelWidth + TP + wrappedTitleHeight / 2;
+	const spaceLeftOfAnchor = T + LP + maxTickLabelWidth + TP + wrappedTitleHeight / 2
 
-	const xRange = xAxis.max - xAxis.min;
-	const f =
-		opts.axisPlacement === "internalZero" && xRange > 0
-			? (0 - xAxis.min) / xRange
-			: 0;
+	const xRange = xAxis.max - xAxis.min
+	const f = opts.axisPlacement === "internalZero" && xRange > 0 ? (0 - xAxis.min) / xRange : 0
 
-	let leftMargin: number;
+	let leftMargin: number
 	if (f >= 1) {
-		leftMargin = Math.ceil(spaceLeftOfAnchor);
+		leftMargin = Math.ceil(spaceLeftOfAnchor)
 	} else {
-		const denom = 1 - f;
-		leftMargin = Math.ceil((spaceLeftOfAnchor - f * (svgWidth - pads.right)) / denom);
+		const denom = 1 - f
+		leftMargin = Math.ceil((spaceLeftOfAnchor - f * (svgWidth - pads.right)) / denom)
 	}
 
 	if (!isFinite(leftMargin) || leftMargin < 0) {
-		leftMargin = Math.ceil(spaceLeftOfAnchor);
+		leftMargin = Math.ceil(spaceLeftOfAnchor)
 	}
 
-	const chartWidth = svgWidth - leftMargin - pads.right;
-	const anchorX = leftMargin + f * chartWidth;
-	const yAxisLabelX = anchorX - (T + LP + maxTickLabelWidth + TP + wrappedTitleHeight / 2);
+	const chartWidth = svgWidth - leftMargin - pads.right
+	const anchorX = leftMargin + f * chartWidth
+	const yAxisLabelX = anchorX - (T + LP + maxTickLabelWidth + TP + wrappedTitleHeight / 2)
 
-	return { leftMargin, yAxisLabelX, anchorX };
+	return { leftMargin, yAxisLabelX, anchorX }
 }
 
 /**
@@ -186,45 +403,21 @@ export function calculateHorizontalBarChartYAxisLayout(
 	yAxisLabels: string[],
 	labelPadding = 10
 ): { leftMargin: number } {
-	const AVG_CHAR_WIDTH_PX = 8; // Consistent average character width for estimation.
-	
+	const AVG_CHAR_WIDTH_PX = 8 // Consistent average character width for estimation.
+
 	// 1. Find the maximum width required for any of the category labels.
 	const maxTickLabelWidth = yAxisLabels.reduce((maxWidth, label) => {
-		const estimatedWidth = label.length * AVG_CHAR_WIDTH_PX;
-		return Math.max(maxWidth, estimatedWidth);
-	}, 0);
+		const estimatedWidth = label.length * AVG_CHAR_WIDTH_PX
+		return Math.max(maxWidth, estimatedWidth)
+	}, 0)
 
 	// 2. The left margin is the sum of the space for the longest label and its padding.
-	const leftMargin = maxTickLabelWidth + labelPadding;
+	const leftMargin = maxTickLabelWidth + labelPadding
 
-	return { leftMargin };
+	return { leftMargin }
 }
 
-/**
- * Generates SVG clipPath definition for constraining chart elements to the plot area.
- * This prevents lines, curves, and other chart elements from extending beyond the chart boundaries.
- * @param clipId - Unique identifier for the clipPath element
- * @param x - Left edge of the clipping rectangle (typically pad.left)
- * @param y - Top edge of the clipping rectangle (typically pad.top)
- * @param width - Width of the clipping rectangle (typically chartWidth)
- * @param height - Height of the clipping rectangle (typically chartHeight)
- * @returns SVG clipPath definition string
- */
-export function createChartClipPath(clipId: string, x: number, y: number, width: number, height: number): string {
-	return `<defs><clipPath id="${clipId}" clipPathUnits="userSpaceOnUse"><rect x="${x}" y="${y}" width="${width}" height="${height}"/></clipPath></defs>`
-}
-
-/**
- * Wraps chart elements (lines, curves, paths) in an SVG group with clipping applied.
- * This ensures mathematical curves are cleanly cut off at chart boundaries rather than
- * artificially clamped, preserving the true shape of the function.
- * @param clipId - The clipPath ID to reference
- * @param content - SVG content to be clipped
- * @returns SVG group with clip-path applied
- */
-export function wrapInClippedGroup(clipId: string, content: string): string {
-	return `<g clip-path="url(#${clipId})">${content}</g>`
-}
+// --- REMOVED: createChartClipPath and wrapInClippedGroup (replaced by Canvas.addDef and Canvas.wrapClipped) ---
 
 /**
  * Estimates how many lines a title will wrap to based on available width.
@@ -429,19 +622,7 @@ export function calculateTextAwareLabelSelection(
  * @param isXAxis - Whether this is the x-axis (affects collision logic)
  * @returns Set of indices indicating which ticks should have labels
  */
-export function includeRotatedYAxisLabel(
-	_ext: Extents,
-	_pivotX: number,
-	_text: string,
-	_chartHeightPx: number,
-	_fontPx = 16,
-	_lineHeight = 1.1
-): void {
-	// This is a deliberate no-op for horizontal extents.
-	// The horizontal space required for the rotated Y-axis title (including its padding,
-	// tick labels, etc.) is already calculated and reserved by `calculateYAxisLayoutAxisAware`.
-	// Calling `includeText` would incorrectly expand the viewBox further to the left.
-}
+// --- REMOVED: includeRotatedYAxisLabel (deprecated extent tracking function) ---
 
 export function calculateIntersectionAwareTicks(tickValues: number[], _isXAxis: boolean): Set<number> {
 	const labeledIndices = new Set<number>()

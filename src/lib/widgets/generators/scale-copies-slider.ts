@@ -1,8 +1,8 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, initExtents, type Extents } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
 
 function createRectSchema() {
@@ -106,14 +106,19 @@ export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSlider
 	// Calculate scale to fit the largest shape within the allocated areas
 	const scale = Math.min(shapeWidth / maxWidth, rowHeight / maxHeight)
 
-	const ext = initExtents(width)
-	let svgContent = "<style>.label { font-size: 14px; font-weight: bold; } .sub-label { font-size: 12px; fill: #555; }</style>"
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
+	canvas.addStyle(".label { font-size: 14px; font-weight: bold; } .sub-label { font-size: 12px; fill: #555; }")
 
 	/**
 	 * Helper function to draw a single row (e.g., for Shape A) containing
 	 * the "Before" shape, an arrow, and the "After" shape.
 	 */
-	const drawShapeGroup = (shape: ScaleCopiesSliderProps["shapeA"], yOffset: number, ext: Extents): string => {
+	const drawShapeGroup = (shape: ScaleCopiesSliderProps["shapeA"], yOffset: number): void => {
 		let groupSvg = ""
 
 		// --- Before Shape ---
@@ -121,12 +126,14 @@ export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSlider
 		const beforeH = shape.before.height * scale
 		const beforeX = padding.left + (shapeWidth - beforeW) / 2 // Center within its column
 		const beforeY = yOffset + (rowHeight - beforeH) / 2 // Center within its row
-		includePointX(ext, beforeX)
-		includePointX(ext, beforeX + beforeW)
-		groupSvg += `<rect x="${beforeX}" y="${beforeY}" width="${beforeW}" height="${beforeH}" fill="${shape.color}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thin}"/>`
+		// Canvas automatically tracks extents
+		canvas.drawRect(beforeX, beforeY, beforeW, beforeH, {
+			fill: shape.color,
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+		})
 		const beforeLabelX = padding.left + shapeWidth / 2
-		includeText(ext, beforeLabelX, "Before", "middle")
-		groupSvg += `<text x="${beforeLabelX}" y="${yOffset + rowHeight + 15}" text-anchor="middle" class="sub-label">Before</text>`
+		canvas.drawText({ x: beforeLabelX, y: yOffset + rowHeight + 15, text: "Before", anchor: "middle" })
 
 		// --- Arrow ---
 		const arrowXStart = padding.left + shapeWidth + 5
@@ -140,34 +147,31 @@ export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSlider
 		const afterH = shape.after.height * scale
 		const afterX = padding.left + shapeWidth + colGap + (shapeWidth - afterW) / 2 // Center
 		const afterY = yOffset + (rowHeight - afterH) / 2 // Center
-		includePointX(ext, afterX)
-		includePointX(ext, afterX + afterW)
-		groupSvg += `<rect x="${afterX}" y="${afterY}" width="${afterW}" height="${afterH}" fill="${shape.color}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thin}"/>`
+		// Canvas automatically tracks extents
+		canvas.drawRect(afterX, afterY, afterW, afterH, {
+			fill: shape.color,
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+		})
 		const afterLabelX = padding.left + shapeWidth + colGap + shapeWidth / 2
-		includeText(ext, afterLabelX, "After", "middle")
-		groupSvg += `<text x="${afterLabelX}" y="${yOffset + rowHeight + 15}" text-anchor="middle" class="sub-label">After</text>`
+		canvas.drawText({ x: afterLabelX, y: yOffset + rowHeight + 15, text: "After", anchor: "middle" })
 
 		// --- Main Row Label (only if label exists) ---
 		if (shape.label !== null) {
 			const labelX = width / 2
-			includeText(ext, labelX, shape.label, "middle")
-			groupSvg += `<text x="${labelX}" y="${yOffset - 8}" text-anchor="middle" class="label">${shape.label}</text>`
+			canvas.drawText({ x: labelX, y: yOffset - 8, text: shape.label, anchor: "middle" })
 		}
-
-		return groupSvg
 	}
 
 	// Draw Shape A group in the top half
-	svgContent += drawShapeGroup(shapeA, padding.top, ext)
+	drawShapeGroup(shapeA, padding.top)
 
 	// Draw Shape B group in the bottom half
 	const shapeB_Y_Offset = padding.top + rowHeight + rowGap
-	svgContent += drawShapeGroup(shapeB, shapeB_Y_Offset, ext)
+	drawShapeGroup(shapeB, shapeB_Y_Offset)
 
-	// Final assembly with dynamic width
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-	svg += svgContent
-	svg += "</svg>"
-	return svg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

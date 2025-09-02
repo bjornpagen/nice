@@ -1,12 +1,8 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import {
-	computeDynamicWidth,
-	includePointX,
-	initExtents,
-} from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
 
 // Defines the properties for a rectangular prism solid
@@ -443,12 +439,12 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 		})
 	}
 
-	// 5. Generate SVG String
-	const ext = initExtents(width) // Initialize extents tracking
-	let svgBody = ""
-	
-	const solidStroke = `stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"`
-	const hiddenStroke = `stroke="${theme.colors.hiddenEdge}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.dashed}"`
+	// 5. Generate SVG using Canvas API
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	// Draw hidden edges
 	if (showHiddenEdges) {
@@ -459,10 +455,11 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 			if (!proj1 || !proj2) continue
 			const p1 = toSvg(proj1)
 			const p2 = toSvg(proj2)
-			// Track extents of all points
-			includePointX(ext, p1.x)
-			includePointX(ext, p2.x)
-			svgBody += `<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" ${hiddenStroke}/>`
+			canvas.drawLine(p1.x, p1.y, p2.x, p2.y, {
+				stroke: theme.colors.hiddenEdge,
+				strokeWidth: Number.parseFloat(theme.stroke.width.base),
+				dash: theme.stroke.dasharray.dashed
+			})
 		}
 	}
 
@@ -474,29 +471,27 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 		if (!proj1 || !proj2) continue
 		const p1 = toSvg(proj1)
 		const p2 = toSvg(proj2)
-		// Track extents of all points
-		includePointX(ext, p1.x)
-		includePointX(ext, p2.x)
-		svgBody += `<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" ${solidStroke}/>`
+		canvas.drawLine(p1.x, p1.y, p2.x, p2.y, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		})
 	}
 
 	// Draw intersection polygon
 	if (sortedIntersectionPoints.length > 0) {
-		const pointsStr = sortedIntersectionPoints
-			.map((p) => {
-				const svgP = toSvg(project(p))
-				// Track extents of intersection points
-				includePointX(ext, svgP.x)
-				return `${svgP.x},${svgP.y}`
-			})
-			.join(" ")
-		svgBody += `<polygon points="${pointsStr}" fill="${intersectionColor}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+		const polygonPoints = sortedIntersectionPoints.map((p) => {
+			const svgP = toSvg(project(p))
+			return { x: svgP.x, y: svgP.y }
+		})
+		canvas.drawPolygon(polygonPoints, {
+			fill: intersectionColor,
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
 	}
 
-	// Apply dynamic width at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">${svgBody}</svg>`
 }

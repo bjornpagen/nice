@@ -1,16 +1,12 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import {
-	createAxisOptionsSchema,
-	createPlotPointSchema,
-	generateCoordinatePlaneBase,
-	renderPoints
-} from "@/lib/widgets/generators/coordinate-plane-base"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
+import { createAxisOptionsSchema, createPlotPointSchema, renderPoints } from "@/lib/widgets/utils/canvas-utils"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
+import { setupCoordinatePlaneV2 } from "@/lib/widgets/utils/coordinate-plane-v2"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidPolygon = errors.new("polygon must have at least 3 vertices")
@@ -182,92 +178,119 @@ export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTrans
 	}
 
 	// 1. Call the base generator and get the body content and extents object
-	const base = generateCoordinatePlaneBase(width, height, xAxis, yAxis, showQuadrantLabels, points)
-	
-	// 2. Separate clipped polygons from unclipped center points
-	let clippedContent = ""
-	let unclippedContent = ""
-
-	// Draw Pre-Image (solid) in clipped content and track extents
-	const preImageSvgPoints = preImage.vertices.map((p) => {
-		const svgX = base.toSvgX(p.x)
-		const svgY = base.toSvgY(p.y)
-		includePointX(base.ext, svgX)
-		return `${svgX},${svgY}`
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
 	})
-	const preImagePoints = preImageSvgPoints.join(" ")
-	clippedContent += `<polygon points="${preImagePoints}" fill="${preImage.color}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" fill-opacity="${theme.opacity.overlay}"/>`
 
-	// 3. Calculate Transformed Vertices
-	let imageVertices: Vertex[] = []
-	switch (transformation.type) {
-		case "translation": {
-			imageVertices = preImage.vertices.map((v) => ({
-				x: v.x + transformation.vector.x,
-				y: v.y + transformation.vector.y
-			}))
-			break
-		}
-		case "reflection": {
-			imageVertices = preImage.vertices.map((v) => ({
-				x: transformation.axis === "y" ? -v.x : v.x,
-				y: transformation.axis === "x" ? -v.y : v.y
-			}))
-			break
-		}
-		case "rotation": {
-			const angleRad = (transformation.angle * Math.PI) / 180
-			const center = transformation.center
-			imageVertices = preImage.vertices.map((v) => {
-				const translatedX = v.x - center.x
-				const translatedY = v.y - center.y
-				return {
-					x: translatedX * Math.cos(angleRad) - translatedY * Math.sin(angleRad) + center.x,
-					y: translatedX * Math.sin(angleRad) + translatedY * Math.cos(angleRad) + center.y
-				}
-			})
-			break
-		}
-		case "dilation": {
-			const scale = transformation.scaleFactor
-			const dilCenter = transformation.center
-			imageVertices = preImage.vertices.map((v) => ({
-				x: dilCenter.x + scale * (v.x - dilCenter.x),
-				y: dilCenter.y + scale * (v.y - dilCenter.y)
-			}))
-			break
-		}
-	}
+	const baseInfo = setupCoordinatePlaneV2(
+		{
+			width,
+			height,
+			xAxis: {
+				label: xAxis.label,
+				min: xAxis.min,
+				max: xAxis.max,
+				tickInterval: xAxis.tickInterval,
+				showGridLines: xAxis.showGridLines
+			},
+			yAxis: {
+				label: yAxis.label,
+				min: yAxis.min,
+				max: yAxis.max,
+				tickInterval: yAxis.tickInterval,
+				showGridLines: yAxis.showGridLines
+			},
+			showQuadrantLabels: true
+		},
+		canvas
+	)
 
-	// 4. Draw Image (dashed) in clipped content and track extents
-	const imageSvgPoints = imageVertices.map((p) => {
-		const svgX = base.toSvgX(p.x)
-		const svgY = base.toSvgY(p.y)
-		includePointX(base.ext, svgX)
-		return `${svgX},${svgY}`
+	// Draw shapes within the clipped region
+	canvas.drawInClippedRegion((clippedCanvas) => {
+		// Draw Pre-Image (solid)
+		const preImagePoints = preImage.vertices.map((p) => ({
+			x: baseInfo.toSvgX(p.x),
+			y: baseInfo.toSvgY(p.y)
+		}))
+		clippedCanvas.drawPolygon(preImagePoints, {
+			fill: preImage.color,
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			fillOpacity: Number.parseFloat(theme.opacity.overlay)
+		})
+
+		// 3. Calculate Transformed Vertices
+		let imageVertices: Vertex[] = []
+		switch (transformation.type) {
+			case "translation": {
+				imageVertices = preImage.vertices.map((v) => ({
+					x: v.x + transformation.vector.x,
+					y: v.y + transformation.vector.y
+				}))
+				break
+			}
+			case "reflection": {
+				imageVertices = preImage.vertices.map((v) => ({
+					x: transformation.axis === "y" ? -v.x : v.x,
+					y: transformation.axis === "x" ? -v.y : v.y
+				}))
+				break
+			}
+			case "rotation": {
+				const angleRad = (transformation.angle * Math.PI) / 180
+				const center = transformation.center
+				imageVertices = preImage.vertices.map((v) => {
+					const translatedX = v.x - center.x
+					const translatedY = v.y - center.y
+					return {
+						x: translatedX * Math.cos(angleRad) - translatedY * Math.sin(angleRad) + center.x,
+						y: translatedX * Math.sin(angleRad) + translatedY * Math.cos(angleRad) + center.y
+					}
+				})
+				break
+			}
+			case "dilation": {
+				const scale = transformation.scaleFactor
+				const dilCenter = transformation.center
+				imageVertices = preImage.vertices.map((v) => ({
+					x: dilCenter.x + scale * (v.x - dilCenter.x),
+					y: dilCenter.y + scale * (v.y - dilCenter.y)
+				}))
+				break
+			}
+		}
+
+		// 4. Draw Image (dashed)
+		const imagePoints = imageVertices.map((p) => ({
+			x: baseInfo.toSvgX(p.x),
+			y: baseInfo.toSvgY(p.y)
+		}))
+		clippedCanvas.drawPolygon(imagePoints, {
+			fill: preImage.color,
+			fillOpacity: Number.parseFloat(theme.opacity.overlay),
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			dash: theme.stroke.dasharray.dashed
+		})
 	})
-	const imagePoints = imageSvgPoints.join(" ")
-	clippedContent += `<polygon points="${imagePoints}" fill-opacity="${theme.opacity.overlay}" fill="${preImage.color}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}" stroke-dasharray="${theme.stroke.dasharray.dashed}"/>`
 
-	// 5. Add visual aids like center of rotation/dilation in unclipped content
+	// 5. Add visual aids like center of rotation/dilation
 	if (transformation.type === "rotation" || transformation.type === "dilation") {
 		const c = transformation.center
-		const cx = base.toSvgX(c.x)
-		const cy = base.toSvgY(c.y)
-		includePointX(base.ext, cx)
-		unclippedContent += `<circle cx="${cx}" cy="${cy}" r="${theme.geometry.pointRadius.base}" fill="${theme.colors.actionSecondary}" />`
+		const cx = baseInfo.toSvgX(c.x)
+		const cy = baseInfo.toSvgY(c.y)
+		canvas.drawCircle(cx, cy, Number.parseFloat(theme.geometry.pointRadius.base), {
+			fill: theme.colors.actionSecondary
+		})
 	}
 
-	// 6. Render points in unclipped content to prevent being cut off at boundaries
-	unclippedContent += renderPoints(points, base.toSvgX, base.toSvgY, base.ext)
+	// 6. Render points
+	renderPoints(points, baseInfo.toSvgX, baseInfo.toSvgY, canvas)
 
-	// 7. Compute final width and assemble the complete SVG
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, height, PADDING)
-	let finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-	finalSvg += base.svgBody
-	finalSvg += wrapInClippedGroup("chartArea", clippedContent)
-	finalSvg += unclippedContent // Add unclipped center points and additional points
-	finalSvg += `</svg>`
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
 
-	return finalSvg
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

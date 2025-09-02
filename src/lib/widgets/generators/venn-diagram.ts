@@ -1,9 +1,9 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 
 function createCircleSchema() {
@@ -92,52 +92,98 @@ export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema>
 	const cxB = width / 2 + r - overlap
 	const cy = padding.top + chartHeight / 2
 
-	const ext = initExtents(width)
-	let svgContent = "<style>.label { font-size: 16px; font-weight: bold; text-anchor: middle; } .count { font-size: 18px; text-anchor: middle; }</style>"
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 16,
+		lineHeightDefault: 1.2
+	})
+
+	canvas.addStyle(
+		".label { font-size: 16px; font-weight: bold; text-anchor: middle; } .count { font-size: 18px; text-anchor: middle; }"
+	)
 
 	// Draw containing box
-	svgContent += `<rect x="1" y="1" width="${width - 2}" height="${height - 2}" fill="none" stroke="${theme.colors.axis}" />`
+	canvas.drawRect(1, 1, width - 2, height - 2, {
+		fill: "none",
+		stroke: theme.colors.axis
+	})
 
-	// Track circles
-	includePointX(ext, cxA - r)
-	includePointX(ext, cxA + r)
-	includePointX(ext, cxB - r)
-	includePointX(ext, cxB + r)
-	
 	// Circles (semi-transparent for overlap visibility)
-	svgContent += `<circle cx="${cxA}" cy="${cy}" r="${r}" fill="${circleA.color}" fill-opacity="${theme.opacity.overlay}" stroke="${theme.colors.axis}"/>`
-	svgContent += `<circle cx="${cxB}" cy="${cy}" r="${r}" fill="${circleB.color}" fill-opacity="${theme.opacity.overlay}" stroke="${theme.colors.axis}"/>`
+	canvas.drawCircle(cxA, cy, r, {
+		fill: circleA.color,
+		fillOpacity: Number.parseFloat(theme.opacity.overlay),
+		stroke: theme.colors.axis
+	})
+	canvas.drawCircle(cxB, cy, r, {
+		fill: circleB.color,
+		fillOpacity: Number.parseFloat(theme.opacity.overlay),
+		stroke: theme.colors.axis
+	})
 
 	// Labels for circles - positioned farther apart to use side space
 	const labelA_X = cxA - r * 0.5
 	const labelB_X = cxB + r * 0.5
-	includeText(ext, labelA_X, abbreviateMonth(circleA.label), "middle")
-	includeText(ext, labelB_X, abbreviateMonth(circleB.label), "middle")
-	svgContent += `<text x="${labelA_X}" y="${padding.top - 5}" class="label">${abbreviateMonth(circleA.label)}</text>` // Moved left
-	svgContent += `<text x="${labelB_X}" y="${padding.top - 5}" class="label">${abbreviateMonth(circleB.label)}</text>` // Moved right
+	canvas.drawText({
+		x: labelA_X,
+		y: padding.top - 5,
+		text: abbreviateMonth(circleA.label),
+		fontPx: 16,
+		fontWeight: theme.font.weight.bold,
+		anchor: "middle"
+	})
+	canvas.drawText({
+		x: labelB_X,
+		y: padding.top - 5,
+		text: abbreviateMonth(circleB.label),
+		fontPx: 16,
+		fontWeight: theme.font.weight.bold,
+		anchor: "middle"
+	})
 
-	// Track counts
+	// Counts
 	const countA_X = cxA - r / 2
 	const countB_X = cxB + r / 2
 	const intersection_X = (cxA + cxB) / 2
 	const outside_X = width / 2
-	includeText(ext, countA_X, String(circleA.count), "middle")
-	includeText(ext, countB_X, String(circleB.count), "middle")
-	includeText(ext, intersection_X, String(intersectionCount), "middle")
-	includeText(ext, outside_X, String(outsideCount), "middle")
-	
-	// A only
-	svgContent += `<text x="${countA_X}" y="${cy}" class="count" dominant-baseline="middle">${circleA.count}</text>`
-	// B only
-	svgContent += `<text x="${countB_X}" y="${cy}" class="count" dominant-baseline="middle">${circleB.count}</text>`
-	// Intersection
-	svgContent += `<text x="${intersection_X}" y="${cy}" class="count" dominant-baseline="middle">${intersectionCount}</text>`
-	svgContent += `<text x="${outside_X}" y="${height - padding.bottom / 2}" class="count">${outsideCount}</text>` // Adjusted y position based on padding
 
-	// Final assembly
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
-	svg += svgContent
-	svg += "</svg>"
-	return svg
+	// A only
+	canvas.drawText({
+		x: countA_X,
+		y: cy,
+		text: String(circleA.count),
+		fontPx: 18,
+		anchor: "middle",
+		dominantBaseline: "middle"
+	})
+	// B only
+	canvas.drawText({
+		x: countB_X,
+		y: cy,
+		text: String(circleB.count),
+		fontPx: 18,
+		anchor: "middle",
+		dominantBaseline: "middle"
+	})
+	// Intersection
+	canvas.drawText({
+		x: intersection_X,
+		y: cy,
+		text: String(intersectionCount),
+		fontPx: 18,
+		anchor: "middle",
+		dominantBaseline: "middle"
+	})
+	// Outside
+	canvas.drawText({
+		x: outside_X,
+		y: height - padding.bottom / 2,
+		text: String(outsideCount),
+		fontPx: 18,
+		anchor: "middle"
+	})
+
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">${svgBody}</svg>`
 }

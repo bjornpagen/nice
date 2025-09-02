@@ -1,8 +1,9 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { initExtents, includePointX, includeText, computeDynamicWidth } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
 
 // Defines a 2D coordinate point for a vertex
@@ -199,10 +200,12 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 	} = data
 
 	if (vertices.length === 0) return `<svg width="${width}" height="${height}" />`
-	
-	// Initialize extent tracking
-	const ext = initExtents(width)
-	let svgContent = "" // Use a temporary string for the SVG body
+
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	// Shaded regions (drawn first to be in the background)
 	for (const region of shadedRegions) {
@@ -213,27 +216,35 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		const regionPoints = validIndices
 			.map((i) => {
 				const vertex = vertices[i]
-				if (!vertex) return ""
-				includePointX(ext, vertex.x) // Track vertex
-				return `${vertex.x},${vertex.y}`
+				if (!vertex) return null
+				return { x: vertex.x, y: vertex.y }
 			})
-			.filter(Boolean)
-			.join(" ")
+			.filter((p): p is { x: number; y: number } => p !== null)
 
-		svgContent += `<polygon points="${regionPoints}" fill="${region.fillColor}" stroke="none"/>`
+		if (regionPoints.length >= 3) {
+			canvas.drawPolygon(regionPoints, {
+				fill: region.fillColor,
+				stroke: "none"
+			})
+		}
 	}
 
 	// Outer boundary
 	const outerPoints = outerBoundary
 		.map((i) => {
 			const vertex = vertices[i]
-			if (!vertex) return ""
-			includePointX(ext, vertex.x) // Track vertex
-			return `${vertex.x},${vertex.y}`
+			if (!vertex) return null
+			return { x: vertex.x, y: vertex.y }
 		})
-		.filter(Boolean)
-		.join(" ")
-	svgContent += `<polygon points="${outerPoints}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+		.filter((p): p is { x: number; y: number } => p !== null)
+
+	if (outerPoints.length >= 3) {
+		canvas.drawPolygon(outerPoints, {
+			fill: "none",
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
+	}
 
 	// Outer boundary labels
 	for (let i = 0; i < outerBoundary.length; i++) {
@@ -285,8 +296,16 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		const labelX = midX + perpX * label.offset
 		const labelY = midY + perpY * label.offset
 
-		svgContent += `<text x="${labelX}" y="${labelY}" fill="${theme.colors.text}" text-anchor="middle" dominant-baseline="middle" font-size="${theme.font.size.medium}" font-weight="${theme.font.weight.bold}">${label.text}</text>`
-		includeText(ext, labelX, label.text, "middle") // Track label
+		canvas.drawText({
+			x: labelX,
+			y: labelY,
+			text: label.text,
+			fill: theme.colors.text,
+			anchor: "middle",
+			dominantBaseline: "middle",
+			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", "")),
+			fontWeight: theme.font.weight.bold
+		})
 	}
 
 	// Internal segments
@@ -294,11 +313,12 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		const from = vertices[s.fromVertexIndex]
 		const to = vertices[s.toVertexIndex]
 		if (!from || !to) continue
-		const dash = s.style === "dashed" ? ' stroke-dasharray="4 2"' : ""
-		// Track segment endpoints
-		includePointX(ext, from.x)
-		includePointX(ext, to.x)
-		svgContent += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"${dash}/>`
+		const dash = s.style === "dashed" ? "4 2" : undefined
+		canvas.drawLine(from.x, from.y, to.x, to.y, {
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base),
+			dash: dash
+		})
 		if (s.label !== null) {
 			const midX = (from.x + to.x) / 2
 			const midY = (from.y + to.y) / 2
@@ -306,15 +326,33 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 			const angle = Math.atan2(to.y - from.y, to.x - from.x)
 			const offsetX = -Math.sin(angle) * 5
 			const offsetY = Math.cos(angle) * 5
-			svgContent += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="${theme.colors.text}" text-anchor="middle" dominant-baseline="middle" font-size="${theme.font.size.base}" style="paint-order: stroke; stroke: ${theme.colors.background}; stroke-width: 3px; stroke-linejoin: round;">${s.label}</text>`
-			includeText(ext, midX + offsetX, s.label, "middle") // Track label
+			canvas.drawText({
+				x: midX + offsetX,
+				y: midY + offsetY,
+				text: s.label,
+				fill: theme.colors.text,
+				anchor: "middle",
+				dominantBaseline: "middle",
+				fontPx: Number.parseFloat(theme.font.size.base.replace("px", "")),
+				stroke: theme.colors.background,
+				strokeWidth: 3,
+				paintOrder: "stroke fill"
+			})
 		}
 	}
 
 	// Region labels
 	for (const l of regionLabels) {
-		svgContent += `<text x="${l.position.x}" y="${l.position.y}" fill="${theme.colors.text}" text-anchor="middle" dominant-baseline="middle" font-size="${theme.font.size.medium}" font-weight="${theme.font.weight.bold}">${l.text}</text>`
-		includeText(ext, l.position.x, l.text, "middle") // Track label
+		canvas.drawText({
+			x: l.position.x,
+			y: l.position.y,
+			text: l.text,
+			fill: theme.colors.text,
+			anchor: "middle",
+			dominantBaseline: "middle",
+			fontPx: Number.parseFloat(theme.font.size.medium.replace("px", "")),
+			fontWeight: theme.font.weight.bold
+		})
 	}
 
 	// Right-angle markers
@@ -345,17 +383,16 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		const p3x = corner.x + (u1x + u2x) * markerSize
 		const p3y = corner.y + (u1y + u2y) * markerSize
 
-		// Track right angle marker points
-		includePointX(ext, p1x)
-		includePointX(ext, p2x)
-		includePointX(ext, p3x)
-		svgContent += `<path d="M ${p1x} ${p1y} L ${p3x} ${p3y} L ${p2x} ${p2y}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"/>`
+		const markerPath = new Path2D().moveTo(p1x, p1y).lineTo(p3x, p3y).lineTo(p2x, p2y)
+		canvas.drawPath(markerPath, {
+			fill: "none",
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.base)
+		})
 	}
 
-	// Compute dynamic width and create final SVG
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.small}">`
-	svg += svgContent
-	svg += "</svg>"
-	return svg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.small}">${svgBody}</svg>`
 }

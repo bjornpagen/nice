@@ -4,7 +4,6 @@ import {
 	CoordinatePlaneComprehensivePropsSchema,
 	DivergentBarChartPropsSchema,
 	HistogramPropsSchema,
-
 	KeelingCurvePropsSchema,
 	LineGraphPropsSchema,
 	ParabolaGraphPropsSchema,

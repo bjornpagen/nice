@@ -1,8 +1,9 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
 
 // Defines a line segment, such as a radius or a diameter.
@@ -227,15 +228,28 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 	})
 	const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(value, max))
 
-	const ext = initExtents(width) // NEW: Initialize extents tracking
-	let svgBody = ""
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 	const r = radius * scale
 
 	// Annulus is only compatible with the full "circle" shape.
 	if (shape === "circle" && innerRadius && annulusFillColor) {
 		const r1 = radius * scale
 		const r2 = innerRadius * scale
-		svgBody += `<path d="M ${cx - r1},${cy} a ${r1},${r1} 0 1,0 ${2 * r1},0 a ${r1},${r1} 0 1,0 -${2 * r1},0 M ${cx - r2},${cy} a ${r2},${r2} 0 1,0 ${2 * r2},0 a ${r2},${r2} 0 1,0 -${2 * r2},0" fill="${annulusFillColor}" fill-rule="evenodd" />`
+		const annulusPath = new Path2D()
+			.moveTo(cx - r1, cy)
+			.arcTo(r1, r1, 0, 0, 1, cx + r1, cy)
+			.arcTo(r1, r1, 0, 0, 1, cx - r1, cy)
+			.moveTo(cx - r2, cy)
+			.arcTo(r2, r2, 0, 0, 1, cx + r2, cy)
+			.arcTo(r2, r2, 0, 0, 1, cx - r2, cy)
+		canvas.drawPath(annulusPath, {
+			fill: annulusFillColor,
+			fillRule: "evenodd"
+		})
 	}
 
 	// Draw sectors first, so the main shape's stroke is drawn on top.
@@ -243,20 +257,29 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 		for (const sector of sectors) {
 			const start = pointOnCircle(sector.startAngle, r)
 			const end = pointOnCircle(sector.endAngle, r)
-			// Track sector endpoints
-			includePointX(ext, start.x)
-			includePointX(ext, end.x)
 			const angleDiff = Math.abs(sector.endAngle - sector.startAngle)
-			const largeArcFlag = angleDiff > 180 ? 1 : 0
-			const pathData = `M ${cx},${cy} L ${start.x},${start.y} A ${r},${r} 0 ${largeArcFlag} 1 ${end.x},${end.y} Z`
-			svgBody += `<path d="${pathData}" fill="${sector.fillColor}" stroke="none"/>`
+			const largeArcFlag: 0 | 1 = angleDiff > 180 ? 1 : 0
+			const sectorPath = new Path2D()
+				.moveTo(cx, cy)
+				.lineTo(start.x, start.y)
+				.arcTo(r, r, 0, largeArcFlag, 1, end.x, end.y)
+				.closePath()
+			canvas.drawPath(sectorPath, {
+				fill: sector.fillColor,
+				stroke: "none"
+			})
 
 			if (sector.showRightAngleMarker && Math.abs(angleDiff - 90) < 0.1) {
 				const markerSize = Math.min(r, 20) * 0.8
 				const p1 = pointOnCircle(sector.startAngle, markerSize)
 				const p3 = pointOnCircle(sector.startAngle + 45, markerSize * Math.sqrt(2))
 				const p2 = pointOnCircle(sector.endAngle, markerSize)
-				svgBody += `<path d="M ${p1.x},${p1.y} L ${p3.x},${p3.y} L ${p2.x},${p2.y}" fill="none" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"/>`
+				const markerPath = new Path2D().moveTo(p1.x, p1.y).lineTo(p3.x, p3.y).lineTo(p2.x, p2.y)
+				canvas.drawPath(markerPath, {
+					fill: "none",
+					stroke: theme.colors.black,
+					strokeWidth: Number.parseFloat(theme.stroke.width.base)
+				})
 			}
 		}
 	}
@@ -269,11 +292,12 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 			const endAngle = 180 + rotation
 			const start = pointOnCircle(startAngle, r)
 			const end = pointOnCircle(endAngle, r)
-			// Track semicircle endpoints
-			includePointX(ext, start.x)
-			includePointX(ext, end.x)
-			const pathData = `M ${start.x},${start.y} A ${r},${r} 0 0 1 ${end.x},${end.y} Z`
-			svgBody += `<path d="${pathData}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${theme.stroke.width.thick}"/>`
+			const semicirclePath = new Path2D().moveTo(start.x, start.y).arcTo(r, r, 0, 0, 1, end.x, end.y).closePath()
+			canvas.drawPath(semicirclePath, {
+				fill: fillColor,
+				stroke: strokeColor,
+				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			})
 			break
 		}
 		case "quarter-circle": {
@@ -282,18 +306,24 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 			const endAngle = 90 + rotation
 			const start = pointOnCircle(startAngle, r)
 			const end = pointOnCircle(endAngle, r)
-			// Track quarter-circle endpoints and center
-			includePointX(ext, cx)
-			includePointX(ext, start.x)
-			includePointX(ext, end.x)
-			const pathData = `M ${cx},${cy} L ${start.x},${start.y} A ${r},${r} 0 0 1 ${end.x},${end.y} Z`
-			svgBody += `<path d="${pathData}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${theme.stroke.width.thick}"/>`
+			const quarterCirclePath = new Path2D()
+				.moveTo(cx, cy)
+				.lineTo(start.x, start.y)
+				.arcTo(r, r, 0, 0, 1, end.x, end.y)
+				.closePath()
+			canvas.drawPath(quarterCirclePath, {
+				fill: fillColor,
+				stroke: strokeColor,
+				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			})
 			break
 		}
 		default: {
-			svgBody += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${theme.stroke.width.thick}"/>`
-			includePointX(ext, cx - r)
-			includePointX(ext, cx + r)
+			canvas.drawCircle(cx, cy, r, {
+				fill: fillColor,
+				stroke: strokeColor,
+				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			})
 			break
 		}
 	}
@@ -301,9 +331,11 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 	// The inner circle is only drawn for the main "circle" shape.
 	if (shape === "circle" && innerRadius) {
 		const rInner = innerRadius * scale
-		svgBody += `<circle cx="${cx}" cy="${cy}" r="${rInner}" fill="${theme.colors.white}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
-		includePointX(ext, cx - rInner)
-		includePointX(ext, cx + rInner)
+		canvas.drawCircle(cx, cy, rInner, {
+			fill: theme.colors.white,
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
 	}
 
 	// Arcs are drawn on top of the main shape.
@@ -311,20 +343,28 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 		for (const arc of arcs) {
 			const start = pointOnCircle(arc.startAngle, r)
 			const end = pointOnCircle(arc.endAngle, r)
-			// Track arc endpoints
-			includePointX(ext, start.x)
-			includePointX(ext, end.x)
-			const largeArcFlag = Math.abs(arc.endAngle - arc.startAngle) > 180 ? 1 : 0
-			const pathData = `M ${start.x},${start.y} A ${r},${r} 0 ${largeArcFlag} 1 ${end.x},${end.y}`
-			svgBody += `<path d="${pathData}" fill="none" stroke="${arc.strokeColor}" stroke-width="${theme.stroke.width.xxthick}"/>`
+			const largeArcFlag: 0 | 1 = Math.abs(arc.endAngle - arc.startAngle) > 180 ? 1 : 0
+			const arcPath = new Path2D().moveTo(start.x, start.y).arcTo(r, r, 0, largeArcFlag, 1, end.x, end.y)
+			canvas.drawPath(arcPath, {
+				fill: "none",
+				stroke: arc.strokeColor,
+				strokeWidth: Number.parseFloat(theme.stroke.width.xxthick)
+			})
 			if (arc.label !== null) {
 				const midAngle = (arc.startAngle + arc.endAngle) / 2
 				const labelPos = pointOnCircle(midAngle, r + PADDING)
 				const finalX = clamp(labelPos.x, PADDING, width - PADDING)
 				const finalY = clamp(labelPos.y, PADDING, height - PADDING)
-				svgBody += `<text x="${finalX}" y="${finalY}" font-size="${theme.font.size.medium}" font-weight="${theme.font.weight.bold}" fill="${theme.colors.text}" text-anchor="middle" dominant-baseline="middle">${arc.label}</text>`
-				// NEW: Track arc label extents
-				includeText(ext, finalX, arc.label, "middle", 7)
+				canvas.drawText({
+					x: finalX,
+					y: finalY,
+					text: arc.label,
+					fontPx: Number.parseFloat(theme.font.size.medium.replace("px", "")),
+					fontWeight: theme.font.weight.bold,
+					fill: theme.colors.text,
+					anchor: "middle",
+					dominantBaseline: "middle"
+				})
 			}
 		}
 	}
@@ -344,11 +384,10 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 				lineStart.y = cy
 			}
 
-			// Track segment endpoints
-			includePointX(ext, lineStart.x)
-			includePointX(ext, lineEnd.x)
-			
-			svgBody += `<line x1="${lineStart.x}" y1="${lineStart.y}" x2="${lineEnd.x}" y2="${lineEnd.y}" stroke="${seg.color}" stroke-width="${theme.stroke.width.thick}"/>`
+			canvas.drawLine(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y, {
+				stroke: seg.color,
+				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			})
 
 			if (seg.label) {
 				const labelStartRadius = shape === "circle" && innerRadius ? innerRadius * scale : 0
@@ -360,28 +399,41 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 				const offsetY = Math.cos(angleRad) * 10 * verticalOffsetMultiplier
 				const finalX = clamp(mid.x + offsetX, PADDING, width - PADDING)
 				const finalY = clamp(mid.y + offsetY, PADDING, height - PADDING)
-				svgBody += `<text x="${finalX}" y="${finalY}" font-size="${theme.font.size.base}" fill="${theme.colors.text}" text-anchor="middle" dominant-baseline="middle">${seg.label}</text>`
-				// NEW: Track segment label extents
-				includeText(ext, finalX, seg.label, "middle", 7)
+				canvas.drawText({
+					x: finalX,
+					y: finalY,
+					text: seg.label,
+					fontPx: Number.parseFloat(theme.font.size.base.replace("px", "")),
+					fill: theme.colors.text,
+					anchor: "middle",
+					dominantBaseline: "middle"
+				})
 			}
 		}
 	}
 
 	if (showCenterDot) {
-		svgBody += `<circle cx="${cx}" cy="${cy}" r="${theme.geometry.pointRadius.small}" fill="${theme.colors.black}"/>`
+		canvas.drawCircle(cx, cy, Number.parseFloat(theme.geometry.pointRadius.small), {
+			fill: theme.colors.black
+		})
 	}
 
 	if (areaLabel !== null) {
 		const yOffset = -10
-		svgBody += `<text x="${cx}" y="${cy + yOffset}" font-size="${theme.font.size.large}" font-weight="${theme.font.weight.bold}" fill="${theme.colors.text}" text-anchor="middle" dominant-baseline="middle">${areaLabel}</text>`
-		// NEW: Track area label extents
-		includeText(ext, cx, areaLabel, "middle", 8)
+		canvas.drawText({
+			x: cx,
+			y: cy + yOffset,
+			text: areaLabel,
+			fontPx: Number.parseFloat(theme.font.size.large.replace("px", "")),
+			fontWeight: theme.font.weight.bold,
+			fill: theme.colors.text,
+			anchor: "middle",
+			dominantBaseline: "middle"
+		})
 	}
 
-	// NEW: Apply dynamic width and viewBox at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

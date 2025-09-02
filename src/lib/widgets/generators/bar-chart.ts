@@ -2,12 +2,12 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, wrapInClippedGroup } from "@/lib/widgets/utils/layout"
-import { theme } from "@/lib/widgets/utils/theme"
+import { setupCoordinatePlaneBaseV2 } from "@/lib/widgets/utils/coordinate-plane-utils"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { generateCoordinatePlaneBaseV2 } from "@/lib/widgets/generators/coordinate-plane-base"
+import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
@@ -96,6 +96,13 @@ export type BarChartProps = z.infer<typeof BarChartPropsSchema>
 export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (data) => {
 	const { width, height, title, xAxisLabel, yAxis, data: chartData, barColor } = data
 
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
+	// Label preparation logic
 	let finalXAxisLabel = ""
 	if (xAxisLabel) {
 		finalXAxisLabel = xAxisLabel
@@ -106,27 +113,31 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 		finalYAxisLabel = yAxis.label
 	}
 
-	const base = generateCoordinatePlaneBaseV2(
-		width,
-		height,
-		title,
+	// MODIFIED: Call the setup function, passing the canvas. It will draw the axes.
+	const baseInfo = setupCoordinatePlaneBaseV2(
 		{
-			xScaleType: "categoryBand", // Set the scale type
-			label: finalXAxisLabel,
-			categories: chartData.map((d) => abbreviateMonth(d.label)), // This is now type-checked
-			showTickLabels: true,
-			showGridLines: false
+			width,
+			height,
+			title,
+			xAxis: {
+				xScaleType: "categoryBand",
+				label: finalXAxisLabel,
+				categories: chartData.map((d) => abbreviateMonth(d.label)),
+				showTickLabels: true,
+				showGridLines: false
+			},
+			yAxis: {
+				...yAxis,
+				label: finalYAxisLabel,
+				showTickLabels: true,
+				showGridLines: true
+			}
 		},
-		{
-			...yAxis,
-			label: finalYAxisLabel,
-			showTickLabels: true,
-			showGridLines: true
-		}
+		canvas
 	)
 
-	let bars = ""
-	let bandWidth = base.bandWidth
+	// bandWidth and innerBarWidth calculation remains
+	let bandWidth = baseInfo.bandWidth
 	if (bandWidth === undefined) {
 		logger.error("bandWidth missing for categorical x-axis in bar chart", { length: chartData.length })
 		throw errors.wrap(ErrInvalidDimensions, "categorical x-axis requires defined bandWidth")
@@ -134,25 +145,31 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 	const barPadding = 0.2
 	const innerBarWidth = bandWidth * (1 - barPadding)
 
-	chartData.forEach((d, i) => {
-		const xCenter = base.toSvgX(i)
-		const barX = xCenter - innerBarWidth / 2
-		const barHeight = (d.value - yAxis.min) / (yAxis.max - yAxis.min) * base.chartArea.height
-		const y = base.chartArea.top + base.chartArea.height - barHeight
-		includePointX(base.ext, barX)
-		includePointX(base.ext, barX + innerBarWidth)
-		if (d.state === "normal") {
-			bars += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="${barColor}"/>`
-		} else {
-			bars += `<rect x="${barX}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="none" stroke="${barColor}" stroke-width="${theme.stroke.width.thick}" stroke-dasharray="${theme.stroke.dasharray.dashed}"/>`
-		}
+	// Draw bars within the clipped region
+	canvas.drawInClippedRegion((clippedCanvas) => {
+		chartData.forEach((d, i) => {
+			const xCenter = baseInfo.toSvgX(i)
+			const barX = xCenter - innerBarWidth / 2
+			const barHeight = ((d.value - yAxis.min) / (yAxis.max - yAxis.min)) * baseInfo.chartArea.height
+			const y = baseInfo.chartArea.top + baseInfo.chartArea.height - barHeight
+
+			if (d.state === "normal") {
+				clippedCanvas.drawRect(barX, y, innerBarWidth, barHeight, {
+					fill: barColor
+				})
+			} else {
+				clippedCanvas.drawRect(barX, y, innerBarWidth, barHeight, {
+					fill: "none",
+					stroke: barColor,
+					strokeWidth: Number.parseFloat(theme.stroke.width.thick),
+					dash: theme.stroke.dasharray.dashed
+				})
+			}
+		})
 	})
 
-	let svgBody = base.svgBody
-	svgBody += wrapInClippedGroup(base.clipId, bars)
+	// NEW: Finalize the canvas and construct the root SVG element.
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(AXIS_VIEWBOX_PADDING)
 
-	const totalHeight = base.chartArea.top + base.chartArea.height + base.outsideBottomPx
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(base.ext, totalHeight, AXIS_VIEWBOX_PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${totalHeight}" viewBox="${vbMinX} 0 ${dynamicWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">` + svgBody + `</svg>`
-	return finalSvg
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

@@ -1,8 +1,9 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { computeDynamicWidth, includePointX, includeText, initExtents } from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
 
 // Defines a group of identical sectors on the spinner
@@ -81,8 +82,11 @@ export type ProbabilitySpinnerProps = z.infer<typeof ProbabilitySpinnerPropsSche
 export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinnerPropsSchema> = (props) => {
 	const { width, height, groups, pointerAngle, title } = props
 
-	// Initialize extents tracking
-	const ext = initExtents(width)
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 
 	const cx = width / 2
 	const cy = height / 2
@@ -101,52 +105,21 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 		y: cy + r * Math.sin(toRad(angleDeg))
 	})
 
-	// Track the circle bounds
-	includePointX(ext, cx - radius) // Leftmost point of circle
-	includePointX(ext, cx + radius) // Rightmost point of circle
-
-	// Track title if present
-	if (title !== null) {
-		includeText(ext, cx, title, "middle", 8)
-	}
-
-	// Track pointer tip position (after rotation)
-	const pointerLength = radius * 1.2
-	const pointerTipX = cx + pointerLength * Math.cos(toRad(pointerAngle))
-	const pointerTipY = cy + pointerLength * Math.sin(toRad(pointerAngle))
-	includePointX(ext, pointerTipX)
-
-	// Track the sectors' key points
-	let currentAngle = -90 // Start at the top
-	for (const group of groups) {
-		for (let i = 0; i < group.count; i++) {
-			const startAngle = currentAngle
-			const endAngle = currentAngle + anglePerSector
-
-			const start = pointOnCircle(startAngle, radius)
-			const end = pointOnCircle(endAngle, radius)
-
-			// Track sector endpoints
-			includePointX(ext, start.x)
-			includePointX(ext, end.x)
-
-			currentAngle += anglePerSector
-		}
-	}
-
-	// Compute dynamic width
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	
-	// Build SVG with computed dimensions
-	let svg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">`
-	svg += "<style>.title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
+	canvas.addStyle(".title { font-size: 16px; font-weight: bold; text-anchor: middle; }")
 
 	if (title !== null) {
-		svg += `<text x="${cx}" y="${padding - 10}" class="title">${title}</text>`
+		canvas.drawText({
+			x: cx,
+			y: padding - 10,
+			text: title,
+			fontPx: 16,
+			fontWeight: theme.font.weight.bold,
+			anchor: "middle"
+		})
 	}
 
 	// 1. Draw Sectors and Emojis
-	currentAngle = -90 // Reset to start at the top
+	let currentAngle = -90 // Start at the top
 
 	for (const group of groups) {
 		for (let i = 0; i < group.count; i++) {
@@ -157,18 +130,31 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 			const end = pointOnCircle(endAngle, radius)
 
 			// Create the path for the pie slice
-			const largeArcFlag = anglePerSector > 180 ? 1 : 0
-			const pathData = `M ${cx},${cy} L ${start.x},${start.y} A ${radius},${radius} 0 ${largeArcFlag} 1 ${end.x},${end.y} Z`
-			svg += `<path d="${pathData}" fill="${group.color}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.base}"/>`
+			const largeArcFlag: 0 | 1 = anglePerSector > 180 ? 1 : 0
+			const sectorPath = new Path2D()
+				.moveTo(cx, cy)
+				.lineTo(start.x, start.y)
+				.arcTo(radius, radius, 0, largeArcFlag, 1, end.x, end.y)
+				.closePath()
+			canvas.drawPath(sectorPath, {
+				fill: group.color,
+				stroke: theme.colors.black,
+				strokeWidth: Number.parseFloat(theme.stroke.width.base)
+			})
 
 			// Add emoji if it exists
 			if (group.emoji !== null) {
 				const midAngle = startAngle + anglePerSector / 2
 				const emojiPos = pointOnCircle(midAngle, radius * 0.65)
 				const emojiSize = Math.min(radius / totalSectors, 30) * 1.5 // Scale emoji size
-				svg += `<text x="${emojiPos.x}" y="${emojiPos.y}" font-size="${emojiSize}px" text-anchor="middle" dominant-baseline="central">${group.emoji}</text>`
-				// MODIFICATION: Add this line to track the emoji's extent
-				includeText(ext, emojiPos.x, group.emoji, "middle", emojiSize)
+				canvas.drawText({
+					x: emojiPos.x,
+					y: emojiPos.y,
+					text: group.emoji,
+					fontPx: emojiSize,
+					anchor: "middle",
+					dominantBaseline: "middle"
+				})
 			}
 
 			currentAngle += anglePerSector
@@ -177,23 +163,36 @@ export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinn
 
 	// 2. Draw Spinner Pointer and Hub
 	const pointerWidth = 12
+	const pointerLength = radius * 1.2
 
-	svg += `<g transform="rotate(${pointerAngle}, ${cx}, ${cy})">`
-	// A polygon for a nice arrow shape
-	const p1 = { x: cx, y: cy - pointerWidth / 2 }
-	const p2 = { x: cx + pointerLength - pointerWidth, y: cy - pointerWidth / 2 }
-	const p3 = { x: cx + pointerLength - pointerWidth, y: cy - pointerWidth }
-	const p4 = { x: cx + pointerLength, y: cy }
-	const p5 = { x: cx + pointerLength - pointerWidth, y: cy + pointerWidth }
-	const p6 = { x: cx + pointerLength - pointerWidth, y: cy + pointerWidth / 2 }
-	const p7 = { x: cx, y: cy + pointerWidth / 2 }
-	const pointsStr = `${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y} ${p5.x},${p5.y} ${p6.x},${p6.y} ${p7.x},${p7.y}`
-	svg += `<polygon points="${pointsStr}" fill="${theme.colors.textSecondary}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thin}"/>`
-	svg += "</g>"
+	// Use withTransform for the rotated pointer
+	canvas.withTransform(`rotate(${pointerAngle}, ${cx}, ${cy})`, () => {
+		// A polygon for a nice arrow shape
+		const pointerPoints = [
+			{ x: cx, y: cy - pointerWidth / 2 },
+			{ x: cx + pointerLength - pointerWidth, y: cy - pointerWidth / 2 },
+			{ x: cx + pointerLength - pointerWidth, y: cy - pointerWidth },
+			{ x: cx + pointerLength, y: cy },
+			{ x: cx + pointerLength - pointerWidth, y: cy + pointerWidth },
+			{ x: cx + pointerLength - pointerWidth, y: cy + pointerWidth / 2 },
+			{ x: cx, y: cy + pointerWidth / 2 }
+		]
+		canvas.drawPolygon(pointerPoints, {
+			fill: theme.colors.textSecondary,
+			stroke: theme.colors.black,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thin)
+		})
+	})
 
 	// Central hub
-	svg += `<circle cx="${cx}" cy="${cy}" r="${pointerWidth}" fill="${theme.colors.background}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}"/>`
+	canvas.drawCircle(cx, cy, pointerWidth, {
+		fill: theme.colors.background,
+		stroke: theme.colors.black,
+		strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+	})
 
-	svg += "</svg>"
-	return svg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">${svgBody}</svg>`
 }

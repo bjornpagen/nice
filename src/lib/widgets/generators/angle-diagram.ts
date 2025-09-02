@@ -1,13 +1,9 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import {
-	computeDynamicWidth,
-	includePointX,
-	includeText,
-	initExtents,
-} from "@/lib/widgets/utils/layout"
+import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
 
 // Utility function to find intersection point of two lines
@@ -168,9 +164,11 @@ export type AngleDiagramProps = z.infer<typeof AngleDiagramPropsSchema>
 export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchema> = (props) => {
 	const { width, height, points, rays, angles } = props
 
-	const ext = initExtents(width) // Initialize extents tracking
-	let svgBody = ""
-
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
 	const pointMap = new Map(points.map((p) => [p.id, p]))
 
 	// Draw rays
@@ -178,12 +176,11 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 		const from = pointMap.get(ray.from)
 		const to = pointMap.get(ray.to)
 		if (!from || !to) continue
-		
-		// Track ray endpoints
-		includePointX(ext, from.x)
-		includePointX(ext, to.x)
-		
-		svgBody += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="${theme.colors.axis}" stroke-width="${theme.stroke.width.thick}"/>`
+
+		canvas.drawLine(from.x, from.y, to.x, to.y, {
+			stroke: theme.colors.axis,
+			strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+		})
 	}
 
 	// draw angles
@@ -216,12 +213,12 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			const m3x = vertex.x + (u1x + u2x) * markerSize
 			const m3y = vertex.y + (u1y + u2y) * markerSize
 
-			// Track right angle marker vertices
-			includePointX(ext, m1x)
-			includePointX(ext, m2x)
-			includePointX(ext, m3x)
-
-			svgBody += `<path d="M ${m1x} ${m1y} L ${m3x} ${m3y} L ${m2x} ${m2y}" fill="none" stroke="${angle.color}" stroke-width="${theme.stroke.width.thick}"/>`
+			const path = new Path2D().moveTo(m1x, m1y).lineTo(m3x, m3y).lineTo(m2x, m2y)
+			canvas.drawPath(path, {
+				fill: "none",
+				stroke: angle.color,
+				strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+			})
 		}
 
 		if (angle.type === "arc") {
@@ -235,18 +232,21 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			const arcEndX = vertex.x + effectiveRadius * Math.cos(endAngle)
 			const arcEndY = vertex.y + effectiveRadius * Math.sin(endAngle)
 
-			// Track angle arc endpoints
-			includePointX(ext, arcStartX)
-			includePointX(ext, arcEndX)
-
 			let angleDiff = endAngle - startAngle
 			if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI
 			if (angleDiff < -Math.PI) angleDiff += 2 * Math.PI
 
-			const largeArcFlag = Math.abs(angleDiff) > Math.PI ? 1 : 0
-			const sweepFlag = angleDiff > 0 ? 1 : 0
+			const largeArcFlag: 0 | 1 = Math.abs(angleDiff) > Math.PI ? 1 : 0
+			const sweepFlag: 0 | 1 = angleDiff > 0 ? 1 : 0
 
-			svgBody += `<path d="M ${arcStartX} ${arcStartY} A ${angle.radius} ${angle.radius} 0 ${largeArcFlag} ${sweepFlag} ${arcEndX} ${arcEndY}" fill="none" stroke="${angle.color}" stroke-width="${theme.stroke.width.xthick}"/>`
+			const path = new Path2D()
+				.moveTo(arcStartX, arcStartY)
+				.arcTo(angle.radius, angle.radius, 0, largeArcFlag, sweepFlag, arcEndX, arcEndY)
+			canvas.drawPath(path, {
+				fill: "none",
+				stroke: angle.color,
+				strokeWidth: Number.parseFloat(theme.stroke.width.xthick)
+			})
 		}
 
 		if (angle.label !== null) {
@@ -284,21 +284,40 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 
 			const labelX = vertex.x + labelRadius * Math.cos(midAngle)
 			const labelY = vertex.y + labelRadius * Math.sin(midAngle)
-			svgBody += `<text x="${labelX}" y="${labelY}" fill="${theme.colors.text}" stroke="${theme.colors.white}" stroke-width="0.3" paint-order="stroke fill" text-anchor="middle" dominant-baseline="middle" font-size="${theme.font.size.medium}" font-weight="500">${angle.label}</text>`
-			// Track angle label extents
-			includeText(ext, labelX, angle.label, "middle", 7)
+			canvas.drawText({
+				x: labelX,
+				y: labelY,
+				text: angle.label,
+				fill: theme.colors.text,
+				stroke: theme.colors.white,
+				strokeWidth: 0.3,
+				paintOrder: "stroke fill",
+				anchor: "middle",
+				dominantBaseline: "middle",
+				fontPx: Number.parseFloat(theme.font.size.medium.replace("px", "")),
+				fontWeight: "500"
+			})
 		}
 	}
 
 	// Draw points and their labels (drawn last to be on top)
 	for (const point of points) {
-		// Track point location
-		includePointX(ext, point.x)
-		
 		if (point.shape === "ellipse") {
-			svgBody += `<ellipse cx="${point.x}" cy="${point.y}" rx="${theme.geometry.pointRadius.base}" ry="${theme.geometry.pointRadius.base}" fill="${theme.colors.black}" stroke="${theme.colors.black}" stroke-width="${theme.stroke.width.thick}" stroke-dasharray="0"/>`
+			canvas.drawEllipse(
+				point.x,
+				point.y,
+				Number.parseFloat(theme.geometry.pointRadius.base),
+				Number.parseFloat(theme.geometry.pointRadius.base),
+				{
+					fill: theme.colors.black,
+					stroke: theme.colors.black,
+					strokeWidth: Number.parseFloat(theme.stroke.width.thick)
+				}
+			)
 		} else {
-			svgBody += `<circle cx="${point.x}" cy="${point.y}" r="${theme.geometry.pointRadius.base}" fill="${theme.colors.black}"/>`
+			canvas.drawCircle(point.x, point.y, Number.parseFloat(theme.geometry.pointRadius.base), {
+				fill: theme.colors.black
+			})
 		}
 		if (point.label !== null) {
 			// Smart label positioning: avoid rays emanating from this point
@@ -308,9 +327,14 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 				// No rays from this point, use simple offset
 				const textX = point.x + 5
 				const textY = point.y - 5
-				// Track simple point label
-				includeText(ext, textX, point.label, "start", 16)
-				svgBody += `<text x="${textX}" y="${textY}" fill="${theme.colors.text}" font-size="${theme.font.size.large}" font-weight="${theme.font.weight.bold}">${point.label}</text>`
+				canvas.drawText({
+					x: textX,
+					y: textY,
+					text: point.label,
+					fill: theme.colors.text,
+					fontPx: Number.parseFloat(theme.font.size.large.replace("px", "")),
+					fontWeight: theme.font.weight.bold
+				})
 			} else {
 				// Calculate angles of all rays from this point
 				const rayAngles = raysFromPoint
@@ -353,17 +377,20 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 				const labelDistance = 15
 				const textX = point.x + labelDistance * Math.cos(bestAngle)
 				const textY = point.y + labelDistance * Math.sin(bestAngle)
-				svgBody += `<text x="${textX}" y="${textY}" fill="${theme.colors.text}" font-size="${theme.font.size.large}" font-weight="${theme.font.weight.bold}">${point.label}</text>`
-				// Track vertex label extents
-				includeText(ext, textX, point.label, "middle", 8)
+				canvas.drawText({
+					x: textX,
+					y: textY,
+					text: point.label,
+					fill: theme.colors.text,
+					fontPx: Number.parseFloat(theme.font.size.large.replace("px", "")),
+					fontWeight: theme.font.weight.bold
+				})
 			}
 		}
 	}
 
-	// Apply dynamic width at the end
-	const { vbMinX, dynamicWidth } = computeDynamicWidth(ext, height, PADDING)
-	const finalSvg = `<svg width="${dynamicWidth}" height="${height}" viewBox="${vbMinX} 0 ${dynamicWidth} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">`
-		+ svgBody
-		+ `</svg>`
-	return finalSvg
+	// NEW: Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }
