@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><qti-assessment-stimulus xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd" identifier="dropdown-incorrect-stimulus" title="Dropdown Incorrect" xml:lang="en-US">
+  <qti-stimulus-body>
+    <p>In this article, we'll see how a nineteenth-century monk named Gregor Mendel uncovered the key principles of inheritance using a simple, familiar system: the pea plant.</p>
+    <!-- INVALID: Using generic div/h3 instead of semantic details/summary for explanation dropdown -->
+    <div>
+      <h3>Why didn&apos;t Mendel study humans?</h3>
+      <p>Many of us are curious about genetics because we want to understand human inheritance. If the burning questions of genetics are about humans, why would anyone study inheritance in something like the pea plant?</p>
+      <p>When it comes to basic principles of inheritance, humans may be the organisms we most want to learn about, but they aren&apos;t always the best organisms to study experimentally.</p>
+    </div>
+  </qti-stimulus-body>
+</qti-assessment-stimulus>
+

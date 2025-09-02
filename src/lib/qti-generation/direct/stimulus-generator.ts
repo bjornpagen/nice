@@ -430,6 +430,8 @@ Perseus uses special notation like [[☃ widget-name 1]] for interactive widgets
 
 7. **ABSOLUTE LINKS ONLY:** All links MUST be absolute HTTPS URLs. Convert any relative paths (e.g., "/science/...") to \`https://nice.academy/...\`.
 
+8. **DROPDOWNS MUST USE DETAILS/SUMMARY:** Convert Perseus explanation widgets (e.g., \`[[☃ explanation X]]\`) into semantic HTML5 \`<details>\` with a \`<summary>\` for the prompt and the explanation content inside \`<details>\`. Do NOT use generic \`<div>\`/\`<h3>\` structures.
+
 ---
 ### ABSOLUTE XML RULES - NON-NEGOTIABLE ###
 
