@@ -78,6 +78,7 @@ export interface Canvas {
 		fillOpacity?: number
 		transform?: string
 		rotate?: { angle: number; cx: number; cy: number }
+		dominantBaseline?: "auto" | "alphabetic" | "hanging" | "ideographic" | "mathematical" | "middle"
 	}): void
 
 	// Basic shapes

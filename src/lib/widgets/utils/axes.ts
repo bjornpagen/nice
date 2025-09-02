@@ -97,6 +97,8 @@ export function computeAndRenderYAxis(
 	chartArea: { top: number; left: number; width: number; height: number },
 	xAxisSpec: AxisSpec,
 	canvas: Canvas,
+	// ADD THIS ARGUMENT
+	yAxisLabelX: number,
 ): AxisResult {
 	const tickLength = spec.showTicks === false ? 0 : TICK_LENGTH_PX
 	const isCategorical = !!(spec.categories && spec.categories.length > 0)
@@ -202,8 +204,6 @@ export function computeAndRenderYAxis(
 	}
 
 	// Y-axis title (rotated)
-	const yAxisLabelX =
-		axisX - (tickLength + TICK_LABEL_PADDING_PX + TICK_LABEL_FONT_PX + AXIS_TITLE_PADDING_PX + AXIS_TITLE_FONT_PX / 2)
 	const yAxisLabelY = chartArea.top + chartArea.height / 2
 	canvas.drawWrappedText({
 		x: yAxisLabelX,
@@ -213,6 +213,8 @@ export function computeAndRenderYAxis(
 		rotate: { angle: -90, cx: yAxisLabelX, cy: yAxisLabelY },
 		fontPx: AXIS_TITLE_FONT_PX,
 		anchor: "middle",
+		// THIS IS THE FIX: Align the text block vertically to its center.
+		dominantBaseline: "middle",
 		fill: theme.colors.axisLabel
 	})
 

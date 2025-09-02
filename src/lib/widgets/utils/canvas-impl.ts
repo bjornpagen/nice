@@ -1,6 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import type { Canvas, CanvasOptions, Extents2D, FinalizedSvg } from "@/lib/widgets/utils/layout"
 import type { Path2D } from "./path-builder"
+import { estimateWrappedTextDimensions } from "@/lib/widgets/utils/text"
 
 // A lightweight, internal-only canvas for collecting clipped content.
 // It shares the main canvas's extents for proper bounding box calculation but writes to its own buffer.
@@ -223,7 +224,7 @@ export class CanvasImpl implements Canvas {
 		const dominantBaseline = opts.dominantBaseline || "baseline"
 		const lineHeight = opts.lineHeight || 1.2
 
-		const textWidth = this.estimateTextWidth(opts.text, fontPx)
+		const { maxWidth: textWidth } = estimateWrappedTextDimensions(opts.text, Infinity, fontPx, lineHeight) // Use shared estimation for single-line width
 		const textHeight = fontPx
 
 		// Check if we need to wrap text
@@ -236,7 +237,7 @@ export class CanvasImpl implements Canvas {
 		}
 
 		// Calculate max line width for bounding box
-		const maxLineWidth = Math.max(...lines.map((line) => this.estimateTextWidth(line, fontPx)))
+		const maxLineWidth = Math.max(...lines.map(line => this.estimateTextWidth(line, fontPx)))
 
 		// Calculate initial bounding box corners before rotation
 		let minX = opts.x
@@ -356,6 +357,7 @@ export class CanvasImpl implements Canvas {
 		fillOpacity?: number
 		transform?: string
 		rotate?: { angle: number; cx: number; cy: number }
+		dominantBaseline?: "auto" | "alphabetic" | "hanging" | "ideographic" | "mathematical" | "middle"
 	}): void {
 		// Validate parameters
 		if (opts.fontPx !== undefined && (!isFinite(opts.fontPx) || opts.fontPx <= 0)) {
@@ -369,79 +371,79 @@ export class CanvasImpl implements Canvas {
 		const lineHeight = opts.lineHeight || this.options.lineHeightDefault
 		const anchor = opts.anchor || "start"
 
-		// Simple greedy word wrapping
-		const words = opts.text.split(/\s+/).filter(Boolean)
-		const lines: string[] = []
-		let currentLine = ""
+		const lines = this.wrapText(opts.text, opts.maxWidthPx, fontPx)
 
-		for (const word of words) {
-			const testLine = currentLine ? `${currentLine} ${word}` : word
-			const testWidth = this.estimateTextWidth(testLine, fontPx)
+		// Create a single text element with tspans for each line
+		const tspans = lines
+			.map((line, i) => {
+				const dy = i === 0 ? "0" : `${lineHeight}em`
+				return `<tspan x="${opts.x}" dy="${dy}">${this.escapeHtml(line)}</tspan>`
+			})
+			.join("")
 
-			if (testWidth <= opts.maxWidthPx) {
-				currentLine = testLine
-			} else {
-				if (currentLine) {
-					lines.push(currentLine)
-					currentLine = word
-				} else {
-					// Single word exceeds maxWidth - keep it as one line
-					lines.push(word)
-				}
-			}
+		let attrs = `x="${opts.x}" y="${opts.y}" font-size="${fontPx}"`
+		if (anchor !== "start") attrs += ` text-anchor="${anchor}"`
+		if (opts.fontWeight) attrs += ` font-weight="${opts.fontWeight}"`
+		if (opts.fill) attrs += ` fill="${opts.fill}"`
+		if (opts.stroke) attrs += ` stroke="${opts.stroke}"`
+		if (opts.strokeWidth) attrs += ` stroke-width="${opts.strokeWidth}"`
+		if (opts.paintOrder) attrs += ` paint-order="${opts.paintOrder}"`
+		if (opts.opacity !== undefined) attrs += ` opacity="${opts.opacity}"`
+		if (opts.strokeOpacity !== undefined) attrs += ` stroke-opacity="${opts.strokeOpacity}"`
+		if (opts.fillOpacity !== undefined) attrs += ` fill-opacity="${opts.fillOpacity}"`
+		if (opts.dominantBaseline && opts.dominantBaseline !== "auto") attrs += ` dominant-baseline="${opts.dominantBaseline}"`
+
+		let transformAttr = ""
+		if (opts.rotate) {
+			transformAttr += `rotate(${opts.rotate.angle}, ${opts.rotate.cx}, ${opts.rotate.cy})`
 		}
-		if (currentLine) {
-			lines.push(currentLine)
+		if (opts.transform) {
+			transformAttr += transformAttr ? ` ${opts.transform}` : opts.transform
 		}
+		if (transformAttr) attrs += ` transform="${transformAttr}"`
 
-		// Calculate total text bounds
+		this.svgBody += `<text ${attrs}>${tspans}</text>`
+
+		// Update extents based on the entire block
 		const totalHeight = lines.length * fontPx * lineHeight
-		const maxLineWidth = Math.max(...lines.map((line) => this.estimateTextWidth(line, fontPx)))
+		const maxLineWidth = Math.max(...lines.map(line => this.estimateTextWidth(line, fontPx)))
 
 		let textMinX = opts.x
-		let textMaxX = opts.x + maxLineWidth
-		if (anchor === "middle") {
-			textMinX = opts.x - maxLineWidth / 2
-			textMaxX = opts.x + maxLineWidth / 2
-		} else if (anchor === "end") {
-			textMinX = opts.x - maxLineWidth
-			textMaxX = opts.x
-		}
+		if (anchor === "middle") textMinX -= maxLineWidth / 2
+		else if (anchor === "end") textMinX -= maxLineWidth
 
-		const textMinY = opts.y
-		const textMaxY = opts.y + totalHeight
+		const textMinY = opts.y - fontPx * 0.2 // Approximate baseline adjustment
 
-		// Expand extents by stroke if present
-		if (opts.stroke && opts.strokeWidth && opts.strokeWidth > 0) {
-			const strokeExpansion = opts.strokeWidth / 2
-			textMinX -= strokeExpansion
-			textMaxX += strokeExpansion
-			this.updateExtents(textMinX, textMaxX, textMinY - strokeExpansion, textMaxY + strokeExpansion)
-		} else {
-			this.updateExtents(textMinX, textMaxX, textMinY, textMaxY)
-		}
+		const corners = [
+			{ x: textMinX, y: textMinY },
+			{ x: textMinX + maxLineWidth, y: textMinY },
+			{ x: textMinX + maxLineWidth, y: textMinY + totalHeight },
+			{ x: textMinX, y: textMinY + totalHeight },
+		]
 
-		// Render each line
-		lines.forEach((line, i) => {
-			const lineY = opts.y + i * fontPx * lineHeight
-			this.drawText({
-				x: opts.x,
-				y: lineY,
-				text: line,
-				anchor: opts.anchor,
-				fontPx: opts.fontPx,
-				fontWeight: opts.fontWeight,
-				paintOrder: opts.paintOrder,
-				stroke: opts.stroke,
-				strokeWidth: opts.strokeWidth,
-				fill: opts.fill,
-				opacity: opts.opacity,
-				strokeOpacity: opts.strokeOpacity,
-				fillOpacity: opts.fillOpacity,
-				transform: opts.transform,
-				rotate: opts.rotate
+		if (opts.rotate) {
+			const { angle, cx, cy } = opts.rotate
+			const rad = (angle * Math.PI) / 180
+			const cos = Math.cos(rad)
+			const sin = Math.sin(rad)
+
+			const rotatedCorners = corners.map(p => {
+				const translatedX = p.x - cx
+				const translatedY = p.y - cy
+				return {
+					x: translatedX * cos - translatedY * sin + cx,
+					y: translatedX * sin + translatedY * cos + cy
+				}
 			})
-		})
+			this.updateExtents(
+				Math.min(...rotatedCorners.map(p => p.x)),
+				Math.max(...rotatedCorners.map(p => p.x)),
+				Math.min(...rotatedCorners.map(p => p.y)),
+				Math.max(...rotatedCorners.map(p => p.y))
+			)
+		} else {
+			this.updateExtents(textMinX, textMinX + maxLineWidth, textMinY, textMinY + totalHeight)
+		}
 	}
 
 	drawLine(

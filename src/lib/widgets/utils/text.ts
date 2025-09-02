@@ -152,8 +152,7 @@ export function stripMarkdownToPlaintext(input: string): string {
 
 /**
  * Estimates the final dimensions (width and height) of a text element after wrapping.
- * This function simulates the wrapping logic of `renderWrappedText` without rendering SVG,
- * allowing layout utilities to predict the bounding box of text.
+ * This function uses the same wrapping logic as CanvasImpl.wrapText for accurate prediction.
  *
  * @returns An object with the total height and maximum width of the wrapped text.
  */
@@ -161,44 +160,53 @@ export function estimateWrappedTextDimensions(
 	text: string,
 	maxWidthPx: number,
 	fontSize = 16,
-	lineHeight = 1.1,
+	lineHeight = 1.2,
 	approxCharWidthPx = 8
 ): { height: number; maxWidth: number } {
-	let lines: string[] = []
-	const titlePattern = /^(.*)\s+(\(.+\))$/
-	const m = text.match(titlePattern)
+	// Use shared wrapText logic for accurate prediction
+	const lines = wrapText(text, maxWidthPx, fontSize)
 
-	if (m?.[1] && m[2] && text.length > 36) {
-		lines = [m[1].trim(), m[2].trim()]
-	} else {
-		const estimated = text.length * approxCharWidthPx
-		if (maxWidthPx && estimated > maxWidthPx) {
-			const words = text.split(/\s+/).filter(Boolean)
-			if (words.length > 1) {
-				const wordWidths = words.map((w) => w.length * approxCharWidthPx)
-				const total = wordWidths.reduce((a, b) => a + b, 0) + (words.length - 1) * approxCharWidthPx
-				const target = total / 2
-				let acc = 0
-				let splitIdx = 1
-				for (let i = 0; i < words.length - 1; i++) {
-					const w = wordWidths[i] ?? 0
-					acc += w + approxCharWidthPx
-					if (acc >= target) {
-						splitIdx = i + 1
-						break
-					}
-				}
-				lines = [words.slice(0, splitIdx).join(" "), words.slice(splitIdx).join(" ")]
-			} else {
-				lines = [text]
-			}
+	const totalHeight = fontSize * lines.length * lineHeight
+	const maxWidth = Math.max(...lines.map(line => estimateTextWidth(line, fontSize)))
+	return { height: totalHeight, maxWidth }
+}
+
+/**
+ * Shared text wrapping function that matches CanvasImpl.wrapText logic
+ */
+function wrapText(text: string, maxWidth: number, fontPx: number): string[] {
+	// First check for explicit line breaks
+	if (text.includes('\n')) {
+		return text.split('\n')
+	}
+	// Simple word-based wrapping
+	const words = text.split(' ')
+	const lines: string[] = []
+	let currentLine = ''
+	for (const word of words) {
+		const testLine = currentLine ? `${currentLine} ${word}` : word
+		const testWidth = estimateTextWidth(testLine, fontPx)
+		if (testWidth > maxWidth && currentLine) {
+			// Word doesn't fit, start new line
+			lines.push(currentLine)
+			currentLine = word
 		} else {
-			lines = [text]
+			// Word fits, add it to current line
+			currentLine = testLine
 		}
 	}
+	// Add the last line
+	if (currentLine) {
+		lines.push(currentLine)
+	}
+	return lines.length > 0 ? lines : [text]
+}
 
-	const totalHeight = lines.length * fontSize * lineHeight
-	const maxWidth = Math.max(...lines.map((line) => line.length * approxCharWidthPx))
-
-	return { height: totalHeight, maxWidth }
+/**
+ * Shared text width estimation that matches CanvasImpl.estimateTextWidth
+ */
+function estimateTextWidth(text: string, fontPx: number): number {
+	// Simple heuristic: average character width is about 0.6 * font size
+	// This is server-safe and deterministic
+	return text.length * fontPx * 0.6
 }

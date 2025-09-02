@@ -7,7 +7,9 @@ import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
 import { setupCoordinatePlaneBaseV2 } from "@/lib/widgets/utils/coordinate-plane-utils"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
+import { estimateWrappedTextDimensions } from "@/lib/widgets/utils/text" // ADD THIS IMPORT
 import { theme } from "@/lib/widgets/utils/theme"
+import { buildTicks } from "@/lib/widgets/utils/ticks" // ADD THIS IMPORT
 
 export const ErrMismatchedDataLength = errors.new("series data must have the same length as x-axis categories")
 
@@ -166,17 +168,30 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		}
 
 		const yCenter = baseInfo.chartArea.top + baseInfo.chartArea.height / 2
-		const labelX = rightAxisX + 30
+
+		// ADD dynamic labelX calculation
+		const { height: wrappedTitleHeight } = estimateWrappedTextDimensions(yAxisRight.label, baseInfo.chartArea.height, 16, 1.2)
+		const rightTickInfo = buildTicks(yAxisRight.min, yAxisRight.max, yAxisRight.tickInterval)
+		const maxTickLabelWidth = Math.max(...rightTickInfo.labels.map(l => l.length * 7)) // Heuristic
+		const TICK_LENGTH = 5
+		const TICK_LABEL_PADDING = 10
+		const AXIS_TITLE_PADDING = 15
+
+		const labelX = rightAxisX + TICK_LENGTH + TICK_LABEL_PADDING + maxTickLabelWidth + AXIS_TITLE_PADDING + wrappedTitleHeight / 2
+
 		// Estimate available width for text (space between axis and chart edge)
 		const availableWidth = Math.max(50, baseInfo.chartArea.width - (rightAxisX - baseInfo.chartArea.left))
-		canvas.drawText({
+
+		// CHANGE drawText to drawWrappedText and use new labelX
+		canvas.drawWrappedText({
 			x: labelX,
 			y: yCenter,
 			text: abbreviateMonth(yAxisRight.label),
 			anchor: "middle",
 			fontPx: 16,
-			maxWidth: availableWidth,
-			rotate: { angle: -90, cx: labelX, cy: yCenter }
+			maxWidthPx: availableWidth,
+			// FIX: Use 90 for right axis to read top-to-bottom
+			rotate: { angle: 90, cx: labelX, cy: yCenter }
 		})
 	}
 
@@ -219,18 +234,26 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		}
 	}
 
-	// Legend content
+	// Legend content (moved to the right side, outside clip)
 	if (showLegend) {
 		const legendItemHeight = 18
 		const legendLineLength = 30
-		const estimateTextWidth = (text: string) => text.length * 7
-		const maxTextWidth = Math.max(...series.map((s) => estimateTextWidth(s.name)))
-		const legendBoxWidth = legendLineLength + 12 + 8 + maxTextWidth
+		// Start near the top-right of the chart area
+		let legendStartX = baseInfo.chartArea.left + baseInfo.chartArea.width + 15
+		const legendStartY = baseInfo.chartArea.top + 10
 
-		let legendStartX = (width - legendBoxWidth) / 2
-		if (legendStartX < 10) legendStartX = 10
-
-		const legendStartY = baseInfo.chartArea.top + baseInfo.chartArea.height + 50
+		// If a right Y-axis exists and we computed a right-side label position, push legend further right
+		if (yAxisRight) {
+			const rightAxisX = baseInfo.chartArea.left + baseInfo.chartArea.width
+			const { height: wrappedTitleHeight } = estimateWrappedTextDimensions(yAxisRight.label, baseInfo.chartArea.height, 16, 1.2)
+			const rightTickInfo = buildTicks(yAxisRight.min, yAxisRight.max, yAxisRight.tickInterval)
+			const maxTickLabelWidth = Math.max(...rightTickInfo.labels.map((l) => l.length * 7))
+			const TICK_LENGTH = 5
+			const TICK_LABEL_PADDING = 10
+			const AXIS_TITLE_PADDING = 15
+			const labelX = rightAxisX + TICK_LENGTH + TICK_LABEL_PADDING + maxTickLabelWidth + AXIS_TITLE_PADDING + wrappedTitleHeight / 2
+			legendStartX = labelX + 20
+		}
 
 		canvas.drawLegendBlock({
 			startX: legendStartX,

@@ -10,6 +10,7 @@ import { selectAxisLabels } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 import { abbreviateMonth } from "./labels"
 import { buildTicks } from "./ticks"
+import { estimateWrappedTextDimensions } from "./text" // ADD THIS IMPORT
 
 // Re-export types that are needed for the render functions
 export type AxisOptions = {
@@ -44,8 +45,20 @@ export function setupCoordinatePlaneV2(
 } {
 	const { width, height, xAxis, yAxis, showQuadrantLabels } = data
 
+	// ADD dynamic margin calculation logic
+	const yAxisTickInfo = buildTicks(yAxis.min, yAxis.max, yAxis.tickInterval)
+	const maxTickLabelWidth = Math.max(...yAxisTickInfo.labels.map(l => l.length * LABEL_AVG_CHAR_WIDTH_PX))
+	const { height: wrappedTitleHeight } = estimateWrappedTextDimensions(yAxis.label, height, 14)
+	// Note: For v2 (4-quadrant), use similar logic but adjust if needed for centered axes.
+
+	const TICK_LENGTH = 4
+	const TICK_LABEL_PADDING = 8
+	const AXIS_TITLE_PADDING = 12
+
+	const dynamicLeftMargin = TICK_LENGTH + TICK_LABEL_PADDING + maxTickLabelWidth + AXIS_TITLE_PADDING + wrappedTitleHeight / 2 + PADDING
+
 	// Define margins to create space for labels and ticks
-	const margin = { top: PADDING, right: PADDING, bottom: 40, left: 40 }
+	const margin = { top: PADDING, right: PADDING, bottom: 40, left: dynamicLeftMargin }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 
@@ -165,16 +178,19 @@ export function setupCoordinatePlaneV2(
 		fill: theme.colors.axisLabel,
 		fontPx: 14
 	})
-	const yAxisLabelX = 15
-	const yAxisLabelY = margin.top + chartHeight / 2
-	canvas.drawText({
-		x: yAxisLabelX,
-		y: yAxisLabelY,
+
+	// ADD new dynamic and wrapped axis label logic
+	const yAxisTitleX = margin.left - (AXIS_TITLE_PADDING + maxTickLabelWidth + TICK_LABEL_PADDING + TICK_LENGTH + wrappedTitleHeight / 2)
+	const yAxisTitleY = margin.top + chartHeight / 2
+	canvas.drawWrappedText({
+		x: yAxisTitleX,
+		y: yAxisTitleY,
 		text: abbreviateMonth(yAxis.label),
+		maxWidthPx: chartHeight,
 		anchor: "middle",
 		fill: theme.colors.axisLabel,
 		fontPx: 14,
-		rotate: { angle: -90, cx: yAxisLabelX, cy: yAxisLabelY }
+		rotate: { angle: -90, cx: yAxisTitleX, cy: yAxisTitleY }
 	})
 
 	// Quadrant labels

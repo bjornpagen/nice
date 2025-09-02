@@ -9,11 +9,17 @@ import {
 	AXIS_VIEWBOX_PADDING,
 	CHART_TITLE_BOTTOM_PADDING_PX,
 	CHART_TITLE_FONT_PX,
-	CHART_TITLE_TOP_PADDING_PX
+	CHART_TITLE_TOP_PADDING_PX,
+	TICK_LENGTH_PX,
+	TICK_LABEL_PADDING_PX,
+	AXIS_TITLE_PADDING_PX,
+	AXIS_TITLE_FONT_PX,
+	LABEL_AVG_CHAR_WIDTH_PX
 } from "@/lib/widgets/utils/constants"
-import type { Canvas } from "@/lib/widgets/utils/layout"
+import { type Canvas } from "@/lib/widgets/utils/layout"
 import { estimateWrappedTextDimensions } from "@/lib/widgets/utils/text"
 import { theme } from "@/lib/widgets/utils/theme"
+import { buildTicks } from "./ticks"
 
 // Coordinate plane specific types
 export type AxisOptionsFromWidgetX =
@@ -78,18 +84,43 @@ export function setupCoordinatePlaneBaseV2(
 		titleHeight = CHART_TITLE_TOP_PADDING_PX + dims.height + CHART_TITLE_BOTTOM_PADDING_PX
 	}
 
-	// We need to estimate padding without actually rendering
-	// For now, use conservative estimates based on constants
-	const leftOutsidePx = 80 // Conservative estimate for Y-axis
-	const outsideBottomPx = 60 // Conservative estimate for X-axis
+	const outsideBottomPx = 60 // Fixed estimate for X-axis (ticks + labels + title)
 	const outsideTopPx = (hasTitle ? titleHeight : 0) + 20 // Title + some buffer
+
+	// --- START: DEFINITIVE FIX FOR Y-AXIS LAYOUT ---
+	// 1. Estimate the dimensions of all Y-axis components.
+	const { labels: yTickLabels } = buildTicks(data.yAxis.min, data.yAxis.max, data.yAxis.tickInterval)
+	const maxTickLabelWidth = Math.max(...yTickLabels.map(l => l.length * LABEL_AVG_CHAR_WIDTH_PX), 0)
+
+	// Tentative chart height for accurate wrapping estimation
+	const tentativeChartHeight = data.height - outsideTopPx - outsideBottomPx
+
+	const { height: wrappedTitleHeight } = estimateWrappedTextDimensions(
+		data.yAxis.label,
+		tentativeChartHeight, // Use tentative height for consistent wrapping
+		AXIS_TITLE_FONT_PX
+	)
+
+	// 2. Calculate the position for the Y-axis title. Its X is half its rotated width.
+	// This leaves space for the entire label.
+	const yAxisLabelX = wrappedTitleHeight / 2
+
+	// 3. Calculate the total left margin needed to fit the title, padding, and axis hardware.
+	const leftOutsidePx =
+		wrappedTitleHeight +        // The full "width" of the rotated title
+		AXIS_TITLE_PADDING_PX +
+		TICK_LABEL_PADDING_PX +
+		TICK_LENGTH_PX +
+		maxTickLabelWidth
+
+	// --- END: DEFINITIVE FIX ---
 
 	// Final chart area places the axis area inside the total SVG canvas
 	const chartArea = {
 		top: outsideTopPx,
 		left: leftOutsidePx,
-		width: data.width,
-		height: data.height
+		width: data.width - leftOutsidePx - 80, // Adjust width based on dynamic margin
+		height: data.height - outsideTopPx - outsideBottomPx
 	}
 
 	const yAxisSpec: AxisSpecY = {
@@ -149,8 +180,8 @@ export function setupCoordinatePlaneBaseV2(
 		})
 	}
 
-	// Render axes against the final chartArea
-	const yRes = computeAndRenderYAxis(yAxisLegacySpec, chartArea, xAxisLegacySpec, canvas)
+	// Render axes against the final chartArea, passing the new yAxisLabelX
+	const yRes = computeAndRenderYAxis(yAxisLegacySpec, chartArea, xAxisLegacySpec, canvas, yAxisLabelX)
 	const xRes = computeAndRenderXAxis(xAxisSpec, chartArea, canvas)
 
 	// Clip path for geometry (only chart content, not axes/labels)
