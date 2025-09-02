@@ -277,6 +277,67 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		Exercise: lessonContents.filter((lc) => lc.contentType === "Exercise").map((lc) => lc.contentId)
 	}
 
+	// --- NEW: Fetch CASE learning objective IDs from Common Core via join table ---
+	// Build a map keyed by `${contentType}:${contentId}` -> string[] of CASE IDs
+	const learningObjectivesByContentTypeId = new Map<string, string[]>()
+	function addLearningObjective(contentType: "Video" | "Article" | "Exercise", contentId: string, caseId: string): void {
+		if (caseId === "") {
+			return
+		}
+		const key = `${contentType}:${contentId}`
+		const existing = learningObjectivesByContentTypeId.get(key)
+		if (existing) {
+			if (!existing.includes(caseId)) {
+				existing.push(caseId)
+			}
+			return
+		}
+		learningObjectivesByContentTypeId.set(key, [caseId])
+	}
+
+	// Helper to process a single content type array
+	async function fetchCaseIdsForContentType(
+		contentType: "Video" | "Article" | "Exercise",
+		ids: string[]
+	): Promise<void> {
+		if (ids.length === 0) {
+			return
+		}
+		const result = await errors.try(
+			db
+				.select({
+					contentId: schema.niceLessonContentsCommonCoreStandards.contentId,
+					caseId: schema.niceCommonCoreStandards.caseId
+				})
+				.from(schema.niceLessonContentsCommonCoreStandards)
+				.innerJoin(
+					schema.niceCommonCoreStandards,
+					eq(
+						schema.niceLessonContentsCommonCoreStandards.commonCoreStandardId,
+						schema.niceCommonCoreStandards.id
+					)
+				)
+				.where(
+					and(
+						inArray(schema.niceLessonContentsCommonCoreStandards.contentId, ids),
+						eq(schema.niceLessonContentsCommonCoreStandards.contentType, contentType)
+					)
+				)
+		)
+		if (result.error) {
+			logger.error("failed to fetch case ids for content", { contentType, count: ids.length, error: result.error })
+			throw errors.wrap(result.error, "database query for case ids")
+		}
+		for (const row of result.data) {
+			addLearningObjective(contentType, row.contentId, row.caseId)
+		}
+	}
+
+	// Fetch for each type sequentially (data dependent on type); each call handles empty lists
+	await fetchCaseIdsForContentType("Video", contentIds.Video)
+	await fetchCaseIdsForContentType("Article", contentIds.Article)
+	await fetchCaseIdsForContentType("Exercise", contentIds.Exercise)
+
 	const [videos, articles, exercises] = await Promise.all([
 		contentIds.Video.length
 			? db.query.niceVideos.findMany({ where: inArray(schema.niceVideos.id, contentIds.Video) })
@@ -636,6 +697,22 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								launchUrl: `${appDomain}${metadata.path}/e/${content.slug}`,
 								url: `${appDomain}${metadata.path}/e/${content.slug}`,
 								xp: Math.ceil(exerciseQuestionCount * 0.5)
+							}
+						}
+
+						// Attach CASE learning objectives to metadata when present
+						{
+							const caseIds = learningObjectivesByContentTypeId.get(`${lc.contentType}:${content.id}`)
+							if (caseIds && caseIds.length > 0) {
+								metadata = {
+									...metadata,
+									learningObjectiveSet: [
+										{
+											source: "CASE",
+											learningObjectiveIds: caseIds
+										}
+									]
+								}
 							}
 						}
 
