@@ -128,6 +128,7 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 	const plotHeight = height - margin.top - margin.bottom
 	const chartWidth = width - margin.left - margin.right
 	const yCenter = margin.top + plotHeight / 2
+	const innerBottomGapPx = 10
 
 	if (axis.min >= axis.max) {
 		logger.error("invalid axis range for box plot", { axisMin: axis.min, axisMax: axis.max })
@@ -200,36 +201,46 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 	})
 
 	// Box plot elements
-	// Whiskers
-	canvas.drawLine(minPos, yCenter, q1Pos, yCenter, {
-		stroke: theme.colors.black,
-		strokeWidth: theme.stroke.width.base
-	})
-	canvas.drawLine(q3Pos, yCenter, maxPos, yCenter, {
-		stroke: theme.colors.black,
-		strokeWidth: theme.stroke.width.base
-	})
+	// Main box with guaranteed clearance above axis, anchored to axis for consistent thickness
+	const minBoxHeightPx = 14
+	const maxBoxHeightPx = 28
+	const safeBottom = axisY - innerBottomGapPx
+	// For cramped charts, draw a proper box anchored to the axis regardless of plotHeight
+	const desiredHeight = Math.max(minBoxHeightPx, Math.min(maxBoxHeightPx, height * 0.25))
+	const boxTopRaw = safeBottom - desiredHeight
+	const boxTop = Math.max(0, boxTopRaw)
+	const boxHeight = Math.max(minBoxHeightPx, safeBottom - boxTop)
 
-	canvas.drawLine(minPos, yCenter - 10, minPos, yCenter + 10, {
-		stroke: theme.colors.black,
-		strokeWidth: theme.stroke.width.base
-	})
-	canvas.drawLine(maxPos, yCenter - 10, maxPos, yCenter + 10, {
-		stroke: theme.colors.black,
-		strokeWidth: theme.stroke.width.base
-	})
-
-	// Main box
-	canvas.drawRect(q1Pos, yCenter - plotHeight / 2, q3Pos - q1Pos, plotHeight, {
+	canvas.drawRect(q1Pos, boxTop, q3Pos - q1Pos, boxHeight, {
 		fill: boxColor,
 		stroke: theme.colors.black,
 		strokeWidth: theme.stroke.width.base
 	})
 
 	// Median line
-	canvas.drawLine(medianPos, yCenter - plotHeight / 2, medianPos, yCenter + plotHeight / 2, {
+	canvas.drawLine(medianPos, boxTop, medianPos, safeBottom, {
 		stroke: medianColor,
 		strokeWidth: theme.stroke.width.thick
+	})
+
+	// Whiskers aligned with the box vertical center
+	const yMidForWhiskers = (boxTop + safeBottom) / 2
+	canvas.drawLine(minPos, yMidForWhiskers, q1Pos, yMidForWhiskers, {
+		stroke: theme.colors.black,
+		strokeWidth: theme.stroke.width.base
+	})
+	canvas.drawLine(q3Pos, yMidForWhiskers, maxPos, yMidForWhiskers, {
+		stroke: theme.colors.black,
+		strokeWidth: theme.stroke.width.base
+	})
+
+	canvas.drawLine(minPos, yMidForWhiskers - 10, minPos, yMidForWhiskers + 10, {
+		stroke: theme.colors.black,
+		strokeWidth: theme.stroke.width.base
+	})
+	canvas.drawLine(maxPos, yMidForWhiskers - 10, maxPos, yMidForWhiskers + 10, {
+		stroke: theme.colors.black,
+		strokeWidth: theme.stroke.width.base
 	})
 
 	// NEW: Finalize the canvas and construct the root SVG element
