@@ -41,19 +41,17 @@ export function Header({
 					{/* Search - strictly constrained width */}
 					<div className="relative w-24 sm:w-32 md:w-40 cursor-not-allowed hidden">
 						<Search
-							className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 ${
-								dark ? "text-white" : "text-blue-600"
-							}`}
+							className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 ${dark ? "text-white" : "text-blue-600"
+								}`}
 						/>
 						<Input
 							type="search"
 							placeholder="Search"
 							disabled
-							className={`pl-10 pr-4 py-2 w-full text-sm ${
-								dark
-									? "border-white text-white placeholder:text-white focus:border-white focus:ring-white"
-									: "border-blue-200 placeholder:text-blue-600 focus:border-blue-600 focus:ring-blue-600"
-							}`}
+							className={`pl-10 pr-4 py-2 w-full text-sm ${dark
+								? "border-white text-white placeholder:text-white focus:border-white focus:ring-white"
+								: "border-blue-200 placeholder:text-blue-600 focus:border-blue-600 focus:ring-blue-600"
+								}`}
 						/>
 					</div>
 				</div>
@@ -81,10 +79,10 @@ export function Header({
 					{/* Login/Signup buttons for signed out users */}
 					<SignedOut>
 						<Button asChild variant="link" className={`px-4 ${dark ? "text-white" : "text-blue-600"}`}>
-							<Link href="/login">Log in</Link>
+							<Link href="/login?auto=timeback">Log in</Link>
 						</Button>
 						<Button asChild className="bg-blue-600 hover:bg-blue-700 font-medium px-6">
-							<Link href="/login">Sign up</Link>
+							<Link href="/login?auto=timeback">Sign up</Link>
 						</Button>
 					</SignedOut>
 				</div>

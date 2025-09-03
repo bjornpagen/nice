@@ -2,6 +2,7 @@
 
 import { useSignIn } from "@clerk/nextjs"
 import Image from "next/image"
+import { useSearchParams } from "next/navigation"
 import * as React from "react"
 import { Header } from "@/components/header"
 import { Button } from "@/components/ui/button"
@@ -11,6 +12,7 @@ import { dialogKeys, useDialogManager } from "@/hooks/use-dialog-manager"
 export default function Home() {
 	const { signIn } = useSignIn()
 	const { shouldShow, openDialog } = useDialogManager()
+	const searchParams = useSearchParams()
 
 	React.useEffect(() => {
 		// On component mount, check if the cookie dialog should be shown.
@@ -26,6 +28,12 @@ export default function Home() {
 			redirectUrlComplete: "/profile/me/courses"
 		})
 	}
+
+	React.useEffect(() => {
+		if (searchParams.get("auto") === "timeback") {
+			handleTimeBackSignIn()
+		}
+	}, [searchParams, signIn])
 
 	return (
 		<div className="flex flex-col min-h-screen bg-white">
@@ -71,36 +79,8 @@ export default function Home() {
 									<span className="mr-2">Continue with</span>
 									<Image src="/timeback.png" alt="TimeBack" width={100} height={100} className="h-5 w-auto" />
 								</Button>
-
-								<p className="text-xs text-gray-500 text-center leading-relaxed">
-									By logging in, you agree to the{" "}
-									<button type="button" className="text-blue-600 hover:underline">
-										Nice Academy Terms of Service
-									</button>{" "}
-									and{" "}
-									<button type="button" className="text-blue-600 hover:underline">
-										Privacy Policy
-									</button>
-									.
-								</p>
-
-								<p className="text-sm text-center text-gray-600 pt-2">
-									Need a Nice Academy account?{" "}
-									<button type="button" className="text-blue-600 hover:underline font-semibold">
-										Sign up today
-									</button>
-								</p>
 							</CardContent>
 						</Card>
-
-						<div className="mt-8 text-center">
-							<p className="text-gray-600">
-								Don&apos;t have an account?{" "}
-								<Button variant="link" className="text-blue-600 hover:text-blue-700 p-0 font-medium">
-									Sign up for free!
-								</Button>
-							</p>
-						</div>
 					</div>
 				</div>
 			</main>
