@@ -30,23 +30,11 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	const input = {
 	"width": 281,
 	"height": 400,
-	"squareA": {
-		"area": 58,
-		"color": "#FFE082",
-		"sideLabel": "a"
-	},
-	"squareB": {
-		"area": 10,
-		"color": "#90CAF9",
-		"sideLabel": "b"
-	},
-	"squareC": {
-		"area": 64,
-		"color": "#A5D6A7",
-		"sideLabel": "c"
-	},
+	"sideA": { "label": "a", "square": { "area": 58, "color": "#FFE082" } },
+	"sideB": { "label": "b", "square": { "area": 10, "color": "#90CAF9" } },
+	"sideC": { "label": "c", "square": { "area": 64, "color": "#A5D6A7" } },
 	"type": "pythagoreanProofDiagram"
-} satisfies PythagoreanProofDiagramInput
+	} satisfies PythagoreanProofDiagramInput
 
 	// Validate the input
 	const parseResult = PythagoreanProofDiagramPropsSchema.safeParse(input)
@@ -69,23 +57,11 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	const input = {
 	"width": 240,
 	"height": 193,
-	"squareA": {
-		"area": 33,
-		"color": "#ca337c",
-		"sideLabel": null
-	},
-	"squareB": {
-		"area": 0,
-		"color": "#11accd",
-		"sideLabel": null
-	},
-	"squareC": {
-		"area": 44,
-		"color": "#1fab54",
-		"sideLabel": null
-	},
+	"sideA": { "label": null, "square": { "area": 33, "color": "#ca337c" } },
+	"sideB": { "label": null, "square": { "area": 0, "color": "#11accd" } },
+	"sideC": { "label": null, "square": { "area": 44, "color": "#1fab54" } },
 	"type": "pythagoreanProofDiagram"
-} satisfies PythagoreanProofDiagramInput
+	} satisfies PythagoreanProofDiagramInput
 
 	// Validate the input
 	const parseResult = PythagoreanProofDiagramPropsSchema.safeParse(input)
@@ -108,23 +84,11 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	const input = {
 	"width": 300,
 	"height": 263,
-	"squareA": {
-		"area": 4,
-		"color": "#FFE082",
-		"sideLabel": "2"
-	},
-	"squareB": {
-		"area": 16,
-		"color": "#90CAF9",
-		"sideLabel": "4"
-	},
-	"squareC": {
-		"area": 0,
-		"color": "#FFAB91",
-		"sideLabel": "x"
-	},
+	"sideA": { "label": "2", "square": { "area": 4, "color": "#FFE082" } },
+	"sideB": { "label": "4", "square": { "area": 16, "color": "#90CAF9" } },
+	"sideC": { "label": "x", "square": { "area": 0, "color": "#FFAB91" } },
 	"type": "pythagoreanProofDiagram"
-} satisfies PythagoreanProofDiagramInput
+	} satisfies PythagoreanProofDiagramInput
 
 	// Validate the input
 	const parseResult = PythagoreanProofDiagramPropsSchema.safeParse(input)
@@ -147,23 +111,11 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	const input = {
 	"width": 224,
 	"height": 240,
-	"squareA": {
-		"area": 0,
-		"color": "#ffbde0",
-		"sideLabel": "a"
-	},
-	"squareB": {
-		"area": 0,
-		"color": "#ffbde0",
-		"sideLabel": "b"
-	},
-	"squareC": {
-		"area": 55,
-		"color": "#ffbde0",
-		"sideLabel": "c"
-	},
+	"sideA": { "label": "a", "square": { "area": 0, "color": "#ffbde0" } },
+	"sideB": { "label": "b", "square": { "area": 0, "color": "#ffbde0" } },
+	"sideC": { "label": "c", "square": { "area": 55, "color": "#ffbde0" } },
 	"type": "pythagoreanProofDiagram"
-} satisfies PythagoreanProofDiagramInput
+	} satisfies PythagoreanProofDiagramInput
 
 	// Validate the input
 	const parseResult = PythagoreanProofDiagramPropsSchema.safeParse(input)
@@ -186,21 +138,9 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	const input = {
 	"width": 240,
 	"height": 197,
-	"squareA": {
-		"area": 0,
-		"color": "#ffbde0",
-		"sideLabel": " "
-	},
-	"squareB": {
-		"area": 0,
-		"color": "#ffbde0",
-		"sideLabel": " "
-	},
-	"squareC": {
-		"area": 67,
-		"color": "#ffbde0",
-		"sideLabel": " "
-	},
+	"sideA": { "label": " ", "square": { "area": 0, "color": "#ffbde0" } },
+	"sideB": { "label": " ", "square": { "area": 0, "color": "#ffbde0" } },
+	"sideC": { "label": " ", "square": { "area": 67, "color": "#ffbde0" } },
 	"type": "pythagoreanProofDiagram"
 } satisfies PythagoreanProofDiagramInput
 
@@ -225,21 +165,9 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	const input = {
 	"width": 219,
 	"height": 240,
-	"squareA": {
-		"area": 12,
-		"color": "#FFBDE0",
-		"sideLabel": "a"
-	},
-	"squareB": {
-		"area": 24,
-		"color": "#FFBDE0",
-		"sideLabel": "b"
-	},
-	"squareC": {
-		"area": 36,
-		"color": "#FFBDE0",
-		"sideLabel": "c"
-	},
+	"sideA": { "label": "a", "square": { "area": 12, "color": "#FFBDE0" } },
+	"sideB": { "label": "b", "square": { "area": 24, "color": "#FFBDE0" } },
+	"sideC": { "label": "c", "square": { "area": 36, "color": "#FFBDE0" } },
 	"type": "pythagoreanProofDiagram"
 } satisfies PythagoreanProofDiagramInput
 
@@ -264,21 +192,9 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	const input = {
 	"width": 300,
 	"height": 170,
-	"squareA": {
-		"area": 32,
-		"color": "#11accd",
-		"sideLabel": " "
-	},
-	"squareB": {
-		"area": 32,
-		"color": "#ca337c",
-		"sideLabel": " "
-	},
-	"squareC": {
-		"area": 64,
-		"color": "#FFE082",
-		"sideLabel": "x"
-	},
+	"sideA": { "label": " ", "square": { "area": 32, "color": "#11accd" } },
+	"sideB": { "label": " ", "square": { "area": 32, "color": "#ca337c" } },
+	"sideC": { "label": "x", "square": { "area": 64, "color": "#FFE082" } },
 	"type": "pythagoreanProofDiagram"
 } satisfies PythagoreanProofDiagramInput
 
@@ -303,21 +219,9 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	const input = {
 	"width": 272,
 	"height": 300,
-	"squareA": {
-		"area": 35,
-		"color": "#ca337c",
-		"sideLabel": " "
-	},
-	"squareB": {
-		"area": 50,
-		"color": "#1fab54",
-		"sideLabel": " "
-	},
-	"squareC": {
-		"area": 0,
-		"color": "#11accd",
-		"sideLabel": " "
-	},
+	"sideA": { "label": " ", "square": { "area": 35, "color": "#ca337c" } },
+	"sideB": { "label": " ", "square": { "area": 50, "color": "#1fab54" } },
+	"sideC": { "label": " ", "square": { "area": 0, "color": "#11accd" } },
 	"type": "pythagoreanProofDiagram"
 } satisfies PythagoreanProofDiagramInput
 
@@ -342,21 +246,9 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	const input = {
 	"width": 300,
 	"height": 300,
-	"squareA": {
-		"area": 18,
-		"color": "#FFE082",
-		"sideLabel": "a"
-	},
-	"squareB": {
-		"area": 7,
-		"color": "#C5E1A5",
-		"sideLabel": "b"
-	},
-	"squareC": {
-		"area": 27,
-		"color": "#80DEEA",
-		"sideLabel": "c"
-	},
+	"sideA": { "label": "a", "square": { "area": 18, "color": "#FFE082" } },
+	"sideB": { "label": "b", "square": { "area": 7, "color": "#C5E1A5" } },
+	"sideC": { "label": "c", "square": { "area": 27, "color": "#80DEEA" } },
 	"type": "pythagoreanProofDiagram"
 } satisfies PythagoreanProofDiagramInput
 
@@ -381,21 +273,9 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	const input = {
 	"width": 300,
 	"height": 255,
-	"squareA": {
-		"area": 9,
-		"color": "#FFE082",
-		"sideLabel": "3"
-	},
-	"squareB": {
-		"area": 49,
-		"color": "#90CAF9",
-		"sideLabel": "7"
-	},
-	"squareC": {
-		"area": 0,
-		"color": "#B39DDB",
-		"sideLabel": " "
-	},
+	"sideA": { "label": "3", "square": { "area": 9, "color": "#FFE082" } },
+	"sideB": { "label": "7", "square": { "area": 49, "color": "#90CAF9" } },
+	"sideC": { "label": " ", "square": { "area": 0, "color": "#B39DDB" } },
 	"type": "pythagoreanProofDiagram"
 } satisfies PythagoreanProofDiagramInput
 
@@ -420,21 +300,9 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	const input = {
 	"width": 300,
 	"height": 209,
-	"squareA": {
-		"area": 13,
-		"color": "#ca337c",
-		"sideLabel": "a"
-	},
-	"squareB": {
-		"area": 29.25,
-		"color": "#11accd",
-		"sideLabel": "b"
-	},
-	"squareC": {
-		"area": 0,
-		"color": "#00000000",
-		"sideLabel": "x"
-	},
+	"sideA": { "label": "a", "square": { "area": 13, "color": "#ca337c" } },
+	"sideB": { "label": "b", "square": { "area": 29.25, "color": "#11accd" } },
+	"sideC": { "label": "x", "square": { "area": 0, "color": "#00000000" } },
 	"type": "pythagoreanProofDiagram"
 } satisfies PythagoreanProofDiagramInput
 
@@ -446,6 +314,115 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	}
 
 	// Generate the widget
+	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	expect(svg).toMatchSnapshot()
+})
+
+test("pythagorean-proof-diagram - renders a side label without a square", () => {
+	const input = {
+		width: 300,
+		height: 300,
+		sideA: { label: "5" },
+		sideB: { square: { area: 144, color: "#90CAF9" } },
+		sideC: { square: { area: 169, color: "#A5D6A7" } },
+		type: "pythagoreanProofDiagram"
+	} satisfies PythagoreanProofDiagramInput
+
+	const parseResult = PythagoreanProofDiagramPropsSchema.safeParse(input)
+	if (!parseResult.success) {
+		return
+	}
+	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	expect(svg).toMatchSnapshot()
+})
+
+test("pythagorean-proof-diagram - renders a square without a side label", () => {
+	const input = {
+		width: 300,
+		height: 300,
+		sideA: { square: { area: 25, color: "#FFE082" } },
+		sideB: { square: { area: 144, color: "#90CAF9" } },
+		sideC: { label: "13" },
+		type: "pythagoreanProofDiagram"
+	} satisfies PythagoreanProofDiagramInput
+
+	const parseResult = PythagoreanProofDiagramPropsSchema.safeParse(input)
+	if (!parseResult.success) {
+		return
+	}
+	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	expect(svg).toMatchSnapshot()
+})
+
+test("pythagorean-proof-diagram - renders a side with both a square and a label", () => {
+	const input = {
+		width: 600,
+		height: 600,
+		sideA: { label: "a", square: { area: 49, color: "#FFE082" } },
+		sideB: { label: "b", square: { area: 576, color: "#90CAF9" } },
+		sideC: { label: "c", square: { area: 625, color: "#A5D6A7" } },
+		type: "pythagoreanProofDiagram"
+	} satisfies PythagoreanProofDiagramInput
+
+	const parseResult = PythagoreanProofDiagramPropsSchema.safeParse(input)
+	if (!parseResult.success) {
+		return
+	}
+	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	expect(svg).toMatchSnapshot()
+})
+
+test("pythagorean-proof-diagram - renders a diagram with a bare side", () => {
+	const input = {
+		width: 300,
+		height: 300,
+		sideA: {},
+		sideB: { square: { area: 144, color: "#90CAF9" } },
+		sideC: { square: { area: 169, color: "#A5D6A7" } },
+		type: "pythagoreanProofDiagram"
+	} satisfies PythagoreanProofDiagramInput
+
+	const parseResult = PythagoreanProofDiagramPropsSchema.safeParse(input)
+	if (!parseResult.success) {
+		return
+	}
+	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	expect(svg).toMatchSnapshot()
+})
+
+test("pythagorean-proof-diagram - correctly calculates a missing numeric area with the new schema", () => {
+	const input = {
+		width: 300,
+		height: 300,
+		sideA: { square: { area: 8, color: "#FFE082" } },
+		sideB: { square: { area: 15, color: "#90CAF9" } },
+		sideC: { square: { area: 0, color: "#A5D6A7" } },
+		type: "pythagoreanProofDiagram"
+	} satisfies PythagoreanProofDiagramInput
+
+	const parseResult = PythagoreanProofDiagramPropsSchema.safeParse(input)
+	if (!parseResult.success) {
+		return
+	}
+
+	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	expect(svg).toMatchSnapshot()
+})
+
+test("pythagorean-proof-diagram - renders string square label for B", () => {
+	const input = {
+		width: 300,
+		height: 240,
+		sideA: { square: { area: 9, color: "#FFE082" } },
+		sideB: { square: { area: "b^2 = 4", color: "#90CAF9" } },
+		sideC: { square: { area: 13, color: "#A5D6A7" } },
+		type: "pythagoreanProofDiagram"
+	} satisfies PythagoreanProofDiagramInput
+
+	const parseResult = PythagoreanProofDiagramPropsSchema.safeParse(input)
+	if (!parseResult.success) {
+		return
+	}
 	const svg = generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
