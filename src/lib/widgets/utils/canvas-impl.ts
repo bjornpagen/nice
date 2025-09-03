@@ -412,7 +412,18 @@ export class CanvasImpl implements Canvas {
 		if (anchor === "middle") textMinX -= maxLineWidth / 2
 		else if (anchor === "end") textMinX -= maxLineWidth
 
-		const textMinY = opts.y - fontPx * 0.15 // Approximate baseline adjustment
+		// Determine the block's top based on dominantBaseline semantics.
+		// - hanging: y is the block's top
+		// - middle: y is vertical center
+		// - default (alphabetic/auto/...): y is baseline; approximate top with 0.15em ascent adjustment
+		let textMinY: number
+		if (opts.dominantBaseline === "hanging") {
+			textMinY = opts.y
+		} else if (opts.dominantBaseline === "middle") {
+			textMinY = opts.y - totalHeight / 2
+		} else {
+			textMinY = opts.y - fontPx * 0.15
+		}
 
 		const corners = [
 			{ x: textMinX, y: textMinY },

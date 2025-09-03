@@ -100,6 +100,7 @@ export function setupCoordinatePlaneBaseV2(
 			maxWidthPx: chartArea.width,
 			fontPx: CHART_TITLE_FONT_PX,
 			anchor: "middle",
+			dominantBaseline: "hanging",
 			fill: theme.colors.title
 		})
 	}
