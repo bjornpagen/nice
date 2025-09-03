@@ -3,7 +3,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { calculateTitleLayout } from "@/lib/widgets/utils/layout"
+
 import { theme } from "@/lib/widgets/utils/theme"
 import { drawChartTitle } from "@/lib/widgets/utils/chart-layout-utils"
 
@@ -77,9 +77,8 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 ) => {
 	const { width, height, objects, layout, title } = data
 
-	// Use dynamic layout for title and top margin
-	const { titleY, topMargin } = calculateTitleLayout(title ?? undefined, width - 40)
-	const padding = { top: topMargin, right: PADDING, bottom: PADDING, left: PADDING }
+	// Titles float above the chart content area.
+	const padding = { top: 40, right: PADDING, bottom: PADDING, left: PADDING }
 
 	const chartWidth = width - padding.left - padding.right
 	const chartHeight = height - padding.top - padding.bottom

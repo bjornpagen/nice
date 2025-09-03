@@ -21,9 +21,10 @@ export function drawChartTitle(
 	const maxWidthPolicy = options.maxWidthPolicy ?? "frame"
 	const fill = options.fill ?? theme.colors.title
 
+	// Horizontal centering uses the provided frame. Y is absolute (floating above chart area)
 	const titleX = frame.left + frame.width / 2
 	const titleY = topPaddingPx
-	const maxWidthPx = maxWidthPolicy === "frame" ? frame.width : frame.width // Note: 'full' policy is deprecated; always use frame width.
+	const maxWidthPx = frame.width // Note: 'full' policy is deprecated; always use frame width.
 
 	canvas.drawWrappedText({
 		x: titleX,

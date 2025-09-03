@@ -107,15 +107,9 @@ export function setupCoordinatePlaneBaseV2(
 	// Use chart area width to get the true wrapped title height.
 	let titleHeight = 0
 	if (hasTitle) {
-		const dims = estimateWrappedTextDimensions(
-			data.title as string,
-			chartAreaWidth, // USE CHART AREA WIDTH
-			CHART_TITLE_FONT_PX
-		)
-		titleHeight = CHART_TITLE_TOP_PADDING_PX + dims.height + CHART_TITLE_BOTTOM_PADDING_PX
 	}
-
-	const outsideTopPx = (hasTitle ? titleHeight : 0) + 20
+	// Titles float outside; do not budget title height into the chart area
+	const outsideTopPx = 40
 
 	// Final chart area places the axis area inside the total SVG canvas
 	const chartArea = {
@@ -169,9 +163,7 @@ export function setupCoordinatePlaneBaseV2(
 
 	// Render title using the new helper
 	if (hasTitle) {
-		drawChartTitle(canvas, chartArea, data.title as string, {
-			maxWidthPolicy: "frame"
-		})
+		drawChartTitle(canvas, chartArea, data.title as string, { maxWidthPolicy: "frame" })
 	}
 
 	// Render axes against the final chartArea, passing the new yAxisLabelX

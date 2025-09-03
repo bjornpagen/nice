@@ -64,18 +64,9 @@ export function setupCoordinatePlaneV2(
 
 	// Calculate title height if it exists
 	let titleHeight = 0
-	if (title) {
-		const chartContentWidth = width - dynamicLeftMargin - PADDING
-		const dims = estimateWrappedTextDimensions(
-			title,
-			chartContentWidth,
-			CHART_TITLE_FONT_PX
-		)
-		titleHeight = CHART_TITLE_TOP_PADDING_PX + dims.height + CHART_TITLE_BOTTOM_PADDING_PX
-	}
 
-	// Define margins to create space for labels and ticks
-	const margin = { top: PADDING + titleHeight, right: PADDING, bottom: 40, left: dynamicLeftMargin }
+	// Define margins to create space for labels and ticks (titles float outside)
+	const margin = { top: 40, right: PADDING, bottom: 40, left: dynamicLeftMargin }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 
