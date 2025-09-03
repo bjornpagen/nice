@@ -4,11 +4,14 @@ import { and, eq, inArray, sql } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { env } from "@/env"
-import { getCourseMapping, isHardcodedCourse } from "@/lib/constants/course-mapping"
+import { getCourseMapping, getAverageReadingWpmForCourse, isHardcodedCourse } from "@/lib/constants/course-mapping"
 import { getAssessmentTest } from "@/lib/data/fetchers/qti"
 import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
 import { applyQtiSelectionAndOrdering } from "@/lib/qti-selection"
 import { formatResourceTitleForDisplay } from "@/lib/utils/format-resource-title"
+import { qti } from "@/lib/clients"
+import { extractQtiStimulusBodyContent } from "@/lib/xml-utils"
+import he from "he"
 
 function normalizeKhanSlug(slug: string): string {
 	const colonIndex = slug.indexOf(":")
@@ -511,6 +514,65 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 	const UNIT_TEST_EXPECTED_QUESTIONS = 12
 	const COURSE_CHALLENGE_EXPECTED_QUESTIONS = 30
 
+	// Reading speed assumption for articles:
+	// If course is hardcoded with known grades, use average WPM from grade mapping; else fallback to 200
+	const computedCourseWpm = isHardcodedCourse(course.id) ? getAverageReadingWpmForCourse(course.id) : null
+	const READING_WORDS_PER_MINUTE = computedCourseWpm ?? 200
+
+	function extractReadableTextFromStimulusBody(stimulusBodyHtml: string): string {
+		let cleaned = stimulusBodyHtml.replace(/<figure[\s\S]*?<\/figure>/gi, " ")
+		cleaned = cleaned.replace(/<figcaption[\s\S]*?<\/figcaption>/gi, " ")
+		cleaned = cleaned.replace(/<details[\s\S]*?<\/details>/gi, (match) => {
+			const summaryMatch = match.match(/<summary[^>]*>([\s\S]*?)<\/summary>/i)
+			const summaryText = summaryMatch ? summaryMatch[1] ?? "" : ""
+			const summaryLower = summaryText.toLowerCase()
+			const isAttributionLike =
+				summaryLower.includes("attribution") ||
+				summaryLower.includes("references") ||
+				summaryLower.includes("works cited") ||
+				summaryLower.includes("credit") ||
+				summaryLower.includes("credits")
+			return isAttributionLike ? " " : match
+		})
+		cleaned = cleaned.replace(/<script[\s\S]*?<\/script>/gi, " ")
+		cleaned = cleaned.replace(/<style[\s\S]*?<\/style>/gi, " ")
+		cleaned = cleaned.replace(/<math[\s\S]*?<\/math>/gi, " ")
+		cleaned = cleaned.replace(/<[^>]+>/g, " ")
+		const decoded = he.decode(cleaned)
+		return decoded.replace(/\s+/g, " ").trim()
+	}
+
+	async function computeArticleXpFromStimulus(articleId: string): Promise<number> {
+		const identifier = `nice_${articleId}`
+		const stimulusResult = await errors.try(qti.getStimulus(identifier))
+		if (stimulusResult.error) {
+			logger.error("qti stimulus fetch failed", { articleId, identifier, error: stimulusResult.error })
+			throw errors.wrap(stimulusResult.error, "qti stimulus fetch")
+		}
+		const rawXml = stimulusResult.data.rawXml
+		if (!rawXml || rawXml === "") {
+			logger.error("qti stimulus xml empty", { articleId, identifier })
+			throw errors.new("qti stimulus: empty xml")
+		}
+		const body = extractQtiStimulusBodyContent(rawXml)
+		if (!body || body === "") {
+			logger.error("qti stimulus body missing", { articleId, identifier })
+			throw errors.new("qti stimulus body: missing")
+		}
+		const readable = extractReadableTextFromStimulusBody(body)
+		if (readable === "") {
+			logger.error("qti stimulus body contains no readable text", { articleId, identifier })
+			throw errors.new("qti stimulus body: no readable text")
+		}
+		const wordCount = readable.split(/\s+/).filter(Boolean).length
+		if (!Number.isFinite(wordCount) || wordCount <= 0) {
+			logger.error("qti stimulus word count invalid", { articleId, identifier, wordCount })
+			throw errors.new("qti stimulus: invalid word count")
+		}
+		const minutes = Math.ceil(wordCount / READING_WORDS_PER_MINUTE)
+		return Math.max(1, minutes)
+	}
+
 	// --- NEW: Hierarchical Line Item Generation ---
 
 	// Find the top-level course challenge
@@ -651,6 +713,13 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 
 						if (lc.contentType === "Article") {
 							// CHANGE: Convert Articles to interactive type
+							let articleXp: number | undefined
+							const articleXpResult = await errors.try(computeArticleXpFromStimulus(content.id))
+							if (articleXpResult.error) {
+								logger.error("qti xp: failed computing article xp from stimulus", { articleId: content.id, slug: content.slug, error: articleXpResult.error })
+								throw articleXpResult.error
+							}
+							articleXp = articleXpResult.data
 							metadata = {
 								...metadata,
 								type: "interactive",
@@ -658,7 +727,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								khanActivityType: "Article",
 								launchUrl: `${appDomain}${metadata.path}/a/${content.slug}`,
 								url: `${appDomain}${metadata.path}/a/${content.slug}`,
-								xp: 2
+								xp: articleXp
 							}
 						} else if (lc.contentType === "Video") {
 							// CHANGE: Convert Videos to interactive type

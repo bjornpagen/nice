@@ -84,3 +84,28 @@ export const HARDCODED_HISTORY_COURSE_IDS = [
 	"x231f0f4241b58f49", // us-government-and-civics
 	"x3e2fc37246974751" // ap-college-us-government-and-politics
 ] as const
+
+/**
+ * Reading speed mapping (words per minute) by grade level.
+ * Only 6th–9th grades are currently defined.
+ */
+export const GRADE_TO_WPM: Readonly<Record<string, number>> = {
+	"6": 150,
+	"7": 175,
+	"8": 200,
+	"9": 225
+}
+
+/**
+ * Computes the average reading WPM for a hardcoded course based on its grade list.
+ * Returns null if none of the course's grades are in GRADE_TO_WPM.
+ */
+export function getAverageReadingWpmForCourse(courseId: CourseId): number | null {
+	const grades = HARDCODED_COURSE_MAPPING[courseId]
+	const wpms = grades
+		.map((g) => GRADE_TO_WPM[g])
+		.filter((v): v is number => typeof v === "number")
+	if (wpms.length === 0) return null
+	const sum = wpms.reduce((acc, n) => acc + n, 0)
+	return Math.round(sum / wpms.length)
+}
