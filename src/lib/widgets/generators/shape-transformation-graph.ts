@@ -202,7 +202,7 @@ export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTrans
 				tickInterval: yAxis.tickInterval,
 				showGridLines: yAxis.showGridLines
 			},
-			showQuadrantLabels: true
+			showQuadrantLabels: showQuadrantLabels
 		},
 		canvas
 	)

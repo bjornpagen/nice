@@ -75,7 +75,7 @@ export const generatePointPlotGraph: WidgetGenerator<typeof PointPlotGraphPropsS
 				tickInterval: yAxis.tickInterval,
 				showGridLines: yAxis.showGridLines
 			},
-			showQuadrantLabels: true
+			showQuadrantLabels: showQuadrantLabels
 		},
 		canvas
 	)

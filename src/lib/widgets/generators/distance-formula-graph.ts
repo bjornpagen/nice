@@ -86,7 +86,7 @@ export const generateDistanceFormulaGraph: WidgetGenerator<typeof DistanceFormul
 				tickInterval: yAxis.tickInterval,
 				showGridLines: yAxis.showGridLines
 			},
-			showQuadrantLabels: true
+			showQuadrantLabels: showQuadrantLabels
 		},
 		canvas
 	)

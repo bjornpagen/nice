@@ -86,7 +86,7 @@ export const generatePolygonGraph: WidgetGenerator<typeof PolygonGraphPropsSchem
 				tickInterval: yAxis.tickInterval,
 				showGridLines: yAxis.showGridLines
 			},
-			showQuadrantLabels: true
+			showQuadrantLabels: showQuadrantLabels
 		},
 		canvas
 	)

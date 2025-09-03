@@ -217,11 +217,33 @@ export function setupCoordinatePlaneV2(
 
 	// Quadrant labels
 	if (showQuadrantLabels) {
+		const hasPositiveX = xAxis.max > 0
+		const hasNegativeX = xAxis.min < 0
+		const hasPositiveY = yAxis.max > 0
+		const hasNegativeY = yAxis.min < 0
+
 		const qLabelStyle = { fill: "#ccc", fontPx: 18, anchor: "middle" as const, dominantBaseline: "middle" as const }
-		canvas.drawText({ x: zeroX + chartWidth / 4, y: zeroY - chartHeight / 4, text: "I", ...qLabelStyle })
-		canvas.drawText({ x: zeroX - chartWidth / 4, y: zeroY - chartHeight / 4, text: "II", ...qLabelStyle })
-		canvas.drawText({ x: zeroX - chartWidth / 4, y: zeroY + chartHeight / 4, text: "III", ...qLabelStyle })
-		canvas.drawText({ x: zeroX + chartWidth / 4, y: zeroY + chartHeight / 4, text: "IV", ...qLabelStyle })
+
+		// Clamp the zero anchor to chart edges so labels stay inside the chart area
+		const anchorXPos = Math.min(Math.max(zeroX, chartArea.left), chartArea.left + chartArea.width)
+		const anchorYPos = Math.min(Math.max(zeroY, chartArea.top), chartArea.top + chartArea.height)
+
+		// I: (+x, +y)
+		if (hasPositiveX && hasPositiveY) {
+			canvas.drawText({ x: anchorXPos + chartWidth / 4, y: anchorYPos - chartHeight / 4, text: "I", ...qLabelStyle })
+		}
+		// II: (-x, +y)
+		if (hasNegativeX && hasPositiveY) {
+			canvas.drawText({ x: anchorXPos - chartWidth / 4, y: anchorYPos - chartHeight / 4, text: "II", ...qLabelStyle })
+		}
+		// III: (-x, -y)
+		if (hasNegativeX && hasNegativeY) {
+			canvas.drawText({ x: anchorXPos - chartWidth / 4, y: anchorYPos + chartHeight / 4, text: "III", ...qLabelStyle })
+		}
+		// IV: (+x, -y)
+		if (hasPositiveX && hasNegativeY) {
+			canvas.drawText({ x: anchorXPos + chartWidth / 4, y: anchorYPos + chartHeight / 4, text: "IV", ...qLabelStyle })
+		}
 	}
 
 	return { toSvgX, toSvgY, chartArea }
