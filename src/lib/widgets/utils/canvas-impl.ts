@@ -412,7 +412,7 @@ export class CanvasImpl implements Canvas {
 		if (anchor === "middle") textMinX -= maxLineWidth / 2
 		else if (anchor === "end") textMinX -= maxLineWidth
 
-		const textMinY = opts.y - fontPx * 0.2 // Approximate baseline adjustment
+		const textMinY = opts.y - fontPx * 0.15 // Approximate baseline adjustment
 
 		const corners = [
 			{ x: textMinX, y: textMinY },

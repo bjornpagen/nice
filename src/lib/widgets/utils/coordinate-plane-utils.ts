@@ -74,56 +74,54 @@ export function setupCoordinatePlaneBaseV2(
 	chartArea: { top: number; left: number; width: number; height: number }
 	bandWidth?: number
 } {
-	const hasTitle = !!data.title
-	const outsideBottomPx = 60 // Fixed estimate for X-axis (ticks + labels + title)
-
-	// --- START: DEFINITIVE FIX FOR Y-AXIS LAYOUT ---
-	// 1. Estimate the dimensions of all Y-axis components.
-	const { labels: yTickLabels } = buildTicks(data.yAxis.min, data.yAxis.max, data.yAxis.tickInterval)
-	const maxTickLabelWidth = Math.max(...yTickLabels.map(l => l.length * LABEL_AVG_CHAR_WIDTH_PX), 0)
-
-	// 2. Calculate the position for the Y-axis title. Its X is half its rotated width.
-	// This leaves space for the entire label.
-	const { height: wrappedTitleHeight } = estimateWrappedTextDimensions(
-		data.yAxis.label,
-		data.height, // Use full height for initial estimation
-		AXIS_TITLE_FONT_PX
-	)
-	const yAxisLabelX = wrappedTitleHeight / 2
-
-	// 3. Calculate the total left margin needed to fit the title, padding, and axis hardware.
-	const leftOutsidePx =
-		wrappedTitleHeight +        // The full "width" of the rotated title
-		AXIS_TITLE_PADDING_PX +
-		TICK_LABEL_PADDING_PX +
-		TICK_LENGTH_PX +
-		maxTickLabelWidth
-
-	// --- END: DEFINITIVE FIX ---
-
-	// Calculate chart area width first, which is needed for accurate title height estimation.
-	const chartAreaWidth = data.width - leftOutsidePx - 80
-
-	// Use chart area width to get the true wrapped title height.
-	let titleHeight = 0
-	if (hasTitle) {
-	}
-	// Titles float outside; do not budget title height into the chart area
-	const outsideTopPx = 40
-
-	// Final chart area places the axis area inside the total SVG canvas
+	// 1. Fix chartArea to the full input size. No padding deductions.
 	const chartArea = {
-		top: outsideTopPx,
-		left: leftOutsidePx,
-		width: chartAreaWidth, // USE PREVIOUSLY CALCULATED WIDTH
-		height: data.height - outsideTopPx - outsideBottomPx
+		top: 0,
+		left: 0,
+		width: data.width,
+		height: data.height
 	}
 
-	const yAxisSpec: AxisSpecY = {
+	// 2. Measure and position title (if present) to hover above the chartArea.
+	if (data.title) {
+		const measured = estimateWrappedTextDimensions(data.title, chartArea.width, CHART_TITLE_FONT_PX)
+		// Position the title's bottom edge just above the chart area's top.
+		const titleY = chartArea.top - CHART_TITLE_BOTTOM_PADDING_PX
+		const titleX = chartArea.left + chartArea.width / 2
+
+		// drawWrappedText anchors text from the top by default. We adjust the Y position
+		// so the entire text block appears above chartArea.top.
+		const adjustedTitleY = titleY - measured.height
+
+		canvas.drawWrappedText({
+			x: titleX,
+			y: adjustedTitleY,
+			text: data.title,
+			maxWidthPx: chartArea.width,
+			fontPx: CHART_TITLE_FONT_PX,
+			anchor: "middle",
+			fill: theme.colors.title
+		})
+	}
+
+	// 3. Measure Y-axis components to calculate the total required left-side offset.
+	const yTicks = buildTicks(data.yAxis.min, data.yAxis.max, data.yAxis.tickInterval)
+	const maxYTickWidth = Math.max(0, ...yTicks.labels.map(l => l.length * LABEL_AVG_CHAR_WIDTH_PX))
+	// Since Y-axis title is rotated, its "width" is its measured height.
+	const yLabelDimensions = estimateWrappedTextDimensions(data.yAxis.label, chartArea.height, AXIS_TITLE_FONT_PX)
+	const yLabelWidth = yLabelDimensions.height
+
+	const leftOffset = yLabelWidth + AXIS_TITLE_PADDING_PX + TICK_LABEL_PADDING_PX + TICK_LENGTH_PX + maxYTickWidth
+	// The Y-axis title's final X position is computed to place it correctly to the left of all other axis hardware.
+	const yAxisLabelX = chartArea.left - (leftOffset - yLabelWidth / 2)
+
+	// Y-axis uses a legacy spec object for now.
+	const yAxisLegacySpec: AxisSpec = {
 		...data.yAxis,
 		placement: "left",
 		domain: { min: data.yAxis.min, max: data.yAxis.max }
 	}
+
 	const xAxisSpec: AxisSpecX =
 		data.xAxis.xScaleType === "numeric"
 			? {
@@ -136,54 +134,20 @@ export function setupCoordinatePlaneBaseV2(
 					placement: "bottom" as const
 				}
 
-	// Create legacy AxisSpec for Y-axis compatibility
-	const yAxisLegacySpec: AxisSpec = { ...yAxisSpec, placement: "left" }
-	const xAxisLegacySpec: AxisSpec =
-		data.xAxis.xScaleType === "numeric"
-			? {
-					domain: { min: data.xAxis.min, max: data.xAxis.max },
-					tickInterval: data.xAxis.tickInterval,
-					label: data.xAxis.label,
-					showGridLines: data.xAxis.showGridLines,
-					showTickLabels: data.xAxis.showTickLabels,
-					showTicks: data.xAxis.showTicks,
-					placement: "bottom",
-					labelFormatter: data.xAxis.labelFormatter
-				}
-			: {
-					domain: { min: 0, max: data.xAxis.categories.length },
-					tickInterval: 1,
-					label: data.xAxis.label,
-					showGridLines: data.xAxis.showGridLines,
-					showTickLabels: data.xAxis.showTickLabels,
-					showTicks: data.xAxis.showTicks,
-					placement: "bottom",
-					categories: data.xAxis.categories
-				}
-
-	// Render title using the new helper
-	if (hasTitle) {
-		drawChartTitle(canvas, chartArea, data.title as string, { maxWidthPolicy: "frame" })
-	}
-
-	// Render axes against the final chartArea, passing the new yAxisLabelX
-	const yRes = computeAndRenderYAxis(yAxisLegacySpec, chartArea, xAxisLegacySpec, canvas, yAxisLabelX)
+	// The `computeAndRender...` functions will draw relative to the chartArea edges.
+	// `yAxisLabelX` is passed explicitly to position the Y-axis title correctly in the negative space.
+	const yRes = computeAndRenderYAxis(yAxisLegacySpec, chartArea, {} as AxisSpec, canvas, yAxisLabelX)
 	const xRes = computeAndRenderXAxis(xAxisSpec, chartArea, canvas)
 
-	// Clip path for geometry (only chart content, not axes/labels)
+	// Clip path remains tied to the fixed chartArea.
 	canvas.addDef(
 		`<clipPath id="${canvas.clipId}"><rect x="${chartArea.left}" y="${chartArea.top}" width="${chartArea.width}" height="${chartArea.height}"/></clipPath>`
 	)
 
-	// Scaling functions
-	const yRange = data.yAxis.max - data.yAxis.min
+	// Scaling functions are now relative to the fixed chartArea.
+	const toSvgY = yRes.toSvg
 	const toSvgX = xRes.toSvg
-	function toSvgY(val: number): number {
-		const frac = (val - data.yAxis.min) / yRange
-		return chartArea.top + chartArea.height - frac * chartArea.height
-	}
-
-	const bandWidth = xRes.bandWidth !== undefined ? xRes.bandWidth : yRes.bandWidth
+	const bandWidth = xRes.bandWidth
 
 	return { toSvgX, toSvgY, chartArea, bandWidth }
 }
