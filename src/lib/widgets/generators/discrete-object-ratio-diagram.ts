@@ -5,6 +5,7 @@ import { PADDING } from "@/lib/widgets/utils/constants"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import { calculateTitleLayout } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
+import { drawChartTitle } from "@/lib/widgets/utils/chart-layout-utils"
 
 // Defines a type of object to be rendered
 const ObjectTypeSchema = z
@@ -103,14 +104,19 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 		strokeWidth: theme.stroke.width.thick
 	})
 
-	// Draw the title using Canvas API
+	// Draw the title using the new helper
 	if (title !== null) {
-		canvas.drawWrappedText({
-			x: width / 2,
-			y: titleY,
-			text: abbreviateMonth(title),
-			maxWidthPx: width - 40,
-			anchor: "middle",
+		// Define the frame for the title
+		const titleFrame = {
+			left: 0,
+			top: 0,
+			width: width,
+			height: height
+		}
+
+		// Call the new helper
+		drawChartTitle(canvas, titleFrame, abbreviateMonth(title), {
+			maxWidthPolicy: "frame",
 			fontPx: theme.font.size.base * 1.1
 		})
 	}

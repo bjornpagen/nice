@@ -6,6 +6,7 @@ import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
+import { drawChartTitle } from "@/lib/widgets/utils/chart-layout-utils"
 
 // Defines a single slice within a pie chart.
 const SliceSchema = z
@@ -99,20 +100,21 @@ export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema>
 
 		const cx = xOffset + chartAreaWidth / 2
 		const cy = yOffset + chartAreaHeight / 2
-		const titleY = yOffset + 25
 		// Slightly smaller radius to leave more room for external labels
 		const radius = Math.min(chartAreaWidth, chartAreaHeight) * 0.33
 
-		// Draw title (width-aware wrapping)
-		const maxTextWidth = chartAreaWidth - 40
-		canvas.drawWrappedText({
-			x: cx,
-			y: titleY,
-			text: abbreviateMonth(chart.title),
-			maxWidthPx: maxTextWidth,
-			fontPx: theme.font.size.large,
-			fontWeight: theme.font.weight.bold,
-			anchor: "middle"
+		// Define the frame for the title
+		const titleFrame = {
+			left: xOffset,
+			top: yOffset,
+			width: chartAreaWidth,
+			height: chartAreaHeight
+		}
+
+		// Call the new helper
+		drawChartTitle(canvas, titleFrame, abbreviateMonth(chart.title), {
+			maxWidthPolicy: "frame",
+			fontPx: theme.font.size.large
 		})
 
 		const totalValue = chart.slices.reduce((sum, slice) => sum + slice.value, 0)

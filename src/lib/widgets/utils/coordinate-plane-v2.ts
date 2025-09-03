@@ -4,13 +4,17 @@ import {
 	LABEL_AVG_CHAR_WIDTH_PX,
 	X_AXIS_MIN_LABEL_PADDING_PX,
 	Y_AXIS_MIN_LABEL_GAP_PX,
+	CHART_TITLE_BOTTOM_PADDING_PX,
+	CHART_TITLE_FONT_PX,
+	CHART_TITLE_TOP_PADDING_PX
 } from "@/lib/widgets/utils/constants"
 import type { Canvas } from "@/lib/widgets/utils/layout"
 import { selectAxisLabels } from "@/lib/widgets/utils/layout"
 import { theme } from "@/lib/widgets/utils/theme"
 import { abbreviateMonth } from "./labels"
 import { buildTicks } from "./ticks"
-import { estimateWrappedTextDimensions } from "./text" // ADD THIS IMPORT
+import { estimateWrappedTextDimensions } from "./text"
+import { drawChartTitle } from "./chart-layout-utils" // ADD THIS IMPORT
 
 // Re-export types that are needed for the render functions
 export type AxisOptions = {
@@ -36,6 +40,7 @@ export function setupCoordinatePlaneV2(
 		xAxis: AxisOptions
 		yAxis: AxisOptions
 		showQuadrantLabels: boolean
+		title?: string | null // ADD THIS PROPERTY
 	},
 	canvas: Canvas
 ): {
@@ -43,7 +48,7 @@ export function setupCoordinatePlaneV2(
 	toSvgY: (val: number) => number
 	chartArea: { top: number; left: number; width: number; height: number }
 } {
-	const { width, height, xAxis, yAxis, showQuadrantLabels } = data
+	const { width, height, xAxis, yAxis, showQuadrantLabels, title } = data // ADD title
 
 	// ADD dynamic margin calculation logic
 	const yAxisTickInfo = buildTicks(yAxis.min, yAxis.max, yAxis.tickInterval)
@@ -57,8 +62,20 @@ export function setupCoordinatePlaneV2(
 
 	const dynamicLeftMargin = TICK_LENGTH + TICK_LABEL_PADDING + maxTickLabelWidth + AXIS_TITLE_PADDING + wrappedTitleHeight / 2 + PADDING
 
+	// Calculate title height if it exists
+	let titleHeight = 0
+	if (title) {
+		const chartContentWidth = width - dynamicLeftMargin - PADDING
+		const dims = estimateWrappedTextDimensions(
+			title,
+			chartContentWidth,
+			CHART_TITLE_FONT_PX
+		)
+		titleHeight = CHART_TITLE_TOP_PADDING_PX + dims.height + CHART_TITLE_BOTTOM_PADDING_PX
+	}
+
 	// Define margins to create space for labels and ticks
-	const margin = { top: PADDING, right: PADDING, bottom: 40, left: dynamicLeftMargin }
+	const margin = { top: PADDING + titleHeight, right: PADDING, bottom: 40, left: dynamicLeftMargin }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 
@@ -76,6 +93,11 @@ export function setupCoordinatePlaneV2(
 		top: margin.top,
 		width: chartWidth,
 		height: chartHeight
+	}
+
+	// ADD THIS BLOCK: Render title if it exists
+	if (title) {
+		drawChartTitle(canvas, chartArea, title, { maxWidthPolicy: "frame" })
 	}
 
 	// Add a clipping path definition that other elements can reference.

@@ -353,6 +353,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		{
 			width,
 			height,
+			title,
 			xAxis: {
 				label: xAxis.label,
 				min: xAxis.min,
