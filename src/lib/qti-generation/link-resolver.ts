@@ -1,8 +1,9 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { and, eq, inArray } from "drizzle-orm"
+import { inArray } from "drizzle-orm"
 import { db } from "@/db"
-import { niceArticles, niceExercises, niceVideos } from "@/db/schemas"
+import { niceArticles, niceExercises, niceVideos, niceCourses } from "@/db/schemas"
+import { ALL_HARDCODED_COURSE_IDS } from "@/lib/constants/course-mapping"
 
 interface LinkInfo {
   full: string
@@ -107,8 +108,68 @@ export async function resolveRelativeLinksToCanonicalDomain(
     exerciseMap.set(row.slug, row.path)
   }
 
+  // Fetch allowed course path prefixes from courses.path using hardcoded course IDs
+  const allowedCoursePathsRes = await errors.try(
+    db
+      .select({ id: niceCourses.id, path: niceCourses.path })
+      .from(niceCourses)
+      .where(inArray(niceCourses.id, ALL_HARDCODED_COURSE_IDS))
+  )
+  if (allowedCoursePathsRes.error) {
+    slog.error("db query for allowed course paths failed", { error: allowedCoursePathsRes.error })
+    throw errors.wrap(allowedCoursePathsRes.error, "query courses by id")
+  }
+  const allowedCoursePrefixes = new Set(allowedCoursePathsRes.data.map((r) => r.path))
+
+  // Remove anchors whose canonical path does not start with any allowed course prefix
+  let workingXml = xml
+  if (allowedCoursePrefixes.size > 0) {
+    const urlsToRemove = new Set<string>()
+    for (const c of candidates) {
+      let canonicalPath = ""
+      if (c.type === "a") canonicalPath = articleMap.get(c.slug) ?? ""
+      else if (c.type === "v") canonicalPath = videoMap.get(c.slug) ?? ""
+      else if (c.type === "e") canonicalPath = exerciseMap.get(c.slug) ?? ""
+      if (canonicalPath === "") continue
+      let startsWithAllowed = false
+      for (const prefix of allowedCoursePrefixes) {
+        if (canonicalPath === prefix || canonicalPath.startsWith(prefix + "/")) {
+          startsWithAllowed = true
+          break
+        }
+      }
+      if (!startsWithAllowed) urlsToRemove.add(c.full)
+    }
+    if (urlsToRemove.size > 0) {
+      const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+      for (const urlToStrip of urlsToRemove) {
+        const anchorRegex = new RegExp(
+          `<a\\b[^>]*href="${escapeRegExp(urlToStrip)}"[^>]*>([\\s\\S]*?)<\\/a>`,
+          "g"
+        )
+        workingXml = workingXml.replace(anchorRegex, (_m, inner: string) => inner)
+      }
+      slog.debug("stripped anchors with disallowed course prefix", { count: urlsToRemove.size })
+    }
+  }
+
+  // Recompute candidates after stripping
+  const remainingMatches = Array.from(workingXml.matchAll(linkRegex))
+  const remainingCandidates: LinkInfo[] = []
+  for (const m of remainingMatches) {
+    const url = m.groups?.url ?? ""
+    if (!url || url.startsWith("http://") || url.startsWith("https://")) continue
+    const parts = url.split("/").filter((p) => p !== "")
+    if (parts.length < 2) continue
+    const slug = parts[parts.length - 1] ?? ""
+    const typeSegment = parts[parts.length - 2] ?? ""
+    if (typeSegment !== "a" && typeSegment !== "e" && typeSegment !== "v") continue
+    if (slug === "") continue
+    remainingCandidates.push({ full: url, type: typeSegment, slug })
+  }
+
   // Verify all candidates are resolvable
-  for (const c of candidates) {
+  for (const c of remainingCandidates) {
     let found = false
     if (c.type === "a") found = articleMap.has(c.slug)
     if (c.type === "v") found = videoMap.has(c.slug)
@@ -119,8 +180,8 @@ export async function resolveRelativeLinksToCanonicalDomain(
     }
   }
 
-  // Rewrite hrefs
-  const rewrittenXml = xml.replace(/href="(\/[^"#?]*)"/g, (_match, url: string) => {
+  // Rewrite hrefs using the filtered set and workingXml
+  const rewrittenXml = workingXml.replace(/href="(\/[^"#?]*)"/g, (_match, url: string) => {
     // Skip absolute URLs
     if (url.startsWith("http://") || url.startsWith("https://")) return `href="${url}"`
     const parts = url.split("/").filter((p: string) => p !== "")
@@ -136,7 +197,7 @@ export async function resolveRelativeLinksToCanonicalDomain(
   })
 
   slog.debug("resolved relative links to canonical domain", {
-    totalCandidates: candidates.length
+    totalCandidates: remainingCandidates.length
   })
 
   return rewrittenXml
