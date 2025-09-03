@@ -261,14 +261,37 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 		lineHeightDefault: 1.2
 	})
 
-	const unit = 20 // Use a consistent unit size for drawing, not for scaling
+	const unit = 20 // Logical unit; final fit-to-box scaling is applied later
+
+	// Collect geometry in raw coordinates first, then fit-to-box scale and render
+	type Point = { x: number; y: number }
+	const rects: Array<{ x: number; y: number; w: number; h: number }>=[]
+	const polys: Array<Point[]> = []
+	const lines: Array<{ x1: number; y1: number; x2: number; y2: number; stroke?: string; strokeWidth?: number }>=[]
+
+	// Helper: compute fit transform for all collected points
+	function computeFit(allPoints: Point[]) {
+		if (allPoints.length === 0) {
+			return { scale: 1, offsetX: 0, offsetY: 0, project: (p: Point) => p }
+		}
+		const minX = Math.min(...allPoints.map((p) => p.x))
+		const maxX = Math.max(...allPoints.map((p) => p.x))
+		const minY = Math.min(...allPoints.map((p) => p.y))
+		const maxY = Math.max(...allPoints.map((p) => p.y))
+		const rawW = maxX - minX
+		const rawH = maxY - minY
+		const scale = Math.min(
+			(width - 2 * PADDING) / (rawW || 1),
+			(height - 2 * PADDING) / (rawH || 1)
+		)
+		const offsetX = (width - scale * rawW) / 2 - scale * minX
+		const offsetY = (height - scale * rawH) / 2 - scale * minY
+		const project = (p: Point) => ({ x: offsetX + scale * p.x, y: offsetY + scale * p.y })
+		return { scale, offsetX, offsetY, project }
+	}
 
 	const rect = (x: number, y: number, w: number, h: number) => {
-		canvas.drawRect(x, y, w, h, {
-			fill: "rgba(200,200,200,0.3)",
-			stroke: theme.colors.black,
-			strokeWidth: theme.stroke.width.thick
-		})
+		rects.push({ x, y, w, h })
 	}
 
 	const poly = (points: string) => {
@@ -279,21 +302,17 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 				return { x: x || 0, y: y || 0 }
 			})
 			.filter((p) => !isNaN(p.x) && !isNaN(p.y) && isFinite(p.x) && isFinite(p.y))
-		canvas.drawPolygon(polygonPoints, {
-			fill: "rgba(200,200,200,0.3)",
-			stroke: theme.colors.black,
-			strokeWidth: theme.stroke.width.thick
-		})
+		polys.push(polygonPoints)
 	}
 
 	const drawGridLines = (x: number, y: number, w: number, h: number, dim_w: number, dim_h: number) => {
 		const unit_w = w / dim_w
 		const unit_h = h / dim_h
 		for (let i = 1; i < dim_w; i++) {
-			canvas.drawLine(x + i * unit_w, y, x + i * unit_w, y + h, { stroke: theme.colors.black, strokeWidth: 0.5 })
+			lines.push({ x1: x + i * unit_w, y1: y, x2: x + i * unit_w, y2: y + h, stroke: theme.colors.black, strokeWidth: 0.5 })
 		}
 		for (let i = 1; i < dim_h; i++) {
-			canvas.drawLine(x, y + i * unit_h, x + w, y + i * unit_h, { stroke: theme.colors.black, strokeWidth: 0.5 })
+			lines.push({ x1: x, y1: y + i * unit_h, x2: x + w, y2: y + i * unit_h, stroke: theme.colors.black, strokeWidth: 0.5 })
 		}
 	}
 
@@ -360,12 +379,12 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 			const row_y = -c_u / 2
 			const x_start = -(b_u + a_u / 2)
 
-			rect(x_start, row_y, b_u, c_u) // side
-			rect(x_start + b_u, row_y, a_u, c_u) // front
-			rect(x_start + b_u + a_u, row_y, b_u, c_u) // side
-			rect(x_start + b_u + a_u + b_u, row_y, a_u, c_u) // back
-			rect(x_start + b_u, row_y - b_u, a_u, b_u) // top
-			rect(x_start + b_u, row_y + c_u, a_u, b_u) // bottom
+			rect(x_start, row_y, b_u, c_u)
+			rect(x_start + b_u, row_y, a_u, c_u)
+			rect(x_start + b_u + a_u, row_y, b_u, c_u)
+			rect(x_start + b_u + a_u + b_u, row_y, a_u, c_u)
+			rect(x_start + b_u, row_y - b_u, a_u, b_u)
+			rect(x_start + b_u, row_y + c_u, a_u, b_u)
 			if (showLabels === true) {
 				drawGridLines(x_start, row_y, b_u, c_u, width, prismHeight)
 				drawGridLines(x_start + b_u, row_y, a_u, c_u, length, prismHeight)
@@ -621,8 +640,46 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 		}
 	}
 
-	// NEW: Finalize the canvas and construct the root SVG element
-	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
+	// Compute fit transform from all collected shapes
+	const allPoints: Point[] = []
+	for (const r of rects) {
+		allPoints.push({ x: r.x, y: r.y })
+		allPoints.push({ x: r.x + r.w, y: r.y + r.h })
+	}
+	for (const polyPts of polys) allPoints.push(...polyPts)
+	for (const ln of lines) {
+		allPoints.push({ x: ln.x1, y: ln.y1 })
+		allPoints.push({ x: ln.x2, y: ln.y2 })
+	}
+	const { scale, project } = computeFit(allPoints)
 
+	// Render with transform; keep stroke widths and fonts in screen space
+	for (const r of rects) {
+		const topLeft = project({ x: r.x, y: r.y })
+		canvas.drawRect(topLeft.x, topLeft.y, r.w * scale, r.h * scale, {
+			fill: "rgba(200,200,200,0.3)",
+			stroke: theme.colors.black,
+			strokeWidth: theme.stroke.width.thick
+		})
+	}
+	for (const polyPts of polys) {
+		const projected = polyPts.map(project)
+		canvas.drawPolygon(projected, {
+			fill: "rgba(200,200,200,0.3)",
+			stroke: theme.colors.black,
+			strokeWidth: theme.stroke.width.thick
+		})
+	}
+	for (const ln of lines) {
+		const p1 = project({ x: ln.x1, y: ln.y1 })
+		const p2 = project({ x: ln.x2, y: ln.y2 })
+		canvas.drawLine(p1.x, p1.y, p2.x, p2.y, {
+			stroke: ln.stroke || theme.colors.black,
+			strokeWidth: ln.strokeWidth ?? 0.5
+		})
+	}
+
+	// Finalize the canvas and construct the root SVG element
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
 	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
 }

@@ -1,4 +1,4 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`box-grid - Creating frequency tables 1`] = `
 "<svg width="242" height="162" viewBox="-21 -21 242 162" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><defs><style>

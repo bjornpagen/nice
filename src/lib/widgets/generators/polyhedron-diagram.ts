@@ -163,33 +163,49 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 		lineHeightDefault: 1.2
 	})
 
+	// Helper: compute a transform that scales and centers a set of raw points into the chart area
+	function computeFit(points: Array<{ x: number; y: number }>) {
+		const minX = Math.min(...points.map((p) => p.x))
+		const maxX = Math.max(...points.map((p) => p.x))
+		const minY = Math.min(...points.map((p) => p.y))
+		const maxY = Math.max(...points.map((p) => p.y))
+		const rawW = maxX - minX
+		const rawH = maxY - minY
+		const scale = Math.min(
+			(width - 2 * PADDING) / (rawW || 1),
+			(height - 2 * PADDING) / (rawH || 1)
+		)
+		const offsetX = (width - scale * rawW) / 2 - scale * minX
+		const offsetY = (height - scale * rawH) / 2 - scale * minY
+		const project = (p: { x: number; y: number }) => ({ x: offsetX + scale * p.x, y: offsetY + scale * p.y })
+		return { project }
+	}
+
 	switch (shape.type) {
 		case "rectangularPrism": {
-			const w = shape.width * 5
-			const h = shape.height * 5
-			const l = shape.length * 3 // depth
-			const x_offset = (width - w - l) / 2
-			const y_offset = (height + h - l * 0.5) / 2
+			const w = shape.width
+			const h = shape.height
+			const l = shape.length // depth
 
-			// 8 vertices of the prism
-			// 0: front bottom left, 1: front bottom right, 2: front top right, 3: front top left
-			// 4: back bottom left,  5: back bottom right,  6: back top right,  7: back top left
-			const p = [
-				{ x: x_offset, y: y_offset }, // 0: front bottom left
-				{ x: x_offset + w, y: y_offset }, // 1: front bottom right
-				{ x: x_offset + w, y: y_offset - h }, // 2: front top right
-				{ x: x_offset, y: y_offset - h }, // 3: front top left
-				{ x: x_offset + l, y: y_offset - l * 0.5 }, // 4: back bottom left
-				{ x: x_offset + w + l, y: y_offset - l * 0.5 }, // 5: back bottom right
-				{ x: x_offset + w + l, y: y_offset - h - l * 0.5 }, // 6: back top right
-				{ x: x_offset + l, y: y_offset - h - l * 0.5 } // 7: back top left
+			// Build vertices in data space (origin at front-bottom-left)
+			const raw = [
+				{ x: 0, y: 0 }, // 0: front bottom left
+				{ x: w, y: 0 }, // 1: front bottom right
+				{ x: w, y: -h }, // 2: front top right
+				{ x: 0, y: -h }, // 3: front top left
+				{ x: l, y: -l * 0.5 }, // 4: back bottom left
+				{ x: w + l, y: -l * 0.5 }, // 5: back bottom right
+				{ x: w + l, y: -h - l * 0.5 }, // 6: back top right
+				{ x: l, y: -h - l * 0.5 } // 7: back top left
 			]
+			const { project } = computeFit(raw)
+			const p = raw.map(project)
 
 			const faces = {
-				front_face: { points: [p[0], p[1], p[2], p[3]], color: "rgba(255,0,0,0.2)" },
-				top_face: { points: [p[3], p[2], p[6], p[7]], color: "rgba(0,0,255,0.2)" },
-				side_face: { points: [p[1], p[5], p[6], p[2]], color: "rgba(0,255,0,0.2)" },
-				bottom_face: { points: [p[0], p[4], p[5], p[1]], color: "rgba(255,255,0,0.2)" }
+				frontFace: { points: [p[0], p[1], p[2], p[3]], color: "rgba(255,0,0,0.2)" },
+				topFace: { points: [p[3], p[2], p[6], p[7]], color: "rgba(0,0,255,0.2)" },
+				rightFace: { points: [p[1], p[5], p[6], p[2]], color: "rgba(0,255,0,0.2)" },
+				bottomFace: { points: [p[0], p[4], p[5], p[1]], color: "rgba(255,255,0,0.2)" }
 			}
 
 			const getFaceSvg = (faceName: keyof typeof faces) => {
@@ -228,9 +244,9 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 					})
 			}
 			// Draw visible faces and edges
-			getFaceSvg("front_face")
-			getFaceSvg("top_face")
-			getFaceSvg("side_face")
+			getFaceSvg("frontFace")
+			getFaceSvg("topFace")
+			getFaceSvg("rightFace")
 
 			// --- Render Diagonals ---
 			for (const d of diagonals) {
@@ -273,19 +289,19 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			}
 
 			for (const lab of labels) {
-				if (lab.target === "height" && p[0]) {
+				if (lab.target === "height" && p[0] && p[3]) {
 					const textX = p[0].x - 10
-					const textY = p[0].y - h / 2
+					const textY = (p[0].y + p[3].y) / 2
 					canvas.drawText({ x: textX, y: textY, text: lab.text, anchor: "end", dominantBaseline: "middle" })
 				}
-				if (lab.target === "width" && p[0]) {
-					const textX = p[0].x + w / 2
+				if (lab.target === "width" && p[0] && p[1]) {
+					const textX = (p[0].x + p[1].x) / 2
 					const textY = p[0].y + 15
 					canvas.drawText({ x: textX, y: textY, text: lab.text, anchor: "middle" })
 				}
-				if (lab.target === "length" && p[1]) {
-					const textX = p[1].x + l / 2
-					const textY = p[1].y - l * 0.25 + 10
+				if (lab.target === "length" && p[1] && p[5]) {
+					const textX = (p[1].x + p[5].x) / 2
+					const textY = (p[1].y + p[5].y) / 2 + 10
 					canvas.drawText({ x: textX, y: textY, text: lab.text, anchor: "middle", transform: "skewX(-25)" })
 				}
 			}
@@ -293,33 +309,28 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 		}
 		case "triangularPrism": {
 			const { b, h } = shape.base
-			const l = shape.length * 3 // depth scaling
-			const w = b * 5 // base width scaling
-			const hScaled = h * 5 // height scaling
+			const l = shape.length
+			const w = b
 
-			// Center the shape
-			const x_offset = (width - w - l) / 2
-			const y_offset = (height + hScaled - l * 0.5) / 2
-
-			// 6 vertices of the triangular prism
-			// Front triangle: 0 (bottom left), 1 (bottom right), 2 (top)
-			// Back triangle: 3 (bottom left), 4 (bottom right), 5 (top)
-			const p = [
-				{ x: x_offset, y: y_offset }, // 0: front bottom left
-				{ x: x_offset + w, y: y_offset }, // 1: front bottom right
-				{ x: x_offset + w / 2, y: y_offset - hScaled }, // 2: front top
-				{ x: x_offset + l, y: y_offset - l * 0.5 }, // 3: back bottom left
-				{ x: x_offset + w + l, y: y_offset - l * 0.5 }, // 4: back bottom right
-				{ x: x_offset + w / 2 + l, y: y_offset - hScaled - l * 0.5 } // 5: back top
+			// Build vertices in data space
+			const raw = [
+				{ x: 0, y: 0 }, // 0: front bottom left
+				{ x: w, y: 0 }, // 1: front bottom right
+				{ x: w / 2, y: -h }, // 2: front top
+				{ x: l, y: -l * 0.5 }, // 3: back bottom left
+				{ x: w + l, y: -l * 0.5 }, // 4: back bottom right
+				{ x: w / 2 + l, y: -h - l * 0.5 } // 5: back top
 			]
+			const { project } = computeFit(raw)
+			const p = raw.map(project)
 
 			// Define faces for triangular prism
 			const faces = {
-				front_face: { points: [p[0], p[1], p[2]], color: "rgba(255,0,0,0.2)" },
-				back_face: { points: [p[3], p[4], p[5]], color: "rgba(128,128,128,0.2)" },
-				bottom_face: { points: [p[0], p[1], p[4], p[3]], color: "rgba(255,255,0,0.2)" },
-				side_face_left: { points: [p[0], p[3], p[5], p[2]], color: "rgba(0,255,0,0.2)" },
-				side_face_right: { points: [p[1], p[2], p[5], p[4]], color: "rgba(0,0,255,0.2)" }
+				frontFace: { points: [p[0], p[1], p[2]], color: "rgba(255,0,0,0.2)" },
+				backFace: { points: [p[3], p[4], p[5]], color: "rgba(128,128,128,0.2)" },
+				bottomFace: { points: [p[0], p[1], p[4], p[3]], color: "rgba(255,255,0,0.2)" },
+				leftFace: { points: [p[0], p[3], p[5], p[2]], color: "rgba(0,255,0,0.2)" },
+				rightFace: { points: [p[1], p[2], p[5], p[4]], color: "rgba(0,0,255,0.2)" }
 			}
 
 			// Helper to draw face
@@ -360,10 +371,10 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			}
 
 			// Draw visible faces
-			drawFace("bottom_face")
-			drawFace("side_face_left")
-			drawFace("side_face_right")
-			drawFace("front_face")
+			drawFace("bottomFace")
+			drawFace("leftFace")
+			drawFace("rightFace")
+			drawFace("frontFace")
 
 			// Draw diagonals if specified
 			for (const d of diagonals) {
@@ -424,32 +435,28 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			break
 		}
 		case "rectangularPyramid": {
-			const w = shape.baseWidth * 5
-			const l = shape.baseLength * 3 // depth
-			const h = shape.height * 5
+			const w = shape.baseWidth
+			const l = shape.baseLength
+			const h = shape.height
 
-			// Center the shape
-			const x_offset = (width - w - l) / 2
-			const y_offset = (height + h - l * 0.5) / 2
-
-			// 5 vertices of the pyramid
-			// Base rectangle: 0 (front left), 1 (front right), 2 (back right), 3 (back left)
-			// Apex: 4
-			const p = [
-				{ x: x_offset, y: y_offset }, // 0: base front left
-				{ x: x_offset + w, y: y_offset }, // 1: base front right
-				{ x: x_offset + w + l, y: y_offset - l * 0.5 }, // 2: base back right
-				{ x: x_offset + l, y: y_offset - l * 0.5 }, // 3: base back left
-				{ x: x_offset + w / 2 + l / 2, y: y_offset - h - l * 0.25 } // 4: apex
+			// 5 vertices in data space
+			const raw = [
+				{ x: 0, y: 0 }, // 0: base front left
+				{ x: w, y: 0 }, // 1: base front right
+				{ x: w + l, y: -l * 0.5 }, // 2: base back right
+				{ x: l, y: -l * 0.5 }, // 3: base back left
+				{ x: w / 2 + l / 2, y: -h - l * 0.25 } // 4: apex
 			]
+			const { project } = computeFit(raw)
+			const p = raw.map(project)
 
 			// Define faces
 			const faces = {
-				base_face: { points: [p[0], p[1], p[2], p[3]], color: "rgba(255,255,0,0.2)" },
-				front_face: { points: [p[0], p[1], p[4]], color: "rgba(255,0,0,0.2)" },
-				right_face: { points: [p[1], p[2], p[4]], color: "rgba(0,0,255,0.2)" },
-				back_face: { points: [p[2], p[3], p[4]], color: "rgba(128,128,128,0.2)" },
-				left_face: { points: [p[3], p[0], p[4]], color: "rgba(0,255,0,0.2)" }
+				baseFace: { points: [p[0], p[1], p[2], p[3]], color: "rgba(255,255,0,0.2)" },
+				frontFace: { points: [p[0], p[1], p[4]], color: "rgba(255,0,0,0.2)" },
+				rightFace: { points: [p[1], p[2], p[4]], color: "rgba(0,0,255,0.2)" },
+				backFace: { points: [p[2], p[3], p[4]], color: "rgba(128,128,128,0.2)" },
+				leftFace: { points: [p[3], p[0], p[4]], color: "rgba(0,255,0,0.2)" }
 			}
 
 			// Helper to draw face
@@ -492,9 +499,9 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			}
 
 			// Draw visible faces
-			drawFace("front_face")
-			drawFace("right_face")
-			drawFace("left_face")
+			drawFace("frontFace")
+			drawFace("rightFace")
+			drawFace("leftFace")
 
 			// Draw visible edges that aren't part of filled faces (or are drawn on top)
 			if (p[0] && p[1])
@@ -582,44 +589,26 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			break
 		}
 		case "triangularPyramid": {
-			const { b, h } = shape.base // b: base length (width of front base edge), h: base triangle height (creates depth for the base)
-			const pyrH = shape.height // pyramid vertical height
+			const { b, h } = shape.base // base length and base height
+			const pyrH = shape.height
 
-			const b_scaled = b * 5 // width of the front base edge
-			const h_base_depth_scaled = h * 3 // simulates the depth of the base triangle in isometric view
-			const pyr_h_scaled = pyrH * 5 // vertical height of the pyramid
-
-			// Adjust offsets to center the overall pyramid
-			// Max width consideration: b_scaled (front base) + h_base_depth_scaled (depth extension for back vertex)
-			// Max height consideration: pyr_h_scaled (pyramid height) + h_base_depth_scaled * 0.5 (y-offset of base back vertex)
-			const max_display_width = b_scaled + h_base_depth_scaled
-			const max_display_height = pyr_h_scaled + h_base_depth_scaled * 0.5
-
-			const x_offset = (width - max_display_width) / 2
-			const y_offset = (height + max_display_height) / 2
-
-			// 4 vertices of the triangular pyramid
-			// Base: 0 (front-left), 1 (front-right), 2 (back-center vertex of base triangle)
-			// Apex: 3
-			// Define base vertices
-			const frontLeft = { x: x_offset, y: y_offset } // 0: front-left base corner
-			const frontRight = { x: x_offset + b_scaled, y: y_offset } // 1: front-right base corner
-			const backVertex = { x: x_offset + b_scaled / 2 + h_base_depth_scaled, y: y_offset - h_base_depth_scaled * 0.5 } // 2: back vertex of base triangle
-
-			// Calculate base centroid for apex placement
+			// Build vertices in data space
+			const frontLeft = { x: 0, y: 0 }
+			const frontRight = { x: b, y: 0 }
+			const backVertex = { x: b / 2 + h, y: -h * 0.5 }
 			const base_centroid_x = (frontLeft.x + frontRight.x + backVertex.x) / 3
 			const base_centroid_y = (frontLeft.y + frontRight.y + backVertex.y) / 3
-			const apex = { x: base_centroid_x, y: base_centroid_y - pyr_h_scaled } // 3: apex
-
-			// Build vertex array
-			const p = [frontLeft, frontRight, backVertex, apex]
+			const apexRaw = { x: base_centroid_x, y: base_centroid_y - pyrH }
+			const raw = [frontLeft, frontRight, backVertex, apexRaw]
+			const { project } = computeFit(raw)
+			const p = raw.map(project)
 
 			// Define faces
 			const faces = {
-				base_face: { points: [p[0], p[1], p[2]], color: "rgba(255,255,0,0.2)" }, // bottom triangular base
-				front_face: { points: [p[0], p[1], p[3]], color: "rgba(255,0,0,0.2)" },
-				right_face: { points: [p[1], p[2], p[3]], color: "rgba(0,0,255,0.2)" },
-				left_face: { points: [p[2], p[0], p[3]], color: "rgba(0,255,0,0.2)" }
+				baseFace: { points: [p[0], p[1], p[2]], color: "rgba(255,255,0,0.2)" },
+				frontFace: { points: [p[0], p[1], p[3]], color: "rgba(255,0,0,0.2)" },
+				rightFace: { points: [p[1], p[2], p[3]], color: "rgba(0,0,255,0.2)" },
+				leftFace: { points: [p[2], p[0], p[3]], color: "rgba(0,255,0,0.2)" }
 			}
 
 			// Helper to draw face
@@ -662,10 +651,10 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			}
 
 			// Draw faces (order matters for overlapping with semi-transparent fills)
-			drawFace("base_face")
-			drawFace("front_face")
-			drawFace("right_face")
-			drawFace("left_face")
+			drawFace("baseFace")
+			drawFace("frontFace")
+			drawFace("rightFace")
+			drawFace("leftFace")
 
 			// Draw visible edges that are not covered by faces (front base edge, and edges to apex)
 			if (p[0] && p[1])
