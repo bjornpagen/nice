@@ -741,7 +741,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								logger.error("CRITICAL: Missing duration for video", { contentId: content.id, slug: content.slug })
 								throw errors.new("video metadata: duration is required for interactive video resource")
 							}
-							const computedVideoXp = Math.max(1, Math.round(videoData.duration / 60))
+							const computedVideoXp = Math.max(1, Math.ceil(videoData.duration / 60))
 							metadata = {
 								...metadata,
 								type: "interactive",
