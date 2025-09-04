@@ -34,40 +34,44 @@ function createSideSquareSchema() {
 }
 
 // New side-centric square and side schemas
-const SquarePropsSchema = z
-	.object({
-		area: z
-			.union([z.number(), z.string()])
-			.describe(
-				"Area text rendered inside the square (e.g., 144, 25, 'x', 'c²'). Must be a number or string."
-			),
-		color: z
-			.string()
-			.regex(
-				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
-			)
-			.describe(
-				"Fill color for this square (e.g., '#A5D6A7', '#90CAF9', '#FFE082'). Should contrast with text and background."
-			)
-	})
-	.strict()
+function createSquarePropsSchema() {
+	return z
+		.object({
+			area: z
+				.union([z.number(), z.string()])
+				.describe(
+					"Area text rendered inside the square (e.g., 144, 25, 'x', 'c²'). Must be a number or string."
+				),
+			color: z
+				.string()
+				.regex(
+					CSS_COLOR_PATTERN,
+					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				)
+				.describe(
+					"Fill color for this square (e.g., '#A5D6A7', '#90CAF9', '#FFE082'). Should contrast with text and background."
+				)
+		})
+		.strict()
+}
 
-const TriangleSidePropsSchema = z
-	.object({
-		label: z
-			.string()
-			.nullable()
-			.optional()
-			.describe(
-				"Optional text label for this triangle side (e.g., 'a', 'b', 'c', '5', '13'). Null or omit to hide."
-			),
-		square: SquarePropsSchema
-			.nullable()
-			.optional()
-			.describe("Optional square attached to this side. Null or omit to hide the square.")
-	})
-	.strict()
+function createTriangleSidePropsSchema() {
+	return z
+		.object({
+			label: z
+				.string()
+				.nullable()
+				.optional()
+				.describe(
+					"Optional text label for this triangle side (e.g., 'a', 'b', 'c', '5', '13'). Null or omit to hide."
+				),
+			square: createSquarePropsSchema()
+				.nullable()
+				.optional()
+				.describe("Optional square attached to this side. Null or omit to hide the square.")
+		})
+		.strict()
+}
 
 // Back-compat schema (old square-centric shape)
 const OldPythagoreanPropsSchema = z
@@ -101,13 +105,13 @@ const NewPythagoreanPropsSchema = z
 			.describe(
 				"Total height of the diagram in pixels (e.g., 400, 500, 600). Should balance with width for proportions."
 			),
-		sideA: TriangleSidePropsSchema.describe(
+		sideA: createTriangleSidePropsSchema().describe(
 			"First leg (a) of the right triangle, with optional label and optional attached square."
 		),
-		sideB: TriangleSidePropsSchema.describe(
+		sideB: createTriangleSidePropsSchema().describe(
 			"Second leg (b) of the right triangle, with optional label and optional attached square."
 		),
-		sideC: TriangleSidePropsSchema.describe(
+		sideC: createTriangleSidePropsSchema().describe(
 			"Hypotenuse (c) of the right triangle, with optional label and optional attached square."
 		)
 	})
