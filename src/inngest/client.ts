@@ -314,6 +314,9 @@ const events = {
 	"migration/hardcoded.science.qti.upload": {
 		data: z.object({})
 	},
+	"migration/hardcoded.science.qti.backup": {
+		data: z.object({}).describe("Fetches the exact QTI state from the backend and saves it to the data/ directory.")
+	},
 
 	// ✅ ADDED: New, explicitly namespaced events for the HISTORY course pipeline
 	"migration/hardcoded.history.items.perseus-to-qti": {
