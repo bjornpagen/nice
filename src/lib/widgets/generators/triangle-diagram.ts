@@ -237,13 +237,20 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 		canvas.drawPolygon(regionPoints, { fill: region.color, stroke: "none" })
 	}
 
-	// Layer 2: Main Triangle Outline (assumes first 3 points form the main triangle)
-	const mainTrianglePoints = points.slice(0, 3)
-	canvas.drawPolygon(mainTrianglePoints, {
-		fill: "none",
-		stroke: theme.colors.black,
-		strokeWidth: theme.stroke.width.thick
-	})
+	// Layer 2: Main Triangle Outlines
+	// Iterate through points in chunks of 3 to draw all defined triangles. This
+	// fixes a bug where only the first of multiple triangles was being rendered.
+	for (let i = 0; i < points.length; i += 3) {
+		const trianglePoints = points.slice(i, i + 3)
+		// Ensure we have a complete triangle before attempting to draw.
+		if (trianglePoints.length === 3) {
+			canvas.drawPolygon(trianglePoints, {
+				fill: "none",
+				stroke: theme.colors.black,
+				strokeWidth: theme.stroke.width.thick
+			})
+		}
+	}
 
 	// Layer 3: Internal Lines
 	for (const line of internalLines) {

@@ -25,6 +25,7 @@
 		"@anatine/zod-mock": "^3.14.0",
 		"@clerk/backend": "^2.9.3",
 		"@clerk/nextjs": "^6.31.3",
+		"@faker-js/faker": "^10.0.0",
 		"@google/generative-ai": "^0.24.1",
 		"@hookform/resolvers": "^5.2.1",
 		"@radix-ui/react-accordion": "^1.2.12",

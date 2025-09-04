@@ -7,6 +7,7 @@
         "@anatine/zod-mock": "^3.14.0",
         "@clerk/backend": "^2.9.3",
         "@clerk/nextjs": "^6.31.3",
+        "@faker-js/faker": "^10.0.0",
         "@google/generative-ai": "^0.24.1",
         "@hookform/resolvers": "^5.2.1",
         "@radix-ui/react-accordion": "^1.2.12",
@@ -209,7 +210,7 @@
 
     "@esbuild/win32-x64": ["@esbuild/win32-x64@0.25.4", "", { "os": "win32", "cpu": "x64" }, "sha512-nOT2vZNw6hJ+z43oP1SPea/G/6AbN6X+bGNhNuq8NtRHy4wsMhw765IKLNmnjek7GvjWBYQ8Q5VBoYTFg9y1UQ=="],
 
-    "@faker-js/faker": ["@faker-js/faker@9.9.0", "", {}, "sha512-OEl393iCOoo/z8bMezRlJu+GlRGlsKbUAN7jKB6LhnKoqKve5DXRpalbItIIcwnCjs1k/FOPjFzcA6Qn+H+YbA=="],
+    "@faker-js/faker": ["@faker-js/faker@10.0.0", "", {}, "sha512-UollFEUkVXutsaP+Vndjxar40Gs5JL2HeLcl8xO1QAjJgOdhc3OmBFWyEylS+RddWaaBiAzH+5/17PLQJwDiLw=="],
 
     "@fastify/busboy": ["@fastify/busboy@2.1.1", "", {}, "sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA=="],
 
