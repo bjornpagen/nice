@@ -7,6 +7,7 @@ import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { HARDCODED_SCIENCE_COURSE_IDS } from "@/lib/constants/course-mapping"
 import { qti } from "@/lib/clients"
+import { ErrQtiNotFound } from "@/lib/qti"
 
 export const orchestrateHardcodedScienceQtiBackup = inngest.createFunction(
 	{ id: "orchestrate-hardcoded-science-qti-backup", name: "Orchestrate Hardcoded Science Course QTI Backup" },
@@ -71,12 +72,16 @@ export const orchestrateHardcodedScienceQtiBackup = inngest.createFunction(
 				assessments: assessmentIds.length
 			})
 
-			// Fetch Items (metadata required; hard fail if missing)
+			// Fetch Items (skip missing items; metadata required if present)
 			const items: Array<{ xml: string; metadata: Record<string, unknown> }> = []
 			for (const qid of questionIds) {
 				const identifier = `nice_${qid}`
 				const r = await errors.try(qti.getAssessmentItem(identifier))
 				if (r.error) {
+					if (errors.is(r.error, ErrQtiNotFound)) {
+						logger.warn("item not found in qti backend during backup; skipping", { questionId: qid, identifier })
+						continue
+					}
 					logger.error("qti backend: get item failed", { questionId: qid, identifier, error: r.error })
 					throw errors.wrap(r.error, `qti.getAssessmentItem ${identifier}`)
 				}
@@ -87,12 +92,16 @@ export const orchestrateHardcodedScienceQtiBackup = inngest.createFunction(
 				items.push({ xml: r.data.rawXml, metadata: r.data.metadata })
 			}
 
-			// Fetch Stimuli (metadata required; hard fail if missing)
+			// Fetch Stimuli (skip missing stimuli; metadata required if present)
 			const stimuli: Array<{ xml: string; metadata: Record<string, unknown> }> = []
 			for (const aid of articleIds) {
 				const identifier = `nice_${aid}`
 				const r = await errors.try(qti.getStimulus(identifier))
 				if (r.error) {
+					if (errors.is(r.error, ErrQtiNotFound)) {
+						logger.warn("stimulus not found in qti backend during backup; skipping", { articleId: aid, identifier })
+						continue
+					}
 					logger.error("qti backend: get stimulus failed", { articleId: aid, identifier, error: r.error })
 					throw errors.wrap(r.error, `qti.getStimulus ${identifier}`)
 				}
@@ -103,12 +112,16 @@ export const orchestrateHardcodedScienceQtiBackup = inngest.createFunction(
 				stimuli.push({ xml: r.data.rawXml, metadata: r.data.metadata })
 			}
 
-			// Fetch Tests
+			// Fetch Tests (skip missing tests)
 			const tests: string[] = []
 			for (const asmtId of assessmentIds) {
 				const identifier = `nice_${asmtId}`
 				const r = await errors.try(qti.getAssessmentTest(identifier))
 				if (r.error) {
+					if (errors.is(r.error, ErrQtiNotFound)) {
+						logger.warn("assessment test not found in qti backend during backup; skipping", { assessmentId: asmtId, identifier })
+						continue
+					}
 					logger.error("qti backend: get assessment test failed", { assessmentId: asmtId, identifier, error: r.error })
 					throw errors.wrap(r.error, `qti.getAssessmentTest ${identifier}`)
 				}
