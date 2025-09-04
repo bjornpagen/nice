@@ -53,6 +53,7 @@
 		"@radix-ui/react-toggle": "^1.1.10",
 		"@radix-ui/react-toggle-group": "^1.1.11",
 		"@radix-ui/react-tooltip": "^1.2.8",
+		"@salusoft89/planegcs": "^1.1.7",
 		"@superbuilders/errors": "2.0.1",
 		"@superbuilders/oneroster": "^0.7.0",
 		"@superbuilders/slog": "4.0.0",
