@@ -52,11 +52,14 @@ export function Progress({
 		}
 
 		if (child.type === "Quiz") {
+			const progress = progressMap.get(child.id)
+			const variant = progress?.completed && progress?.proficiency ? progress.proficiency : "quiz"
+
 			return [
 				{
 					id: child.id,
 					componentResourceSourcedId: child.componentResourceSourcedId,
-					variant: "quiz",
+					variant,
 					path: child.path,
 					title: child.title,
 					type: "Quiz"
@@ -65,11 +68,14 @@ export function Progress({
 		}
 
 		if (child.type === "UnitTest") {
+			const progress = progressMap.get(child.id)
+			const variant = progress?.completed && progress?.proficiency ? progress.proficiency : "unit-test"
+
 			return [
 				{
 					id: child.id,
 					componentResourceSourcedId: child.componentResourceSourcedId,
-					variant: "unit-test",
+					variant,
 					path: child.path,
 					title: child.title,
 					type: "UnitTest"
