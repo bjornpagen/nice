@@ -32,6 +32,7 @@ export function Content({ questionIds }: ContentProps) {
     const contentType: AssessmentType = "Exercise"
     const MAX_ATTEMPTS = 3
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: visibleIndex dependency is required to reset state on question change
     React.useEffect(() => {
         setSelectedResponses({})
         setExpectedResponseIdentifiers([])
@@ -82,7 +83,7 @@ export function Content({ questionIds }: ContentProps) {
 
     function computeHasAllExpectedFilled(): boolean {
         if (expectedResponseIdentifiers.length > 0) {
-            const nested = (selectedResponses as Record<string, unknown>)["RESPONSE"]
+            const nested = selectedResponses.RESPONSE
             if (nested && typeof nested === "object" && !Array.isArray(nested)) {
                 const nestedEntries = Object.entries(nested)
                 const nestedMap = new Map(nestedEntries)
@@ -91,10 +92,10 @@ export function Content({ questionIds }: ContentProps) {
                     return isMeaningfulValue(value)
                 })
             }
-            return expectedResponseIdentifiers.every((key) => isMeaningfulValue((selectedResponses as Record<string, unknown>)[key]))
+            return expectedResponseIdentifiers.every((key) => isMeaningfulValue(selectedResponses[key]))
         }
 
-        const maybe = (selectedResponses as Record<string, unknown>)["RESPONSE"]
+        const maybe = selectedResponses.RESPONSE
         if (maybe && typeof maybe === "object" && !Array.isArray(maybe)) {
             const entries = Object.values(maybe)
             return entries.length > 0 && entries.every((v) => isMeaningfulValue(v))
@@ -157,7 +158,10 @@ export function Content({ questionIds }: ContentProps) {
         }
 
         setLastCheckResponse(result.data)
-        const isCorrect = Boolean((result.data as { isCorrect?: boolean }).isCorrect)
+        function isCheckResponse(value: unknown): value is { isCorrect?: boolean } {
+            return typeof value === "object" && value !== null && "isCorrect" in value
+        }
+        const isCorrect = isCheckResponse(result.data) ? Boolean(result.data.isCorrect) : false
         setIsAnswerCorrect(isCorrect)
         setIsAnswerChecked(true)
         setShowFeedback(true)
@@ -197,6 +201,7 @@ export function Content({ questionIds }: ContentProps) {
     }
 
     const buttonConfig = getButtonConfig()
+    const currentQuestionId = questionIds[visibleIndex]
 
     return (
         <div className="h-full w-full flex">
@@ -206,9 +211,9 @@ export function Content({ questionIds }: ContentProps) {
                     <div className="text-sm text-gray-500">Item {visibleIndex + 1} / {questionIds.length}</div>
                 </div>
                 <div className="h-[calc(100%-56px-72px)]">
-                    {questionIds[visibleIndex] ? (
+                    {currentQuestionId ? (
                         <QTIRenderer
-                            identifier={questionIds[visibleIndex] as string}
+                            identifier={currentQuestionId}
                             materialType="assessmentItem"
                             height="100%"
                             width="100%"

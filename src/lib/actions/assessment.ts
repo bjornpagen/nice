@@ -154,14 +154,18 @@ export async function processQuestionResponse(
 		}
 
 		const results = await Promise.all(
-			responseEntries.map(([identifier, value]) => {
+			responseEntries.map(async ([identifier, value]) => {
 				const normalizedValue = Array.isArray(value) ? value : String(value)
-				return errors.try(
+				const result = await errors.try(
 					qti.processResponse(qtiItemId, {
 						responseIdentifier: identifier,
 						value: normalizedValue
 					})
 				)
+				if (result.error) {
+					return result
+				}
+				return result
 			})
 		)
 
@@ -381,14 +385,18 @@ export async function submitAnswer(
 		}
 
 		const results = await Promise.all(
-			responseEntries.map(([identifier, value]) => {
+			responseEntries.map(async ([identifier, value]) => {
 				const normalizedValue = Array.isArray(value) ? value : String(value)
-				return errors.try(
+				const result = await errors.try(
 					qti.processResponse(questionId, {
 						responseIdentifier: identifier,
 						value: normalizedValue
 					})
 				)
+				if (result.error) {
+					return result
+				}
+				return result
 			})
 		)
 
