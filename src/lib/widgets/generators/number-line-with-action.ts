@@ -322,10 +322,10 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const arrowSpacing = 25
 			const arrowY = yPos - baseOffset - (i * arrowSpacing)
 			
-			// Estimate label dimensions (server-safe approximation)
+			// Estimate label dimensions with tight bounds (server-safe approximation)
 			const labelWidth = action.label.length * theme.font.size.small * 0.6
 			const labelHeight = theme.font.size.small
-			const padding = 4
+			const padding = 2  // Minimal padding for tighter clipping
 			
 			labelBounds.push({
 				x: midX - labelWidth / 2 - padding,
@@ -466,19 +466,23 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const arrowX = xPos + baseOffset + (i * arrowSpacing)
 			const labelX = arrowX + 18  // Reduced from 25 to 18 for better balance
 			
-			// For rotated text (-90 degrees), calculate proper bounding box
+			// For rotated text (-90 degrees), calculate accurate bounding box
 			const textWidth = action.label.length * theme.font.size.small * 0.6  // original text width
 			const textHeight = theme.font.size.small  // original text height
-			const padding = 6  // Increased padding for better clipping
+			const padding = 3  // Adequate padding for proper clipping
 			
-			// After -90 degree rotation: width becomes height, height becomes width
-			// The rotated text extends vertically (in Y direction) by the original width
-			// The rotated text extends horizontally (in X direction) by the original height
+			// For -90 degree rotation around (labelX, midY), use heavily asymmetric clipping
+			// Text visually extends more to the left, so we need much more padding on the left
+			const leftPadding = padding + 4   // Much more padding on the left where text appears
+			const rightPadding = 0             // No padding on the right - preserve maximum dotted line
+			const topPadding = padding
+			const bottomPadding = padding
+			
 			labelBounds.push({
-				x: labelX - textHeight / 2 - padding,  // horizontal extent
-				y: midY - textWidth / 2 - padding,     // vertical extent  
-				width: textHeight + 2 * padding,       // rotated width
-				height: textWidth + 2 * padding        // rotated height
+				x: labelX - textHeight / 2 - leftPadding,    // more space on left
+				y: midY - textWidth / 2 - topPadding,        // top edge
+				width: textHeight + leftPadding + rightPadding, // asymmetric width
+				height: textWidth + topPadding + bottomPadding   // symmetric height
 			})
 
 			currentValue += action.delta
