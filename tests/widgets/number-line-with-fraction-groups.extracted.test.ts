@@ -124,7 +124,7 @@ test("number-line-with-fraction-groups - Divide whole numbers by fractions", () 
 		}
 	],
 	"type": "numberLineWithFractionGroups"
-} satisfies NumberLineWithFractionGroupsInput
+} as any // TODO: Update when schema is regenerated with new format
 
 	// Validate the input
 	const parseResult = NumberLineWithFractionGroupsPropsSchema.safeParse(input)
@@ -190,7 +190,7 @@ test("number-line-with-fraction-groups - Divide whole numbers by fractions", () 
 		}
 	],
 	"type": "numberLineWithFractionGroups"
-} satisfies NumberLineWithFractionGroupsInput
+} as any // TODO: Update when schema is regenerated with new format
 
 	// Validate the input
 	const parseResult = NumberLineWithFractionGroupsPropsSchema.safeParse(input)

@@ -2,68 +2,8 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
-import { buildTicks } from "@/lib/widgets/utils/ticks"
 import { selectAxisLabels } from "@/lib/widgets/utils/layout"
-
-const Tick = z
-	.object({
-		value: z
-			.number()
-			.describe("Position of this tick mark on the number line (e.g., 0, 0.5, 1, 1.5). Must be between min and max."),
-		label: z
-			.union([
-				z.object({
-					type: z.literal("fraction"),
-					numerator: z.number().int().describe("Numerator of the fraction (e.g., 1, 3, -2)"),
-					denominator: z.number().int().positive().describe("Denominator of the fraction (e.g., 2, 4, 8). Must be positive.")
-				}).strict(),
-				z.object({
-					type: z.literal("decimal"),
-					value: z.number().describe("Decimal value to display (e.g., 0.5, 1.25, -0.75)")
-				}).strict(),
-				z.object({
-					type: z.literal("whole"),
-					value: z.number().int().describe("Whole number to display (e.g., 0, 1, -3)")
-				}).strict(),
-				z.object({
-					type: z.literal("unlabeled")
-				}).strict().describe("No label - shows tick mark only"),
-				z.string().describe("DEPRECATED: Legacy string labels (e.g., '1/2', '1 fourth'). Use structured types instead for better AI generation.")
-			])
-			.describe("Structured label data for this tick. PREFER structured types (fraction/decimal/whole/unlabeled) over strings for better AI generation. Strings are deprecated but supported for backward compatibility."),
-		isMajor: z
-			.boolean()
-			.describe(
-				"Whether this is a major tick (longer line) or minor tick (shorter line). Major ticks typically mark whole numbers."
-			)
-	})
-	.strict()
-
-const Segment = z
-	.object({
-		start: z
-			.number()
-			.describe("Starting position of this grouped segment (e.g., 0, 0.5, 1). Must be >= min and < end."),
-		end: z
-			.number()
-			.describe("Ending position of this grouped segment (e.g., 0.5, 1, 1.5). Must be <= max and > start."),
-		color: z
-			.string()
-			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
-			.describe(
-				"CSS fill color for this segment's bar (e.g., '#FFE5B4' for peach, 'lightblue', 'rgba(255,0,0,0.3)'). Different colors distinguish groups."
-			),
-		label: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe(
-				"Text label for this segment (e.g., '1/2', 'Group A', '0.5', null). Positioned above the segment. Null shows no label. Can indicate the fraction size or group name."
-			)
-	})
-	.strict()
 
 export const NumberLineWithFractionGroupsPropsSchema = z
 	.object({
@@ -82,70 +22,91 @@ export const NumberLineWithFractionGroupsPropsSchema = z
 			.describe(
 				"Total height of the widget in pixels (e.g., 150, 200, 180). Includes number line and stacked segment bars."
 			),
-		min: z
-			.number()
-			.describe("Minimum value shown on the number line (e.g., 0, -1, -0.5). Typically 0 for fraction work."),
-		max: z
-			.number()
-			.describe("Maximum value shown on the number line (e.g., 3, 5, 2). Should accommodate all segments."),
-		ticks: z
-			.array(Tick)
-			.describe(
-				"All tick marks with their labels. Can show fractions, decimals, or mixed numbers. Order doesn't matter. Empty array shows no ticks."
-			),
-		segments: z
-			.array(Segment)
-			.describe(
-				"Colored bars above the number line showing grouped segments. Useful for division by fractions (e.g., how many 1/2s in 2?). Segments can overlap with staggered display."
-			)
+		axis: z
+			.object({
+				lowerBound: z
+					.number()
+					.int()
+					.describe("Lower bound numerator (e.g., 0 for 0/4, -2 for -2/4)"),
+				upperBound: z
+					.number()
+					.int()
+					.describe("Upper bound numerator (e.g., 8 for 8/4 = 2)"),
+				denominator: z
+					.number()
+					.int()
+					.positive()
+					.describe("The common denominator for all fractions on this axis (e.g., 4 for fourths). Determines tick spacing.")
+			})
+			.strict()
+			.describe("Defines the axis bounds and fraction interval"),
+		boxes: z
+			.object({
+				lowerBound: z
+					.number()
+					.int()
+					.describe("Starting numerator for the boxes (e.g., 0 to start from 0/4, -2 for -2/4)"),
+				upperBound: z
+					.number()
+					.int()
+					.describe("Ending numerator for the boxes (e.g., 7 for boxes up to 7/4)"),
+				fillTo: z
+					.number()
+					.int()
+					.describe("Numerator up to which boxes should be filled/shaded (e.g., 4 to fill up to 4/4)")
+			})
+			.strict()
+			.describe("Defines which boxes to show and how many to fill")
 	})
 	.strict()
 	.describe(
-		"Creates a number line with colored segment groups above it, perfect for visualizing division by fractions and repeated addition of fractional amounts. Shows how many groups of a given size fit within a range. Essential for fraction division concepts like 'how many 1/3s are in 2?' or skip counting by fractions.\n\nTick labels should use structured types for proper mathematical notation:\n- Fractions: {type: 'fraction', numerator: 1, denominator: 4} renders as '1/4'\n- Decimals: {type: 'decimal', value: 0.25} renders as '0.25'\n- Whole numbers: {type: 'whole', value: 2} renders as '2'\n- No label: {type: 'unlabeled'} (shows tick only)\n\nAvoid string labels like '1 fourth' or '2 fourths' - use proper structured fraction types instead."
+		"Creates a number line with fraction intervals and colored boxes above it. Perfect for visualizing fraction concepts like 'how many fourths make one whole?' The axis shows fraction labels above tick marks and whole number labels below. Boxes are automatically generated and filled up to the specified bound.\n\nExample: axis from 0/4 to 8/4 with denominator 4, boxes from 0 to 7 filled to 4, creates a number line from 0 to 2 with fourths marked, and boxes showing 4/4 = 1 whole."
 	)
 
 export type NumberLineWithFractionGroupsProps = z.infer<typeof NumberLineWithFractionGroupsPropsSchema>
 
-// Helper function to render structured labels as proper mathematical notation
-function renderTickLabel(label: NumberLineWithFractionGroupsProps["ticks"][0]["label"]): string {
-	// Handle legacy string labels (backward compatibility)
-	if (typeof label === "string") {
-		return label
-	}
-	
-	switch (label.type) {
-		case "fraction": {
-			const { numerator, denominator } = label
-			// Pure fraction: "3/4" or "-1/2"
-			return `${numerator}/${denominator}`
-		}
-		case "decimal":
-			return String(label.value)
-		case "whole":
-			return String(label.value)
-		case "unlabeled":
-			return ""
-		default:
-			return ""
-	}
+function renderFraction(numerator: number, denominator: number): string {
+	return `${numerator}/${denominator}`
 }
 
 /**
  * This template generates a highly illustrative number line as an SVG graphic,
  * specifically designed to build conceptual understanding of fraction division.
- * It visually answers the question, "How many groups of a certain fraction fit into a whole number?"
+ * It automatically generates ticks, labels, and boxes based on fraction bounds and intervals.
  */
 export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof NumberLineWithFractionGroupsPropsSchema> = (
 	data
 ) => {
-	const { width, height, min, max, ticks, segments } = data
-	const padding = { horizontal: PADDING, vertical: 40 }
+	const { width, height, axis, boxes } = data
+	const padding = { horizontal: PADDING * 2, vertical: 60 }
 	const chartWidth = width - 2 * padding.horizontal
 	const yPos = height / 2
 
-	if (min >= max) return `<svg width="${width}" height="${height}"></svg>`
-	const scale = chartWidth / (max - min)
-	const toSvgX = (val: number) => padding.horizontal + (val - min) * scale
+	// Convert fraction bounds to decimal values for positioning
+	const minValue = axis.lowerBound / axis.denominator
+	const maxValue = axis.upperBound / axis.denominator
+	
+	// Validation checks
+	if (minValue >= maxValue) return `<svg width="${width}" height="${height}"></svg>`
+	
+	if (boxes.lowerBound >= boxes.upperBound) {
+		throw new Error(`boxes.lowerBound (${boxes.lowerBound}) must be strictly less than boxes.upperBound (${boxes.upperBound})`)
+	}
+	
+	if (boxes.lowerBound < axis.lowerBound) {
+		throw new Error(`boxes.lowerBound (${boxes.lowerBound}) must be >= axis.lowerBound (${axis.lowerBound})`)
+	}
+	
+	if (boxes.upperBound > axis.upperBound) {
+		throw new Error(`boxes.upperBound (${boxes.upperBound}) must be <= axis.upperBound (${axis.upperBound})`)
+	}
+	
+	if (boxes.fillTo < boxes.lowerBound || boxes.fillTo > boxes.upperBound) {
+		throw new Error(`boxes.fillTo (${boxes.fillTo}) must be between boxes.lowerBound (${boxes.lowerBound}) and boxes.upperBound (${boxes.upperBound})`)
+	}
+	
+	const scale = chartWidth / (maxValue - minValue)
+	const toSvgX = (val: number) => padding.horizontal + (val - minValue) * scale
 
 	const canvas = new CanvasImpl({
 		chartArea: { left: 0, top: 0, width, height },
@@ -153,77 +114,103 @@ export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof Number
 		lineHeightDefault: 1.2
 	})
 
+	// Draw the main axis line
 	canvas.drawLine(padding.horizontal, yPos, width - padding.horizontal, yPos, {
 		stroke: theme.colors.axis,
 		strokeWidth: theme.stroke.width.base
 	})
 
-	// Smart tick labeling to prevent overlaps with structured labels
-	const tickPositions = ticks.map(tick => toSvgX(tick.value))
-	const tickLabels = ticks.map(tick => renderTickLabel(tick.label))
+	// Generate all tick marks and labels automatically
+	const fractionLabels: string[] = []
+	const wholeLabels: string[] = []
+	const tickPositions: number[] = []
 	
-	const selectedLabels = selectAxisLabels({
-		labels: tickLabels,
+	for (let numerator = axis.lowerBound; numerator <= axis.upperBound; numerator++) {
+		const fractionValue = numerator / axis.denominator
+		const position = toSvgX(fractionValue)
+		
+		tickPositions.push(position)
+		fractionLabels.push(renderFraction(numerator, axis.denominator))
+		
+		// Add whole number labels for integer values
+		if (numerator % axis.denominator === 0) {
+			wholeLabels.push(String(numerator / axis.denominator))
+		} else {
+			wholeLabels.push("")
+		}
+	}
+
+	// Smart label selection to prevent overlaps
+	const selectedFractionLabels = selectAxisLabels({
+		labels: fractionLabels,
 		positions: tickPositions,
 		axisLengthPx: chartWidth,
 		orientation: "horizontal",
-		fontPx: 11,
-		minGapPx: 8
+		fontPx: 10,
+		minGapPx: 6
 	})
 
-	ticks.forEach((t, i) => {
-		const x = toSvgX(t.value)
-		const tickHeight = t.isMajor ? 8 : 4
+	// Draw ticks and labels
+	tickPositions.forEach((x, i) => {
+		const numerator = axis.lowerBound + i
+		const isWhole = numerator % axis.denominator === 0
+		const tickHeight = isWhole ? 8 : 4
+		
+		// Draw tick mark
 		canvas.drawLine(x, yPos - tickHeight, x, yPos + tickHeight, {
 			stroke: theme.colors.axis,
 			strokeWidth: theme.stroke.width.base
 		})
 		
-		const renderedLabel = renderTickLabel(t.label)
-		if (renderedLabel !== "" && selectedLabels.has(i)) {
+		// Draw fraction label above the tick (if selected)
+		if (selectedFractionLabels.has(i)) {
 			canvas.drawText({
 				x: x,
-				y: yPos + 25,
-				text: renderedLabel,
+				y: yPos - 25,
+				text: fractionLabels[i] ?? "",
 				fill: theme.colors.axisLabel,
 				anchor: "middle",
 				fontPx: 11
 			})
 		}
-	})
-
-	// Segments
-	segments.forEach((s, i) => {
-		const startPos = toSvgX(s.start)
-		const endPos = toSvgX(s.end)
-		const segmentWidth = endPos - startPos
-		const segmentHeight = 20
-		// Stagger segments vertically to avoid overlap if needed
-		const segmentY = yPos - segmentHeight / 2 - (i % 2) * (segmentHeight + 2)
-
-		canvas.drawRect(startPos, segmentY, segmentWidth, segmentHeight, {
-			fill: s.color,
-			fillOpacity: theme.opacity.overlay,
-			stroke: theme.colors.axis,
-			strokeWidth: 0.5
-		})
-
-		if (s.label !== null) {
-			const textColor = theme.colors.white // Assuming dark segment colors
-			const textX = startPos + segmentWidth / 2
+		
+		// Draw whole number label below the tick
+		if (wholeLabels[i] !== "") {
 			canvas.drawText({
-				x: textX,
-				y: segmentY + segmentHeight / 2,
-				text: s.label,
-				fill: textColor,
+				x: x,
+				y: yPos + 35,
+				text: wholeLabels[i] ?? "",
+				fill: theme.colors.axisLabel,
 				anchor: "middle",
-				dominantBaseline: "middle",
-				fontWeight: theme.font.weight.bold
+				fontPx: 12
 			})
 		}
 	})
 
-	// NEW: Finalize the canvas and construct the root SVG element
+	// Generate and draw boxes
+	const boxCount = boxes.upperBound - boxes.lowerBound
+	const boxWidth = chartWidth / (axis.upperBound - axis.lowerBound)
+	const boxHeight = 40
+	const boxY = yPos - boxHeight - 45
+
+	for (let numerator = boxes.lowerBound; numerator < boxes.upperBound; numerator++) {
+		const fractionValue = numerator / axis.denominator
+		const boxX = toSvgX(fractionValue)
+		
+		// Determine if this box should be filled
+		const isFilled = numerator < boxes.fillTo
+		const fillColor = isFilled ? "#11accd" : theme.colors.background
+		const strokeColor = theme.colors.axis
+
+		canvas.drawRect(boxX, boxY, boxWidth, boxHeight, {
+			fill: fillColor,
+			fillOpacity: isFilled ? 0.7 : 0.1,
+			stroke: strokeColor,
+			strokeWidth: 1
+		})
+	}
+
+	// Finalize the canvas and construct the root SVG element
 	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
 
 	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.base}">${svgBody}</svg>`
