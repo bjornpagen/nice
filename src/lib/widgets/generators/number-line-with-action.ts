@@ -443,16 +443,19 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const arrowX = xPos + baseOffset + (i * arrowSpacing)
 			const labelX = arrowX + 18  // Reduced from 25 to 18 for better balance
 			
-			// For rotated text, width and height are swapped
-			const labelWidth = action.label.length * theme.font.size.small * 0.6  // becomes height when rotated
-			const labelHeight = theme.font.size.small  // becomes width when rotated
-			const padding = 4
+			// For rotated text (-90 degrees), calculate proper bounding box
+			const textWidth = action.label.length * theme.font.size.small * 0.6  // original text width
+			const textHeight = theme.font.size.small  // original text height
+			const padding = 6  // Increased padding for better clipping
 			
+			// After -90 degree rotation: width becomes height, height becomes width
+			// The rotated text extends vertically (in Y direction) by the original width
+			// The rotated text extends horizontally (in X direction) by the original height
 			labelBounds.push({
-				x: labelX - labelHeight / 2 - padding,
-				y: midY - labelWidth / 2 - padding,
-				width: labelHeight + 2 * padding,
-				height: labelWidth + 2 * padding
+				x: labelX - textHeight / 2 - padding,  // horizontal extent
+				y: midY - textWidth / 2 - padding,     // vertical extent  
+				width: textHeight + 2 * padding,       // rotated width
+				height: textWidth + 2 * padding        // rotated height
 			})
 
 			currentValue += action.delta
