@@ -9,6 +9,23 @@ import { theme } from "@/lib/widgets/utils/theme"
 
 export const ErrInvalidRange = errors.new("min must be less than max")
 
+function toOpaqueHex(color: string): string {
+	const hex = color.toLowerCase()
+	// #RRGGBBAA -> #RRGGBB (strip alpha)
+	if (hex.length === 9) {
+		return hex.slice(0, 7)
+	}
+	// #RGB -> #RRGGBB (expand)
+	if (hex.length === 4) {
+		const r = hex[1]
+		const g = hex[2]
+		const b = hex[3]
+		return `#${r}${r}${g}${g}${b}${b}`
+	}
+	// #RRGGBB stays as-is
+	return hex
+}
+
 function createBoundarySchema() {
 	return z
 		.object({
@@ -149,8 +166,8 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 		`<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.axis}"/></marker>`
 	)
 
-	// Add colored arrow markers for ranges
-	const uniqueColors = new Set(ranges.map((r) => r.color))
+	// Add colored arrow markers for ranges (use opaque colors to avoid showing axis beneath)
+	const uniqueColors = new Set(ranges.map((r) => toOpaqueHex(r.color)))
 	for (const color of uniqueColors) {
 		const colorId = color.replace(/[^a-zA-Z0-9]/g, "")
 		canvas.addDef(
@@ -183,13 +200,14 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 	}
 
 	for (const r of ranges) {
+		const lineColor = toOpaqueHex(r.color)
 		const startPos = r.start.type === "bounded" ? toSvgX(r.start.at.value) : PADDING
 		const endPos = r.end.type === "bounded" ? toSvgX(r.end.at.value) : width - PADDING
-		const colorId = r.color.replace(/[^a-zA-Z0-9]/g, "")
+		const colorId = lineColor.replace(/[^a-zA-Z0-9]/g, "")
 
 		// Add markers for unbounded cases
-		let markerStart
-		let markerEnd
+		let markerStart: string | undefined
+		let markerEnd: string | undefined
 		if (r.start.type === "unbounded") {
 			markerStart = `url(#arrow-${colorId})`
 		}
@@ -198,8 +216,8 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 		}
 
 		canvas.drawLine(startPos, yPos, endPos, yPos, {
-			stroke: r.color,
-			strokeWidth: theme.stroke.width.xthick,
+			stroke: lineColor,
+			strokeWidth: theme.stroke.width.xxxthick,
 			strokeLinecap: "butt",
 			markerStart: markerStart,
 			markerEnd: markerEnd
@@ -207,18 +225,18 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 
 		// Boundary circles
 		if (r.start.type === "bounded") {
-			const fill = r.start.at.type === "closed" ? r.color : theme.colors.background
+			const fill = r.start.at.type === "closed" ? lineColor : theme.colors.background
 			canvas.drawCircle(startPos, yPos, 5, {
 				fill: fill,
-				stroke: r.color,
+				stroke: lineColor,
 				strokeWidth: theme.stroke.width.base
 			})
 		}
 		if (r.end.type === "bounded") {
-			const fill = r.end.at.type === "closed" ? r.color : theme.colors.white
+			const fill = r.end.at.type === "closed" ? lineColor : theme.colors.white
 			canvas.drawCircle(endPos, yPos, 5, {
 				fill: fill,
-				stroke: r.color,
+				stroke: lineColor,
 				strokeWidth: theme.stroke.width.base
 			})
 		}
