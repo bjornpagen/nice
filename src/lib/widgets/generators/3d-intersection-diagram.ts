@@ -397,6 +397,142 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 		planePoint = { x: 0, y: yPos * 0.5 + zPos * 0.5, z: zPos * 0.5 + yPos * 0.5 }
 	}
 
+	// Targeted fix: compute hidden/visible edges based on face orientation for prisms and pyramids
+	if (solid.type === "rectangularPrism" || solid.type === "squarePyramid") {
+		// Helper vector ops
+		const sub = (a: Point3D, b: Point3D): Point3D => ({ x: a.x - b.x, y: a.y - b.y, z: a.z - b.z })
+		const cross = (a: Point3D, b: Point3D): Point3D => ({
+			x: a.y * b.z - a.z * b.y,
+			y: a.z * b.x - a.x * b.z,
+			z: a.x * b.y - a.y * b.x
+		})
+		const dot = (a: Point3D, b: Point3D): number => a.x * b.x + a.y * b.y + a.z * b.z
+		const add = (a: Point3D, b: Point3D): Point3D => ({ x: a.x + b.x, y: a.y + b.y, z: a.z + b.z })
+		const scaleVec = (a: Point3D, s: number): Point3D => ({ x: a.x * s, y: a.y * s, z: a.z * s })
+
+		// Camera view direction: looking along negative Z toward origin
+		const viewDir: Point3D = { x: 0, y: 0, z: -1 }
+
+		// Object centroid
+		const centroid = vertices.reduce<Point3D>((acc, v) => add(acc, v), { x: 0, y: 0, z: 0 })
+		const objCenter = scaleVec(centroid, 1 / (vertices.length === 0 ? 1 : vertices.length))
+
+		// Define faces for each solid
+		type Face = { indices: number[]; normal: Point3D }
+		const faces: Face[] = []
+
+		if (solid.type === "rectangularPrism") {
+			// Faces defined by vertex cycles
+			const faceCycles: number[][] = [
+				[0, 1, 2, 3], // back
+				[4, 5, 6, 7], // front
+				[0, 4, 5, 1], // bottom (y-)
+				[3, 2, 6, 7], // top (y+)
+				[0, 3, 7, 4], // left (x-)
+				[1, 5, 6, 2] // right (x+)
+			]
+			for (const cyc of faceCycles) {
+				const i0 = cyc[0]
+				const i1 = cyc[1]
+				const i2 = cyc[2]
+				if (i0 === undefined || i1 === undefined || i2 === undefined) continue
+				const a = vertices[i0]
+				const b = vertices[i1]
+				const c = vertices[i2]
+				if (!a || !b || !c) continue
+				let n = cross(sub(b, a), sub(c, a))
+				// Orient normal outward relative to object center
+				let sum: Point3D = { x: 0, y: 0, z: 0 }
+				let count = 0
+				for (const idx of cyc) {
+					const v = vertices[idx]
+					if (!v) {
+						count = -1
+						break
+					}
+					sum = add(sum, v)
+					count++
+				}
+				if (count !== cyc.length) continue
+				const fCenter = scaleVec(sum, 1 / count)
+				if (dot(n, sub(fCenter, objCenter)) < 0) n = scaleVec(n, -1)
+				faces.push({ indices: cyc, normal: n })
+			}
+		} else {
+			// squarePyramid
+			const faceCycles: number[][] = [
+				[0, 1, 2, 3], // base (y constant)
+				[0, 1, 4],
+				[1, 2, 4],
+				[2, 3, 4],
+				[3, 0, 4]
+			]
+			for (const cyc of faceCycles) {
+				const i0 = cyc[0]
+				const i1 = cyc[1]
+				const i2 = cyc[2]
+				if (i0 === undefined || i1 === undefined || i2 === undefined) continue
+				const a = vertices[i0]
+				const b = vertices[i1]
+				const c = vertices[i2]
+				if (!a || !b || !c) continue
+				let n = cross(sub(b, a), sub(c, a))
+				let sum: Point3D = { x: 0, y: 0, z: 0 }
+				let count = 0
+				for (const idx of cyc) {
+					const v = vertices[idx]
+					if (!v) {
+						count = -1
+						break
+					}
+					sum = add(sum, v)
+					count++
+				}
+				if (count !== cyc.length) continue
+				const fCenter = scaleVec(sum, 1 / count)
+				if (dot(n, sub(fCenter, objCenter)) < 0) n = scaleVec(n, -1)
+				faces.push({ indices: cyc, normal: n })
+			}
+		}
+
+		// Build edge -> adjacent faces map using face cycles (edges are undirected)
+		const edgeToFaces = new Map<string, Point3D[]>()
+		const makeKey = (i: number, j: number) => (i < j ? `${i}-${j}` : `${j}-${i}`)
+		for (const f of faces) {
+			const cyc = f.indices
+			for (let k = 0; k < cyc.length; k++) {
+				const i = cyc[k]
+				const j = cyc[(k + 1) % cyc.length]
+				if (i === undefined || j === undefined) continue
+				const key = makeKey(i, j)
+				const arr = edgeToFaces.get(key)
+				if (arr) arr.push(f.normal)
+				else edgeToFaces.set(key, [f.normal])
+			}
+		}
+
+		// Classify each edge: hidden iff all adjacent faces are back-facing
+		for (const edge of edges) {
+			const key = makeKey(edge.startIdx, edge.endIdx)
+			const normals = edgeToFaces.get(key) || []
+			if (normals.length === 0) {
+				// Fallback: treat as visible if no face association found
+				edge.isHidden = false
+				continue
+			}
+			let allBackFacing = true
+			for (const n of normals) {
+				// front-facing if dot(n, viewDir) < 0; treat == 0 as visible (silhouette)
+				const d = dot(n, viewDir)
+				if (d <= 0) {
+					allBackFacing = false
+					break
+				}
+			}
+			edge.isHidden = allBackFacing
+		}
+	}
+
 	const intersectLinePlane = (p1: Point3D, p2: Point3D): Point3D | null => {
 		const lineVec = { x: p2.x - p1.x, y: p2.y - p1.y, z: p2.z - p1.z }
 		const dot = lineVec.x * planeNormal.x + lineVec.y * planeNormal.y + lineVec.z * planeNormal.z

@@ -215,6 +215,17 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 
 	const pointMap = new Map(points.map((p) => [p.id, p]))
 
+	// Precompute dashed-vertex membership for helper ray rendering
+	const dashedVertexIds = new Set<string>()
+	for (const line of internalLines) {
+		if (line.style === "dashed") {
+			const from = pointMap.get(line.from)
+			const to = pointMap.get(line.to)
+			if (from) dashedVertexIds.add(from.id)
+			if (to) dashedVertexIds.add(to.id)
+		}
+	}
+
 	// Compute centroid of the main triangle (first 3 points) to infer outward direction
 	// Safe to access without checks since we validated points.length >= 3 above
 	const pAforCentroid = points[0]
@@ -251,6 +262,26 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 			})
 		}
 	}
+
+	// Precompute triangle membership and centroids for improved side label placement.
+	// We consider triangles defined by sequential chunks of 3 points, matching the
+	// drawing logic above.
+	const triangleChunks: Array<{ ids: Set<string>; cx: number; cy: number }> = []
+	for (let i = 0; i < points.length; i += 3) {
+		const t0 = points[i]
+		const t1 = points[i + 1]
+		const t2 = points[i + 2]
+		if (!t0 || !t1 || !t2) continue
+		triangleChunks.push({
+			ids: new Set<string>([t0.id, t1.id, t2.id]),
+			cx: (t0.x + t1.x + t2.x) / 3,
+			cy: (t0.y + t1.y + t2.y) / 3
+		})
+	}
+
+	// Fallback centroid across all points for degenerate cases
+	const centroidAllX = points.reduce((acc, p) => acc + p.x, 0) / points.length
+	const centroidAllY = points.reduce((acc, p) => acc + p.y, 0) / points.length
 
 	// Layer 3: Internal Lines
 	for (const line of internalLines) {
@@ -353,6 +384,99 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 					stroke: theme.colors.black,
 					strokeWidth: theme.stroke.width.thick
 				})
+
+				// Helper dashed rays from the right-angle square along both rays
+				// Draw when a dashed internal line meets this vertex (altitude/height context).
+				if (dashedVertexIds.has(vertex.id)) {
+					const helperLen = markerSize
+					// Determine if there is an existing dashed line colinear with each ray from this vertex.
+					const colinearSignFor = (dirX: number, dirY: number): -1 | 0 | 1 => {
+						for (const line of internalLines) {
+							if (line.style !== "dashed") continue
+							let other: { x: number; y: number } | null = null
+							if (line.from === vertex.id) {
+								const to = pointMap.get(line.to)
+								if (to) other = { x: to.x - vertex.x, y: to.y - vertex.y }
+							} else if (line.to === vertex.id) {
+								const fromP = pointMap.get(line.from)
+								if (fromP) other = { x: fromP.x - vertex.x, y: fromP.y - vertex.y }
+							}
+							if (!other) continue
+							const ovLen = Math.hypot(other.x, other.y)
+							if (ovLen === 0) continue
+							const ovx = other.x / ovLen
+							const ovy = other.y / ovLen
+							const dot = ovx * dirX + ovy * dirY
+							if (Math.abs(dot) > 0.98) {
+								return dot >= 0 ? 1 : -1
+							}
+						}
+						return 0
+					}
+
+					// For each ray, draw dashed segments in both directions from the square corner,
+					// unless a real dashed line already occupies one direction; in that case, draw the opposite.
+					const drawRayHelpers = (
+						cornerX: number,
+						cornerY: number,
+						dirX: number,
+						dirY: number,
+						sign: -1 | 0 | 1
+					): void => {
+						const posX1 = cornerX
+						const posY1 = cornerY
+						const posX2 = cornerX + dirX * helperLen
+						const posY2 = cornerY + dirY * helperLen
+						const negX1 = cornerX - dirX * helperLen
+						const negY1 = cornerY - dirY * helperLen
+						// Draw toward +dir only if no true dashed internal line occupies +dir
+						if (sign <= 0) {
+							canvas.drawLine(posX1, posY1, posX2, posY2, {
+								stroke: theme.colors.black,
+								strokeWidth: theme.stroke.width.base,
+								dash: "4 3"
+							})
+						}
+						// Draw toward -dir only if no true dashed internal line occupies -dir
+						if (sign >= 0) {
+							canvas.drawLine(negX1, negY1, posX1, posY1, {
+								stroke: theme.colors.black,
+								strokeWidth: theme.stroke.width.base,
+								dash: "4 3"
+							})
+						}
+					}
+
+					const sign1 = colinearSignFor(u1x, u1y)
+					const sign2 = colinearSignFor(u2x, u2y)
+					drawRayHelpers(m1x, m1y, u1x, u1y, sign1)
+					drawRayHelpers(m2x, m2y, u2x, u2y, sign2)
+				}
+
+				// Auto-draw full dashed height when a right-angle marker exists at a non-core vertex
+				// but no explicit dashed internal line is provided. This addresses cases where the
+				// height dropdown is implied in the problem but omitted from inputs.
+				const isCoreTriangleVertex = triangleChunks.some((tri) => tri.ids.has(vertex.id))
+				if (!isCoreTriangleVertex) {
+					// Choose the farther of the two rays' endpoints as the target (typically the apex
+					// when the right angle is at the foot on the base).
+					const dToP1 = Math.hypot(p1.x - vertex.x, p1.y - vertex.y)
+					const dToP2 = Math.hypot(p2.x - vertex.x, p2.y - vertex.y)
+					const target = dToP1 >= dToP2 ? p1 : p2
+					const existsDashedHeight = internalLines.some(
+						(line) =>
+							line.style === "dashed" &&
+							((line.from === vertex.id && line.to === target.id) ||
+								(line.to === vertex.id && line.from === target.id))
+					)
+					if (!existsDashedHeight) {
+						canvas.drawLine(vertex.x, vertex.y, target.x, target.y, {
+							stroke: theme.colors.black,
+							strokeWidth: theme.stroke.width.base,
+							dash: "4 3"
+						})
+					}
+				}
 			} else {
 				const arcStartX = vertex.x + scaledArcRadius * Math.cos(startAngle)
 				const arcStartY = vertex.y + scaledArcRadius * Math.sin(startAngle)
@@ -458,16 +582,29 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 		const len = Math.sqrt(dx * dx + dy * dy)
 		const nx = -dy / len // Perpendicular vector
 		const ny = dx / len
-		const labelOffset = 15
+		// Dynamic label offset scaled by side length, within reasonable bounds
+		const labelOffset = Math.max(15, Math.min(32, len * 0.06 + (side.label ? side.label.length * 3 : 0)))
 
 		if (side.label) {
-			// Flip perpendicular to point away from the triangle centroid so labels are placed outside
+			// Determine an appropriate centroid for this side: prefer the centroid
+			// of the triangle chunk that contains both endpoints; otherwise fallback.
+			let useCx = centroidX
+			let useCy = centroidY
+			for (const tri of triangleChunks) {
+				if (tri.ids.has(p1.id) && tri.ids.has(p2.id)) {
+					useCx = tri.cx
+					useCy = tri.cy
+					break
+				}
+			}
+
+			// Flip perpendicular to point away from the chosen centroid so labels are placed outside
 			let perpX = nx
 			let perpY = ny
 			const testX = midX + perpX * 10
 			const testY = midY + perpY * 10
-			const distTest = Math.hypot(testX - centroidX, testY - centroidY)
-			const distMid = Math.hypot(midX - centroidX, midY - centroidY)
+			const distTest = Math.hypot(testX - useCx, testY - useCy)
+			const distMid = Math.hypot(midX - useCx, midY - useCy)
 			if (distTest < distMid) {
 				perpX = -perpX
 				perpY = -perpY
@@ -517,8 +654,79 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 			fill: theme.colors.black
 		})
 		if (point.label) {
-			const textX = point.x + 8
-			const textY = point.y - 8
+			// Place vertex labels along the external angle bisector so they sit outside
+			// the triangle and are equidistant from both incident sides.
+			let useCx = centroidAllX
+			let useCy = centroidAllY
+			let bisX = 0
+			let bisY = 0
+			let haveBisector = false
+			for (const tri of triangleChunks) {
+				if (tri.ids.has(point.id)) {
+					useCx = tri.cx
+					useCy = tri.cy
+					const neighborIds: string[] = []
+					for (const id of tri.ids) {
+						if (id !== point.id) neighborIds.push(id)
+					}
+					if (neighborIds.length === 2) {
+						const id1 = neighborIds[0]
+						const id2 = neighborIds[1]
+						if (id1 !== undefined && id2 !== undefined) {
+							const n1 = pointMap.get(id1)
+							const n2 = pointMap.get(id2)
+							if (n1 && n2) {
+								const v1x = n1.x - point.x
+								const v1y = n1.y - point.y
+								const v2x = n2.x - point.x
+								const v2y = n2.y - point.y
+								const m1 = Math.hypot(v1x, v1y)
+								const m2 = Math.hypot(v2x, v2y)
+								if (m1 > 0 && m2 > 0) {
+									const u1x = v1x / m1
+									const u1y = v1y / m1
+									const u2x = v2x / m2
+									const u2y = v2y / m2
+									let bx = u1x + u2x
+									let by = u1y + u2y
+									const bm = Math.hypot(bx, by)
+									if (bm > 0) {
+										bx /= bm
+										by /= bm
+										// Flip to point away from triangle interior (outward)
+										const toCentX = useCx - point.x
+										const toCentY = useCy - point.y
+										if (bx * toCentX + by * toCentY > 0) {
+											bx = -bx
+											by = -by
+										}
+										bisX = bx
+										bisY = by
+										haveBisector = true
+									}
+								}
+							}
+						}
+					}
+					break
+				}
+			}
+			const OFFSET = 16
+			let textX = point.x + 8
+			let textY = point.y - 8
+			if (haveBisector) {
+				textX = point.x + bisX * OFFSET
+				textY = point.y + bisY * OFFSET
+			} else {
+				// Fallback: push away from centroid if bisector unavailable
+				const dirX = point.x - useCx
+				const dirY = point.y - useCy
+				const dirLen = Math.hypot(dirX, dirY)
+				if (dirLen > 0) {
+					textX = point.x + (dirX / dirLen) * OFFSET
+					textY = point.y + (dirY / dirLen) * OFFSET
+				}
+			}
 
 			// Canvas automatically tracks extents
 
@@ -528,7 +736,9 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 				text: point.label,
 				fill: theme.colors.black,
 				fontPx: theme.font.size.large,
-				fontWeight: theme.font.weight.bold
+				fontWeight: theme.font.weight.bold,
+				anchor: "middle",
+				dominantBaseline: "middle"
 			})
 		}
 	}
