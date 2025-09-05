@@ -13,8 +13,26 @@ const Tick = z
 			.number()
 			.describe("Position of this tick mark on the number line (e.g., 0, 0.5, 1, 1.5). Must be between min and max."),
 		label: z
-			.string()
-			.describe("Text label for this tick (e.g., '0', '1/2', '1', '1 1/2'). To show no label, use an empty string."),
+			.union([
+				z.object({
+					type: z.literal("fraction"),
+					numerator: z.number().int().describe("Numerator of the fraction (e.g., 1, 3, -2)"),
+					denominator: z.number().int().positive().describe("Denominator of the fraction (e.g., 2, 4, 8). Must be positive.")
+				}).strict(),
+				z.object({
+					type: z.literal("decimal"),
+					value: z.number().describe("Decimal value to display (e.g., 0.5, 1.25, -0.75)")
+				}).strict(),
+				z.object({
+					type: z.literal("whole"),
+					value: z.number().int().describe("Whole number to display (e.g., 0, 1, -3)")
+				}).strict(),
+				z.object({
+					type: z.literal("unlabeled")
+				}).strict().describe("No label - shows tick mark only"),
+				z.string().describe("DEPRECATED: Legacy string labels (e.g., '1/2', '1 fourth'). Use structured types instead for better AI generation.")
+			])
+			.describe("Structured label data for this tick. PREFER structured types (fraction/decimal/whole/unlabeled) over strings for better AI generation. Strings are deprecated but supported for backward compatibility."),
 		isMajor: z
 			.boolean()
 			.describe(
@@ -83,10 +101,34 @@ export const NumberLineWithFractionGroupsPropsSchema = z
 	})
 	.strict()
 	.describe(
-		"Creates a number line with colored segment groups above it, perfect for visualizing division by fractions and repeated addition of fractional amounts. Shows how many groups of a given size fit within a range. Essential for fraction division concepts like 'how many 1/3s are in 2?' or skip counting by fractions."
+		"Creates a number line with colored segment groups above it, perfect for visualizing division by fractions and repeated addition of fractional amounts. Shows how many groups of a given size fit within a range. Essential for fraction division concepts like 'how many 1/3s are in 2?' or skip counting by fractions.\n\nTick labels should use structured types for proper mathematical notation:\n- Fractions: {type: 'fraction', numerator: 1, denominator: 4} renders as '1/4'\n- Decimals: {type: 'decimal', value: 0.25} renders as '0.25'\n- Whole numbers: {type: 'whole', value: 2} renders as '2'\n- No label: {type: 'unlabeled'} (shows tick only)\n\nAvoid string labels like '1 fourth' or '2 fourths' - use proper structured fraction types instead."
 	)
 
 export type NumberLineWithFractionGroupsProps = z.infer<typeof NumberLineWithFractionGroupsPropsSchema>
+
+// Helper function to render structured labels as proper mathematical notation
+function renderTickLabel(label: NumberLineWithFractionGroupsProps["ticks"][0]["label"]): string {
+	// Handle legacy string labels (backward compatibility)
+	if (typeof label === "string") {
+		return label
+	}
+	
+	switch (label.type) {
+		case "fraction": {
+			const { numerator, denominator } = label
+			// Pure fraction: "3/4" or "-1/2"
+			return `${numerator}/${denominator}`
+		}
+		case "decimal":
+			return String(label.value)
+		case "whole":
+			return String(label.value)
+		case "unlabeled":
+			return ""
+		default:
+			return ""
+	}
+}
 
 /**
  * This template generates a highly illustrative number line as an SVG graphic,
@@ -116,9 +158,9 @@ export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof Number
 		strokeWidth: theme.stroke.width.base
 	})
 
-	// Smart tick labeling to prevent overlaps
+	// Smart tick labeling to prevent overlaps with structured labels
 	const tickPositions = ticks.map(tick => toSvgX(tick.value))
-	const tickLabels = ticks.map(tick => tick.label)
+	const tickLabels = ticks.map(tick => renderTickLabel(tick.label))
 	
 	const selectedLabels = selectAxisLabels({
 		labels: tickLabels,
@@ -137,11 +179,12 @@ export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof Number
 			strokeWidth: theme.stroke.width.base
 		})
 		
-		if (t.label !== "" && selectedLabels.has(i)) {
+		const renderedLabel = renderTickLabel(t.label)
+		if (renderedLabel !== "" && selectedLabels.has(i)) {
 			canvas.drawText({
 				x: x,
 				y: yPos + 25,
-				text: t.label,
+				text: renderedLabel,
 				fill: theme.colors.axisLabel,
 				anchor: "middle",
 				fontPx: 11
