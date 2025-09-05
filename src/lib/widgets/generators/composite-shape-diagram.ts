@@ -1,3 +1,5 @@
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
@@ -147,7 +149,7 @@ export const CompositeShapeDiagramPropsSchema = z
 		outerBoundary: z
 			.array(z.number().int())
 			.describe(
-				"Ordered vertex indices defining the outer perimeter. Connects vertices in order, closing back to first (e.g., [0,1,2,3,4] for pentagon). Min 3 indices."
+				"Ordered vertex indices defining the outer perimeter. Traces the shape's outer edge by connecting vertices in sequence, then closing back to the first vertex. CRITICAL: Must include ALL vertices that form the outer boundary, not just the first N vertices. Examples: Rectangle=[0,1,2,3], L-shape=[0,1,2,3,4,5], Triangle=[0,1,2]. Min 3 indices."
 			),
 		outerBoundaryLabels: z
 			.array(SideLabelSchema)
@@ -177,7 +179,7 @@ export const CompositeShapeDiagramPropsSchema = z
 	})
 	.strict()
 	.describe(
-		"Creates complex composite polygons with internal divisions, shaded regions, and geometric annotations. Perfect for area decomposition problems, geometric proofs, and visualizing how shapes can be divided into parts. Supports right angle markers and both solid and dashed internal segments."
+		"Creates complex composite polygons with internal divisions, shaded regions, and geometric annotations. Perfect for area decomposition problems, geometric proofs, and visualizing how shapes can be divided into parts. Supports right angle markers and both solid and dashed internal segments. IMPORTANT: For complex shapes like L-shapes or U-shapes, ensure outerBoundary includes ALL vertices that form the perimeter, not just sequential indices."
 	)
 
 export type CompositeShapeDiagramProps = z.infer<typeof CompositeShapeDiagramPropsSchema>
@@ -200,6 +202,29 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 	} = data
 
 	if (vertices.length === 0) return `<svg width="${width}" height="${height}" />`
+
+	// Validation: Check that outerBoundaryLabels length matches outerBoundary length
+	if (outerBoundaryLabels.length !== outerBoundary.length) {
+		logger.error("outerBoundaryLabels length mismatch", {
+			outerBoundaryLabelsLength: outerBoundaryLabels.length,
+			outerBoundaryLength: outerBoundary.length
+		})
+		throw errors.new(
+			`outerBoundaryLabels length (${outerBoundaryLabels.length}) must match outerBoundary length (${outerBoundary.length})`
+		)
+	}
+
+	// Validation: Check that all outerBoundary indices are valid
+	for (const idx of outerBoundary) {
+		if (idx < 0 || idx >= vertices.length) {
+			logger.error("invalid outerBoundary index", {
+				index: idx,
+				verticesLength: vertices.length,
+				validRange: `0-${vertices.length - 1}`
+			})
+			throw errors.new(`outerBoundary index ${idx} is invalid (must be 0-${vertices.length - 1})`)
+		}
+	}
 
 	const canvas = new CanvasImpl({
 		chartArea: { left: 0, top: 0, width, height },

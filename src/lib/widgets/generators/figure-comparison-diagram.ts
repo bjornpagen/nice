@@ -140,7 +140,27 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 
 	if (figures.length === 0) return `<svg width="${width}" height="${height}" />`
 
-	// Calculate bounding boxes for each figure
+	const canvas = new CanvasImpl({
+		chartArea: { left: 0, top: 0, width, height },
+		fontPxDefault: 12,
+		lineHeightDefault: 1.2
+	})
+
+	// Collect geometry in raw coordinates first, then fit-to-box scale and render
+	type Point = { x: number; y: number }
+	type FigureGeometry = {
+		vertices: Point[]
+		sideLabels: Array<{ x: number; y: number; text: string; color: string }>
+		figureLabel: { x: number; y: number; text: string; color: string }
+		fillColor: string
+		strokeColor: string
+		strokeWidth: number
+	}
+
+	const figureGeometries: FigureGeometry[] = []
+	const allPoints: Point[] = []
+
+	// Calculate bounding boxes for each figure in raw coordinates
 	const figureBounds = figures.map((figure) => {
 		const xs = figure.vertices.map((v) => v.x)
 		const ys = figure.vertices.map((v) => v.y)
@@ -154,9 +174,7 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 		}
 	})
 
-	// Calculate total dimensions needed
-	const padding = 30
-	const totalFigureSpacing = (figures.length - 1) * spacing
+	// Calculate total dimensions needed in raw coordinates (without spacing)
 	const maxFigureWidth = Math.max(...figureBounds.map((b) => b.width))
 	const maxFigureHeight = Math.max(...figureBounds.map((b) => b.height))
 
@@ -164,41 +182,17 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 	let totalContentHeight: number
 
 	if (layout === "horizontal") {
-		totalContentWidth = figureBounds.reduce((sum, b) => sum + b.width, 0) + totalFigureSpacing
+		totalContentWidth = figureBounds.reduce((sum, b) => sum + b.width, 0)
 		totalContentHeight = maxFigureHeight
 	} else {
 		totalContentWidth = maxFigureWidth
-		totalContentHeight = figureBounds.reduce((sum, b) => sum + b.height, 0) + totalFigureSpacing
+		totalContentHeight = figureBounds.reduce((sum, b) => sum + b.height, 0)
 	}
 
-	// Calculate scale to fit within the specified dimensions
-	const availableWidth = width - 2 * padding
-	const availableHeight = height - 2 * padding
-	const scaleX = availableWidth / totalContentWidth
-	const scaleY = availableHeight / totalContentHeight
-	const scale = Math.min(scaleX, scaleY, 1) // Don't scale up, only down
+	// Position figures in raw coordinate space (centered around 0,0, no spacing yet)
+	const startX = -totalContentWidth / 2
+	const startY = -totalContentHeight / 2
 
-	// Calculate scaled dimensions
-	const scaledContentWidth = totalContentWidth * scale
-	const scaledContentHeight = totalContentHeight * scale
-
-	// Start SVG with proper viewBox
-	const viewBoxX = 0
-	const viewBoxY = 0
-	const viewBoxWidth = width
-	const viewBoxHeight = height
-
-	const canvas = new CanvasImpl({
-		chartArea: { left: 0, top: 0, width, height },
-		fontPxDefault: 12,
-		lineHeightDefault: 1.2
-	})
-
-	// Calculate starting position to center the content
-	const startX = (width - scaledContentWidth) / 2
-	const startY = (height - scaledContentHeight) / 2
-
-	// Draw each figure
 	let currentX = startX
 	let currentY = startY
 
@@ -207,58 +201,184 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 		const bounds = figureBounds[i]
 		if (!figure || !bounds) continue
 
-		// Calculate offset to position this figure
-		const offsetX = currentX - bounds.minX * scale
-		const offsetY = currentY - bounds.minY * scale
+		// Calculate offset to position this figure in raw coordinates
+		const offsetX = currentX - bounds.minX
+		const offsetY = currentY - bounds.minY
 
-		// Draw the figure
-		drawFigure(figure, offsetX, offsetY, scale, canvas) // MODIFIED: Pass canvas
+		// Collect geometry for this figure
+		const figureGeometry = collectFigureGeometry(figure, offsetX, offsetY)
+		figureGeometries.push(figureGeometry)
 
-		// Move to next position
+		// Add all points to the global collection for fit calculation
+		allPoints.push(...figureGeometry.vertices)
+		allPoints.push(...figureGeometry.sideLabels.map((label) => ({ x: label.x, y: label.y })))
+		allPoints.push({ x: figureGeometry.figureLabel.x, y: figureGeometry.figureLabel.y })
+
+		// Move to next position in raw coordinates (no spacing)
 		if (layout === "horizontal") {
-			currentX += bounds.width * scale + spacing * scale
+			currentX += bounds.width
 		} else {
-			currentY += bounds.height * scale + spacing * scale
+			currentY += bounds.height
 		}
 	}
 
-	// NEW: Finalize the canvas and construct the root SVG element
+	// Compute fit transform from all collected points
+	const { project } = computeFit(allPoints, width, height)
+
+	// Calculate spacing offsets in screen coordinates
+	const spacingOffsets: Array<{ x: number; y: number }> = []
+	let cumulativeOffsetX = 0
+	let cumulativeOffsetY = 0
+
+	for (let i = 0; i < figureGeometries.length; i++) {
+		spacingOffsets.push({ x: cumulativeOffsetX, y: cumulativeOffsetY })
+
+		if (i < figureGeometries.length - 1) {
+			// Don't add spacing after the last figure
+			if (layout === "horizontal") {
+				cumulativeOffsetX += spacing
+			} else {
+				cumulativeOffsetY += spacing
+			}
+		}
+	}
+
+	// Render all figures with spacing applied in screen space
+	for (let i = 0; i < figureGeometries.length; i++) {
+		const figureGeom = figureGeometries[i]
+		const spacingOffset = spacingOffsets[i]
+		if (!figureGeom || !spacingOffset) continue
+		// Draw the figure shape with spacing offset
+		const transformedVertices = figureGeom.vertices.map((v) => {
+			const projected = project(v)
+			return { x: projected.x + spacingOffset.x, y: projected.y + spacingOffset.y }
+		})
+		canvas.drawPolygon(transformedVertices, {
+			fill: figureGeom.fillColor,
+			stroke: figureGeom.strokeColor,
+			strokeWidth: figureGeom.strokeWidth // Keep original stroke width (screen space)
+		})
+
+		// Draw side labels with spacing offset
+		for (const sideLabel of figureGeom.sideLabels) {
+			const transformedPos = project({ x: sideLabel.x, y: sideLabel.y })
+			canvas.drawText({
+				x: transformedPos.x + spacingOffset.x,
+				y: transformedPos.y + spacingOffset.y,
+				text: sideLabel.text,
+				fill: sideLabel.color,
+				anchor: "middle",
+				dominantBaseline: "middle",
+				fontPx: 14, // Keep original font size (screen space)
+				fontWeight: theme.font.weight.bold
+			})
+		}
+
+		// Calculate figure label position based on final transformed bounds
+		const finalBounds = {
+			minX: Math.min(...transformedVertices.map((v) => v.x)),
+			maxX: Math.max(...transformedVertices.map((v) => v.x)),
+			minY: Math.min(...transformedVertices.map((v) => v.y)),
+			maxY: Math.max(...transformedVertices.map((v) => v.y))
+		}
+
+		const centerX = (finalBounds.minX + finalBounds.maxX) / 2
+		const centerY = (finalBounds.minY + finalBounds.maxY) / 2
+		const figure = figures[i]
+		if (!figure) continue
+
+		let labelX = centerX
+		let labelY = centerY
+
+		// Add clearance for external side labels to avoid overlap with the figure label.
+		// This pushes the figure label further out if side labels are present and positioned externally.
+		const hasExternalSideLabels =
+			figure.sideLabels.some((l) => typeof l === "string" && l.trim() !== "") && figure.sideLabelOffset > 0
+		const clearance = hasExternalSideLabels ? figure.sideLabelOffset + 20 : 0 // Increased buffer to 20px to account for font sizes.
+
+		switch (figure.figureLabel.position) {
+			case "top":
+				labelY = finalBounds.minY - figure.figureLabel.offset - clearance
+				break
+			case "bottom":
+				labelY = finalBounds.maxY + figure.figureLabel.offset + clearance
+				break
+			case "left":
+				labelX = finalBounds.minX - figure.figureLabel.offset - clearance
+				break
+			case "right":
+				labelX = finalBounds.maxX + figure.figureLabel.offset + clearance
+				break
+			default:
+				// Already set to center
+				break
+		}
+
+		canvas.drawText({
+			x: labelX,
+			y: labelY,
+			text: figureGeom.figureLabel.text,
+			fill: figureGeom.figureLabel.color,
+			anchor: "middle",
+			dominantBaseline: "middle",
+			fontPx: 16, // Keep original font size (screen space)
+			fontWeight: theme.font.weight.bold
+		})
+	}
+
+	// Finalize the canvas and construct the root SVG element
 	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
 
 	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">${svgBody}</svg>`
 }
 
 /**
- * Draws a single figure with all its properties
+ * Helper: compute fit transform for all collected points
  */
-function drawFigure(
+function computeFit(allPoints: Array<{ x: number; y: number }>, width: number, height: number) {
+	if (allPoints.length === 0) {
+		return { scale: 1, offsetX: 0, offsetY: 0, project: (p: { x: number; y: number }) => p }
+	}
+	const minX = Math.min(...allPoints.map((p) => p.x))
+	const maxX = Math.max(...allPoints.map((p) => p.x))
+	const minY = Math.min(...allPoints.map((p) => p.y))
+	const maxY = Math.max(...allPoints.map((p) => p.y))
+	const rawW = maxX - minX
+	const rawH = maxY - minY
+	const scale = Math.min((width - 2 * PADDING) / (rawW || 1), (height - 2 * PADDING) / (rawH || 1))
+	const offsetX = (width - scale * rawW) / 2 - scale * minX
+	const offsetY = (height - scale * rawH) / 2 - scale * minY
+	const project = (p: { x: number; y: number }) => ({ x: offsetX + scale * p.x, y: offsetY + scale * p.y })
+	return { scale, offsetX, offsetY, project }
+}
+
+/**
+ * Collects geometry for a single figure in raw coordinates
+ */
+function collectFigureGeometry(
 	figure: z.infer<typeof Figure>,
 	offsetX: number,
-	offsetY: number,
-	scale: number,
-	canvas: any
-): void {
-	// MODIFIED: Accept canvas
-
-	// Transform vertices
+	offsetY: number
+): {
+	vertices: Array<{ x: number; y: number }>
+	sideLabels: Array<{ x: number; y: number; text: string; color: string }>
+	figureLabel: { x: number; y: number; text: string; color: string }
+	fillColor: string
+	strokeColor: string
+	strokeWidth: number
+} {
+	// Transform vertices to raw coordinates
 	const transformedVertices = figure.vertices.map((v) => ({
-		x: v.x * scale + offsetX,
-		y: v.y * scale + offsetY
+		x: v.x + offsetX,
+		y: v.y + offsetY
 	}))
 
-	// Canvas automatically tracks extents
-
-	// Draw the figure shape
-	const points = transformedVertices.map((v) => ({ x: v.x, y: v.y }))
-	const strokeWidth = figure.strokeWidth * scale
-
-	canvas.drawPolygon(points, { fill: figure.fillColor, stroke: figure.strokeColor, strokeWidth })
-
-	// Draw side labels
+	// Collect side labels
+	const sideLabels: Array<{ x: number; y: number; text: string; color: string }> = []
 	for (let i = 0; i < Math.min(figure.sideLabels.length, transformedVertices.length); i++) {
 		const rawLabel = figure.sideLabels[i]
 		if (!rawLabel) continue
-		const label = abbreviateMonth(rawLabel) // MODIFIED: Abbreviate
+		const label = abbreviateMonth(rawLabel)
 
 		const from = transformedVertices[i]
 		const to = transformedVertices[(i + 1) % transformedVertices.length]
@@ -286,24 +406,18 @@ function drawFigure(
 		const outwardNormalX = dotProduct > 0 ? -normalX : normalX
 		const outwardNormalY = dotProduct > 0 ? -normalY : normalY
 
-		const labelOffset = figure.sideLabelOffset * scale
-		const labelX = midX + outwardNormalX * labelOffset
-		const labelY = midY + outwardNormalY * labelOffset
+		const labelX = midX + outwardNormalX * figure.sideLabelOffset
+		const labelY = midY + outwardNormalY * figure.sideLabelOffset
 
-		const fontSize = Math.max(10, 14 * scale)
-		canvas.drawText({
+		sideLabels.push({
 			x: labelX,
 			y: labelY,
 			text: label,
-			fill: figure.strokeColor,
-			anchor: "middle",
-			dominantBaseline: "middle",
-			fontPx: fontSize,
-			fontWeight: theme.font.weight.bold
+			color: figure.strokeColor
 		})
 	}
 
-	// Draw figure label
+	// Calculate figure label position
 	const bounds = {
 		minX: Math.min(...transformedVertices.map((v) => v.x)),
 		maxX: Math.max(...transformedVertices.map((v) => v.x)),
@@ -313,41 +427,47 @@ function drawFigure(
 
 	const centerX = (bounds.minX + bounds.maxX) / 2
 	const centerY = (bounds.minY + bounds.maxY) / 2
-	const labelOffset = figure.figureLabel.offset * scale
 
 	let labelX = centerX
 	let labelY = centerY
 
+	// Add clearance for external side labels to avoid overlap with the figure label.
+	// This pushes the figure label further out if side labels are present and positioned externally.
+	const hasExternalSideLabels =
+		figure.sideLabels.some((l) => typeof l === "string" && l.trim() !== "") && figure.sideLabelOffset > 0
+	const clearance = hasExternalSideLabels ? figure.sideLabelOffset + 20 : 0 // Increased buffer to 20px to account for font sizes.
+
 	switch (figure.figureLabel.position) {
 		case "top":
-			labelY = bounds.minY - labelOffset
+			labelY = bounds.minY - figure.figureLabel.offset - clearance
 			break
 		case "bottom":
-			labelY = bounds.maxY + labelOffset
+			labelY = bounds.maxY + figure.figureLabel.offset + clearance
 			break
 		case "left":
-			labelX = bounds.minX - labelOffset
+			labelX = bounds.minX - figure.figureLabel.offset - clearance
 			break
 		case "right":
-			labelX = bounds.maxX + labelOffset
+			labelX = bounds.maxX + figure.figureLabel.offset + clearance
 			break
 		default:
 			// Already set to center
 			break
 	}
 
-	const rawLabelText = figure.figureLabel.text
-	const labelText = abbreviateMonth(rawLabelText) // MODIFIED: Abbreviate
+	const labelText = abbreviateMonth(figure.figureLabel.text)
 
-	const fontSize = Math.max(12, 16 * scale)
-	canvas.drawText({
-		x: labelX,
-		y: labelY,
-		text: labelText,
-		fill: figure.strokeColor,
-		anchor: "middle",
-		dominantBaseline: "middle",
-		fontPx: fontSize,
-		fontWeight: "bold"
-	})
+	return {
+		vertices: transformedVertices,
+		sideLabels,
+		figureLabel: {
+			x: labelX,
+			y: labelY,
+			text: labelText,
+			color: figure.strokeColor
+		},
+		fillColor: figure.fillColor,
+		strokeColor: figure.strokeColor,
+		strokeWidth: figure.strokeWidth
+	}
 }
