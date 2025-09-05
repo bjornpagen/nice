@@ -19,7 +19,7 @@ function createShapeSchema() {
 			label: z
 				.string()
 				.nullable()
-				.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+				.transform((val) => (val === null || val.trim() === "" || val.trim().toLowerCase() === "null" ? null : val.trim()))
 				.describe(
 					"Shape identifier (e.g., 'ABCD', 'Figure 1', 'P', 'P'\'', null). Null means no label. Positioned near shape's center."
 				),
@@ -49,7 +49,9 @@ function createShapeSchema() {
 							label: z
 								.string()
 								.nullable()
-								.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)),
+								.transform((val) =>
+									val === null || val.trim() === "" || val.trim().toLowerCase() === "null" ? null : val.trim()
+								),
 							labelDistance: z.number()
 						})
 						.strict()
@@ -146,7 +148,7 @@ const AngleMark = z
 		label: z
 			.string()
 			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.transform((val) => (val === null || val.trim() === "" || val.trim().toLowerCase() === "null" ? null : val.trim()))
 			.describe(
 				"Angle measurement or name (e.g., '90°', '45°', '∠ABC', 'θ', null). Null shows arc without label. Positioned near the arc."
 			),
@@ -192,7 +194,9 @@ export const TransformationDiagramPropsSchema = z
 						label: z
 							.string()
 							.nullable()
-							.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+							.transform((val) =>
+								val === null || val.trim() === "" || val.trim().toLowerCase() === "null" ? null : val.trim()
+							)
 							.describe("Point label (e.g., 'O', 'Center', 'C', null). Positioned near the point."),
 						style: z
 							.enum(["dot", "circle"])
@@ -217,19 +221,13 @@ export type TransformationDiagramProps = z.infer<typeof TransformationDiagramPro
 export const generateTransformationDiagram: WidgetGenerator<typeof TransformationDiagramPropsSchema> = (props) => {
 	const { width, height, preImage, transformation, additionalPoints } = props
 
-	// Initialize the canvas
 	const canvas = new CanvasImpl({
 		chartArea: { left: 0, top: 0, width, height },
 		fontPxDefault: 12,
 		lineHeightDefault: 1.2
 	})
 
-	// Validation now handled by schema; preImage already guaranteed to have >=3 vertices and matching labels
-	canvas.addDef(
-		`<marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.highlightPrimary}"/></marker>`
-	)
 
-	// Helper function needed for coordinate calculations
 	const calculateCentroid = (vertices: Array<{ x: number; y: number }>) => {
 		const centroid = vertices.reduce((acc, p) => ({ x: acc.x + p.x, y: acc.y + p.y }), { x: 0, y: 0 })
 		centroid.x /= vertices.length
@@ -237,7 +235,6 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		return centroid
 	}
 
-	// Transformation helpers
 	const rotatePoint = (p: { x: number; y: number }, center: { x: number; y: number }, angleDeg: number) => {
 		const rad = (angleDeg * Math.PI) / 180
 		const tx = p.x - center.x
@@ -247,6 +244,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			y: tx * Math.sin(rad) + ty * Math.cos(rad) + center.y
 		}
 	}
+
 	const reflectPointAcrossLine = (
 		p: { x: number; y: number },
 		a: { x: number; y: number },
@@ -271,60 +269,53 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		return { x: a.x + projx - perpx, y: a.y + projy - perpy }
 	}
 
-	// 2. Compute image from preImage + transformation
 	let imageVertices: Array<{ x: number; y: number }> = []
 	switch (transformation.type) {
-		case "translation": {
-			const v = transformation.vector
-			imageVertices = preImage.vertices.map((p) => ({ x: p.x + v.x, y: p.y + v.y }))
+		case "translation":
+			imageVertices = preImage.vertices.map((p) => ({ x: p.x + transformation.vector.x, y: p.y + transformation.vector.y }))
 			break
-		}
-		case "rotation": {
-			const c = transformation.centerOfRotation
-			imageVertices = preImage.vertices.map((p) => rotatePoint(p, c, transformation.angle))
+		case "rotation":
+			imageVertices = preImage.vertices.map((p) => rotatePoint(p, transformation.centerOfRotation, transformation.angle))
 			break
-		}
-		case "reflection": {
+		case "reflection":
 			const { from, to } = transformation.lineOfReflection
 			imageVertices = preImage.vertices.map((p) => reflectPointAcrossLine(p, from, to))
 			break
-		}
-		case "dilation": {
+		case "dilation":
 			const c = transformation.centerOfDilation
 			const s = transformation.scaleFactor
-			if (typeof s !== "number") {
-				logger.error("missing scale factor for dilation")
-				throw errors.new("dilation requires scale factor")
-			}
 			imageVertices = preImage.vertices.map((p) => ({ x: c.x + s * (p.x - c.x), y: c.y + s * (p.y - c.y) }))
 			break
-		}
 	}
 
-	const addPrime = (label: string) => `${label}′`
-	const image = {
+	// FIX: Use separate functions for nullable (shape label) and non-nullable (vertex labels) to fix type error.
+	const addPrimeToNullable = (label: string | null): string | null => (label ? `${label}′` : null)
+	const addPrime = (label: string): string => `${label}′`
+
+	const image: TransformationDiagramProps["preImage"] = {
+		...preImage,
 		vertices: imageVertices,
-		label: preImage.label ? addPrime(preImage.label) : null,
-		fillColor: preImage.fillColor,
-		strokeColor: preImage.strokeColor,
+		label: addPrimeToNullable(preImage.label),
 		vertexLabels: preImage.vertexLabels.map(addPrime),
-		angleMarks: preImage.angleMarks,
-		sideLengths: []
+		sideLengths: [] // Side lengths are not transferred as they change in dilation
 	}
 
-	// 3. Calculate bounds for ALL points that need to be visible
-	let allPoints = [...preImage.vertices, ...image.vertices]
-	if (additionalPoints.length > 0) {
-		allPoints.push(...additionalPoints)
-	}
-	if (transformation.type === "rotation") {
-		allPoints.push(transformation.centerOfRotation)
-	} else if (transformation.type === "dilation") {
-		allPoints.push(transformation.centerOfDilation)
-	}
-	if (transformation.type === "reflection") {
-		allPoints.push(transformation.lineOfReflection.from, transformation.lineOfReflection.to)
-	}
+	let centerPoint: { x: number; y: number } | null = null
+	if (transformation.type === "rotation") centerPoint = transformation.centerOfRotation
+	if (transformation.type === "dilation") centerPoint = transformation.centerOfDilation
+
+	let centerPointInfo: (typeof additionalPoints)[0] | undefined
+	const otherPoints = additionalPoints.filter((p) => {
+		if (centerPoint && p.x === centerPoint.x && p.y === centerPoint.y) {
+			centerPointInfo = p
+			return false
+		}
+		return true
+	})
+
+	const allPoints = [...preImage.vertices, ...image.vertices, ...otherPoints]
+	if (centerPoint) allPoints.push(centerPoint)
+	if (transformation.type === "reflection") allPoints.push(transformation.lineOfReflection.from, transformation.lineOfReflection.to)
 
 	const minX = Math.min(...allPoints.map((p) => p.x))
 	const maxX = Math.max(...allPoints.map((p) => p.x))
@@ -334,135 +325,117 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	const dataWidth = maxX - minX
 	const dataHeight = maxY - minY
 
-	// 3. Create robust coordinate transformation with proper padding
 	const padding = PADDING * 2
 	const availableWidth = width - 2 * padding
 	const availableHeight = height - 2 * padding
 
-	// Ensure minimum scale to prevent microscopic shapes
-	const scaleX = dataWidth > 0 ? availableWidth / dataWidth : 1
-	const scaleY = dataHeight > 0 ? availableHeight / dataHeight : 1
-	const scale = Math.min(scaleX, scaleY, 10) // Cap maximum scale at 10
+	const scaleX = dataWidth > 1e-9 ? availableWidth / dataWidth : 1
+	const scaleY = dataHeight > 1e-9 ? availableHeight / dataHeight : 1
+	const scale = Math.max(1e-9, Math.min(scaleX, scaleY))
 
-	// Use the center of the bounding box as the data center (simple and reliable)
 	const dataCenterX = (minX + maxX) / 2
 	const dataCenterY = (minY + maxY) / 2
-
-	// Center the data in the SVG canvas
 	const svgCenterX = width / 2
 	const svgCenterY = height / 2
 
-	// Transform coordinate system: data coordinates -> SVG coordinates
 	const toSvgX = (x: number) => svgCenterX + (x - dataCenterX) * scale
-	const toSvgY = (y: number) => svgCenterY - (y - dataCenterY) * scale // Flip Y axis
+	const toSvgY = (y: number) => svgCenterY - (y - dataCenterY) * scale
 
 	const drawPolygon = (shape: TransformationDiagramProps["preImage"], isImage: boolean) => {
 		const polygonPoints = shape.vertices.map((p) => ({ x: toSvgX(p.x), y: toSvgY(p.y) }))
 		const strokeWidth = isImage ? 2.5 : 2
+		const dash = isImage ? "4 4" : undefined
 
 		canvas.drawPolygon(polygonPoints, {
 			fill: shape.fillColor,
 			stroke: shape.strokeColor,
-			strokeWidth: strokeWidth
+			strokeWidth: strokeWidth,
+			dash: dash
 		})
-
-		// Add shape label at centroid if provided
-		if (shape.label) {
-			const centroid = calculateCentroid(shape.vertices)
-			const svgCentroidX = toSvgX(centroid.x)
-			const svgCentroidY = toSvgY(centroid.y)
-			canvas.drawText({
-				x: svgCentroidX,
-				y: svgCentroidY,
-				text: shape.label,
-				anchor: "middle",
-				dominantBaseline: "middle",
-				fontPx: theme.font.size.medium,
-				fontWeight: theme.font.weight.bold,
-				fill: theme.colors.text
-			})
-		}
 	}
 
 	const drawLine = (
-		line: { from: { x: number; y: number }; to: { x: number; y: number }; style: string; color: string },
-		hasArrow: boolean
+		line: { from: { x: number; y: number }; to: { x: number; y: number }; style: string; color: string }
 	) => {
 		let dash: string | undefined
-		if (line.style === "dashed") {
-			dash = "8 6"
-		} else if (line.style === "dotted") {
-			dash = "2 4"
-		}
-		const markerEnd = hasArrow ? "url(#arrowhead)" : undefined
+		if (line.style === "dashed") dash = "8 6"
+		else if (line.style === "dotted") dash = "2 4"
 
 		canvas.drawLine(toSvgX(line.from.x), toSvgY(line.from.y), toSvgX(line.to.x), toSvgY(line.to.y), {
 			stroke: line.color,
 			strokeWidth: theme.stroke.width.thick,
-			dash,
-			markerEnd
+			dash
 		})
 	}
 
 	const drawRotationArc = (center: { x: number; y: number }, startPoint: { x: number; y: number }, angle: number) => {
-		const radius = Math.sqrt((startPoint.x - center.x) ** 2 + (startPoint.y - center.y) ** 2)
-		const arcRadius = Math.min(radius * 0.6, 30) // Keep arc visible but not overwhelming
+		const radius = Math.hypot(startPoint.x - center.x, startPoint.y - center.y)
+		const arcRadius = Math.min(radius * 0.6, 30)
 
-		const startAngle = Math.atan2(startPoint.y - center.y, startPoint.x - center.x)
-		const endAngle = startAngle + (angle * Math.PI) / 180
+		const startAngleRad = Math.atan2(startPoint.y - center.y, startPoint.x - center.x)
+		const endAngleRad = startAngleRad + (angle * Math.PI) / 180
 
-		const startX = toSvgX(center.x + arcRadius * Math.cos(startAngle))
-		const startY = toSvgY(center.y + arcRadius * Math.sin(startAngle))
-		const endX = toSvgX(center.x + arcRadius * Math.cos(endAngle))
-		const endY = toSvgY(center.y + arcRadius * Math.sin(endAngle))
+		const svgArcRadius = arcRadius * scale
+		const startX = toSvgX(center.x) + svgArcRadius * Math.cos(startAngleRad)
+		const startY = toSvgY(center.y) - svgArcRadius * Math.sin(startAngleRad)
+		const endX = toSvgX(center.x) + svgArcRadius * Math.cos(endAngleRad)
+		const endY = toSvgY(center.y) - svgArcRadius * Math.sin(endAngleRad)
 
-		const largeArcFlag: 0 | 1 = Math.abs(angle) > 180 ? 1 : 0
-		const sweepFlag: 0 | 1 = angle > 0 ? 0 : 1 // Flip sweep direction for Y-axis flip in SVG coordinates
+		const largeArcFlag = Math.abs(angle) > 180 ? 1 : 0
+		const sweepFlag = angle > 0 ? 1 : 0
 
-		const arcPath = new Path2D()
-			.moveTo(startX, startY)
-			.arcTo(arcRadius * scale, arcRadius * scale, 0, largeArcFlag, sweepFlag, endX, endY)
+		const arcPath = new Path2D().moveTo(startX, startY).arcTo(svgArcRadius, svgArcRadius, 0, largeArcFlag, sweepFlag, endX, endY)
 
-		canvas.drawPath(arcPath, {
-			stroke: theme.colors.actionSecondary,
-			strokeWidth: theme.stroke.width.thick,
-			fill: "none",
-			markerEnd: "url(#arrowhead)"
-		})
+		canvas.drawPath(arcPath, { stroke: theme.colors.actionSecondary, strokeWidth: theme.stroke.width.thick, fill: "none" })
 	}
 
 	const drawVertexLabels = (shape: TransformationDiagramProps["preImage"]) => {
-		if (shape.vertexLabels.length === 0) {
-			return
-		}
-
-		const labelOffset = 16 // Offset in SVG pixels, not data coordinates
-
+		const labelOffset = 16
 		for (let i = 0; i < shape.vertices.length; i++) {
 			const vertex = shape.vertices[i]
 			const label = shape.vertexLabels[i]
 			if (!vertex || !label) continue
 
-			// Transform vertex to SVG coordinates first
-			const svgX = toSvgX(vertex.x)
-			const svgY = toSvgY(vertex.y)
+			const prevVertex = shape.vertices[(i - 1 + shape.vertices.length) % shape.vertices.length]
+			const nextVertex = shape.vertices[(i + 1) % shape.vertices.length]
+			if (!prevVertex || !nextVertex) continue
+			
+			const v_prev_x = prevVertex.x - vertex.x
+			const v_prev_y = prevVertex.y - vertex.y
+			const v_next_x = nextVertex.x - vertex.x
+			const v_next_y = nextVertex.y - vertex.y
 
-			// Calculate shape centroid in SVG coordinates
+			const len_prev = Math.hypot(v_prev_x, v_prev_y)
+			const len_next = Math.hypot(v_next_x, v_next_y)
+
+			const u_prev_x = len_prev > 0 ? v_prev_x / len_prev : 0
+			const u_prev_y = len_prev > 0 ? v_prev_y / len_prev : 0
+			const u_next_x = len_next > 0 ? v_next_x / len_next : 0
+			const u_next_y = len_next > 0 ? v_next_y / len_next : 0
+
+			let bisectorX = u_prev_x + u_next_x
+			let bisectorY = u_prev_y + u_next_y
+			const len_bisector = Math.hypot(bisectorX, bisectorY)
+
+			if (len_bisector < 1e-9) {
+				bisectorX = -u_prev_y
+				bisectorY = u_prev_x
+			} else {
+				bisectorX /= len_bisector
+				bisectorY /= len_bisector
+			}
+
 			const centroid = calculateCentroid(shape.vertices)
-			const svgCentroidX = toSvgX(centroid.x)
-			const svgCentroidY = toSvgY(centroid.y)
+			const centroidVecX = vertex.x - centroid.x
+			const centroidVecY = vertex.y - centroid.y
 
-			// Vector from centroid to vertex in SVG space (outward direction)
-			const dx = svgX - svgCentroidX
-			const dy = svgY - svgCentroidY
-			const len = Math.sqrt(dx * dx + dy * dy)
+			if (bisectorX * centroidVecX + bisectorY * centroidVecY < 0) {
+				bisectorX = -bisectorX
+				bisectorY = -bisectorY
+			}
 
-			// Normalize and scale for label offset in SVG pixels
-			const offsetX = len > 0 ? (dx / len) * labelOffset : 0
-			const offsetY = len > 0 ? (dy / len) * labelOffset : -labelOffset
-
-			const labelX = svgX + offsetX
-			const labelY = svgY + offsetY
+			const labelX = toSvgX(vertex.x) + bisectorX * labelOffset
+			const labelY = toSvgY(vertex.y) - bisectorY * labelOffset
 
 			canvas.drawText({
 				x: labelX,
@@ -482,103 +455,85 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		mark: z.infer<typeof AngleMark>,
 		strokeColor: string
 	) => {
-		if (mark.vertexIndex < 0 || mark.vertexIndex >= vertices.length) {
-			return
-		}
-
+		if (mark.vertexIndex < 0 || mark.vertexIndex >= vertices.length) return
 		const vertex = vertices[mark.vertexIndex]
 		const prevVertex = vertices[(mark.vertexIndex - 1 + vertices.length) % vertices.length]
 		const nextVertex = vertices[(mark.vertexIndex + 1) % vertices.length]
+		if (!vertex || !prevVertex || !nextVertex) return
 
-		if (!vertex || !prevVertex || !nextVertex) {
-			return
-		}
+		let angle1 = Math.atan2(prevVertex.y - vertex.y, prevVertex.x - vertex.x)
+		let angle2 = Math.atan2(nextVertex.y - vertex.y, nextVertex.x - vertex.x)
 
-		// Calculate angles for the arc in data coordinates
-		const angle1 = Math.atan2(prevVertex.y - vertex.y, prevVertex.x - vertex.x)
-		const angle2 = Math.atan2(nextVertex.y - vertex.y, nextVertex.x - vertex.x)
+		const crossProduct = (nextVertex.x - vertex.x) * (prevVertex.y - vertex.y) - (nextVertex.y - vertex.y) * (prevVertex.x - vertex.x)
+		if (crossProduct > 0) [angle1, angle2] = [angle2, angle1]
 
-		// Normalize angles to [0, 2π]
-		let startAngle = angle1
-		let endAngle = angle2
-
-		// Ensure we draw the interior angle
-		if (endAngle < startAngle) {
-			endAngle += 2 * Math.PI
-		}
-		if (endAngle - startAngle > Math.PI) {
-			;[startAngle, endAngle] = [endAngle, startAngle + 2 * Math.PI]
-		}
-
-		// Use scaled radius for SVG coordinates
 		const svgRadius = mark.radius * scale
 		const svgVertexX = toSvgX(vertex.x)
 		const svgVertexY = toSvgY(vertex.y)
 
-		// Calculate arc endpoints in SVG coordinates
-		// Note: Need to flip Y angles because SVG Y-axis is flipped
-		const startX = svgVertexX + svgRadius * Math.cos(startAngle)
-		const startY = svgVertexY + svgRadius * Math.sin(-startAngle) // Flip Y
-		const endX = svgVertexX + svgRadius * Math.cos(endAngle)
-		const endY = svgVertexY + svgRadius * Math.sin(-endAngle) // Flip Y
+		const startX = svgVertexX + svgRadius * Math.cos(-angle1)
+		const startY = svgVertexY + svgRadius * Math.sin(-angle1)
+		const endX = svgVertexX + svgRadius * Math.cos(-angle2)
+		const endY = svgVertexY + svgRadius * Math.sin(-angle2)
 
-		const largeArcFlag: 0 | 1 = Math.abs(endAngle - startAngle) > Math.PI ? 1 : 0
-		const sweepFlag: 0 | 1 = 0 // Use 0 for correct direction in flipped Y coordinates
+		let angleDiff = angle2 - angle1
+		if (angleDiff < 0) angleDiff += 2 * Math.PI
+		// Determine whether the small-arc bisector points toward the shape centroid.
+		// If it does, render the external (large) arc so the concave side faces away from the center.
+		const centroid = calculateCentroid(vertices)
+		const dirToCentroidX = centroid.x - vertex.x
+		const dirToCentroidY = centroid.y - vertex.y
+		const midAngle = angle1 + angleDiff / 2
+		const midDirX = Math.cos(midAngle)
+		const midDirY = Math.sin(midAngle)
+		const pointsTowardCentroid = midDirX * dirToCentroidX + midDirY * dirToCentroidY > 0
+		// We want the interior (small) arc when its bisector points toward the centroid; otherwise use the exterior arc
+		const largeArcFlag: 0 | 1 = pointsTowardCentroid ? 0 : 1
 
-		const markPath = new Path2D()
-			.moveTo(startX, startY)
-			.arcTo(svgRadius, svgRadius, 0, largeArcFlag, sweepFlag, endX, endY)
+		// Determine sweep direction in SVG coords (angles increase clockwise).
+		const startScreen = ((-angle1) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI)
+		const endScreen = ((-angle2) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI)
+		const cwDiff = (endScreen - startScreen + 2 * Math.PI) % (2 * Math.PI)
+		const clockwiseIsSmall = cwDiff <= Math.PI
+		const sweepFlag: 0 | 1 = largeArcFlag === 0 ? (clockwiseIsSmall ? 1 : 0) : (clockwiseIsSmall ? 0 : 1)
 
-		canvas.drawPath(markPath, {
-			stroke: strokeColor,
-			strokeWidth: Math.max(1, 1.5),
-			fill: "none"
-		})
+		const markPath = new Path2D().moveTo(startX, startY).arcTo(svgRadius, svgRadius, 0, largeArcFlag, sweepFlag, endX, endY)
+		canvas.drawPath(markPath, { stroke: strokeColor, strokeWidth: 1.5, fill: "none" })
 
-		// Add label if provided
 		if (mark.label) {
-			const midAngle = (startAngle + endAngle) / 2
-			const svgLabelDistance = mark.labelDistance * scale
-			const labelX = svgVertexX + svgLabelDistance * Math.cos(midAngle)
-			const labelY = svgVertexY + svgLabelDistance * Math.sin(-midAngle) // Flip Y
-			const fontSize = Math.max(11, 13)
-
+			// Always label the interior angle: choose the radial direction that points toward the polygon centroid
+			const labelAngle = pointsTowardCentroid ? midAngle : midAngle + Math.PI
+			// Push label center far enough from the arc to avoid clashes.
+			// Use half the text height (since we place the text's center) plus extra clearance.
+			const LABEL_FONT = 13
+			const LABEL_HALF_HEIGHT = LABEL_FONT / 2
+			const CLEARANCE = 10
+			const minDistanceFromCenter = svgRadius + LABEL_HALF_HEIGHT + CLEARANCE
+			const svgLabelDistance = Math.max(mark.labelDistance * scale, minDistanceFromCenter)
+			const labelX = svgVertexX + svgLabelDistance * Math.cos(-labelAngle)
+			const labelY = svgVertexY + svgLabelDistance * Math.sin(-labelAngle)
 			canvas.drawText({
 				x: labelX,
 				y: labelY,
 				text: mark.label,
 				anchor: "middle",
 				dominantBaseline: "middle",
-				fontPx: fontSize,
+				fontPx: LABEL_FONT,
 				fill: theme.colors.text
 			})
 		}
 	}
 
-	const drawAdditionalPoint = (point: { x: number; y: number; label: string | null; style: string }) => {
-		const radius = 4
+	const drawPoint = (point: { x: number; y: number; label: string | null; style: string }) => {
 		const svgX = toSvgX(point.x)
 		const svgY = toSvgY(point.y)
-
-		if (point.style === "circle") {
-			canvas.drawCircle(svgX, svgY, radius, {
-				fill: "none",
-				stroke: theme.colors.text,
-				strokeWidth: theme.stroke.width.thick
-			})
-		} else {
-			// dot style
-			canvas.drawCircle(svgX, svgY, radius, {
-				fill: theme.colors.text
-			})
-		}
-
-		// Label offset to avoid overlapping with the point
+		const radius = 4
+		const style = point.style === "circle" ? { fill: "none", stroke: theme.colors.text, strokeWidth: theme.stroke.width.thick } : { fill: theme.colors.highlightPrimary, stroke: theme.colors.white, strokeWidth: theme.stroke.width.thin }
+		canvas.drawCircle(svgX, svgY, radius, style)
 		if (point.label) {
-			const labelOffset = 12
 			canvas.drawText({
 				x: svgX,
-				y: svgY - labelOffset,
+				y: svgY - 12,
 				text: point.label,
 				anchor: "middle",
 				dominantBaseline: "baseline",
@@ -590,84 +545,38 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	}
 
 	const drawSideLengths = (shape: TransformationDiagramProps["preImage"]) => {
-		if (shape.sideLengths.length === 0) {
-			return
-		}
-
-		const fontSize = Math.max(11, 13)
-
 		for (let i = 0; i < shape.vertices.length; i++) {
 			const sideLength = shape.sideLengths[i]
-			if (!sideLength) continue
+			if (!sideLength || !sideLength.value) continue
 
-			const vertex1 = shape.vertices[i]
-			const vertex2 = shape.vertices[(i + 1) % shape.vertices.length]
-			if (!vertex1 || !vertex2) continue
+			const p1 = shape.vertices[i]
+			const p2 = shape.vertices[(i + 1) % shape.vertices.length]
+			if (!p1 || !p2) continue
 
-			// Calculate midpoint of the edge in data coordinates
-			const dataMidX = (vertex1.x + vertex2.x) / 2
-			const dataMidY = (vertex1.y + vertex2.y) / 2
+			const midX = (p1.x + p2.x) / 2
+			const midY = (p1.y + p2.y) / 2
+			const dx = p2.x - p1.x
+			const dy = p2.y - p1.y
+			const len = Math.hypot(dx, dy)
+			if (len < 1e-9) continue
+			const perpX = -dy / len
+			const perpY = dx / len
 
-			// Transform to SVG coordinates
-			const svgMidX = toSvgX(dataMidX)
-			const svgMidY = toSvgY(dataMidY)
-
-			// Calculate edge direction in SVG coordinates
-			const svgVertex1X = toSvgX(vertex1.x)
-			const svgVertex1Y = toSvgY(vertex1.y)
-			const svgVertex2X = toSvgX(vertex2.x)
-			const svgVertex2Y = toSvgY(vertex2.y)
-
-			const svgDx = svgVertex2X - svgVertex1X
-			const svgDy = svgVertex2Y - svgVertex1Y
-			const svgEdgeLength = Math.sqrt(svgDx * svgDx + svgDy * svgDy)
-
-			// Normalize edge vector in SVG space
-			const edgeNormX = svgDx / svgEdgeLength
-			const edgeNormY = svgDy / svgEdgeLength
-
-			// Calculate perpendicular vector (rotated 90 degrees)
-			let perpX = -edgeNormY
-			let perpY = edgeNormX
-
-			// Determine if we need to flip the perpendicular based on position preference
 			const centroid = calculateCentroid(shape.vertices)
-			const svgCentroidX = toSvgX(centroid.x)
-			const svgCentroidY = toSvgY(centroid.y)
+			const centroidVecX = midX - centroid.x
+			const centroidVecY = midY - centroid.y
+			const dot = perpX * centroidVecX + perpY * centroidVecY
 
-			if (sideLength.position === "inside") {
-				// Check if perpendicular points outward by testing with centroid
-				const testX = svgMidX + perpX * 10
-				const testY = svgMidY + perpY * 10
-				const distToCentroid = Math.sqrt((testX - svgCentroidX) ** 2 + (testY - svgCentroidY) ** 2)
-				const midDistToCentroid = Math.sqrt((svgMidX - svgCentroidX) ** 2 + (svgMidY - svgCentroidY) ** 2)
+			let finalPerpX = perpX
+			let finalPerpY = perpY
 
-				// If test point is further from centroid, flip the perpendicular
-				if (distToCentroid > midDistToCentroid) {
-					perpX = -perpX
-					perpY = -perpY
-				}
-			} else {
-				// For outside position, ensure perpendicular points away from centroid
-				const testX = svgMidX + perpX * 10
-				const testY = svgMidY + perpY * 10
-				const distToCentroid = Math.sqrt((testX - svgCentroidX) ** 2 + (testY - svgCentroidY) ** 2)
-				const midDistToCentroid = Math.sqrt((svgMidX - svgCentroidX) ** 2 + (svgMidY - svgCentroidY) ** 2)
-
-				// If test point is closer to centroid, flip the perpendicular
-				if (distToCentroid < midDistToCentroid) {
-					perpX = -perpX
-					perpY = -perpY
-				}
+			if ((sideLength.position === "inside" && dot > 0) || (sideLength.position === "outside" && dot < 0)) {
+				finalPerpX = -perpX
+				finalPerpY = -perpY
 			}
 
-			// Position the label in SVG coordinates
-			const svgOffset = sideLength.offset * scale
-			const labelX = svgMidX + perpX * svgOffset
-			const labelY = svgMidY + perpY * svgOffset
-
-			// Always orient text horizontally (angle = 0) so it faces down/right
-			const angle = 0
+			const labelX = toSvgX(midX) + finalPerpX * sideLength.offset
+			const labelY = toSvgY(midY) - finalPerpY * sideLength.offset
 
 			canvas.drawText({
 				x: labelX,
@@ -675,201 +584,72 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 				text: sideLength.value,
 				anchor: "middle",
 				dominantBaseline: "middle",
-				fontPx: fontSize,
-				fill: theme.colors.text,
-				transform: `rotate(${angle} ${labelX} ${labelY})`
+				fontPx: 13,
+				fill: theme.colors.text
 			})
 		}
 	}
 
-	// 4. Draw Transformation-Specific Background Elements (like lines and rays)
 	if (transformation.type === "reflection") {
-		drawLine(transformation.lineOfReflection, false)
+		drawLine(transformation.lineOfReflection)
 	}
 
-	// Draw dilation rays BEHIND the shapes for proper layering
-	if (
-		transformation.type === "dilation" &&
-		transformation.showRays &&
-		preImage.vertices.length === image.vertices.length
-	) {
+	if (transformation.type === "dilation" && transformation.showRays) {
 		const center = transformation.centerOfDilation
 		for (let i = 0; i < preImage.vertices.length; i++) {
 			const preVertex = preImage.vertices[i]
-			const imageVertex = image.vertices[i]
-			if (preVertex && imageVertex) {
-				// Calculate ray direction from center through both points
-				const dx = imageVertex.x - center.x
-				const dy = imageVertex.y - center.y
-				const rayLength = Math.sqrt(dx * dx + dy * dy)
-
-				// Limit extension to a reasonable amount relative to the canvas
-				const maxExtension = (Math.min(width, height) * 0.3) / scale // Convert to data units
-				const extensionLength = Math.min(rayLength * 0.3, maxExtension)
-
-				// Calculate extended endpoint
-				const extendedX = center.x + (dx / rayLength) * (rayLength + extensionLength)
-				const extendedY = center.y + (dy / rayLength) * (rayLength + extensionLength)
-
-				// Draw ray from center through both vertices (behind shapes)
-				drawLine(
-					{
-						from: center,
-						to: { x: extendedX, y: extendedY },
-						style: "solid",
-						color: theme.colors.highlightPrimary
-					},
-					false
-				)
+			if (!preVertex) continue
+			const rayLength = Math.hypot(preVertex.x - center.x, preVertex.y - center.y)
+			if (rayLength < 1e-9) continue
+			const maxDim = Math.max(dataWidth, dataHeight, 1)
+			const extendedPoint = {
+				x: center.x + ((preVertex.x - center.x) / rayLength) * maxDim * 2,
+				y: center.y + ((preVertex.y - center.y) / rayLength) * maxDim * 2
 			}
+			drawLine({ from: center, to: extendedPoint, style: "solid", color: theme.colors.gridMinor })
 		}
 	}
 
-	// 5. Draw Main Shapes with proper layering
 	drawPolygon(preImage, false)
 	drawPolygon(image, true)
 
-	// 5a. Draw angle marks for both shapes
-	for (const mark of preImage.angleMarks) {
-		drawAngleMark(preImage.vertices, mark, preImage.strokeColor)
-	}
-	for (const mark of image.angleMarks) {
-		drawAngleMark(image.vertices, mark, image.strokeColor)
-	}
+	preImage.angleMarks.forEach((mark) => drawAngleMark(preImage.vertices, mark, preImage.strokeColor))
+	image.angleMarks.forEach((mark) => drawAngleMark(image.vertices, mark, image.strokeColor))
 
-	// 5b. Draw vertex labels for both shapes
 	drawVertexLabels(preImage)
 	drawVertexLabels(image)
-
-	// 5c. Draw side lengths for both shapes
 	drawSideLengths(preImage)
-	// Intentionally avoid copying side lengths to image since dilation changes values
 
-	// 6. Draw Transformation-Specific Foreground Elements (vectors, centers, vertex indicators)
+	if (centerPoint) {
+		drawPoint(centerPointInfo ?? { ...centerPoint, label: "P", style: "dot" })
+	}
+
 	switch (transformation.type) {
-		case "translation":
-			// Remove translation vectors - no more green arrows between shapes
+		case "rotation":
 			break
-		case "dilation": {
-			const center = transformation.centerOfDilation
-			const centerRadius = 4
-
-			// Draw vertex correspondence indicators if rays are shown
-			if (transformation.showRays && preImage.vertices.length === image.vertices.length) {
-				for (let i = 0; i < preImage.vertices.length; i++) {
-					const preVertex = preImage.vertices[i]
-					const imageVertex = image.vertices[i]
-					if (preVertex && imageVertex) {
-						// Add small circles at vertices to show correspondence
-						const preVertexRadius = 2
-						const imageVertexRadius = 2.5
-
-						// Pre-image vertices: smaller, semi-transparent
-						const preSvgX = toSvgX(preVertex.x)
-						const preSvgY = toSvgY(preVertex.y)
-						const imgSvgX = toSvgX(imageVertex.x)
-						const imgSvgY = toSvgY(imageVertex.y)
-
-						// Draw vertex correspondence indicators
-
-						canvas.drawCircle(preSvgX, preSvgY, preVertexRadius, {
-							fill: theme.colors.highlightPrimary,
-							fillOpacity: theme.opacity.overlay,
-							stroke: theme.colors.white,
-							strokeWidth: theme.stroke.width.thin
-						})
-						// Image vertices: larger, more prominent
-						canvas.drawCircle(imgSvgX, imgSvgY, imageVertexRadius, {
-							fill: theme.colors.highlightPrimary,
-							stroke: theme.colors.white,
-							strokeWidth: theme.stroke.width.thin
-						})
-					}
-				}
-			}
-
-			// Draw center point on top of everything
-			const centerSvgX = toSvgX(center.x)
-			const centerSvgY = toSvgY(center.y)
-
-			// Draw center point on top of everything
-			canvas.drawCircle(centerSvgX, centerSvgY, centerRadius, {
-				fill: theme.colors.highlightPrimary,
-				stroke: theme.colors.white,
-				strokeWidth: theme.stroke.width.base
-			})
-			break
-		}
-		case "rotation": {
-			const center = transformation.centerOfRotation
-			const centerRadius = 4
-			const centerSvgX = toSvgX(center.x)
-			const centerSvgY = toSvgY(center.y)
-
-			// Draw center point
-			canvas.drawCircle(centerSvgX, centerSvgY, centerRadius, {
-				fill: theme.colors.highlightPrimary,
-				stroke: theme.colors.white,
-				strokeWidth: theme.stroke.width.thin
-			})
-
-			// Draw rotation arc to show angle and direction
-			if (preImage.vertices.length > 0) {
-				const refPoint = preImage.vertices[0] // Use first vertex as reference
-				if (refPoint) {
-					drawRotationArc(center, refPoint, transformation.angle)
+		case "reflection":
+			for (let i = 0; i < preImage.vertices.length; i++) {
+				const preVertex = preImage.vertices[i]
+				const imgVertex = image.vertices[i]
+				if (preVertex && imgVertex) {
+					drawLine({ from: preVertex, to: imgVertex, style: "dotted", color: theme.colors.gridMinor })
 				}
 			}
 			break
-		}
-		case "reflection": {
-			// Add perpendicular distance indicators for educational value
-			if (preImage.vertices.length === image.vertices.length) {
-				for (let i = 0; i < preImage.vertices.length; i++) {
-					const preVertex = preImage.vertices[i]
-					const imageVertex = image.vertices[i]
-					if (preVertex && imageVertex) {
-						// Draw light dotted lines showing perpendicular distances
-						drawLine(
-							{
-								from: preVertex,
-								to: imageVertex,
-								style: "dotted",
-								color: theme.colors.gridMinor
-							},
-							false
-						)
-
-						// Add small circles at vertices
-						const vertexRadius = 2
-						const preSvgX = toSvgX(preVertex.x)
-						const preSvgY = toSvgY(preVertex.y)
-						const imgSvgX = toSvgX(imageVertex.x)
-						const imgSvgY = toSvgY(imageVertex.y)
-
-						// Add small circles at vertices
-						canvas.drawCircle(preSvgX, preSvgY, vertexRadius, {
-							fill: theme.colors.textSecondary,
-							opacity: theme.opacity.overlay
-						})
-						canvas.drawCircle(imgSvgX, imgSvgY, vertexRadius, {
-							fill: theme.colors.textSecondary,
-							opacity: theme.opacity.overlay
-						})
-					}
+		case "dilation":
+			for (let i = 0; i < preImage.vertices.length; i++) {
+				const preVertex = preImage.vertices[i]
+				const imgVertex = image.vertices[i]
+				if (preVertex && imgVertex) {
+					canvas.drawCircle(toSvgX(preVertex.x), toSvgY(preVertex.y), 2, { fill: theme.colors.highlightPrimary, fillOpacity: 0.6 })
+					canvas.drawCircle(toSvgX(imgVertex.x), toSvgY(imgVertex.y), 2.5, { fill: theme.colors.highlightPrimary })
 				}
 			}
 			break
-		}
 	}
 
-	// 7. Draw additional points (last so they appear on top)
-	for (const point of additionalPoints) {
-		drawAdditionalPoint(point)
-	}
+	otherPoints.forEach(drawPoint)
 
-	// NEW: Finalize the canvas and construct the root SVG element
 	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
-
 	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">${svgBody}</svg>`
 }
