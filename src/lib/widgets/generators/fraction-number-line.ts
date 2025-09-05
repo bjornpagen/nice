@@ -3,7 +3,15 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
+import { estimateWrappedTextDimensions } from "@/lib/widgets/utils/text"
 import { theme } from "@/lib/widgets/utils/theme"
+
+const FractionLabel = z
+	.object({
+		numerator: z.number().int().describe("Numerator of the fraction to display above the tick mark (e.g., 1, 3, 5)."),
+		denominator: z.number().int().describe("Denominator of the fraction to display above the tick mark.")
+	})
+	.strict()
 
 const Tick = z
 	.object({
@@ -12,11 +20,9 @@ const Tick = z
 			.describe(
 				"The numerical position of this tick mark on the number line (e.g., 0, 0.5, 1.5, 2.25, -0.75). Must be between min and max."
 			),
-		topLabel: z
-			.string()
-			.describe(
-				"Label displayed above the tick mark (e.g., '0', '1/2', '1 1/2', '2.25'). To show no label, use an empty string."
-			),
+		topLabel: FractionLabel.describe(
+			"Label displayed above the tick mark as a fraction object { numerator, denominator } rendered as 'numerator/denominator'."
+		),
 		bottomLabel: z
 			.string()
 			.describe(
@@ -176,6 +182,9 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 	})
 
 	// 2. Draw Ticks and Labels
+	let lastTopLabelRightX = Number.NEGATIVE_INFINITY
+	const topFontPx = 11
+	const minTopLabelGapPx = 4
 	for (const tick of ticks) {
 		const x = toSvgX(tick.value)
 		const tickHeight = tick.isMajor ? 8 : 4
@@ -183,14 +192,22 @@ export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLi
 			stroke: theme.colors.axis,
 			strokeWidth: theme.stroke.width.base
 		})
-		if (tick.topLabel !== "") {
+		const text =
+			tick.topLabel.denominator === 1
+				? String(tick.topLabel.numerator)
+				: `${tick.topLabel.numerator}/${tick.topLabel.denominator}`
+		const { maxWidth: topLabelWidth } = estimateWrappedTextDimensions(text, Number.POSITIVE_INFINITY, topFontPx, 1.2)
+		const proposedLeftX = x - topLabelWidth / 2
+		const proposedRightX = x + topLabelWidth / 2
+		if (proposedLeftX >= lastTopLabelRightX + minTopLabelGapPx) {
 			canvas.drawText({
 				x: x,
 				y: yPosAxis - 15,
-				text: tick.topLabel,
+				text,
 				anchor: "middle",
-				fontPx: 11
+				fontPx: topFontPx
 			})
+			lastTopLabelRightX = proposedRightX
 		}
 		if (tick.bottomLabel !== "") {
 			canvas.drawText({

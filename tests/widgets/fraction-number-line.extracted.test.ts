@@ -17,10 +17,9 @@
 
 import { expect, test } from "bun:test"
 import type { z } from "zod"
-import { generateFractionNumberLine, FractionNumberLinePropsSchema } from "@/lib/widgets/generators"
+import { FractionNumberLinePropsSchema, generateFractionNumberLine } from "@/lib/widgets/generators"
 
 type FractionNumberLineInput = z.input<typeof FractionNumberLinePropsSchema>
-
 
 // Extracted from question: x254489d08703d240
 // Course: 6th grade math
@@ -28,119 +27,119 @@ type FractionNumberLineInput = z.input<typeof FractionNumberLinePropsSchema>
 // Widget key: image_1
 test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const input = {
-	"max": 1.25,
-	"min": 0,
-	"model": {
-		"cellGroups": [
+		max: 1.25,
+		min: 0,
+		model: {
+			cellGroups: [
+				{
+					color: "#11accd",
+					count: 3
+				},
+				{
+					color: "#e07d10",
+					count: 3
+				},
+				{
+					color: "#11accd",
+					count: 2
+				},
+				{
+					color: "#FFFFFF",
+					count: 1
+				}
+			],
+			totalCells: 9,
+			bracketLabel: ""
+		},
+		ticks: [
 			{
-				"color": "#11accd",
-				"count": 3
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 8 },
+				bottomLabel: "0"
 			},
 			{
-				"color": "#e07d10",
-				"count": 3
+				value: 0.125,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 8 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#11accd",
-				"count": 2
+				value: 0.25,
+				isMajor: false,
+				topLabel: { numerator: 2, denominator: 8 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#FFFFFF",
-				"count": 1
+				value: 0.375,
+				isMajor: true,
+				topLabel: { numerator: 3, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.5,
+				isMajor: false,
+				topLabel: { numerator: 4, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.625,
+				isMajor: false,
+				topLabel: { numerator: 5, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.75,
+				isMajor: true,
+				topLabel: { numerator: 6, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.875,
+				isMajor: false,
+				topLabel: { numerator: 7, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 1,
+				isMajor: false,
+				topLabel: { numerator: 8, denominator: 8 },
+				bottomLabel: "1"
+			},
+			{
+				value: 1.125,
+				isMajor: true,
+				topLabel: { numerator: 9, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.25,
+				isMajor: false,
+				topLabel: { numerator: 10, denominator: 8 },
+				bottomLabel: ""
 			}
 		],
-		"totalCells": 9,
-		"bracketLabel": ""
-	},
-	"ticks": [
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "0 eighths",
-			"bottomLabel": "0"
-		},
-		{
-			"value": 0.125,
-			"isMajor": false,
-			"topLabel": "1 eighth",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.25,
-			"isMajor": false,
-			"topLabel": "2 eighths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.375,
-			"isMajor": true,
-			"topLabel": "3 eighths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.5,
-			"isMajor": false,
-			"topLabel": "4 eighths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.625,
-			"isMajor": false,
-			"topLabel": "5 eighths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.75,
-			"isMajor": true,
-			"topLabel": "6 eighths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.875,
-			"isMajor": false,
-			"topLabel": "7 eighths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": false,
-			"topLabel": "8 eighths",
-			"bottomLabel": "1"
-		},
-		{
-			"value": 1.125,
-			"isMajor": true,
-			"topLabel": "9 eighths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.25,
-			"isMajor": false,
-			"topLabel": "10 eighths",
-			"bottomLabel": ""
-		}
-	],
-	"width": 320,
-	"height": 198,
-	"segments": [
-		{
-			"end": 0.375,
-			"color": "#11accd",
-			"start": 0
-		},
-		{
-			"end": 0.75,
-			"color": "#e07d10",
-			"start": 0.375
-		},
-		{
-			"end": 1,
-			"color": "#11accd",
-			"start": 0.75
-		}
-	],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		width: 320,
+		height: 198,
+		segments: [
+			{
+				end: 0.375,
+				color: "#11accd",
+				start: 0
+			},
+			{
+				end: 0.75,
+				color: "#e07d10",
+				start: 0.375
+			},
+			{
+				end: 1,
+				color: "#11accd",
+				start: 0.75
+			}
+		],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -153,7 +152,6 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xfc9c5456807151a7
 // Course: 6th grade math
@@ -161,110 +159,110 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Widget key: image_1
 test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const input = {
-	"max": 1.6666666667,
-	"min": 0,
-	"model": {
-		"cellGroups": [
+		max: 1.6666666667,
+		min: 0,
+		model: {
+			cellGroups: [
+				{
+					color: "#11accd",
+					count: 5
+				},
+				{
+					color: "#e07d10",
+					count: 1
+				},
+				{
+					color: "#FFFFFF",
+					count: 4
+				}
+			],
+			totalCells: 10,
+			bracketLabel: ""
+		},
+		ticks: [
 			{
-				"color": "#11accd",
-				"count": 5
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 6 },
+				bottomLabel: "0"
 			},
 			{
-				"color": "#e07d10",
-				"count": 1
+				value: 0.1666666667,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 6 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#FFFFFF",
-				"count": 4
+				value: 0.3333333333,
+				isMajor: false,
+				topLabel: { numerator: 2, denominator: 6 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.5,
+				isMajor: false,
+				topLabel: { numerator: 3, denominator: 6 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.6666666667,
+				isMajor: false,
+				topLabel: { numerator: 4, denominator: 6 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.8333333333,
+				isMajor: false,
+				topLabel: { numerator: 5, denominator: 6 },
+				bottomLabel: ""
+			},
+			{
+				value: 1,
+				isMajor: true,
+				topLabel: { numerator: 6, denominator: 6 },
+				bottomLabel: "1"
+			},
+			{
+				value: 1.1666666667,
+				isMajor: false,
+				topLabel: { numerator: 7, denominator: 6 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.3333333333,
+				isMajor: false,
+				topLabel: { numerator: 8, denominator: 6 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.5,
+				isMajor: false,
+				topLabel: { numerator: 9, denominator: 6 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.6666666667,
+				isMajor: true,
+				topLabel: { numerator: 10, denominator: 6 },
+				bottomLabel: ""
 			}
 		],
-		"totalCells": 10,
-		"bracketLabel": ""
-	},
-	"ticks": [
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "0 sixths",
-			"bottomLabel": "0"
-		},
-		{
-			"value": 0.1666666667,
-			"isMajor": false,
-			"topLabel": "1 sixth",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.3333333333,
-			"isMajor": false,
-			"topLabel": "2 sixths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.5,
-			"isMajor": false,
-			"topLabel": "3 sixths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.6666666667,
-			"isMajor": false,
-			"topLabel": "4 sixths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.8333333333,
-			"isMajor": false,
-			"topLabel": "5 sixths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": true,
-			"topLabel": "6 sixths",
-			"bottomLabel": "1"
-		},
-		{
-			"value": 1.1666666667,
-			"isMajor": false,
-			"topLabel": "7 sixths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.3333333333,
-			"isMajor": false,
-			"topLabel": "8 sixths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.5,
-			"isMajor": false,
-			"topLabel": "9 sixths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.6666666667,
-			"isMajor": true,
-			"topLabel": "10 sixths",
-			"bottomLabel": ""
-		}
-	],
-	"width": 320,
-	"height": 198,
-	"segments": [
-		{
-			"end": 0.8333333333,
-			"color": "#11accd",
-			"start": 0
-		},
-		{
-			"end": 1,
-			"color": "#e07d10",
-			"start": 0.8333333333
-		}
-	],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		width: 320,
+		height: 198,
+		segments: [
+			{
+				end: 0.8333333333,
+				color: "#11accd",
+				start: 0
+			},
+			{
+				end: 1,
+				color: "#e07d10",
+				start: 0.8333333333
+			}
+		],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -277,7 +275,6 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x335aafe44cff510e
 // Course: 6th grade math
@@ -285,98 +282,98 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Widget key: image_1
 test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const input = {
-	"max": 2,
-	"min": 0,
-	"model": {
-		"cellGroups": [
+		max: 2,
+		min: 0,
+		model: {
+			cellGroups: [
+				{
+					color: "#11accd",
+					count: 3
+				},
+				{
+					color: "#e07d10",
+					count: 1
+				},
+				{
+					color: "#FFFFFF",
+					count: 2
+				}
+			],
+			totalCells: 6,
+			bracketLabel: ""
+		},
+		ticks: [
 			{
-				"color": "#11accd",
-				"count": 3
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 4 },
+				bottomLabel: "0"
 			},
 			{
-				"color": "#e07d10",
-				"count": 1
+				value: 0.25,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 4 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#FFFFFF",
-				"count": 2
+				value: 0.5,
+				isMajor: false,
+				topLabel: { numerator: 2, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.75,
+				isMajor: false,
+				topLabel: { numerator: 3, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 1,
+				isMajor: true,
+				topLabel: { numerator: 4, denominator: 4 },
+				bottomLabel: "1"
+			},
+			{
+				value: 1.25,
+				isMajor: false,
+				topLabel: { numerator: 5, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.5,
+				isMajor: false,
+				topLabel: { numerator: 6, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.75,
+				isMajor: false,
+				topLabel: { numerator: 7, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 2,
+				isMajor: true,
+				topLabel: { numerator: 8, denominator: 4 },
+				bottomLabel: "2"
 			}
 		],
-		"totalCells": 6,
-		"bracketLabel": ""
-	},
-	"ticks": [
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "0 fourths",
-			"bottomLabel": "0"
-		},
-		{
-			"value": 0.25,
-			"isMajor": false,
-			"topLabel": "1 fourth",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.5,
-			"isMajor": false,
-			"topLabel": "2 fourths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.75,
-			"isMajor": false,
-			"topLabel": "3 fourths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": true,
-			"topLabel": "4 fourths",
-			"bottomLabel": "1"
-		},
-		{
-			"value": 1.25,
-			"isMajor": false,
-			"topLabel": "5 fourths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.5,
-			"isMajor": false,
-			"topLabel": "6 fourths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.75,
-			"isMajor": false,
-			"topLabel": "7 fourths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2,
-			"isMajor": true,
-			"topLabel": "8 fourths",
-			"bottomLabel": "2"
-		}
-	],
-	"width": 320,
-	"height": 198,
-	"segments": [
-		{
-			"end": 0.75,
-			"color": "#11accd",
-			"start": 0
-		},
-		{
-			"end": 1,
-			"color": "#e07d10",
-			"start": 0.75
-		}
-	],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		width: 320,
+		height: 198,
+		segments: [
+			{
+				end: 0.75,
+				color: "#11accd",
+				start: 0
+			},
+			{
+				end: 1,
+				color: "#e07d10",
+				start: 0.75
+			}
+		],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -389,7 +386,6 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xf50dfb2fa3c68d44
 // Course: 6th grade math
@@ -397,116 +393,116 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Widget key: image_1
 test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const input = {
-	"max": 1.5714285714,
-	"min": 0,
-	"model": {
-		"cellGroups": [
+		max: 1.5714285714,
+		min: 0,
+		model: {
+			cellGroups: [
+				{
+					color: "#11accd",
+					count: 5
+				},
+				{
+					color: "#e07d10",
+					count: 2
+				},
+				{
+					color: "#ffffff",
+					count: 3
+				}
+			],
+			totalCells: 10,
+			bracketLabel: ""
+		},
+		ticks: [
 			{
-				"color": "#11accd",
-				"count": 5
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 7 },
+				bottomLabel: "0"
 			},
 			{
-				"color": "#e07d10",
-				"count": 2
+				value: 0.1428571429,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 7 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#ffffff",
-				"count": 3
+				value: 0.2857142857,
+				isMajor: false,
+				topLabel: { numerator: 2, denominator: 7 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.4285714286,
+				isMajor: false,
+				topLabel: { numerator: 3, denominator: 7 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.5714285714,
+				isMajor: false,
+				topLabel: { numerator: 4, denominator: 7 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.7142857143,
+				isMajor: false,
+				topLabel: { numerator: 5, denominator: 7 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.8571428571,
+				isMajor: false,
+				topLabel: { numerator: 6, denominator: 7 },
+				bottomLabel: ""
+			},
+			{
+				value: 1,
+				isMajor: true,
+				topLabel: { numerator: 7, denominator: 7 },
+				bottomLabel: "1"
+			},
+			{
+				value: 1.1428571429,
+				isMajor: false,
+				topLabel: { numerator: 8, denominator: 7 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.2857142857,
+				isMajor: false,
+				topLabel: { numerator: 9, denominator: 7 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.4285714286,
+				isMajor: false,
+				topLabel: { numerator: 10, denominator: 7 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.5714285714,
+				isMajor: false,
+				topLabel: { numerator: 11, denominator: 7 },
+				bottomLabel: ""
 			}
 		],
-		"totalCells": 10,
-		"bracketLabel": ""
-	},
-	"ticks": [
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "0 sevenths",
-			"bottomLabel": "0"
-		},
-		{
-			"value": 0.1428571429,
-			"isMajor": false,
-			"topLabel": "1 seventh",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.2857142857,
-			"isMajor": false,
-			"topLabel": "2 sevenths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.4285714286,
-			"isMajor": false,
-			"topLabel": "3 sevenths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.5714285714,
-			"isMajor": false,
-			"topLabel": "4 sevenths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.7142857143,
-			"isMajor": false,
-			"topLabel": "5 sevenths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.8571428571,
-			"isMajor": false,
-			"topLabel": "6 sevenths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": true,
-			"topLabel": "7 sevenths",
-			"bottomLabel": "1"
-		},
-		{
-			"value": 1.1428571429,
-			"isMajor": false,
-			"topLabel": "8 sevenths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.2857142857,
-			"isMajor": false,
-			"topLabel": "9 sevenths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.4285714286,
-			"isMajor": false,
-			"topLabel": "10 sevenths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.5714285714,
-			"isMajor": false,
-			"topLabel": "11 sevenths",
-			"bottomLabel": ""
-		}
-	],
-	"width": 320,
-	"height": 198,
-	"segments": [
-		{
-			"end": 0.7142857143,
-			"color": "#11accd",
-			"start": 0
-		},
-		{
-			"end": 1,
-			"color": "#e07d10",
-			"start": 0.7142857143
-		}
-	],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		width: 320,
+		height: 198,
+		segments: [
+			{
+				end: 0.7142857143,
+				color: "#11accd",
+				start: 0
+			},
+			{
+				end: 1,
+				color: "#e07d10",
+				start: 0.7142857143
+			}
+		],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -519,7 +515,6 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x1cd3ad9db7c87f7d
 // Course: 6th grade math
@@ -527,212 +522,212 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Widget key: image_1
 test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const input = {
-	"max": 4.8,
-	"min": 0,
-	"model": {
-		"cellGroups": [
+		max: 4.8,
+		min: 0,
+		model: {
+			cellGroups: [
+				{
+					color: "#11accd",
+					count: 6
+				},
+				{
+					color: "#e07d10",
+					count: 6
+				},
+				{
+					color: "#11accd",
+					count: 6
+				},
+				{
+					color: "#e07d10",
+					count: 2
+				},
+				{
+					color: "#ffffff",
+					count: 4
+				}
+			],
+			totalCells: 24,
+			bracketLabel: ""
+		},
+		ticks: [
 			{
-				"color": "#11accd",
-				"count": 6
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 5 },
+				bottomLabel: "0"
 			},
 			{
-				"color": "#e07d10",
-				"count": 6
+				value: 0.2,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 5 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#11accd",
-				"count": 6
+				value: 0.4,
+				isMajor: false,
+				topLabel: { numerator: 2, denominator: 5 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#e07d10",
-				"count": 2
+				value: 0.6,
+				isMajor: false,
+				topLabel: { numerator: 3, denominator: 5 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#ffffff",
-				"count": 4
+				value: 0.8,
+				isMajor: false,
+				topLabel: { numerator: 4, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 1,
+				isMajor: true,
+				topLabel: { numerator: 5, denominator: 5 },
+				bottomLabel: "1"
+			},
+			{
+				value: 1.2,
+				isMajor: false,
+				topLabel: { numerator: 6, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.4,
+				isMajor: false,
+				topLabel: { numerator: 7, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.6,
+				isMajor: false,
+				topLabel: { numerator: 8, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.8,
+				isMajor: false,
+				topLabel: { numerator: 9, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 2,
+				isMajor: true,
+				topLabel: { numerator: 10, denominator: 5 },
+				bottomLabel: "2"
+			},
+			{
+				value: 2.2,
+				isMajor: false,
+				topLabel: { numerator: 11, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.4,
+				isMajor: false,
+				topLabel: { numerator: 12, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.6,
+				isMajor: false,
+				topLabel: { numerator: 13, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.8,
+				isMajor: false,
+				topLabel: { numerator: 14, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 3,
+				isMajor: true,
+				topLabel: { numerator: 15, denominator: 5 },
+				bottomLabel: "3"
+			},
+			{
+				value: 3.2,
+				isMajor: false,
+				topLabel: { numerator: 16, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 3.4,
+				isMajor: false,
+				topLabel: { numerator: 17, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 3.6,
+				isMajor: false,
+				topLabel: { numerator: 18, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 3.8,
+				isMajor: false,
+				topLabel: { numerator: 19, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 4,
+				isMajor: true,
+				topLabel: { numerator: 20, denominator: 5 },
+				bottomLabel: "4"
+			},
+			{
+				value: 4.2,
+				isMajor: false,
+				topLabel: { numerator: 21, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 4.4,
+				isMajor: false,
+				topLabel: { numerator: 22, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 4.6,
+				isMajor: false,
+				topLabel: { numerator: 23, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 4.8,
+				isMajor: false,
+				topLabel: { numerator: 24, denominator: 5 },
+				bottomLabel: ""
 			}
 		],
-		"totalCells": 24,
-		"bracketLabel": ""
-	},
-	"ticks": [
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "0 fifths",
-			"bottomLabel": "0"
-		},
-		{
-			"value": 0.2,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.4,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.6,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.8,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": "1"
-		},
-		{
-			"value": 1.2,
-			"isMajor": false,
-			"topLabel": "6 fifths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.4,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.6,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.8,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": "2"
-		},
-		{
-			"value": 2.2,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.4,
-			"isMajor": false,
-			"topLabel": "12 fifths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.6,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.8,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": "3"
-		},
-		{
-			"value": 3.2,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3.4,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3.6,
-			"isMajor": false,
-			"topLabel": "18 fifths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3.8,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": "4"
-		},
-		{
-			"value": 4.2,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4.4,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4.6,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4.8,
-			"isMajor": false,
-			"topLabel": "24 fifths",
-			"bottomLabel": ""
-		}
-	],
-	"width": 320,
-	"height": 198,
-	"segments": [
-		{
-			"end": 1,
-			"color": "#11accd",
-			"start": 0
-		},
-		{
-			"end": 2,
-			"color": "#e07d10",
-			"start": 1
-		},
-		{
-			"end": 3,
-			"color": "#11accd",
-			"start": 2
-		},
-		{
-			"end": 3.3333333333333335,
-			"color": "#e07d10",
-			"start": 3
-		}
-	],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		width: 320,
+		height: 198,
+		segments: [
+			{
+				end: 1,
+				color: "#11accd",
+				start: 0
+			},
+			{
+				end: 2,
+				color: "#e07d10",
+				start: 1
+			},
+			{
+				end: 3,
+				color: "#11accd",
+				start: 2
+			},
+			{
+				end: 3.3333333333333335,
+				color: "#e07d10",
+				start: 3
+			}
+		],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -745,7 +740,6 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x065198b739c010f5
 // Course: 6th grade math
@@ -753,185 +747,185 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Widget key: image_1
 test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const input = {
-	"max": 2.222222,
-	"min": 0,
-	"model": {
-		"cellGroups": [
+		max: 2.222222,
+		min: 0,
+		model: {
+			cellGroups: [
+				{
+					color: "#11accd",
+					count: 10
+				},
+				{
+					color: "#e07d10",
+					count: 8
+				},
+				{
+					color: "#ffffff",
+					count: 2
+				}
+			],
+			totalCells: 20,
+			bracketLabel: ""
+		},
+		ticks: [
 			{
-				"color": "#11accd",
-				"count": 10
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 9 },
+				bottomLabel: "0"
 			},
 			{
-				"color": "#e07d10",
-				"count": 8
+				value: 0.111111,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 9 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#ffffff",
-				"count": 2
+				value: 0.222222,
+				isMajor: false,
+				topLabel: { numerator: 2, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.333333,
+				isMajor: false,
+				topLabel: { numerator: 3, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.444444,
+				isMajor: true,
+				topLabel: { numerator: 4, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.555556,
+				isMajor: false,
+				topLabel: { numerator: 5, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.666667,
+				isMajor: false,
+				topLabel: { numerator: 6, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.777778,
+				isMajor: false,
+				topLabel: { numerator: 7, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.888889,
+				isMajor: true,
+				topLabel: { numerator: 8, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 1,
+				isMajor: false,
+				topLabel: { numerator: 9, denominator: 9 },
+				bottomLabel: "1"
+			},
+			{
+				value: 1.111111,
+				isMajor: false,
+				topLabel: { numerator: 10, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.222222,
+				isMajor: false,
+				topLabel: { numerator: 11, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.333333,
+				isMajor: true,
+				topLabel: { numerator: 12, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.444444,
+				isMajor: false,
+				topLabel: { numerator: 13, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.555556,
+				isMajor: false,
+				topLabel: { numerator: 14, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.666667,
+				isMajor: false,
+				topLabel: { numerator: 15, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.777778,
+				isMajor: true,
+				topLabel: { numerator: 16, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.888889,
+				isMajor: false,
+				topLabel: { numerator: 17, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 2,
+				isMajor: false,
+				topLabel: { numerator: 18, denominator: 9 },
+				bottomLabel: "2"
+			},
+			{
+				value: 2.111111,
+				isMajor: false,
+				topLabel: { numerator: 19, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.222222,
+				isMajor: true,
+				topLabel: { numerator: 20, denominator: 9 },
+				bottomLabel: ""
 			}
 		],
-		"totalCells": 20,
-		"bracketLabel": ""
-	},
-	"ticks": [
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "0 ninths",
-			"bottomLabel": "0"
-		},
-		{
-			"value": 0.111111,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.222222,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.333333,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.444444,
-			"isMajor": true,
-			"topLabel": "4 ninths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.555556,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.666667,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.777778,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.888889,
-			"isMajor": true,
-			"topLabel": "8 ninths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "1"
-		},
-		{
-			"value": 1.111111,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.222222,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.333333,
-			"isMajor": true,
-			"topLabel": "12 ninths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.444444,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.555556,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.666667,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.777778,
-			"isMajor": true,
-			"topLabel": "16 ninths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.888889,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "2"
-		},
-		{
-			"value": 2.111111,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.222222,
-			"isMajor": true,
-			"topLabel": "20 ninths",
-			"bottomLabel": ""
-		}
-	],
-	"width": 320,
-	"height": 198,
-	"segments": [
-		{
-			"end": 0.444444,
-			"color": "#11accd",
-			"start": 0
-		},
-		{
-			"end": 0.888889,
-			"color": "#e07d10",
-			"start": 0.444444
-		},
-		{
-			"end": 1.333333,
-			"color": "#11accd",
-			"start": 0.888889
-		},
-		{
-			"end": 1.777778,
-			"color": "#e07d10",
-			"start": 1.333333
-		},
-		{
-			"end": 2,
-			"color": "#11accd",
-			"start": 1.777778
-		}
-	],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		width: 320,
+		height: 198,
+		segments: [
+			{
+				end: 0.444444,
+				color: "#11accd",
+				start: 0
+			},
+			{
+				end: 0.888889,
+				color: "#e07d10",
+				start: 0.444444
+			},
+			{
+				end: 1.333333,
+				color: "#11accd",
+				start: 0.888889
+			},
+			{
+				end: 1.777778,
+				color: "#e07d10",
+				start: 1.333333
+			},
+			{
+				end: 2,
+				color: "#11accd",
+				start: 1.777778
+			}
+		],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -944,7 +938,6 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x65d44702eaf77e76
 // Course: 6th grade math
@@ -952,302 +945,302 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Widget key: image_1
 test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const input = {
-	"max": 7.5,
-	"min": 0,
-	"model": {
-		"cellGroups": [
+		max: 7.5,
+		min: 0,
+		model: {
+			cellGroups: [
+				{
+					color: "#11accd",
+					count: 3
+				},
+				{
+					color: "#e07d10",
+					count: 3
+				},
+				{
+					color: "#11accd",
+					count: 3
+				},
+				{
+					color: "#e07d10",
+					count: 3
+				},
+				{
+					color: "#11accd",
+					count: 3
+				},
+				{
+					color: "#e07d10",
+					count: 3
+				},
+				{
+					color: "#11accd",
+					count: 3
+				},
+				{
+					color: "#e07d10",
+					count: 3
+				},
+				{
+					color: "#11accd",
+					count: 3
+				},
+				{
+					color: "#e07d10",
+					count: 1
+				},
+				{
+					color: "#FFFFFF",
+					count: 2
+				}
+			],
+			totalCells: 30,
+			bracketLabel: ""
+		},
+		ticks: [
 			{
-				"color": "#11accd",
-				"count": 3
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 4 },
+				bottomLabel: "0"
 			},
 			{
-				"color": "#e07d10",
-				"count": 3
+				value: 0.25,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 4 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#11accd",
-				"count": 3
+				value: 0.5,
+				isMajor: false,
+				topLabel: { numerator: 2, denominator: 4 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#e07d10",
-				"count": 3
+				value: 0.75,
+				isMajor: true,
+				topLabel: { numerator: 3, denominator: 4 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#11accd",
-				"count": 3
+				value: 1,
+				isMajor: false,
+				topLabel: { numerator: 4, denominator: 4 },
+				bottomLabel: "1"
 			},
 			{
-				"color": "#e07d10",
-				"count": 3
+				value: 1.25,
+				isMajor: false,
+				topLabel: { numerator: 5, denominator: 4 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#11accd",
-				"count": 3
+				value: 1.5,
+				isMajor: true,
+				topLabel: { numerator: 6, denominator: 4 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#e07d10",
-				"count": 3
+				value: 1.75,
+				isMajor: false,
+				topLabel: { numerator: 7, denominator: 4 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#11accd",
-				"count": 3
+				value: 2,
+				isMajor: false,
+				topLabel: { numerator: 8, denominator: 4 },
+				bottomLabel: "2"
 			},
 			{
-				"color": "#e07d10",
-				"count": 1
+				value: 2.25,
+				isMajor: true,
+				topLabel: { numerator: 9, denominator: 4 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#FFFFFF",
-				"count": 2
+				value: 2.5,
+				isMajor: false,
+				topLabel: { numerator: 10, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.75,
+				isMajor: false,
+				topLabel: { numerator: 11, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 3,
+				isMajor: true,
+				topLabel: { numerator: 12, denominator: 4 },
+				bottomLabel: "3"
+			},
+			{
+				value: 3.25,
+				isMajor: false,
+				topLabel: { numerator: 13, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 3.5,
+				isMajor: false,
+				topLabel: { numerator: 14, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 3.75,
+				isMajor: true,
+				topLabel: { numerator: 15, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 4,
+				isMajor: false,
+				topLabel: { numerator: 16, denominator: 4 },
+				bottomLabel: "4"
+			},
+			{
+				value: 4.25,
+				isMajor: false,
+				topLabel: { numerator: 17, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 4.5,
+				isMajor: true,
+				topLabel: { numerator: 18, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 4.75,
+				isMajor: false,
+				topLabel: { numerator: 19, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 5,
+				isMajor: false,
+				topLabel: { numerator: 20, denominator: 4 },
+				bottomLabel: "5"
+			},
+			{
+				value: 5.25,
+				isMajor: true,
+				topLabel: { numerator: 21, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 5.5,
+				isMajor: false,
+				topLabel: { numerator: 22, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 5.75,
+				isMajor: false,
+				topLabel: { numerator: 23, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 6,
+				isMajor: true,
+				topLabel: { numerator: 24, denominator: 4 },
+				bottomLabel: "6"
+			},
+			{
+				value: 6.25,
+				isMajor: false,
+				topLabel: { numerator: 25, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 6.5,
+				isMajor: false,
+				topLabel: { numerator: 26, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 6.75,
+				isMajor: true,
+				topLabel: { numerator: 27, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 7,
+				isMajor: false,
+				topLabel: { numerator: 28, denominator: 4 },
+				bottomLabel: "7"
+			},
+			{
+				value: 7.25,
+				isMajor: false,
+				topLabel: { numerator: 29, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 7.5,
+				isMajor: true,
+				topLabel: { numerator: 30, denominator: 4 },
+				bottomLabel: ""
 			}
 		],
-		"totalCells": 30,
-		"bracketLabel": ""
-	},
-	"ticks": [
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "0 fourths",
-			"bottomLabel": "0"
-		},
-		{
-			"value": 0.25,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.75,
-			"isMajor": true,
-			"topLabel": "3 fourths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "1"
-		},
-		{
-			"value": 1.25,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.5,
-			"isMajor": true,
-			"topLabel": "6 fourths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.75,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "2"
-		},
-		{
-			"value": 2.25,
-			"isMajor": true,
-			"topLabel": "9 fourths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.75,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3,
-			"isMajor": true,
-			"topLabel": "12 fourths",
-			"bottomLabel": "3"
-		},
-		{
-			"value": 3.25,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3.75,
-			"isMajor": true,
-			"topLabel": "15 fourths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "4"
-		},
-		{
-			"value": 4.25,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4.5,
-			"isMajor": true,
-			"topLabel": "18 fourths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4.75,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "5"
-		},
-		{
-			"value": 5.25,
-			"isMajor": true,
-			"topLabel": "21 fourths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 5.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 5.75,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 6,
-			"isMajor": true,
-			"topLabel": "24 fourths",
-			"bottomLabel": "6"
-		},
-		{
-			"value": 6.25,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 6.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 6.75,
-			"isMajor": true,
-			"topLabel": "27 fourths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 7,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "7"
-		},
-		{
-			"value": 7.25,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 7.5,
-			"isMajor": true,
-			"topLabel": "30 fourths",
-			"bottomLabel": ""
-		}
-	],
-	"width": 320,
-	"height": 198,
-	"segments": [
-		{
-			"end": 0.75,
-			"color": "#11accd",
-			"start": 0
-		},
-		{
-			"end": 1.5,
-			"color": "#e07d10",
-			"start": 0.75
-		},
-		{
-			"end": 2.25,
-			"color": "#11accd",
-			"start": 1.5
-		},
-		{
-			"end": 3,
-			"color": "#e07d10",
-			"start": 2.25
-		},
-		{
-			"end": 3.75,
-			"color": "#11accd",
-			"start": 3
-		},
-		{
-			"end": 4.5,
-			"color": "#e07d10",
-			"start": 3.75
-		},
-		{
-			"end": 5.25,
-			"color": "#11accd",
-			"start": 4.5
-		},
-		{
-			"end": 6,
-			"color": "#e07d10",
-			"start": 5.25
-		},
-		{
-			"end": 6.75,
-			"color": "#11accd",
-			"start": 6
-		},
-		{
-			"end": 7,
-			"color": "#e07d10",
-			"start": 6.75
-		}
-	],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		width: 320,
+		height: 198,
+		segments: [
+			{
+				end: 0.75,
+				color: "#11accd",
+				start: 0
+			},
+			{
+				end: 1.5,
+				color: "#e07d10",
+				start: 0.75
+			},
+			{
+				end: 2.25,
+				color: "#11accd",
+				start: 1.5
+			},
+			{
+				end: 3,
+				color: "#e07d10",
+				start: 2.25
+			},
+			{
+				end: 3.75,
+				color: "#11accd",
+				start: 3
+			},
+			{
+				end: 4.5,
+				color: "#e07d10",
+				start: 3.75
+			},
+			{
+				end: 5.25,
+				color: "#11accd",
+				start: 4.5
+			},
+			{
+				end: 6,
+				color: "#e07d10",
+				start: 5.25
+			},
+			{
+				end: 6.75,
+				color: "#11accd",
+				start: 6
+			},
+			{
+				end: 7,
+				color: "#e07d10",
+				start: 6.75
+			}
+		],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -1260,7 +1253,6 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x78692243f47f4860
 // Course: 6th grade math
@@ -1268,101 +1260,101 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Widget key: image_1
 test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const input = {
-	"max": 5,
-	"min": 0,
-	"model": {
-		"cellGroups": [
+		max: 5,
+		min: 0,
+		model: {
+			cellGroups: [
+				{
+					color: "#11accd",
+					count: 2
+				},
+				{
+					color: "#FFFFFF",
+					count: 7
+				}
+			],
+			totalCells: 9,
+			bracketLabel: ""
+		},
+		ticks: [
 			{
-				"color": "#11accd",
-				"count": 2
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 2 },
+				bottomLabel: "0"
 			},
 			{
-				"color": "#FFFFFF",
-				"count": 7
+				value: 0.5,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: 1,
+				isMajor: true,
+				topLabel: { numerator: 2, denominator: 2 },
+				bottomLabel: "1"
+			},
+			{
+				value: 1.5,
+				isMajor: false,
+				topLabel: { numerator: 3, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: 2,
+				isMajor: true,
+				topLabel: { numerator: 4, denominator: 2 },
+				bottomLabel: "2"
+			},
+			{
+				value: 2.5,
+				isMajor: false,
+				topLabel: { numerator: 5, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: 3,
+				isMajor: true,
+				topLabel: { numerator: 6, denominator: 2 },
+				bottomLabel: "3"
+			},
+			{
+				value: 3.5,
+				isMajor: false,
+				topLabel: { numerator: 7, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: 4,
+				isMajor: true,
+				topLabel: { numerator: 8, denominator: 2 },
+				bottomLabel: "4"
+			},
+			{
+				value: 4.5,
+				isMajor: false,
+				topLabel: { numerator: 9, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: 5,
+				isMajor: true,
+				topLabel: { numerator: 10, denominator: 2 },
+				bottomLabel: "5"
 			}
 		],
-		"totalCells": 9,
-		"bracketLabel": ""
-	},
-	"ticks": [
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "0 halves",
-			"bottomLabel": "0"
-		},
-		{
-			"value": 0.5,
-			"isMajor": false,
-			"topLabel": "1 half",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": true,
-			"topLabel": "2 halves",
-			"bottomLabel": "1"
-		},
-		{
-			"value": 1.5,
-			"isMajor": false,
-			"topLabel": "3 halves",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2,
-			"isMajor": true,
-			"topLabel": "4 halves",
-			"bottomLabel": "2"
-		},
-		{
-			"value": 2.5,
-			"isMajor": false,
-			"topLabel": "5 halves",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3,
-			"isMajor": true,
-			"topLabel": "6 halves",
-			"bottomLabel": "3"
-		},
-		{
-			"value": 3.5,
-			"isMajor": false,
-			"topLabel": "7 halves",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4,
-			"isMajor": true,
-			"topLabel": "8 halves",
-			"bottomLabel": "4"
-		},
-		{
-			"value": 4.5,
-			"isMajor": false,
-			"topLabel": "9 halves",
-			"bottomLabel": ""
-		},
-		{
-			"value": 5,
-			"isMajor": true,
-			"topLabel": "10 halves",
-			"bottomLabel": "5"
-		}
-	],
-	"width": 320,
-	"height": 198,
-	"segments": [
-		{
-			"end": 1,
-			"color": "#11accd",
-			"start": 0
-		}
-	],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		width: 320,
+		height: 198,
+		segments: [
+			{
+				end: 1,
+				color: "#11accd",
+				start: 0
+			}
+		],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -1375,7 +1367,6 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xbf3823e8389ce34a
 // Course: 6th grade math
@@ -1383,101 +1374,101 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Widget key: image_1
 test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const input = {
-	"max": 2,
-	"min": 0,
-	"model": {
-		"cellGroups": [
+		max: 2,
+		min: 0,
+		model: {
+			cellGroups: [
+				{
+					color: "#11accd",
+					count: 5
+				},
+				{
+					color: "#FFFFFF",
+					count: 4
+				}
+			],
+			totalCells: 9,
+			bracketLabel: ""
+		},
+		ticks: [
 			{
-				"color": "#11accd",
-				"count": 5
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 5 },
+				bottomLabel: "0"
 			},
 			{
-				"color": "#FFFFFF",
-				"count": 4
+				value: 0.2,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.4,
+				isMajor: false,
+				topLabel: { numerator: 2, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.6,
+				isMajor: false,
+				topLabel: { numerator: 3, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.8,
+				isMajor: false,
+				topLabel: { numerator: 4, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 1,
+				isMajor: true,
+				topLabel: { numerator: 5, denominator: 5 },
+				bottomLabel: "1"
+			},
+			{
+				value: 1.2,
+				isMajor: false,
+				topLabel: { numerator: 6, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.4,
+				isMajor: false,
+				topLabel: { numerator: 7, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.6,
+				isMajor: false,
+				topLabel: { numerator: 8, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.8,
+				isMajor: false,
+				topLabel: { numerator: 9, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 2,
+				isMajor: true,
+				topLabel: { numerator: 10, denominator: 5 },
+				bottomLabel: "2"
 			}
 		],
-		"totalCells": 9,
-		"bracketLabel": ""
-	},
-	"ticks": [
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "0 fifths",
-			"bottomLabel": "0"
-		},
-		{
-			"value": 0.2,
-			"isMajor": false,
-			"topLabel": "1 fifth",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.4,
-			"isMajor": false,
-			"topLabel": "2 fifths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.6,
-			"isMajor": false,
-			"topLabel": "3 fifths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.8,
-			"isMajor": false,
-			"topLabel": "4 fifths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": true,
-			"topLabel": "5 fifths",
-			"bottomLabel": "1"
-		},
-		{
-			"value": 1.2,
-			"isMajor": false,
-			"topLabel": "6 fifths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.4,
-			"isMajor": false,
-			"topLabel": "7 fifths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.6,
-			"isMajor": false,
-			"topLabel": "8 fifths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.8,
-			"isMajor": false,
-			"topLabel": "9 fifths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2,
-			"isMajor": true,
-			"topLabel": "10 fifths",
-			"bottomLabel": "2"
-		}
-	],
-	"width": 320,
-	"height": 198,
-	"segments": [
-		{
-			"end": 1,
-			"color": "#11accd",
-			"start": 0
-		}
-	],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		width: 320,
+		height: 198,
+		segments: [
+			{
+				end: 1,
+				color: "#11accd",
+				start: 0
+			}
+		],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -1490,7 +1481,6 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xc0d0c715069d9fca
 // Course: 6th grade math
@@ -1498,188 +1488,188 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Widget key: image_1
 test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const input = {
-	"max": 9,
-	"min": 0,
-	"model": {
-		"cellGroups": [
+		max: 9,
+		min: 0,
+		model: {
+			cellGroups: [
+				{
+					color: "#11accd",
+					count: 9
+				},
+				{
+					color: "#e07d10",
+					count: 7
+				},
+				{
+					color: "#FFFFFF",
+					count: 2
+				}
+			],
+			totalCells: 18,
+			bracketLabel: " "
+		},
+		ticks: [
 			{
-				"color": "#11accd",
-				"count": 9
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 2 },
+				bottomLabel: "0"
 			},
 			{
-				"color": "#e07d10",
-				"count": 7
+				value: 0.5,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 2 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#FFFFFF",
-				"count": 2
+				value: 1,
+				isMajor: false,
+				topLabel: { numerator: 2, denominator: 2 },
+				bottomLabel: "1"
+			},
+			{
+				value: 1.5,
+				isMajor: true,
+				topLabel: { numerator: 3, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: 2,
+				isMajor: false,
+				topLabel: { numerator: 4, denominator: 2 },
+				bottomLabel: "2"
+			},
+			{
+				value: 2.5,
+				isMajor: false,
+				topLabel: { numerator: 5, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: 3,
+				isMajor: true,
+				topLabel: { numerator: 6, denominator: 2 },
+				bottomLabel: "3"
+			},
+			{
+				value: 3.5,
+				isMajor: false,
+				topLabel: { numerator: 7, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: 4,
+				isMajor: false,
+				topLabel: { numerator: 8, denominator: 2 },
+				bottomLabel: "4"
+			},
+			{
+				value: 4.5,
+				isMajor: true,
+				topLabel: { numerator: 9, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: 5,
+				isMajor: false,
+				topLabel: { numerator: 10, denominator: 2 },
+				bottomLabel: "5"
+			},
+			{
+				value: 5.5,
+				isMajor: false,
+				topLabel: { numerator: 11, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: 6,
+				isMajor: true,
+				topLabel: { numerator: 12, denominator: 2 },
+				bottomLabel: "6"
+			},
+			{
+				value: 6.5,
+				isMajor: false,
+				topLabel: { numerator: 13, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: 7,
+				isMajor: false,
+				topLabel: { numerator: 14, denominator: 2 },
+				bottomLabel: "7"
+			},
+			{
+				value: 7.5,
+				isMajor: true,
+				topLabel: { numerator: 15, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: 8,
+				isMajor: false,
+				topLabel: { numerator: 16, denominator: 2 },
+				bottomLabel: "8"
+			},
+			{
+				value: 8.5,
+				isMajor: false,
+				topLabel: { numerator: 17, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: 9,
+				isMajor: true,
+				topLabel: { numerator: 18, denominator: 2 },
+				bottomLabel: "9"
 			}
 		],
-		"totalCells": 18,
-		"bracketLabel": " "
-	},
-	"ticks": [
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "0 halves",
-			"bottomLabel": "0"
-		},
-		{
-			"value": 0.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "1"
-		},
-		{
-			"value": 1.5,
-			"isMajor": true,
-			"topLabel": "3 halves",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "2"
-		},
-		{
-			"value": 2.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3,
-			"isMajor": true,
-			"topLabel": "6 halves",
-			"bottomLabel": "3"
-		},
-		{
-			"value": 3.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "4"
-		},
-		{
-			"value": 4.5,
-			"isMajor": true,
-			"topLabel": "9 halves",
-			"bottomLabel": ""
-		},
-		{
-			"value": 5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "5"
-		},
-		{
-			"value": 5.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 6,
-			"isMajor": true,
-			"topLabel": "12 halves",
-			"bottomLabel": "6"
-		},
-		{
-			"value": 6.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 7,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "7"
-		},
-		{
-			"value": 7.5,
-			"isMajor": true,
-			"topLabel": "15 halves",
-			"bottomLabel": ""
-		},
-		{
-			"value": 8,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "8"
-		},
-		{
-			"value": 8.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 9,
-			"isMajor": true,
-			"topLabel": "18 halves",
-			"bottomLabel": "9"
-		}
-	],
-	"width": 700,
-	"height": 220,
-	"segments": [
-		{
-			"end": 1,
-			"color": "#11accd",
-			"start": 0
-		},
-		{
-			"end": 2,
-			"color": "#e07d10",
-			"start": 1
-		},
-		{
-			"end": 3,
-			"color": "#11accd",
-			"start": 2
-		},
-		{
-			"end": 4,
-			"color": "#e07d10",
-			"start": 3
-		},
-		{
-			"end": 5,
-			"color": "#11accd",
-			"start": 4
-		},
-		{
-			"end": 6,
-			"color": "#e07d10",
-			"start": 5
-		},
-		{
-			"end": 7,
-			"color": "#11accd",
-			"start": 6
-		},
-		{
-			"end": 8,
-			"color": "#e07d10",
-			"start": 7
-		}
-	],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		width: 700,
+		height: 220,
+		segments: [
+			{
+				end: 1,
+				color: "#11accd",
+				start: 0
+			},
+			{
+				end: 2,
+				color: "#e07d10",
+				start: 1
+			},
+			{
+				end: 3,
+				color: "#11accd",
+				start: 2
+			},
+			{
+				end: 4,
+				color: "#e07d10",
+				start: 3
+			},
+			{
+				end: 5,
+				color: "#11accd",
+				start: 4
+			},
+			{
+				end: 6,
+				color: "#e07d10",
+				start: 5
+			},
+			{
+				end: 7,
+				color: "#11accd",
+				start: 6
+			},
+			{
+				end: 8,
+				color: "#e07d10",
+				start: 7
+			}
+		],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -1692,7 +1682,6 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x0a2ef246f7964e60
 // Course: 6th grade math
@@ -1700,227 +1689,227 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Widget key: image_1
 test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const input = {
-	"max": 3.125,
-	"min": 0,
-	"model": {
-		"cellGroups": [
+		max: 3.125,
+		min: 0,
+		model: {
+			cellGroups: [
+				{
+					color: "#11accd",
+					count: 5
+				},
+				{
+					color: "#e07d10",
+					count: 5
+				},
+				{
+					color: "#11accd",
+					count: 5
+				},
+				{
+					color: "#e07d10",
+					count: 5
+				},
+				{
+					color: "#11accd",
+					count: 4
+				},
+				{
+					color: "#ffffff",
+					count: 1
+				}
+			],
+			totalCells: 25,
+			bracketLabel: ""
+		},
+		ticks: [
 			{
-				"color": "#11accd",
-				"count": 5
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 8 },
+				bottomLabel: "0"
 			},
 			{
-				"color": "#e07d10",
-				"count": 5
+				value: 0.125,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 8 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#11accd",
-				"count": 5
+				value: 0.25,
+				isMajor: false,
+				topLabel: { numerator: 2, denominator: 8 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#e07d10",
-				"count": 5
+				value: 0.375,
+				isMajor: false,
+				topLabel: { numerator: 3, denominator: 8 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#11accd",
-				"count": 4
+				value: 0.5,
+				isMajor: false,
+				topLabel: { numerator: 4, denominator: 8 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#ffffff",
-				"count": 1
+				value: 0.625,
+				isMajor: true,
+				topLabel: { numerator: 5, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.75,
+				isMajor: false,
+				topLabel: { numerator: 6, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.875,
+				isMajor: false,
+				topLabel: { numerator: 7, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 1,
+				isMajor: false,
+				topLabel: { numerator: 8, denominator: 8 },
+				bottomLabel: "1"
+			},
+			{
+				value: 1.125,
+				isMajor: false,
+				topLabel: { numerator: 9, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.25,
+				isMajor: true,
+				topLabel: { numerator: 10, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.375,
+				isMajor: false,
+				topLabel: { numerator: 11, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.5,
+				isMajor: false,
+				topLabel: { numerator: 12, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.625,
+				isMajor: false,
+				topLabel: { numerator: 13, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.75,
+				isMajor: false,
+				topLabel: { numerator: 14, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.875,
+				isMajor: true,
+				topLabel: { numerator: 15, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 2,
+				isMajor: false,
+				topLabel: { numerator: 16, denominator: 8 },
+				bottomLabel: "2"
+			},
+			{
+				value: 2.125,
+				isMajor: false,
+				topLabel: { numerator: 17, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.25,
+				isMajor: false,
+				topLabel: { numerator: 18, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.375,
+				isMajor: false,
+				topLabel: { numerator: 19, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.5,
+				isMajor: true,
+				topLabel: { numerator: 20, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.625,
+				isMajor: false,
+				topLabel: { numerator: 21, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.75,
+				isMajor: false,
+				topLabel: { numerator: 22, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.875,
+				isMajor: false,
+				topLabel: { numerator: 23, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 3,
+				isMajor: false,
+				topLabel: { numerator: 24, denominator: 8 },
+				bottomLabel: "3"
+			},
+			{
+				value: 3.125,
+				isMajor: true,
+				topLabel: { numerator: 25, denominator: 8 },
+				bottomLabel: ""
 			}
 		],
-		"totalCells": 25,
-		"bracketLabel": ""
-	},
-	"ticks": [
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "0 eighths",
-			"bottomLabel": "0"
-		},
-		{
-			"value": 0.125,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.25,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.375,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.625,
-			"isMajor": true,
-			"topLabel": "5 eighths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.75,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.875,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "1"
-		},
-		{
-			"value": 1.125,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.25,
-			"isMajor": true,
-			"topLabel": "10 eighths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.375,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.625,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.75,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.875,
-			"isMajor": true,
-			"topLabel": "15 eighths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "2"
-		},
-		{
-			"value": 2.125,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.25,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.375,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.5,
-			"isMajor": true,
-			"topLabel": "20 eighths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.625,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.75,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.875,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "3"
-		},
-		{
-			"value": 3.125,
-			"isMajor": true,
-			"topLabel": "25 eighths",
-			"bottomLabel": ""
-		}
-	],
-	"width": 320,
-	"height": 198,
-	"segments": [
-		{
-			"end": 0.625,
-			"color": "#11accd",
-			"start": 0
-		},
-		{
-			"end": 1.25,
-			"color": "#e07d10",
-			"start": 0.625
-		},
-		{
-			"end": 1.875,
-			"color": "#11accd",
-			"start": 1.25
-		},
-		{
-			"end": 2.5,
-			"color": "#e07d10",
-			"start": 1.875
-		},
-		{
-			"end": 3,
-			"color": "#11accd",
-			"start": 2.5
-		}
-	],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		width: 320,
+		height: 198,
+		segments: [
+			{
+				end: 0.625,
+				color: "#11accd",
+				start: 0
+			},
+			{
+				end: 1.25,
+				color: "#e07d10",
+				start: 0.625
+			},
+			{
+				end: 1.875,
+				color: "#11accd",
+				start: 1.25
+			},
+			{
+				end: 2.5,
+				color: "#e07d10",
+				start: 1.875
+			},
+			{
+				end: 3,
+				color: "#11accd",
+				start: 2.5
+			}
+		],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -1933,7 +1922,6 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x7c0f1e5f5ce44bca
 // Course: 6th grade math
@@ -1941,228 +1929,228 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Widget key: image_1
 test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const input = {
-	"max": 9.3333333333,
-	"min": 0,
-	"model": {
-		"cellGroups": [
+		max: 9.3333333333,
+		min: 0,
+		model: {
+			cellGroups: [
+				{
+					color: "#11accd",
+					count: 14
+				},
+				{
+					color: "#e07d10",
+					count: 13
+				},
+				{
+					color: "#ffffff",
+					count: 1
+				}
+			],
+			totalCells: 28,
+			bracketLabel: ""
+		},
+		ticks: [
 			{
-				"color": "#11accd",
-				"count": 14
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 3 },
+				bottomLabel: "0"
 			},
 			{
-				"color": "#e07d10",
-				"count": 13
+				value: 0.3333333333,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 3 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#ffffff",
-				"count": 1
+				value: 0.6666666667,
+				isMajor: false,
+				topLabel: { numerator: 2, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 1,
+				isMajor: false,
+				topLabel: { numerator: 3, denominator: 3 },
+				bottomLabel: "1"
+			},
+			{
+				value: 1.3333333333,
+				isMajor: false,
+				topLabel: { numerator: 4, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.6666666667,
+				isMajor: false,
+				topLabel: { numerator: 5, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 2,
+				isMajor: false,
+				topLabel: { numerator: 6, denominator: 3 },
+				bottomLabel: "2"
+			},
+			{
+				value: 2.3333333333,
+				isMajor: true,
+				topLabel: { numerator: 7, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.6666666667,
+				isMajor: false,
+				topLabel: { numerator: 8, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 3,
+				isMajor: false,
+				topLabel: { numerator: 9, denominator: 3 },
+				bottomLabel: "3"
+			},
+			{
+				value: 3.3333333333,
+				isMajor: false,
+				topLabel: { numerator: 10, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 3.6666666667,
+				isMajor: false,
+				topLabel: { numerator: 11, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 4,
+				isMajor: false,
+				topLabel: { numerator: 12, denominator: 3 },
+				bottomLabel: "4"
+			},
+			{
+				value: 4.3333333333,
+				isMajor: false,
+				topLabel: { numerator: 13, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 4.6666666667,
+				isMajor: true,
+				topLabel: { numerator: 14, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 5,
+				isMajor: false,
+				topLabel: { numerator: 15, denominator: 3 },
+				bottomLabel: "5"
+			},
+			{
+				value: 5.3333333333,
+				isMajor: false,
+				topLabel: { numerator: 16, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 5.6666666667,
+				isMajor: false,
+				topLabel: { numerator: 17, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 6,
+				isMajor: false,
+				topLabel: { numerator: 18, denominator: 3 },
+				bottomLabel: "6"
+			},
+			{
+				value: 6.3333333333,
+				isMajor: false,
+				topLabel: { numerator: 19, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 6.6666666667,
+				isMajor: false,
+				topLabel: { numerator: 20, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 7,
+				isMajor: true,
+				topLabel: { numerator: 21, denominator: 3 },
+				bottomLabel: "7"
+			},
+			{
+				value: 7.3333333333,
+				isMajor: false,
+				topLabel: { numerator: 22, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 7.6666666667,
+				isMajor: false,
+				topLabel: { numerator: 23, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 8,
+				isMajor: false,
+				topLabel: { numerator: 24, denominator: 3 },
+				bottomLabel: "8"
+			},
+			{
+				value: 8.3333333333,
+				isMajor: false,
+				topLabel: { numerator: 25, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 8.6666666667,
+				isMajor: false,
+				topLabel: { numerator: 26, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 9,
+				isMajor: false,
+				topLabel: { numerator: 27, denominator: 3 },
+				bottomLabel: "9"
+			},
+			{
+				value: 9.3333333333,
+				isMajor: true,
+				topLabel: { numerator: 28, denominator: 3 },
+				bottomLabel: ""
 			}
 		],
-		"totalCells": 28,
-		"bracketLabel": ""
-	},
-	"ticks": [
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "0 thirds",
-			"bottomLabel": "0"
-		},
-		{
-			"value": 0.3333333333,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.6666666667,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "1"
-		},
-		{
-			"value": 1.3333333333,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.6666666667,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "2"
-		},
-		{
-			"value": 2.3333333333,
-			"isMajor": true,
-			"topLabel": "7 thirds",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.6666666667,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "3"
-		},
-		{
-			"value": 3.3333333333,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3.6666666667,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "4"
-		},
-		{
-			"value": 4.3333333333,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4.6666666667,
-			"isMajor": true,
-			"topLabel": "14 thirds",
-			"bottomLabel": ""
-		},
-		{
-			"value": 5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "5"
-		},
-		{
-			"value": 5.3333333333,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 5.6666666667,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 6,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "6"
-		},
-		{
-			"value": 6.3333333333,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 6.6666666667,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 7,
-			"isMajor": true,
-			"topLabel": "21 thirds",
-			"bottomLabel": "7"
-		},
-		{
-			"value": 7.3333333333,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 7.6666666667,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 8,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "8"
-		},
-		{
-			"value": 8.3333333333,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 8.6666666667,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 9,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": "9"
-		},
-		{
-			"value": 9.3333333333,
-			"isMajor": true,
-			"topLabel": "28 thirds",
-			"bottomLabel": ""
-		}
-	],
-	"width": 700,
-	"height": 220,
-	"segments": [
-		{
-			"end": 2.3333333333,
-			"color": "#11accd",
-			"start": 0
-		},
-		{
-			"end": 4.6666666667,
-			"color": "#e07d10",
-			"start": 2.3333333333
-		},
-		{
-			"end": 7,
-			"color": "#11accd",
-			"start": 4.6666666667
-		},
-		{
-			"end": 9,
-			"color": "#e07d10",
-			"start": 7
-		}
-	],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		width: 700,
+		height: 220,
+		segments: [
+			{
+				end: 2.3333333333,
+				color: "#11accd",
+				start: 0
+			},
+			{
+				end: 4.6666666667,
+				color: "#e07d10",
+				start: 2.3333333333
+			},
+			{
+				end: 7,
+				color: "#11accd",
+				start: 4.6666666667
+			},
+			{
+				end: 9,
+				color: "#e07d10",
+				start: 7
+			}
+		],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -2175,7 +2163,6 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xd738550114d58b1f
 // Course: 6th grade math
@@ -2183,215 +2170,215 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Widget key: image_1
 test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const input = {
-	"max": 6.25,
-	"min": 0,
-	"model": {
-		"cellGroups": [
+		max: 6.25,
+		min: 0,
+		model: {
+			cellGroups: [
+				{
+					color: "#11accd",
+					count: 14
+				},
+				{
+					color: "#e07d10",
+					count: 10
+				},
+				{
+					color: "#ffffff",
+					count: 1
+				}
+			],
+			totalCells: 25,
+			bracketLabel: ""
+		},
+		ticks: [
 			{
-				"color": "#11accd",
-				"count": 14
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 4 },
+				bottomLabel: "0"
 			},
 			{
-				"color": "#e07d10",
-				"count": 10
+				value: 0.25,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 4 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#ffffff",
-				"count": 1
+				value: 0.5,
+				isMajor: false,
+				topLabel: { numerator: 2, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.75,
+				isMajor: false,
+				topLabel: { numerator: 3, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 1,
+				isMajor: true,
+				topLabel: { numerator: 4, denominator: 4 },
+				bottomLabel: "1"
+			},
+			{
+				value: 1.25,
+				isMajor: false,
+				topLabel: { numerator: 5, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.5,
+				isMajor: false,
+				topLabel: { numerator: 6, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.75,
+				isMajor: false,
+				topLabel: { numerator: 7, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 2,
+				isMajor: true,
+				topLabel: { numerator: 8, denominator: 4 },
+				bottomLabel: "2"
+			},
+			{
+				value: 2.25,
+				isMajor: false,
+				topLabel: { numerator: 9, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.5,
+				isMajor: false,
+				topLabel: { numerator: 10, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.75,
+				isMajor: false,
+				topLabel: { numerator: 11, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 3,
+				isMajor: true,
+				topLabel: { numerator: 12, denominator: 4 },
+				bottomLabel: "3"
+			},
+			{
+				value: 3.25,
+				isMajor: false,
+				topLabel: { numerator: 13, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 3.5,
+				isMajor: false,
+				topLabel: { numerator: 14, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 3.75,
+				isMajor: false,
+				topLabel: { numerator: 15, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 4,
+				isMajor: true,
+				topLabel: { numerator: 16, denominator: 4 },
+				bottomLabel: "4"
+			},
+			{
+				value: 4.25,
+				isMajor: false,
+				topLabel: { numerator: 17, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 4.5,
+				isMajor: false,
+				topLabel: { numerator: 18, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 4.75,
+				isMajor: false,
+				topLabel: { numerator: 19, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 5,
+				isMajor: true,
+				topLabel: { numerator: 20, denominator: 4 },
+				bottomLabel: "5"
+			},
+			{
+				value: 5.25,
+				isMajor: false,
+				topLabel: { numerator: 21, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 5.5,
+				isMajor: false,
+				topLabel: { numerator: 22, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 5.75,
+				isMajor: false,
+				topLabel: { numerator: 23, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 6,
+				isMajor: true,
+				topLabel: { numerator: 24, denominator: 4 },
+				bottomLabel: "6"
+			},
+			{
+				value: 6.25,
+				isMajor: false,
+				topLabel: { numerator: 25, denominator: 4 },
+				bottomLabel: ""
 			}
 		],
-		"totalCells": 25,
-		"bracketLabel": ""
-	},
-	"ticks": [
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "0 fourths",
-			"bottomLabel": "0"
-		},
-		{
-			"value": 0.25,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.75,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": "1"
-		},
-		{
-			"value": 1.25,
-			"isMajor": false,
-			"topLabel": "5 fourths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.75,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": "2"
-		},
-		{
-			"value": 2.25,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.5,
-			"isMajor": false,
-			"topLabel": "10 fourths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.75,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": "3"
-		},
-		{
-			"value": 3.25,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3.75,
-			"isMajor": false,
-			"topLabel": "15 fourths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": "4"
-		},
-		{
-			"value": 4.25,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4.75,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 5,
-			"isMajor": true,
-			"topLabel": "20 fourths",
-			"bottomLabel": "5"
-		},
-		{
-			"value": 5.25,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 5.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 5.75,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 6,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": "6"
-		},
-		{
-			"value": 6.25,
-			"isMajor": false,
-			"topLabel": "25 fourths",
-			"bottomLabel": ""
-		}
-	],
-	"width": 320,
-	"height": 198,
-	"segments": [
-		{
-			"end": 1.25,
-			"color": "#11accd",
-			"start": 0
-		},
-		{
-			"end": 2.5,
-			"color": "#e07d10",
-			"start": 1.25
-		},
-		{
-			"end": 3.75,
-			"color": "#11accd",
-			"start": 2.5
-		},
-		{
-			"end": 5,
-			"color": "#e07d10",
-			"start": 3.75
-		},
-		{
-			"end": 6,
-			"color": "#11accd",
-			"start": 5
-		}
-	],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		width: 320,
+		height: 198,
+		segments: [
+			{
+				end: 1.25,
+				color: "#11accd",
+				start: 0
+			},
+			{
+				end: 2.5,
+				color: "#e07d10",
+				start: 1.25
+			},
+			{
+				end: 3.75,
+				color: "#11accd",
+				start: 2.5
+			},
+			{
+				end: 5,
+				color: "#e07d10",
+				start: 3.75
+			},
+			{
+				end: 6,
+				color: "#11accd",
+				start: 5
+			}
+		],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -2404,7 +2391,6 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xd796bd737c42d49d
 // Course: 6th grade math
@@ -2412,233 +2398,233 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Widget key: image_1
 test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const input = {
-	"max": 5.6,
-	"min": 0,
-	"model": {
-		"cellGroups": [
+		max: 5.6,
+		min: 0,
+		model: {
+			cellGroups: [
+				{
+					color: "#11accd",
+					count: 13
+				},
+				{
+					color: "#e07d10",
+					count: 12
+				},
+				{
+					color: "#FFFFFF",
+					count: 3
+				}
+			],
+			totalCells: 28,
+			bracketLabel: ""
+		},
+		ticks: [
 			{
-				"color": "#11accd",
-				"count": 13
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 5 },
+				bottomLabel: "0"
 			},
 			{
-				"color": "#e07d10",
-				"count": 12
+				value: 0.2,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 5 },
+				bottomLabel: ""
 			},
 			{
-				"color": "#FFFFFF",
-				"count": 3
+				value: 0.4,
+				isMajor: false,
+				topLabel: { numerator: 2, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.6,
+				isMajor: false,
+				topLabel: { numerator: 3, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.8,
+				isMajor: false,
+				topLabel: { numerator: 4, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 1,
+				isMajor: true,
+				topLabel: { numerator: 5, denominator: 5 },
+				bottomLabel: "1"
+			},
+			{
+				value: 1.2,
+				isMajor: false,
+				topLabel: { numerator: 6, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.4,
+				isMajor: false,
+				topLabel: { numerator: 7, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.6,
+				isMajor: false,
+				topLabel: { numerator: 8, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 1.8,
+				isMajor: false,
+				topLabel: { numerator: 9, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 2,
+				isMajor: true,
+				topLabel: { numerator: 10, denominator: 5 },
+				bottomLabel: "2"
+			},
+			{
+				value: 2.2,
+				isMajor: false,
+				topLabel: { numerator: 11, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.4,
+				isMajor: false,
+				topLabel: { numerator: 12, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.6,
+				isMajor: false,
+				topLabel: { numerator: 13, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 2.8,
+				isMajor: false,
+				topLabel: { numerator: 14, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 3,
+				isMajor: true,
+				topLabel: { numerator: 15, denominator: 5 },
+				bottomLabel: "3"
+			},
+			{
+				value: 3.2,
+				isMajor: false,
+				topLabel: { numerator: 16, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 3.4,
+				isMajor: false,
+				topLabel: { numerator: 17, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 3.6,
+				isMajor: false,
+				topLabel: { numerator: 18, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 3.8,
+				isMajor: false,
+				topLabel: { numerator: 19, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 4,
+				isMajor: true,
+				topLabel: { numerator: 20, denominator: 5 },
+				bottomLabel: "4"
+			},
+			{
+				value: 4.2,
+				isMajor: false,
+				topLabel: { numerator: 21, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 4.4,
+				isMajor: false,
+				topLabel: { numerator: 22, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 4.6,
+				isMajor: false,
+				topLabel: { numerator: 23, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 4.8,
+				isMajor: false,
+				topLabel: { numerator: 24, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 5,
+				isMajor: true,
+				topLabel: { numerator: 25, denominator: 5 },
+				bottomLabel: "5"
+			},
+			{
+				value: 5.2,
+				isMajor: false,
+				topLabel: { numerator: 26, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 5.4,
+				isMajor: false,
+				topLabel: { numerator: 27, denominator: 5 },
+				bottomLabel: ""
+			},
+			{
+				value: 5.6,
+				isMajor: false,
+				topLabel: { numerator: 28, denominator: 5 },
+				bottomLabel: ""
 			}
 		],
-		"totalCells": 28,
-		"bracketLabel": ""
-	},
-	"ticks": [
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "0 fifths",
-			"bottomLabel": "0"
-		},
-		{
-			"value": 0.2,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.4,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.6,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.8,
-			"isMajor": false,
-			"topLabel": "4 fifths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": "1"
-		},
-		{
-			"value": 1.2,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.4,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.6,
-			"isMajor": false,
-			"topLabel": "8 fifths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1.8,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": "2"
-		},
-		{
-			"value": 2.2,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.4,
-			"isMajor": false,
-			"topLabel": "12 fifths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.6,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 2.8,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": "3"
-		},
-		{
-			"value": 3.2,
-			"isMajor": false,
-			"topLabel": "16 fifths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3.4,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3.6,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 3.8,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4,
-			"isMajor": true,
-			"topLabel": "20 fifths",
-			"bottomLabel": "4"
-		},
-		{
-			"value": 4.2,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4.4,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4.6,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 4.8,
-			"isMajor": false,
-			"topLabel": "24 fifths",
-			"bottomLabel": ""
-		},
-		{
-			"value": 5,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": "5"
-		},
-		{
-			"value": 5.2,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 5.4,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 5.6,
-			"isMajor": false,
-			"topLabel": "28 fifths",
-			"bottomLabel": ""
-		}
-	],
-	"width": 700,
-	"height": 220,
-	"segments": [
-		{
-			"end": 1,
-			"color": "#11accd",
-			"start": 0
-		},
-		{
-			"end": 2,
-			"color": "#e07d10",
-			"start": 1
-		},
-		{
-			"end": 3,
-			"color": "#11accd",
-			"start": 2
-		},
-		{
-			"end": 4,
-			"color": "#e07d10",
-			"start": 3
-		},
-		{
-			"end": 5,
-			"color": "#11accd",
-			"start": 4
-		}
-	],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		width: 700,
+		height: 220,
+		segments: [
+			{
+				end: 1,
+				color: "#11accd",
+				start: 0
+			},
+			{
+				end: 2,
+				color: "#e07d10",
+				start: 1
+			},
+			{
+				end: 3,
+				color: "#11accd",
+				start: 2
+			},
+			{
+				end: 4,
+				color: "#e07d10",
+				start: 3
+			},
+			{
+				end: 5,
+				color: "#11accd",
+				start: 4
+			}
+		],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -2651,7 +2637,6 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x801e7a13b9af1d75
 // Course: 6th grade math
@@ -2659,166 +2644,166 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Widget key: image_1
 test("fraction-number-line - Negative fractions on the number line", () => {
 	const input = {
-	"max": 1,
-	"min": -2,
-	"model": null,
-	"ticks": [
-		{
-			"value": -2,
-			"isMajor": true,
-			"topLabel": "-2",
-			"bottomLabel": ""
-		},
-		{
-			"value": -1.875,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -1.75,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -1.625,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -1.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -1.375,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -1.25,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -1.125,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -1,
-			"isMajor": true,
-			"topLabel": "-1",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.875,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.75,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.625,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.375,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.25,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.125,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "0",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.125,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.25,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.375,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.625,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.75,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.875,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": true,
-			"topLabel": "1",
-			"bottomLabel": ""
-		}
-	],
-	"width": 380,
-	"height": 80,
-	"segments": [],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		max: 1,
+		min: -2,
+		model: null,
+		ticks: [
+			{
+				value: -2,
+				isMajor: true,
+				topLabel: { numerator: -2, denominator: 1 },
+				bottomLabel: ""
+			},
+			{
+				value: -1.875,
+				isMajor: false,
+				topLabel: { numerator: -15, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: -1.75,
+				isMajor: false,
+				topLabel: { numerator: -7, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: -1.625,
+				isMajor: false,
+				topLabel: { numerator: -13, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: -1.5,
+				isMajor: false,
+				topLabel: { numerator: -3, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: -1.375,
+				isMajor: false,
+				topLabel: { numerator: -11, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: -1.25,
+				isMajor: false,
+				topLabel: { numerator: -5, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: -1.125,
+				isMajor: false,
+				topLabel: { numerator: -9, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: -1,
+				isMajor: true,
+				topLabel: { numerator: -1, denominator: 1 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.875,
+				isMajor: false,
+				topLabel: { numerator: -7, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.75,
+				isMajor: false,
+				topLabel: { numerator: -3, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.625,
+				isMajor: false,
+				topLabel: { numerator: -5, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.5,
+				isMajor: false,
+				topLabel: { numerator: -1, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.375,
+				isMajor: false,
+				topLabel: { numerator: -3, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.25,
+				isMajor: false,
+				topLabel: { numerator: -1, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.125,
+				isMajor: false,
+				topLabel: { numerator: -1, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 1 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.125,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.25,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.375,
+				isMajor: false,
+				topLabel: { numerator: 3, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.5,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.625,
+				isMajor: false,
+				topLabel: { numerator: 5, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.75,
+				isMajor: false,
+				topLabel: { numerator: 3, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.875,
+				isMajor: false,
+				topLabel: { numerator: 7, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 1,
+				isMajor: true,
+				topLabel: { numerator: 1, denominator: 1 },
+				bottomLabel: ""
+			}
+		],
+		width: 380,
+		height: 80,
+		segments: [],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -2831,7 +2816,6 @@ test("fraction-number-line - Negative fractions on the number line", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xadc5fbecb828bbf2
 // Course: 6th grade math
@@ -2839,130 +2823,130 @@ test("fraction-number-line - Negative fractions on the number line", () => {
 // Widget key: image_1
 test("fraction-number-line - Compare rational numbers", () => {
 	const input = {
-	"max": 1,
-	"min": -1,
-	"model": null,
-	"ticks": [
-		{
-			"value": -1,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.8888888889,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.7777777778,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.6666666667,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.5555555556,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.4444444444,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.3333333333,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.2222222222,
-			"isMajor": false,
-			"topLabel": "-2/9",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.1111111111,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.1111111111,
-			"isMajor": false,
-			"topLabel": "1/9",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.2222222222,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.3333333333,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.4444444444,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.5555555556,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.6666666667,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.7777777778,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.8888888889,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		}
-	],
-	"width": 460,
-	"height": 80,
-	"segments": [],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		max: 1,
+		min: -1,
+		model: null,
+		ticks: [
+			{
+				value: -1,
+				isMajor: true,
+				topLabel: { numerator: -1, denominator: 1 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.8888888889,
+				isMajor: false,
+				topLabel: { numerator: -8, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.7777777778,
+				isMajor: false,
+				topLabel: { numerator: -7, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.6666666667,
+				isMajor: false,
+				topLabel: { numerator: -2, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.5555555556,
+				isMajor: false,
+				topLabel: { numerator: -5, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.4444444444,
+				isMajor: false,
+				topLabel: { numerator: -4, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.3333333333,
+				isMajor: false,
+				topLabel: { numerator: -1, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.2222222222,
+				isMajor: false,
+				topLabel: { numerator: -2, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.1111111111,
+				isMajor: false,
+				topLabel: { numerator: -1, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 1 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.1111111111,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.2222222222,
+				isMajor: false,
+				topLabel: { numerator: 2, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.3333333333,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.4444444444,
+				isMajor: false,
+				topLabel: { numerator: 4, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.5555555556,
+				isMajor: false,
+				topLabel: { numerator: 5, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.6666666667,
+				isMajor: false,
+				topLabel: { numerator: 2, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.7777777778,
+				isMajor: false,
+				topLabel: { numerator: 7, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.8888888889,
+				isMajor: false,
+				topLabel: { numerator: 8, denominator: 9 },
+				bottomLabel: ""
+			},
+			{
+				value: 1,
+				isMajor: true,
+				topLabel: { numerator: 1, denominator: 1 },
+				bottomLabel: ""
+			}
+		],
+		width: 460,
+		height: 80,
+		segments: [],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -2975,7 +2959,6 @@ test("fraction-number-line - Compare rational numbers", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x61783134e6426546
 // Course: 6th grade math
@@ -2983,118 +2966,118 @@ test("fraction-number-line - Compare rational numbers", () => {
 // Widget key: image_1
 test("fraction-number-line - Compare rational numbers", () => {
 	const input = {
-	"max": 1,
-	"min": -1,
-	"model": null,
-	"ticks": [
-		{
-			"value": -1,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.875,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.75,
-			"isMajor": true,
-			"topLabel": "-3/4",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.625,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.5,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.375,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.25,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.125,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.125,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.25,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.375,
-			"isMajor": true,
-			"topLabel": "3/8",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.5,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.625,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.75,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.875,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		}
-	],
-	"width": 460,
-	"height": 80,
-	"segments": [],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		max: 1,
+		min: -1,
+		model: null,
+		ticks: [
+			{
+				value: -1,
+				isMajor: true,
+				topLabel: { numerator: -1, denominator: 1 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.875,
+				isMajor: true,
+				topLabel: { numerator: -7, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.75,
+				isMajor: true,
+				topLabel: { numerator: -3, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.625,
+				isMajor: true,
+				topLabel: { numerator: -5, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.5,
+				isMajor: true,
+				topLabel: { numerator: -1, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.375,
+				isMajor: true,
+				topLabel: { numerator: -3, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.25,
+				isMajor: true,
+				topLabel: { numerator: -1, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.125,
+				isMajor: true,
+				topLabel: { numerator: -1, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 1 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.125,
+				isMajor: true,
+				topLabel: { numerator: 1, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.25,
+				isMajor: true,
+				topLabel: { numerator: 1, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.375,
+				isMajor: true,
+				topLabel: { numerator: 3, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.5,
+				isMajor: true,
+				topLabel: { numerator: 1, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.625,
+				isMajor: true,
+				topLabel: { numerator: 5, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.75,
+				isMajor: true,
+				topLabel: { numerator: 3, denominator: 4 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.875,
+				isMajor: true,
+				topLabel: { numerator: 7, denominator: 8 },
+				bottomLabel: ""
+			},
+			{
+				value: 1,
+				isMajor: true,
+				topLabel: { numerator: 1, denominator: 1 },
+				bottomLabel: ""
+			}
+		],
+		width: 460,
+		height: 80,
+		segments: [],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -3107,7 +3090,6 @@ test("fraction-number-line - Compare rational numbers", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x96407c71318ac40a
 // Course: 6th grade math
@@ -3115,94 +3097,94 @@ test("fraction-number-line - Compare rational numbers", () => {
 // Widget key: image_1
 test("fraction-number-line - Compare rational numbers", () => {
 	const input = {
-	"max": 1,
-	"min": -1,
-	"model": null,
-	"ticks": [
-		{
-			"value": -1,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.8333333,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.6666667,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.3333333,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": -0.1666667,
-			"isMajor": false,
-			"topLabel": "-1/6",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.1666667,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.3333333,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.5,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.6666667,
-			"isMajor": false,
-			"topLabel": "",
-			"bottomLabel": ""
-		},
-		{
-			"value": 0.8333333,
-			"isMajor": false,
-			"topLabel": "5/6",
-			"bottomLabel": ""
-		},
-		{
-			"value": 1,
-			"isMajor": true,
-			"topLabel": "",
-			"bottomLabel": ""
-		}
-	],
-	"width": 460,
-	"height": 120,
-	"segments": [],
-	"type": "fractionNumberLine"
-} satisfies FractionNumberLineInput
+		max: 1,
+		min: -1,
+		model: null,
+		ticks: [
+			{
+				value: -1,
+				isMajor: true,
+				topLabel: { numerator: -1, denominator: 1 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.8333333,
+				isMajor: false,
+				topLabel: { numerator: -5, denominator: 6 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.6666667,
+				isMajor: false,
+				topLabel: { numerator: -2, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.5,
+				isMajor: false,
+				topLabel: { numerator: -1, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.3333333,
+				isMajor: false,
+				topLabel: { numerator: -1, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: -0.1666667,
+				isMajor: false,
+				topLabel: { numerator: -1, denominator: 6 },
+				bottomLabel: ""
+			},
+			{
+				value: 0,
+				isMajor: true,
+				topLabel: { numerator: 0, denominator: 1 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.1666667,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 6 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.3333333,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.5,
+				isMajor: false,
+				topLabel: { numerator: 1, denominator: 2 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.6666667,
+				isMajor: false,
+				topLabel: { numerator: 2, denominator: 3 },
+				bottomLabel: ""
+			},
+			{
+				value: 0.8333333,
+				isMajor: false,
+				topLabel: { numerator: 5, denominator: 6 },
+				bottomLabel: ""
+			},
+			{
+				value: 1,
+				isMajor: true,
+				topLabel: { numerator: 1, denominator: 1 },
+				bottomLabel: ""
+			}
+		],
+		width: 460,
+		height: 120,
+		segments: [],
+		type: "fractionNumberLine"
+	} satisfies FractionNumberLineInput
 
 	// Validate the input
 	const parseResult = FractionNumberLinePropsSchema.safeParse(input)
@@ -3215,4 +3197,3 @@ test("fraction-number-line - Compare rational numbers", () => {
 	const svg = generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
