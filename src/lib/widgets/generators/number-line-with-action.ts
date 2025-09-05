@@ -439,9 +439,9 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const actionEndY = toSvgY(currentValue + action.delta)
 			const midY = (actionStartY + actionEndY) / 2
 			const baseOffset = 30
-			const arrowSpacing = 25
+			const arrowSpacing = 40  // Increased from 25 to 40 for more space between arrows
 			const arrowX = xPos + baseOffset + (i * arrowSpacing)
-			const labelX = arrowX + 12
+			const labelX = arrowX + 18  // Reduced from 25 to 18 for better balance
 			
 			// For rotated text, width and height are swapped
 			const labelWidth = action.label.length * theme.font.size.small * 0.6  // becomes height when rotated
@@ -470,7 +470,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 
 			// Stack arrows horizontally with better spacing
 			const baseOffset = 30
-			const arrowSpacing = 25
+			const arrowSpacing = 40  // Increased from 25 to 40 for more space between arrows
 			const arrowX = xPos + baseOffset + (i * arrowSpacing)
 
 			// Draw completely vertical arrow
@@ -486,7 +486,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 
 			// Arrow label (rotated for vertical layout) with better spacing
 			if (action.label) {
-				const labelX = arrowX + 12
+				const labelX = arrowX + 18  // Reduced from 25 to 18 for better balance
 				canvas.drawText({
 					x: labelX,
 					y: midY,
