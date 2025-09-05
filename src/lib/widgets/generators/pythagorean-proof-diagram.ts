@@ -5,54 +5,38 @@ import { PADDING } from "@/lib/widgets/utils/constants"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
 
-function createSideSquareSchema() {
-	return z
-		.object({
-			area: z
-				.number()
-				.describe(
-					"The area of this square in square units (e.g., 9, 16, 25, 12.5). Will be displayed inside the square. For Pythagorean theorem: a² + b² = c²."
-				),
-			sideLabel: z
-				.string()
-				.nullable()
-				.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-				.describe(
-					"Label for the triangle side this square is attached to (e.g., 'a', 'b', 'c', '3', '4', null). Null means no side label. Typically lowercase letters."
-				),
-			color: z
-				.string()
-				.regex(
-					CSS_COLOR_PATTERN,
-					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
-				)
-				.describe(
-					"Hex-only color for this square (e.g., '#FFE082', '#1E90FF', '#FFC864CC' for ~80% alpha). Should contrast with text and background."
-				)
-		})
-		.strict()
-}
+ 
 
 // New side-centric square and side schemas
 function createSquarePropsSchema() {
-	return z
-		.object({
-			area: z
-				.union([z.number(), z.string()])
-				.describe(
-					"Area text rendered inside the square (e.g., 144, 25, 'x', 'c²'). Must be a number or string."
-				),
-			color: z
-				.string()
-				.regex(
-					CSS_COLOR_PATTERN,
-					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
-				)
-				.describe(
-					"Fill color for this square (e.g., '#A5D6A7', '#90CAF9', '#FFE082'). Should contrast with text and background."
-				)
-		})
-		.strict()
+	return z.discriminatedUnion("type", [
+		z
+			.object({
+				type: z.literal("unknown"),
+				color: z
+					.string()
+					.regex(
+						CSS_COLOR_PATTERN,
+						"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+					)
+			})
+			.strict(),
+		z
+			.object({
+				type: z.literal("value"),
+				area: z
+					.number()
+					.positive()
+					.describe("Numeric area rendered inside the square (e.g., 144, 25)."),
+				color: z
+					.string()
+					.regex(
+						CSS_COLOR_PATTERN,
+						"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+					)
+			})
+			.strict()
+	])
 }
 
 function createTriangleSidePropsSchema() {
@@ -73,17 +57,7 @@ function createTriangleSidePropsSchema() {
 		.strict()
 }
 
-// Back-compat schema (old square-centric shape)
-const OldPythagoreanPropsSchema = z
-	.object({
-		type: z.literal("pythagoreanProofDiagram"),
-		width: z.number().positive(),
-		height: z.number().positive(),
-		squareA: createSideSquareSchema(),
-		squareB: createSideSquareSchema(),
-		squareC: createSideSquareSchema()
-	})
-	.strict()
+ 
 
 // New side-centric schema
 const NewPythagoreanPropsSchema = z
@@ -131,13 +105,9 @@ export type PythagoreanProofDiagramProps = z.infer<typeof PythagoreanProofDiagra
 export const generatePythagoreanProofDiagram: WidgetGenerator<typeof PythagoreanProofDiagramPropsSchema> = (data) => {
 	const { width, height, sideA, sideB, sideC } = data
 
-	const aArea = sideA?.square?.area
-	const bArea = sideB?.square?.area
-	const cArea = sideC?.square?.area
-
-	const aAreaNum = typeof aArea === "number" && aArea > 0 ? (aArea as number) : undefined
-	const bAreaNum = typeof bArea === "number" && bArea > 0 ? (bArea as number) : undefined
-	const cAreaNum = typeof cArea === "number" && cArea > 0 ? (cArea as number) : undefined
+	const aAreaNum = sideA?.square?.type === "value" && sideA.square.area > 0 ? sideA.square.area : undefined
+	const bAreaNum = sideB?.square?.type === "value" && sideB.square.area > 0 ? sideB.square.area : undefined
+	const cAreaNum = sideC?.square?.type === "value" && sideC.square.area > 0 ? sideC.square.area : undefined
 
 	let aLen: number | undefined = aAreaNum !== undefined ? Math.sqrt(aAreaNum) : undefined
 	let bLen: number | undefined = bAreaNum !== undefined ? Math.sqrt(bAreaNum) : undefined
@@ -193,10 +163,6 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 		fontPxDefault: 12,
 		lineHeightDefault: 1.2
 	})
-
-	const formatArea = (value: string | number): string => {
-		return typeof value === "number" ? String(Math.round(value)) : String(value)
-	}
 
 	// Convert simple caret exponents to unicode superscripts (e.g., b^2 => b², x^{10} => x¹⁰)
 	const toSuperscript = (input: string): string => {
@@ -256,13 +222,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 		// (No grid lines)
 
 		const centerC = { x: (v_a_end.x + v_c1.x) / 2, y: (v_a_end.y + v_c1.y) / 2 }
-		const displayCArea: string | number =
-			typeof sideC.square.area === "string"
-				? sideC.square.area
-				: typeof sideC.square.area === "number" && sideC.square.area > 0
-					? sideC.square.area
-					: c * c
-		const cText = toSuperscript(formatArea(displayCArea))
+		const cText = sideC.square.type === "unknown" ? "?" : toSuperscript(String(Math.round(sideC.square.area)))
 		canvas.drawText({
 			x: centerC.x,
 			y: centerC.y,
@@ -288,13 +248,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 		// (No grid lines)
 
 		const centerB = { x: v_right.x + sb / 2, y: v_b_end.y + sb / 2 }
-		const displayBArea: string | number =
-			typeof sideB.square.area === "string"
-				? sideB.square.area
-				: typeof sideB.square.area === "number" && sideB.square.area > 0
-					? sideB.square.area
-					: b * b
-		const bText = toSuperscript(formatArea(displayBArea))
+		const bText = sideB.square.type === "unknown" ? "?" : toSuperscript(String(Math.round(sideB.square.area)))
 		canvas.drawText({
 			x: centerB.x,
 			y: centerB.y,
@@ -320,13 +274,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 		// (No grid lines)
 
 		const centerA = { x: v_a_end.x + sa / 2, y: v_a_end.y + sa / 2 }
-		const displayAArea: string | number =
-			typeof sideA.square.area === "string"
-				? sideA.square.area
-				: typeof sideA.square.area === "number" && sideA.square.area > 0
-					? sideA.square.area
-					: a * a
-		const aText = toSuperscript(formatArea(displayAArea))
+		const aText = sideA.square.type === "unknown" ? "?" : toSuperscript(String(Math.round(sideA.square.area)))
 		canvas.drawText({
 			x: centerA.x,
 			y: centerA.y,
