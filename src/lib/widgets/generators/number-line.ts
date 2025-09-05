@@ -140,8 +140,10 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 		const specialLabelsMap = new Map(specialTickLabels.map((stl) => [stl.value, stl.label]))
 		const tickPositions = values.map(toSvgX)
 		
-		// Smart label selection to prevent overlaps
-		const selectedLabels = selectAxisLabels({
+		// If specialTickLabels is provided, use it as the authoritative labeling scheme
+		// Otherwise use smart label selection to prevent overlaps
+		const useSpecialLabelsOnly = specialTickLabels.length > 0
+		const selectedLabels = useSpecialLabelsOnly ? new Set<number>() : selectAxisLabels({
 			labels: tickLabels,
 			positions: tickPositions,
 			axisLengthPx: lineLength,
@@ -159,10 +161,16 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 			})
 
 			const specialLabel = specialLabelsMap.get(t)
-			if (specialLabel && specialLabel !== "") {
-				canvas.drawText({ x, y: yPos + 20, text: specialLabel, anchor: "middle", fill: theme.colors.axis, fontWeight: theme.font.weight.bold })
-			} else if (selectedLabels.has(i)) {
-				canvas.drawText({ x, y: yPos + 20, text: tickLabels[i]!, anchor: "middle", fill: theme.colors.axis, fontPx: theme.font.size.small })
+			if (useSpecialLabelsOnly) {
+				// Only show labels explicitly defined in specialTickLabels
+				if (specialLabel && specialLabel !== "") {
+					canvas.drawText({ x, y: yPos + 20, text: specialLabel, anchor: "middle", fill: theme.colors.axis, fontWeight: theme.font.weight.bold })
+				}
+			} else {
+				// Use default labeling with smart selection
+				if (selectedLabels.has(i)) {
+					canvas.drawText({ x, y: yPos + 20, text: tickLabels[i]!, anchor: "middle", fill: theme.colors.axis, fontPx: theme.font.size.small })
+				}
 			}
 		})
 		for (const p of points) {
@@ -221,8 +229,10 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 		const specialLabelsMap = new Map(specialTickLabels.map((stl) => [stl.value, stl.label]))
 		const tickPositions = values.map(toSvgY)
 		
-		// Smart label selection to prevent overlaps
-		const selectedLabels = selectAxisLabels({
+		// If specialTickLabels is provided, use it as the authoritative labeling scheme
+		// Otherwise use smart label selection to prevent overlaps
+		const useSpecialLabelsOnly = specialTickLabels.length > 0
+		const selectedLabels = useSpecialLabelsOnly ? new Set<number>() : selectAxisLabels({
 			labels: tickLabels,
 			positions: tickPositions,
 			axisLengthPx: lineLength,
@@ -241,10 +251,16 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 
 			const specialLabel = specialLabelsMap.get(t)
 			const labelX = xPos - 10
-			if (specialLabel && specialLabel !== "") {
-				canvas.drawText({ x: labelX, y: y + 4, text: specialLabel, anchor: "end", fill: theme.colors.axis, fontWeight: theme.font.weight.bold })
-			} else if (selectedLabels.has(i)) {
-				canvas.drawText({ x: labelX, y: y + 4, text: tickLabels[i]!, anchor: "end", fill: theme.colors.axis, fontPx: theme.font.size.small })
+			if (useSpecialLabelsOnly) {
+				// Only show labels explicitly defined in specialTickLabels
+				if (specialLabel && specialLabel !== "") {
+					canvas.drawText({ x: labelX, y: y + 4, text: specialLabel, anchor: "end", fill: theme.colors.axis, fontWeight: theme.font.weight.bold })
+				}
+			} else {
+				// Use default labeling with smart selection
+				if (selectedLabels.has(i)) {
+					canvas.drawText({ x: labelX, y: y + 4, text: tickLabels[i]!, anchor: "end", fill: theme.colors.axis, fontPx: theme.font.size.small })
+				}
 			}
 		})
 		for (const p of points) {
