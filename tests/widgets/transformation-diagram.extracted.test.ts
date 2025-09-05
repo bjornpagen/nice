@@ -69,14 +69,6 @@ test("transformation-diagram - Determine rotations basic", () => {
 			"y": 150
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 150,
-			"y": 150,
-			"label": "Q",
-			"style": "dot"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -135,14 +127,6 @@ test("transformation-diagram - Determine rotations basic", () => {
 			"y": 100
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 150,
-			"y": 100,
-			"label": "B",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -206,14 +190,6 @@ test("transformation-diagram - Determine rotations basic", () => {
 			"y": 137.5
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 150,
-			"y": 137.5,
-			"label": "Q",
-			"style": "dot"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -300,7 +276,6 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 			"y": -116.666
 		}
 	},
-	"additionalPoints": [],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -398,14 +373,6 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 			"y": 87.5
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 58.333,
-			"y": 87.5,
-			"label": "R",
-			"style": "dot"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -508,7 +475,6 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 			"y": 159.091
 		}
 	},
-	"additionalPoints": [],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -587,7 +553,6 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 			"style": "solid"
 		}
 	},
-	"additionalPoints": [],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -651,14 +616,6 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 			"y": 200
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 25,
-			"y": 200,
-			"label": "Q",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -732,7 +689,6 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 			"y": -31.818
 		}
 	},
-	"additionalPoints": [],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -814,7 +770,6 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 			"style": "solid"
 		}
 	},
-	"additionalPoints": [],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -901,7 +856,6 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 			"y": -30
 		}
 	},
-	"additionalPoints": [],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -993,14 +947,6 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 			"style": "solid"
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 169.697,
-			"y": 127.273,
-			"label": "m",
-			"style": "dot"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -1053,21 +999,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": true,
 		"scaleFactor": 0.75,
 		"centerOfDilation": {
 			"x": 119,
 			"y": 85
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 119,
-			"y": 85,
-			"label": "P",
-			"style": "dot"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -1120,21 +1057,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": true,
 		"scaleFactor": 1.5,
 		"centerOfDilation": {
 			"x": 119,
 			"y": 85
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 119,
-			"y": 85,
-			"label": "P",
-			"style": "dot"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -1187,21 +1115,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": true,
 		"scaleFactor": 1.5,
 		"centerOfDilation": {
 			"x": 68,
 			"y": 85
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 119,
-			"y": 85,
-			"label": "P",
-			"style": "dot"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -1254,21 +1173,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": true,
 		"scaleFactor": 0.75,
 		"centerOfDilation": {
 			"x": 68,
 			"y": 85
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 119,
-			"y": 85,
-			"label": "P",
-			"style": "dot"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -1321,21 +1231,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": true,
 		"scaleFactor": 0.6666666667,
 		"centerOfDilation": {
 			"x": 1,
 			"y": -4
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 1,
-			"y": -4,
-			"label": "P",
-			"style": "dot"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -1388,21 +1289,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": true,
 		"scaleFactor": 0.3333333333,
 		"centerOfDilation": {
 			"x": 1,
 			"y": -4
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 1,
-			"y": -4,
-			"label": "P",
-			"style": "dot"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -1455,21 +1347,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": true,
 		"scaleFactor": 0.3333333333,
 		"centerOfDilation": {
 			"x": 0,
 			"y": 0
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 1,
-			"y": -4,
-			"label": "P",
-			"style": "dot"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -1522,21 +1405,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": false,
 		"scaleFactor": 0.6666666667,
 		"centerOfDilation": {
 			"x": 102,
 			"y": 102
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 102,
-			"y": 102,
-			"label": "P",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -1589,21 +1463,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": false,
 		"scaleFactor": 1.3333333333,
 		"centerOfDilation": {
 			"x": 102,
 			"y": 102
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 102,
-			"y": 102,
-			"label": "P",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -1656,21 +1521,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": false,
 		"scaleFactor": 1.3333333333,
 		"centerOfDilation": {
 			"x": 136,
 			"y": 102
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 102,
-			"y": 102,
-			"label": "P",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -1723,21 +1579,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": false,
 		"scaleFactor": 0.6666666667,
 		"centerOfDilation": {
 			"x": 136,
 			"y": 102
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 102,
-			"y": 102,
-			"label": "P",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -1790,21 +1637,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": true,
 		"scaleFactor": 0.75,
 		"centerOfDilation": {
 			"x": 145.714,
 			"y": 80.952
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 145.714,
-			"y": 80.952,
-			"label": "P",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -1857,21 +1695,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": true,
 		"scaleFactor": 0.25,
 		"centerOfDilation": {
 			"x": 145.714,
 			"y": 80.952
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 145.714,
-			"y": 80.952,
-			"label": "P",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -1924,21 +1753,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": true,
 		"scaleFactor": 0.25,
 		"centerOfDilation": {
 			"x": 145.714,
 			"y": 48.571
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 145.714,
-			"y": 80.952,
-			"label": "P",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -1991,21 +1811,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": true,
 		"scaleFactor": 0.75,
 		"centerOfDilation": {
 			"x": 145.714,
 			"y": 48.571
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 145.714,
-			"y": 80.952,
-			"label": "P",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -2058,21 +1869,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": true,
 		"scaleFactor": 0.4,
 		"centerOfDilation": {
 			"x": 119,
 			"y": 34
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 119,
-			"y": 34,
-			"label": "A",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -2125,21 +1927,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": true,
 		"scaleFactor": 0.75,
 		"centerOfDilation": {
 			"x": 119,
 			"y": 34
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 119,
-			"y": 34,
-			"label": "A",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -2192,27 +1985,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": true,
 		"scaleFactor": 0.75,
 		"centerOfDilation": {
 			"x": 85,
 			"y": 85
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 119,
-			"y": 34,
-			"label": "A",
-			"style": "dot"
-		},
-		{
-			"x": 85,
-			"y": 85,
-			"label": "Center",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -2265,27 +2043,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": true,
 		"scaleFactor": 0.4,
 		"centerOfDilation": {
 			"x": 85,
 			"y": 85
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 119,
-			"y": 34,
-			"label": "A",
-			"style": "dot"
-		},
-		{
-			"x": 85,
-			"y": 85,
-			"label": "Center",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -2338,21 +2101,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": false,
 		"scaleFactor": 0.7,
 		"centerOfDilation": {
 			"x": 85,
 			"y": 85
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 85,
-			"y": 85,
-			"label": "P",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -2405,21 +2159,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": false,
 		"scaleFactor": 0.3333333333,
 		"centerOfDilation": {
 			"x": 85,
 			"y": 85
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 85,
-			"y": 85,
-			"label": "P",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -2472,21 +2217,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": false,
 		"scaleFactor": 0.3333333333,
 		"centerOfDilation": {
 			"x": 34,
 			"y": 68
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 85,
-			"y": 85,
-			"label": "P",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -2539,21 +2275,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": false,
 		"scaleFactor": 0.7,
 		"centerOfDilation": {
 			"x": 34,
 			"y": 68
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 85,
-			"y": 85,
-			"label": "P",
-			"style": "circle"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -2606,21 +2333,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": false,
 		"scaleFactor": 0.33,
 		"centerOfDilation": {
 			"x": 136,
 			"y": 136
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 136,
-			"y": 136,
-			"label": "P",
-			"style": "dot"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -2673,21 +2391,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": false,
 		"scaleFactor": 0.6666666667,
 		"centerOfDilation": {
 			"x": 136,
 			"y": 136
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 136,
-			"y": 136,
-			"label": "P",
-			"style": "dot"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -2740,21 +2449,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": false,
 		"scaleFactor": 0.6666666667,
 		"centerOfDilation": {
 			"x": 102,
 			"y": 34
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 136,
-			"y": 136,
-			"label": "P",
-			"style": "dot"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 
@@ -2807,21 +2507,12 @@ test("transformation-diagram - Dilate triangles", () => {
 	},
 	"transformation": {
 		"type": "dilation",
-		"showRays": false,
 		"scaleFactor": 0.4,
 		"centerOfDilation": {
 			"x": 102,
 			"y": 34
 		}
 	},
-	"additionalPoints": [
-		{
-			"x": 136,
-			"y": 136,
-			"label": "P",
-			"style": "dot"
-		}
-	],
 	"type": "transformationDiagram"
 } satisfies TransformationDiagramInput
 

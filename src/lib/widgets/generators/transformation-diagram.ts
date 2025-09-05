@@ -124,10 +124,7 @@ function createTransformationSchema() {
 			.object({
 				type: z.literal("dilation"),
 				centerOfDilation: createPoint().describe("Fixed point from which scaling occurs."),
-				scaleFactor: z.number().describe("Scaling factor for dilation. Values > 1 enlarge, 0 < values < 1 shrink."),
-				showRays: z
-					.boolean()
-					.describe("Whether to draw rays from center through corresponding vertices. Shows scaling direction.")
+				scaleFactor: z.number().describe("Scaling factor for dilation. Values > 1 enlarge, 0 < values < 1 shrink.")
 			})
 			.strict()
 	])
@@ -185,28 +182,6 @@ export const TransformationDiagramPropsSchema = z
 		transformation: createTransformationSchema().describe(
 			"Details of how preImage transforms to image. Include visual aids like vectors, reflection lines, or rotation centers."
 		),
-		additionalPoints: z
-			.array(
-				z
-					.object({
-						x: z.number(),
-						y: z.number(),
-						label: z
-							.string()
-							.nullable()
-							.transform((val) =>
-								val === null || val.trim() === "" || val.trim().toLowerCase() === "null" ? null : val.trim()
-							)
-							.describe("Point label (e.g., 'O', 'Center', 'C', null). Positioned near the point."),
-						style: z
-							.enum(["dot", "circle"])
-							.describe("Visual style. 'dot' for filled point, 'circle' for hollow point.")
-					})
-					.strict()
-			)
-			.describe(
-				"Extra labeled points (e.g., rotation center, reference points). Empty array means no additional points."
-			)
 	})
 	.strict()
 	.describe(
@@ -219,7 +194,7 @@ export type TransformationDiagramProps = z.infer<typeof TransformationDiagramPro
  * Generates an SVG diagram illustrating a geometric transformation.
  */
 export const generateTransformationDiagram: WidgetGenerator<typeof TransformationDiagramPropsSchema> = (props) => {
-	const { width, height, preImage, transformation, additionalPoints } = props
+	const { width, height, preImage, transformation } = props
 
 	const canvas = new CanvasImpl({
 		chartArea: { left: 0, top: 0, width, height },
@@ -304,16 +279,10 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	if (transformation.type === "rotation") centerPoint = transformation.centerOfRotation
 	if (transformation.type === "dilation") centerPoint = transformation.centerOfDilation
 
-	let centerPointInfo: (typeof additionalPoints)[0] | undefined
-	const otherPoints = additionalPoints.filter((p) => {
-		if (centerPoint && p.x === centerPoint.x && p.y === centerPoint.y) {
-			centerPointInfo = p
-			return false
-		}
-		return true
-	})
+	let centerPointInfo: { x: number; y: number; label: string | null; style: string } | undefined
+	const otherPoints: Array<{ x: number; y: number; label: string | null; style: string }> = []
 
-	const allPoints = [...preImage.vertices, ...image.vertices, ...otherPoints]
+	const allPoints = [...preImage.vertices, ...image.vertices]
 	if (centerPoint) allPoints.push(centerPoint)
 	if (transformation.type === "reflection") allPoints.push(transformation.lineOfReflection.from, transformation.lineOfReflection.to)
 
@@ -389,12 +358,17 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		canvas.drawPath(arcPath, { stroke: theme.colors.actionSecondary, strokeWidth: theme.stroke.width.thick, fill: "none" })
 	}
 
-	const drawVertexLabels = (shape: TransformationDiagramProps["preImage"]) => {
-		const labelOffset = 16
+	const drawVertexLabels = (
+		shape: TransformationDiagramProps["preImage"],
+		extraOffset: number | Array<number> = 0
+	) => {
 		for (let i = 0; i < shape.vertices.length; i++) {
 			const vertex = shape.vertices[i]
 			const label = shape.vertexLabels[i]
 			if (!vertex || !label) continue
+
+			const perVertexExtraOffset = Array.isArray(extraOffset) ? extraOffset[i] ?? 0 : extraOffset
+			const labelOffset = 16 + perVertexExtraOffset
 
 			const prevVertex = shape.vertices[(i - 1 + shape.vertices.length) % shape.vertices.length]
 			const nextVertex = shape.vertices[(i + 1) % shape.vertices.length]
@@ -594,30 +568,41 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		drawLine(transformation.lineOfReflection)
 	}
 
-	if (transformation.type === "dilation" && transformation.showRays) {
-		const center = transformation.centerOfDilation
-		for (let i = 0; i < preImage.vertices.length; i++) {
-			const preVertex = preImage.vertices[i]
-			if (!preVertex) continue
-			const rayLength = Math.hypot(preVertex.x - center.x, preVertex.y - center.y)
-			if (rayLength < 1e-9) continue
-			const maxDim = Math.max(dataWidth, dataHeight, 1)
-			const extendedPoint = {
-				x: center.x + ((preVertex.x - center.x) / rayLength) * maxDim * 2,
-				y: center.y + ((preVertex.y - center.y) / rayLength) * maxDim * 2
-			}
-			drawLine({ from: center, to: extendedPoint, style: "solid", color: theme.colors.gridMinor })
-		}
-	}
-
 	drawPolygon(preImage, false)
 	drawPolygon(image, true)
 
 	preImage.angleMarks.forEach((mark) => drawAngleMark(preImage.vertices, mark, preImage.strokeColor))
 	image.angleMarks.forEach((mark) => drawAngleMark(image.vertices, mark, image.strokeColor))
 
+	// When dilation scale is very close to 1, pre-image and image labels can overlap.
+	// Nudge the image labels outward with a small additional offset to avoid overlap.
+	let imageLabelExtraOffset: number | Array<number> = 0
+	if (transformation.type === "dilation") {
+		const s = transformation.scaleFactor
+		const defaultNudge = Math.abs(s - 1) < 0.05 ? 14 : 0
+		const perVertex: Array<number> = new Array(image.vertices.length).fill(defaultNudge)
+		const count = Math.min(preImage.vertices.length, image.vertices.length)
+		for (let i = 0; i < count; i++) {
+			const p = preImage.vertices[i]
+			const q = image.vertices[i]
+			if (!p || !q) continue
+			const dx = p.x - q.x
+			const dy = p.y - q.y
+			const d = Math.hypot(dx, dy)
+			if (d < 1e-9) {
+				const val = perVertex[i]
+				let currentOffset: number
+				if (val === undefined) currentOffset = defaultNudge
+				else currentOffset = val
+				if (currentOffset < 16) currentOffset = 16
+				perVertex[i] = currentOffset
+			}
+		}
+		imageLabelExtraOffset = perVertex
+	}
+
 	drawVertexLabels(preImage)
-	drawVertexLabels(image)
+	drawVertexLabels(image, imageLabelExtraOffset)
 	drawSideLengths(preImage)
 
 	if (centerPoint) {
@@ -648,7 +633,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			break
 	}
 
-	otherPoints.forEach(drawPoint)
+	// no-op: general markers removed
 
 	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
 	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">${svgBody}</svg>`
