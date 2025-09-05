@@ -203,6 +203,35 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 
 	if (vertices.length === 0) return `<svg width="${width}" height="${height}" />`
 
+	// Fit-to-canvas projection in data space (uniform scale + centering)
+	type Point = { x: number; y: number }
+	const allPoints: Point[] = []
+	for (const v of vertices) {
+		allPoints.push({ x: v.x, y: v.y })
+	}
+	for (const l of regionLabels) {
+		allPoints.push({ x: l.position.x, y: l.position.y })
+	}
+
+	function computeFit(points: Point[]) {
+		if (points.length === 0) {
+			return { scale: 1, offsetX: 0, offsetY: 0, project: (p: Point) => p }
+		}
+		const minX = Math.min(...points.map((p) => p.x))
+		const maxX = Math.max(...points.map((p) => p.x))
+		const minY = Math.min(...points.map((p) => p.y))
+		const maxY = Math.max(...points.map((p) => p.y))
+		const rawW = maxX - minX
+		const rawH = maxY - minY
+		const scale = Math.min((width - 2 * PADDING) / (rawW || 1), (height - 2 * PADDING) / (rawH || 1))
+		const offsetX = (width - scale * rawW) / 2 - scale * minX
+		const offsetY = (height - scale * rawH) / 2 - scale * minY
+		const project = (p: Point) => ({ x: offsetX + scale * p.x, y: offsetY + scale * p.y })
+		return { scale, offsetX, offsetY, project }
+	}
+
+	const { scale, project } = computeFit(allPoints)
+
 	// Validation: Check that outerBoundaryLabels length matches outerBoundary length
 	if (outerBoundaryLabels.length !== outerBoundary.length) {
 		logger.error("outerBoundaryLabels length mismatch", {
@@ -236,13 +265,13 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 	for (const region of shadedRegions) {
 		// Validate that all vertex indices are within bounds
 		const validIndices = region.vertexIndices.filter((i) => i >= 0 && i < vertices.length)
-		if (validIndices.length < 3) continue // Skip regions with insufficient valid vertices
+		if (validIndices.length < 3) continue
 
 		const regionPoints = validIndices
 			.map((i) => {
 				const vertex = vertices[i]
 				if (!vertex) return null
-				return { x: vertex.x, y: vertex.y }
+				return project({ x: vertex.x, y: vertex.y })
 			})
 			.filter((p): p is { x: number; y: number } => p !== null)
 
@@ -259,7 +288,7 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		.map((i) => {
 			const vertex = vertices[i]
 			if (!vertex) return null
-			return { x: vertex.x, y: vertex.y }
+			return project({ x: vertex.x, y: vertex.y })
 		})
 		.filter((p): p is { x: number; y: number } => p !== null)
 
@@ -283,47 +312,40 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		const to = vertices[toIndex]
 		if (!from || !to) continue
 
-		// Calculate midpoint of the edge
+		// Midpoint in data space
 		const midX = (from.x + to.x) / 2
 		const midY = (from.y + to.y) / 2
 
-		// Calculate edge direction and perpendicular
+		// Edge direction and perpendicular in data space
 		const dx = to.x - from.x
 		const dy = to.y - from.y
 		const edgeLength = Math.sqrt(dx * dx + dy * dy)
-
-		// Normalize edge vector
+		if (edgeLength === 0) continue
 		const edgeNormX = dx / edgeLength
 		const edgeNormY = dy / edgeLength
-
-		// Calculate perpendicular vector (rotated 90 degrees counterclockwise)
 		let perpX = -edgeNormY
 		let perpY = edgeNormX
 
-		// Determine if we need to flip the perpendicular to point outward
-		// Calculate the center of the shape
+		// Determine outward direction via center of all vertices (data space)
 		const centerX = vertices.reduce((sum, v) => sum + v.x, 0) / vertices.length
 		const centerY = vertices.reduce((sum, v) => sum + v.y, 0) / vertices.length
-
-		// Test if perpendicular points away from center
 		const testX = midX + perpX * 10
 		const testY = midY + perpY * 10
 		const distToCenterFromTest = Math.sqrt((testX - centerX) ** 2 + (testY - centerY) ** 2)
 		const distToCenterFromMid = Math.sqrt((midX - centerX) ** 2 + (midY - centerY) ** 2)
-
-		// If test point is closer to center, flip the perpendicular
 		if (distToCenterFromTest < distToCenterFromMid) {
 			perpX = -perpX
 			perpY = -perpY
 		}
 
-		// Position the label
-		const labelX = midX + perpX * label.offset
-		const labelY = midY + perpY * label.offset
+		// Convert offset (px) to data-space units
+		const offsetData = label.offset / scale
+		const labelData = { x: midX + perpX * offsetData, y: midY + perpY * offsetData }
+		const labelPx = project(labelData)
 
 		canvas.drawText({
-			x: labelX,
-			y: labelY,
+			x: labelPx.x,
+			y: labelPx.y,
 			text: label.text,
 			fill: theme.colors.text,
 			anchor: "middle",
@@ -338,8 +360,10 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		const from = vertices[s.fromVertexIndex]
 		const to = vertices[s.toVertexIndex]
 		if (!from || !to) continue
+		const p1 = project({ x: from.x, y: from.y })
+		const p2 = project({ x: to.x, y: to.y })
 		const dash = s.style === "dashed" ? "4 2" : undefined
-		canvas.drawLine(from.x, from.y, to.x, to.y, {
+		canvas.drawLine(p1.x, p1.y, p2.x, p2.y, {
 			stroke: theme.colors.black,
 			strokeWidth: theme.stroke.width.base,
 			dash: dash
@@ -347,13 +371,14 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		if (s.label !== null) {
 			const midX = (from.x + to.x) / 2
 			const midY = (from.y + to.y) / 2
-			// Add a small offset perpendicular to the line for better label placement
 			const angle = Math.atan2(to.y - from.y, to.x - from.x)
-			const offsetX = -Math.sin(angle) * 5
-			const offsetY = Math.cos(angle) * 5
+			const offsetMagData = 5 / scale
+			const offsetX = -Math.sin(angle) * offsetMagData
+			const offsetY = Math.cos(angle) * offsetMagData
+			const labelPx = project({ x: midX + offsetX, y: midY + offsetY })
 			canvas.drawText({
-				x: midX + offsetX,
-				y: midY + offsetY,
+				x: labelPx.x,
+				y: labelPx.y,
 				text: s.label,
 				fill: theme.colors.text,
 				anchor: "middle",
@@ -368,9 +393,10 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 
 	// Region labels
 	for (const l of regionLabels) {
+		const pos = project({ x: l.position.x, y: l.position.y })
 		canvas.drawText({
-			x: l.position.x,
-			y: l.position.y,
+			x: pos.x,
+			y: pos.y,
 			text: l.text,
 			fill: theme.colors.text,
 			anchor: "middle",
@@ -387,28 +413,34 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		const adj2 = vertices[m.adjacentVertex2Index]
 		if (!corner || !adj1 || !adj2) continue
 
-		// Create unit vectors from corner to adjacent points
+		// Create unit vectors from corner to adjacent points in data space
 		const v1x = adj1.x - corner.x
 		const v1y = adj1.y - corner.y
 		const mag1 = Math.sqrt(v1x * v1x + v1y * v1y)
+		if (mag1 === 0) continue
 		const u1x = v1x / mag1
 		const u1y = v1y / mag1
 
 		const v2x = adj2.x - corner.x
 		const v2y = adj2.y - corner.y
 		const mag2 = Math.sqrt(v2x * v2x + v2y * v2y)
+		if (mag2 === 0) continue
 		const u2x = v2x / mag2
 		const u2y = v2y / mag2
 
-		const markerSize = 10 // Fixed size instead of relative
-		const p1x = corner.x + u1x * markerSize
-		const p1y = corner.y + u1y * markerSize
-		const p2x = corner.x + u2x * markerSize
-		const p2y = corner.y + u2y * markerSize
-		const p3x = corner.x + (u1x + u2x) * markerSize
-		const p3y = corner.y + (u1y + u2y) * markerSize
+		const markerSizePx = 10
+		const markerSizeData = markerSizePx / scale
+		const p1x = corner.x + u1x * markerSizeData
+		const p1y = corner.y + u1y * markerSizeData
+		const p2x = corner.x + u2x * markerSizeData
+		const p2y = corner.y + u2y * markerSizeData
+		const p3x = corner.x + (u1x + u2x) * markerSizeData
+		const p3y = corner.y + (u1y + u2y) * markerSizeData
 
-		const markerPath = new Path2D().moveTo(p1x, p1y).lineTo(p3x, p3y).lineTo(p2x, p2y)
+		const q1 = project({ x: p1x, y: p1y })
+		const q2 = project({ x: p3x, y: p3y })
+		const q3 = project({ x: p2x, y: p2y })
+		const markerPath = new Path2D().moveTo(q1.x, q1.y).lineTo(q2.x, q2.y).lineTo(q3.x, q3.y)
 		canvas.drawPath(markerPath, {
 			fill: "none",
 			stroke: theme.colors.black,
