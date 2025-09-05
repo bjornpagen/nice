@@ -123,8 +123,8 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 		cLen = Math.sqrt(aAreaNum + bAreaNum)
 	}
 
-	// Provide visual defaults if we cannot derive both legs
-	const defaultLen = Math.min(width, height) * 0.25
+	// Provide visual defaults in data space if we cannot derive both legs
+	const defaultLen = 10
 	const resolvedA = aLen ?? defaultLen
 	const resolvedB = bLen ?? defaultLen
 	const resolvedC = cLen ?? Math.sqrt(resolvedA * resolvedA + resolvedB * resolvedB)
@@ -132,31 +132,51 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	const b = resolvedB
 	const c = resolvedC
 
-	// Calculate the exact bounds needed for the entire diagram
-	// The width needs: triangle width (a) + square B width (b) = a + b
-	// The height needs: triangle height (b) + square A height (a) = a + b
-	// Plus the hypotenuse square extends diagonally, adding c to both dimensions
+	// Work entirely in data space, then project to pixels to maximize usage of the viewport
 	const includeHypSquare = Boolean(sideC?.square)
-	const requiredWidth = a + b + (includeHypSquare ? c : 0)
-	const requiredHeight = a + b + (includeHypSquare ? c : 0)
-	const maxDim = Math.max(requiredWidth, requiredHeight)
-	const scale = (Math.min(width, height) * 0.9) / maxDim // 0.9 for padding
+	const v_right = { x: a, y: b }
+	const v_a_end = { x: 0, y: b }
+	const v_b_end = { x: a, y: 0 }
 
-	const sa = a * scale
-	const sb = b * scale
-	const sc = c * scale
+	type Point = { x: number; y: number }
+	const allPoints: Point[] = []
+	const addRectPoints = (x: number, y: number, side: number) => {
+		allPoints.push({ x, y })
+		allPoints.push({ x: x + side, y: y + side })
+	}
+	const addPolyPoints = (pts: Point[]) => {
+		for (const p of pts) allPoints.push(p)
+	}
 
-	// Center the entire diagram
-	const totalWidth = (a + b + (includeHypSquare ? c : 0)) * scale
-	const totalHeight = (a + b + (includeHypSquare ? c : 0)) * scale
-	const offsetX = (width - totalWidth) / 2 + (includeHypSquare ? sc : 0)
-	const offsetY = (height - totalHeight) / 2 + (includeHypSquare ? sc : 0)
+	if (includeHypSquare) {
+		const hypVec = { x: v_b_end.x - v_a_end.x, y: v_b_end.y - v_a_end.y }
+		const perpVec = { x: hypVec.y, y: -hypVec.x }
+		const v_c1 = { x: v_b_end.x + perpVec.x, y: v_b_end.y + perpVec.y }
+		const v_c2 = { x: v_a_end.x + perpVec.x, y: v_a_end.y + perpVec.y }
+		addPolyPoints([v_a_end, v_b_end, v_c1, v_c2])
+	}
+	if (sideB?.square) addRectPoints(v_right.x, v_b_end.y, b)
+	if (sideA?.square) addRectPoints(v_a_end.x, v_a_end.y, a)
+	addPolyPoints([v_a_end, v_right, v_b_end])
 
-	// To make the diagram match the visual test case, we swap 'a' and 'b' sides
-	// The triangle is now oriented with side 'a' horizontal and 'b' vertical.
-	const v_right = { x: offsetX + sa, y: offsetY + sb } // Right-angle vertex
-	const v_a_end = { x: offsetX, y: offsetY + sb } // End of horizontal leg 'a'
-	const v_b_end = { x: offsetX + sa, y: offsetY } // End of vertical leg 'b'
+	function computeFit(points: Point[]) {
+		if (points.length === 0) {
+			return { scale: 1, offsetX: 0, offsetY: 0, project: (p: Point) => p }
+		}
+		const minX = Math.min(...points.map((p) => p.x))
+		const maxX = Math.max(...points.map((p) => p.x))
+		const minY = Math.min(...points.map((p) => p.y))
+		const maxY = Math.max(...points.map((p) => p.y))
+		const rawW = maxX - minX
+		const rawH = maxY - minY
+		const scale = Math.min((width - 2 * PADDING) / (rawW || 1), (height - 2 * PADDING) / (rawH || 1))
+		const offsetX = (width - scale * rawW) / 2 - scale * minX
+		const offsetY = (height - scale * rawH) / 2 - scale * minY
+		const project = (p: Point) => ({ x: offsetX + scale * p.x, y: offsetY + scale * p.y })
+		return { scale, offsetX, offsetY, project }
+	}
+
+	const { scale, project } = computeFit(allPoints)
 
 	const canvas = new CanvasImpl({
 		chartArea: { left: 0, top: 0, width, height },
@@ -208,10 +228,10 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 		const v_c2 = { x: v_a_end.x + perpVec.x, y: v_a_end.y + perpVec.y }
 
 		const squareCPoints = [
-			{ x: v_a_end.x, y: v_a_end.y },
-			{ x: v_b_end.x, y: v_b_end.y },
-			{ x: v_c1.x, y: v_c1.y },
-			{ x: v_c2.x, y: v_c2.y }
+			project({ x: v_a_end.x, y: v_a_end.y }),
+			project({ x: v_b_end.x, y: v_b_end.y }),
+			project({ x: v_c1.x, y: v_c1.y }),
+			project({ x: v_c2.x, y: v_c2.y })
 		]
 		canvas.drawPolygon(squareCPoints, {
 			fill: sideC.square.color,
@@ -221,7 +241,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 
 		// (No grid lines)
 
-		const centerC = { x: (v_a_end.x + v_c1.x) / 2, y: (v_a_end.y + v_c1.y) / 2 }
+		const centerC = project({ x: (v_a_end.x + v_c1.x) / 2, y: (v_a_end.y + v_c1.y) / 2 })
 		const cText = sideC.square.type === "unknown" ? "?" : toSuperscript(String(Math.round(sideC.square.area)))
 		canvas.drawText({
 			x: centerC.x,
@@ -229,7 +249,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 			text: cText,
 			anchor: "middle",
 			dominantBaseline: "middle",
-			fontPx: computeSquareFontPx(sc, cText),
+			fontPx: computeSquareFontPx(c * scale, cText),
 			fontWeight: "700"
 		})
 	}
@@ -239,7 +259,8 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 		const rectB_x = v_right.x
 		const rectB_y = v_b_end.y
 
-		canvas.drawRect(rectB_x, rectB_y, sb, sb, {
+		const topLeft = project({ x: rectB_x, y: rectB_y })
+		canvas.drawRect(topLeft.x, topLeft.y, b * scale, b * scale, {
 			fill: sideB.square.color,
 			stroke: theme.colors.axis,
 			strokeWidth: theme.stroke.width.thin
@@ -247,7 +268,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 
 		// (No grid lines)
 
-		const centerB = { x: v_right.x + sb / 2, y: v_b_end.y + sb / 2 }
+		const centerB = project({ x: v_right.x + b / 2, y: v_b_end.y + b / 2 })
 		const bText = sideB.square.type === "unknown" ? "?" : toSuperscript(String(Math.round(sideB.square.area)))
 		canvas.drawText({
 			x: centerB.x,
@@ -255,7 +276,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 			text: bText,
 			anchor: "middle",
 			dominantBaseline: "middle",
-			fontPx: computeSquareFontPx(sb, bText),
+			fontPx: computeSquareFontPx(b * scale, bText),
 			fontWeight: "700"
 		})
 	}
@@ -265,7 +286,8 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 		const rectA_x = v_a_end.x
 		const rectA_y = v_a_end.y
 
-		canvas.drawRect(rectA_x, rectA_y, sa, sa, {
+		const topLeft = project({ x: rectA_x, y: rectA_y })
+		canvas.drawRect(topLeft.x, topLeft.y, a * scale, a * scale, {
 			fill: sideA.square.color,
 			stroke: theme.colors.axis,
 			strokeWidth: theme.stroke.width.thin
@@ -273,7 +295,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 
 		// (No grid lines)
 
-		const centerA = { x: v_a_end.x + sa / 2, y: v_a_end.y + sa / 2 }
+		const centerA = project({ x: v_a_end.x + a / 2, y: v_a_end.y + a / 2 })
 		const aText = sideA.square.type === "unknown" ? "?" : toSuperscript(String(Math.round(sideA.square.area)))
 		canvas.drawText({
 			x: centerA.x,
@@ -281,7 +303,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 			text: aText,
 			anchor: "middle",
 			dominantBaseline: "middle",
-			fontPx: computeSquareFontPx(sa, aText),
+			fontPx: computeSquareFontPx(a * scale, aText),
 			fontWeight: "700"
 		})
 	}
@@ -290,9 +312,9 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	// Canvas automatically tracks extents
 
 	const trianglePoints = [
-		{ x: v_a_end.x, y: v_a_end.y },
-		{ x: v_right.x, y: v_right.y },
-		{ x: v_b_end.x, y: v_b_end.y }
+		project({ x: v_a_end.x, y: v_a_end.y }),
+		project({ x: v_right.x, y: v_right.y }),
+		project({ x: v_b_end.x, y: v_b_end.y })
 	]
 	canvas.drawPolygon(trianglePoints, {
 		fill: theme.colors.background,
@@ -301,12 +323,13 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	})
 
 	// Right-angle marker at v_right (small square inside the triangle)
-	const markerSize = Math.max(6, Math.round(Math.min(sa, sb) * 0.1))
+	const markerSizePx = Math.max(6, Math.round(Math.min(a, b) * scale * 0.1))
+	const ms = markerSizePx / scale
 	const raPoints = [
-		{ x: v_right.x - markerSize, y: v_right.y },
-		{ x: v_right.x - markerSize, y: v_right.y - markerSize },
-		{ x: v_right.x, y: v_right.y - markerSize },
-		{ x: v_right.x, y: v_right.y }
+		project({ x: v_right.x - ms, y: v_right.y }),
+		project({ x: v_right.x - ms, y: v_right.y - ms }),
+		project({ x: v_right.x, y: v_right.y - ms }),
+		project({ x: v_right.x, y: v_right.y })
 	]
 	canvas.drawPolygon(raPoints, {
 		fill: theme.colors.background,
@@ -320,8 +343,8 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 		const hypVec = { x: v_b_end.x - v_a_end.x, y: v_b_end.y - v_a_end.y }
 		const perp = { x: hypVec.y, y: -hypVec.x }
 		const perpLen = Math.hypot(perp.x, perp.y) || 1
-		const labelOffset = 14
-		const labelPos = { x: midHyp.x + (perp.x / perpLen) * labelOffset, y: midHyp.y + (perp.y / perpLen) * labelOffset }
+		const labelOffsetPx = 14
+		const labelPos = project({ x: midHyp.x + (perp.x / perpLen) * (labelOffsetPx / scale), y: midHyp.y + (perp.y / perpLen) * (labelOffsetPx / scale) })
 		canvas.drawText({
 			x: labelPos.x,
 			y: labelPos.y,
@@ -333,9 +356,10 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	}
 	if (sideB?.label) {
 		const midB = { x: (v_right.x + v_b_end.x) / 2, y: (v_right.y + v_b_end.y) / 2 }
+		const pos = project({ x: midB.x + 10 / scale, y: midB.y })
 		canvas.drawText({
-			x: midB.x + 10,
-			y: midB.y,
+			x: pos.x,
+			y: pos.y,
 			text: sideB.label,
 			anchor: "middle",
 			dominantBaseline: "middle",
@@ -344,9 +368,10 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	}
 	if (sideA?.label) {
 		const midA = { x: (v_right.x + v_a_end.x) / 2, y: (v_right.y + v_a_end.y) / 2 }
+		const pos = project({ x: midA.x, y: midA.y + 10 / scale })
 		canvas.drawText({
-			x: midA.x,
-			y: midA.y + 10,
+			x: pos.x,
+			y: pos.y,
 			text: sideA.label,
 			anchor: "middle",
 			dominantBaseline: "middle",
