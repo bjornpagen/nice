@@ -53,6 +53,7 @@ import {
 } from "@/lib/widgets/generators/geometric-solid-diagram"
 import { generateHangerDiagram, HangerDiagramPropsSchema } from "@/lib/widgets/generators/hanger-diagram"
 import { generateHistogram, HistogramPropsSchema } from "@/lib/widgets/generators/histogram"
+import { generateNPolygon, NPolygonPropsSchema } from "@/lib/widgets/generators/n-polygon"
 
 import {
 	generateInequalityNumberLine,
@@ -171,6 +172,7 @@ export const allWidgetSchemas = {
 	geometricSolidDiagram: GeometricSolidDiagramPropsSchema,
 	hangerDiagram: HangerDiagramPropsSchema,
 	histogram: HistogramPropsSchema,
+	nPolygon: NPolygonPropsSchema,
 
 	inequalityNumberLine: InequalityNumberLinePropsSchema,
 	keelingCurve: KeelingCurvePropsSchema,
@@ -242,6 +244,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.geometricSolidDiagram,
 	typedSchemas.hangerDiagram,
 	typedSchemas.histogram,
+	typedSchemas.nPolygon,
 
 	typedSchemas.inequalityNumberLine,
 	typedSchemas.keelingCurve,
@@ -310,6 +313,7 @@ export {
 	GeometricSolidDiagramPropsSchema,
 	HangerDiagramPropsSchema,
 	HistogramPropsSchema,
+	NPolygonPropsSchema,
 	InequalityNumberLinePropsSchema,
 	KeelingCurvePropsSchema,
 	LineEquationGraphPropsSchema,
@@ -381,6 +385,7 @@ export {
 	generateGeometricSolidDiagram,
 	generateHangerDiagram,
 	generateHistogram,
+	generateNPolygon,
 	generateInequalityNumberLine,
 	generateKeelingCurve,
 	generateLineGraph,
@@ -468,6 +473,8 @@ export function generateWidget(widget: Widget): string {
 			return generateHangerDiagram(widget)
 		case "histogram":
 			return generateHistogram(widget)
+		case "nPolygon":
+			return generateNPolygon(widget)
 
 		case "inequalityNumberLine":
 			return generateInequalityNumberLine(widget)

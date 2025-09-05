@@ -49,7 +49,8 @@ import {
 	TriangleDiagramPropsSchema,
 	UnitBlockDiagramPropsSchema,
 	VennDiagramPropsSchema,
-	VerticalArithmeticSetupPropsSchema
+	VerticalArithmeticSetupPropsSchema,
+	NPolygonPropsSchema
 } from "@/lib/widgets/generators"
 
 export const mathCoreCollection = {
@@ -105,7 +106,8 @@ export const mathCoreCollection = {
 		triangleDiagram: TriangleDiagramPropsSchema,
 		unitBlockDiagram: UnitBlockDiagramPropsSchema,
 		vennDiagram: VennDiagramPropsSchema,
-		verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema
+		verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema,
+		nPolygon: NPolygonPropsSchema
 	},
 	widgetTypeKeys: [
 		"threeDIntersectionDiagram",
@@ -158,6 +160,7 @@ export const mathCoreCollection = {
 		"triangleDiagram",
 		"unitBlockDiagram",
 		"vennDiagram",
-		"verticalArithmeticSetup"
+		"verticalArithmeticSetup",
+		"nPolygon"
 	] as const
 } as const

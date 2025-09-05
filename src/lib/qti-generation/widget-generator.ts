@@ -25,6 +25,7 @@ import {
 	generateGeometricSolidDiagram,
 	generateHangerDiagram,
 	generateHistogram,
+	generateNPolygon,
 
 	generateInequalityNumberLine,
 	generateKeelingCurve,
@@ -130,6 +131,8 @@ export function generateWidget(widget: Widget): string {
 			return generateHangerDiagram(widget)
 		case "histogram":
 			return generateHistogram(widget)
+		case "nPolygon":
+			return generateNPolygon(widget)
 		case "inequalityNumberLine":
 			return generateInequalityNumberLine(widget)
 		case "numberLine":
