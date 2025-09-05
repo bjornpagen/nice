@@ -12,18 +12,20 @@ function createSquarePropsSchema() {
 	return z.discriminatedUnion("type", [
 		z
 			.object({
-				type: z.literal("unknown"),
+				type: z.literal("unknown").describe("Square with unknown area, displays '?' as placeholder text"),
 				color: z
 					.string()
 					.regex(
 						CSS_COLOR_PATTERN,
 						"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
 					)
+					.describe("Fill color for the square background (e.g., '#ff6b6b', 'lightblue', 'rgba(255,0,0,0.5)')")
 			})
-			.strict(),
+			.strict()
+			.describe("Unknown square type: displays '?' placeholder when the area value is not yet determined or should be solved by the student"),
 		z
 			.object({
-				type: z.literal("value"),
+				type: z.literal("value").describe("Square with known numeric area, displays the calculated area value"),
 				area: z
 					.number()
 					.positive()
@@ -34,8 +36,10 @@ function createSquarePropsSchema() {
 						CSS_COLOR_PATTERN,
 						"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
 					)
+					.describe("Fill color for the square background (e.g., '#ff6b6b', 'lightblue', 'rgba(255,0,0,0.5)')")
 			})
 			.strict()
+			.describe("Value square type: displays the numeric area value inside the square, used when the area is known or given")
 	])
 }
 
