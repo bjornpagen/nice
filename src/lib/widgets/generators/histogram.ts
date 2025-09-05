@@ -166,7 +166,7 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 				min: 0,
 				max: yAxis.max,
 				tickInterval: yAxis.tickInterval,
-				showGridLines: false,
+				showGridLines: true,
 				showTickLabels: true
 			}
 		},
