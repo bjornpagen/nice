@@ -5,6 +5,7 @@ import { PADDING } from "@/lib/widgets/utils/constants"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
 import { buildTicks } from "@/lib/widgets/utils/ticks"
+import { selectAxisLabels } from "@/lib/widgets/utils/layout"
 
 const Point = z
 	.object({
@@ -133,28 +134,35 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 			stroke: theme.colors.axis,
 			strokeWidth: theme.stroke.width.thick
 		})
-		const minorTickInterval = majorTickInterval / (minorTicksPerInterval + 1)
-		const { values, labels } = buildTicks(min, max, minorTickInterval)
+		
+		// Use simplified tick generation (consistent with other widgets)
+		const { values, labels: tickLabels } = buildTicks(min, max, majorTickInterval)
 		const specialLabelsMap = new Map(specialTickLabels.map((stl) => [stl.value, stl.label]))
+		const tickPositions = values.map(toSvgX)
+		
+		// Smart label selection to prevent overlaps
+		const selectedLabels = selectAxisLabels({
+			labels: tickLabels,
+			positions: tickPositions,
+			axisLengthPx: lineLength,
+			orientation: "horizontal",
+			fontPx: theme.font.size.small,
+			minGapPx: 8
+		})
 
 		values.forEach((t, i) => {
 			const x = toSvgX(t)
-			// Determine if this is a major tick by checking if tick value modulo major interval is close to zero
-			const isMajor = Math.abs((t - min) % majorTickInterval) < 1e-9 || Math.abs(t % majorTickInterval) < 1e-9
-
-			const tickHeight = isMajor ? 8 : 4
-			canvas.drawLine(x, yPos - tickHeight, x, yPos + tickHeight, {
+			// All ticks are now major ticks (simplified approach)
+			canvas.drawLine(x, yPos - 5, x, yPos + 5, {
 				stroke: theme.colors.axis,
-				strokeWidth: isMajor ? theme.stroke.width.base : theme.stroke.width.thin
+				strokeWidth: theme.stroke.width.base
 			})
 
-			if (isMajor) {
-				const specialLabel = specialLabelsMap.get(t)
-				if (specialLabel) {
-					canvas.drawText({ x, y: yPos + 25, text: specialLabel, anchor: "middle", fill: theme.colors.axisLabel, fontWeight: theme.font.weight.bold })
-				} else {
-					canvas.drawText({ x, y: yPos + 25, text: labels[i]!, anchor: "middle", fill: theme.colors.axisLabel })
-				}
+			const specialLabel = specialLabelsMap.get(t)
+			if (specialLabel) {
+				canvas.drawText({ x, y: yPos + 20, text: specialLabel, anchor: "middle", fill: theme.colors.axis, fontWeight: theme.font.weight.bold })
+			} else if (selectedLabels.has(i)) {
+				canvas.drawText({ x, y: yPos + 20, text: tickLabels[i]!, anchor: "middle", fill: theme.colors.axis, fontPx: theme.font.size.small })
 			}
 		})
 		// Special Labels
@@ -219,30 +227,38 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 		// Draw the main vertical line using Canvas API
 		canvas.drawLine(xPos, PADDING, xPos, height - PADDING, {
 			stroke: theme.colors.axis,
-			strokeWidth: theme.stroke.width.base
+			strokeWidth: theme.stroke.width.thick
 		})
-		const minorTickInterval = majorTickInterval / (minorTicksPerInterval + 1)
-		const { values, labels } = buildTicks(min, max, minorTickInterval)
+		
+		// Use simplified tick generation (consistent with other widgets)
+		const { values, labels: tickLabels } = buildTicks(min, max, majorTickInterval)
 		const specialLabelsMap = new Map(specialTickLabels.map((stl) => [stl.value, stl.label]))
+		const tickPositions = values.map(toSvgY)
+		
+		// Smart label selection to prevent overlaps
+		const selectedLabels = selectAxisLabels({
+			labels: tickLabels,
+			positions: tickPositions,
+			axisLengthPx: lineLength,
+			orientation: "vertical",
+			fontPx: theme.font.size.small,
+			minGapPx: 12
+		})
 
 		values.forEach((t, i) => {
 			const y = toSvgY(t)
-			// Determine if this is a major tick by checking if tick value modulo major interval is close to zero
-			const isMajor = Math.abs((t - min) % majorTickInterval) < 1e-9 || Math.abs(t % majorTickInterval) < 1e-9
-			const tickWidth = isMajor ? 8 : 4
-			canvas.drawLine(xPos - tickWidth, y, xPos + tickWidth, y, {
+			// All ticks are now consistent size (simplified approach)
+			canvas.drawLine(xPos - 5, y, xPos + 5, y, {
 				stroke: theme.colors.axis,
-				strokeWidth: isMajor ? theme.stroke.width.base : theme.stroke.width.thin
+				strokeWidth: theme.stroke.width.base
 			})
 
-			if (isMajor) {
-				const specialLabel = specialLabelsMap.get(t)
-				const labelX = xPos - 15
-				if (specialLabel) {
-					canvas.drawText({ x: labelX, y: y + 4, text: specialLabel, anchor: "end", fill: theme.colors.axisLabel, fontWeight: theme.font.weight.bold })
-				} else {
-					canvas.drawText({ x: labelX, y: y + 4, text: labels[i]!, anchor: "end", fill: theme.colors.axisLabel })
-				}
+			const specialLabel = specialLabelsMap.get(t)
+			const labelX = xPos - 10
+			if (specialLabel) {
+				canvas.drawText({ x: labelX, y: y + 4, text: specialLabel, anchor: "end", fill: theme.colors.axis, fontWeight: theme.font.weight.bold })
+			} else if (selectedLabels.has(i)) {
+				canvas.drawText({ x: labelX, y: y + 4, text: tickLabels[i]!, anchor: "end", fill: theme.colors.axis, fontPx: theme.font.size.small })
 			}
 		})
 		// Special Labels

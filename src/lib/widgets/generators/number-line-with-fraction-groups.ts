@@ -4,6 +4,8 @@ import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { theme } from "@/lib/widgets/utils/theme"
+import { buildTicks } from "@/lib/widgets/utils/ticks"
+import { selectAxisLabels } from "@/lib/widgets/utils/layout"
 
 const Tick = z
 	.object({
@@ -114,23 +116,38 @@ export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof Number
 		strokeWidth: theme.stroke.width.base
 	})
 
-	for (const t of ticks) {
+	// Smart tick labeling to prevent overlaps
+	const tickPositions = ticks.map(tick => toSvgX(tick.value))
+	const tickLabels = ticks.map(tick => tick.label)
+	
+	const selectedLabels = selectAxisLabels({
+		labels: tickLabels,
+		positions: tickPositions,
+		axisLengthPx: chartWidth,
+		orientation: "horizontal",
+		fontPx: 11,
+		minGapPx: 8
+	})
+
+	ticks.forEach((t, i) => {
 		const x = toSvgX(t.value)
 		const tickHeight = t.isMajor ? 8 : 4
 		canvas.drawLine(x, yPos - tickHeight, x, yPos + tickHeight, {
 			stroke: theme.colors.axis,
 			strokeWidth: theme.stroke.width.base
 		})
-		if (t.label !== "") {
+		
+		if (t.label !== "" && selectedLabels.has(i)) {
 			canvas.drawText({
 				x: x,
 				y: yPos + 25,
 				text: t.label,
 				fill: theme.colors.axisLabel,
-				anchor: "middle"
+				anchor: "middle",
+				fontPx: 11
 			})
 		}
-	}
+	})
 
 	// Segments
 	segments.forEach((s, i) => {

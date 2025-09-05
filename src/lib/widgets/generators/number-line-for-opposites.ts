@@ -3,6 +3,8 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { theme } from "@/lib/widgets/utils/theme"
+import { buildTicks } from "@/lib/widgets/utils/ticks"
+import { selectAxisLabels } from "@/lib/widgets/utils/layout"
 
 // strict schema with no nullables or fallbacks
 export const NumberLineForOppositesPropsSchema = z
@@ -89,26 +91,43 @@ export const generateNumberLineForOpposites: WidgetGenerator<typeof NumberLineFo
 		`<marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${theme.colors.black}"/></marker>`
 	)
 
-	// axis and ticks
+	// axis and ticks with smart labeling
 	canvas.drawLine(PADDING, yPos, width - PADDING, yPos, {
 		stroke: theme.colors.axis,
-		strokeWidth: theme.stroke.width.base
+		strokeWidth: theme.stroke.width.thick
 	})
 
-	for (let t = min; t <= max; t += tickInterval) {
+	const { values, labels: tickLabels } = buildTicks(min, max, tickInterval)
+	const tickPositions = values.map(toSvgX)
+	
+	// Smart label selection to prevent overlaps
+	const selectedLabels = selectAxisLabels({
+		labels: tickLabels,
+		positions: tickPositions,
+		axisLengthPx: chartWidth,
+		orientation: "horizontal",
+		fontPx: theme.font.size.small,
+		minGapPx: 8
+	})
+
+	values.forEach((t, i) => {
 		const x = toSvgX(t)
 		canvas.drawLine(x, yPos - 5, x, yPos + 5, {
 			stroke: theme.colors.axis,
 			strokeWidth: theme.stroke.width.base
 		})
-		canvas.drawText({
-			x: x,
-			y: yPos + 20,
-			text: String(t),
-			fill: theme.colors.black,
-			anchor: "middle"
-		})
-	}
+		
+		if (selectedLabels.has(i)) {
+			canvas.drawText({
+				x: x,
+				y: yPos + 20,
+				text: tickLabels[i]!,
+				fill: theme.colors.axisLabel,
+				anchor: "middle",
+				fontPx: theme.font.size.small
+			})
+		}
+	})
 
 	if (showArrows) {
 		const arrowY = yPos - 10
