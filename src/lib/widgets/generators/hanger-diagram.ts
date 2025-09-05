@@ -21,11 +21,11 @@ function createWeightSchema() {
 				.describe(
 					"Geometric shape for this weight. Different shapes can represent different variables or value types in equations."
 				),
-			color: z
+			backgroundColor: z
 				.string()
 				.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
 				.describe(
-					"Hex-only fill color for this weight (e.g., '#4472C4', '#1E90FF', '#FF000080' for 50% alpha). Use distinct colors for different variable types."
+					"Hex-only background color for this weight (e.g., '#F4F8FF', '#FFF5CC', '#E6FFEE'). Text is rendered in black on top; background MUST be a light color to ensure contrast."
 				)
 		})
 		.strict()
@@ -131,7 +131,7 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 		switch (weight.shape) {
 			case "circle":
 				canvas.drawCircle(x, y + size / 2, size / 2, {
-					fill: weight.color,
+					fill: weight.backgroundColor,
 					stroke: theme.colors.axis
 				})
 				break
@@ -143,7 +143,7 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 						{ x: x, y: y }
 					],
 					{
-						fill: weight.color,
+						fill: weight.backgroundColor,
 						stroke: theme.colors.axis
 					}
 				)
@@ -158,14 +158,14 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 					{ x: x - size / 2, y: y + size * 0.4 }
 				]
 				canvas.drawPolygon(pentagonPoints, {
-					fill: weight.color,
+					fill: weight.backgroundColor,
 					stroke: theme.colors.axis
 				})
 				break
 			}
 			default:
 				canvas.drawRect(x - size / 2, y, size, size, {
-					fill: weight.color,
+					fill: weight.backgroundColor,
 					stroke: theme.colors.axis
 				})
 				break
@@ -175,7 +175,7 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 				x: x,
 				y: y + size / 2 + 4,
 				text: String(weight.label),
-				fill: theme.colors.axis,
+				fill: "#000000",
 				anchor: "middle",
 				fontWeight: theme.font.weight.bold
 			})
