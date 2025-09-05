@@ -687,6 +687,7 @@ export class CanvasImpl implements Canvas {
 
 		let attrs = `d="${path.getPathData()}"`
 		if (style.fill) attrs += ` fill="${style.fill}"`
+		else attrs += ` fill="none"`
 		if (style.stroke) attrs += ` stroke="${style.stroke}"`
 		if (style.strokeWidth) attrs += ` stroke-width="${style.strokeWidth}"`
 		if (style.dash) attrs += ` stroke-dasharray="${style.dash}"`
@@ -739,6 +740,7 @@ export class CanvasImpl implements Canvas {
 		// Build SVG attributes
 		let attrs = `points="${pointsStr}"`
 		if (style.fill) attrs += ` fill="${style.fill}"`
+		else attrs += ` fill="none"`
 		if (style.stroke) attrs += ` stroke="${style.stroke}"`
 		if (style.strokeWidth) attrs += ` stroke-width="${style.strokeWidth}"`
 		if (style.dash) attrs += ` stroke-dasharray="${style.dash}"`
