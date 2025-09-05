@@ -20,6 +20,113 @@ const DimensionLabel = z
 	})
 	.strict()
 
+// Defines the face names that can appear across all supported polyhedra
+const FaceName = z
+	.enum([
+		"frontFace",
+		"backFace", 
+		"leftFace",
+		"rightFace",
+		"topFace",
+		"bottomFace",
+		"baseFace"
+	])
+	.describe("Face identifier for polyhedra. 'frontFace' is the viewer-facing surface, 'backFace' is hidden behind, 'leftFace'/'rightFace' are side surfaces, 'topFace'/'bottomFace' are vertical extremes, and 'baseFace' is the foundation of pyramids.")
+
+// Factory: creates a fresh Anchor schema to avoid $ref generation in OpenAI JSON Schema conversion
+function createAnchorSchema() {
+	return z
+		.discriminatedUnion("type", [
+			z
+				.object({
+					type: z.literal("vertex"),
+					index: z
+						.number()
+						.int()
+						.min(0)
+						.describe("Zero-based vertex index referring to a specific corner of the polyhedron. Vertex numbering follows the systematic ordering used by each shape type.")
+				})
+				.strict()
+				.describe("References an existing vertex of the polyhedron by its index position."),
+			z
+				.object({
+					type: z.literal("edgeMidpoint"),
+					a: z
+						.number()
+						.int()
+						.min(0)
+						.describe("Index of the first vertex that defines one endpoint of the edge."),
+					b: z
+						.number()
+						.int()
+						.min(0)
+						.describe("Index of the second vertex that defines the other endpoint of the edge. Must be different from 'a'.")
+				})
+				.strict()
+				.describe("References the midpoint of an edge connecting two vertices. Useful for slant heights, edge bisectors, and construction lines."),
+			z
+				.object({
+					type: z.literal("edgePoint"),
+					a: z
+						.number()
+						.int()
+						.min(0)
+						.describe("Index of the first vertex defining the edge's starting point."),
+					b: z
+						.number()
+						.int()
+						.min(0)
+						.describe("Index of the second vertex defining the edge's ending point. Must be different from 'a'."),
+					t: z
+						.number()
+						.min(0)
+						.max(1)
+						.describe("Parametric position along the edge from vertex 'a' to vertex 'b'. 0 = at vertex a, 1 = at vertex b, 0.5 = midpoint, 0.25 = quarter way from a to b.")
+				})
+				.strict()
+				.describe("References a specific point along an edge at a fractional distance between two vertices. Enables precise positioning for construction lines and measurements."),
+			z
+				.object({
+					type: z.literal("faceCentroid"),
+					face: FaceName.describe("The face whose geometric center will be used as the anchor point.")
+				})
+				.strict()
+				.describe("References the geometric center (centroid) of a face polygon. Calculated as the average position of all vertices that define the face.")
+		])
+		.describe("Flexible anchor system for positioning line segments and angle markers. Can reference vertices, points along edges, or face centers to enable complex geometric constructions like slant heights, altitudes, and construction lines.")
+}
+
+// Defines a line segment between two anchor points with optional labeling
+const Segment = z
+	.object({
+		from: createAnchorSchema().describe("Starting point of the line segment. Can be any anchor type: vertex, edge point, or face center."),
+		to: createAnchorSchema().describe("Ending point of the line segment. Can be any anchor type: vertex, edge point, or face center. Must be different from 'from'."),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe("Optional text label for the segment (e.g., '140 cm', 'slant height', 'd = √50', null). Positioned at the segment's midpoint with automatic offset. Null means no label.")
+	})
+	.strict()
+	.describe("Defines a line segment between two anchor points with optional labeling. The renderer determines visibility and line pattern (e.g., dashed for hidden) using its camera/occlusion model; the input does not control styling.")
+
+// Defines a right-angle marker positioned at an anchor using two reference directions
+const AngleMarker = z
+	.object({
+		type: z
+			.literal("right")
+			.describe("Marker type identifier. Currently only 'right' is supported for right-angle square markers."),
+		at: createAnchorSchema().describe("The anchor point where the angle marker will be positioned. This is the vertex of the angle."),
+		from: createAnchorSchema().describe("Reference anchor defining the first ray of the angle. A line from 'at' to 'from' forms one side of the angle."),
+		to: createAnchorSchema().describe("Reference anchor defining the second ray of the angle. A line from 'at' to 'to' forms the other side of the angle."),
+		sizePx: z
+			.number()
+			.positive()
+			.describe("Size of the right-angle marker square in pixels. Typical values: 8-15 pixels. The marker extends this distance along both angle rays from the vertex.")
+	})
+	.strict()
+	.describe("Places a right-angle marker (small square) at an anchor point using two reference anchors to define the angle's rays. Essential for indicating perpendicular relationships like slant heights meeting base edges, altitudes, and construction perpendiculars.")
+
 // Defines the properties for a rectangular prism (including cubes)
 const RectangularPrismDataSchema = z
 	.object({
@@ -86,12 +193,7 @@ const Diagonal = z
 			.string()
 			.nullable()
 			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe("Text label for the diagonal's length (e.g., '12.7 cm', 'd = 15', '√50', null). Null means no label."),
-		style: z
-			.enum(["solid", "dashed", "dotted"])
-			.describe(
-				"Visual style of the diagonal. 'solid' for main diagonals, 'dashed' for hidden parts, 'dotted' for construction lines."
-			)
+			.describe("Text label for the diagonal's length (e.g., '12.7 cm', 'd = 15', '√50', null). Null means no label.")
 	})
 	.strict()
 
@@ -124,10 +226,22 @@ export const PolyhedronDiagramPropsSchema = z
 			.describe(
 				"Dimension labels to display on edges or faces. Empty array means no labels. Can label multiple dimensions and faces."
 			),
+		segments: z
+			.array(Segment)
+			.nullable()
+			.describe(
+				"Array of line segments to draw between anchor points. Null or empty array means no segments. Supports slant heights from apex to edge midpoints, construction lines, auxiliary measurements, and any line between vertices, edge points, or face centers. Each segment can have independent styling and labeling. Generalizes the old diagonal system with much more flexibility."
+			),
 		diagonals: z
 			.array(Diagonal)
 			.describe(
 				"Space diagonals or face diagonals to draw. Empty array means no diagonals. Useful for distance calculations and 3D geometry."
+			),
+		angleMarkers: z
+			.array(AngleMarker)
+			.nullable()
+			.describe(
+				"Array of angle markers to place at anchor points using reference rays. Null or empty array means no markers. Currently supports right-angle square markers positioned at any anchor (vertex, edge midpoint, face center) with two reference anchors defining the angle's arms. Essential for showing perpendicular relationships like slant heights meeting base edges, altitude constructions, and geometric proofs requiring right-angle indicators."
 			),
 		shadedFace: z
 			.string()
@@ -155,7 +269,7 @@ export type PolyhedronDiagramProps = z.infer<typeof PolyhedronDiagramPropsSchema
  * standard isometric or perspective view to provide depth perception.
  */
 export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagramPropsSchema> = (data) => {
-	const { width, height, shape, labels, diagonals, shadedFace, showHiddenEdges } = data
+	const { width, height, shape, labels, diagonals, segments, angleMarkers, shadedFace, showHiddenEdges } = data
 
 	const canvas = new CanvasImpl({
 		chartArea: { left: 0, top: 0, width, height },
@@ -179,6 +293,137 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 		const offsetY = (height - scale * rawH) / 2 - scale * minY
 		const project = (p: { x: number; y: number }) => ({ x: offsetX + scale * p.x, y: offsetY + scale * p.y })
 		return { project }
+	}
+
+	// Helper: resolve an Anchor to a concrete point using the projected vertices and faces
+	function resolveAnchor(
+		anchor:
+			| z.infer<ReturnType<typeof createAnchorSchema>>
+			| { type: "vertex"; index: number }
+			| { type: "edgeMidpoint"; a: number; b: number }
+			| { type: "edgePoint"; a: number; b: number; t: number }
+			| { type: "faceCentroid"; face: z.infer<typeof FaceName> },
+		p: Array<{ x: number; y: number } | undefined>,
+		faces: Record<string, { points: Array<{ x: number; y: number } | undefined> }>
+	): { x: number; y: number } | null {
+		switch (anchor.type) {
+			case "vertex": {
+				const v = p[anchor.index]
+				return v ? { x: v.x, y: v.y } : null
+			}
+			case "edgeMidpoint": {
+				const a = p[anchor.a]
+				const b = p[anchor.b]
+				if (!a || !b) return null
+				return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }
+			}
+			case "edgePoint": {
+				const a = p[anchor.a]
+				const b = p[anchor.b]
+				if (!a || !b) return null
+				const t = anchor.t
+				return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t }
+			}
+			case "faceCentroid": {
+				const face = faces[anchor.face]
+				if (!face) return null
+				const pts = face.points.filter((pt): pt is { x: number; y: number } => !!pt)
+				if (pts.length === 0) return null
+				const sum = pts.reduce(
+					(acc, q) => ({ x: acc.x + q.x, y: acc.y + q.y }),
+					{ x: 0, y: 0 }
+				)
+				return { x: sum.x / pts.length, y: sum.y / pts.length }
+			}
+		}
+	}
+
+	function drawSegmentsAndMarkers(
+		p: Array<{ x: number; y: number } | undefined>,
+		faces: Record<string, { points: Array<{ x: number; y: number } | undefined> }>
+	) {
+		// Back-compat: map legacy diagonals to segments if any were provided
+		const allSegments: Array<{ from: any; to: any; label: string | null }> = []
+		for (const d of diagonals) {
+			allSegments.push({
+				from: { type: "vertex", index: d.fromVertexIndex },
+				to: { type: "vertex", index: d.toVertexIndex },
+				label: d.label
+			})
+		}
+		if (segments !== null) {
+			for (const s of segments) {
+				allSegments.push(s)
+			}
+		}
+
+		for (const s of allSegments) {
+			const from = resolveAnchor(s.from, p, faces)
+			const to = resolveAnchor(s.to, p, faces)
+			if (!from || !to) continue
+
+
+			// Camera/renderer decides whether a line should be dashed or occluded.
+			// For now, draw as solid; future occlusion logic will handle visibility.
+			canvas.drawLine(from.x, from.y, to.x, to.y, {
+				stroke: theme.colors.black,
+				strokeWidth: theme.stroke.width.base,
+				dash: undefined
+			})
+
+			if (s.label) {
+				const midX = (from.x + to.x) / 2
+				const midY = (from.y + to.y) / 2
+				const angle = Math.atan2(to.y - from.y, to.x - from.x)
+				const offsetX = -Math.sin(angle) * 10
+				const offsetY = Math.cos(angle) * 10
+				canvas.drawText({
+					x: midX + offsetX,
+					y: midY + offsetY,
+					text: s.label,
+					fill: theme.colors.black,
+					anchor: "middle",
+					dominantBaseline: "middle",
+					fontPx: theme.font.size.base,
+					stroke: theme.colors.white,
+					strokeWidth: 3,
+					paintOrder: "stroke fill"
+				})
+			}
+		}
+
+		if (angleMarkers !== null) {
+			for (const m of angleMarkers) {
+			if (m.type !== "right") continue
+			const at = resolveAnchor(m.at, p, faces)
+			const from = resolveAnchor(m.from, p, faces)
+			const to = resolveAnchor(m.to, p, faces)
+			if (!at || !from || !to) continue
+
+			// Build two unit vectors from 'at' to 'from' and 'to'
+			const uVec = { x: from.x - at.x, y: from.y - at.y }
+			const vVec = { x: to.x - at.x, y: to.y - at.y }
+			const uLen = Math.hypot(uVec.x, uVec.y) || 1
+			const vLen = Math.hypot(vVec.x, vVec.y) || 1
+			const ux = (uVec.x / uLen) * m.sizePx
+			const uy = (uVec.y / uLen) * m.sizePx
+			const vx = (vVec.x / vLen) * m.sizePx
+			const vy = (vVec.y / vLen) * m.sizePx
+
+			const p0 = { x: at.x + ux, y: at.y + uy }
+			const p1 = { x: p0.x + vx, y: p0.y + vy }
+			const p2 = { x: at.x + vx, y: at.y + vy }
+
+			canvas.drawLine(p0.x, p0.y, p1.x, p1.y, {
+				stroke: theme.colors.black,
+				strokeWidth: theme.stroke.width.base
+			})
+			canvas.drawLine(p1.x, p1.y, p2.x, p2.y, {
+				stroke: theme.colors.black,
+				strokeWidth: theme.stroke.width.base
+			})
+			}
+		}
 	}
 
 	switch (shape.type) {
@@ -248,45 +493,8 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			getFaceSvg("topFace")
 			getFaceSvg("rightFace")
 
-			// --- Render Diagonals ---
-			for (const d of diagonals) {
-				const from = p[d.fromVertexIndex]
-				const to = p[d.toVertexIndex]
-				if (!from || !to) continue
-
-				let dash: string | undefined
-				if (d.style === "dashed") {
-					dash = theme.stroke.dasharray.dashedShort
-				} else if (d.style === "dotted") {
-					dash = "2 3"
-				}
-
-				canvas.drawLine(from.x, from.y, to.x, to.y, {
-					stroke: theme.colors.black,
-					strokeWidth: theme.stroke.width.base,
-					dash
-				})
-
-				if (d.label) {
-					const midX = (from.x + to.x) / 2
-					const midY = (from.y + to.y) / 2
-					const angle = Math.atan2(to.y - from.y, to.x - from.x)
-					const offsetX = -Math.sin(angle) * 10
-					const offsetY = Math.cos(angle) * 10
-					canvas.drawText({
-						x: midX + offsetX,
-						y: midY + offsetY,
-						text: d.label,
-						fill: theme.colors.black,
-						anchor: "middle",
-						dominantBaseline: "middle",
-						fontPx: theme.font.size.base,
-						stroke: theme.colors.white,
-						strokeWidth: 3,
-						paintOrder: "stroke fill"
-					})
-				}
-			}
+			// Segments and angle markers
+			drawSegmentsAndMarkers(p, faces)
 
 			for (const lab of labels) {
 				if (lab.target === "height" && p[0] && p[3]) {
@@ -376,45 +584,8 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 			drawFace("rightFace")
 			drawFace("frontFace")
 
-			// Draw diagonals if specified
-			for (const d of diagonals) {
-				const from = p[d.fromVertexIndex]
-				const to = p[d.toVertexIndex]
-				if (!from || !to) continue
-
-				let dash: string | undefined
-				if (d.style === "dashed") {
-					dash = theme.stroke.dasharray.dashedShort
-				} else if (d.style === "dotted") {
-					dash = "2 3"
-				}
-
-				canvas.drawLine(from.x, from.y, to.x, to.y, {
-					stroke: theme.colors.black,
-					strokeWidth: theme.stroke.width.base,
-					dash
-				})
-
-				if (d.label) {
-					const midX = (from.x + to.x) / 2
-					const midY = (from.y + to.y) / 2
-					const angle = Math.atan2(to.y - from.y, to.x - from.x)
-					const offsetX = -Math.sin(angle) * 10
-					const offsetY = Math.cos(angle) * 10
-					canvas.drawText({
-						x: midX + offsetX,
-						y: midY + offsetY,
-						text: d.label,
-						fill: theme.colors.black,
-						anchor: "middle",
-						dominantBaseline: "middle",
-						fontPx: theme.font.size.base,
-						stroke: theme.colors.white,
-						strokeWidth: 3,
-						paintOrder: "stroke fill"
-					})
-				}
-			}
+			// Segments and angle markers
+			drawSegmentsAndMarkers(p, faces)
 
 			// Draw labels
 			for (const lab of labels) {
@@ -520,45 +691,8 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 					strokeWidth: theme.stroke.width.base
 				})
 
-			// Draw diagonals if specified
-			for (const d of diagonals) {
-				const from = p[d.fromVertexIndex]
-				const to = p[d.toVertexIndex]
-				if (!from || !to) continue
-
-				let dash: string | undefined
-				if (d.style === "dashed") {
-					dash = theme.stroke.dasharray.dashedShort
-				} else if (d.style === "dotted") {
-					dash = "2 3"
-				}
-
-				canvas.drawLine(from.x, from.y, to.x, to.y, {
-					stroke: theme.colors.black,
-					strokeWidth: theme.stroke.width.base,
-					dash
-				})
-
-				if (d.label) {
-					const midX = (from.x + to.x) / 2
-					const midY = (from.y + to.y) / 2
-					const angle = Math.atan2(to.y - from.y, to.x - from.x)
-					const offsetX = -Math.sin(angle) * 10
-					const offsetY = Math.cos(angle) * 10
-					canvas.drawText({
-						x: midX + offsetX,
-						y: midY + offsetY,
-						text: d.label,
-						fill: theme.colors.black,
-						anchor: "middle",
-						dominantBaseline: "middle",
-						fontPx: theme.font.size.base,
-						stroke: theme.colors.white,
-						strokeWidth: 3,
-						paintOrder: "stroke fill"
-					})
-				}
-			}
+			// Segments and angle markers
+			drawSegmentsAndMarkers(p, faces)
 
 			// Draw labels
 			for (const lab of labels) {
@@ -673,45 +807,8 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 					strokeWidth: theme.stroke.width.base
 				}) // Front-right edge to apex
 
-			// Draw diagonals if specified
-			for (const d of diagonals) {
-				const from = p[d.fromVertexIndex]
-				const to = p[d.toVertexIndex]
-				if (!from || !to) continue
-
-				let dash: string | undefined
-				if (d.style === "dashed") {
-					dash = theme.stroke.dasharray.dashedShort
-				} else if (d.style === "dotted") {
-					dash = "2 3"
-				}
-
-				canvas.drawLine(from.x, from.y, to.x, to.y, {
-					stroke: theme.colors.black,
-					strokeWidth: theme.stroke.width.base,
-					dash
-				})
-
-				if (d.label) {
-					const midX = (from.x + to.x) / 2
-					const midY = (from.y + to.y) / 2
-					const angle = Math.atan2(to.y - from.y, to.x - from.x)
-					const offsetX = -Math.sin(angle) * 10
-					const offsetY = Math.cos(angle) * 10
-					canvas.drawText({
-						x: midX + offsetX,
-						y: midY + offsetY,
-						text: d.label,
-						fill: theme.colors.black,
-						anchor: "middle",
-						dominantBaseline: "middle",
-						fontPx: theme.font.size.base,
-						stroke: theme.colors.white,
-						strokeWidth: 3,
-						paintOrder: "stroke fill"
-					})
-				}
-			}
+			// Segments and angle markers
+			drawSegmentsAndMarkers(p, faces)
 
 			// Draw labels
 			for (const lab of labels) {
