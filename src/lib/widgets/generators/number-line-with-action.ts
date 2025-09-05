@@ -5,6 +5,7 @@ import { PADDING } from "@/lib/widgets/utils/constants"
 import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
 import { buildTicks } from "@/lib/widgets/utils/ticks"
+import { selectAxisLabels } from "@/lib/widgets/utils/layout"
 
 const Label = z
 	.object({
@@ -257,6 +258,17 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 
 		const { values, labels: tickLabels } = buildTicks(min, max, tickInterval)
 		const customLabelsMap = new Map(customLabels.map(l => [l.value, l.text]))
+		const tickPositions = values.map(toSvgX)
+		
+		// Smart label selection to prevent overlaps
+		const selectedLabels = selectAxisLabels({
+			labels: tickLabels,
+			positions: tickPositions,
+			axisLengthPx: lineLength,
+			orientation: "horizontal",
+			fontPx: theme.font.size.small,
+			minGapPx: 8
+		})
 
 		values.forEach((t, i) => {
 			const x = toSvgX(t)
@@ -268,7 +280,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const customLabel = customLabelsMap.get(t)
 			if (customLabel) {
 				canvas.drawText({ x: x, y: yPos + 20, text: customLabel, fill: theme.colors.axis, anchor: "middle", fontWeight: theme.font.weight.bold })
-			} else {
+			} else if (selectedLabels.has(i)) {
 				canvas.drawText({ x: x, y: yPos + 20, text: tickLabels[i]!, fill: theme.colors.axis, anchor: "middle", fontPx: theme.font.size.small })
 			}
 		})
@@ -387,6 +399,17 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 
 		const { values, labels: tickLabels } = buildTicks(min, max, tickInterval)
 		const customLabelsMap = new Map(customLabels.map(l => [l.value, l.text]))
+		const tickPositions = values.map(toSvgY)
+		
+		// Smart label selection to prevent overlaps
+		const selectedLabels = selectAxisLabels({
+			labels: tickLabels,
+			positions: tickPositions,
+			axisLengthPx: lineLength,
+			orientation: "vertical",
+			fontPx: theme.font.size.small,
+			minGapPx: 12
+		})
 
 		values.forEach((t, i) => {
 			const y = toSvgY(t)
@@ -399,7 +422,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const labelX = xPos - 10
 			if (customLabel) {
 				canvas.drawText({ x: labelX, y: y + 4, text: customLabel, fill: theme.colors.axis, anchor: "end", fontWeight: theme.font.weight.bold })
-			} else {
+			} else if (selectedLabels.has(i)) {
 				canvas.drawText({ x: labelX, y: y + 4, text: tickLabels[i]!, fill: theme.colors.axis, anchor: "end", fontPx: theme.font.size.small })
 			}
 		})
@@ -439,7 +462,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const actionEndY = toSvgY(currentValue + action.delta)
 			const midY = (actionStartY + actionEndY) / 2
 			const baseOffset = 30
-			const arrowSpacing = 40  // Increased from 25 to 40 for more space between arrows
+			const arrowSpacing = 32  // Reduced from 40 to 32 for tighter spacing
 			const arrowX = xPos + baseOffset + (i * arrowSpacing)
 			const labelX = arrowX + 18  // Reduced from 25 to 18 for better balance
 			
@@ -473,7 +496,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 
 			// Stack arrows horizontally with better spacing
 			const baseOffset = 30
-			const arrowSpacing = 40  // Increased from 25 to 40 for more space between arrows
+			const arrowSpacing = 32  // Reduced from 40 to 32 for tighter spacing
 			const arrowX = xPos + baseOffset + (i * arrowSpacing)
 
 			// Draw completely vertical arrow
