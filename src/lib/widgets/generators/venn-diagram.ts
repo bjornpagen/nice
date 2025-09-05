@@ -123,21 +123,30 @@ export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema>
 	// Labels for circles - positioned farther apart to use side space
 	const labelA_X = cxA - r * 0.5
 	const labelB_X = cxB + r * 0.5
-	canvas.drawText({
+	// Compute side-constrained max widths so labels never collide or bleed to edges
+	const midX = (cxA + cxB) / 2
+	const labelPaddingX = PADDING
+	const leftHalfWidth = Math.max(0, Math.min(labelA_X - labelPaddingX, midX - labelA_X - labelPaddingX))
+	const rightHalfWidth = Math.max(0, Math.min((width - labelPaddingX) - labelB_X, labelB_X - midX - labelPaddingX))
+	const labelA_MaxWidth = leftHalfWidth * 2
+	const labelB_MaxWidth = rightHalfWidth * 2
+	canvas.drawWrappedText({
 		x: labelA_X,
 		y: padding.top - 5,
 		text: abbreviateMonth(circleA.label),
 		fontPx: 16,
 		fontWeight: theme.font.weight.bold,
-		anchor: "middle"
+		anchor: "middle",
+		maxWidthPx: labelA_MaxWidth
 	})
-	canvas.drawText({
+	canvas.drawWrappedText({
 		x: labelB_X,
 		y: padding.top - 5,
 		text: abbreviateMonth(circleB.label),
 		fontPx: 16,
 		fontWeight: theme.font.weight.bold,
-		anchor: "middle"
+		anchor: "middle",
+		maxWidthPx: labelB_MaxWidth
 	})
 
 	// Counts
