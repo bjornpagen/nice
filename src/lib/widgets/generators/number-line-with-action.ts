@@ -178,31 +178,44 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const actionEndX = toSvgX(currentValue + action.delta)
 			const midX = (actionStartX + actionEndX) / 2
 
-			// Stack arrows vertically to avoid overlap
-			const arrowOffset = 20 + i * 15
-			const arrowY = yPos - arrowOffset
-			const controlOffset = 25 + i * 10
-			const controlY = arrowY - controlOffset * Math.sign(action.delta || 1)
+			// Stack arrows vertically with better spacing
+			const baseOffset = 30
+			const arrowSpacing = 25
+			const arrowY = yPos - baseOffset - (i * arrowSpacing)
 
-			// Draw curved arrow
-			const arrowPath = new Path2D().moveTo(actionStartX, arrowY).quadraticCurveTo(midX, controlY, actionEndX, arrowY)
-			canvas.drawPath(arrowPath, {
-				fill: "none",
+			// Draw completely horizontal arrow
+			canvas.drawLine(actionStartX, arrowY, actionEndX, arrowY, {
 				stroke: theme.colors.actionPrimary,
 				strokeWidth: theme.stroke.width.base,
 				markerEnd: "url(#action-arrow)"
 			})
 
-			// Arrow label
-			canvas.drawText({
-				x: midX,
-				y: controlY - 5,
-				text: action.label,
-				fill: theme.colors.actionPrimary,
-				anchor: "middle",
-				fontPx: theme.font.size.small,
-				fontWeight: theme.font.weight.bold
+			// Draw dotted lines from arrow endpoints down to the axis
+			canvas.drawLine(actionStartX, arrowY, actionStartX, yPos, {
+				stroke: theme.colors.actionPrimary,
+				strokeWidth: theme.stroke.width.thin,
+				dash: "2,2",
+				opacity: 0.6
 			})
+			canvas.drawLine(actionEndX, arrowY, actionEndX, yPos, {
+				stroke: theme.colors.actionPrimary,
+				strokeWidth: theme.stroke.width.thin,
+				dash: "2,2",
+				opacity: 0.6
+			})
+
+			// Arrow label with better spacing
+			if (action.label) {
+				canvas.drawText({
+					x: midX,
+					y: arrowY - 8,
+					text: action.label,
+					fill: theme.colors.actionPrimary,
+					anchor: "middle",
+					fontPx: theme.font.size.small,
+					fontWeight: theme.font.weight.bold
+				})
+			}
 
 			currentValue += action.delta
 		}
@@ -276,33 +289,46 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const actionEndY = toSvgY(currentValue + action.delta)
 			const midY = (actionStartY + actionEndY) / 2
 
-			// Stack arrows horizontally to avoid overlap
-			const arrowOffset = 20 + i * 15
-			const arrowX = xPos + arrowOffset
-			const controlOffset = 25 + i * 10
-			const controlX = arrowX + controlOffset
+			// Stack arrows horizontally with better spacing
+			const baseOffset = 30
+			const arrowSpacing = 25
+			const arrowX = xPos + baseOffset + (i * arrowSpacing)
 
-			// Draw curved arrow
-			const arrowPath = new Path2D().moveTo(arrowX, actionStartY).quadraticCurveTo(controlX, midY, arrowX, actionEndY)
-			canvas.drawPath(arrowPath, {
-				fill: "none",
+			// Draw completely vertical arrow
+			canvas.drawLine(arrowX, actionStartY, arrowX, actionEndY, {
 				stroke: theme.colors.actionPrimary,
 				strokeWidth: theme.stroke.width.base,
 				markerEnd: "url(#action-arrow)"
 			})
 
-			// Arrow label (rotated for vertical layout)
-			const labelX = controlX + 5
-			canvas.drawText({
-				x: labelX,
-				y: midY,
-				text: action.label,
-				fill: theme.colors.actionPrimary,
-				anchor: "middle",
-				fontPx: theme.font.size.small,
-				fontWeight: theme.font.weight.bold,
-				rotate: { angle: -90, cx: labelX, cy: midY }
+			// Draw dotted lines from arrow endpoints to the axis
+			canvas.drawLine(arrowX, actionStartY, xPos, actionStartY, {
+				stroke: theme.colors.actionPrimary,
+				strokeWidth: theme.stroke.width.thin,
+				dash: "2,2",
+				opacity: 0.6
 			})
+			canvas.drawLine(arrowX, actionEndY, xPos, actionEndY, {
+				stroke: theme.colors.actionPrimary,
+				strokeWidth: theme.stroke.width.thin,
+				dash: "2,2",
+				opacity: 0.6
+			})
+
+			// Arrow label (rotated for vertical layout) with better spacing
+			if (action.label) {
+				const labelX = arrowX + 12
+				canvas.drawText({
+					x: labelX,
+					y: midY,
+					text: action.label,
+					fill: theme.colors.actionPrimary,
+					anchor: "middle",
+					fontPx: theme.font.size.small,
+					fontWeight: theme.font.weight.bold,
+					rotate: { angle: -90, cx: labelX, cy: midY }
+				})
+			}
 
 			currentValue += action.delta
 		}
