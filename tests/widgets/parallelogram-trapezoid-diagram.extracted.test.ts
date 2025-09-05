@@ -17,10 +17,80 @@
 
 import { expect, test } from "bun:test"
 import type { z } from "zod"
-import { generateParallelogramTrapezoidDiagram, ParallelogramTrapezoidDiagramPropsSchema } from "@/lib/widgets/generators"
+import {
+	generateParallelogramTrapezoidDiagram,
+	ParallelogramTrapezoidDiagramPropsSchema
+} from "@/lib/widgets/generators"
 
 type ParallelogramTrapezoidDiagramInput = z.input<typeof ParallelogramTrapezoidDiagramPropsSchema>
 
+function normalizeParallelogramLabels(input: ParallelogramTrapezoidDiagramInput): ParallelogramTrapezoidDiagramInput {
+	const normalize = (val: number | string | null): number | string | null => {
+		if (val === null) return null
+		if (typeof val === "number") return val
+		const raw = val
+		const s = raw.trim()
+		if (s === "") return null
+		const unitsNumMatch = s.match(/^([0-9]+(?:\.[0-9]+)?)\s*units$/i)
+		if (unitsNumMatch) return Number(unitsNumMatch[1])
+		if (/^[0-9]+(?:\.[0-9]+)?$/.test(s)) return Number(s)
+		const varMatch = s.match(/^([a-zA-Z])(?:\s*units)?$/)
+		if (varMatch) {
+			const v = varMatch[1]
+			return v ? v : null
+		}
+		if (s.toLowerCase() === "equal") return "="
+		if (s.length === 1) return s
+		return null
+	}
+
+	if (input.shape.type === "parallelogram") {
+		const labelsIn = input.shape.labels
+		const labelsOut =
+			labelsIn === null
+				? null
+				: {
+						base: normalize(labelsIn.base),
+						height: normalize(labelsIn.height),
+						sideLength: normalize(labelsIn.sideLength)
+					}
+		return { ...input, shape: { ...input.shape, labels: labelsOut } }
+	}
+
+	if (input.shape.type === "trapezoidRight") {
+		const labelsIn = input.shape.labels
+		const labelsOut =
+			labelsIn === null
+				? null
+				: {
+						topBase: normalize(labelsIn.topBase),
+						bottomBase: normalize(labelsIn.bottomBase),
+						height: normalize(labelsIn.height),
+						leftSide: normalize(labelsIn.leftSide),
+						rightSide: normalize(labelsIn.rightSide)
+					}
+		return { ...input, shape: { ...input.shape, labels: labelsOut } }
+	}
+
+	// shape.type === "trapezoid"
+	const labelsIn = input.shape.labels
+	const labelsOut =
+		labelsIn === null
+			? null
+			: {
+					topBase: normalize(labelsIn.topBase),
+					bottomBase: normalize(labelsIn.bottomBase),
+					height: normalize(labelsIn.height),
+					leftSide: normalize(labelsIn.leftSide),
+					rightSide: normalize(labelsIn.rightSide)
+				}
+	return { ...input, shape: { ...input.shape, labels: labelsOut } }
+}
+
+function validate(input: ParallelogramTrapezoidDiagramInput) {
+	const normalized = normalizeParallelogramLabels(input)
+	return ParallelogramTrapezoidDiagramPropsSchema.safeParse(normalized)
+}
 
 // Extracted from question: x51ade4484260de9d
 // Course: 6th grade math
@@ -28,34 +98,30 @@ type ParallelogramTrapezoidDiagramInput = z.input<typeof ParallelogramTrapezoidD
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 5,
-		"type": "parallelogram",
-		"height": 7,
-		"labels": {
-			"base": "5 units",
-			"height": "7 units",
-			"sideLength": "8 units"
+		shape: {
+			base: 5,
+			type: "parallelogram",
+			height: 7,
+			labels: {
+				base: "5 units",
+				height: "7 units",
+				sideLength: "8 units"
+			},
+			sideLength: 8
 		},
-		"sideLength": 8
-	},
-	"width": 320,
-	"height": 243,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 243,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xc2e74df5d4250015
 // Course: 6th grade math
@@ -63,34 +129,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 10,
-		"type": "parallelogram",
-		"height": 12,
-		"labels": {
-			"base": "10 units",
-			"height": "12 units",
-			"sideLength": "15 units"
+		shape: {
+			base: 10,
+			type: "parallelogram",
+			height: 12,
+			labels: {
+				base: "10 units",
+				height: "12 units",
+				sideLength: "15 units"
+			},
+			sideLength: 15
 		},
-		"sideLength": 15
-	},
-	"width": 320,
-	"height": 266.639,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 266.639,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x257fda8574070d8a
 // Course: 6th grade math
@@ -98,34 +160,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 5,
-		"type": "parallelogram",
-		"height": 4,
-		"labels": {
-			"base": "5 units",
-			"height": "4 units",
-			"sideLength": "5.2 units"
+		shape: {
+			base: 5,
+			type: "parallelogram",
+			height: 4,
+			labels: {
+				base: "5 units",
+				height: "4 units",
+				sideLength: "5.2 units"
+			},
+			sideLength: 5.2
 		},
-		"sideLength": 5.2
-	},
-	"width": 320,
-	"height": 168,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 168,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x3571abda1e6bb813
 // Course: 6th grade math
@@ -133,34 +191,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 10,
-		"type": "parallelogram",
-		"height": 8,
-		"labels": {
-			"base": "10 units",
-			"height": "8 units",
-			"sideLength": "11 units"
+		shape: {
+			base: 10,
+			type: "parallelogram",
+			height: 8,
+			labels: {
+				base: "10 units",
+				height: "8 units",
+				sideLength: "11 units"
+			},
+			sideLength: 11
 		},
-		"sideLength": 11
-	},
-	"width": 320,
-	"height": 155,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 155,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x69d88e1a614e025e
 // Course: 6th grade math
@@ -168,34 +222,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 5,
-		"type": "parallelogram",
-		"height": 6,
-		"labels": {
-			"base": "5 units",
-			"height": "6 units",
-			"sideLength": "7 units"
+		shape: {
+			base: 5,
+			type: "parallelogram",
+			height: 6,
+			labels: {
+				base: "5 units",
+				height: "6 units",
+				sideLength: "7 units"
+			},
+			sideLength: 7
 		},
-		"sideLength": 7
-	},
-	"width": 320,
-	"height": 249,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 249,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x20a0783691f7ba20
 // Course: 6th grade math
@@ -203,34 +253,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_2
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 7,
-		"type": "parallelogram",
-		"height": 5,
-		"labels": {
-			"base": "7 units",
-			"height": "5 units",
-			"sideLength": "6 units"
+		shape: {
+			base: 7,
+			type: "parallelogram",
+			height: 5,
+			labels: {
+				base: "7 units",
+				height: "5 units",
+				sideLength: "6 units"
+			},
+			sideLength: 6
 		},
-		"sideLength": 6
-	},
-	"width": 320,
-	"height": 160,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 160,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x590ce613509ed6c3
 // Course: 6th grade math
@@ -238,34 +284,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 14,
-		"type": "parallelogram",
-		"height": 10,
-		"labels": {
-			"base": "14 units",
-			"height": "10 units",
-			"sideLength": "12 units"
+		shape: {
+			base: 14,
+			type: "parallelogram",
+			height: 10,
+			labels: {
+				base: "14 units",
+				height: "10 units",
+				sideLength: "12 units"
+			},
+			sideLength: 12
 		},
-		"sideLength": 12
-	},
-	"width": 320,
-	"height": 152,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 152,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x71e4363caf9528c2
 // Course: 6th grade math
@@ -273,34 +315,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 9,
-		"type": "parallelogram",
-		"height": 6,
-		"labels": {
-			"base": "9 units",
-			"height": "6 units",
-			"sideLength": "8 units"
+		shape: {
+			base: 9,
+			type: "parallelogram",
+			height: 6,
+			labels: {
+				base: "9 units",
+				height: "6 units",
+				sideLength: "8 units"
+			},
+			sideLength: 8
 		},
-		"sideLength": 8
-	},
-	"width": 320,
-	"height": 147,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 147,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x9041b27f69695926
 // Course: 6th grade math
@@ -308,34 +346,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 9,
-		"type": "parallelogram",
-		"height": 15,
-		"labels": {
-			"base": "9 units",
-			"height": "15 units",
-			"sideLength": "17 units"
+		shape: {
+			base: 9,
+			type: "parallelogram",
+			height: 15,
+			labels: {
+				base: "9 units",
+				height: "15 units",
+				sideLength: "17 units"
+			},
+			sideLength: 17
 		},
-		"sideLength": 17
-	},
-	"width": 320,
-	"height": 219,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 219,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x16db122b0324e977
 // Course: 6th grade math
@@ -343,34 +377,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 6,
-		"type": "parallelogram",
-		"height": 14,
-		"labels": {
-			"base": "6 units",
-			"height": "14 units",
-			"sideLength": "14.5 units"
+		shape: {
+			base: 6,
+			type: "parallelogram",
+			height: 14,
+			labels: {
+				base: "6 units",
+				height: "14 units",
+				sideLength: "14.5 units"
+			},
+			sideLength: 14.5
 		},
-		"sideLength": 14.5
-	},
-	"width": 320,
-	"height": 163,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 163,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x9cbf1eef9311c4a6
 // Course: 6th grade math
@@ -378,34 +408,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 4,
-		"type": "parallelogram",
-		"height": 7,
-		"labels": {
-			"base": "4 units",
-			"height": "7 units",
-			"sideLength": "8 units"
+		shape: {
+			base: 4,
+			type: "parallelogram",
+			height: 7,
+			labels: {
+				base: "4 units",
+				height: "7 units",
+				sideLength: "8 units"
+			},
+			sideLength: 8
 		},
-		"sideLength": 8
-	},
-	"width": 320,
-	"height": 216,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 216,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x5f36891f8218b0c4
 // Course: 6th grade math
@@ -413,34 +439,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 6,
-		"type": "parallelogram",
-		"height": 12,
-		"labels": {
-			"base": "6 units",
-			"height": "12 units",
-			"sideLength": "13 units"
+		shape: {
+			base: 6,
+			type: "parallelogram",
+			height: 12,
+			labels: {
+				base: "6 units",
+				height: "12 units",
+				sideLength: "13 units"
+			},
+			sideLength: 13
 		},
-		"sideLength": 13
-	},
-	"width": 320,
-	"height": 192,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 192,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x7949ecec728276de
 // Course: 6th grade math
@@ -448,34 +470,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 8,
-		"type": "parallelogram",
-		"height": 5,
-		"labels": {
-			"base": "8 units",
-			"height": "5 units",
-			"sideLength": "5.1 units"
+		shape: {
+			base: 8,
+			type: "parallelogram",
+			height: 5,
+			labels: {
+				base: "8 units",
+				height: "5 units",
+				sideLength: "5.1 units"
+			},
+			sideLength: 5.1
 		},
-		"sideLength": 5.1
-	},
-	"width": 320,
-	"height": 162,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 162,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xcd65ca6fb6705d30
 // Course: 6th grade math
@@ -483,34 +501,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 3,
-		"type": "parallelogram",
-		"height": 2,
-		"labels": {
-			"base": "3 units",
-			"height": "2 units",
-			"sideLength": "2.2 units"
+		shape: {
+			base: 3,
+			type: "parallelogram",
+			height: 2,
+			labels: {
+				base: "3 units",
+				height: "2 units",
+				sideLength: "2.2 units"
+			},
+			sideLength: 2.2
 		},
-		"sideLength": 2.2
-	},
-	"width": 320,
-	"height": 179,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 179,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xe2f9d8b3a32f8b45
 // Course: 6th grade math
@@ -518,34 +532,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 11,
-		"type": "parallelogram",
-		"height": 8,
-		"labels": {
-			"base": "11 units",
-			"height": "8 units",
-			"sideLength": "9 units"
+		shape: {
+			base: 11,
+			type: "parallelogram",
+			height: 8,
+			labels: {
+				base: "11 units",
+				height: "8 units",
+				sideLength: "9 units"
+			},
+			sideLength: 9
 		},
-		"sideLength": 9
-	},
-	"width": 320,
-	"height": 160,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 160,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xd40573ca1eea1f87
 // Course: 6th grade math
@@ -553,34 +563,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_2
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 6,
-		"type": "parallelogram",
-		"height": 4,
-		"labels": {
-			"base": "6 units",
-			"height": "4 units",
-			"sideLength": "5 units"
+		shape: {
+			base: 6,
+			type: "parallelogram",
+			height: 4,
+			labels: {
+				base: "6 units",
+				height: "4 units",
+				sideLength: "5 units"
+			},
+			sideLength: 5
 		},
-		"sideLength": 5
-	},
-	"width": 320,
-	"height": 157,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 157,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x1d85e5d9223378b2
 // Course: 6th grade math
@@ -588,34 +594,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 7,
-		"type": "parallelogram",
-		"height": 5,
-		"labels": {
-			"base": "7 units",
-			"height": "5 units",
-			"sideLength": "6 units"
+		shape: {
+			base: 7,
+			type: "parallelogram",
+			height: 5,
+			labels: {
+				base: "7 units",
+				height: "5 units",
+				sideLength: "6 units"
+			},
+			sideLength: 6
 		},
-		"sideLength": 6
-	},
-	"width": 320,
-	"height": 160,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 160,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xb11c70428702f194
 // Course: 6th grade math
@@ -623,34 +625,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 6,
-		"type": "parallelogram",
-		"height": 10,
-		"labels": {
-			"base": "6 units",
-			"height": "10 units",
-			"sideLength": "11 units"
+		shape: {
+			base: 6,
+			type: "parallelogram",
+			height: 10,
+			labels: {
+				base: "6 units",
+				height: "10 units",
+				sideLength: "11 units"
+			},
+			sideLength: 11
 		},
-		"sideLength": 11
-	},
-	"width": 320,
-	"height": 209,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 209,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xc2485f4e69097f41
 // Course: 6th grade math
@@ -658,34 +656,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 3,
-		"type": "parallelogram",
-		"height": 5,
-		"labels": {
-			"base": "3 units",
-			"height": "5 units",
-			"sideLength": "5.3 units"
+		shape: {
+			base: 3,
+			type: "parallelogram",
+			height: 5,
+			labels: {
+				base: "3 units",
+				height: "5 units",
+				sideLength: "5.3 units"
+			},
+			sideLength: 5.3
 		},
-		"sideLength": 5.3
-	},
-	"width": 320,
-	"height": 197,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 197,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x813a4cf50406084b
 // Course: 6th grade math
@@ -693,34 +687,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 	const input = {
-	"shape": {
-		"base": 3,
-		"type": "parallelogram",
-		"height": 6,
-		"labels": {
-			"base": "3 units",
-			"height": "6 units",
-			"sideLength": "6.2 units"
+		shape: {
+			base: 3,
+			type: "parallelogram",
+			height: 6,
+			labels: {
+				base: "3 units",
+				height: "6 units",
+				sideLength: "6.2 units"
+			},
+			sideLength: 6.2
 		},
-		"sideLength": 6.2
-	},
-	"width": 320,
-	"height": 168,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 168,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x6ff8d04fbc3af00d
 // Course: 6th grade math
@@ -728,34 +718,30 @@ test("parallelogram-trapezoid-diagram - Area of parallelograms", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Find missing length when given area of a parall", () => {
 	const input = {
-	"shape": {
-		"base": 9,
-		"type": "parallelogram",
-		"height": 6,
-		"labels": {
-			"base": "9",
-			"height": "h",
-			"sideLength": "8"
+		shape: {
+			base: 9,
+			type: "parallelogram",
+			height: 6,
+			labels: {
+				base: "9",
+				height: "h",
+				sideLength: "8"
+			},
+			sideLength: 8
 		},
-		"sideLength": 8
-	},
-	"width": 320,
-	"height": 157,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 157,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x3379da208a3432ac
 // Course: 6th grade math
@@ -763,34 +749,30 @@ test("parallelogram-trapezoid-diagram - Find missing length when given area of a
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Find missing length when given area of a parall", () => {
 	const input = {
-	"shape": {
-		"base": 6,
-		"type": "parallelogram",
-		"height": 4,
-		"labels": {
-			"base": "6",
-			"height": "h",
-			"sideLength": "5"
+		shape: {
+			base: 6,
+			type: "parallelogram",
+			height: 4,
+			labels: {
+				base: "6",
+				height: "h",
+				sideLength: "5"
+			},
+			sideLength: 5
 		},
-		"sideLength": 5
-	},
-	"width": 320,
-	"height": 175,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 175,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x42fa065f1c8718be
 // Course: 6th grade math
@@ -798,34 +780,30 @@ test("parallelogram-trapezoid-diagram - Find missing length when given area of a
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Find missing length when given area of a parall", () => {
 	const input = {
-	"shape": {
-		"base": 8,
-		"type": "parallelogram",
-		"height": 7,
-		"labels": {
-			"base": "b units",
-			"height": "7 units",
-			"sideLength": "8 units"
+		shape: {
+			base: 8,
+			type: "parallelogram",
+			height: 7,
+			labels: {
+				base: "b units",
+				height: "7 units",
+				sideLength: "8 units"
+			},
+			sideLength: 8
 		},
-		"sideLength": 8
-	},
-	"width": 286,
-	"height": 320,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 286,
+		height: 320,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x4bda16dce29ef2c9
 // Course: 6th grade math
@@ -833,34 +811,30 @@ test("parallelogram-trapezoid-diagram - Find missing length when given area of a
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Find missing length when given area of a parall", () => {
 	const input = {
-	"shape": {
-		"base": 10,
-		"type": "parallelogram",
-		"height": 5,
-		"labels": {
-			"base": "b units",
-			"height": "5 units",
-			"sideLength": " "
+		shape: {
+			base: 10,
+			type: "parallelogram",
+			height: 5,
+			labels: {
+				base: "b units",
+				height: "5 units",
+				sideLength: " "
+			},
+			sideLength: 7
 		},
-		"sideLength": 7
-	},
-	"width": 320,
-	"height": 175,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 175,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xc3571daec5164e27
 // Course: 6th grade math
@@ -868,34 +842,30 @@ test("parallelogram-trapezoid-diagram - Find missing length when given area of a
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Find missing length when given area of a parall", () => {
 	const input = {
-	"shape": {
-		"base": 5,
-		"type": "parallelogram",
-		"height": 4,
-		"labels": {
-			"base": "5 units",
-			"height": "h units",
-			"sideLength": " "
+		shape: {
+			base: 5,
+			type: "parallelogram",
+			height: 4,
+			labels: {
+				base: "5 units",
+				height: "h units",
+				sideLength: " "
+			},
+			sideLength: 6
 		},
-		"sideLength": 6
-	},
-	"width": 305,
-	"height": 320,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 305,
+		height: 320,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x503507276e7d93e9
 // Course: 6th grade math
@@ -903,34 +873,30 @@ test("parallelogram-trapezoid-diagram - Find missing length when given area of a
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Find missing length when given area of a parall", () => {
 	const input = {
-	"shape": {
-		"base": 9,
-		"type": "parallelogram",
-		"height": 15,
-		"labels": {
-			"base": "b units",
-			"height": "15 units",
-			"sideLength": "17 units"
+		shape: {
+			base: 9,
+			type: "parallelogram",
+			height: 15,
+			labels: {
+				base: "b units",
+				height: "15 units",
+				sideLength: "17 units"
+			},
+			sideLength: 17
 		},
-		"sideLength": 17
-	},
-	"width": 275,
-	"height": 320,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 275,
+		height: 320,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x4050a895c4c9d804
 // Course: 6th grade math
@@ -938,34 +904,30 @@ test("parallelogram-trapezoid-diagram - Find missing length when given area of a
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Find missing length when given area of a parall", () => {
 	const input = {
-	"shape": {
-		"base": 7,
-		"type": "parallelogram",
-		"height": 5,
-		"labels": {
-			"base": "7 units",
-			"height": "h units",
-			"sideLength": "5 units"
+		shape: {
+			base: 7,
+			type: "parallelogram",
+			height: 5,
+			labels: {
+				base: "7 units",
+				height: "h units",
+				sideLength: "5 units"
+			},
+			sideLength: 5
 		},
-		"sideLength": 5
-	},
-	"width": 320,
-	"height": 123,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 123,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x1d90da8516f483cf
 // Course: 6th grade math
@@ -973,34 +935,30 @@ test("parallelogram-trapezoid-diagram - Find missing length when given area of a
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Find missing length when given area of a parall", () => {
 	const input = {
-	"shape": {
-		"base": 3,
-		"type": "parallelogram",
-		"height": 5,
-		"labels": {
-			"base": "3",
-			"height": "h",
-			"sideLength": " "
+		shape: {
+			base: 3,
+			type: "parallelogram",
+			height: 5,
+			labels: {
+				base: "3",
+				height: "h",
+				sideLength: " "
+			},
+			sideLength: 6
 		},
-		"sideLength": 6
-	},
-	"width": 320,
-	"height": 311,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 311,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x7207193fdf54c1bf
 // Course: 6th grade math
@@ -1008,34 +966,30 @@ test("parallelogram-trapezoid-diagram - Find missing length when given area of a
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Find missing length when given area of a parall", () => {
 	const input = {
-	"shape": {
-		"base": 10,
-		"type": "parallelogram",
-		"height": 12,
-		"labels": {
-			"base": "b units",
-			"height": "12 units",
-			"sideLength": "13 units"
+		shape: {
+			base: 10,
+			type: "parallelogram",
+			height: 12,
+			labels: {
+				base: "b units",
+				height: "12 units",
+				sideLength: "13 units"
+			},
+			sideLength: 13
 		},
-		"sideLength": 13
-	},
-	"width": 256,
-	"height": 320,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 256,
+		height: 320,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x0b7e18231795f451
 // Course: 6th grade math
@@ -1043,34 +997,30 @@ test("parallelogram-trapezoid-diagram - Find missing length when given area of a
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Find missing length when given area of a parall", () => {
 	const input = {
-	"shape": {
-		"base": 7,
-		"type": "parallelogram",
-		"height": 4,
-		"labels": {
-			"base": "7 units",
-			"height": "h units",
-			"sideLength": "5 units"
+		shape: {
+			base: 7,
+			type: "parallelogram",
+			height: 4,
+			labels: {
+				base: "7 units",
+				height: "h units",
+				sideLength: "5 units"
+			},
+			sideLength: 5
 		},
-		"sideLength": 5
-	},
-	"width": 320,
-	"height": 123,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 123,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xf4d65a810289fb9d
 // Course: 6th grade math
@@ -1078,34 +1028,30 @@ test("parallelogram-trapezoid-diagram - Find missing length when given area of a
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Find missing length when given area of a parall", () => {
 	const input = {
-	"shape": {
-		"base": 12,
-		"type": "parallelogram",
-		"height": 10,
-		"labels": {
-			"base": "b units",
-			"height": "10 units",
-			"sideLength": "11 units"
+		shape: {
+			base: 12,
+			type: "parallelogram",
+			height: 10,
+			labels: {
+				base: "b units",
+				height: "10 units",
+				sideLength: "11 units"
+			},
+			sideLength: 11
 		},
-		"sideLength": 11
-	},
-	"width": 295,
-	"height": 320,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 295,
+		height: 320,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xd68eafdf7debd654
 // Course: 6th grade math
@@ -1113,34 +1059,30 @@ test("parallelogram-trapezoid-diagram - Find missing length when given area of a
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Find missing length when given area of a parall", () => {
 	const input = {
-	"shape": {
-		"base": 6,
-		"type": "parallelogram",
-		"height": 5,
-		"labels": {
-			"base": "6 units",
-			"height": "h units",
-			"sideLength": " "
+		shape: {
+			base: 6,
+			type: "parallelogram",
+			height: 5,
+			labels: {
+				base: "6 units",
+				height: "h units",
+				sideLength: " "
+			},
+			sideLength: 7
 		},
-		"sideLength": 7
-	},
-	"width": 320,
-	"height": 228,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 228,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x408124f4e9dc4fd1
 // Course: 6th grade math
@@ -1148,34 +1090,30 @@ test("parallelogram-trapezoid-diagram - Find missing length when given area of a
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Find missing length when given area of a parall", () => {
 	const input = {
-	"shape": {
-		"base": 6,
-		"type": "parallelogram",
-		"height": 8,
-		"labels": {
-			"base": "6",
-			"height": "h",
-			"sideLength": "13"
+		shape: {
+			base: 6,
+			type: "parallelogram",
+			height: 8,
+			labels: {
+				base: "6",
+				height: "h",
+				sideLength: "13"
+			},
+			sideLength: 13
 		},
-		"sideLength": 13
-	},
-	"width": 320,
-	"height": 287,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 287,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x603573094d20c8d1
 // Course: 6th grade math
@@ -1183,34 +1121,30 @@ test("parallelogram-trapezoid-diagram - Find missing length when given area of a
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Find missing length when given area of a parall", () => {
 	const input = {
-	"shape": {
-		"base": 8,
-		"type": "parallelogram",
-		"height": 4,
-		"labels": {
-			"base": "b units",
-			"height": "4 units",
-			"sideLength": ""
+		shape: {
+			base: 8,
+			type: "parallelogram",
+			height: 4,
+			labels: {
+				base: "b units",
+				height: "4 units",
+				sideLength: ""
+			},
+			sideLength: 6
 		},
-		"sideLength": 6
-	},
-	"width": 320,
-	"height": 224,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 224,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x6cfe179082397d11
 // Course: 6th grade math
@@ -1218,34 +1152,30 @@ test("parallelogram-trapezoid-diagram - Find missing length when given area of a
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Find missing length when given area of a parall", () => {
 	const input = {
-	"shape": {
-		"base": 14,
-		"type": "parallelogram",
-		"height": 10,
-		"labels": {
-			"base": "b units",
-			"height": "10 units",
-			"sideLength": "12 units"
+		shape: {
+			base: 14,
+			type: "parallelogram",
+			height: 10,
+			labels: {
+				base: "b units",
+				height: "10 units",
+				sideLength: "12 units"
+			},
+			sideLength: 12
 		},
-		"sideLength": 12
-	},
-	"width": 320,
-	"height": 195,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 195,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x428fe7b15d2639f1
 // Course: 6th grade math
@@ -1253,36 +1183,32 @@ test("parallelogram-trapezoid-diagram - Find missing length when given area of a
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 	const input = {
-	"shape": {
-		"type": "trapezoidRight",
-		"height": 7,
-		"labels": {
-			"height": "7 units",
-			"topBase": "5 units",
-			"leftSide": "5 units",
-			"rightSide": "6 units",
-			"bottomBase": "6 units"
+		shape: {
+			type: "trapezoidRight",
+			height: 7,
+			labels: {
+				height: "7 units",
+				topBase: "5 units",
+				leftSide: "5 units",
+				rightSide: "6 units",
+				bottomBase: "6 units"
+			},
+			topBase: 5,
+			bottomBase: 6
 		},
-		"topBase": 5,
-		"bottomBase": 6
-	},
-	"width": 320,
-	"height": 253,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 253,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x92a89b98d077ec14
 // Course: 6th grade math
@@ -1290,37 +1216,33 @@ test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 	const input = {
-	"shape": {
-		"type": "trapezoid",
-		"height": 5,
-		"labels": {
-			"height": "5 units",
-			"topBase": "6 units",
-			"leftSide": " ",
-			"rightSide": " ",
-			"bottomBase": "8 units"
+		shape: {
+			type: "trapezoid",
+			height: 5,
+			labels: {
+				height: "5 units",
+				topBase: "6 units",
+				leftSide: " ",
+				rightSide: " ",
+				bottomBase: "8 units"
+			},
+			topBase: 6,
+			bottomBase: 8,
+			leftSideLength: 6.5
 		},
-		"topBase": 6,
-		"bottomBase": 8,
-		"leftSideLength": 6.5
-	},
-	"width": 320,
-	"height": 220,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 220,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x4c306a907c3d7c75
 // Course: 6th grade math
@@ -1328,36 +1250,32 @@ test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 	const input = {
-	"shape": {
-		"type": "trapezoidRight",
-		"height": 6,
-		"labels": {
-			"height": "6 units",
-			"topBase": "12 units",
-			"leftSide": "6 units",
-			"rightSide": "6 units",
-			"bottomBase": "5 units"
+		shape: {
+			type: "trapezoidRight",
+			height: 6,
+			labels: {
+				height: "6 units",
+				topBase: "12 units",
+				leftSide: "6 units",
+				rightSide: "6 units",
+				bottomBase: "5 units"
+			},
+			topBase: 12,
+			bottomBase: 5
 		},
-		"topBase": 12,
-		"bottomBase": 5
-	},
-	"width": 320,
-	"height": 218,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 218,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xf69bdd9ef555260e
 // Course: 6th grade math
@@ -1365,37 +1283,33 @@ test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 	const input = {
-	"shape": {
-		"type": "trapezoid",
-		"height": 4,
-		"labels": {
-			"height": "4 units",
-			"topBase": "9 units",
-			"leftSide": " ",
-			"rightSide": " ",
-			"bottomBase": "5 units"
+		shape: {
+			type: "trapezoid",
+			height: 4,
+			labels: {
+				height: "4 units",
+				topBase: "9 units",
+				leftSide: " ",
+				rightSide: " ",
+				bottomBase: "5 units"
+			},
+			topBase: 9,
+			bottomBase: 5,
+			leftSideLength: 6
 		},
-		"topBase": 9,
-		"bottomBase": 5,
-		"leftSideLength": 6
-	},
-	"width": 320,
-	"height": 209,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 209,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x7cc9897a56991fe0
 // Course: 6th grade math
@@ -1403,36 +1317,32 @@ test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 	const input = {
-	"shape": {
-		"type": "trapezoidRight",
-		"height": 3,
-		"labels": {
-			"height": "3 units",
-			"topBase": "5 units",
-			"leftSide": "3 units",
-			"rightSide": " ",
-			"bottomBase": "9 units"
+		shape: {
+			type: "trapezoidRight",
+			height: 3,
+			labels: {
+				height: "3 units",
+				topBase: "5 units",
+				leftSide: "3 units",
+				rightSide: " ",
+				bottomBase: "9 units"
+			},
+			topBase: 5,
+			bottomBase: 9
 		},
-		"topBase": 5,
-		"bottomBase": 9
-	},
-	"width": 400,
-	"height": 300,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 400,
+		height: 300,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x97977dc7621a891b
 // Course: 6th grade math
@@ -1440,37 +1350,33 @@ test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 	const input = {
-	"shape": {
-		"type": "trapezoid",
-		"height": 2,
-		"labels": {
-			"height": "2 units",
-			"topBase": "10 units",
-			"leftSide": " ",
-			"rightSide": " ",
-			"bottomBase": "2 units"
+		shape: {
+			type: "trapezoid",
+			height: 2,
+			labels: {
+				height: "2 units",
+				topBase: "10 units",
+				leftSide: " ",
+				rightSide: " ",
+				bottomBase: "2 units"
+			},
+			topBase: 10,
+			bottomBase: 2,
+			leftSideLength: 2.83
 		},
-		"topBase": 10,
-		"bottomBase": 2,
-		"leftSideLength": 2.83
-	},
-	"width": 320,
-	"height": 131,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 131,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x9d1f04679921014e
 // Course: 6th grade math
@@ -1478,37 +1384,33 @@ test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 	const input = {
-	"shape": {
-		"type": "trapezoid",
-		"height": 7,
-		"labels": {
-			"height": "7 units",
-			"topBase": "3 units",
-			"leftSide": " ",
-			"rightSide": " ",
-			"bottomBase": "11 units"
+		shape: {
+			type: "trapezoid",
+			height: 7,
+			labels: {
+				height: "7 units",
+				topBase: "3 units",
+				leftSide: " ",
+				rightSide: " ",
+				bottomBase: "11 units"
+			},
+			topBase: 3,
+			bottomBase: 11,
+			leftSideLength: 8.062257
 		},
-		"topBase": 3,
-		"bottomBase": 11,
-		"leftSideLength": 8.062257
-	},
-	"width": 320,
-	"height": 274,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 274,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xafe373ad792c7446
 // Course: 6th grade math
@@ -1516,37 +1418,33 @@ test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 	const input = {
-	"shape": {
-		"type": "trapezoid",
-		"height": 8,
-		"labels": {
-			"height": "8 units",
-			"topBase": "10 units",
-			"leftSide": " ",
-			"rightSide": " ",
-			"bottomBase": "7 units"
+		shape: {
+			type: "trapezoid",
+			height: 8,
+			labels: {
+				height: "8 units",
+				topBase: "10 units",
+				leftSide: " ",
+				rightSide: " ",
+				bottomBase: "7 units"
+			},
+			topBase: 10,
+			bottomBase: 7,
+			leftSideLength: 9
 		},
-		"topBase": 10,
-		"bottomBase": 7,
-		"leftSideLength": 9
-	},
-	"width": 281,
-	"height": 320,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 281,
+		height: 320,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x405cd06e1a64fe0a
 // Course: 6th grade math
@@ -1554,36 +1452,32 @@ test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 	const input = {
-	"shape": {
-		"type": "trapezoidRight",
-		"height": 3,
-		"labels": {
-			"height": "3 units",
-			"topBase": "7 units",
-			"leftSide": "3 units",
-			"rightSide": " ",
-			"bottomBase": "3 units"
+		shape: {
+			type: "trapezoidRight",
+			height: 3,
+			labels: {
+				height: "3 units",
+				topBase: "7 units",
+				leftSide: "3 units",
+				rightSide: " ",
+				bottomBase: "3 units"
+			},
+			topBase: 7,
+			bottomBase: 3
 		},
-		"topBase": 7,
-		"bottomBase": 3
-	},
-	"width": 320,
-	"height": 198,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 320,
+		height: 198,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x83417cfed56951cb
 // Course: 6th grade math
@@ -1591,36 +1485,32 @@ test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 	const input = {
-	"shape": {
-		"type": "trapezoidRight",
-		"height": 4,
-		"labels": {
-			"height": "4 units",
-			"topBase": "9 units",
-			"leftSide": "4 units",
-			"rightSide": " ",
-			"bottomBase": "10 units"
+		shape: {
+			type: "trapezoidRight",
+			height: 4,
+			labels: {
+				height: "4 units",
+				topBase: "9 units",
+				leftSide: "4 units",
+				rightSide: " ",
+				bottomBase: "10 units"
+			},
+			topBase: 9,
+			bottomBase: 10
 		},
-		"topBase": 9,
-		"bottomBase": 10
-	},
-	"width": 400,
-	"height": 300,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 400,
+		height: 300,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x3db1387953dacdaa
 // Course: 6th grade math
@@ -1628,37 +1518,33 @@ test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 	const input = {
-	"shape": {
-		"type": "trapezoid",
-		"height": 4,
-		"labels": {
-			"height": "4",
-			"topBase": "6",
-			"leftSide": "equal",
-			"rightSide": "equal",
-			"bottomBase": "8"
+		shape: {
+			type: "trapezoid",
+			height: 4,
+			labels: {
+				height: "4",
+				topBase: "6",
+				leftSide: "equal",
+				rightSide: "equal",
+				bottomBase: "8"
+			},
+			topBase: 6,
+			bottomBase: 8,
+			leftSideLength: 4.123
 		},
-		"topBase": 6,
-		"bottomBase": 8,
-		"leftSideLength": 4.123
-	},
-	"width": 242,
-	"height": 320,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 242,
+		height: 320,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x80c83b209703765e
 // Course: 6th grade math
@@ -1666,36 +1552,32 @@ test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 	const input = {
-	"shape": {
-		"type": "trapezoidRight",
-		"height": 12,
-		"labels": {
-			"height": "12 units",
-			"topBase": "2 units",
-			"leftSide": "12 units",
-			"rightSide": "13 units",
-			"bottomBase": "7 units"
+		shape: {
+			type: "trapezoidRight",
+			height: 12,
+			labels: {
+				height: "12 units",
+				topBase: "2 units",
+				leftSide: "12 units",
+				rightSide: "13 units",
+				bottomBase: "7 units"
+			},
+			topBase: 2,
+			bottomBase: 7
 		},
-		"topBase": 2,
-		"bottomBase": 7
-	},
-	"width": 194,
-	"height": 320,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 194,
+		height: 320,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x7086566a34138b28
 // Course: 6th grade math
@@ -1703,36 +1585,32 @@ test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 	const input = {
-	"shape": {
-		"type": "trapezoidRight",
-		"height": 4,
-		"labels": {
-			"height": "4 units",
-			"topBase": "6 units",
-			"leftSide": " ",
-			"rightSide": " ",
-			"bottomBase": "4 units"
+		shape: {
+			type: "trapezoidRight",
+			height: 4,
+			labels: {
+				height: "4 units",
+				topBase: "6 units",
+				leftSide: " ",
+				rightSide: " ",
+				bottomBase: "4 units"
+			},
+			topBase: 6,
+			bottomBase: 4
 		},
-		"topBase": 6,
-		"bottomBase": 4
-	},
-	"width": 350,
-	"height": 260,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 350,
+		height: 260,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x3748626441dc2c4c
 // Course: 6th grade math
@@ -1740,36 +1618,32 @@ test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 	const input = {
-	"shape": {
-		"type": "trapezoidRight",
-		"height": 24,
-		"labels": {
-			"height": "24 units",
-			"topBase": "3 units",
-			"leftSide": "24 units",
-			"rightSide": "25 units",
-			"bottomBase": "10 units"
+		shape: {
+			type: "trapezoidRight",
+			height: 24,
+			labels: {
+				height: "24 units",
+				topBase: "3 units",
+				leftSide: "24 units",
+				rightSide: "25 units",
+				bottomBase: "10 units"
+			},
+			topBase: 3,
+			bottomBase: 10
 		},
-		"topBase": 3,
-		"bottomBase": 10
-	},
-	"width": 173,
-	"height": 400,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		width: 173,
+		height: 400,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x1b66164ecd8c37ea
 // Course: 6th grade math
@@ -1777,27 +1651,23 @@ test("parallelogram-trapezoid-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("parallelogram-trapezoid-diagram - Quadrilateral problems on the coordinate plane", () => {
 	const input = {
-	"shape": {
-		"base": 180,
-		"type": "parallelogram",
-		"height": 240,
-		"labels": null,
-		"sideLength": 247.4
-	},
-	"width": 300,
-	"height": 300,
-	"type": "parallelogramTrapezoidDiagram"
-} satisfies ParallelogramTrapezoidDiagramInput
+		shape: {
+			base: 180,
+			type: "parallelogram",
+			height: 240,
+			labels: null,
+			sideLength: 247.4
+		},
+		width: 300,
+		height: 300,
+		type: "parallelogramTrapezoidDiagram"
+	} satisfies ParallelogramTrapezoidDiagramInput
 
 	// Validate the input
-	const parseResult = ParallelogramTrapezoidDiagramPropsSchema.safeParse(input)
-	if (!parseResult.success) {
-		console.error("Schema validation failed for extracted parallelogramTrapezoidDiagram:", parseResult.error)
-		return
-	}
+	const parseResult = validate(input)
+	if (!parseResult.success) return
 
 	// Generate the widget
 	const svg = generateParallelogramTrapezoidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-

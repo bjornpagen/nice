@@ -7,6 +7,8 @@ import { PADDING } from "@/lib/widgets/utils/constants"
 import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
 
+const LabelValue = z.union([z.number(), z.string().max(1)])
+
 const Parallelogram = z
 	.object({
 		type: z.literal("parallelogram").describe("Specifies a parallelogram shape."),
@@ -28,22 +30,19 @@ const Parallelogram = z
 			),
 		labels: z
 			.object({
-				base: z
-					.string()
-					.nullable()
-					.describe("Label for the base (e.g., '8 cm', 'b', '10'). Null hides label. Positioned below the base."),
-				height: z
-					.string()
-					.nullable()
-					.describe("Label for the height (e.g., '5 cm', 'h', '7'). Null hides label. Shows perpendicular distance."),
-				sideLength: z
-					.string()
-					.nullable()
-					.describe("Label for the slanted side (e.g., '6 cm', 's', '8'). Null hides label. Positioned along the side.")
+				base: LabelValue.nullable().describe(
+					"Label for the base: number or single-letter variable. Null hides label. Positioned below the base."
+				),
+				height: LabelValue.nullable().describe(
+					"Label for the height: number or single-letter variable. Null hides label. Perpendicular distance."
+				),
+				sideLength: LabelValue.nullable().describe(
+					"Label for the slanted side: number or single-letter variable. Null hides label. Positioned along the side."
+				)
 			})
 			.strict()
 			.nullable()
-			.describe("Labels for dimensions. Null object hides all labels.")
+			.describe("Labels for dimensions as numbers or single-letter variables. Null object hides all labels.")
 	})
 	.strict()
 
@@ -66,21 +65,25 @@ const RightTrapezoid = z
 			),
 		labels: z
 			.object({
-				topBase: z.string().nullable().describe("Label for top base (e.g., '6 cm', 'a'). Null hides label."),
-				bottomBase: z.string().nullable().describe("Label for bottom base (e.g., '10 cm', 'b'). Null hides label."),
-				height: z.string().nullable().describe("Label for height/left side (e.g., '5 cm', 'h'). Null hides label."),
-				leftSide: z
-					.string()
-					.nullable()
-					.describe("Label for left perpendicular side (e.g., '5 cm', 'h'). Often same as height. Null hides label."),
-				rightSide: z
-					.string()
-					.nullable()
-					.describe("Label for right slanted side (e.g., '6.4 cm', 'c'). Null hides label.")
+				topBase: LabelValue.nullable().describe(
+					"Label for top base: number or single-letter variable. Null hides label."
+				),
+				bottomBase: LabelValue.nullable().describe(
+					"Label for bottom base: number or single-letter variable. Null hides label."
+				),
+				height: LabelValue.nullable().describe(
+					"Label for height/left side: number or single-letter variable. Null hides label."
+				),
+				leftSide: LabelValue.nullable().describe(
+					"Label for left perpendicular side: number or single-letter variable. Often same as height. Null hides label."
+				),
+				rightSide: LabelValue.nullable().describe(
+					"Label for right slanted side: number or single-letter variable. Null hides label."
+				)
 			})
 			.strict()
 			.nullable()
-			.describe("Labels for dimensions. Null object hides all labels.")
+			.describe("Labels for dimensions as numbers or single-letter variables. Null object hides all labels.")
 	})
 	.strict()
 
@@ -107,21 +110,25 @@ const GeneralTrapezoid = z
 			.describe("Length of the left slanted side in arbitrary units (e.g., 5, 7, 4.5). Can differ from right side."),
 		labels: z
 			.object({
-				topBase: z.string().nullable().describe("Label for top base (e.g., '5 cm', 'a'). Null hides label."),
-				bottomBase: z.string().nullable().describe("Label for bottom base (e.g., '9 cm', 'b'). Null hides label."),
-				height: z
-					.string()
-					.nullable()
-					.describe("Label for perpendicular height (e.g., '4 cm', 'h'). Shows with dashed line. Null hides label."),
-				leftSide: z.string().nullable().describe("Label for left slanted side (e.g., '5 cm', 'c'). Null hides label."),
-				rightSide: z
-					.string()
-					.nullable()
-					.describe("Label for right slanted side (e.g., '5.5 cm', 'd'). Null hides label.")
+				topBase: LabelValue.nullable().describe(
+					"Label for top base: number or single-letter variable. Null hides label."
+				),
+				bottomBase: LabelValue.nullable().describe(
+					"Label for bottom base: number or single-letter variable. Null hides label."
+				),
+				height: LabelValue.nullable().describe(
+					"Label for perpendicular height: number or single-letter variable. Shows with dashed line. Null hides label."
+				),
+				leftSide: LabelValue.nullable().describe(
+					"Label for left slanted side: number or single-letter variable. Null hides label."
+				),
+				rightSide: LabelValue.nullable().describe(
+					"Label for right slanted side: number or single-letter variable. Null hides label."
+				)
 			})
 			.strict()
 			.nullable()
-			.describe("Labels for dimensions. Null object hides all labels.")
+			.describe("Labels for dimensions as numbers or single-letter variables. Null object hides all labels.")
 	})
 	.strict()
 
@@ -161,6 +168,11 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		fontPxDefault: 12,
 		lineHeightDefault: 1.2
 	})
+
+	const labelToString = (value: number | string | null | undefined): string | undefined => {
+		if (value === null || value === undefined) return undefined
+		return typeof value === "number" ? String(value) : value
+	}
 
 	// --- SCALING LOGIC START ---
 	const availableWidth = width - PADDING * 2
@@ -248,66 +260,103 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 			})
 		}
 
-		// Draw labels
+		// Draw labels only when provided
 		// Base label (bottom)
-		const baseLabel = labels?.base ?? String(base)
-		const baseLabelX = xOffset + scaledBase / 2
-		const baseLabelY = yOffset + scaledH + 20
-		canvas.drawText({
-			x: baseLabelX,
-			y: baseLabelY,
-			text: baseLabel,
-			anchor: "middle",
-			fontPx: theme.font.size.medium
-		})
+		const baseLabel = labelToString(labels?.base)
+		if (baseLabel !== undefined) {
+			const baseLabelX = xOffset + scaledBase / 2
+			const baseLabelY = yOffset + scaledH + 20
+			canvas.drawText({
+				x: baseLabelX,
+				y: baseLabelY,
+				text: baseLabel,
+				anchor: "middle",
+				fontPx: theme.font.size.medium
+			})
+		}
 
 		// Right side label
-		const rightLabel = labels?.sideLength ?? String(sideLength)
-		const rightLabelX = xOffset + scaledBase + scaledOffset / 2
-		const rightLabelY = yOffset + scaledH / 2
-		canvas.drawText({
-			x: rightLabelX + 20,
-			y: rightLabelY,
-			text: rightLabel,
-			anchor: "start",
-			fontPx: theme.font.size.medium
-		})
+		const rightLabel = labelToString(labels?.sideLength)
+		if (rightLabel !== undefined) {
+			const rightLabelX = xOffset + scaledBase + scaledOffset / 2
+			const rightLabelY = yOffset + scaledH / 2
+			canvas.drawText({
+				x: rightLabelX + 20,
+				y: rightLabelY,
+				text: rightLabel,
+				anchor: "start",
+				fontPx: theme.font.size.medium
+			})
+		}
 
-		// Top base label
-		const topLabelX = xOffset + scaledOffset + scaledBase / 2
-		const topLabelY = yOffset - 10
-		canvas.drawText({
-			x: topLabelX,
-			y: topLabelY,
-			text: baseLabel,
-			anchor: "middle",
-			fontPx: theme.font.size.medium
-		})
+		// Top base label mirrors base label when provided
+		if (baseLabel !== undefined) {
+			const topLabelX = xOffset + scaledOffset + scaledBase / 2
+			const topLabelY = yOffset - 10
+			canvas.drawText({
+				x: topLabelX,
+				y: topLabelY,
+				text: baseLabel,
+				anchor: "middle",
+				fontPx: theme.font.size.medium
+			})
+		}
 
 		// Left side label
-		const leftLabel = labels?.sideLength ?? String(sideLength)
-		const leftLabelX = xOffset + scaledOffset / 2
-		const leftLabelY = yOffset + scaledH / 2
-		canvas.drawText({
-			x: leftLabelX - 20,
-			y: leftLabelY,
-			text: leftLabel,
-			anchor: "end",
-			fontPx: theme.font.size.medium
-		})
-
-		// Height label
-		const heightLabel = labels?.height ?? String(h)
-		if (v3 && v4) {
-			const heightLabelX = v3.x + (v4.x - v3.x) / 2 - 10
-			const heightLabelY = v3.y + (v4.y - v3.y) / 2
+		const leftLabel = labelToString(labels?.sideLength)
+		if (leftLabel !== undefined) {
+			const leftLabelX = xOffset + scaledOffset / 2
+			const leftLabelY = yOffset + scaledH / 2
 			canvas.drawText({
-				x: heightLabelX,
-				y: heightLabelY,
-				text: heightLabel,
+				x: leftLabelX - 20,
+				y: leftLabelY,
+				text: leftLabel,
 				anchor: "end",
 				fontPx: theme.font.size.medium
 			})
+		}
+
+		// Height label with dynamic side placement to avoid clash with left slanted edge
+		const heightLabel = labelToString(labels?.height)
+		if (heightLabel !== undefined && v3 && v4) {
+			const yMid = v3.y + (v4.y - v3.y) / 2
+			// Interpolate x of the left slanted side (between top-left v3 and bottom-left v0) at yMid
+			const v0 = vertices[0]
+			let placeOnLeft = true
+			if (v0) {
+				const denom = v0.y - v3.y
+				const t = denom === 0 ? 0 : (yMid - v3.y) / denom
+				const xLeftAtMid = v3.x + (v0.x - v3.x) * t
+				const dashedX = v3.x
+				const gap = dashedX - xLeftAtMid // available horizontal space to the left of the dashed line
+				const estimateTextWidth = (text: string, fontPx: number) =>
+					Math.max(0, Math.ceil(fontPx * 0.6 * Math.max(1, text.length)))
+				const fontPx = theme.font.size.medium
+				const labelWidthPx = estimateTextWidth(heightLabel, fontPx)
+				const margin = 10
+				placeOnLeft = labelWidthPx + margin <= gap
+			}
+
+			const heightLabelY = yMid
+			if (placeOnLeft) {
+				const heightLabelX = v3.x - 10
+				canvas.drawText({
+					x: heightLabelX,
+					y: heightLabelY,
+					text: heightLabel,
+					anchor: "end",
+					fontPx: theme.font.size.medium
+				})
+			} else {
+				const heightLabelX = v3.x + 10
+				canvas.drawText({
+					x: heightLabelX,
+					y: heightLabelY,
+					text: heightLabel,
+					anchor: "start",
+					fontPx: theme.font.size.medium
+				})
+			}
 		}
 	} else if (shape.type === "trapezoidRight") {
 		// Right trapezoid - left side is perpendicular
@@ -361,68 +410,64 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		}
 
 		const rightOffset = scaledBottom - scaledTop
-		const rightSideLengthVal = Math.sqrt(rightOffset * rightOffset + scaledH * scaledH) / scale
 
-		// Draw labels
+		// Draw labels only when provided
 		// Bottom base label
-		const bottomLabel = labels?.bottomBase ?? String(bottomBase)
-		const bottomLabelX = xOffset + scaledBottom / 2
-		const bottomLabelY = yOffset + scaledH + 20
-		canvas.drawText({
-			x: bottomLabelX,
-			y: bottomLabelY,
-			text: bottomLabel,
-			anchor: "middle",
-			fontPx: theme.font.size.medium
-		})
+		const bottomLabel = labelToString(labels?.bottomBase)
+		if (bottomLabel !== undefined) {
+			const bottomLabelX = xOffset + scaledBottom / 2
+			const bottomLabelY = yOffset + scaledH + 20
+			canvas.drawText({
+				x: bottomLabelX,
+				y: bottomLabelY,
+				text: bottomLabel,
+				anchor: "middle",
+				fontPx: theme.font.size.medium
+			})
+		}
 
 		// Right side label
-		const rightLabel = labels?.rightSide ?? String(Number.parseFloat(rightSideLengthVal.toFixed(2)))
-		const rightLabelX = xOffset + scaledBottom - rightOffset / 2
-		const rightLabelY = yOffset + scaledH / 2
-		canvas.drawText({
-			x: rightLabelX + 20,
-			y: rightLabelY,
-			text: rightLabel,
-			anchor: "start",
-			fontPx: theme.font.size.medium
-		})
+		const rightLabel = labelToString(labels?.rightSide)
+		if (rightLabel !== undefined) {
+			const rightLabelX = xOffset + scaledBottom - rightOffset / 2
+			const rightLabelY = yOffset + scaledH / 2
+			canvas.drawText({
+				x: rightLabelX + 20,
+				y: rightLabelY,
+				text: rightLabel,
+				anchor: "start",
+				fontPx: theme.font.size.medium
+			})
+		}
 
 		// Top base label
-		const topLabel = labels?.topBase ?? String(topBase)
-		const topLabelX = xOffset + scaledTop / 2
-		const topLabelY = yOffset - 10
-		canvas.drawText({
-			x: topLabelX,
-			y: topLabelY,
-			text: topLabel,
-			anchor: "middle",
-			fontPx: theme.font.size.medium
-		})
+		const topLabel = labelToString(labels?.topBase)
+		if (topLabel !== undefined) {
+			const topLabelX = xOffset + scaledTop / 2
+			const topLabelY = yOffset - 10
+			canvas.drawText({
+				x: topLabelX,
+				y: topLabelY,
+				text: topLabel,
+				anchor: "middle",
+				fontPx: theme.font.size.medium
+			})
+		}
 
-		// Left side label
-		const leftLabel = labels?.leftSide ?? String(h)
-		const leftLabelX = xOffset - 20
-		const leftLabelY = yOffset + scaledH / 2
-		canvas.drawText({
-			x: leftLabelX,
-			y: leftLabelY,
-			text: leftLabel,
-			anchor: "end",
-			fontPx: theme.font.size.medium
-		})
-
-		// Height label
-		const heightLabel = labels?.height ?? String(h)
-		const heightLabelX = xOffset - 10
-		const heightLabelY = yOffset + scaledH / 2
-		canvas.drawText({
-			x: heightLabelX,
-			y: heightLabelY,
-			text: heightLabel,
-			anchor: "end",
-			fontPx: theme.font.size.medium
-		})
+		// Left side labeling: for right trapezoids, height equals left side.
+		// Prefer height label if present; otherwise use leftSide. Draw only once.
+		const resolvedLeftLabel = labelToString(labels?.height) ?? labelToString(labels?.leftSide)
+		if (resolvedLeftLabel !== undefined) {
+			const leftLabelX = xOffset - 15
+			const leftLabelY = yOffset + scaledH / 2
+			canvas.drawText({
+				x: leftLabelX,
+				y: leftLabelY,
+				text: resolvedLeftLabel,
+				anchor: "end",
+				fontPx: theme.font.size.medium
+			})
+		}
 	} else {
 		// shape.type === "trapezoid" - general trapezoid with both sides slanted
 		const { topBase, bottomBase, height: h, leftSideLength, labels } = shape
@@ -484,66 +529,73 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		}
 
 		const rightOffset = scaledBottom - (leftOffset + scaledTop)
-		const rightSideLengthVal = Math.sqrt(rightOffset * rightOffset + scaledH * scaledH) / scale
 
-		// Draw labels
+		// Draw labels only when provided
 		// Bottom base label
-		const bottomLabel = labels?.bottomBase ?? String(bottomBase)
-		const bottomLabelX = xOffset + scaledBottom / 2
-		const bottomLabelY = yOffset + scaledH + 20
-		canvas.drawText({
-			x: bottomLabelX,
-			y: bottomLabelY,
-			text: bottomLabel,
-			anchor: "middle",
-			fontPx: theme.font.size.medium
-		})
+		const bottomLabel = labelToString(labels?.bottomBase)
+		if (bottomLabel !== undefined) {
+			const bottomLabelX = xOffset + scaledBottom / 2
+			const bottomLabelY = yOffset + scaledH + 20
+			canvas.drawText({
+				x: bottomLabelX,
+				y: bottomLabelY,
+				text: bottomLabel,
+				anchor: "middle",
+				fontPx: theme.font.size.medium
+			})
+		}
 
 		// Right side label
-		const rightLabel = labels?.rightSide ?? String(Number.parseFloat(rightSideLengthVal.toFixed(2)))
-		const rightLabelX = xOffset + scaledBottom - rightOffset / 2
-		const rightLabelY = yOffset + scaledH / 2
-		canvas.drawText({
-			x: rightLabelX + 20,
-			y: rightLabelY,
-			text: rightLabel,
-			anchor: "start",
-			fontPx: theme.font.size.medium
-		})
+		const rightLabel = labelToString(labels?.rightSide)
+		if (rightLabel !== undefined) {
+			const rightLabelX = xOffset + scaledBottom - rightOffset / 2
+			const rightLabelY = yOffset + scaledH / 2
+			canvas.drawText({
+				x: rightLabelX + 20,
+				y: rightLabelY,
+				text: rightLabel,
+				anchor: "start",
+				fontPx: theme.font.size.medium
+			})
+		}
 
 		// Top base label
-		const topLabel = labels?.topBase ?? String(topBase)
-		const topLabelX = xOffset + leftOffset + scaledTop / 2
-		const topLabelY = yOffset - 10
-		canvas.drawText({
-			x: topLabelX,
-			y: topLabelY,
-			text: topLabel,
-			anchor: "middle",
-			fontPx: theme.font.size.medium
-		})
+		const topLabel = labelToString(labels?.topBase)
+		if (topLabel !== undefined) {
+			const topLabelX = xOffset + leftOffset + scaledTop / 2
+			const topLabelY = yOffset - 10
+			canvas.drawText({
+				x: topLabelX,
+				y: topLabelY,
+				text: topLabel,
+				anchor: "middle",
+				fontPx: theme.font.size.medium
+			})
+		}
 
 		// Left side label
-		const leftLabel = labels?.leftSide ?? String(leftSideLength)
-		const leftLabelX = xOffset + leftOffset / 2
-		const leftLabelY = yOffset + scaledH / 2
-		canvas.drawText({
-			x: leftLabelX - 20,
-			y: leftLabelY,
-			text: leftLabel,
-			anchor: "end",
-			fontPx: theme.font.size.medium
-		})
+		const leftLabel = labelToString(labels?.leftSide)
+		if (leftLabel !== undefined) {
+			const leftLabelX = xOffset + leftOffset / 2
+			const leftLabelY = yOffset + scaledH / 2
+			canvas.drawText({
+				x: leftLabelX - 20,
+				y: leftLabelY,
+				text: leftLabel,
+				anchor: "end",
+				fontPx: theme.font.size.medium
+			})
+		}
 
 		// Height label
-		const heightLabel = labels?.height ?? String(h)
-		if (v3g && v4g) {
+		const heightLabel3 = labelToString(labels?.height)
+		if (heightLabel3 !== undefined && v3g && v4g) {
 			const heightLabelX = v3g.x + (v4g.x - v3g.x) / 2 - 10
 			const heightLabelY = v3g.y + (v4g.y - v3g.y) / 2
 			canvas.drawText({
 				x: heightLabelX,
 				y: heightLabelY,
-				text: heightLabel,
+				text: heightLabel3,
 				anchor: "end",
 				fontPx: theme.font.size.medium
 			})
