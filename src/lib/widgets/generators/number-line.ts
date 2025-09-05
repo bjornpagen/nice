@@ -159,26 +159,12 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 			})
 
 			const specialLabel = specialLabelsMap.get(t)
-			if (specialLabel) {
+			if (specialLabel && specialLabel !== "") {
 				canvas.drawText({ x, y: yPos + 20, text: specialLabel, anchor: "middle", fill: theme.colors.axis, fontWeight: theme.font.weight.bold })
 			} else if (selectedLabels.has(i)) {
 				canvas.drawText({ x, y: yPos + 20, text: tickLabels[i]!, anchor: "middle", fill: theme.colors.axis, fontPx: theme.font.size.small })
 			}
 		})
-		// Special Labels
-		for (const s of specialTickLabels) {
-			if (s.label !== "") {
-				const x = toSvgX(s.value)
-				canvas.drawText({
-					x,
-					y: yPos + 25,
-					text: s.label,
-					anchor: "middle",
-					fill: theme.colors.axisLabel,
-					fontWeight: theme.font.weight.bold
-				})
-			}
-		}
 		for (const p of points) {
 			const cx = toSvgX(p.value)
 			// Canvas automatically tracks extents
@@ -255,26 +241,12 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 
 			const specialLabel = specialLabelsMap.get(t)
 			const labelX = xPos - 10
-			if (specialLabel) {
+			if (specialLabel && specialLabel !== "") {
 				canvas.drawText({ x: labelX, y: y + 4, text: specialLabel, anchor: "end", fill: theme.colors.axis, fontWeight: theme.font.weight.bold })
 			} else if (selectedLabels.has(i)) {
 				canvas.drawText({ x: labelX, y: y + 4, text: tickLabels[i]!, anchor: "end", fill: theme.colors.axis, fontPx: theme.font.size.small })
 			}
 		})
-		// Special Labels
-		for (const s of specialTickLabels) {
-			if (s.label !== "") {
-				const labelX = xPos - 15
-				canvas.drawText({
-					x: labelX,
-					y: toSvgY(s.value) + 4,
-					text: s.label,
-					anchor: "end",
-					fill: theme.colors.axisLabel,
-					fontWeight: theme.font.weight.bold
-				})
-			}
-		}
 		for (const p of points) {
 			const cy = toSvgY(p.value)
 			// Canvas automatically tracks extents
