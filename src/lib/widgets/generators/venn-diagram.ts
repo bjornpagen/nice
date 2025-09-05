@@ -5,6 +5,7 @@ import { PADDING } from "@/lib/widgets/utils/constants"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import { theme } from "@/lib/widgets/utils/theme"
+import { estimateWrappedTextDimensions } from "@/lib/widgets/utils/text"
 
 function createCircleSchema() {
 	return z
@@ -130,20 +131,32 @@ export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema>
 	const rightHalfWidth = Math.max(0, Math.min((width - labelPaddingX) - labelB_X, labelB_X - midX - labelPaddingX))
 	const labelA_MaxWidth = leftHalfWidth * 2
 	const labelB_MaxWidth = rightHalfWidth * 2
+
+	// Vertically center wrapped labels between the top of the diagram and the top of the circles
+	const yTop = 1 // top border of the surrounding rect
+	const yCircleTop = cy - r
+	const midY = (yTop + yCircleTop) / 2
+	const fontPx = 16
+	const lineHeight = 1.2
+	const labelAMeasure = estimateWrappedTextDimensions(abbreviateMonth(circleA.label), labelA_MaxWidth, fontPx, lineHeight)
+	const labelBMeasure = estimateWrappedTextDimensions(abbreviateMonth(circleB.label), labelB_MaxWidth, fontPx, lineHeight)
+	const labelA_Y = midY - (labelAMeasure.height - fontPx) / 2
+	const labelB_Y = midY - (labelBMeasure.height - fontPx) / 2
+
 	canvas.drawWrappedText({
 		x: labelA_X,
-		y: padding.top - 5,
+		y: labelA_Y,
 		text: abbreviateMonth(circleA.label),
-		fontPx: 16,
+		fontPx: fontPx,
 		fontWeight: theme.font.weight.bold,
 		anchor: "middle",
 		maxWidthPx: labelA_MaxWidth
 	})
 	canvas.drawWrappedText({
 		x: labelB_X,
-		y: padding.top - 5,
+		y: labelB_Y,
 		text: abbreviateMonth(circleB.label),
-		fontPx: 16,
+		fontPx: fontPx,
 		fontWeight: theme.font.weight.bold,
 		anchor: "middle",
 		maxWidthPx: labelB_MaxWidth
