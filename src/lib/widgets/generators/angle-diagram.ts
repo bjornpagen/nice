@@ -46,7 +46,7 @@ const Point = z
 		id: z
 			.string()
 			.describe(
-				"unique identifier for this vertex point, used to reference it in rays and angles (e.g., 'A', 'B', 'C', 'vertex1'). must be unique within the diagram."
+				"unique identifier for this vertex point, used to reference it in rays and angles (e.g., 'A', 'B', 'C', 'vertex1'). must be unique within the diagram. CRITICAL: every point must be connected to at least one ray - isolated points are not allowed."
 			),
 		x: z
 			.number()
@@ -142,12 +142,12 @@ export const AngleDiagramPropsSchema = z
 			.array(
 				z
 					.object({
-						from: z.string().describe("id of the starting point"),
-						to: z.string().describe("id of the point the ray passes through")
+						from: z.string().describe("id of the starting point - must reference a point in the points array"),
+						to: z.string().describe("id of the ending point - must reference a point in the points array")
 					})
 					.strict()
 			)
-			.describe("rays that form angles"),
+			.describe("rays that connect points and form the geometric structure; every point in the points array must be referenced by at least one ray (either as 'from' or 'to'); for complete lines, ensure both directions are covered (e.g., A→B and B→A for line AB)."),
 		angles: z.array(Angle).describe("angles to highlight")
 	})
 	.strict()
@@ -163,6 +163,25 @@ export type AngleDiagramProps = z.infer<typeof AngleDiagramPropsSchema>
  */
 export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchema> = (props) => {
 	const { width, height, points, rays, angles } = props
+
+	// Validate that every point is connected to at least one ray
+	const connectedPointIds = new Set<string>()
+	for (const ray of rays) {
+		connectedPointIds.add(ray.from)
+		connectedPointIds.add(ray.to)
+	}
+
+	const isolatedPoints = points.filter(point => !connectedPointIds.has(point.id))
+	if (isolatedPoints.length > 0) {
+		const isolatedIds = isolatedPoints.map(p => p.id).join(', ')
+		throw new Error(
+			`Angle diagram validation failed: Points [${isolatedIds}] are not connected to any rays. ` +
+			`Every point must be referenced by at least one ray (either as 'from' or 'to'). ` +
+			`This likely indicates incomplete line definitions - ensure all geometric lines are fully specified. ` +
+			`For parallel lines with transversal, you need complete line segments (e.g., A→B for line AB), ` +
+			`not just partial segments from vertices to endpoints.`
+		)
+	}
 
 	const canvas = new CanvasImpl({
 		chartArea: { left: 0, top: 0, width, height },
@@ -266,8 +285,13 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 				labelRadius = 25
 			} else {
 				const ARC_OFFSET = 6
-				const baseLabelRadius = angle.radius + ARC_OFFSET + 8
 				const FONT_SIZE_ESTIMATE = 14
+				const MIN_LABEL_CLEARANCE = FONT_SIZE_ESTIMATE * 1.5 // Minimum 21px clearance from arc
+				
+				// Base radius: arc position + generous clearance
+				const baseLabelRadius = angle.radius + ARC_OFFSET + MIN_LABEL_CLEARANCE
+				
+				// For narrow angles, ensure label doesn't collide with rays
 				const CLEARANCE_PX = FONT_SIZE_ESTIMATE * 0.7
 				if (Math.sin(angleSize / 2) > 0.01) {
 					const minRadiusForClearance = CLEARANCE_PX / Math.sin(angleSize / 2)
@@ -275,10 +299,12 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 				} else {
 					labelRadius = baseLabelRadius
 				}
+				
+				// Extra spacing for longer labels to prevent crowding
 				const isLongLabel = angle.label.length > 3
 				if (isLongLabel) {
-					const extraSpacing = angle.label.length > 4 ? (angle.label.length - 4) * 3 : 0
-					labelRadius += 15 + extraSpacing
+					const extraSpacing = angle.label.length > 4 ? (angle.label.length - 4) * 4 : 0
+					labelRadius += 18 + extraSpacing
 				}
 			}
 
