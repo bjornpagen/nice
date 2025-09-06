@@ -5,6 +5,7 @@ import { PADDING } from "@/lib/widgets/utils/constants"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { abbreviateMonth } from "@/lib/widgets/utils/labels"
 import { theme } from "@/lib/widgets/utils/theme"
+import { estimateWrappedTextDimensions } from "@/lib/widgets/utils/text"
 
 const Point = z
 	.object({
@@ -150,7 +151,14 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 	type Point = { x: number; y: number }
 	type FigureGeometry = {
 		vertices: Point[]
-		sideLabels: Array<{ x: number; y: number; text: string; color: string }>
+		sideLabels: Array<{
+			x: number
+			y: number
+			text: string
+			color: string
+			edgeFrom: { x: number; y: number }
+			edgeTo: { x: number; y: number }
+		}>
 		figureLabel: { x: number; y: number; text: string; color: string }
 		fillColor: string
 		strokeColor: string
@@ -247,7 +255,8 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 	for (let i = 0; i < figureGeometries.length; i++) {
 		const figureGeom = figureGeometries[i]
 		const spacingOffset = spacingOffsets[i]
-		if (!figureGeom || !spacingOffset) continue
+		const figure = figures[i]
+		if (!figureGeom || !spacingOffset || !figure) continue
 		// Draw the figure shape with spacing offset
 		const transformedVertices = figureGeom.vertices.map((v) => {
 			const projected = project(v)
@@ -259,17 +268,88 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 			strokeWidth: figureGeom.strokeWidth // Keep original stroke width (screen space)
 		})
 
-		// Draw side labels with spacing offset
+		// Draw side labels with spacing offset, nudging outward to avoid line collisions
 		for (const sideLabel of figureGeom.sideLabels) {
-			const transformedPos = project({ x: sideLabel.x, y: sideLabel.y })
+			const projectedFrom = project({ x: sideLabel.edgeFrom.x, y: sideLabel.edgeFrom.y })
+			const projectedTo = project({ x: sideLabel.edgeTo.x, y: sideLabel.edgeTo.y })
+
+			const labelFontPx = 14
+			const labelLineHeight = 1.2
+			const { maxWidth: textWidthPx, height: textHeightPx } = estimateWrappedTextDimensions(
+				sideLabel.text,
+				Number.POSITIVE_INFINITY,
+				labelFontPx,
+				labelLineHeight
+			)
+
+			// Compute outward normal in screen space using polygon center
+			const edgeDx = projectedTo.x - projectedFrom.x
+			const edgeDy = projectedTo.y - projectedFrom.y
+			const edgeLen = Math.sqrt(edgeDx * edgeDx + edgeDy * edgeDy)
+			let normalX = 0
+			let normalY = 0
+			if (edgeLen > 0) {
+				normalX = -edgeDy / edgeLen
+				normalY = edgeDx / edgeLen
+			}
+
+			const polyCenterX = transformedVertices.reduce((sum, v) => sum + v.x, 0) / transformedVertices.length
+			const polyCenterY = transformedVertices.reduce((sum, v) => sum + v.y, 0) / transformedVertices.length
+			// Use edge midpoint for initial candidate placement
+			const midX = (projectedFrom.x + projectedTo.x) / 2
+			const midY = (projectedFrom.y + projectedTo.y) / 2
+			const toCenterX = polyCenterX - midX
+			const toCenterY = polyCenterY - midY
+			const dot = normalX * toCenterX + normalY * toCenterY
+			if (dot > 0) {
+				normalX = -normalX
+				normalY = -normalY
+			}
+
+			// Build candidates: outward and inward from the edge midpoint, then choose best by minimal nudges
+			// midX/midY already defined above
+
+			const halfW = textWidthPx / 2
+			const halfH = textHeightPx / 2
+
+			// Capture narrowed values for use inside the local function (avoids optional narrowing loss)
+			const offsetDistance = figure.sideLabelOffset
+			const spacingX = spacingOffset.x
+			const spacingY = spacingOffset.y
+
+			function placeFor(dirX: number, dirY: number) {
+				const startX = midX + dirX * offsetDistance + spacingX
+				const startY = midY + dirY * offsetDistance + spacingY
+				let px = startX
+				let py = startY
+				let iterations = 0
+				const maxIterations = 60
+				const stepPx = 2
+				while (
+					polygonIntersectsRect(transformedVertices, { x: px - halfW, y: py - halfH, width: textWidthPx, height: textHeightPx, pad: 1 }) &&
+					iterations < maxIterations
+				) {
+					px += dirX * stepPx
+					py += dirY * stepPx
+					iterations++
+				}
+				return { x: px, y: py, iterations }
+			}
+
+			const outward = placeFor(normalX, normalY)
+			const inward = placeFor(-normalX, -normalY)
+
+			// Choose candidate with fewer iterations; tie-break by further distance from polygon (more iterations not necessarily better, so prefer the one that first cleared)
+			const chosen = inward.iterations < outward.iterations ? inward : outward
+
 			canvas.drawText({
-				x: transformedPos.x + spacingOffset.x,
-				y: transformedPos.y + spacingOffset.y,
+				x: chosen.x,
+				y: chosen.y,
 				text: sideLabel.text,
 				fill: sideLabel.color,
 				anchor: "middle",
 				dominantBaseline: "middle",
-				fontPx: 14, // Keep original font size (screen space)
+				fontPx: labelFontPx,
 				fontWeight: theme.font.weight.bold
 			})
 		}
@@ -284,8 +364,6 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 
 		const centerX = (finalBounds.minX + finalBounds.maxX) / 2
 		const centerY = (finalBounds.minY + finalBounds.maxY) / 2
-		const figure = figures[i]
-		if (!figure) continue
 
 		let labelX = centerX
 		let labelY = centerY
@@ -314,16 +392,69 @@ export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureCompa
 				break
 		}
 
-		canvas.drawText({
-			x: labelX,
-			y: labelY,
-			text: figureGeom.figureLabel.text,
-			fill: figureGeom.figureLabel.color,
-			anchor: "middle",
-			dominantBaseline: "middle",
-			fontPx: 16, // Keep original font size (screen space)
-			fontWeight: theme.font.weight.bold
-		})
+		// Nudge figure label outward if overlapping the polygon edges
+		{
+			const figureFontPx = 16
+			const figureLineHeight = 1.2
+			const { maxWidth: figTextW, height: figTextH } = estimateWrappedTextDimensions(
+				figureGeom.figureLabel.text,
+				Number.POSITIVE_INFINITY,
+				figureFontPx,
+				figureLineHeight
+			)
+			let flX = labelX
+			let flY = labelY
+			const halfW = figTextW / 2
+			const halfH = figTextH / 2
+
+			// Determine outward direction based on label position
+			let dirX = 0
+			let dirY = 0
+			if (figure.figureLabel.position === "top") {
+				dirY = -1
+			} else if (figure.figureLabel.position === "bottom") {
+				dirY = 1
+			} else if (figure.figureLabel.position === "left") {
+				dirX = -1
+			} else if (figure.figureLabel.position === "right") {
+				dirX = 1
+			} else {
+				// center: use vector from polygon center to label
+				const vx = flX - centerX
+				const vy = flY - centerY
+				const vlen = Math.sqrt(vx * vx + vy * vy)
+				if (vlen > 0) {
+					dirX = vx / vlen
+					dirY = vy / vlen
+				}
+			}
+
+			let iter = 0
+			const maxIter = 60
+			const step = 2
+			while (
+				polygonIntersectsRect(
+					transformedVertices,
+					{ x: flX - halfW, y: flY - halfH, width: figTextW, height: figTextH, pad: 1 }
+				) &&
+				iter < maxIter
+			) {
+				flX += dirX * step
+				flY += dirY * step
+				iter++
+			}
+
+			canvas.drawText({
+				x: flX,
+				y: flY,
+				text: figureGeom.figureLabel.text,
+				fill: figureGeom.figureLabel.color,
+				anchor: "middle",
+				dominantBaseline: "middle",
+				fontPx: figureFontPx,
+				fontWeight: theme.font.weight.bold
+			})
+		}
 	}
 
 	// Finalize the canvas and construct the root SVG element
@@ -361,7 +492,14 @@ function collectFigureGeometry(
 	offsetY: number
 ): {
 	vertices: Array<{ x: number; y: number }>
-	sideLabels: Array<{ x: number; y: number; text: string; color: string }>
+	sideLabels: Array<{
+		x: number
+		y: number
+		text: string
+		color: string
+		edgeFrom: { x: number; y: number }
+		edgeTo: { x: number; y: number }
+	}>
 	figureLabel: { x: number; y: number; text: string; color: string }
 	fillColor: string
 	strokeColor: string
@@ -374,7 +512,14 @@ function collectFigureGeometry(
 	}))
 
 	// Collect side labels
-	const sideLabels: Array<{ x: number; y: number; text: string; color: string }> = []
+	const sideLabels: Array<{
+		x: number
+		y: number
+		text: string
+		color: string
+		edgeFrom: { x: number; y: number }
+		edgeTo: { x: number; y: number }
+	}> = []
 	for (let i = 0; i < Math.min(figure.sideLabels.length, transformedVertices.length); i++) {
 		const rawLabel = figure.sideLabels[i]
 		if (!rawLabel) continue
@@ -413,7 +558,9 @@ function collectFigureGeometry(
 			x: labelX,
 			y: labelY,
 			text: label,
-			color: figure.strokeColor
+			color: figure.strokeColor,
+			edgeFrom: { x: from.x, y: from.y },
+			edgeTo: { x: to.x, y: to.y }
 		})
 	}
 
@@ -470,4 +617,128 @@ function collectFigureGeometry(
 		strokeColor: figure.strokeColor,
 		strokeWidth: figure.strokeWidth
 	}
+}
+
+/**
+ * Geometry helpers for collision checks in screen space
+ */
+function segmentIntersectsRect(
+	A: { x: number; y: number },
+	B: { x: number; y: number },
+	rect: { x: number; y: number; width: number; height: number; pad?: number }
+): boolean {
+	const pad = rect.pad ?? 0
+	const rx = rect.x - pad
+	const ry = rect.y - pad
+	const rw = rect.width + 2 * pad
+	const rh = rect.height + 2 * pad
+
+	// Quick reject if both points are on one outside side without crossing
+	const minX = Math.min(A.x, B.x)
+	const maxX = Math.max(A.x, B.x)
+	const minY = Math.min(A.y, B.y)
+	const maxY = Math.max(A.y, B.y)
+	if (maxX < rx || minX > rx + rw || maxY < ry || minY > ry + rh) {
+		// Bounding boxes don't overlap
+		// Might still intersect if the segment passes through the rectangle area in a narrow way, but
+		// since the segment bbox is fully outside the expanded rect bbox, it's safe to return false
+		return false
+	}
+
+	// If either endpoint inside the rect
+	if (pointInRect(A.x, A.y, rx, ry, rw, rh) || pointInRect(B.x, B.y, rx, ry, rw, rh)) return true
+
+	// Check intersection with each rectangle side
+	const r1 = { x: rx, y: ry }
+	const r2 = { x: rx + rw, y: ry }
+	const r3 = { x: rx + rw, y: ry + rh }
+	const r4 = { x: rx, y: ry + rh }
+
+	if (segmentsIntersect(A, B, r1, r2)) return true
+	if (segmentsIntersect(A, B, r2, r3)) return true
+	if (segmentsIntersect(A, B, r3, r4)) return true
+	if (segmentsIntersect(A, B, r4, r1)) return true
+
+	return false
+}
+
+function polygonIntersectsRect(
+	poly: Array<{ x: number; y: number }>,
+	rect: { x: number; y: number; width: number; height: number; pad?: number }
+): boolean {
+	if (poly.length < 2) return false
+	const pad = rect.pad ?? 0
+	const rx = rect.x - pad
+	const ry = rect.y - pad
+	const rw = rect.width + 2 * pad
+	const rh = rect.height + 2 * pad
+
+	// Any polygon edge intersect the rect
+	for (let i = 0; i < poly.length; i++) {
+		const a = poly[i]
+		const b = poly[(i + 1) % poly.length]
+		if (!a || !b) continue
+		if (segmentIntersectsRect(a, b, { x: rx, y: ry, width: rw, height: rh })) return true
+	}
+
+	// Any polygon vertex inside rect
+	for (const p of poly) {
+		if (pointInRect(p.x, p.y, rx, ry, rw, rh)) return true
+	}
+
+	// Rect center inside polygon (handles rect completely inside polygon with no edge intersections)
+	const cx = rx + rw / 2
+	const cy = ry + rh / 2
+	if (pointInPolygon({ x: cx, y: cy }, poly)) return true
+
+	return false
+}
+
+function pointInRect(x: number, y: number, rx: number, ry: number, rw: number, rh: number): boolean {
+	return x >= rx && x <= rx + rw && y >= ry && y <= ry + rh
+}
+
+function segmentsIntersect(
+	p1: { x: number; y: number },
+	p2: { x: number; y: number },
+	p3: { x: number; y: number },
+	p4: { x: number; y: number }
+): boolean {
+	function orientation(a: { x: number; y: number }, b: { x: number; y: number }, c: { x: number; y: number }): number {
+		const val = (b.y - a.y) * (c.x - b.x) - (b.x - a.x) * (c.y - b.y)
+		if (val > 0) return 1
+		if (val < 0) return -1
+		return 0
+	}
+	function onSegment(a: { x: number; y: number }, b: { x: number; y: number }, c: { x: number; y: number }): boolean {
+		return Math.min(a.x, c.x) <= b.x && b.x <= Math.max(a.x, c.x) && Math.min(a.y, c.y) <= b.y && b.y <= Math.max(a.y, c.y)
+	}
+	const o1 = orientation(p1, p2, p3)
+	const o2 = orientation(p1, p2, p4)
+	const o3 = orientation(p3, p4, p1)
+	const o4 = orientation(p3, p4, p2)
+
+	if (o1 !== o2 && o3 !== o4) return true
+	if (o1 === 0 && onSegment(p1, p3, p2)) return true
+	if (o2 === 0 && onSegment(p1, p4, p2)) return true
+	if (o3 === 0 && onSegment(p3, p1, p4)) return true
+	if (o4 === 0 && onSegment(p3, p2, p4)) return true
+	return false
+}
+
+function pointInPolygon(point: { x: number; y: number }, polygon: Array<{ x: number; y: number }>): boolean {
+	if (polygon.length < 3) return false
+	let inside = false
+	for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+		const pi = polygon[i]
+		const pj = polygon[j]
+		if (!pi || !pj) continue
+		const xi = pi.x
+		const yi = pi.y
+		const xj = pj.x
+		const yj = pj.y
+		const intersect = yi > point.y !== yj > point.y && point.x < ((xj - xi) * (point.y - yi)) / (yj - yi) + xi
+		if (intersect) inside = !inside
+	}
+	return inside
 }
