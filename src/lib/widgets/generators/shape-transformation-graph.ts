@@ -3,7 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
-import { createAxisOptionsSchema, createPlotPointSchema, renderPoints } from "@/lib/widgets/utils/canvas-utils"
+import { createAxisOptionsSchema, createPlotPointSchema, renderPoints, createLineSchema, renderLines } from "@/lib/widgets/utils/canvas-utils"
 import { PADDING } from "@/lib/widgets/utils/constants"
 import { setupCoordinatePlaneV2 } from "@/lib/widgets/utils/coordinate-plane-v2"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
@@ -157,6 +157,12 @@ export const ShapeTransformationGraphPropsSchema = z
 			.array(createPlotPointSchema())
 			.describe(
 				"Additional points to plot (e.g., center of rotation, reference points). Empty array means no extra points. Useful for marking key locations."
+			),
+		lines: z
+			.array(createLineSchema())
+			.nullable()
+			.describe(
+				"List of lines defined by equations (slope-intercept, standard, or point-slope). Lines are clipped to the plane extents."
 			)
 	})
 	.strict()
@@ -169,7 +175,7 @@ export type ShapeTransformationGraphProps = z.infer<typeof ShapeTransformationGr
 export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTransformationGraphPropsSchema> = (
 	props
 ) => {
-	const { width, height, xAxis, yAxis, showQuadrantLabels, preImage, transformation, points } = props
+	const { width, height, xAxis, yAxis, showQuadrantLabels, preImage, transformation, points, lines } = props
 
 	// Validate polygon has at least 3 vertices
 	if (preImage.vertices.length < 3) {
@@ -286,7 +292,12 @@ export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTrans
 		})
 	}
 
-	// 6. Render points
+	// 6. Render lines if provided (below points for clarity in layering)
+	if (lines && lines.length > 0) {
+		renderLines(lines, xAxis, yAxis, baseInfo.toSvgX, baseInfo.toSvgY, canvas)
+	}
+
+	// 7. Render points on top
 	renderPoints(points, baseInfo.toSvgX, baseInfo.toSvgY, canvas)
 
 	// NEW: Finalize the canvas and construct the root SVG element
