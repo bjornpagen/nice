@@ -70,6 +70,79 @@ export const DoubleNumberLinePropsSchema = z
 
 export type DoubleNumberLineProps = z.infer<typeof DoubleNumberLinePropsSchema>
 
+// Helper function to draw a dotted line with clipping around label areas
+function drawClippedDottedLine(
+	canvas: CanvasImpl,
+	x1: number,
+	y1: number,
+	x2: number,
+	y2: number,
+	labelBounds: Array<{x: number, y: number, width: number, height: number}>,
+	theme: any
+) {
+	// Check if the line intersects with any label bounds
+	const lineIntersections: Array<{start: number, end: number}> = []
+	
+	// For vertical lines (x1 === x2)
+	if (Math.abs(x1 - x2) < 0.1) {
+		const lineX = x1
+		const minY = Math.min(y1, y2)
+		const maxY = Math.max(y1, y2)
+		
+		for (const bound of labelBounds) {
+			// Check if vertical line intersects with label rectangle
+			if (lineX >= bound.x && lineX <= bound.x + bound.width) {
+				const intersectionStart = Math.max(minY, bound.y)
+				const intersectionEnd = Math.min(maxY, bound.y + bound.height)
+				
+				if (intersectionStart < intersectionEnd) {
+					lineIntersections.push({start: intersectionStart, end: intersectionEnd})
+				}
+			}
+		}
+	}
+	
+	// If no intersections, draw the full line
+	if (lineIntersections.length === 0) {
+		canvas.drawLine(x1, y1, x2, y2, {
+			stroke: theme.colors.gridMinor,
+			strokeWidth: theme.stroke.width.base,
+			dash: theme.stroke.dasharray.gridMinor
+		})
+		return
+	}
+	
+	// Sort intersections and draw line segments between them
+	lineIntersections.sort((a, b) => a.start - b.start)
+	
+	// For vertical lines
+	const lineX = x1
+	const minY = Math.min(y1, y2)
+	const maxY = Math.max(y1, y2)
+	let currentY = minY
+	
+	for (const intersection of lineIntersections) {
+		// Draw segment before intersection
+		if (currentY < intersection.start) {
+			canvas.drawLine(lineX, currentY, lineX, intersection.start, {
+				stroke: theme.colors.gridMinor,
+				strokeWidth: theme.stroke.width.base,
+				dash: theme.stroke.dasharray.gridMinor
+			})
+		}
+		currentY = Math.max(currentY, intersection.end)
+	}
+	
+	// Draw final segment after last intersection
+	if (currentY < maxY) {
+		canvas.drawLine(lineX, currentY, lineX, maxY, {
+			stroke: theme.colors.gridMinor,
+			strokeWidth: theme.stroke.width.base,
+			dash: theme.stroke.dasharray.gridMinor
+		})
+	}
+}
+
 /**
  * This template generates a double number line diagram as a clear and accurate SVG graphic.
  * This visualization tool is excellent for illustrating the relationship between two
@@ -122,6 +195,9 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 
 	canvas.addStyle(".line-label { font-size: 14px; font-weight: bold; text-anchor: middle; }")
 
+	// Collect label bounds for intelligent clipping
+	const labelBounds: Array<{x: number, y: number, width: number, height: number}> = []
+
 	// Top line
 	canvas.drawLine(PADDING, topY, width - PADDING, topY, {
 		stroke: theme.colors.axis,
@@ -155,6 +231,30 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 			fill: theme.colors.axisLabel,
 			anchor: "middle"
 		})
+		
+		// Only collect label bounds for clipping if there's actually visible text
+		if (labelText.trim() !== "") {
+			const fontPx = 12  // Default font size
+			const textWidth = labelText.length * fontPx * 0.6  // Same as CanvasImpl.estimateTextWidth
+			const padding = 3  // More padding for better visual separation
+			
+			// For baseline text, we need to account for:
+			// - Ascender height (above baseline): ~0.75 * fontSize
+			// - Descender depth (below baseline): ~0.25 * fontSize
+			const ascenderHeight = fontPx * 0.75
+			const descenderDepth = fontPx * 0.25
+			const totalTextHeight = ascenderHeight + descenderDepth
+			
+			// For anchor="middle" + dominantBaseline="baseline":
+			// - X: text is centered horizontally around x
+			// - Y: labelY is the baseline, text extends from labelY - ascenderHeight to labelY + descenderDepth
+			labelBounds.push({
+				x: x - textWidth / 2 - padding,
+				y: labelY - ascenderHeight - padding,  // Top of text including ascenders
+				width: textWidth + 2 * padding,
+				height: totalTextHeight + 2 * padding
+			})
+		}
 	})
 
 	// Bottom line
@@ -190,16 +290,44 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 			fill: theme.colors.axisLabel,
 			anchor: "middle"
 		})
+		
+		// Only collect label bounds for clipping if there's actually visible text
+		if (labelText.trim() !== "") {
+			const fontPx = 12  // Default font size
+			const textWidth = labelText.length * fontPx * 0.6  // Same as CanvasImpl.estimateTextWidth
+			const padding = 3  // More padding for better visual separation
+			
+			// For baseline text, we need to account for:
+			// - Ascender height (above baseline): ~0.75 * fontSize
+			// - Descender depth (below baseline): ~0.25 * fontSize
+			const ascenderHeight = fontPx * 0.75
+			const descenderDepth = fontPx * 0.25
+			const totalTextHeight = ascenderHeight + descenderDepth
+			
+			// For anchor="middle" + dominantBaseline="baseline":
+			// - X: text is centered horizontally around x
+			// - Y: labelY is the baseline, text extends from labelY - ascenderHeight to labelY + descenderDepth
+			labelBounds.push({
+				x: x - textWidth / 2 - padding,
+				y: labelY - ascenderHeight - padding,  // Top of text including ascenders
+				width: textWidth + 2 * padding,
+				height: totalTextHeight + 2 * padding
+			})
+		}
 	})
 
-	// Alignment lines (optional, but good for clarity)
+	// Alignment lines with intelligent clipping around labels
 	for (let i = 0; i < numTicks; i++) {
 		const x = PADDING + i * tickSpacing
-		canvas.drawLine(x, topY + TICK_MARK_HEIGHT, x, bottomY - TICK_MARK_HEIGHT, {
-			stroke: theme.colors.gridMinor,
-			strokeWidth: theme.stroke.width.base,
-			dash: theme.stroke.dasharray.gridMinor
-		})
+		drawClippedDottedLine(
+			canvas,
+			x,
+			topY + TICK_MARK_HEIGHT,
+			x,
+			bottomY - TICK_MARK_HEIGHT,
+			labelBounds,
+			theme
+		)
 	}
 
 	// NEW: Finalize the canvas and construct the root SVG element
