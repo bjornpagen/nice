@@ -7,7 +7,20 @@ import { PADDING } from "@/lib/widgets/utils/constants"
 import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
 
-const LabelValue = z.union([z.number(), z.string().max(1)])
+// Label value as discriminated union: number, string, or none
+const createLabelValueSchema = () =>
+	z
+		.discriminatedUnion("type", [
+			z.object({ type: z.literal("number"), value: z.number() }),
+			z.object({ type: z.literal("string"), value: z.string().max(1) }),
+			z.object({ type: z.literal("none") })
+		])
+		.describe("Label value as number, single-letter string, or none")
+
+type LabelValue =
+	| { type: "number"; value: number }
+	| { type: "string"; value: string }
+	| { type: "none" }
 
 const Parallelogram = z
 	.object({
@@ -30,19 +43,18 @@ const Parallelogram = z
 			),
 		labels: z
 			.object({
-				base: LabelValue.nullable().describe(
-					"Label for the base: number or single-letter variable. Null hides label. Positioned below the base."
+				base: createLabelValueSchema().describe(
+					"Label for the base: number or single-letter variable. Use type 'none' to hide. Positioned below the base."
 				),
-				height: LabelValue.nullable().describe(
-					"Label for the height: number or single-letter variable. Null hides label. Perpendicular distance."
+				height: createLabelValueSchema().describe(
+					"Label for the height: number or single-letter variable. Use type 'none' to hide. Perpendicular distance."
 				),
-				sideLength: LabelValue.nullable().describe(
-					"Label for the slanted side: number or single-letter variable. Null hides label. Positioned along the side."
+				sideLength: createLabelValueSchema().describe(
+					"Label for the slanted side: number or single-letter variable. Use type 'none' to hide. Positioned along the side."
 				)
 			})
 			.strict()
-			.nullable()
-			.describe("Labels for dimensions as numbers or single-letter variables. Null object hides all labels.")
+			.describe("Labels for dimensions as numbers or single-letter variables. Use type 'none' to hide.")
 	})
 	.strict()
 
@@ -65,25 +77,24 @@ const RightTrapezoid = z
 			),
 		labels: z
 			.object({
-				topBase: LabelValue.nullable().describe(
-					"Label for top base: number or single-letter variable. Null hides label."
+				topBase: createLabelValueSchema().describe(
+					"Label for top base: number or single-letter variable. Use type 'none' to hide."
 				),
-				bottomBase: LabelValue.nullable().describe(
-					"Label for bottom base: number or single-letter variable. Null hides label."
+				bottomBase: createLabelValueSchema().describe(
+					"Label for bottom base: number or single-letter variable. Use type 'none' to hide."
 				),
-				height: LabelValue.nullable().describe(
-					"Label for height/left side: number or single-letter variable. Null hides label."
+				height: createLabelValueSchema().describe(
+					"Label for height/left side: number or single-letter variable. Use type 'none' to hide."
 				),
-				leftSide: LabelValue.nullable().describe(
-					"Label for left perpendicular side: number or single-letter variable. Often same as height. Null hides label."
+				leftSide: createLabelValueSchema().describe(
+					"Label for left perpendicular side: number or single-letter variable. Often same as height. Use type 'none' to hide."
 				),
-				rightSide: LabelValue.nullable().describe(
-					"Label for right slanted side: number or single-letter variable. Null hides label."
+				rightSide: createLabelValueSchema().describe(
+					"Label for right slanted side: number or single-letter variable. Use type 'none' to hide."
 				)
 			})
 			.strict()
-			.nullable()
-			.describe("Labels for dimensions as numbers or single-letter variables. Null object hides all labels.")
+			.describe("Labels for dimensions as numbers or single-letter variables. Use type 'none' to hide.")
 	})
 	.strict()
 
@@ -110,25 +121,24 @@ const GeneralTrapezoid = z
 			.describe("Length of the left slanted side in arbitrary units (e.g., 5, 7, 4.5). Can differ from right side."),
 		labels: z
 			.object({
-				topBase: LabelValue.nullable().describe(
-					"Label for top base: number or single-letter variable. Null hides label."
+				topBase: createLabelValueSchema().describe(
+					"Label for top base: number or single-letter variable. Use type 'none' to hide."
 				),
-				bottomBase: LabelValue.nullable().describe(
-					"Label for bottom base: number or single-letter variable. Null hides label."
+				bottomBase: createLabelValueSchema().describe(
+					"Label for bottom base: number or single-letter variable. Use type 'none' to hide."
 				),
-				height: LabelValue.nullable().describe(
-					"Label for perpendicular height: number or single-letter variable. Shows with dashed line. Null hides label."
+				height: createLabelValueSchema().describe(
+					"Label for perpendicular height: number or single-letter variable. Shows with dashed line. Use type 'none' to hide."
 				),
-				leftSide: LabelValue.nullable().describe(
-					"Label for left slanted side: number or single-letter variable. Null hides label."
+				leftSide: createLabelValueSchema().describe(
+					"Label for left slanted side: number or single-letter variable. Use type 'none' to hide."
 				),
-				rightSide: LabelValue.nullable().describe(
-					"Label for right slanted side: number or single-letter variable. Null hides label."
+				rightSide: createLabelValueSchema().describe(
+					"Label for right slanted side: number or single-letter variable. Use type 'none' to hide."
 				)
 			})
 			.strict()
-			.nullable()
-			.describe("Labels for dimensions as numbers or single-letter variables. Null object hides all labels.")
+			.describe("Labels for dimensions as numbers or single-letter variables. Use type 'none' to hide.")
 	})
 	.strict()
 
@@ -169,9 +179,10 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		lineHeightDefault: 1.2
 	})
 
-	const labelToString = (value: number | string | null | undefined): string | undefined => {
-		if (value === null || value === undefined) return undefined
-		return typeof value === "number" ? String(value) : value
+	const labelToString = (value: LabelValue): string | undefined => {
+		if (value.type === "none") return undefined
+		if (value.type === "number") return String(value.value)
+		return value.value
 	}
 
 	// --- SCALING LOGIC START ---
@@ -262,7 +273,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 
 		// Draw labels only when provided
 		// Base label (bottom)
-		const baseLabel = labelToString(labels?.base)
+		const baseLabel = labelToString(labels.base)
 		if (baseLabel !== undefined) {
 			const baseLabelX = xOffset + scaledBase / 2
 			const baseLabelY = yOffset + scaledH + 20
@@ -276,7 +287,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		}
 
 		// Right side label
-		const rightLabel = labelToString(labels?.sideLength)
+		const rightLabel = labelToString(labels.sideLength)
 		if (rightLabel !== undefined) {
 			const rightLabelX = xOffset + scaledBase + scaledOffset / 2
 			const rightLabelY = yOffset + scaledH / 2
@@ -303,7 +314,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		}
 
 		// Left side label
-		const leftLabel = labelToString(labels?.sideLength)
+		const leftLabel = labelToString(labels.sideLength)
 		if (leftLabel !== undefined) {
 			const leftLabelX = xOffset + scaledOffset / 2
 			const leftLabelY = yOffset + scaledH / 2
@@ -317,7 +328,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		}
 
 		// Height label with dynamic side placement to avoid clash with left slanted edge
-		const heightLabel = labelToString(labels?.height)
+		const heightLabel = labelToString(labels.height)
 		if (heightLabel !== undefined && v3 && v4) {
 			const yMid = v3.y + (v4.y - v3.y) / 2
 			// Interpolate x of the left slanted side (between top-left v3 and bottom-left v0) at yMid
@@ -413,7 +424,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 
 		// Draw labels only when provided
 		// Bottom base label
-		const bottomLabel = labelToString(labels?.bottomBase)
+		const bottomLabel = labelToString(labels.bottomBase)
 		if (bottomLabel !== undefined) {
 			const bottomLabelX = xOffset + scaledBottom / 2
 			const bottomLabelY = yOffset + scaledH + 20
@@ -427,7 +438,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		}
 
 		// Right side label
-		const rightLabel = labelToString(labels?.rightSide)
+		const rightLabel = labelToString(labels.rightSide)
 		if (rightLabel !== undefined) {
 			const rightLabelX = xOffset + scaledBottom - rightOffset / 2
 			const rightLabelY = yOffset + scaledH / 2
@@ -441,7 +452,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		}
 
 		// Top base label
-		const topLabel = labelToString(labels?.topBase)
+		const topLabel = labelToString(labels.topBase)
 		if (topLabel !== undefined) {
 			const topLabelX = xOffset + scaledTop / 2
 			const topLabelY = yOffset - 10
@@ -456,7 +467,16 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 
 		// Left side labeling: for right trapezoids, height equals left side.
 		// Prefer height label if present; otherwise use leftSide. Draw only once.
-		const resolvedLeftLabel = labelToString(labels?.height) ?? labelToString(labels?.leftSide)
+		let resolvedLeftLabel: string | undefined
+		const heightLabelLeft = labelToString(labels.height)
+		if (heightLabelLeft !== undefined) {
+			resolvedLeftLabel = heightLabelLeft
+		} else {
+			const leftSideLabel = labelToString(labels.leftSide)
+			if (leftSideLabel !== undefined) {
+				resolvedLeftLabel = leftSideLabel
+			}
+		}
 		if (resolvedLeftLabel !== undefined) {
 			const leftLabelX = xOffset - 15
 			const leftLabelY = yOffset + scaledH / 2
@@ -532,7 +552,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 
 		// Draw labels only when provided
 		// Bottom base label
-		const bottomLabel = labelToString(labels?.bottomBase)
+		const bottomLabel = labelToString(labels.bottomBase)
 		if (bottomLabel !== undefined) {
 			const bottomLabelX = xOffset + scaledBottom / 2
 			const bottomLabelY = yOffset + scaledH + 20
@@ -546,7 +566,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		}
 
 		// Right side label
-		const rightLabel = labelToString(labels?.rightSide)
+		const rightLabel = labelToString(labels.rightSide)
 		if (rightLabel !== undefined) {
 			const rightLabelX = xOffset + scaledBottom - rightOffset / 2
 			const rightLabelY = yOffset + scaledH / 2
@@ -560,7 +580,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		}
 
 		// Top base label
-		const topLabel = labelToString(labels?.topBase)
+		const topLabel = labelToString(labels.topBase)
 		if (topLabel !== undefined) {
 			const topLabelX = xOffset + leftOffset + scaledTop / 2
 			const topLabelY = yOffset - 10
@@ -574,7 +594,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		}
 
 		// Left side label
-		const leftLabel = labelToString(labels?.leftSide)
+		const leftLabel = labelToString(labels.leftSide)
 		if (leftLabel !== undefined) {
 			const leftLabelX = xOffset + leftOffset / 2
 			const leftLabelY = yOffset + scaledH / 2
@@ -588,7 +608,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		}
 
 		// Height label
-		const heightLabel3 = labelToString(labels?.height)
+		const heightLabel3 = labelToString(labels.height)
 		if (heightLabel3 !== undefined && v3g && v4g) {
 			const heightLabelX = v3g.x + (v4g.x - v3g.x) / 2 - 10
 			const heightLabelY = v3g.y + (v4g.y - v3g.y) / 2
