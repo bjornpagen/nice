@@ -1,4 +1,4 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`parallelogram-trapezoid-diagram - Area of parallelograms 1`] = `"<svg width="360" height="297" viewBox="-20 -20 360 297" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif"><polygon points="31.341741479992464,223 176.34174147999246,223 288.65825852000756,20 143.65825852000756,20" fill="none" stroke="#000000" stroke-width="2"/><line x1="143.65825852000756" y1="20" x2="143.65825852000756" y2="223" stroke="#000000" stroke-width="1.5" stroke-dasharray="4 2"/><path d="M 133.65825852000756 223 L 133.65825852000756 213 L 143.65825852000756 213" fill="none" stroke="#000000" stroke-width="1.5"/><text x="103.84174147999246" y="243" font-size="14" text-anchor="middle">5</text><text x="252.5" y="121.5" font-size="14">8</text><text x="216.15825852000756" y="10" font-size="14" text-anchor="middle">5</text><text x="67.5" y="121.5" font-size="14" text-anchor="end">8</text><text x="133.65825852000756" y="121.5" font-size="14" text-anchor="end">7</text></svg>"`;
 

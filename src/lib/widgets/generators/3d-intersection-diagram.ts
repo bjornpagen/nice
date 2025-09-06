@@ -15,6 +15,15 @@ const RectangularPrismDataSchema = z
 	})
 	.strict()
 
+// Defines the properties for a pentagonal prism solid
+const PentagonalPrismDataSchema = z
+	.object({
+		type: z.literal("pentagonalPrism"),
+		side: z.number().positive().describe("The side length of the pentagonal bases."),
+		height: z.number().positive().describe("The height of the prism.")
+	})
+	.strict()
+
 // Defines the properties for a square pyramid solid
 const SquarePyramidDataSchema = z
 	.object({
@@ -124,6 +133,7 @@ export const ThreeDIntersectionDiagramPropsSchema = z
 		solid: z
 			.discriminatedUnion("type", [
 				RectangularPrismDataSchema,
+				PentagonalPrismDataSchema,
 				SquarePyramidDataSchema,
 				CylinderDataSchema,
 				ConeDataSchema,
@@ -216,6 +226,38 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 				{ startIdx: 2, endIdx: 6, isHidden: null },
 				{ startIdx: 3, endIdx: 7, isHidden: null }
 			]
+			break
+		}
+		case "pentagonalPrism": {
+			const { side, height: h } = solid
+			solidHeight = h
+			const radius = side / (2 * Math.sin(Math.PI / 5)) // Circumradius of the pentagon
+			solidLength = radius * 2
+			vertices = []
+			edges = []
+			const h2 = h / 2
+
+			// Generate vertices
+			for (let i = 0; i < 5; i++) {
+				// Bottom vertices
+				const angle = (i * 2 * Math.PI) / 5 + Math.PI / 10 // Rotate to have a face forward
+				vertices.push({ x: radius * Math.cos(angle), y: -h2, z: radius * Math.sin(angle) })
+			}
+			for (let i = 0; i < 5; i++) {
+				// Top vertices
+				const angle = (i * 2 * Math.PI) / 5 + Math.PI / 10
+				vertices.push({ x: radius * Math.cos(angle), y: h2, z: radius * Math.sin(angle) })
+			}
+
+			// Generate edges
+			for (let i = 0; i < 5; i++) {
+				// Bottom edges
+				edges.push({ startIdx: i, endIdx: (i + 1) % 5, isHidden: null })
+				// Top edges
+				edges.push({ startIdx: 5 + i, endIdx: 5 + ((i + 1) % 5), isHidden: null })
+				// Vertical edges
+				edges.push({ startIdx: i, endIdx: i + 5, isHidden: null })
+			}
 			break
 		}
 		case "squarePyramid": {
@@ -398,7 +440,11 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 	}
 
 	// Targeted fix: compute hidden/visible edges based on face orientation for prisms and pyramids
-	if (solid.type === "rectangularPrism" || solid.type === "squarePyramid") {
+	if (
+		solid.type === "rectangularPrism" ||
+		solid.type === "squarePyramid" ||
+		solid.type === "pentagonalPrism"
+	) {
 		// Helper vector ops
 		const sub = (a: Point3D, b: Point3D): Point3D => ({ x: a.x - b.x, y: a.y - b.y, z: a.z - b.z })
 		const cross = (a: Point3D, b: Point3D): Point3D => ({
@@ -420,10 +466,11 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 		// Define faces for each solid
 		type Face = { indices: number[]; normal: Point3D }
 		const faces: Face[] = []
+		let faceCycles: number[][] = []
 
 		if (solid.type === "rectangularPrism") {
 			// Faces defined by vertex cycles
-			const faceCycles: number[][] = [
+			faceCycles = [
 				[0, 1, 2, 3], // back
 				[4, 5, 6, 7], // front
 				[0, 4, 5, 1], // bottom (y-)
@@ -431,68 +478,53 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 				[0, 3, 7, 4], // left (x-)
 				[1, 5, 6, 2] // right (x+)
 			]
-			for (const cyc of faceCycles) {
-				const i0 = cyc[0]
-				const i1 = cyc[1]
-				const i2 = cyc[2]
-				if (i0 === undefined || i1 === undefined || i2 === undefined) continue
-				const a = vertices[i0]
-				const b = vertices[i1]
-				const c = vertices[i2]
-				if (!a || !b || !c) continue
-				let n = cross(sub(b, a), sub(c, a))
-				// Orient normal outward relative to object center
-				let sum: Point3D = { x: 0, y: 0, z: 0 }
-				let count = 0
-				for (const idx of cyc) {
-					const v = vertices[idx]
-					if (!v) {
-						count = -1
-						break
-					}
-					sum = add(sum, v)
-					count++
-				}
-				if (count !== cyc.length) continue
-				const fCenter = scaleVec(sum, 1 / count)
-				if (dot(n, sub(fCenter, objCenter)) < 0) n = scaleVec(n, -1)
-				faces.push({ indices: cyc, normal: n })
-			}
-		} else {
-			// squarePyramid
-			const faceCycles: number[][] = [
+		} else if (solid.type === "squarePyramid") {
+			faceCycles = [
 				[0, 1, 2, 3], // base (y constant)
 				[0, 1, 4],
 				[1, 2, 4],
 				[2, 3, 4],
 				[3, 0, 4]
 			]
-			for (const cyc of faceCycles) {
-				const i0 = cyc[0]
-				const i1 = cyc[1]
-				const i2 = cyc[2]
-				if (i0 === undefined || i1 === undefined || i2 === undefined) continue
-				const a = vertices[i0]
-				const b = vertices[i1]
-				const c = vertices[i2]
-				if (!a || !b || !c) continue
-				let n = cross(sub(b, a), sub(c, a))
-				let sum: Point3D = { x: 0, y: 0, z: 0 }
-				let count = 0
-				for (const idx of cyc) {
-					const v = vertices[idx]
-					if (!v) {
-						count = -1
-						break
-					}
-					sum = add(sum, v)
-					count++
+		} else {
+			// pentagonalPrism
+			faceCycles = [
+				[0, 1, 2, 3, 4], // bottom
+				[9, 8, 7, 6, 5], // top (reversed for outward normal)
+				[0, 1, 6, 5], // side
+				[1, 2, 7, 6], // side
+				[2, 3, 8, 7], // side
+				[3, 4, 9, 8], // side
+				[4, 0, 5, 9] // side
+			]
+		}
+
+		for (const cyc of faceCycles) {
+			const i0 = cyc[0]
+			const i1 = cyc[1]
+			const i2 = cyc[2]
+			if (i0 === undefined || i1 === undefined || i2 === undefined) continue
+			const a = vertices[i0]
+			const b = vertices[i1]
+			const c = vertices[i2]
+			if (!a || !b || !c) continue
+			let n = cross(sub(b, a), sub(c, a))
+			// Orient normal outward relative to object center
+			let sum: Point3D = { x: 0, y: 0, z: 0 }
+			let count = 0
+			for (const idx of cyc) {
+				const v = vertices[idx]
+				if (!v) {
+					count = -1
+					break
 				}
-				if (count !== cyc.length) continue
-				const fCenter = scaleVec(sum, 1 / count)
-				if (dot(n, sub(fCenter, objCenter)) < 0) n = scaleVec(n, -1)
-				faces.push({ indices: cyc, normal: n })
+				sum = add(sum, v)
+				count++
 			}
+			if (count !== cyc.length) continue
+			const fCenter = scaleVec(sum, 1 / count)
+			if (dot(n, sub(fCenter, objCenter)) < 0) n = scaleVec(n, -1)
+			faces.push({ indices: cyc, normal: n })
 		}
 
 		// Build edge -> adjacent faces map using face cycles (edges are undirected)
