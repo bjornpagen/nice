@@ -28,100 +28,41 @@ type CompositeShapeDiagramInput = z.input<typeof CompositeShapeDiagramPropsSchem
 // Widget key: image_1
 test("composite-shape-diagram - Decompose area with triangles", () => {
 	const input = {
-	"width": 320,
-	"height": 212,
-	"vertices": [
-		{
-			"x": -130,
-			"y": 80
-		},
-		{
-			"x": 130,
-			"y": 80
-		},
-		{
-			"x": 130,
-			"y": -80
-		},
-		{
-			"x": -90,
-			"y": 0
-		},
-		{
-			"x": 130,
-			"y": 0
-		}
-	],
-	"regionLabels": [
-		{
-			"text": "A",
-			"position": {
-				"x": 60,
-				"y": -30
-			}
-		},
-		{
-			"text": "B",
-			"position": {
-				"x": 0,
-				"y": 40
-			}
-		}
-	],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3
-	],
-	"shadedRegions": [],
-	"internalSegments": [
-		{
-			"label": null,
-			"style": "dashed",
-			"toVertexIndex": 4,
-			"fromVertexIndex": 3
-		},
-		{
-			"label": "7 units",
-			"style": "solid",
-			"toVertexIndex": 4,
-			"fromVertexIndex": 2
-		},
-		{
-			"label": "3 units",
-			"style": "solid",
-			"toVertexIndex": 1,
-			"fromVertexIndex": 4
-		}
-	],
-	"rightAngleMarkers": [
-		{
-			"cornerVertexIndex": 4,
-			"adjacentVertex1Index": 2,
-			"adjacentVertex2Index": 3
-		}
-	],
-	"outerBoundaryLabels": [
-		{
-			"text": "10 units",
-			"offset": 12
-		},
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": null,
-			"offset": 12
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 320,
+		"height": 212,
+		"vertices": [
+			{ "id": "V0", "x": -130, "y": 80 },
+			{ "id": "V1", "x": 130, "y": 80 },
+			{ "id": "V2", "x": 130, "y": -80 },
+			{ "id": "V3", "x": -90, "y": 0 },
+			{ "id": "V4", "x": 130, "y": 0 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V3", "to": "V0", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 10, "unit": null }, "offset": 12 },
+			{
+				"type": "partitioned",
+				"path": ["V1", "V4", "V2"],
+				"segments": [
+					{ "label": { "value": 3, "unit": null }, "style": "solid" },
+					{ "label": { "value": 7, "unit": null }, "style": "solid" }
+				]
+			},
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 12 }
+		],
+		"internalSegments": [
+			{ "fromVertexId": "V3", "toVertexId": "V4", "style": "dashed", "label": null }
+		],
+		"regionLabels": [
+			{ "text": "A", "position": { "x": 60, "y": -30 } },
+			{ "text": "B", "position": { "x": 0, "y": 40 } }
+		],
+		"rightAngleMarkers": [
+			{ "cornerVertexId": "V4", "adjacentVertex1Id": "V2", "adjacentVertex2Id": "V3" }
+		],
+		"shadedRegions": []
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -142,104 +83,36 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Widget key: image_1
 test("composite-shape-diagram - Decompose area with triangles", () => {
 	const input = {
-	"width": 280,
-	"height": 320,
-	"vertices": [
-		{
-			"x": 39.506,
-			"y": 280.494
-		},
-		{
-			"x": 39.506,
-			"y": 3.951
-		},
-		{
-			"x": 237.037,
-			"y": 43.457
-		},
-		{
-			"x": 237.037,
-			"y": 201.48
-		},
-		{
-			"x": 237.037,
-			"y": 280.494
-		},
-		{
-			"x": 164.979,
-			"y": 280.494
-		}
-	],
-	"regionLabels": [
-		{
-			"text": "A",
-			"position": {
-				"x": 110,
-				"y": 150
-			}
-		},
-		{
-			"text": "B",
-			"position": {
-				"x": 200,
-				"y": 215
-			}
-		}
-	],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3
-	],
-	"shadedRegions": [],
-	"internalSegments": [
-		{
-			"label": null,
-			"style": "dashed",
-			"toVertexIndex": 2,
-			"fromVertexIndex": 0
-		},
-		{
-			"label": null,
-			"style": "dashed",
-			"toVertexIndex": 4,
-			"fromVertexIndex": 0
-		},
-		{
-			"label": "7 units",
-			"style": "dashed",
-			"toVertexIndex": 5,
-			"fromVertexIndex": 0
-		},
-		{
-			"label": "4 units",
-			"style": "dashed",
-			"toVertexIndex": 4,
-			"fromVertexIndex": 5
-		}
-	],
-	"rightAngleMarkers": [],
-	"outerBoundaryLabels": [
-		{
-			"text": "5 units",
-			"offset": -14
-		},
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": null,
-			"offset": 12
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 280,
+		"height": 320,
+		"vertices": [
+			{ "id": "V0", "x": 39.506, "y": 280.494 },
+			{ "id": "V1", "x": 39.506, "y": 3.951 },
+			{ "id": "V2", "x": 237.037, "y": 43.457 },
+			{ "id": "V3", "x": 237.037, "y": 201.48 },
+			{ "id": "V4", "x": 237.037, "y": 280.494 },
+			{ "id": "V5", "x": 164.979, "y": 280.494 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 5, "unit": null }, "offset": -14 },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V3", "to": "V0", "label": null, "offset": 12 }
+		],
+		"internalSegments": [
+			{ "fromVertexId": "V0", "toVertexId": "V2", "style": "dashed", "label": null },
+			{ "fromVertexId": "V0", "toVertexId": "V4", "style": "dashed", "label": null },
+			{ "fromVertexId": "V0", "toVertexId": "V5", "style": "dashed", "label": { "value": 7, "unit": null } },
+			{ "fromVertexId": "V5", "toVertexId": "V4", "style": "dashed", "label": { "value": 4, "unit": null } }
+		],
+		"regionLabels": [
+			{ "text": "A", "position": { "x": 110, "y": 150 } },
+			{ "text": "B", "position": { "x": 200, "y": 215 } }
+		],
+		"shadedRegions": [],
+		"rightAngleMarkers": []
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -260,115 +133,38 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Widget key: image_1
 test("composite-shape-diagram - Decompose area with triangles", () => {
 	const input = {
-	"width": 320,
-	"height": 205,
-	"vertices": [
-		{
-			"x": 28.829,
-			"y": 2.883
-		},
-		{
-			"x": 28.829,
-			"y": 118.198
-		},
-		{
-			"x": 86.487,
-			"y": 175.856
-		},
-		{
-			"x": 144.144,
-			"y": 175.856
-		},
-		{
-			"x": 317.117,
-			"y": 118.198
-		},
-		{
-			"x": 86.487,
-			"y": 118.198
-		},
-		{
-			"x": 144.144,
-			"y": 118.198
-		}
-	],
-	"regionLabels": [],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3,
-		4
-	],
-	"shadedRegions": [
-		{
-			"fillColor": "#7854ab4D",
-			"vertexIndices": [
-				0,
-				1,
-				2,
-				3,
-				4
-			]
-		}
-	],
-	"internalSegments": [
-		{
-			"label": " ",
-			"style": "dashed",
-			"toVertexIndex": 5,
-			"fromVertexIndex": 1
-		},
-		{
-			"label": " ",
-			"style": "dashed",
-			"toVertexIndex": 6,
-			"fromVertexIndex": 5
-		},
-		{
-			"label": " ",
-			"style": "dashed",
-			"toVertexIndex": 4,
-			"fromVertexIndex": 6
-		},
-		{
-			"label": " ",
-			"style": "dashed",
-			"toVertexIndex": 5,
-			"fromVertexIndex": 2
-		},
-		{
-			"label": " ",
-			"style": "dashed",
-			"toVertexIndex": 6,
-			"fromVertexIndex": 3
-		}
-	],
-	"rightAngleMarkers": [],
-	"outerBoundaryLabels": [
-		{
-			"text": " ",
-			"offset": 12
-		},
-		{
-			"text": " ",
-			"offset": 12
-		},
-		{
-			"text": " ",
-			"offset": 12
-		},
-		{
-			"text": " ",
-			"offset": 12
-		},
-		{
-			"text": " ",
-			"offset": 12
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 320,
+		"height": 205,
+		"vertices": [
+			{ "id": "V0", "x": 28.829, "y": 2.883 },
+			{ "id": "V1", "x": 28.829, "y": 118.198 },
+			{ "id": "V2", "x": 86.487, "y": 175.856 },
+			{ "id": "V3", "x": 144.144, "y": 175.856 },
+			{ "id": "V4", "x": 317.117, "y": 118.198 },
+			{ "id": "V5", "x": 86.487, "y": 118.198 },
+			{ "id": "V6", "x": 144.144, "y": 118.198 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V0", "to": "V1", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V4", "to": "V0", "label": null, "offset": 12 }
+		],
+		"internalSegments": [
+			{ "fromVertexId": "V1", "toVertexId": "V5", "style": "dashed", "label": null },
+			{ "fromVertexId": "V5", "toVertexId": "V6", "style": "dashed", "label": null },
+			{ "fromVertexId": "V6", "toVertexId": "V4", "style": "dashed", "label": null },
+			{ "fromVertexId": "V2", "toVertexId": "V5", "style": "dashed", "label": null },
+			{ "fromVertexId": "V3", "toVertexId": "V6", "style": "dashed", "label": null }
+		],
+		"shadedRegions": [
+			{ "vertexIds": ["V0", "V1", "V2", "V3", "V4"], "fillColor": "#7854ab4D" }
+		],
+		"regionLabels": [],
+		"rightAngleMarkers": []
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -389,82 +185,32 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Widget key: image_1
 test("composite-shape-diagram - Decompose area with triangles", () => {
 	const input = {
-	"width": 320,
-	"height": 254,
-	"vertices": [
-		{
-			"x": 3.137,
-			"y": 222.745
-		},
-		{
-			"x": 285.49,
-			"y": 222.745
-		},
-		{
-			"x": 285.49,
-			"y": 34.51
-		},
-		{
-			"x": 128.627,
-			"y": 34.51
-		},
-		{
-			"x": 128.627,
-			"y": 222.745
-		}
-	],
-	"regionLabels": [
-		{
-			"text": "A",
-			"position": {
-				"x": 70,
-				"y": 150
-			}
-		},
-		{
-			"text": "B",
-			"position": {
-				"x": 210,
-				"y": 130
-			}
-		}
-	],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3
-	],
-	"shadedRegions": [],
-	"internalSegments": [
-		{
-			"label": "6 units",
-			"style": "dashed",
-			"toVertexIndex": 4,
-			"fromVertexIndex": 3
-		}
-	],
-	"rightAngleMarkers": [],
-	"outerBoundaryLabels": [
-		{
-			"text": "9 units",
-			"offset": 18
-		},
-		{
-			"text": " ",
-			"offset": 15
-		},
-		{
-			"text": "5 units",
-			"offset": 18
-		},
-		{
-			"text": " ",
-			"offset": 15
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 320,
+		"height": 254,
+		"vertices": [
+			{ "id": "V0", "x": 3.137, "y": 222.745 },
+			{ "id": "V1", "x": 285.49, "y": 222.745 },
+			{ "id": "V2", "x": 285.49, "y": 34.51 },
+			{ "id": "V3", "x": 128.627, "y": 34.51 },
+			{ "id": "V4", "x": 128.627, "y": 222.745 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 9, "unit": null }, "offset": 18 },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 15 },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 5, "unit": null }, "offset": 18 },
+			{ "type": "simple", "from": "V3", "to": "V0", "label": null, "offset": 15 }
+		],
+		"internalSegments": [
+			{ "fromVertexId": "V3", "toVertexId": "V4", "style": "dashed", "label": { "value": 6, "unit": null } }
+		],
+		"regionLabels": [
+			{ "text": "A", "position": { "x": 70, "y": 150 } },
+			{ "text": "B", "position": { "x": 210, "y": 130 } }
+		],
+		"shadedRegions": [],
+		"rightAngleMarkers": []
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -485,108 +231,37 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Widget key: image_1
 test("composite-shape-diagram - Decompose area with triangles", () => {
 	const input = {
-	"width": 320,
-	"height": 306,
-	"vertices": [
-		{
-			"x": -90,
-			"y": 45
-		},
-		{
-			"x": -90,
-			"y": -45
-		},
-		{
-			"x": -30,
-			"y": -45
-		},
-		{
-			"x": 0,
-			"y": -25
-		},
-		{
-			"x": 0,
-			"y": 45
-		},
-		{
-			"x": -30,
-			"y": 45
-		},
-		{
-			"x": -30,
-			"y": -25
-		}
-	],
-	"regionLabels": [
-		{
-			"text": "A",
-			"position": {
-				"x": -60,
-				"y": 0
-			}
-		},
-		{
-			"text": "B",
-			"position": {
-				"x": -15,
-				"y": -35
-			}
-		},
-		{
-			"text": "C",
-			"position": {
-				"x": -15,
-				"y": 10
-			}
-		}
-	],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3,
-		4
-	],
-	"shadedRegions": [],
-	"internalSegments": [
-		{
-			"label": " ",
-			"style": "dashed",
-			"toVertexIndex": 5,
-			"fromVertexIndex": 2
-		},
-		{
-			"label": " ",
-			"style": "dashed",
-			"toVertexIndex": 3,
-			"fromVertexIndex": 6
-		}
-	],
-	"rightAngleMarkers": [],
-	"outerBoundaryLabels": [
-		{
-			"text": " ",
-			"offset": 15
-		},
-		{
-			"text": " ",
-			"offset": 15
-		},
-		{
-			"text": " ",
-			"offset": 15
-		},
-		{
-			"text": " ",
-			"offset": 15
-		},
-		{
-			"text": " ",
-			"offset": 15
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 320,
+		"height": 306,
+		"vertices": [
+			{ "id": "V0", "x": -90, "y": 45 },
+			{ "id": "V1", "x": -90, "y": -45 },
+			{ "id": "V2", "x": -30, "y": -45 },
+			{ "id": "V3", "x": 0, "y": -25 },
+			{ "id": "V4", "x": 0, "y": 45 },
+			{ "id": "V5", "x": -30, "y": 45 },
+			{ "id": "V6", "x": -30, "y": -25 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V0", "to": "V1", "label": null, "offset": 15 },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 15 },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 15 },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 15 },
+			{ "type": "simple", "from": "V4", "to": "V0", "label": null, "offset": 15 }
+		],
+		"internalSegments": [
+			{ "fromVertexId": "V2", "toVertexId": "V5", "style": "dashed", "label": null },
+			{ "fromVertexId": "V6", "toVertexId": "V3", "style": "dashed", "label": null }
+		],
+		"regionLabels": [
+			{ "text": "A", "position": { "x": -60, "y": 0 } },
+			{ "text": "B", "position": { "x": -15, "y": -35 } },
+			{ "text": "C", "position": { "x": -15, "y": 10 } }
+		],
+		"shadedRegions": [],
+		"rightAngleMarkers": []
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -607,80 +282,32 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Widget key: image_1
 test("composite-shape-diagram - Decompose area with triangles", () => {
 	const input = {
-	"width": 291,
-	"height": 320,
-	"vertices": [
-		{
-			"x": 31.429,
-			"y": 317.143
-		},
-		{
-			"x": 31.429,
-			"y": 31.429
-		},
-		{
-			"x": 260,
-			"y": 31.429
-		},
-		{
-			"x": 260,
-			"y": 317.143
-		},
-		{
-			"x": 202.857,
-			"y": 174.286
-		},
-		{
-			"x": 31.429,
-			"y": 174.286
-		},
-		{
-			"x": 260,
-			"y": 174.286
-		}
-	],
-	"regionLabels": [],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3,
-		4
-	],
-	"shadedRegions": [],
-	"internalSegments": [
-		{
-			"label": null,
-			"style": "dashed",
-			"toVertexIndex": 6,
-			"fromVertexIndex": 5
-		}
-	],
-	"rightAngleMarkers": [],
-	"outerBoundaryLabels": [
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": null,
-			"offset": 12
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 291,
+		"height": 320,
+		"vertices": [
+			{ "id": "V0", "x": 31.429, "y": 317.143 },
+			{ "id": "V1", "x": 31.429, "y": 31.429 },
+			{ "id": "V2", "x": 260, "y": 31.429 },
+			{ "id": "V3", "x": 260, "y": 317.143 },
+			{ "id": "V4", "x": 202.857, "y": 174.286 },
+			{ "id": "V5", "x": 31.429, "y": 174.286 },
+			{ "id": "V6", "x": 260, "y": 174.286 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V0", "to": "V1", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V4", "to": "V0", "label": null, "offset": 12 }
+		],
+		"internalSegments": [
+			{ "fromVertexId": "V5", "toVertexId": "V6", "style": "dashed", "label": null }
+		],
+		"regionLabels": [],
+		"shadedRegions": [],
+		"rightAngleMarkers": []
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -701,106 +328,37 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Widget key: image_1
 test("composite-shape-diagram - Decompose area with triangles", () => {
 	const input = {
-	"width": 420,
-	"height": 260,
-	"vertices": [
-		{
-			"x": 20,
-			"y": 20
-		},
-		{
-			"x": 260,
-			"y": 20
-		},
-		{
-			"x": 340,
-			"y": 170
-		},
-		{
-			"x": 20,
-			"y": 170
-		},
-		{
-			"x": 260,
-			"y": 170
-		}
-	],
-	"regionLabels": [
-		{
-			"text": "A",
-			"position": {
-				"x": 140,
-				"y": 95
-			}
-		},
-		{
-			"text": "B",
-			"position": {
-				"x": 295,
-				"y": 110
-			}
-		}
-	],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3
-	],
-	"shadedRegions": [
-		{
-			"fillColor": "#E6F2FF",
-			"vertexIndices": [
-				0,
-				1,
-				4,
-				3
-			]
-		},
-		{
-			"fillColor": "#FFE5CC",
-			"vertexIndices": [
-				1,
-				2,
-				4
-			]
-		}
-	],
-	"internalSegments": [
-		{
-			"label": null,
-			"style": "dashed",
-			"toVertexIndex": 4,
-			"fromVertexIndex": 1
-		}
-	],
-	"rightAngleMarkers": [
-		{
-			"cornerVertexIndex": 0,
-			"adjacentVertex1Index": 1,
-			"adjacentVertex2Index": 3
-		}
-	],
-	"outerBoundaryLabels": [
-		{
-			"text": "9 units",
-			"offset": 14
-		},
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": "13 units",
-			"offset": 14
-		},
-		{
-			"text": "5 units",
-			"offset": 14
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 420,
+		"height": 260,
+		"vertices": [
+			{ "id": "V0", "x": 20, "y": 20 },
+			{ "id": "V1", "x": 260, "y": 20 },
+			{ "id": "V2", "x": 340, "y": 170 },
+			{ "id": "V3", "x": 20, "y": 170 },
+			{ "id": "V4", "x": 260, "y": 170 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 9, "unit": null }, "offset": 14 },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 13, "unit": null }, "offset": 14 },
+			{ "type": "simple", "from": "V3", "to": "V0", "label": { "value": 5, "unit": null }, "offset": 14 }
+		],
+		"internalSegments": [
+			{ "fromVertexId": "V1", "toVertexId": "V4", "style": "dashed", "label": null }
+		],
+		"shadedRegions": [
+			{ "vertexIds": ["V0", "V1", "V4", "V3"], "fillColor": "#E6F2FF" },
+			{ "vertexIds": ["V1", "V2", "V4"], "fillColor": "#FFE5CC" }
+		],
+		"regionLabels": [
+			{ "text": "A", "position": { "x": 140, "y": 95 } },
+			{ "text": "B", "position": { "x": 295, "y": 110 } }
+		],
+		"rightAngleMarkers": [
+			{ "cornerVertexId": "V0", "adjacentVertex1Id": "V1", "adjacentVertex2Id": "V3" }
+		]
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -821,115 +379,38 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Widget key: image_1
 test("composite-shape-diagram - Decompose area with triangles", () => {
 	const input = {
-	"width": 420,
-	"height": 300,
-	"vertices": [
-		{
-			"x": -2,
-			"y": 5.5
-		},
-		{
-			"x": 0,
-			"y": 11
-		},
-		{
-			"x": 7,
-			"y": 11
-		},
-		{
-			"x": 7,
-			"y": 0
-		},
-		{
-			"x": 0,
-			"y": 0
-		},
-		{
-			"x": 0,
-			"y": 5.5
-		}
-	],
-	"regionLabels": [
-		{
-			"text": "A",
-			"position": {
-				"x": -1.2,
-				"y": 5.5
-			}
-		},
-		{
-			"text": "B",
-			"position": {
-				"x": 3.5,
-				"y": 5.5
-			}
-		}
-	],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3,
-		4
-	],
-	"shadedRegions": [
-		{
-			"fillColor": "#f06a5a55",
-			"vertexIndices": [
-				0,
-				1,
-				4
-			]
-		},
-		{
-			"fillColor": "#01a99555",
-			"vertexIndices": [
-				4,
-				3,
-				2,
-				1
-			]
-		}
-	],
-	"internalSegments": [
-		{
-			"label": "base",
-			"style": "dashed",
-			"toVertexIndex": 1,
-			"fromVertexIndex": 4
-		},
-		{
-			"label": "2",
-			"style": "solid",
-			"toVertexIndex": 5,
-			"fromVertexIndex": 0
-		}
-	],
-	"rightAngleMarkers": [],
-	"outerBoundaryLabels": [
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": "7",
-			"offset": 14
-		},
-		{
-			"text": "11",
-			"offset": 14
-		},
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": null,
-			"offset": 12
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 420,
+		"height": 300,
+		"vertices": [
+			{ "id": "V0", "x": -2, "y": 5.5 },
+			{ "id": "V1", "x": 0, "y": 11 },
+			{ "id": "V2", "x": 7, "y": 11 },
+			{ "id": "V3", "x": 7, "y": 0 },
+			{ "id": "V4", "x": 0, "y": 0 },
+			{ "id": "V5", "x": 0, "y": 5.5 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V0", "to": "V1", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": { "value": 7, "unit": null }, "offset": 14 },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 11, "unit": null }, "offset": 14 },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V4", "to": "V0", "label": null, "offset": 12 }
+		],
+		"internalSegments": [
+			{ "fromVertexId": "V4", "toVertexId": "V1", "style": "dashed", "label": { "value": "base", "unit": null } },
+			{ "fromVertexId": "V0", "toVertexId": "V5", "style": "solid", "label": { "value": 2, "unit": null } }
+		],
+		"shadedRegions": [
+			{ "vertexIds": ["V0", "V1", "V4"], "fillColor": "#f06a5a55" },
+			{ "vertexIds": ["V4", "V3", "V2", "V1"], "fillColor": "#01a99555" }
+		],
+		"regionLabels": [
+			{ "text": "A", "position": { "x": -1.2, "y": 5.5 } },
+			{ "text": "B", "position": { "x": 3.5, "y": 5.5 } }
+		],
+		"rightAngleMarkers": []
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -950,88 +431,33 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Widget key: image_1
 test("composite-shape-diagram - Decompose area with triangles", () => {
 	const input = {
-	"width": 320,
-	"height": 134,
-	"vertices": [
-		{
-			"x": 2.623,
-			"y": 107.541
-		},
-		{
-			"x": 238.689,
-			"y": 107.541
-		},
-		{
-			"x": 291.147,
-			"y": 28.853
-		},
-		{
-			"x": 107.541,
-			"y": 28.853
-		},
-		{
-			"x": 291.147,
-			"y": 107.541
-		}
-	],
-	"regionLabels": [
-		{
-			"text": "A",
-			"position": {
-				"x": 90,
-				"y": 80
-			}
-		},
-		{
-			"text": "B",
-			"position": {
-				"x": 215,
-				"y": 55
-			}
-		}
-	],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3
-	],
-	"shadedRegions": [],
-	"internalSegments": [
-		{
-			"label": " ",
-			"style": "dashed",
-			"toVertexIndex": 1,
-			"fromVertexIndex": 3
-		},
-		{
-			"label": "3 units",
-			"style": "dashed",
-			"toVertexIndex": 4,
-			"fromVertexIndex": 2
-		}
-	],
-	"rightAngleMarkers": [],
-	"outerBoundaryLabels": [
-		{
-			"text": "9 units",
-			"offset": 15
-		},
-		{
-			"text": " ",
-			"offset": 10
-		},
-		{
-			"text": "7 units",
-			"offset": 15
-		},
-		{
-			"text": " ",
-			"offset": 10
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 320,
+		"height": 134,
+		"vertices": [
+			{ "id": "V0", "x": 2.623, "y": 107.541 },
+			{ "id": "V1", "x": 238.689, "y": 107.541 },
+			{ "id": "V2", "x": 291.147, "y": 28.853 },
+			{ "id": "V3", "x": 107.541, "y": 28.853 },
+			{ "id": "V4", "x": 291.147, "y": 107.541 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 9, "unit": null }, "offset": 15 },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 10 },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 7, "unit": null }, "offset": 15 },
+			{ "type": "simple", "from": "V3", "to": "V0", "label": null, "offset": 10 }
+		],
+		"internalSegments": [
+			{ "fromVertexId": "V3", "toVertexId": "V1", "style": "dashed", "label": null },
+			{ "fromVertexId": "V2", "toVertexId": "V4", "style": "dashed", "label": { "value": 3, "unit": null } }
+		],
+		"regionLabels": [
+			{ "text": "A", "position": { "x": 90, "y": 80 } },
+			{ "text": "B", "position": { "x": 215, "y": 55 } }
+		],
+		"shadedRegions": [],
+		"rightAngleMarkers": []
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -1052,105 +478,36 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Widget key: image_1
 test("composite-shape-diagram - Decompose area with triangles", () => {
 	const input = {
-	"width": 320,
-	"height": 147,
-	"vertices": [
-		{
-			"x": 28.829,
-			"y": 31.712
-		},
-		{
-			"x": 115.315,
-			"y": 118.198
-		},
-		{
-			"x": 259.459,
-			"y": 118.198
-		},
-		{
-			"x": 317.117,
-			"y": 31.712
-		},
-		{
-			"x": 28.829,
-			"y": 118.198
-		}
-	],
-	"regionLabels": [
-		{
-			"text": "A",
-			"position": {
-				"x": 150,
-				"y": 98
-			}
-		},
-		{
-			"text": "B",
-			"position": {
-				"x": 200,
-				"y": 56
-			}
-		}
-	],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3
-	],
-	"shadedRegions": [
-		{
-			"fillColor": "#f2c7c1",
-			"vertexIndices": [
-				1,
-				2,
-				0
-			]
-		},
-		{
-			"fillColor": "#cfe8e3",
-			"vertexIndices": [
-				0,
-				3,
-				2
-			]
-		}
-	],
-	"internalSegments": [
-		{
-			"label": " ",
-			"style": "dashed",
-			"toVertexIndex": 2,
-			"fromVertexIndex": 0
-		},
-		{
-			"label": "3 units",
-			"style": "dashed",
-			"toVertexIndex": 0,
-			"fromVertexIndex": 4
-		}
-	],
-	"rightAngleMarkers": [],
-	"outerBoundaryLabels": [
-		{
-			"text": " ",
-			"offset": 12
-		},
-		{
-			"text": "5 units",
-			"offset": 14
-		},
-		{
-			"text": " ",
-			"offset": 12
-		},
-		{
-			"text": "10 units",
-			"offset": 14
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 320,
+		"height": 147,
+		"vertices": [
+			{ "id": "V0", "x": 28.829, "y": 31.712 },
+			{ "id": "V1", "x": 115.315, "y": 118.198 },
+			{ "id": "V2", "x": 259.459, "y": 118.198 },
+			{ "id": "V3", "x": 317.117, "y": 31.712 },
+			{ "id": "V4", "x": 28.829, "y": 118.198 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V0", "to": "V1", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": { "value": 5, "unit": null }, "offset": 14 },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V3", "to": "V0", "label": { "value": 10, "unit": null }, "offset": 14 }
+		],
+		"internalSegments": [
+			{ "fromVertexId": "V0", "toVertexId": "V2", "style": "dashed", "label": null },
+			{ "fromVertexId": "V4", "toVertexId": "V0", "style": "dashed", "label": { "value": 3, "unit": null } }
+		],
+		"shadedRegions": [
+			{ "vertexIds": ["V1", "V2", "V0"], "fillColor": "#f2c7c1" },
+			{ "vertexIds": ["V0", "V3", "V2"], "fillColor": "#cfe8e3" }
+		],
+		"regionLabels": [
+			{ "text": "A", "position": { "x": 150, "y": 98 } },
+			{ "text": "B", "position": { "x": 200, "y": 56 } }
+		],
+		"rightAngleMarkers": []
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -1171,87 +528,33 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Widget key: image_1
 test("composite-shape-diagram - Area of composite shapes", () => {
 	const input = {
-	"width": 320,
-	"height": 320,
-	"vertices": [
-		{
-			"x": -100,
-			"y": 140
-		},
-		{
-			"x": -100,
-			"y": -140
-		},
-		{
-			"x": 0,
-			"y": -28
-		},
-		{
-			"x": 100,
-			"y": -140
-		},
-		{
-			"x": 100,
-			"y": 140
-		},
-		{
-			"x": 0,
-			"y": 140
-		}
-	],
-	"regionLabels": [],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3,
-		4
-	],
-	"shadedRegions": [
-		{
-			"fillColor": "#aa87ff4d",
-			"vertexIndices": [
-				0,
-				1,
-				2,
-				3,
-				4
-			]
-		}
-	],
-	"internalSegments": [
-		{
-			"label": "6 units",
-			"style": "dashed",
-			"toVertexIndex": 5,
-			"fromVertexIndex": 2
-		}
-	],
-	"rightAngleMarkers": [],
-	"outerBoundaryLabels": [
-		{
-			"text": "10 units",
-			"offset": 15
-		},
-		{
-			"text": null,
-			"offset": 15
-		},
-		{
-			"text": null,
-			"offset": 15
-		},
-		{
-			"text": null,
-			"offset": 15
-		},
-		{
-			"text": "7 units",
-			"offset": 15
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 320,
+		"height": 320,
+		"vertices": [
+			{ "id": "V0", "x": -100, "y": 140 },
+			{ "id": "V1", "x": -100, "y": -140 },
+			{ "id": "V2", "x": 0, "y": -28 },
+			{ "id": "V3", "x": 100, "y": -140 },
+			{ "id": "V4", "x": 100, "y": 140 },
+			{ "id": "V5", "x": 0, "y": 140 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 10, "unit": null }, "offset": 15 },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 15 },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 15 },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 15 },
+			{ "type": "simple", "from": "V4", "to": "V0", "label": { "value": 7, "unit": null }, "offset": 15 }
+		],
+		"internalSegments": [
+			{ "fromVertexId": "V2", "toVertexId": "V5", "style": "dashed", "label": { "value": 6, "unit": null } }
+		],
+		"shadedRegions": [
+			{ "vertexIds": ["V0", "V1", "V2", "V3", "V4"], "fillColor": "#aa87ff4d" }
+		],
+		"regionLabels": [],
+		"rightAngleMarkers": []
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -1272,65 +575,28 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("composite-shape-diagram - Area of composite shapes", () => {
 	const input = {
-	"width": 400,
-	"height": 420,
-	"vertices": [
-		{
-			"x": 32,
-			"y": 288
-		},
-		{
-			"x": 96,
-			"y": 288
-		},
-		{
-			"x": 160,
-			"y": 160
-		},
-		{
-			"x": 160,
-			"y": 32
-		},
-		{
-			"x": 32,
-			"y": 32
-		}
-	],
-	"regionLabels": [],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3,
-		4
-	],
-	"shadedRegions": [],
-	"internalSegments": [],
-	"rightAngleMarkers": [],
-	"outerBoundaryLabels": [
-		{
-			"text": "2 units",
-			"offset": 16
-		},
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": "4 units",
-			"offset": 16
-		},
-		{
-			"text": "4 units",
-			"offset": 16
-		},
-		{
-			"text": "8 units",
-			"offset": 16
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 400,
+		"height": 420,
+		"vertices": [
+			{ "id": "V0", "x": 32, "y": 288 },
+			{ "id": "V1", "x": 96, "y": 288 },
+			{ "id": "V2", "x": 160, "y": 160 },
+			{ "id": "V3", "x": 160, "y": 32 },
+			{ "id": "V4", "x": 32, "y": 32 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 2, "unit": null }, "offset": 16 },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 4, "unit": null }, "offset": 16 },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": { "value": 4, "unit": null }, "offset": 16 },
+			{ "type": "simple", "from": "V4", "to": "V0", "label": { "value": 8, "unit": null }, "offset": 16 }
+		],
+		"internalSegments": [],
+		"shadedRegions": [],
+		"regionLabels": [],
+		"rightAngleMarkers": []
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -1351,107 +617,37 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("composite-shape-diagram - Area of composite shapes", () => {
 	const input = {
-	"width": 320,
-	"height": 320,
-	"vertices": [
-		{
-			"x": 0,
-			"y": 5
-		},
-		{
-			"x": 0,
-			"y": 0
-		},
-		{
-			"x": 9,
-			"y": 0
-		},
-		{
-			"x": 9,
-			"y": 4
-		},
-		{
-			"x": 5,
-			"y": 9
-		},
-		{
-			"x": 3,
-			"y": 9
-		},
-		{
-			"x": 0,
-			"y": 9
-		},
-		{
-			"x": 9,
-			"y": 9
-		}
-	],
-	"regionLabels": [],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3,
-		4,
-		5
-	],
-	"shadedRegions": [],
-	"internalSegments": [
-		{
-			"label": "4 units",
-			"style": "dashed",
-			"toVertexIndex": 6,
-			"fromVertexIndex": 0
-		},
-		{
-			"label": "3 units",
-			"style": "dashed",
-			"toVertexIndex": 5,
-			"fromVertexIndex": 6
-		},
-		{
-			"label": "4 units",
-			"style": "dashed",
-			"toVertexIndex": 7,
-			"fromVertexIndex": 4
-		},
-		{
-			"label": "5 units",
-			"style": "dashed",
-			"toVertexIndex": 7,
-			"fromVertexIndex": 3
-		}
-	],
-	"rightAngleMarkers": [],
-	"outerBoundaryLabels": [
-		{
-			"text": "5 units",
-			"offset": 15
-		},
-		{
-			"text": "9 units",
-			"offset": 15
-		},
-		{
-			"text": "4 units",
-			"offset": 15
-		},
-		{
-			"text": null,
-			"offset": 15
-		},
-		{
-			"text": null,
-			"offset": 15
-		},
-		{
-			"text": null,
-			"offset": 15
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 320,
+		"height": 320,
+		"vertices": [
+			{ "id": "V0", "x": 0, "y": 5 },
+			{ "id": "V1", "x": 0, "y": 0 },
+			{ "id": "V2", "x": 9, "y": 0 },
+			{ "id": "V3", "x": 9, "y": 4 },
+			{ "id": "V4", "x": 5, "y": 9 },
+			{ "id": "V5", "x": 3, "y": 9 },
+			{ "id": "V6", "x": 0, "y": 9 },
+			{ "id": "V7", "x": 9, "y": 9 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 5, "unit": null }, "offset": 15 },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": { "value": 9, "unit": null }, "offset": 15 },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 4, "unit": null }, "offset": 15 },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 15 },
+			{ "type": "simple", "from": "V4", "to": "V5", "label": null, "offset": 15 },
+			{ "type": "simple", "from": "V5", "to": "V0", "label": null, "offset": 15 }
+		],
+		"internalSegments": [
+			{ "fromVertexId": "V0", "toVertexId": "V6", "style": "dashed", "label": { "value": 4, "unit": null } },
+			{ "fromVertexId": "V6", "toVertexId": "V5", "style": "dashed", "label": { "value": 3, "unit": null } },
+			{ "fromVertexId": "V4", "toVertexId": "V7", "style": "dashed", "label": { "value": 4, "unit": null } },
+			{ "fromVertexId": "V3", "toVertexId": "V7", "style": "dashed", "label": { "value": 5, "unit": null } }
+		],
+		"shadedRegions": [],
+		"regionLabels": [],
+		"rightAngleMarkers": []
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -1472,99 +668,35 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("composite-shape-diagram - Area of composite shapes", () => {
 	const input = {
-	"width": 300,
-	"height": 320,
-	"vertices": [
-		{
-			"x": 0,
-			"y": 100
-		},
-		{
-			"x": -100,
-			"y": 70
-		},
-		{
-			"x": -100,
-			"y": 0
-		},
-		{
-			"x": 0,
-			"y": -20
-		},
-		{
-			"x": 100,
-			"y": 0
-		},
-		{
-			"x": 100,
-			"y": 70
-		}
-	],
-	"regionLabels": [],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3,
-		4,
-		5
-	],
-	"shadedRegions": [
-		{
-			"fillColor": "#aa87ff55",
-			"vertexIndices": [
-				0,
-				1,
-				2,
-				3,
-				4,
-				5
-			]
-		}
-	],
-	"internalSegments": [
-		{
-			"label": null,
-			"style": "dashed",
-			"toVertexIndex": 5,
-			"fromVertexIndex": 1
-		},
-		{
-			"label": null,
-			"style": "dashed",
-			"toVertexIndex": 4,
-			"fromVertexIndex": 2
-		}
-	],
-	"rightAngleMarkers": [],
-	"outerBoundaryLabels": [
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": null,
-			"offset": 12
-		},
-		{
-			"text": null,
-			"offset": 12
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 300,
+		"height": 320,
+		"vertices": [
+			{ "id": "V0", "x": 0, "y": 100 },
+			{ "id": "V1", "x": -100, "y": 70 },
+			{ "id": "V2", "x": -100, "y": 0 },
+			{ "id": "V3", "x": 0, "y": -20 },
+			{ "id": "V4", "x": 100, "y": 0 },
+			{ "id": "V5", "x": 100, "y": 70 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V0", "to": "V1", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V4", "to": "V5", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V5", "to": "V0", "label": null, "offset": 12 }
+		],
+		"internalSegments": [
+			{ "fromVertexId": "V1", "toVertexId": "V5", "style": "dashed", "label": null },
+			{ "fromVertexId": "V2", "toVertexId": "V4", "style": "dashed", "label": null }
+		],
+		"shadedRegions": [
+			{ "vertexIds": ["V0", "V1", "V2", "V3", "V4", "V5"], "fillColor": "#aa87ff55" }
+		],
+		"regionLabels": [],
+		"rightAngleMarkers": []
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -1585,104 +717,39 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("composite-shape-diagram - Area of composite shapes", () => {
 	const input = {
-	"width": 320,
-	"height": 200,
-	"vertices": [
-		{
-			"x": 1.975,
-			"y": 160
-		},
-		{
-			"x": 160,
-			"y": 1.975
-		},
-		{
-			"x": 160,
-			"y": 61.235
-		},
-		{
-			"x": 199.506,
-			"y": 61.235
-		},
-		{
-			"x": 318.025,
-			"y": 160
-		},
-		{
-			"x": 160,
-			"y": 160
-		},
-		{
-			"x": 199.506,
-			"y": 160
-		}
-	],
-	"regionLabels": [],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3,
-		4
-	],
-	"shadedRegions": [],
-	"internalSegments": [
-		{
-			"label": "5 units",
-			"style": "dashed",
-			"toVertexIndex": 5,
-			"fromVertexIndex": 2
-		},
-		{
-			"label": "5 units",
-			"style": "dashed",
-			"toVertexIndex": 6,
-			"fromVertexIndex": 3
-		},
-		{
-			"label": "8 units",
-			"style": "solid",
-			"toVertexIndex": 5,
-			"fromVertexIndex": 0
-		},
-		{
-			"label": "2 units",
-			"style": "solid",
-			"toVertexIndex": 6,
-			"fromVertexIndex": 5
-		},
-		{
-			"label": "6 units",
-			"style": "solid",
-			"toVertexIndex": 4,
-			"fromVertexIndex": 6
-		}
-	],
-	"rightAngleMarkers": [],
-	"outerBoundaryLabels": [
-		{
-			"text": null,
-			"offset": 15
-		},
-		{
-			"text": null,
-			"offset": 15
-		},
-		{
-			"text": null,
-			"offset": 15
-		},
-		{
-			"text": null,
-			"offset": 15
-		},
-		{
-			"text": "16 units",
-			"offset": 18
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 320,
+		"height": 200,
+		"vertices": [
+			{ "id": "V0", "x": 1.975, "y": 160 },
+			{ "id": "V1", "x": 160, "y": 1.975 },
+			{ "id": "V2", "x": 160, "y": 61.235 },
+			{ "id": "V3", "x": 199.506, "y": 61.235 },
+			{ "id": "V4", "x": 318.025, "y": 160 },
+			{ "id": "V5", "x": 160, "y": 160 },
+			{ "id": "V6", "x": 199.506, "y": 160 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V0", "to": "V1", "label": null, "offset": 15 },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 15 },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 15 },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 15 },
+			{ "type": "partitioned", "path": ["V4", "V6", "V5", "V0"], 
+				"segments": [
+					{"label": { "value": 6, "unit": null }, "style": "solid"},
+					{"label": { "value": 2, "unit": null }, "style": "solid"},
+					{"label": { "value": 8, "unit": null }, "style": "solid"}
+				]
+			}
+		],
+		"internalSegments": [
+			{ "fromVertexId": "V2", "toVertexId": "V5", "style": "dashed", "label": { "value": 5, "unit": null } },
+			{ "fromVertexId": "V3", "toVertexId": "V6", "style": "dashed", "label": { "value": 5, "unit": null } }
+		],
+		"shadedRegions": [],
+		"regionLabels": [],
+		"rightAngleMarkers": []
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -1703,88 +770,34 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("composite-shape-diagram - Area of composite shapes", () => {
 	const input = {
-	"width": 271.145,
-	"height": 320,
-	"vertices": [
-		{
-			"x": 24.427,
-			"y": 173.435
-		},
-		{
-			"x": 24.427,
-			"y": 2.443
-		},
-		{
-			"x": 268.702,
-			"y": 173.435
-		},
-		{
-			"x": 195.42,
-			"y": 295.573
-		},
-		{
-			"x": 122.137,
-			"y": 295.573
-		},
-		{
-			"x": 122.138,
-			"y": 173.435
-		}
-	],
-	"regionLabels": [],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3,
-		4
-	],
-	"shadedRegions": [],
-	"internalSegments": [
-		{
-			"label": "10 units",
-			"style": "dashed",
-			"toVertexIndex": 2,
-			"fromVertexIndex": 0
-		},
-		{
-			"label": "5 units",
-			"style": "dashed",
-			"toVertexIndex": 4,
-			"fromVertexIndex": 5
-		}
-	],
-	"rightAngleMarkers": [
-		{
-			"cornerVertexIndex": 0,
-			"adjacentVertex1Index": 1,
-			"adjacentVertex2Index": 2
-		}
-	],
-	"outerBoundaryLabels": [
-		{
-			"text": "7 units",
-			"offset": 15
-		},
-		{
-			"text": null,
-			"offset": 15
-		},
-		{
-			"text": null,
-			"offset": 15
-		},
-		{
-			"text": "3 units",
-			"offset": 15
-		},
-		{
-			"text": null,
-			"offset": 15
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 271.145,
+		"height": 320,
+		"vertices": [
+			{ "id": "V0", "x": 24.427, "y": 173.435 },
+			{ "id": "V1", "x": 24.427, "y": 2.443 },
+			{ "id": "V2", "x": 268.702, "y": 173.435 },
+			{ "id": "V3", "x": 195.42, "y": 295.573 },
+			{ "id": "V4", "x": 122.137, "y": 295.573 },
+			{ "id": "V5", "x": 122.138, "y": 173.435 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 7, "unit": null }, "offset": 15 },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 15 },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 15 },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": { "value": 3, "unit": null }, "offset": 15 },
+			{ "type": "simple", "from": "V4", "to": "V0", "label": null, "offset": 15 }
+		],
+		"internalSegments": [
+			{ "fromVertexId": "V0", "toVertexId": "V2", "style": "dashed", "label": { "value": 10, "unit": null } },
+			{ "fromVertexId": "V5", "toVertexId": "V4", "style": "dashed", "label": { "value": 5, "unit": null } }
+		],
+		"rightAngleMarkers": [
+			{ "cornerVertexId": "V0", "adjacentVertex1Id": "V1", "adjacentVertex2Id": "V2" }
+		],
+		"shadedRegions": [],
+		"regionLabels": []
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -1805,99 +818,36 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 // Widget key: image_1
 test("composite-shape-diagram - Area of composite shapes", () => {
 	const input = {
-	"width": 320,
-	"height": 320,
-	"vertices": [
-		{
-			"x": 34.51,
-			"y": 285.49
-		},
-		{
-			"x": 34.51,
-			"y": 97.255
-		},
-		{
-			"x": 254.118,
-			"y": 3.137
-		},
-		{
-			"x": 316.863,
-			"y": 97.255
-		},
-		{
-			"x": 316.863,
-			"y": 285.49
-		},
-		{
-			"x": 254.118,
-			"y": 97.255
-		}
-	],
-	"regionLabels": [],
-	"outerBoundary": [
-		0,
-		1,
-		2,
-		3,
-		4
-	],
-	"shadedRegions": [
-		{
-			"fillColor": "#aa87ff55",
-			"vertexIndices": [
-				0,
-				1,
-				2,
-				3,
-				4
-			]
-		}
-	],
-	"internalSegments": [
-		{
-			"label": " ",
-			"style": "dashed",
-			"toVertexIndex": 3,
-			"fromVertexIndex": 1
-		},
-		{
-			"label": " ",
-			"style": "dashed",
-			"toVertexIndex": 5,
-			"fromVertexIndex": 2
-		}
-	],
-	"rightAngleMarkers": [
-		{
-			"cornerVertexIndex": 5,
-			"adjacentVertex1Index": 1,
-			"adjacentVertex2Index": 2
-		}
-	],
-	"outerBoundaryLabels": [
-		{
-			"text": " ",
-			"offset": 12
-		},
-		{
-			"text": " ",
-			"offset": 12
-		},
-		{
-			"text": " ",
-			"offset": 12
-		},
-		{
-			"text": " ",
-			"offset": 12
-		},
-		{
-			"text": " ",
-			"offset": 12
-		}
-	],
-	"type": "compositeShapeDiagram"
-} satisfies CompositeShapeDiagramInput
+		"type": "compositeShapeDiagram",
+		"width": 320,
+		"height": 320,
+		"vertices": [
+			{ "id": "V0", "x": 34.51, "y": 285.49 },
+			{ "id": "V1", "x": 34.51, "y": 97.255 },
+			{ "id": "V2", "x": 254.118, "y": 3.137 },
+			{ "id": "V3", "x": 316.863, "y": 97.255 },
+			{ "id": "V4", "x": 316.863, "y": 285.49 },
+			{ "id": "V5", "x": 254.118, "y": 97.255 }
+		],
+		"boundaryEdges": [
+			{ "type": "simple", "from": "V0", "to": "V1", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 12 },
+			{ "type": "simple", "from": "V4", "to": "V0", "label": null, "offset": 12 }
+		],
+		"internalSegments": [
+			{ "fromVertexId": "V1", "toVertexId": "V3", "style": "dashed", "label": null },
+			{ "fromVertexId": "V2", "toVertexId": "V5", "style": "dashed", "label": null }
+		],
+		"shadedRegions": [
+			{ "vertexIds": ["V0", "V1", "V2", "V3", "V4"], "fillColor": "#aa87ff55" }
+		],
+		"rightAngleMarkers": [
+			{ "cornerVertexId": "V5", "adjacentVertex1Id": "V1", "adjacentVertex2Id": "V2" }
+		],
+		"regionLabels": []
+	} satisfies CompositeShapeDiagramInput
 
 	// Validate the input
 	const parseResult = CompositeShapeDiagramPropsSchema.safeParse(input)
@@ -1910,4 +860,3 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 	const svg = generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-

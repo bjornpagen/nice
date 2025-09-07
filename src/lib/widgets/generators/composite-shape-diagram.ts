@@ -8,181 +8,162 @@ import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
 
-// Defines a 2D coordinate point for a vertex
-const PointSchema = z
-	.object({
-		x: z
-			.number()
-			.describe(
-				"Horizontal coordinate in the SVG space. Can be negative. The shape will be auto-centered, so use coordinates relative to shape's logical center (e.g., -50, 0, 100, 75.5)."
-			),
-		y: z
-			.number()
-			.describe(
-				"Vertical coordinate in the SVG space. Can be negative. Positive y is downward. Shape will be auto-centered (e.g., -30, 0, 50, 80.5)."
-			)
-	})
-	.strict()
+// A simple, safe regex for identifiers.
+const identifierRegex = /^[A-Za-z0-9_]+$/;
 
-// Defines a label for a segment or an internal region
-const LabelSchema = z
-	.object({
-		text: z
-			.string()
-			.describe(
-				"The label text to display (e.g., 'Region A', '45 cm²', '1/2', 'Garden'). Can include math symbols and subscripts."
-			),
-		position: z
-			.object({
-				x: z
-					.number()
-					.describe(
-						"Horizontal position for the label in the same coordinate system as vertices. Should be inside the relevant region."
-					),
-				y: z
-					.number()
-					.describe(
-						"Vertical position for the label in the same coordinate system as vertices. Place carefully to avoid overlapping with edges."
-					)
-			})
-			.strict()
-			.describe("Position for placing the label.")
-	})
-	.strict()
+/**
+ * Defines a structured label for dimensions, separating the numeric or variable
+ * value from its unit for clear, consistent rendering.
+ */
+const LabelSchema = z.object({
+    value: z.union([z.number(), z.string()])
+        .describe("The numerical value or variable for the label (e.g., 10, 7.5, 'x')."),
+    unit: z.string().nullable()
+        .describe("The unit for the value (e.g., 'cm', 'in', 'm'). If the unit is unknown or not applicable, this MUST be null.")
+}).strict().nullable();
 
-// Defines a line segment (either an outer edge or an inner decomposition line)
-const SegmentSchema = z
-	.object({
-		fromVertexIndex: z
-			.number()
-			.int()
-			.describe(
-				"Zero-based index of the starting vertex in the vertices array (e.g., 0, 1, 2). Must be valid index < vertices.length."
-			),
-		toVertexIndex: z
-			.number()
-			.int()
-			.describe(
-				"Zero-based index of the ending vertex in the vertices array (e.g., 1, 3, 5). Must be valid index < vertices.length."
-			),
-		style: z
-			.enum(["solid", "dashed"])
-			.describe(
-				"Visual style of the line segment. 'solid' for regular lines, 'dashed' for lines indicating hidden/auxiliary edges or different types of boundaries."
-			),
-		label: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe(
-				"Text label for this segment's length or name (e.g., '5m', 'x+2', 'base', null). Null shows no label. Positioned at segment midpoint."
-			)
-	})
-	.strict()
+/**
+ * Defines a single vertex with a unique ID and coordinates.
+ * This is the single source of truth for all points in the diagram.
+ */
+const VertexSchema = z.object({
+    id: z.string().regex(identifierRegex)
+        .describe("A unique identifier for this vertex (e.g., 'A', 'B', 'midpoint1'). This ID is used to reference this point in all other parts of the schema."),
+    x: z.number()
+        .describe("The horizontal coordinate in the diagram's logical space. The shape is auto-centered, so coordinates can be relative to a logical origin (0,0)."),
+    y: z.number()
+        .describe("The vertical coordinate in the diagram's logical space. Positive y is downward.")
+}).strict();
 
-// Defines a shaded region within the composite shape
-const ShadedRegionSchema = z
-	.object({
-		vertexIndices: z
-			.array(z.number().int().min(0))
-			.min(3)
-			.describe("An ordered array of vertex indices that defines the boundary of the region to be shaded."),
-		fillColor: z
-			.string()
-			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
-			.describe(
-				"CSS fill color for this region (e.g., '#FFE5CC' for light peach, 'rgba(0,128,255,0.3)' for translucent blue, 'lightgreen'). Use alpha for overlapping regions."
-			)
-	})
-	.strict()
+/**
+ * Describes a single, labeled segment that is part of a larger partitioned edge.
+ * This is the building block for creating boundaries with multiple labels.
+ */
+const PartitionedSegmentSchema = z.object({
+    label: LabelSchema
+        .describe("Structured label for this specific segment of an edge. Use null for no label."),
+    style: z.enum(["solid", "dashed"])
+        .describe("The visual style of this segment's line. 'solid' is standard, 'dashed' can indicate an unmeasured or auxiliary part.")
+}).strict();
 
-// Defines a right-angle marker, positioned by the vertex at its corner
-const RightAngleMarkerSchema = z
-	.object({
-		cornerVertexIndex: z.number().int().describe("The index of the vertex where the right angle corner is located."),
-		adjacentVertex1Index: z.number().int().describe("Index of the first adjacent vertex forming the angle."),
-		adjacentVertex2Index: z.number().int().describe("Index of the second adjacent vertex forming the angle.")
-	})
-	.strict()
+/**
+ * A discriminated union to explicitly define a boundary edge.
+ * An edge can either be a simple line between two vertices or a
+ * complex path composed of multiple, individually labeled segments.
+ */
+const BoundaryEdgeSchema = z.discriminatedUnion("type", [
+    z.object({
+        type: z.literal("simple").describe("A single, continuous edge between two vertices."),
+        from: z.string().regex(identifierRegex)
+            .describe("The ID of the vertex where this edge starts. Must match an ID in the `vertices` array."),
+        to: z.string().regex(identifierRegex)
+            .describe("The ID of the vertex where this edge ends. Must match an ID in the `vertices` array."),
+        label: LabelSchema
+            .describe("A single structured label for the entire length of this edge. Use null for no label."),
+        offset: z.number()
+            .describe("The distance in pixels to offset the label from the edge. Positive values are outside the shape, negative are inside.")
+    }).strict(),
+    z.object({
+        type: z.literal("partitioned").describe("An edge composed of multiple segments connected in a path."),
+        path: z.array(z.string().regex(identifierRegex)).min(3)
+            .describe("An ordered list of vertex IDs defining the path of the edge (e.g., ['A', 'M', 'B']). Must contain at least 3 IDs to define at least two segments."),
+        segments: z.array(PartitionedSegmentSchema)
+            .describe("The definitions for each segment along the path. CRITICAL: The number of segments in this array must be exactly one less than the number of vertex IDs in the `path` array.")
+    }).strict()
+]);
 
-// Defines a label for a side of the outer boundary
-const SideLabelSchema = z
-	.object({
-		text: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe(
-				"Label for this edge/side of the outer boundary (e.g., '10 cm', 'x', '2a+b', null). Null means no label for this side."
-			),
-		offset: z
-			.number()
-			.describe(
-				"Distance in pixels from the edge to place the label. Positive values place label outside the shape, negative inside (e.g., 15, -10, 20)."
-			)
-	})
-	.strict()
+/**
+ * Defines a line segment that is *internal* to the shape, used for decomposition.
+ */
+const InternalSegmentSchema = z.object({
+	fromVertexId: z.string().regex(identifierRegex)
+		.describe("ID of the starting vertex. Must be a valid ID from the `vertices` array."),
+	toVertexId: z.string().regex(identifierRegex)
+		.describe("ID of the ending vertex. Must be a valid ID from the `vertices` array."),
+	style: z.enum(["solid", "dashed"])
+		.describe("Visual style of the line. 'dashed' is common for heights or decomposition lines."),
+	label: LabelSchema
+		.describe("Structured label for the segment's length or name. Use null for no label.")
+}).strict();
 
-// The main Zod schema for the compositeShapeDiagram function
-export const CompositeShapeDiagramPropsSchema = z
-	.object({
-		type: z
-			.literal("compositeShapeDiagram")
-			.describe("Identifies this as a composite shape diagram widget for complex polygons with internal structure."),
-		width: z
-			.number()
-			.positive()
-			.describe(
-				"Total width of the SVG in pixels (e.g., 400, 500, 600). Must accommodate the shape with labels and padding. Shape is auto-centered within."
-			),
-		height: z
-			.number()
-			.positive()
-			.describe(
-				"Total height of the SVG in pixels (e.g., 300, 400, 500). Must accommodate the shape with labels and padding. Shape is auto-centered within."
-			),
-		vertices: z
-			.array(PointSchema)
-			.describe(
-				"All vertex points that define the shape and its internal structure. Referenced by index (0-based) in other arrays. Order matters for boundary definition."
-			),
-		outerBoundary: z
-			.array(z.number().int())
-			.describe(
-				"Ordered vertex indices defining the outer perimeter. Traces the shape's outer edge by connecting vertices in sequence, then closing back to the first vertex. CRITICAL: Must include ALL vertices that form the outer boundary, not just the first N vertices. Examples: Rectangle=[0,1,2,3], L-shape=[0,1,2,3,4,5], Triangle=[0,1,2]. Min 3 indices."
-			),
-		outerBoundaryLabels: z
-			.array(SideLabelSchema)
-			.describe(
-				"Labels for outer boundary edges. Array length should match number of edges. First label is for edge from vertex[outerBoundary[0]] to vertex[outerBoundary[1]], etc."
-			),
-		internalSegments: z
-			.array(SegmentSchema)
-			.describe(
-				"Line segments inside the shape, dividing it into regions. Empty array means no internal divisions. Can represent diagonals, medians, or partitions."
-			),
-		shadedRegions: z
-			.array(ShadedRegionSchema)
-			.describe(
-				"Polygonal regions to fill with color. Empty array means no shading. Useful for highlighting areas, showing fractions, or distinguishing parts."
-			),
-		regionLabels: z
-			.array(LabelSchema)
-			.describe(
-				"Text labels positioned inside regions. Empty array means no labels. Use for area values, region names, or fractions."
-			),
-		rightAngleMarkers: z
-			.array(RightAngleMarkerSchema)
-			.describe(
-				"Square markers indicating 90° angles at vertices. Empty array means no markers. Essential for showing perpendicular edges in geometric proofs."
-			)
-	})
-	.strict()
-	.describe(
-		"Creates complex composite polygons with internal divisions, shaded regions, and geometric annotations. Perfect for area decomposition problems, geometric proofs, and visualizing how shapes can be divided into parts. Supports right angle markers and both solid and dashed internal segments. IMPORTANT: For complex shapes like L-shapes or U-shapes, ensure outerBoundary includes ALL vertices that form the perimeter, not just sequential indices."
-	)
+/**
+ * Defines a shaded polygonal region within the composite shape.
+ */
+const ShadedRegionSchema = z.object({
+	vertexIds: z.array(z.string().regex(identifierRegex)).min(3)
+		.describe("An ordered array of vertex IDs defining the boundary of the region to shade."),
+	fillColor: z.string().regex(CSS_COLOR_PATTERN)
+		.describe("CSS fill color for this region (e.g., '#FFE5CC', 'rgba(0,128,255,0.3)'). Use alpha for transparency.")
+}).strict();
 
-export type CompositeShapeDiagramProps = z.infer<typeof CompositeShapeDiagramPropsSchema>
+/**
+ * Defines a text label placed at an arbitrary position inside a region.
+ */
+const RegionLabelSchema = z.object({
+	text: z.string()
+		.describe("The label text to display (e.g., 'Region A', '45 cm²')."),
+	position: z.object({
+		x: z.number().describe("Horizontal position for the label in the same coordinate system as vertices."),
+		y: z.number().describe("Vertical position for the label in the same coordinate system as vertices.")
+	}).strict()
+}).strict();
+
+/**
+ * Defines a right-angle marker at a vertex.
+ */
+const RightAngleMarkerSchema = z.object({
+	cornerVertexId: z.string().regex(identifierRegex)
+        .describe("The ID of the vertex where the right angle's corner is located."),
+	adjacentVertex1Id: z.string().regex(identifierRegex)
+        .describe("The ID of the first adjacent vertex, forming one leg of the angle."),
+	adjacentVertex2Id: z.string().regex(identifierRegex)
+        .describe("The ID of the second adjacent vertex, forming the other leg of the angle.")
+}).strict();
+
+/**
+ * Creates complex composite polygons with internal divisions, shaded regions, and geometric annotations.
+ * This API is designed to be explicit and robust, defining the shape's perimeter as a collection of `boundaryEdges`.
+ * This approach avoids ambiguity and allows for clear, semantically correct definitions of complex boundaries with multiple labels.
+ */
+export const CompositeShapeDiagramPropsSchema = z.object({
+	type: z.literal("compositeShapeDiagram")
+		.describe("Identifies this as a composite shape diagram widget."),
+	width: z.number().positive()
+		.describe("Total width of the SVG canvas in pixels. The diagram will be auto-centered and scaled to fit within this dimension."),
+	height: z.number().positive()
+		.describe("Total height of the SVG canvas in pixels. The diagram will be auto-centered and scaled to fit within this dimension."),
+	vertices: z.array(VertexSchema)
+		.describe("An array of all vertex points that define the shape. Each vertex must have a unique ID, which is used to construct edges and regions."),
+	
+	boundaryEdges: z.array(BoundaryEdgeSchema)
+        .describe("An ordered array of edge definitions that trace the outer perimeter of the shape. This is the primary mechanism for defining the shape's boundary and its labels."),
+
+	internalSegments: z.array(InternalSegmentSchema).nullable()
+		.describe("Line segments *inside* the shape, used for area decomposition (e.g., showing the height). This should NOT be used to define the outer boundary."),
+
+	shadedRegions: z.array(ShadedRegionSchema).nullable()
+		.describe("Polygonal regions to fill with color, defined by a list of vertex IDs."),
+
+	regionLabels: z.array(RegionLabelSchema).nullable()
+		.describe("Text labels positioned freely inside the shape's regions."),
+
+	rightAngleMarkers: z.array(RightAngleMarkerSchema).nullable()
+		.describe("Square markers indicating 90° angles at specified vertices.")
+
+}).strict();
+
+export type CompositeShapeDiagramProps = z.infer<typeof CompositeShapeDiagramPropsSchema>;
+type Point = { x: number; y: number };
+type Label = z.infer<typeof LabelSchema>;
+
+// Helper function to format the label object into a display string.
+const formatLabel = (label: Label): string | null => {
+    if (!label) return null;
+    if (label.unit) {
+        return `${label.value} ${label.unit}`;
+    }
+    return String(label.value);
+};
 
 /**
  * Generates a diagram of a composite polygon from a set of vertices. Ideal for area
@@ -193,263 +174,220 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		width,
 		height,
 		vertices,
-		outerBoundary,
-		outerBoundaryLabels,
-		shadedRegions,
-		internalSegments,
-		regionLabels,
-		rightAngleMarkers
-	} = data
+		boundaryEdges,
+		internalSegments = [],
+		shadedRegions = [],
+		regionLabels = [],
+		rightAngleMarkers = [],
+	} = data;
 
-	if (vertices.length === 0) return `<svg width="${width}" height="${height}" />`
-
-	// Fit-to-canvas projection in data space (uniform scale + centering)
-	type Point = { x: number; y: number }
-	const allPoints: Point[] = []
-	for (const v of vertices) {
-		allPoints.push({ x: v.x, y: v.y })
-	}
-	for (const l of regionLabels) {
-		allPoints.push({ x: l.position.x, y: l.position.y })
+	if (vertices.length === 0) {
+		return `<svg width="${width}" height="${height}" />`;
 	}
 
-	function computeFit(points: Point[]) {
-		if (points.length === 0) {
-			return { scale: 1, offsetX: 0, offsetY: 0, project: (p: Point) => p }
-		}
-		const minX = Math.min(...points.map((p) => p.x))
-		const maxX = Math.max(...points.map((p) => p.x))
-		const minY = Math.min(...points.map((p) => p.y))
-		const maxY = Math.max(...points.map((p) => p.y))
-		const rawW = maxX - minX
-		const rawH = maxY - minY
-		const scale = Math.min((width - 2 * PADDING) / (rawW || 1), (height - 2 * PADDING) / (rawH || 1))
-		const offsetX = (width - scale * rawW) / 2 - scale * minX
-		const offsetY = (height - scale * rawH) / 2 - scale * minY
-		const project = (p: Point) => ({ x: offsetX + scale * p.x, y: offsetY + scale * p.y })
-		return { scale, offsetX, offsetY, project }
-	}
+	const vertexMap = new Map(vertices.map(v => [v.id, { x: v.x, y: v.y }]));
 
-	const { scale, project } = computeFit(allPoints)
+    // --- Data Validation ---
+    for (const edge of boundaryEdges) {
+        if (edge.type === "partitioned") {
+            if (edge.segments.length !== edge.path.length - 1) {
+                logger.error("Partitioned edge segment/path mismatch", {
+                    pathCount: edge.path.length,
+                    segmentCount: edge.segments.length,
+                });
+                throw errors.new(`For a partitioned edge, segments length (${edge.segments.length}) must be one less than path length (${edge.path.length}).`);
+            }
+        }
+    }
+    // --- End Validation ---
 
-	// Validation: Check that outerBoundaryLabels length matches outerBoundary length
-	if (outerBoundaryLabels.length !== outerBoundary.length) {
-		logger.error("outerBoundaryLabels length mismatch", {
-			outerBoundaryLabelsLength: outerBoundaryLabels.length,
-			outerBoundaryLength: outerBoundary.length
-		})
-		throw errors.new(
-			`outerBoundaryLabels length (${outerBoundaryLabels.length}) must match outerBoundary length (${outerBoundary.length})`
-		)
-	}
+	// Fit-to-canvas projection (uniform scale + centering)
+	const allPoints: Point[] = [...vertices.map(v => ({ x: v.x, y: v.y })), ...(regionLabels || []).map(l => ({ x: l.position.x, y: l.position.y }))];
 
-	// Validation: Check that all outerBoundary indices are valid
-	for (const idx of outerBoundary) {
-		if (idx < 0 || idx >= vertices.length) {
-			logger.error("invalid outerBoundary index", {
-				index: idx,
-				verticesLength: vertices.length,
-				validRange: `0-${vertices.length - 1}`
-			})
-			throw errors.new(`outerBoundary index ${idx} is invalid (must be 0-${vertices.length - 1})`)
-		}
-	}
+	const computeFit = (points: Point[]) => {
+		if (points.length === 0) return { scale: 1, project: (p: Point) => p };
+		const minX = Math.min(...points.map((p) => p.x));
+		const maxX = Math.max(...points.map((p) => p.x));
+		const minY = Math.min(...points.map((p) => p.y));
+		const maxY = Math.max(...points.map((p) => p.y));
+		const rawW = maxX - minX;
+		const rawH = maxY - minY;
+		const scale = Math.min((width - 2 * PADDING) / (rawW || 1), (height - 2 * PADDING) / (rawH || 1));
+		const offsetX = (width - scale * rawW) / 2 - scale * minX;
+		const offsetY = (height - scale * rawH) / 2 - scale * minY;
+		const project = (p: Point) => ({ x: offsetX + scale * p.x, y: offsetY + scale * p.y });
+		return { scale, project };
+	};
 
-	const canvas = new CanvasImpl({
-		chartArea: { left: 0, top: 0, width, height },
-		fontPxDefault: 12,
-		lineHeightDefault: 1.2
-	})
+	const { scale, project } = computeFit(allPoints);
+	const canvas = new CanvasImpl({ chartArea: { left: 0, top: 0, width, height }, fontPxDefault: 12, lineHeightDefault: 1.2 });
 
-	// Shaded regions (drawn first to be in the background)
-	for (const region of shadedRegions) {
-		// Validate that all vertex indices are within bounds
-		const validIndices = region.vertexIndices.filter((i) => i >= 0 && i < vertices.length)
-		if (validIndices.length < 3) continue
-
-		const regionPoints = validIndices
-			.map((i) => {
-				const vertex = vertices[i]
-				if (!vertex) return null
-				return project({ x: vertex.x, y: vertex.y })
-			})
-			.filter((p): p is { x: number; y: number } => p !== null)
-
+	// 1. Shaded regions (drawn first)
+	for (const region of shadedRegions || []) {
+		const regionPoints = region.vertexIds.map(id => vertexMap.get(id)).filter((p): p is Point => !!p).map(project);
 		if (regionPoints.length >= 3) {
-			canvas.drawPolygon(regionPoints, {
-				fill: region.fillColor,
-				stroke: "none"
-			})
+			canvas.drawPolygon(regionPoints, { fill: region.fillColor, stroke: "none" });
 		}
 	}
 
-	// Outer boundary
-	const outerPoints = outerBoundary
-		.map((i) => {
-			const vertex = vertices[i]
-			if (!vertex) return null
-			return project({ x: vertex.x, y: vertex.y })
-		})
-		.filter((p): p is { x: number; y: number } => p !== null)
+	// 2. Main shape boundary and its labels
+	const outerBoundaryPath = new Path2D();
+	for (const [index, edge] of boundaryEdges.entries()) {
+		if (edge.type === "simple") {
+			const from = vertexMap.get(edge.from);
+			const to = vertexMap.get(edge.to);
+			if (!from || !to) continue;
 
-	if (outerPoints.length >= 3) {
-		canvas.drawPolygon(outerPoints, {
-			fill: "none",
-			stroke: theme.colors.black,
-			strokeWidth: theme.stroke.width.thick
-		})
-	}
+			const pFrom = project(from);
+			if (index === 0) outerBoundaryPath.moveTo(pFrom.x, pFrom.y);
+			outerBoundaryPath.lineTo(project(to).x, project(to).y);
 
-	// Outer boundary labels
-	for (let i = 0; i < outerBoundary.length; i++) {
-		const label = outerBoundaryLabels[i]
-		if (!label || label.text === null || label.text === "") continue
+            const labelText = formatLabel(edge.label);
+            if(labelText) {
+                const midX = (from.x + to.x) / 2;
+                const midY = (from.y + to.y) / 2;
+                const dx = to.x - from.x;
+                const dy = to.y - from.y;
+                const edgeLength = Math.hypot(dx, dy);
+                if (edgeLength === 0) continue;
+                let perpX = -dy / edgeLength;
+                let perpY = dx / edgeLength;
 
-		const fromIndex = outerBoundary[i]
-		const toIndex = outerBoundary[(i + 1) % outerBoundary.length]
-		if (fromIndex === undefined || toIndex === undefined) continue
-		const from = vertices[fromIndex]
-		const to = vertices[toIndex]
-		if (!from || !to) continue
+                const centerX = vertices.reduce((sum, v) => sum + v.x, 0) / vertices.length;
+                const centerY = vertices.reduce((sum, v) => sum + v.y, 0) / vertices.length;
+                const testX = midX + perpX * 10;
+                const testY = midY + perpY * 10;
+                const distToCenterFromTest = Math.hypot(testX - centerX, testY - centerY);
+                const distToCenterFromMid = Math.hypot(midX - centerX, midY - centerY);
+                if (distToCenterFromTest < distToCenterFromMid) {
+                    perpX *= -1;
+                    perpY *= -1;
+                }
 
-		// Midpoint in data space
-		const midX = (from.x + to.x) / 2
-		const midY = (from.y + to.y) / 2
+                const offsetData = edge.offset / scale;
+                const labelPx = project({ x: midX + perpX * offsetData, y: midY + perpY * offsetData });
 
-		// Edge direction and perpendicular in data space
-		const dx = to.x - from.x
-		const dy = to.y - from.y
-		const edgeLength = Math.sqrt(dx * dx + dy * dy)
-		if (edgeLength === 0) continue
-		const edgeNormX = dx / edgeLength
-		const edgeNormY = dy / edgeLength
-		let perpX = -edgeNormY
-		let perpY = edgeNormX
+                canvas.drawText({
+                    x: labelPx.x,
+                    y: labelPx.y,
+                    text: labelText,
+                    fill: theme.colors.text,
+                    anchor: "middle",
+                    dominantBaseline: "middle",
+                    fontPx: theme.font.size.medium,
+                    fontWeight: theme.font.weight.bold
+                });
+            }
 
-		// Determine outward direction via center of all vertices (data space)
-		const centerX = vertices.reduce((sum, v) => sum + v.x, 0) / vertices.length
-		const centerY = vertices.reduce((sum, v) => sum + v.y, 0) / vertices.length
-		const testX = midX + perpX * 10
-		const testY = midY + perpY * 10
-		const distToCenterFromTest = Math.sqrt((testX - centerX) ** 2 + (testY - centerY) ** 2)
-		const distToCenterFromMid = Math.sqrt((midX - centerX) ** 2 + (midY - centerY) ** 2)
-		if (distToCenterFromTest < distToCenterFromMid) {
-			perpX = -perpX
-			perpY = -perpY
+		} else { // Partitioned edge
+			const pathPoints = edge.path.map(id => vertexMap.get(id)).filter((p): p is Point => !!p);
+			if (pathPoints.length < 2) continue;
+            
+            if (index === 0 && pathPoints[0]) outerBoundaryPath.moveTo(project(pathPoints[0]).x, project(pathPoints[0]).y);
+			for (let i = 1; i < pathPoints.length; i++) {
+                if (pathPoints[i]) outerBoundaryPath.lineTo(project(pathPoints[i]!).x, project(pathPoints[i]!).y);
+			}
+
+            for (let i = 0; i < edge.segments.length; i++) {
+                const from = pathPoints[i]!;
+                const to = pathPoints[i+1]!;
+                const segment = edge.segments[i]!;
+
+                const p1 = project(from);
+                const p2 = project(to);
+                const dash = segment.style === "dashed" ? "4 2" : undefined;
+                canvas.drawLine(p1.x, p1.y, p2.x, p2.y, { stroke: theme.colors.black, strokeWidth: theme.stroke.width.base, dash });
+
+                const labelText = formatLabel(segment.label);
+                if (labelText) {
+                    const midX = (from.x + to.x) / 2;
+                    const midY = (from.y + to.y) / 2;
+                    const angle = Math.atan2(to.y - from.y, to.x - from.x);
+                    const offsetMagData = 5 / scale;
+                    const offsetX = -Math.sin(angle) * offsetMagData;
+                    const offsetY = Math.cos(angle) * offsetMagData;
+                    const labelPx = project({ x: midX + offsetX, y: midY + offsetY });
+                    canvas.drawText({
+                        x: labelPx.x, y: labelPx.y, text: labelText, fill: theme.colors.text, anchor: "middle",
+                        dominantBaseline: "middle", fontPx: theme.font.size.base, stroke: theme.colors.background, strokeWidth: 3, paintOrder: "stroke fill"
+                    });
+                }
+            }
 		}
-
-		// Convert offset (px) to data-space units
-		const offsetData = label.offset / scale
-		const labelData = { x: midX + perpX * offsetData, y: midY + perpY * offsetData }
-		const labelPx = project(labelData)
-
-		canvas.drawText({
-			x: labelPx.x,
-			y: labelPx.y,
-			text: label.text,
-			fill: theme.colors.text,
-			anchor: "middle",
-			dominantBaseline: "middle",
-			fontPx: theme.font.size.medium,
-			fontWeight: theme.font.weight.bold
-		})
 	}
+	canvas.drawPath(outerBoundaryPath.closePath(), { fill: "none", stroke: theme.colors.black, strokeWidth: theme.stroke.width.thick });
 
-	// Internal segments
-	for (const s of internalSegments) {
-		const from = vertices[s.fromVertexIndex]
-		const to = vertices[s.toVertexIndex]
-		if (!from || !to) continue
-		const p1 = project({ x: from.x, y: from.y })
-		const p2 = project({ x: to.x, y: to.y })
-		const dash = s.style === "dashed" ? "4 2" : undefined
-		canvas.drawLine(p1.x, p1.y, p2.x, p2.y, {
-			stroke: theme.colors.black,
-			strokeWidth: theme.stroke.width.base,
-			dash: dash
-		})
-		if (s.label !== null) {
-			const midX = (from.x + to.x) / 2
-			const midY = (from.y + to.y) / 2
-			const angle = Math.atan2(to.y - from.y, to.x - from.x)
-			const offsetMagData = 5 / scale
-			const offsetX = -Math.sin(angle) * offsetMagData
-			const offsetY = Math.cos(angle) * offsetMagData
-			const labelPx = project({ x: midX + offsetX, y: midY + offsetY })
+	// 3. Internal segments
+	for (const s of internalSegments || []) {
+		const from = vertexMap.get(s.fromVertexId);
+		const to = vertexMap.get(s.toVertexId);
+		if (!from || !to) continue;
+
+		const p1 = project(from);
+		const p2 = project(to);
+		const dash = s.style === "dashed" ? "4 2" : undefined;
+		canvas.drawLine(p1.x, p1.y, p2.x, p2.y, { stroke: theme.colors.black, strokeWidth: theme.stroke.width.base, dash });
+
+		const labelText = formatLabel(s.label);
+		if (labelText) {
+			const midX = (from.x + to.x) / 2;
+			const midY = (from.y + to.y) / 2;
+			const angle = Math.atan2(to.y - from.y, to.x - from.x);
+			const offsetMagData = 5 / scale;
+			const offsetX = -Math.sin(angle) * offsetMagData;
+			const offsetY = Math.cos(angle) * offsetMagData;
+			const labelPx = project({ x: midX + offsetX, y: midY + offsetY });
 			canvas.drawText({
-				x: labelPx.x,
-				y: labelPx.y,
-				text: s.label,
-				fill: theme.colors.text,
-				anchor: "middle",
-				dominantBaseline: "middle",
-				fontPx: theme.font.size.base,
-				stroke: theme.colors.background,
-				strokeWidth: 3,
-				paintOrder: "stroke fill"
-			})
+				x: labelPx.x, y: labelPx.y, text: labelText, fill: theme.colors.text, anchor: "middle",
+				dominantBaseline: "middle", fontPx: theme.font.size.base, stroke: theme.colors.background, strokeWidth: 3, paintOrder: "stroke fill"
+			});
 		}
 	}
 
-	// Region labels
-	for (const l of regionLabels) {
-		const pos = project({ x: l.position.x, y: l.position.y })
-		canvas.drawText({
-			x: pos.x,
-			y: pos.y,
-			text: l.text,
-			fill: theme.colors.text,
-			anchor: "middle",
-			dominantBaseline: "middle",
-			fontPx: theme.font.size.medium,
-			fontWeight: theme.font.weight.bold
-		})
+	// 4. Region labels
+	for (const l of regionLabels || []) {
+		const pos = project({ x: l.position.x, y: l.position.y });
+		canvas.drawText({ x: pos.x, y: pos.y, text: l.text, fill: theme.colors.text, anchor: "middle", dominantBaseline: "middle", fontPx: theme.font.size.medium, fontWeight: theme.font.weight.bold });
 	}
 
-	// Right-angle markers
-	for (const m of rightAngleMarkers) {
-		const corner = vertices[m.cornerVertexIndex]
-		const adj1 = vertices[m.adjacentVertex1Index]
-		const adj2 = vertices[m.adjacentVertex2Index]
-		if (!corner || !adj1 || !adj2) continue
+	// 5. Right-angle markers
+	for (const m of rightAngleMarkers || []) {
+		const corner = vertexMap.get(m.cornerVertexId);
+		const adj1 = vertexMap.get(m.adjacentVertex1Id);
+		const adj2 = vertexMap.get(m.adjacentVertex2Id);
+		if (!corner || !adj1 || !adj2) continue;
 
-		// Create unit vectors from corner to adjacent points in data space
-		const v1x = adj1.x - corner.x
-		const v1y = adj1.y - corner.y
-		const mag1 = Math.sqrt(v1x * v1x + v1y * v1y)
-		if (mag1 === 0) continue
-		const u1x = v1x / mag1
-		const u1y = v1y / mag1
+		const v1x = adj1.x - corner.x;
+		const v1y = adj1.y - corner.y;
+		const mag1 = Math.hypot(v1x, v1y);
+		if (mag1 === 0) continue;
+		const u1x = v1x / mag1;
+		const u1y = v1y / mag1;
 
-		const v2x = adj2.x - corner.x
-		const v2y = adj2.y - corner.y
-		const mag2 = Math.sqrt(v2x * v2x + v2y * v2y)
-		if (mag2 === 0) continue
-		const u2x = v2x / mag2
-		const u2y = v2y / mag2
+		const v2x = adj2.x - corner.x;
+		const v2y = adj2.y - corner.y;
+		const mag2 = Math.hypot(v2x, v2y);
+		if (mag2 === 0) continue;
+		const u2x = v2x / mag2;
+		const u2y = v2y / mag2;
 
-		const markerSizePx = 10
-		const markerSizeData = markerSizePx / scale
-		const p1x = corner.x + u1x * markerSizeData
-		const p1y = corner.y + u1y * markerSizeData
-		const p2x = corner.x + u2x * markerSizeData
-		const p2y = corner.y + u2y * markerSizeData
-		const p3x = corner.x + (u1x + u2x) * markerSizeData
-		const p3y = corner.y + (u1y + u2y) * markerSizeData
+		const markerSizePx = 10;
+		const markerSizeData = markerSizePx / scale;
+		const p1x = corner.x + u1x * markerSizeData;
+		const p1y = corner.y + u1y * markerSizeData;
+		const p2x = corner.x + u2x * markerSizeData;
+		const p2y = corner.y + u2y * markerSizeData;
+		const p3x = corner.x + (u1x + u2x) * markerSizeData;
+		const p3y = corner.y + (u1y + u2y) * markerSizeData;
 
-		const q1 = project({ x: p1x, y: p1y })
-		const q2 = project({ x: p3x, y: p3y })
-		const q3 = project({ x: p2x, y: p2y })
-		const markerPath = new Path2D().moveTo(q1.x, q1.y).lineTo(q2.x, q2.y).lineTo(q3.x, q3.y)
-		canvas.drawPath(markerPath, {
-			fill: "none",
-			stroke: theme.colors.black,
-			strokeWidth: theme.stroke.width.base
-		})
+		const q1 = project({ x: p1x, y: p1y });
+		const q2 = project({ x: p3x, y: p3y });
+		const q3 = project({ x: p2x, y: p2y });
+		const markerPath = new Path2D().moveTo(q1.x, q1.y).lineTo(q2.x, q2.y).lineTo(q3.x, q3.y);
+		canvas.drawPath(markerPath, { fill: "none", stroke: theme.colors.black, strokeWidth: theme.stroke.width.base });
 	}
 
-	// NEW: Finalize the canvas and construct the root SVG element
-	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING)
-
-	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.small}">${svgBody}</svg>`
-}
+	// Finalize and return SVG
+	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING);
+	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.small}">${svgBody}</svg>`;
+};
