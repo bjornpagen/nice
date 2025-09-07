@@ -39,8 +39,8 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 			{ "id": "V4", "x": 130, "y": 0 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V3", "to": "V0", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 10, "unit": null }, "offset": 12 },
+			{ "type": "simple", "from": "V3", "to": "V0", "label": null },
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 10, "unit": null }},
 			{
 				"type": "partitioned",
 				"path": ["V1", "V4", "V2"],
@@ -49,7 +49,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 					{ "label": { "value": 7, "unit": null }, "style": "solid" }
 				]
 			},
-			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 12 }
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null}
 		],
 		"internalSegments": [
 			{ "fromVertexId": "V3", "toVertexId": "V4", "style": "dashed", "label": null }
@@ -95,10 +95,10 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 			{ "id": "V5", "x": 164.979, "y": 280.494 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 5, "unit": null }, "offset": -14 },
-			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V3", "to": "V0", "label": null, "offset": 12 }
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 5, "unit": null } },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null },
+			{ "type": "simple", "from": "V3", "to": "V0", "label": null }
 		],
 		"internalSegments": [
 			{ "fromVertexId": "V0", "toVertexId": "V2", "style": "dashed", "label": null },
@@ -146,11 +146,11 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 			{ "id": "V6", "x": 144.144, "y": 118.198 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V0", "to": "V1", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V4", "to": "V0", "label": null, "offset": 12 }
+			{ "type": "simple", "from": "V0", "to": "V1", "label": null },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null },
+			{ "type": "simple", "from": "V4", "to": "V0", "label": null }
 		],
 		"internalSegments": [
 			{ "fromVertexId": "V1", "toVertexId": "V5", "style": "dashed", "label": null },
@@ -196,10 +196,10 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 			{ "id": "V4", "x": 128.627, "y": 222.745 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 9, "unit": null }, "offset": 18 },
-			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 15 },
-			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 5, "unit": null }, "offset": 18 },
-			{ "type": "simple", "from": "V3", "to": "V0", "label": null, "offset": 15 }
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 9, "unit": null } },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 5, "unit": null } },
+			{ "type": "simple", "from": "V3", "to": "V0", "label": null }
 		],
 		"internalSegments": [
 			{ "fromVertexId": "V3", "toVertexId": "V4", "style": "dashed", "label": { "value": 6, "unit": null } }
@@ -244,11 +244,11 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 			{ "id": "V6", "x": -30, "y": -25 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V0", "to": "V1", "label": null, "offset": 15 },
-			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 15 },
-			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 15 },
-			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 15 },
-			{ "type": "simple", "from": "V4", "to": "V0", "label": null, "offset": 15 }
+			{ "type": "simple", "from": "V0", "to": "V1", "label": null },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null },
+			{ "type": "simple", "from": "V4", "to": "V0", "label": null }
 		],
 		"internalSegments": [
 			{ "fromVertexId": "V2", "toVertexId": "V5", "style": "dashed", "label": null },
@@ -295,11 +295,11 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 			{ "id": "V6", "x": 260, "y": 174.286 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V0", "to": "V1", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V4", "to": "V0", "label": null, "offset": 12 }
+			{ "type": "simple", "from": "V0", "to": "V1", "label": null },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null },
+			{ "type": "simple", "from": "V4", "to": "V0", "label": null }
 		],
 		"internalSegments": [
 			{ "fromVertexId": "V5", "toVertexId": "V6", "style": "dashed", "label": null }
@@ -339,10 +339,10 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 			{ "id": "V4", "x": 260, "y": 170 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 9, "unit": null }, "offset": 14 },
-			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 13, "unit": null }, "offset": 14 },
-			{ "type": "simple", "from": "V3", "to": "V0", "label": { "value": 5, "unit": null }, "offset": 14 }
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 9, "unit": null } },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 13, "unit": null } },
+			{ "type": "simple", "from": "V3", "to": "V0", "label": { "value": 5, "unit": null } }
 		],
 		"internalSegments": [
 			{ "fromVertexId": "V1", "toVertexId": "V4", "style": "dashed", "label": null }
@@ -391,14 +391,14 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 			{ "id": "V5", "x": 0, "y": 5.5 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V0", "to": "V1", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V1", "to": "V2", "label": { "value": 7, "unit": null }, "offset": 14 },
-			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 11, "unit": null }, "offset": 14 },
-			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V4", "to": "V0", "label": null, "offset": 12 }
+			{ "type": "simple", "from": "V0", "to": "V1", "label": null },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": { "value": 7, "unit": null } },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 11, "unit": null } },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null },
+			{ "type": "simple", "from": "V4", "to": "V0", "label": null }
 		],
 		"internalSegments": [
-			{ "fromVertexId": "V4", "toVertexId": "V1", "style": "dashed", "label": { "value": "base", "unit": null } },
+			{ "fromVertexId": "V4", "toVertexId": "V1", "style": "dashed", "label": null },
 			{ "fromVertexId": "V0", "toVertexId": "V5", "style": "solid", "label": { "value": 2, "unit": null } }
 		],
 		"shadedRegions": [
@@ -442,10 +442,10 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 			{ "id": "V4", "x": 291.147, "y": 107.541 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 9, "unit": null }, "offset": 15 },
-			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 10 },
-			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 7, "unit": null }, "offset": 15 },
-			{ "type": "simple", "from": "V3", "to": "V0", "label": null, "offset": 10 }
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 9, "unit": null } },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 7, "unit": null } },
+			{ "type": "simple", "from": "V3", "to": "V0", "label": null }
 		],
 		"internalSegments": [
 			{ "fromVertexId": "V3", "toVertexId": "V1", "style": "dashed", "label": null },
@@ -489,10 +489,10 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 			{ "id": "V4", "x": 28.829, "y": 118.198 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V0", "to": "V1", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V1", "to": "V2", "label": { "value": 5, "unit": null }, "offset": 14 },
-			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V3", "to": "V0", "label": { "value": 10, "unit": null }, "offset": 14 }
+			{ "type": "simple", "from": "V0", "to": "V1", "label": null },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": { "value": 5, "unit": null } },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null },
+			{ "type": "simple", "from": "V3", "to": "V0", "label": { "value": 10, "unit": null } }
 		],
 		"internalSegments": [
 			{ "fromVertexId": "V0", "toVertexId": "V2", "style": "dashed", "label": null },
@@ -540,11 +540,11 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 			{ "id": "V5", "x": 0, "y": 140 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 10, "unit": null }, "offset": 15 },
-			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 15 },
-			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 15 },
-			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 15 },
-			{ "type": "simple", "from": "V4", "to": "V0", "label": { "value": 7, "unit": null }, "offset": 15 }
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 10, "unit": null } },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null },
+			{ "type": "simple", "from": "V4", "to": "V0", "label": { "value": 7, "unit": null } }
 		],
 		"internalSegments": [
 			{ "fromVertexId": "V2", "toVertexId": "V5", "style": "dashed", "label": { "value": 6, "unit": null } }
@@ -586,11 +586,11 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 			{ "id": "V4", "x": 32, "y": 32 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 2, "unit": null }, "offset": 16 },
-			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 4, "unit": null }, "offset": 16 },
-			{ "type": "simple", "from": "V3", "to": "V4", "label": { "value": 4, "unit": null }, "offset": 16 },
-			{ "type": "simple", "from": "V4", "to": "V0", "label": { "value": 8, "unit": null }, "offset": 16 }
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 2, "unit": null } },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 4, "unit": null } },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": { "value": 4, "unit": null } },
+			{ "type": "simple", "from": "V4", "to": "V0", "label": { "value": 8, "unit": null } }
 		],
 		"internalSegments": [],
 		"shadedRegions": [],
@@ -631,12 +631,12 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 			{ "id": "V7", "x": 9, "y": 9 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 5, "unit": null }, "offset": 15 },
-			{ "type": "simple", "from": "V1", "to": "V2", "label": { "value": 9, "unit": null }, "offset": 15 },
-			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 4, "unit": null }, "offset": 15 },
-			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 15 },
-			{ "type": "simple", "from": "V4", "to": "V5", "label": null, "offset": 15 },
-			{ "type": "simple", "from": "V5", "to": "V0", "label": null, "offset": 15 }
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 5, "unit": null } },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": { "value": 9, "unit": null } },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": { "value": 4, "unit": null } },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null },
+			{ "type": "simple", "from": "V4", "to": "V5", "label": null },
+			{ "type": "simple", "from": "V5", "to": "V0", "label": null }
 		],
 		"internalSegments": [
 			{ "fromVertexId": "V0", "toVertexId": "V6", "style": "dashed", "label": { "value": 4, "unit": null } },
@@ -680,12 +680,12 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 			{ "id": "V5", "x": 100, "y": 70 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V0", "to": "V1", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V4", "to": "V5", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V5", "to": "V0", "label": null, "offset": 12 }
+			{ "type": "simple", "from": "V0", "to": "V1", "label": null },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null },
+			{ "type": "simple", "from": "V4", "to": "V5", "label": null },
+			{ "type": "simple", "from": "V5", "to": "V0", "label": null }
 		],
 		"internalSegments": [
 			{ "fromVertexId": "V1", "toVertexId": "V5", "style": "dashed", "label": null },
@@ -730,10 +730,10 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 			{ "id": "V6", "x": 199.506, "y": 160 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V0", "to": "V1", "label": null, "offset": 15 },
-			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 15 },
-			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 15 },
-			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 15 },
+			{ "type": "simple", "from": "V0", "to": "V1", "label": null },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null },
 			{ "type": "partitioned", "path": ["V4", "V6", "V5", "V0"], 
 				"segments": [
 					{"label": { "value": 6, "unit": null }, "style": "solid"},
@@ -782,11 +782,11 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 			{ "id": "V5", "x": 122.138, "y": 173.435 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 7, "unit": null }, "offset": 15 },
-			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 15 },
-			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 15 },
-			{ "type": "simple", "from": "V3", "to": "V4", "label": { "value": 3, "unit": null }, "offset": 15 },
-			{ "type": "simple", "from": "V4", "to": "V0", "label": null, "offset": 15 }
+			{ "type": "simple", "from": "V0", "to": "V1", "label": { "value": 7, "unit": null } },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": { "value": 3, "unit": null } },
+			{ "type": "simple", "from": "V4", "to": "V0", "label": null }
 		],
 		"internalSegments": [
 			{ "fromVertexId": "V0", "toVertexId": "V2", "style": "dashed", "label": { "value": 10, "unit": null } },
@@ -830,11 +830,11 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 			{ "id": "V5", "x": 254.118, "y": 97.255 }
 		],
 		"boundaryEdges": [
-			{ "type": "simple", "from": "V0", "to": "V1", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V1", "to": "V2", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V2", "to": "V3", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V3", "to": "V4", "label": null, "offset": 12 },
-			{ "type": "simple", "from": "V4", "to": "V0", "label": null, "offset": 12 }
+			{ "type": "simple", "from": "V0", "to": "V1", "label": null },
+			{ "type": "simple", "from": "V1", "to": "V2", "label": null },
+			{ "type": "simple", "from": "V2", "to": "V3", "label": null },
+			{ "type": "simple", "from": "V3", "to": "V4", "label": null },
+			{ "type": "simple", "from": "V4", "to": "V0", "label": null }
 		],
 		"internalSegments": [
 			{ "fromVertexId": "V1", "toVertexId": "V3", "style": "dashed", "label": null },

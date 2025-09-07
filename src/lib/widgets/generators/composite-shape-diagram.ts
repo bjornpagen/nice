@@ -7,6 +7,7 @@ import { PADDING } from "@/lib/widgets/utils/constants"
 import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
 import { Path2D } from "@/lib/widgets/utils/path-builder"
 import { theme } from "@/lib/widgets/utils/theme"
+import { estimateWrappedTextDimensions } from "@/lib/widgets/utils/text"
 
 // A simple, safe regex for identifiers.
 const identifierRegex = /^[A-Za-z0-9_]+$/;
@@ -59,9 +60,7 @@ const BoundaryEdgeSchema = z.discriminatedUnion("type", [
         to: z.string().regex(identifierRegex)
             .describe("The ID of the vertex where this edge ends. Must match an ID in the `vertices` array."),
         label: LabelSchema
-            .describe("A single structured label for the entire length of this edge. Use null for no label."),
-        offset: z.number()
-            .describe("The distance in pixels to offset the label from the edge. Positive values are outside the shape, negative are inside.")
+            .describe("A single structured label for the entire length of this edge. Use null for no label.")
     }).strict(),
     z.object({
         type: z.literal("partitioned").describe("An edge composed of multiple segments connected in a path."),
@@ -232,6 +231,7 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 
 	// 2. Main shape boundary and its labels
 	const outerBoundaryPath = new Path2D();
+	const transformedPerimeter: Array<{ x: number; y: number }> = []
 	for (const [index, edge] of boundaryEdges.entries()) {
 		if (edge.type === "simple") {
 			const from = vertexMap.get(edge.from);
@@ -239,85 +239,153 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 			if (!from || !to) continue;
 
 			const pFrom = project(from);
-			if (index === 0) outerBoundaryPath.moveTo(pFrom.x, pFrom.y);
-			outerBoundaryPath.lineTo(project(to).x, project(to).y);
-
-            const labelText = formatLabel(edge.label);
-            if(labelText) {
-                const midX = (from.x + to.x) / 2;
-                const midY = (from.y + to.y) / 2;
-                const dx = to.x - from.x;
-                const dy = to.y - from.y;
-                const edgeLength = Math.hypot(dx, dy);
-                if (edgeLength === 0) continue;
-                let perpX = -dy / edgeLength;
-                let perpY = dx / edgeLength;
-
-                const centerX = vertices.reduce((sum, v) => sum + v.x, 0) / vertices.length;
-                const centerY = vertices.reduce((sum, v) => sum + v.y, 0) / vertices.length;
-                const testX = midX + perpX * 10;
-                const testY = midY + perpY * 10;
-                const distToCenterFromTest = Math.hypot(testX - centerX, testY - centerY);
-                const distToCenterFromMid = Math.hypot(midX - centerX, midY - centerY);
-                if (distToCenterFromTest < distToCenterFromMid) {
-                    perpX *= -1;
-                    perpY *= -1;
-                }
-
-                const offsetData = edge.offset / scale;
-                const labelPx = project({ x: midX + perpX * offsetData, y: midY + perpY * offsetData });
-
-                canvas.drawText({
-                    x: labelPx.x,
-                    y: labelPx.y,
-                    text: labelText,
-                    fill: theme.colors.text,
-                    anchor: "middle",
-                    dominantBaseline: "middle",
-                    fontPx: theme.font.size.medium,
-                    fontWeight: theme.font.weight.bold
-                });
-            }
+			if (index === 0) {
+				outerBoundaryPath.moveTo(pFrom.x, pFrom.y);
+				transformedPerimeter.push(pFrom);
+			}
+			const pTo = project(to);
+			outerBoundaryPath.lineTo(pTo.x, pTo.y);
+			transformedPerimeter.push(pTo);
 
 		} else { // Partitioned edge
 			const pathPoints = edge.path.map(id => vertexMap.get(id)).filter((p): p is Point => !!p);
 			if (pathPoints.length < 2) continue;
-            
-            if (index === 0 && pathPoints[0]) outerBoundaryPath.moveTo(project(pathPoints[0]).x, project(pathPoints[0]).y);
+			
+			if (index === 0 && pathPoints[0]) {
+				const first = project(pathPoints[0]);
+				outerBoundaryPath.moveTo(first.x, first.y);
+				transformedPerimeter.push(first);
+			}
 			for (let i = 1; i < pathPoints.length; i++) {
-                if (pathPoints[i]) outerBoundaryPath.lineTo(project(pathPoints[i]!).x, project(pathPoints[i]!).y);
+				if (pathPoints[i]) {
+					const pt = project(pathPoints[i]!);
+					outerBoundaryPath.lineTo(pt.x, pt.y);
+					transformedPerimeter.push(pt);
+				}
 			}
 
-            for (let i = 0; i < edge.segments.length; i++) {
-                const from = pathPoints[i]!;
-                const to = pathPoints[i+1]!;
-                const segment = edge.segments[i]!;
+			for (let i = 0; i < edge.segments.length; i++) {
+				const from = pathPoints[i]!;
+				const to = pathPoints[i+1]!;
+				const segment = edge.segments[i]!;
 
-                const p1 = project(from);
-                const p2 = project(to);
-                const dash = segment.style === "dashed" ? "4 2" : undefined;
-                canvas.drawLine(p1.x, p1.y, p2.x, p2.y, { stroke: theme.colors.black, strokeWidth: theme.stroke.width.base, dash });
-
-                const labelText = formatLabel(segment.label);
-                if (labelText) {
-                    const midX = (from.x + to.x) / 2;
-                    const midY = (from.y + to.y) / 2;
-                    const angle = Math.atan2(to.y - from.y, to.x - from.x);
-                    const offsetMagData = 5 / scale;
-                    const offsetX = -Math.sin(angle) * offsetMagData;
-                    const offsetY = Math.cos(angle) * offsetMagData;
-                    const labelPx = project({ x: midX + offsetX, y: midY + offsetY });
-                    canvas.drawText({
-                        x: labelPx.x, y: labelPx.y, text: labelText, fill: theme.colors.text, anchor: "middle",
-                        dominantBaseline: "middle", fontPx: theme.font.size.base, stroke: theme.colors.background, strokeWidth: 3, paintOrder: "stroke fill"
-                    });
-                }
-            }
+				const p1 = project(from);
+				const p2 = project(to);
+				const dash = segment.style === "dashed" ? "4 2" : undefined;
+				canvas.drawLine(p1.x, p1.y, p2.x, p2.y, { stroke: theme.colors.black, strokeWidth: theme.stroke.width.base, dash });
+			}
 		}
 	}
 	canvas.drawPath(outerBoundaryPath.closePath(), { fill: "none", stroke: theme.colors.black, strokeWidth: theme.stroke.width.thick });
 
+	// Build perimeter segments for collision checks
+	const perimeterSegments: Array<{ a: { x: number; y: number }; b: { x: number; y: number } }> = []
+	for (let i = 0; i < transformedPerimeter.length; i++) {
+		const a = transformedPerimeter[i]
+		const b = transformedPerimeter[(i + 1) % transformedPerimeter.length]
+		if (a && b) perimeterSegments.push({ a, b })
+	}
+
+	// 2b. Boundary simple-edge labels with collision avoidance
+	for (const edge of boundaryEdges) {
+		if (edge.type !== "simple") continue
+		const from = vertexMap.get(edge.from)
+		const to = vertexMap.get(edge.to)
+		if (!from || !to) continue
+		const labelText = formatLabel(edge.label)
+		if (!labelText) continue
+		const sFrom = project(from)
+		const sTo = project(to)
+		const midX = (sFrom.x + sTo.x) / 2
+		const midY = (sFrom.y + sTo.y) / 2
+		const dx = sTo.x - sFrom.x
+		const dy = sTo.y - sFrom.y
+		const len = Math.hypot(dx, dy)
+		if (len === 0) continue
+		let nx = -dy / len
+		let ny = dx / len
+		const polyCenterX = transformedPerimeter.reduce((sum, v) => sum + v.x, 0) / Math.max(transformedPerimeter.length, 1)
+		const polyCenterY = transformedPerimeter.reduce((sum, v) => sum + v.y, 0) / Math.max(transformedPerimeter.length, 1)
+		const toCenterX = polyCenterX - midX
+		const toCenterY = polyCenterY - midY
+		const dot = nx * toCenterX + ny * toCenterY
+		if (dot > 0) { nx = -nx; ny = -ny }
+		const fontPx = theme.font.size.medium
+		const { maxWidth: w, height: h } = estimateWrappedTextDimensions(labelText, Number.POSITIVE_INFINITY, fontPx, 1.2)
+		const halfW = w / 2
+		const halfH = h / 2
+		const baseOffsetPx = 12
+		function placeFor(dirX: number, dirY: number) {
+			let px = midX + dirX * baseOffsetPx
+			let py = midY + dirY * baseOffsetPx
+			let it = 0
+			const maxIt = 60
+			const step = 2
+			while (polygonIntersectsRect(transformedPerimeter, { x: px - halfW, y: py - halfH, width: w, height: h, pad: 1 }) && it < maxIt) {
+				px += dirX * step
+				py += dirY * step
+				it++
+			}
+			return { x: px, y: py, it }
+		}
+		const outward = placeFor(nx, ny)
+		const inward = placeFor(-nx, -ny)
+		const chosen = inward.it < outward.it ? inward : outward
+		canvas.drawText({ x: chosen.x, y: chosen.y, text: labelText, fill: theme.colors.text, anchor: "middle", dominantBaseline: "middle", fontPx, fontWeight: theme.font.weight.bold })
+	}
+
+	// 2c. Partitioned segment labels with collision avoidance
+	for (const edge of boundaryEdges) {
+		if (edge.type !== "partitioned") continue
+		const pathPoints = edge.path.map(id => vertexMap.get(id)).filter((p): p is Point => !!p)
+		for (let i = 0; i < edge.segments.length; i++) {
+			const from = pathPoints[i]!
+			const to = pathPoints[i + 1]!
+			const labelText = formatLabel(edge.segments[i]!.label)
+			if (!labelText) continue
+			const sFrom = project(from)
+			const sTo = project(to)
+			const midX = (sFrom.x + sTo.x) / 2
+			const midY = (sFrom.y + sTo.y) / 2
+			const dx = sTo.x - sFrom.x
+			const dy = sTo.y - sFrom.y
+			const len = Math.hypot(dx, dy)
+			if (len === 0) continue
+			let nx = -dy / len
+			let ny = dx / len
+			const polyCenterX = transformedPerimeter.reduce((sum, v) => sum + v.x, 0) / Math.max(transformedPerimeter.length, 1)
+			const polyCenterY = transformedPerimeter.reduce((sum, v) => sum + v.y, 0) / Math.max(transformedPerimeter.length, 1)
+			const toCenterX = polyCenterX - midX
+			const toCenterY = polyCenterY - midY
+			const dot = nx * toCenterX + ny * toCenterY
+			if (dot > 0) { nx = -nx; ny = -ny }
+			const fontPx = theme.font.size.base
+			const { maxWidth: w, height: h } = estimateWrappedTextDimensions(labelText, Number.POSITIVE_INFINITY, fontPx, 1.2)
+			const halfW = w / 2
+			const halfH = h / 2
+			const baseOffsetPx = 10
+			function placeFor(dirX: number, dirY: number) {
+				let px = midX + dirX * baseOffsetPx
+				let py = midY + dirY * baseOffsetPx
+				let it = 0
+				const maxIt = 60
+				const step = 2
+				while (polygonIntersectsRect(transformedPerimeter, { x: px - halfW, y: py - halfH, width: w, height: h, pad: 1 }) && it < maxIt) {
+					px += dirX * step
+					py += dirY * step
+					it++
+				}
+				return { x: px, y: py, it }
+			}
+			const outward = placeFor(nx, ny)
+			const inward = placeFor(-nx, -ny)
+			const chosen = inward.it < outward.it ? inward : outward
+			canvas.drawText({ x: chosen.x, y: chosen.y, text: labelText, fill: theme.colors.text, anchor: "middle", dominantBaseline: "middle", fontPx, stroke: theme.colors.background, strokeWidth: 3, paintOrder: "stroke fill" })
+		}
+	}
+
 	// 3. Internal segments
+	const internalSegmentsScreen: Array<{ a: { x: number; y: number }; b: { x: number; y: number }, label: string | null }> = []
 	for (const s of internalSegments || []) {
 		const from = vertexMap.get(s.fromVertexId);
 		const to = vertexMap.get(s.toVertexId);
@@ -327,27 +395,141 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		const p2 = project(to);
 		const dash = s.style === "dashed" ? "4 2" : undefined;
 		canvas.drawLine(p1.x, p1.y, p2.x, p2.y, { stroke: theme.colors.black, strokeWidth: theme.stroke.width.base, dash });
+		internalSegmentsScreen.push({ a: p1, b: p2, label: formatLabel(s.label) });
+	}
 
-		const labelText = formatLabel(s.label);
-		if (labelText) {
-			const midX = (from.x + to.x) / 2;
-			const midY = (from.y + to.y) / 2;
-			const angle = Math.atan2(to.y - from.y, to.x - from.x);
-			const offsetMagData = 5 / scale;
-			const offsetX = -Math.sin(angle) * offsetMagData;
-			const offsetY = Math.cos(angle) * offsetMagData;
-			const labelPx = project({ x: midX + offsetX, y: midY + offsetY });
-			canvas.drawText({
-				x: labelPx.x, y: labelPx.y, text: labelText, fill: theme.colors.text, anchor: "middle",
-				dominantBaseline: "middle", fontPx: theme.font.size.base, stroke: theme.colors.background, strokeWidth: 3, paintOrder: "stroke fill"
-			});
+	// 3b. Internal segment labels with collision avoidance against all lines
+	function rectIntersectsAnyLine(rect: { x: number; y: number; width: number; height: number; pad?: number }): boolean {
+		for (const seg of perimeterSegments) { if (segmentIntersectsRect(seg.a, seg.b, rect)) return true }
+		for (const seg of internalSegmentsScreen) { if (seg.label && segmentIntersectsRect(seg.a, seg.b, rect)) return true }
+		return false
+	}
+	for (const seg of internalSegmentsScreen) {
+		const labelText = seg.label
+		if (!labelText) continue
+		const sFrom = seg.a
+		const sTo = seg.b
+		const midX = (sFrom.x + sTo.x) / 2
+		const midY = (sFrom.y + sTo.y) / 2
+		const dx = sTo.x - sFrom.x
+		const dy = sTo.y - sFrom.y
+		const len = Math.hypot(dx, dy)
+		if (len === 0) continue
+		let nx = -dy / len
+		let ny = dx / len
+		const fontPx = theme.font.size.base
+		const { maxWidth: w, height: h } = estimateWrappedTextDimensions(labelText, Number.POSITIVE_INFINITY, fontPx, 1.2)
+		const halfW = w / 2
+		const halfH = h / 2
+		const baseOffsetPx = 8
+		function placeFor(dirX: number, dirY: number) {
+			let px = midX + dirX * baseOffsetPx
+			let py = midY + dirY * baseOffsetPx
+			let it = 0
+			const maxIt = 60
+			const step = 2
+			while (rectIntersectsAnyLine({ x: px - halfW, y: py - halfH, width: w, height: h, pad: 1 }) && it < maxIt) {
+				px += dirX * step
+				py += dirY * step
+				it++
+			}
+			return { x: px, y: py, it }
 		}
+		const a = placeFor(nx, ny)
+		const b = placeFor(-nx, -ny)
+		const chosen = a.it <= b.it ? a : b
+		canvas.drawText({ x: chosen.x, y: chosen.y, text: labelText, fill: theme.colors.text, anchor: "middle", dominantBaseline: "middle", fontPx, stroke: theme.colors.background, strokeWidth: 3, paintOrder: "stroke fill" })
 	}
 
 	// 4. Region labels
 	for (const l of regionLabels || []) {
-		const pos = project({ x: l.position.x, y: l.position.y });
-		canvas.drawText({ x: pos.x, y: pos.y, text: l.text, fill: theme.colors.text, anchor: "middle", dominantBaseline: "middle", fontPx: theme.font.size.medium, fontWeight: theme.font.weight.bold });
+		const pos0 = project({ x: l.position.x, y: l.position.y });
+		const fontPx = theme.font.size.medium
+		const { maxWidth: w, height: h } = estimateWrappedTextDimensions(l.text, Number.POSITIVE_INFINITY, fontPx, 1.2)
+		const halfW = w / 2
+		const halfH = h / 2
+
+		function rectIntersectsAnyLine(rect: { x: number; y: number; width: number; height: number; pad?: number }): boolean {
+			for (const seg of perimeterSegments) { if (segmentIntersectsRect(seg.a, seg.b, rect)) return true }
+			for (const seg of internalSegmentsScreen) { if (segmentIntersectsRect(seg.a, seg.b, rect)) return true }
+			return false
+		}
+
+		function nearestPointOnSegment(p: { x: number; y: number }, a: { x: number; y: number }, b: { x: number; y: number }) {
+			const abx = b.x - a.x
+			const aby = b.y - a.y
+			const ab2 = abx * abx + aby * aby
+			if (ab2 === 0) return { x: a.x, y: a.y }
+			const apx = p.x - a.x
+			const apy = p.y - a.y
+			let t = (apx * abx + apy * aby) / ab2
+			if (t < 0) t = 0
+			if (t > 1) t = 1
+			return { x: a.x + t * abx, y: a.y + t * aby }
+		}
+
+		function computeAwayDirection(px: number, py: number): { dx: number; dy: number } {
+			let bestDist2 = Number.POSITIVE_INFINITY
+			let nearest: { a: { x: number; y: number }; b: { x: number; y: number } } | null = null
+			for (const seg of perimeterSegments) {
+				const q = nearestPointOnSegment({ x: px, y: py }, seg.a, seg.b)
+				const dx = px - q.x
+				const dy = py - q.y
+				const d2 = dx * dx + dy * dy
+				if (d2 < bestDist2) { bestDist2 = d2; nearest = seg }
+			}
+			for (const seg of internalSegmentsScreen) {
+				const q = nearestPointOnSegment({ x: px, y: py }, seg.a, seg.b)
+				const dx = px - q.x
+				const dy = py - q.y
+				const d2 = dx * dx + dy * dy
+				if (d2 < bestDist2) { bestDist2 = d2; nearest = seg }
+			}
+			if (!nearest) return { dx: 0, dy: -1 }
+			const q = nearestPointOnSegment({ x: px, y: py }, nearest.a, nearest.b)
+			let dx = px - q.x
+			let dy = py - q.y
+			const len = Math.hypot(dx, dy)
+			if (len === 0) return { dx: 0, dy: -1 }
+			dx /= len
+			dy /= len
+			return { dx, dy }
+		}
+
+		function placeFor(dirX: number, dirY: number) {
+			let px = pos0.x
+			let py = pos0.y
+			let it = 0
+			const maxIt = 80
+			const step = 2
+			while (rectIntersectsAnyLine({ x: px - halfW, y: py - halfH, width: w, height: h, pad: 1 }) && it < maxIt) {
+				px += dirX * step
+				py += dirY * step
+				it++
+				// keep the center inside the polygon
+				if (!pointInPolygon({ x: px, y: py }, transformedPerimeter)) {
+					it = maxIt + 1
+					break
+				}
+			}
+			return { x: px, y: py, it }
+		}
+
+		const away = computeAwayDirection(pos0.x, pos0.y)
+		const a = placeFor(away.dx, away.dy)
+		const b = placeFor(-away.dx, -away.dy)
+		let chosen = a
+		if (b.it < a.it) chosen = b
+		if (chosen.it > 80) {
+			// fallback attempt in axes if both failed within bounds
+			const c = placeFor(0, -1)
+			const d = placeFor(1, 0)
+			const e = placeFor(0, 1)
+			const f = placeFor(-1, 0)
+			chosen = [a, b, c, d, e, f].reduce((best, cur) => (cur.it < best.it ? cur : best))
+		}
+
+		canvas.drawText({ x: chosen.x, y: chosen.y, text: l.text, fill: theme.colors.text, anchor: "middle", dominantBaseline: "middle", fontPx, fontWeight: theme.font.weight.bold });
 	}
 
 	// 5. Right-angle markers
@@ -391,3 +573,116 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING);
 	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}" font-size="${theme.font.size.small}">${svgBody}</svg>`;
 };
+
+// Geometry helpers for collision checks in screen space
+function segmentIntersectsRect(
+    A: { x: number; y: number },
+    B: { x: number; y: number },
+    rect: { x: number; y: number; width: number; height: number; pad?: number }
+): boolean {
+    const pad = rect.pad ?? 0
+    const rx = rect.x - pad
+    const ry = rect.y - pad
+    const rw = rect.width + 2 * pad
+    const rh = rect.height + 2 * pad
+
+    const minX = Math.min(A.x, B.x)
+    const maxX = Math.max(A.x, B.x)
+    const minY = Math.min(A.y, B.y)
+    const maxY = Math.max(A.y, B.y)
+    if (maxX < rx || minX > rx + rw || maxY < ry || minY > ry + rh) {
+        return false
+    }
+
+    if (pointInRect(A.x, A.y, rx, ry, rw, rh) || pointInRect(B.x, B.y, rx, ry, rw, rh)) return true
+
+    const r1 = { x: rx, y: ry }
+    const r2 = { x: rx + rw, y: ry }
+    const r3 = { x: rx + rw, y: ry + rh }
+    const r4 = { x: rx, y: ry + rh }
+
+    if (segmentsIntersect(A, B, r1, r2)) return true
+    if (segmentsIntersect(A, B, r2, r3)) return true
+    if (segmentsIntersect(A, B, r3, r4)) return true
+    if (segmentsIntersect(A, B, r4, r1)) return true
+
+    return false
+}
+
+function polygonIntersectsRect(
+    poly: Array<{ x: number; y: number }>,
+    rect: { x: number; y: number; width: number; height: number; pad?: number }
+): boolean {
+    if (poly.length < 2) return false
+    const pad = rect.pad ?? 0
+    const rx = rect.x - pad
+    const ry = rect.y - pad
+    const rw = rect.width + 2 * pad
+    const rh = rect.height + 2 * pad
+
+    for (let i = 0; i < poly.length; i++) {
+        const a = poly[i]
+        const b = poly[(i + 1) % poly.length]
+        if (!a || !b) continue
+        if (segmentIntersectsRect(a, b, { x: rx, y: ry, width: rw, height: rh })) return true
+    }
+
+    for (const p of poly) {
+        if (pointInRect(p.x, p.y, rx, ry, rw, rh)) return true
+    }
+
+    const cx = rx + rw / 2
+    const cy = ry + rh / 2
+    if (pointInPolygon({ x: cx, y: cy }, poly)) return true
+
+    return false
+}
+
+function pointInRect(x: number, y: number, rx: number, ry: number, rw: number, rh: number): boolean {
+    return x >= rx && x <= rx + rw && y >= ry && y <= ry + rh
+}
+
+function segmentsIntersect(
+    p1: { x: number; y: number },
+    p2: { x: number; y: number },
+    p3: { x: number; y: number },
+    p4: { x: number; y: number }
+): boolean {
+    function orientation(a: { x: number; y: number }, b: { x: number; y: number }, c: { x: number; y: number }): number {
+        const val = (b.y - a.y) * (c.x - b.x) - (b.x - a.x) * (c.y - b.y)
+        if (val > 0) return 1
+        if (val < 0) return -1
+        return 0
+    }
+    function onSegment(a: { x: number; y: number }, b: { x: number; y: number }, c: { x: number; y: number }): boolean {
+        return Math.min(a.x, c.x) <= b.x && b.x <= Math.max(a.x, c.x) && Math.min(a.y, c.y) <= b.y && b.y <= Math.max(a.y, c.y)
+    }
+    const o1 = orientation(p1, p2, p3)
+    const o2 = orientation(p1, p2, p4)
+    const o3 = orientation(p3, p4, p1)
+    const o4 = orientation(p3, p4, p2)
+
+    if (o1 !== o2 && o3 !== o4) return true
+    if (o1 === 0 && onSegment(p1, p3, p2)) return true
+    if (o2 === 0 && onSegment(p1, p4, p2)) return true
+    if (o3 === 0 && onSegment(p3, p1, p4)) return true
+    if (o4 === 0 && onSegment(p3, p2, p4)) return true
+    return false
+}
+
+function pointInPolygon(point: { x: number; y: number }, polygon: Array<{ x: number; y: number }>): boolean {
+    if (polygon.length < 3) return false
+    let inside = false
+    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+        const pi = polygon[i]
+        const pj = polygon[j]
+        if (!pi || !pj) continue
+        const xi = pi.x
+        const yi = pi.y
+        const xj = pj.x
+        const yj = pj.y
+        const intersect = yi > point.y !== yj > point.y && point.x < ((xj - xi) * (point.y - yi)) / (yj - yi) + xi
+        if (intersect) inside = !inside
+    }
+    return inside
+}
