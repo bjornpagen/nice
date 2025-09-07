@@ -15,109 +15,141 @@ const identifierRegex = /^[A-Za-z0-9_]+$/;
 /**
  * Defines a structured label for dimensions, separating the numeric or variable
  * value from its unit for clear, consistent rendering.
+ *
+ * Factory pattern to avoid shared Zod instances which cause $ref generation.
  */
-const LabelSchema = z.object({
-    value: z.union([z.number(), z.string()])
-        .describe("The numerical value or variable for the label (e.g., 10, 7.5, 'x')."),
-    unit: z.string().nullable()
-        .describe("The unit for the value (e.g., 'cm', 'in', 'm'). If the unit is unknown or not applicable, this MUST be null.")
-}).strict().nullable();
+function createLabelSchema() {
+    return z.object({
+        value: z.union([z.number(), z.string()])
+            .describe("The numerical value or variable for the label (e.g., 10, 7.5, 'x')."),
+        unit: z.string().nullable()
+            .describe("The unit for the value (e.g., 'cm', 'in', 'm'). If the unit is unknown or not applicable, this MUST be null.")
+    }).strict().nullable();
+}
 
 /**
  * Defines a single vertex with a unique ID and coordinates.
  * This is the single source of truth for all points in the diagram.
+ *
+ * Factory to prevent $ref generation.
  */
-const VertexSchema = z.object({
-    id: z.string().regex(identifierRegex)
-        .describe("A unique identifier for this vertex (e.g., 'A', 'B', 'midpoint1'). This ID is used to reference this point in all other parts of the schema."),
-    x: z.number()
-        .describe("The horizontal coordinate in the diagram's logical space. The shape is auto-centered, so coordinates can be relative to a logical origin (0,0)."),
-    y: z.number()
-        .describe("The vertical coordinate in the diagram's logical space. Positive y is downward.")
-}).strict();
+function createVertexSchema() {
+    return z.object({
+        id: z.string().regex(identifierRegex)
+            .describe("A unique identifier for this vertex (e.g., 'A', 'B', 'midpoint1'). This ID is used to reference this point in all other parts of the schema."),
+        x: z.number()
+            .describe("The horizontal coordinate in the diagram's logical space. The shape is auto-centered, so coordinates can be relative to a logical origin (0,0)."),
+        y: z.number()
+            .describe("The vertical coordinate in the diagram's logical space. Positive y is downward.")
+    }).strict();
+}
 
 /**
  * Describes a single, labeled segment that is part of a larger partitioned edge.
  * This is the building block for creating boundaries with multiple labels.
+ *
+ * Factory to prevent $ref generation.
  */
-const PartitionedSegmentSchema = z.object({
-    label: LabelSchema
-        .describe("Structured label for this specific segment of an edge. Use null for no label."),
-    style: z.enum(["solid", "dashed"])
-        .describe("The visual style of this segment's line. 'solid' is standard, 'dashed' can indicate an unmeasured or auxiliary part.")
-}).strict();
+function createPartitionedSegmentSchema() {
+    return z.object({
+        label: createLabelSchema()
+            .describe("Structured label for this specific segment of an edge. Use null for no label."),
+        style: z.enum(["solid", "dashed"])
+            .describe("The visual style of this segment's line. 'solid' is standard, 'dashed' can indicate an unmeasured or auxiliary part.")
+    }).strict();
+}
 
 /**
  * A discriminated union to explicitly define a boundary edge.
  * An edge can either be a simple line between two vertices or a
  * complex path composed of multiple, individually labeled segments.
+ *
+ * Factory to prevent $ref generation.
  */
-const BoundaryEdgeSchema = z.discriminatedUnion("type", [
-    z.object({
-        type: z.literal("simple").describe("A single, continuous edge between two vertices."),
-        from: z.string().regex(identifierRegex)
-            .describe("The ID of the vertex where this edge starts. Must match an ID in the `vertices` array."),
-        to: z.string().regex(identifierRegex)
-            .describe("The ID of the vertex where this edge ends. Must match an ID in the `vertices` array."),
-        label: LabelSchema
-            .describe("A single structured label for the entire length of this edge. Use null for no label.")
-    }).strict(),
-    z.object({
-        type: z.literal("partitioned").describe("An edge composed of multiple segments connected in a path."),
-        path: z.array(z.string().regex(identifierRegex)).min(3)
-            .describe("An ordered list of vertex IDs defining the path of the edge (e.g., ['A', 'M', 'B']). Must contain at least 3 IDs to define at least two segments."),
-        segments: z.array(PartitionedSegmentSchema)
-            .describe("The definitions for each segment along the path. CRITICAL: The number of segments in this array must be exactly one less than the number of vertex IDs in the `path` array.")
-    }).strict()
-]);
+function createBoundaryEdgeSchema() {
+    return z.discriminatedUnion("type", [
+        z.object({
+            type: z.literal("simple").describe("A single, continuous edge between two vertices."),
+            from: z.string().regex(identifierRegex)
+                .describe("The ID of the vertex where this edge starts. Must match an ID in the `vertices` array."),
+            to: z.string().regex(identifierRegex)
+                .describe("The ID of the vertex where this edge ends. Must match an ID in the `vertices` array."),
+            label: createLabelSchema()
+                .describe("A single structured label for the entire length of this edge. Use null for no label.")
+        }).strict(),
+        z.object({
+            type: z.literal("partitioned").describe("An edge composed of multiple segments connected in a path."),
+            path: z.array(z.string().regex(identifierRegex)).min(3)
+                .describe("An ordered list of vertex IDs defining the path of the edge (e.g., ['A', 'M', 'B']). Must contain at least 3 IDs to define at least two segments."),
+            segments: z.array(createPartitionedSegmentSchema())
+                .describe("The definitions for each segment along the path. CRITICAL: The number of segments in this array must be exactly one less than the number of vertex IDs in the `path` array.")
+        }).strict()
+    ]);
+}
 
 /**
  * Defines a line segment that is *internal* to the shape, used for decomposition.
+ *
+ * Factory to prevent $ref generation.
  */
-const InternalSegmentSchema = z.object({
-	fromVertexId: z.string().regex(identifierRegex)
-		.describe("ID of the starting vertex. Must be a valid ID from the `vertices` array."),
-	toVertexId: z.string().regex(identifierRegex)
-		.describe("ID of the ending vertex. Must be a valid ID from the `vertices` array."),
-	style: z.enum(["solid", "dashed"])
-		.describe("Visual style of the line. 'dashed' is common for heights or decomposition lines."),
-	label: LabelSchema
-		.describe("Structured label for the segment's length or name. Use null for no label.")
-}).strict();
+function createInternalSegmentSchema() {
+    return z.object({
+		fromVertexId: z.string().regex(identifierRegex)
+			.describe("ID of the starting vertex. Must be a valid ID from the `vertices` array."),
+		toVertexId: z.string().regex(identifierRegex)
+			.describe("ID of the ending vertex. Must be a valid ID from the `vertices` array."),
+		style: z.enum(["solid", "dashed"]) 
+			.describe("Visual style of the line. 'dashed' is common for heights or decomposition lines."),
+		label: createLabelSchema()
+			.describe("Structured label for the segment's length or name. Use null for no label.")
+    }).strict();
+}
 
 /**
  * Defines a shaded polygonal region within the composite shape.
+ *
+ * Factory to prevent $ref generation.
  */
-const ShadedRegionSchema = z.object({
-	vertexIds: z.array(z.string().regex(identifierRegex)).min(3)
-		.describe("An ordered array of vertex IDs defining the boundary of the region to shade."),
-	fillColor: z.string().regex(CSS_COLOR_PATTERN)
-		.describe("CSS fill color for this region (e.g., '#FFE5CC', 'rgba(0,128,255,0.3)'). Use alpha for transparency.")
-}).strict();
+function createShadedRegionSchema() {
+    return z.object({
+		vertexIds: z.array(z.string().regex(identifierRegex)).min(3)
+			.describe("An ordered array of vertex IDs defining the boundary of the region to shade."),
+		fillColor: z.string().regex(CSS_COLOR_PATTERN)
+			.describe("CSS fill color for this region (e.g., '#FFE5CC', 'rgba(0,128,255,0.3)'). Use alpha for transparency.")
+    }).strict();
+}
 
 /**
  * Defines a text label placed at an arbitrary position inside a region.
+ *
+ * Factory to prevent $ref generation.
  */
-const RegionLabelSchema = z.object({
-	text: z.string()
-		.describe("The label text to display (e.g., 'Region A', '45 cm²')."),
-	position: z.object({
-		x: z.number().describe("Horizontal position for the label in the same coordinate system as vertices."),
-		y: z.number().describe("Vertical position for the label in the same coordinate system as vertices.")
-	}).strict()
-}).strict();
+function createRegionLabelSchema() {
+    return z.object({
+		text: z.string()
+			.describe("The label text to display (e.g., 'Region A', '45 cm²')."),
+		position: z.object({
+			x: z.number().describe("Horizontal position for the label in the same coordinate system as vertices."),
+			y: z.number().describe("Vertical position for the label in the same coordinate system as vertices.")
+		}).strict()
+    }).strict();
+}
 
 /**
  * Defines a right-angle marker at a vertex.
+ *
+ * Factory to prevent $ref generation.
  */
-const RightAngleMarkerSchema = z.object({
-	cornerVertexId: z.string().regex(identifierRegex)
+function createRightAngleMarkerSchema() {
+    return z.object({
+		cornerVertexId: z.string().regex(identifierRegex)
         .describe("The ID of the vertex where the right angle's corner is located."),
-	adjacentVertex1Id: z.string().regex(identifierRegex)
+		adjacentVertex1Id: z.string().regex(identifierRegex)
         .describe("The ID of the first adjacent vertex, forming one leg of the angle."),
-	adjacentVertex2Id: z.string().regex(identifierRegex)
+		adjacentVertex2Id: z.string().regex(identifierRegex)
         .describe("The ID of the second adjacent vertex, forming the other leg of the angle.")
-}).strict();
+    }).strict();
+}
 
 /**
  * Creates complex composite polygons with internal divisions, shaded regions, and geometric annotations.
@@ -131,29 +163,29 @@ export const CompositeShapeDiagramPropsSchema = z.object({
 		.describe("Total width of the SVG canvas in pixels. The diagram will be auto-centered and scaled to fit within this dimension."),
 	height: z.number().positive()
 		.describe("Total height of the SVG canvas in pixels. The diagram will be auto-centered and scaled to fit within this dimension."),
-	vertices: z.array(VertexSchema)
+	vertices: z.array(createVertexSchema())
 		.describe("An array of all vertex points that define the shape. Each vertex must have a unique ID, which is used to construct edges and regions."),
 	
-	boundaryEdges: z.array(BoundaryEdgeSchema)
+	boundaryEdges: z.array(createBoundaryEdgeSchema())
         .describe("An ordered array of edge definitions that trace the outer perimeter of the shape. This is the primary mechanism for defining the shape's boundary and its labels."),
 
-	internalSegments: z.array(InternalSegmentSchema).nullable()
+	internalSegments: z.array(createInternalSegmentSchema()).nullable()
 		.describe("Line segments *inside* the shape, used for area decomposition (e.g., showing the height). This should NOT be used to define the outer boundary."),
 
-	shadedRegions: z.array(ShadedRegionSchema).nullable()
+	shadedRegions: z.array(createShadedRegionSchema()).nullable()
 		.describe("Polygonal regions to fill with color, defined by a list of vertex IDs."),
 
-	regionLabels: z.array(RegionLabelSchema).nullable()
+	regionLabels: z.array(createRegionLabelSchema()).nullable()
 		.describe("Text labels positioned freely inside the shape's regions."),
 
-	rightAngleMarkers: z.array(RightAngleMarkerSchema).nullable()
+	rightAngleMarkers: z.array(createRightAngleMarkerSchema()).nullable()
 		.describe("Square markers indicating 90° angles at specified vertices.")
 
 }).strict();
 
 export type CompositeShapeDiagramProps = z.infer<typeof CompositeShapeDiagramPropsSchema>;
 type Point = { x: number; y: number };
-type Label = z.infer<typeof LabelSchema>;
+type Label = z.infer<ReturnType<typeof createLabelSchema>>;
 
 // Helper function to format the label object into a display string.
 const formatLabel = (label: Label): string | null => {
