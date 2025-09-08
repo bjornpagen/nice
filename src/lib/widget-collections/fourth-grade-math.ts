@@ -1,11 +1,12 @@
-import { DataTablePropsSchema } from "@/lib/widgets/generators"
+import { DataTablePropsSchema, TapeDiagramPropsSchema } from "@/lib/widgets/generators"
 
 export const fourthGradeMathCollection = {
 	name: "fourth-grade-math",
 	schemas: {
-		dataTable: DataTablePropsSchema
+		dataTable: DataTablePropsSchema,
+		tapeDiagram: TapeDiagramPropsSchema
 	},
-	widgetTypeKeys: ["dataTable"] as const
+	widgetTypeKeys: ["dataTable", "tapeDiagram"] as const
 } as const
 
 
