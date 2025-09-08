@@ -1,5 +1,6 @@
 "use client"
 
+import { useUser } from "@clerk/nextjs"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -12,7 +13,7 @@ type SidebarItem = {
 	external: boolean
 }
 
-const stuff: SidebarItem[] = [
+const baseStuff: SidebarItem[] = [
 	{
 		name: "Courses",
 		href: "me/courses",
@@ -49,9 +50,25 @@ function highlight(pathname: string, href: string) {
 }
 
 export function Sidebar() {
+	const { user, isLoaded } = useUser()
 	const rawPathname = usePathname()
 	const pathname = normalizeString(rawPathname)
 	assertNoEncodedColons(pathname, "profile-sidebar pathname")
+
+	// Determine if user belongs to superbuilders domain
+	let primaryEmail: string | undefined
+	if (isLoaded && user) {
+		const emailEntry = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId)
+		if (emailEntry && typeof emailEntry.emailAddress === "string") {
+			primaryEmail = emailEntry.emailAddress
+		}
+	}
+	const isSuperbuilders = Boolean(primaryEmail?.endsWith("@superbuilders.school"))
+
+	// Build My Stuff list conditionally
+	const stuff: SidebarItem[] = isSuperbuilders
+		? [...baseStuff, { name: "Metrics", href: "me/metrics", disabled: false, external: false }]
+		: baseStuff
 
 	return (
 		<div className="bg-white rounded-lg border border-gray-200 p-4">
