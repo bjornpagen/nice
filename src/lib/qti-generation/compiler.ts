@@ -12,7 +12,6 @@ import { compileResponseDeclarations, compileResponseProcessing } from "./respon
 import type { AssessmentItem, AssessmentItemInput } from "./schemas"
 import { createDynamicAssessmentItemSchema } from "./schemas"
 import { generateWidget } from "./widget-generator"
-import { resetCanvasIdCounter } from "@/lib/widgets/utils/canvas-impl"
 import {
 	convertHtmlEntities,
 	fixInequalityOperators,
@@ -800,8 +799,6 @@ function enforceIdentifierOnlyMatching(item: AssessmentItem): void {
 }
 
 export async function compile(itemData: AssessmentItemInput): Promise<string> {
-    // Reset canvas counter to make clip ids deterministic within this compile run
-    resetCanvasIdCounter()
 	// Step 0: Build widget mapping prior to schema enforcement
 	const widgetMapping: Record<string, string> = {}
 	if (itemData.widgets) {
@@ -815,12 +812,12 @@ export async function compile(itemData: AssessmentItemInput): Promise<string> {
 	const validatedWidgetMapping: Record<string, keyof typeof typedSchemas> = {}
 
 	for (const [key, type] of Object.entries(widgetMapping)) {
-		if (!isValidWidgetType(type)) {
-			logger.error("invalid widget type in mapping", { key, type, availableTypes: Object.keys(typedSchemas) })
-			throw errors.new(`Invalid widget type "${type}" for slot "${key}" provided in mapping.`)
+		if (isValidWidgetType(type)) {
+			validatedWidgetMapping[key] = type
+			continue
 		}
-		// Now TypeScript knows type is a valid keyof typeof typedSchemas
-		validatedWidgetMapping[key] = type
+		logger.error("invalid widget type in mapping", { key, type, availableTypes: Object.keys(typedSchemas) })
+		throw errors.new(`Invalid widget type "${type}" for slot "${key}" provided in mapping.`)
 	}
 
 	const { AssessmentItemSchema } = createDynamicAssessmentItemSchema(validatedWidgetMapping)

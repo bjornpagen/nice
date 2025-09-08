@@ -9,6 +9,7 @@ import {
 	generateBoxGrid,
 	generateBoxPlot,
 	generateCircleDiagram,
+	generateCirclePieceComparisonDiagram,
 	generateCompositeShapeDiagram,
 	generateConceptualGraph,
 	generateCoordinatePlane,
@@ -88,6 +89,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateBoxPlot(widget)
 		case "circleDiagram":
 			return await generateCircleDiagram(widget)
+		case "circlePieceComparisonDiagram":
+			return await generateCirclePieceComparisonDiagram(widget)
 		case "compositeShapeDiagram":
 			return await generateCompositeShapeDiagram(widget)
 		case "coordinatePlane":

@@ -16,6 +16,7 @@ import { BarChartPropsSchema, generateBarChart } from "@/lib/widgets/generators/
 import { BoxGridPropsSchema, generateBoxGrid } from "@/lib/widgets/generators/box-grid"
 import { BoxPlotPropsSchema, generateBoxPlot } from "@/lib/widgets/generators/box-plot"
 import { CircleDiagramPropsSchema, generateCircleDiagram } from "@/lib/widgets/generators/circle-diagram"
+import { generateCirclePieceComparisonDiagram, CirclePieceComparisonDiagramPropsSchema } from "@/lib/widgets/generators/circle-piece-comparison-diagram"
 import {
 	CompositeShapeDiagramPropsSchema,
 	generateCompositeShapeDiagram
@@ -150,6 +151,7 @@ export const allWidgetSchemas = {
 	boxGrid: BoxGridPropsSchema,
 	boxPlot: BoxPlotPropsSchema,
 	circleDiagram: CircleDiagramPropsSchema,
+	circlePieceComparisonDiagram: CirclePieceComparisonDiagramPropsSchema,
 	compositeShapeDiagram: CompositeShapeDiagramPropsSchema,
 	conceptualGraph: ConceptualGraphPropsSchema,
 	coordinatePlane: CoordinatePlaneComprehensivePropsSchema,
@@ -222,6 +224,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.boxGrid,
 	typedSchemas.boxPlot,
 	typedSchemas.circleDiagram,
+	typedSchemas.circlePieceComparisonDiagram,
 	typedSchemas.compositeShapeDiagram,
 	typedSchemas.conceptualGraph,
 	typedSchemas.coordinatePlane,
@@ -296,6 +299,7 @@ export {
 	BoxGridPropsSchema,
 	BoxPlotPropsSchema,
 	CircleDiagramPropsSchema,
+	CirclePieceComparisonDiagramPropsSchema,
 	CompositeShapeDiagramPropsSchema,
 	ConceptualGraphPropsSchema,
 	CoordinatePlaneComprehensivePropsSchema,
@@ -363,6 +367,7 @@ export {
 	generateBoxGrid,
 	generateBoxPlot,
 	generateCircleDiagram,
+	generateCirclePieceComparisonDiagram,
 	generateCompositeShapeDiagram,
 	generateConceptualGraph,
 	generateCoordinatePlaneComprehensive as generateCoordinatePlane,
@@ -439,6 +444,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateBoxPlot(widget)
 		case "circleDiagram":
 			return await generateCircleDiagram(widget)
+		case "circlePieceComparisonDiagram":
+			return await generateCirclePieceComparisonDiagram(widget)
 		case "compositeShapeDiagram":
 			return await generateCompositeShapeDiagram(widget)
 		case "conceptualGraph":

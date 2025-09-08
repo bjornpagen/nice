@@ -117,7 +117,7 @@ class ClippedCanvas implements Canvas {
 // A module-scoped counter is reset by callers (e.g., compiler) per run to keep outputs stable.
 let canvasIdCounter = 0
 export function resetCanvasIdCounter(): void {
-	canvasIdCounter = 0
+	// no-op; retained for compatibility
 }
 
 export class CanvasImpl implements Canvas {
@@ -126,6 +126,7 @@ export class CanvasImpl implements Canvas {
 	private svgBody = ""
 	private defs = ""
 	private readonly options: CanvasOptions
+	private nextLocalClipId = 0
 
 	constructor(options: CanvasOptions) {
 		// Validate parameters according to PRD constraints
@@ -137,7 +138,8 @@ export class CanvasImpl implements Canvas {
 		}
 
 		this.options = options
-		this.clipId = `clip-${canvasIdCounter++}`
+		// Deterministic per-instance clip id (starts at 0 for each SVG document)
+		this.clipId = `clip-${this.nextLocalClipId++}`
 
 		// Initialize extents with the chart area bounds
 		this.extents = {
