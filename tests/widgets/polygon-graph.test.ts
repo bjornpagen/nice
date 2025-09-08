@@ -6,7 +6,7 @@ import { PolygonGraphPropsSchema, generatePolygonGraph } from "@/lib/widgets/gen
 
 type PolygonGraphInput = z.input<typeof PolygonGraphPropsSchema>
 
-test("polygon graph - house-shaped pentagon with labeled vertices", () => {
+test("polygon graph - house-shaped pentagon with labeled vertices", async () => {
 	const input = {
 		type: "polygonGraph",
 		width: 500,
@@ -88,13 +88,13 @@ test("polygon graph - house-shaped pentagon with labeled vertices", () => {
 	const parsed = parseResult.data
 
 	// Generate the SVG
-	const svg = generatePolygonGraph(parsed)
+	const svg = await generatePolygonGraph(parsed)
 
 	// Snapshot test the generated SVG
 	expect(svg).toMatchSnapshot()
 })
 
-test("polygon graph - multiple shapes with shared vertices", () => {
+test("polygon graph - multiple shapes with shared vertices", async () => {
 	const input = {
 		type: "polygonGraph",
 		width: 600,
@@ -164,13 +164,13 @@ test("polygon graph - multiple shapes with shared vertices", () => {
 	const parsed = parseResult.data
 
 	// Generate the SVG
-	const svg = generatePolygonGraph(parsed)
+	const svg = await generatePolygonGraph(parsed)
 
 	// Snapshot test the generated SVG
 	expect(svg).toMatchSnapshot()
 })
 
-test("polygon graph - open polyline with standalone points", () => {
+test("polygon graph - open polyline with standalone points", async () => {
 	const input = {
 		type: "polygonGraph",
 		width: 400,
@@ -221,7 +221,7 @@ test("polygon graph - open polyline with standalone points", () => {
 	const parsed = parseResult.data
 
 	// Generate the SVG
-	const svg = generatePolygonGraph(parsed)
+	const svg = await generatePolygonGraph(parsed)
 
 	// Snapshot test the generated SVG
 	expect(svg).toMatchSnapshot()

@@ -4,7 +4,7 @@ import { generatePolyhedronDiagram, PolyhedronDiagramPropsSchema } from "@/lib/w
 
 type PolyhedronDiagramInput = z.input<typeof PolyhedronDiagramPropsSchema>
 
-test("polyhedron-diagram - Square pyramid with slant height and right-angle marker", () => {
+test("polyhedron-diagram - Square pyramid with slant height and right-angle marker", async () => {
 	const input = {
 		type: "polyhedronDiagram",
 		width: 400,
@@ -50,6 +50,6 @@ test("polyhedron-diagram - Square pyramid with slant height and right-angle mark
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronDiagram(parseResult.data)
+	const svg = await generatePolyhedronDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })

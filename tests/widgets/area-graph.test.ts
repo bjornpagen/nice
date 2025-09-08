@@ -6,7 +6,7 @@ import { AreaGraphPropsSchema, generateAreaGraph } from "@/lib/widgets/generator
 
 type AreaGraphInput = z.input<typeof AreaGraphPropsSchema>
 
-test("area graph - U.S. energy consumption by source (wrapping title)", () => {
+test("area graph - U.S. energy consumption by source (wrapping title)", async () => {
 	const input = {
 		type: "areaGraph",
 		width: 369,
@@ -56,7 +56,7 @@ test("area graph - U.S. energy consumption by source (wrapping title)", () => {
 	const parsed = parseResult.data
 
 	// Generate the SVG
-	const svg = generateAreaGraph(parsed)
+	const svg = await generateAreaGraph(parsed)
 
 	// Snapshot test the generated SVG
 	expect(svg).toMatchSnapshot()

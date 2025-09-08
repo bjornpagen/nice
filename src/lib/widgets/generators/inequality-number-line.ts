@@ -142,7 +142,7 @@ export type InequalityNumberLineProps = z.infer<typeof InequalityNumberLineProps
  * Generates an SVG number line to graph the solution set of single or compound inequalities,
  * using open/closed circles and shaded regions to represent the solution.
  */
-export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumberLinePropsSchema> = (data) => {
+export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumberLinePropsSchema> = async (data) => {
 	const { width, height, min, max, tickInterval, ranges } = data
 	const chartWidth = width - 2 * PADDING
 	const yPos = height / 2

@@ -53,7 +53,7 @@ export const ConceptualGraphPropsSchema = z
 
 export type ConceptualGraphProps = z.infer<typeof ConceptualGraphPropsSchema>
 
-export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphPropsSchema> = (props) => {
+export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphPropsSchema> = async (props) => {
 	const {
 		width,
 		height,

@@ -26,7 +26,7 @@ type InequalityNumberLineInput = z.input<typeof InequalityNumberLinePropsSchema>
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: image_1
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 1,
 	"min": -9,
@@ -59,7 +59,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -68,7 +68,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: image_1
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 1,
 	"min": -9,
@@ -101,7 +101,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -110,7 +110,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: image_1
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -143,7 +143,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -152,7 +152,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_a_image
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -185,7 +185,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -194,7 +194,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_b_image
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -227,7 +227,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -236,7 +236,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_d_image
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -269,7 +269,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -278,7 +278,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: image_1
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -311,7 +311,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -320,7 +320,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_a_graph
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -353,7 +353,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -362,7 +362,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_b_graph
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -395,7 +395,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -404,7 +404,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_c_graph
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -437,7 +437,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -446,7 +446,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_d_graph
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -479,7 +479,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -488,7 +488,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_a_graph
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 9,
 	"min": -1,
@@ -521,7 +521,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -530,7 +530,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_b_graph
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 9,
 	"min": -1,
@@ -563,7 +563,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -572,7 +572,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_c_graph
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 9,
 	"min": -1,
@@ -605,7 +605,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -614,7 +614,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_d_graph
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 9,
 	"min": -1,
@@ -647,7 +647,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -656,7 +656,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_a_number_line
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -689,7 +689,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -698,7 +698,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_b_number_line
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -731,7 +731,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -740,7 +740,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_d_number_line
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -773,7 +773,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -782,7 +782,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_a_number_line
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -815,7 +815,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -824,7 +824,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_b_number_line
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -857,7 +857,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -866,7 +866,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_c_number_line
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -899,7 +899,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -908,7 +908,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_d_number_line
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -941,7 +941,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -950,7 +950,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_a_number_line
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -983,7 +983,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -992,7 +992,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_c_number_line
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -1025,7 +1025,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1034,7 +1034,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_d_number_line
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -1067,7 +1067,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1076,7 +1076,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: image_1
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -1109,7 +1109,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1118,7 +1118,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: image_1
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -1151,7 +1151,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1160,7 +1160,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: image_1
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -1193,7 +1193,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1202,7 +1202,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: image_1
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 1,
 	"min": -9,
@@ -1235,7 +1235,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1244,7 +1244,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_a_numberline
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 7,
 	"min": -3,
@@ -1277,7 +1277,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1286,7 +1286,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_b_numberline
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 7,
 	"min": -3,
@@ -1319,7 +1319,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1328,7 +1328,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_c_numberline
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 7,
 	"min": -3,
@@ -1361,7 +1361,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1370,7 +1370,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_d_numberline
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 7,
 	"min": -3,
@@ -1403,7 +1403,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1412,7 +1412,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_a_number_line
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -1445,7 +1445,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1454,7 +1454,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_b_number_line
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -1487,7 +1487,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1496,7 +1496,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_c_number_line
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -1529,7 +1529,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1538,7 +1538,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_d_number_line
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -1571,7 +1571,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1580,7 +1580,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_a_graph
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 9,
 	"min": -1,
@@ -1613,7 +1613,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1622,7 +1622,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_b_graph
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 9,
 	"min": -1,
@@ -1655,7 +1655,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1664,7 +1664,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_c_graph
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 9,
 	"min": -1,
@@ -1697,7 +1697,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1706,7 +1706,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_d_graph
-test("inequality-number-line - Graphing basic inequalities", () => {
+test("inequality-number-line - Graphing basic inequalities", async () => {
 	const input = {
 	"max": 9,
 	"min": -1,
@@ -1739,7 +1739,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1748,7 +1748,7 @@ test("inequality-number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -1781,7 +1781,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1790,7 +1790,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -1823,7 +1823,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1832,7 +1832,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -1865,7 +1865,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1874,7 +1874,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -1907,7 +1907,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1916,7 +1916,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -1949,7 +1949,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1958,7 +1958,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: choice_a_image
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -1991,7 +1991,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2000,7 +2000,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: choice_c_image
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2033,7 +2033,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2042,7 +2042,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: choice_d_image
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2075,7 +2075,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2084,7 +2084,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2117,7 +2117,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2126,7 +2126,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2159,7 +2159,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2168,7 +2168,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2201,7 +2201,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2210,7 +2210,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2243,7 +2243,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2252,7 +2252,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2285,7 +2285,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2294,7 +2294,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2327,7 +2327,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2336,7 +2336,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2369,7 +2369,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2378,7 +2378,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2411,7 +2411,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2420,7 +2420,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2453,7 +2453,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2462,7 +2462,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: choice_a_visual
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2495,7 +2495,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2504,7 +2504,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: choice_b_visual
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2537,7 +2537,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2546,7 +2546,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: choice_d_visual
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2579,7 +2579,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2588,7 +2588,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2621,7 +2621,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2630,7 +2630,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2663,7 +2663,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2672,7 +2672,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2705,7 +2705,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2714,7 +2714,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: choice_a_visual
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2747,7 +2747,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2756,7 +2756,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: choice_c_visual
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2789,7 +2789,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2798,7 +2798,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: choice_d_visual
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2831,7 +2831,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2840,7 +2840,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2873,7 +2873,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2882,7 +2882,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2915,7 +2915,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2924,7 +2924,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Inequality from graph
 // Widget key: image_1
-test("inequality-number-line - Inequality from graph", () => {
+test("inequality-number-line - Inequality from graph", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2957,7 +2957,7 @@ test("inequality-number-line - Inequality from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2966,7 +2966,7 @@ test("inequality-number-line - Inequality from graph", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: number_line_initial
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -2985,7 +2985,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2994,7 +2994,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: number_line_choice_a
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3027,7 +3027,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3036,7 +3036,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: number_line_choice_b
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3069,7 +3069,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3078,7 +3078,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: number_line_choice_c
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3111,7 +3111,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3120,7 +3120,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: number_line_choice_a
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3153,7 +3153,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3162,7 +3162,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: number_line_choice_b
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3195,7 +3195,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3204,7 +3204,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: number_line_choice_c
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3237,7 +3237,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3246,7 +3246,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: number_line_choice_a
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3279,7 +3279,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3288,7 +3288,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: number_line_choice_b
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3321,7 +3321,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3330,7 +3330,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: number_line_choice_c
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3363,7 +3363,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3372,7 +3372,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: inequality_choice_a
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3405,7 +3405,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3414,7 +3414,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: inequality_choice_b
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3447,7 +3447,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3456,7 +3456,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: inequality_choice_c
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3489,7 +3489,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3498,7 +3498,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: inequality_choice_a
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3531,7 +3531,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3540,7 +3540,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: inequality_choice_b
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3573,7 +3573,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3582,7 +3582,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: inequality_choice_c
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3615,7 +3615,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3624,7 +3624,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: nl_choice_a
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3657,7 +3657,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3666,7 +3666,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: nl_choice_b
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3699,7 +3699,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3708,7 +3708,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: nl_choice_c
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3741,7 +3741,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3750,7 +3750,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: number_line_choice_a
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3783,7 +3783,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3792,7 +3792,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: number_line_choice_b
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3825,7 +3825,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3834,7 +3834,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: number_line_choice_c
-test("inequality-number-line - Plotting inequalities", () => {
+test("inequality-number-line - Plotting inequalities", async () => {
 	const input = {
 	"max": 5,
 	"min": -5,
@@ -3867,7 +3867,7 @@ test("inequality-number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateInequalityNumberLine(parseResult.data)
+	const svg = await generateInequalityNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

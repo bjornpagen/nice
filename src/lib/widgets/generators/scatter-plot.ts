@@ -309,7 +309,7 @@ function computeExponentialRegression(
 
 type LineStyle = z.infer<ReturnType<typeof createLineStyleSchema>>
 
-export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema> = (data) => {
+export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema> = async (data) => {
 	const { width, height, title, xAxis, yAxis, points, lines } = data
 
 	// Validation logic moved from schema

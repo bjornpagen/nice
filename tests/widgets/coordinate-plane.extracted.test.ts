@@ -26,7 +26,7 @@ type CoordinatePlaneInput = z.input<typeof CoordinatePlaneComprehensivePropsSche
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: coordinate_plane_empty
-test("coordinate-plane - Ratios on coordinate plane", () => {
+test("coordinate-plane - Ratios on coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -61,7 +61,7 @@ test("coordinate-plane - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -70,7 +70,7 @@ test("coordinate-plane - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Ratios on coordinate plane", () => {
+test("coordinate-plane - Ratios on coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 380,
@@ -130,7 +130,7 @@ test("coordinate-plane - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -139,7 +139,7 @@ test("coordinate-plane - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Ratios on coordinate plane", () => {
+test("coordinate-plane - Ratios on coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 380,
@@ -199,7 +199,7 @@ test("coordinate-plane - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -208,7 +208,7 @@ test("coordinate-plane - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: coordinate_plane_empty
-test("coordinate-plane - Points on the coordinate plane", () => {
+test("coordinate-plane - Points on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 325,
@@ -243,7 +243,7 @@ test("coordinate-plane - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -252,7 +252,7 @@ test("coordinate-plane - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: coordinate_plane_empty
-test("coordinate-plane - Points on the coordinate plane", () => {
+test("coordinate-plane - Points on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 325,
@@ -296,7 +296,7 @@ test("coordinate-plane - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -305,7 +305,7 @@ test("coordinate-plane - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: coordinate_plane_empty
-test("coordinate-plane - Points on the coordinate plane", () => {
+test("coordinate-plane - Points on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 325,
@@ -340,7 +340,7 @@ test("coordinate-plane - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -349,7 +349,7 @@ test("coordinate-plane - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: coordinate_plane_empty
-test("coordinate-plane - Points on the coordinate plane", () => {
+test("coordinate-plane - Points on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 325,
@@ -384,7 +384,7 @@ test("coordinate-plane - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -393,7 +393,7 @@ test("coordinate-plane - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [
 		{
@@ -450,7 +450,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -459,7 +459,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -494,7 +494,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -503,7 +503,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -538,7 +538,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -547,7 +547,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -582,7 +582,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -591,7 +591,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -626,7 +626,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -635,7 +635,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -670,7 +670,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -679,7 +679,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -714,7 +714,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -723,7 +723,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -758,7 +758,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -767,7 +767,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -802,7 +802,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -811,7 +811,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -846,7 +846,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -855,7 +855,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -890,7 +890,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -899,7 +899,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -934,7 +934,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -943,7 +943,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -978,7 +978,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -987,7 +987,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -1022,7 +1022,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1031,7 +1031,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -1066,7 +1066,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1075,7 +1075,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -1110,7 +1110,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1119,7 +1119,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -1154,7 +1154,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1163,7 +1163,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -1198,7 +1198,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1207,7 +1207,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -1242,7 +1242,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1251,7 +1251,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrants on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrants on the coordinate plane", () => {
+test("coordinate-plane - Quadrants on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 275,
@@ -1286,7 +1286,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1295,7 +1295,7 @@ test("coordinate-plane - Quadrants on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: graph_initial
-test("coordinate-plane - Distance between points vertical or horizontal", () => {
+test("coordinate-plane - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -1339,7 +1339,7 @@ test("coordinate-plane - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1348,7 +1348,7 @@ test("coordinate-plane - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: coordinate_plane_initial
-test("coordinate-plane - Distance between points vertical or horizontal", () => {
+test("coordinate-plane - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -1392,7 +1392,7 @@ test("coordinate-plane - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1401,7 +1401,7 @@ test("coordinate-plane - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: coordinate_plane_initial
-test("coordinate-plane - Distance between points vertical or horizontal", () => {
+test("coordinate-plane - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -1445,7 +1445,7 @@ test("coordinate-plane - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1454,7 +1454,7 @@ test("coordinate-plane - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: coordinate_plane_initial
-test("coordinate-plane - Distance between points vertical or horizontal", () => {
+test("coordinate-plane - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -1498,7 +1498,7 @@ test("coordinate-plane - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1507,7 +1507,7 @@ test("coordinate-plane - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: coordinate_plane_empty
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -1542,7 +1542,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1551,7 +1551,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: coordinate_plane_empty
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -1586,7 +1586,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1595,7 +1595,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: plane_initial
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 500,
@@ -1671,7 +1671,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1680,7 +1680,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: polygon_choice_a
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 500,
@@ -1770,7 +1770,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1779,7 +1779,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: polygon_choice_b
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 500,
@@ -1869,7 +1869,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1878,7 +1878,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: polygon_choice_c
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 500,
@@ -1968,7 +1968,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1977,7 +1977,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: coordinate_plane_empty
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -2012,7 +2012,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2021,7 +2021,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: triangle_choice_a
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -2093,7 +2093,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2102,7 +2102,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: triangle_choice_b
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -2174,7 +2174,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2183,7 +2183,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: triangle_choice_c
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -2255,7 +2255,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2264,7 +2264,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: coordinate_plane_empty
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -2299,7 +2299,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2308,7 +2308,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_a
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -2389,7 +2389,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2398,7 +2398,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_b
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -2479,7 +2479,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2488,7 +2488,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_c
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -2569,7 +2569,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2578,7 +2578,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: coordinate_plane_initial
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -2613,7 +2613,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2622,7 +2622,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: coordinate_plane_empty
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -2657,7 +2657,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2666,7 +2666,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: triangle_initial
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -2701,7 +2701,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2710,7 +2710,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: triangle_choice_a
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -2782,7 +2782,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2791,7 +2791,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: triangle_choice_b
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -2863,7 +2863,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2872,7 +2872,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: triangle_choice_c
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -2944,7 +2944,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2953,7 +2953,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: coordinate_plane_initial
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -2988,7 +2988,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2997,7 +2997,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: coordinate_plane_initial
-test("coordinate-plane - Drawing polygons with coordinates", () => {
+test("coordinate-plane - Drawing polygons with coordinates", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -3032,7 +3032,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3041,7 +3041,7 @@ test("coordinate-plane - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Area and perimeter on the coordinate plane
 // Widget key: graph_choice_a
-test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
+test("coordinate-plane - Area and perimeter on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 340,
@@ -3122,7 +3122,7 @@ test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3131,7 +3131,7 @@ test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Area and perimeter on the coordinate plane
 // Widget key: graph_choice_b
-test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
+test("coordinate-plane - Area and perimeter on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 340,
@@ -3199,7 +3199,7 @@ test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3208,7 +3208,7 @@ test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Area and perimeter on the coordinate plane
 // Widget key: graph_choice_c
-test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
+test("coordinate-plane - Area and perimeter on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 340,
@@ -3260,7 +3260,7 @@ test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3269,7 +3269,7 @@ test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Area and perimeter on the coordinate plane
 // Widget key: rectangle_points_image
-test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
+test("coordinate-plane - Area and perimeter on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 340,
@@ -3321,7 +3321,7 @@ test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3330,7 +3330,7 @@ test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Area and perimeter on the coordinate plane
 // Widget key: graph_choice_a
-test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
+test("coordinate-plane - Area and perimeter on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 340,
@@ -3411,7 +3411,7 @@ test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3420,7 +3420,7 @@ test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Area and perimeter on the coordinate plane
 // Widget key: graph_choice_b
-test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
+test("coordinate-plane - Area and perimeter on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 340,
@@ -3501,7 +3501,7 @@ test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3510,7 +3510,7 @@ test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Area and perimeter on the coordinate plane
 // Widget key: graph_choice_c
-test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
+test("coordinate-plane - Area and perimeter on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 340,
@@ -3591,7 +3591,7 @@ test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3600,7 +3600,7 @@ test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Area and perimeter on the coordinate plane
 // Widget key: coordinate_plane_points
-test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
+test("coordinate-plane - Area and perimeter on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 340,
@@ -3652,7 +3652,7 @@ test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3661,7 +3661,7 @@ test("coordinate-plane - Area and perimeter on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrilateral problems on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => {
+test("coordinate-plane - Quadrilateral problems on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -3742,7 +3742,7 @@ test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => 
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3751,7 +3751,7 @@ test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => 
 // Course: 6th grade math
 // Exercise: Quadrilateral problems on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => {
+test("coordinate-plane - Quadrilateral problems on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 223,
@@ -3832,7 +3832,7 @@ test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => 
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3841,7 +3841,7 @@ test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => 
 // Course: 6th grade math
 // Exercise: Quadrilateral problems on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => {
+test("coordinate-plane - Quadrilateral problems on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -3932,7 +3932,7 @@ test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => 
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3941,7 +3941,7 @@ test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => 
 // Course: 6th grade math
 // Exercise: Quadrilateral problems on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => {
+test("coordinate-plane - Quadrilateral problems on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -4022,7 +4022,7 @@ test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => 
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4031,7 +4031,7 @@ test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => 
 // Course: 6th grade math
 // Exercise: Quadrilateral problems on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => {
+test("coordinate-plane - Quadrilateral problems on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -4122,7 +4122,7 @@ test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => 
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4131,7 +4131,7 @@ test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => 
 // Course: 6th grade math
 // Exercise: Quadrilateral problems on the coordinate plane
 // Widget key: image_1
-test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => {
+test("coordinate-plane - Quadrilateral problems on the coordinate plane", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -4222,7 +4222,7 @@ test("coordinate-plane - Quadrilateral problems on the coordinate plane", () => 
 	}
 
 	// Generate the widget
-	const svg = generateCoordinatePlane(parseResult.data)
+	const svg = await generateCoordinatePlane(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

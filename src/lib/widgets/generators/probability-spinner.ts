@@ -79,7 +79,7 @@ export type ProbabilitySpinnerProps = z.infer<typeof ProbabilitySpinnerPropsSche
  * Generates an SVG diagram of a probability spinner.
  * Ideal for visualizing theoretical probability problems.
  */
-export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinnerPropsSchema> = (props) => {
+export const generateProbabilitySpinner: WidgetGenerator<typeof ProbabilitySpinnerPropsSchema> = async (props) => {
 	const { width, height, groups, pointerAngle, title } = props
 
 	const canvas = new CanvasImpl({

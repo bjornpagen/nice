@@ -251,7 +251,7 @@ export type PolyhedronNetDiagramProps = z.infer<typeof PolyhedronNetDiagramProps
  * A net is a 2D pattern that can be folded to form the 3D shape, and this template is
  * essential for questions about surface area and the relationship between 2D and 3D geometry.
  */
-export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetDiagramPropsSchema> = (data) => {
+export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetDiagramPropsSchema> = async (data) => {
 	const { width, height, polyhedronType, base, showLabels } = data
 	const lateralHeight = "lateralHeight" in data ? data.lateralHeight : undefined
 

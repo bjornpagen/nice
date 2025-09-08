@@ -198,7 +198,7 @@ export type CircleDiagramProps = z.infer<typeof CircleDiagramPropsSchema>
 /**
  * Generates an SVG diagram of a circle and its components.
  */
-export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSchema> = (props) => {
+export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSchema> = async (props) => {
 	const {
 		shape,
 		rotation,

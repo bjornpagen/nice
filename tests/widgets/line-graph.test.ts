@@ -6,7 +6,7 @@ import { generateLineGraph, LineGraphPropsSchema } from "@/lib/widgets/generator
 
 type LineGraphInput = z.input<typeof LineGraphPropsSchema>
 
-test("line graph - wraps long y-axis label (photosynthesis)", () => {
+test("line graph - wraps long y-axis label (photosynthesis)", async () => {
 	const input = {
 		type: "lineGraph",
 		width: 600,
@@ -43,7 +43,7 @@ test("line graph - wraps long y-axis label (photosynthesis)", () => {
 		throw errors.wrap(parseResult.error, "input validation")
 	}
 	const parsed = parseResult.data
-	const svg = generateLineGraph(parsed)
+	const svg = await generateLineGraph(parsed)
 	// Ensure the y-axis label is rotated and may wrap with tspans
 	expect(svg).toContain('transform="rotate(-90')
 	// Check for either single line text or multi-line with tspans
@@ -56,7 +56,7 @@ test("line graph - wraps long y-axis label (photosynthesis)", () => {
 	expect(svg).toMatchSnapshot()
 })
 
-test("line graph - Arizona city temperatures", () => {
+test("line graph - Arizona city temperatures", async () => {
 	const input = {
 		type: "lineGraph",
 		width: 500,
@@ -122,11 +122,11 @@ test("line graph - Arizona city temperatures", () => {
 		throw errors.wrap(parseResult.error, "input validation")
 	}
 	const parsed = parseResult.data
-	const svg = generateLineGraph(parsed)
+	const svg = await generateLineGraph(parsed)
 	expect(svg).toMatchSnapshot()
 })
 
-test("line graph - collared lemmings and stoats (dual y-axis)", () => {
+test("line graph - collared lemmings and stoats (dual y-axis)", async () => {
 	const input = {
 		type: "lineGraph",
 		width: 600,
@@ -193,11 +193,11 @@ test("line graph - collared lemmings and stoats (dual y-axis)", () => {
 		throw errors.wrap(parseResult.error, "input validation")
 	}
 	const parsed = parseResult.data
-	const svg = generateLineGraph(parsed)
+	const svg = await generateLineGraph(parsed)
 	expect(svg).toMatchSnapshot()
 })
 
-test("line graph - environmental change flowering time shift (legend below, labels close, title wrap)", () => {
+test("line graph - environmental change flowering time shift (legend below, labels close, title wrap)", async () => {
 	const input = {
 		type: "lineGraph",
 		width: 325,
@@ -254,11 +254,11 @@ test("line graph - environmental change flowering time shift (legend below, labe
 		throw errors.wrap(parseResult.error, "input validation")
 	}
 	const parsed = parseResult.data
-	const svg = generateLineGraph(parsed)
+	const svg = await generateLineGraph(parsed)
 	expect(svg).toMatchSnapshot()
 })
 
-test("line graph - AZ cities temp elevation (title wrap + label thinning)", () => {
+test("line graph - AZ cities temp elevation (title wrap + label thinning)", async () => {
 	const input = {
 		type: "lineGraph",
 		width: 385,
@@ -311,11 +311,11 @@ test("line graph - AZ cities temp elevation (title wrap + label thinning)", () =
 		throw errors.wrap(parseResult.error, "input validation")
 	}
 	const parsed = parseResult.data
-	const svg = generateLineGraph(parsed)
+	const svg = await generateLineGraph(parsed)
 	expect(svg).toMatchSnapshot()
 })
 
-test("line graph - mammal species vs latitude", () => {
+test("line graph - mammal species vs latitude", async () => {
 	const input = {
 		type: "lineGraph",
 		width: 556,
@@ -359,11 +359,11 @@ test("line graph - mammal species vs latitude", () => {
 		throw errors.wrap(parseResult.error, "input validation")
 	}
 	const parsed = parseResult.data
-	const svg = generateLineGraph(parsed)
+	const svg = await generateLineGraph(parsed)
 	expect(svg).toMatchSnapshot()
 })
 
-test("line graph - monthly precipitation and temperature (dual y-axis)", () => {
+test("line graph - monthly precipitation and temperature (dual y-axis)", async () => {
 	const input = {
 		type: "lineGraph",
 		width: 752,
@@ -414,6 +414,6 @@ test("line graph - monthly precipitation and temperature (dual y-axis)", () => {
 		throw errors.wrap(parseResult.error, "input validation")
 	}
 	const parsed = parseResult.data
-	const svg = generateLineGraph(parsed)
+	const svg = await generateLineGraph(parsed)
 	expect(svg).toMatchSnapshot()
 })

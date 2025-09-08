@@ -93,7 +93,7 @@ export type BarChartProps = z.infer<typeof BarChartPropsSchema>
  * Bar charts are used to compare numerical values across a set of discrete categories.
  * Supports rendering bars in an "unknown" state for missing value problems.
  */
-export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (data) => {
+export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = async (data) => {
 	const { width, height, title, xAxisLabel, yAxis, data: chartData, barColor } = data
 
 	const canvas = new CanvasImpl({

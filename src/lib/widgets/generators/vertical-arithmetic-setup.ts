@@ -45,7 +45,7 @@ export type VerticalArithmeticSetupProps = z.infer<typeof VerticalArithmeticSetu
  * of a vertical arithmetic problem within an HTML div. It is ideal for scaffolding
  * multi-digit multiplication, addition, or subtraction problems.
  */
-export const generateVerticalArithmeticSetup: WidgetGenerator<typeof VerticalArithmeticSetupPropsSchema> = (data) => {
+export const generateVerticalArithmeticSetup: WidgetGenerator<typeof VerticalArithmeticSetupPropsSchema> = async (data) => {
 	const { title, operand1, operand2, operator } = data
 
 	let html = `<div style="display: inline-block; font-family: ${theme.font.family.mono}; font-size: 1.2em; text-align: right;">`

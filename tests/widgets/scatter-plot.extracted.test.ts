@@ -26,7 +26,7 @@ type ScatterPlotInput = z.input<typeof ScatterPlotPropsSchema>
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: image_1
-test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
+test("scatter-plot - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"lines": [],
 	"title": "Temperature vs. Elevation",
@@ -104,7 +104,7 @@ test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
 	}
 
 	// Generate the widget
-	const svg = generateScatterPlot(parseResult.data)
+	const svg = await generateScatterPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -113,7 +113,7 @@ test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: image_2
-test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
+test("scatter-plot - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"lines": [],
 	"title": "",
@@ -191,7 +191,7 @@ test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
 	}
 
 	// Generate the widget
-	const svg = generateScatterPlot(parseResult.data)
+	const svg = await generateScatterPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -200,7 +200,7 @@ test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: image_1
-test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
+test("scatter-plot - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"lines": [],
 	"title": "",
@@ -278,7 +278,7 @@ test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
 	}
 
 	// Generate the widget
-	const svg = generateScatterPlot(parseResult.data)
+	const svg = await generateScatterPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -287,7 +287,7 @@ test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: image_2
-test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
+test("scatter-plot - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"lines": [],
 	"title": "Commute time over days before today",
@@ -360,7 +360,7 @@ test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
 	}
 
 	// Generate the widget
-	const svg = generateScatterPlot(parseResult.data)
+	const svg = await generateScatterPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -369,7 +369,7 @@ test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: image_3
-test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
+test("scatter-plot - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"lines": [],
 	"title": "",
@@ -442,7 +442,7 @@ test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
 	}
 
 	// Generate the widget
-	const svg = generateScatterPlot(parseResult.data)
+	const svg = await generateScatterPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -451,7 +451,7 @@ test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: image_3
-test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
+test("scatter-plot - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"lines": [],
 	"title": "",
@@ -534,7 +534,7 @@ test("scatter-plot - Coordinate plane problems in all four quadrants", () => {
 	}
 
 	// Generate the widget
-	const svg = generateScatterPlot(parseResult.data)
+	const svg = await generateScatterPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

@@ -20,7 +20,7 @@ type NumberLineInput = z.input<typeof NumberLinePropsSchema>
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 77,
@@ -60,7 +60,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -69,7 +69,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -109,7 +109,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -118,7 +118,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -158,7 +158,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -167,7 +167,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 77,
@@ -207,7 +207,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -216,7 +216,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 77,
@@ -256,7 +256,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -265,7 +265,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: number_line_initial
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -292,7 +292,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -301,7 +301,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: number_line_choice_a
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -336,7 +336,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -345,7 +345,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: number_line_choice_b
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -380,7 +380,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -389,7 +389,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: number_line_choice_c
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -424,7 +424,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -433,7 +433,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: number_line_initial
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -460,7 +460,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -469,7 +469,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: number_line_choice_a
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -504,7 +504,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -513,7 +513,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: number_line_choice_b
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -548,7 +548,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -557,7 +557,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: number_line_choice_c
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -592,7 +592,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -601,7 +601,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 77,
@@ -640,7 +640,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -649,7 +649,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -689,7 +689,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -698,7 +698,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 77,
@@ -738,7 +738,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -747,7 +747,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 77,
@@ -782,7 +782,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -791,7 +791,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -831,7 +831,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -840,7 +840,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -880,7 +880,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -889,7 +889,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 77,
@@ -924,7 +924,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -933,7 +933,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 77,
@@ -973,7 +973,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -982,7 +982,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 77,
@@ -1022,7 +1022,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1031,7 +1031,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 77,
@@ -1071,7 +1071,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1080,7 +1080,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1120,7 +1120,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1129,7 +1129,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 77,
@@ -1169,7 +1169,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1178,7 +1178,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative numbers on the number line
 // Widget key: image_2
-test("number-line - Negative numbers on the number line", () => {
+test("number-line - Negative numbers on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 77,
@@ -1218,7 +1218,7 @@ test("number-line - Negative numbers on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1227,7 +1227,7 @@ test("number-line - Negative numbers on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1262,7 +1262,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1271,7 +1271,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1306,7 +1306,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1315,7 +1315,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: nl_choice_a
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1350,7 +1350,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1359,7 +1359,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: nl_choice_b
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1394,7 +1394,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1403,7 +1403,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: nl_choice_c
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1438,7 +1438,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1447,7 +1447,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_initial
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1474,7 +1474,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1483,7 +1483,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1542,7 +1542,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1551,7 +1551,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1586,7 +1586,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1595,7 +1595,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1630,7 +1630,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1639,7 +1639,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_initial
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1674,7 +1674,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1683,7 +1683,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_a
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1718,7 +1718,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1727,7 +1727,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_b
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1762,7 +1762,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1771,7 +1771,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_c
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1806,7 +1806,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1815,7 +1815,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1850,7 +1850,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1859,7 +1859,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1894,7 +1894,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1903,7 +1903,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_initial
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1938,7 +1938,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1947,7 +1947,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_a
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -1982,7 +1982,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1991,7 +1991,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_b
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2026,7 +2026,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2035,7 +2035,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_c
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2070,7 +2070,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2079,7 +2079,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_initial
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -2106,7 +2106,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2115,7 +2115,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_a
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -2150,7 +2150,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2159,7 +2159,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_b
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -2194,7 +2194,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2203,7 +2203,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_c
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -2238,7 +2238,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2247,7 +2247,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2282,7 +2282,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2291,7 +2291,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2350,7 +2350,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2359,7 +2359,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_a
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2394,7 +2394,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2403,7 +2403,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_b
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2438,7 +2438,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2447,7 +2447,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_c
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2482,7 +2482,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2491,7 +2491,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_initial
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2526,7 +2526,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2535,7 +2535,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_a
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2570,7 +2570,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2579,7 +2579,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_b
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2614,7 +2614,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2623,7 +2623,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_c
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2658,7 +2658,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2667,7 +2667,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2702,7 +2702,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2711,7 +2711,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_initial
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2746,7 +2746,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2755,7 +2755,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_a
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2790,7 +2790,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2799,7 +2799,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_b
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2834,7 +2834,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2843,7 +2843,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_c
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2878,7 +2878,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2887,7 +2887,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2922,7 +2922,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2931,7 +2931,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -2966,7 +2966,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2975,7 +2975,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -3010,7 +3010,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3019,7 +3019,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -3078,7 +3078,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3087,7 +3087,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -3122,7 +3122,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3131,7 +3131,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_a
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -3166,7 +3166,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3175,7 +3175,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_b
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -3210,7 +3210,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3219,7 +3219,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: number_line_choice_c
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -3254,7 +3254,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3263,7 +3263,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -3322,7 +3322,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3331,7 +3331,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -3366,7 +3366,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3375,7 +3375,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -3410,7 +3410,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3419,7 +3419,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Negative symbol as opposite
 // Widget key: image_1
-test("number-line - Negative symbol as opposite", () => {
+test("number-line - Negative symbol as opposite", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -3478,7 +3478,7 @@ test("number-line - Negative symbol as opposite", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3487,7 +3487,7 @@ test("number-line - Negative symbol as opposite", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: image_1
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -3546,7 +3546,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3555,7 +3555,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: image_1
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -3614,7 +3614,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3623,7 +3623,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: image_1
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -3682,7 +3682,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3691,7 +3691,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: number_line_initial
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -3718,7 +3718,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3727,7 +3727,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: number_line_choice_a
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 500,
@@ -3762,7 +3762,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3771,7 +3771,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: number_line_choice_b
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 500,
@@ -3806,7 +3806,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3815,7 +3815,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: number_line_choice_c
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 500,
@@ -3850,7 +3850,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3859,7 +3859,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: number_line_initial
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -3886,7 +3886,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3895,7 +3895,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: number_line_choice_a
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -3930,7 +3930,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3939,7 +3939,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: number_line_choice_b
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -3974,7 +3974,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3983,7 +3983,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: number_line_choice_c
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -4018,7 +4018,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4027,7 +4027,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: image_1
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -4086,7 +4086,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4095,7 +4095,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: image_1
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -4154,7 +4154,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4163,7 +4163,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: image_1
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -4222,7 +4222,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4231,7 +4231,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: number_line_initial
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -4258,7 +4258,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4267,7 +4267,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: number_line_choice_a
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -4302,7 +4302,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4311,7 +4311,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: number_line_choice_b
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -4346,7 +4346,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4355,7 +4355,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: number_line_choice_c
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -4390,7 +4390,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4399,7 +4399,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Number opposites
 // Widget key: image_1
-test("number-line - Number opposites", () => {
+test("number-line - Number opposites", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -4458,7 +4458,7 @@ test("number-line - Number opposites", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4467,7 +4467,7 @@ test("number-line - Number opposites", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -4520,7 +4520,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4529,7 +4529,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_a_visual
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 500,
@@ -4564,7 +4564,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4573,7 +4573,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_b_visual
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 500,
@@ -4608,7 +4608,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4617,7 +4617,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_c_visual
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 500,
@@ -4652,7 +4652,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4661,7 +4661,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_d_visual
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 500,
@@ -4696,7 +4696,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4705,7 +4705,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 86,
@@ -4740,7 +4740,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4749,7 +4749,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 86,
@@ -4784,7 +4784,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4793,7 +4793,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -4846,7 +4846,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4855,7 +4855,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_a_visual
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -4890,7 +4890,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4899,7 +4899,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_b_visual
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -4934,7 +4934,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4943,7 +4943,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_c_visual
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -4978,7 +4978,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4987,7 +4987,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_d_visual
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -5022,7 +5022,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5031,7 +5031,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 86.4,
@@ -5066,7 +5066,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5075,7 +5075,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 86.4,
@@ -5110,7 +5110,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5119,7 +5119,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 86,
@@ -5154,7 +5154,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5163,7 +5163,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -5216,7 +5216,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5225,7 +5225,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -5278,7 +5278,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5287,7 +5287,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_a_image
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -5322,7 +5322,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5331,7 +5331,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_b_image
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -5366,7 +5366,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5375,7 +5375,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_c_image
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -5410,7 +5410,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5419,7 +5419,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_d_image
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -5454,7 +5454,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5463,7 +5463,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_a_image
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -5498,7 +5498,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5507,7 +5507,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_b_image
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -5542,7 +5542,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5551,7 +5551,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_c_image
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -5586,7 +5586,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5595,7 +5595,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_d_image
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -5630,7 +5630,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5639,7 +5639,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: number_line_image
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -5692,7 +5692,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5701,7 +5701,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -5754,7 +5754,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5763,7 +5763,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -5816,7 +5816,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5825,7 +5825,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 86.4,
@@ -5860,7 +5860,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5869,7 +5869,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 86.4,
@@ -5904,7 +5904,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5913,7 +5913,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -5966,7 +5966,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5975,7 +5975,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_a_visual
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -6010,7 +6010,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6019,7 +6019,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_b_visual
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -6054,7 +6054,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6063,7 +6063,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_c_visual
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -6098,7 +6098,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6107,7 +6107,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_d_visual
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -6142,7 +6142,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6151,7 +6151,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 86,
@@ -6186,7 +6186,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6195,7 +6195,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -6248,7 +6248,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6257,7 +6257,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_a_visual
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -6292,7 +6292,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6301,7 +6301,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_b_visual
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -6336,7 +6336,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6345,7 +6345,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_c_visual
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -6380,7 +6380,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6389,7 +6389,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_d_visual
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -6424,7 +6424,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6433,7 +6433,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: image_1
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -6486,7 +6486,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6495,7 +6495,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_a_image
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -6530,7 +6530,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6539,7 +6539,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_b_image
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -6574,7 +6574,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6583,7 +6583,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_c_image
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -6618,7 +6618,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6627,7 +6627,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative decimals on the number line
 // Widget key: choice_d_image
-test("number-line - Negative decimals on the number line", () => {
+test("number-line - Negative decimals on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -6662,7 +6662,7 @@ test("number-line - Negative decimals on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6671,7 +6671,7 @@ test("number-line - Negative decimals on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative fractions on the number line
 // Widget key: image_1
-test("number-line - Negative fractions on the number line", () => {
+test("number-line - Negative fractions on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 80,
@@ -6706,7 +6706,7 @@ test("number-line - Negative fractions on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6715,7 +6715,7 @@ test("number-line - Negative fractions on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative fractions on the number line
 // Widget key: image_1
-test("number-line - Negative fractions on the number line", () => {
+test("number-line - Negative fractions on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 380,
@@ -6768,7 +6768,7 @@ test("number-line - Negative fractions on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6777,7 +6777,7 @@ test("number-line - Negative fractions on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative fractions on the number line
 // Widget key: image_1
-test("number-line - Negative fractions on the number line", () => {
+test("number-line - Negative fractions on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 380,
@@ -6830,7 +6830,7 @@ test("number-line - Negative fractions on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6839,7 +6839,7 @@ test("number-line - Negative fractions on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative fractions on the number line
 // Widget key: image_1
-test("number-line - Negative fractions on the number line", () => {
+test("number-line - Negative fractions on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 380,
@@ -6874,7 +6874,7 @@ test("number-line - Negative fractions on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6883,7 +6883,7 @@ test("number-line - Negative fractions on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative fractions on the number line
 // Widget key: image_1
-test("number-line - Negative fractions on the number line", () => {
+test("number-line - Negative fractions on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 80,
@@ -6936,7 +6936,7 @@ test("number-line - Negative fractions on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6945,7 +6945,7 @@ test("number-line - Negative fractions on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative fractions on the number line
 // Widget key: image_1
-test("number-line - Negative fractions on the number line", () => {
+test("number-line - Negative fractions on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 380,
@@ -6998,7 +6998,7 @@ test("number-line - Negative fractions on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7007,7 +7007,7 @@ test("number-line - Negative fractions on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative fractions on the number line
 // Widget key: image_1
-test("number-line - Negative fractions on the number line", () => {
+test("number-line - Negative fractions on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 80,
@@ -7060,7 +7060,7 @@ test("number-line - Negative fractions on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7069,7 +7069,7 @@ test("number-line - Negative fractions on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative fractions on the number line
 // Widget key: image_1
-test("number-line - Negative fractions on the number line", () => {
+test("number-line - Negative fractions on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 380,
@@ -7104,7 +7104,7 @@ test("number-line - Negative fractions on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7113,7 +7113,7 @@ test("number-line - Negative fractions on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative fractions on the number line
 // Widget key: image_1
-test("number-line - Negative fractions on the number line", () => {
+test("number-line - Negative fractions on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 80,
@@ -7148,7 +7148,7 @@ test("number-line - Negative fractions on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7157,7 +7157,7 @@ test("number-line - Negative fractions on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative fractions on the number line
 // Widget key: image_1
-test("number-line - Negative fractions on the number line", () => {
+test("number-line - Negative fractions on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 80,
@@ -7210,7 +7210,7 @@ test("number-line - Negative fractions on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7219,7 +7219,7 @@ test("number-line - Negative fractions on the number line", () => {
 // Course: 6th grade math
 // Exercise: Negative fractions on the number line
 // Widget key: image_1
-test("number-line - Negative fractions on the number line", () => {
+test("number-line - Negative fractions on the number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 80,
@@ -7254,7 +7254,7 @@ test("number-line - Negative fractions on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7263,7 +7263,7 @@ test("number-line - Negative fractions on the number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers using a number line
 // Widget key: image_1
-test("number-line - Compare rational numbers using a number line", () => {
+test("number-line - Compare rational numbers using a number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 320,
@@ -7304,7 +7304,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7313,7 +7313,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers using a number line
 // Widget key: image_1
-test("number-line - Compare rational numbers using a number line", () => {
+test("number-line - Compare rational numbers using a number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 100,
@@ -7354,7 +7354,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7363,7 +7363,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers using a number line
 // Widget key: image_1
-test("number-line - Compare rational numbers using a number line", () => {
+test("number-line - Compare rational numbers using a number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 100,
@@ -7404,7 +7404,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7413,7 +7413,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers using a number line
 // Widget key: image_1
-test("number-line - Compare rational numbers using a number line", () => {
+test("number-line - Compare rational numbers using a number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 320,
@@ -7454,7 +7454,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7463,7 +7463,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers using a number line
 // Widget key: image_1
-test("number-line - Compare rational numbers using a number line", () => {
+test("number-line - Compare rational numbers using a number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 100,
@@ -7504,7 +7504,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7513,7 +7513,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers using a number line
 // Widget key: image_1
-test("number-line - Compare rational numbers using a number line", () => {
+test("number-line - Compare rational numbers using a number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 100,
@@ -7554,7 +7554,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7563,7 +7563,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers using a number line
 // Widget key: image_1
-test("number-line - Compare rational numbers using a number line", () => {
+test("number-line - Compare rational numbers using a number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 100,
@@ -7604,7 +7604,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7613,7 +7613,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers using a number line
 // Widget key: image_1
-test("number-line - Compare rational numbers using a number line", () => {
+test("number-line - Compare rational numbers using a number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 320,
@@ -7654,7 +7654,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7663,7 +7663,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers using a number line
 // Widget key: image_1
-test("number-line - Compare rational numbers using a number line", () => {
+test("number-line - Compare rational numbers using a number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 320,
@@ -7704,7 +7704,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7713,7 +7713,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers using a number line
 // Widget key: image_1
-test("number-line - Compare rational numbers using a number line", () => {
+test("number-line - Compare rational numbers using a number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 100,
@@ -7754,7 +7754,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7763,7 +7763,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers using a number line
 // Widget key: image_1
-test("number-line - Compare rational numbers using a number line", () => {
+test("number-line - Compare rational numbers using a number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 100,
@@ -7804,7 +7804,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7813,7 +7813,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers using a number line
 // Widget key: image_1
-test("number-line - Compare rational numbers using a number line", () => {
+test("number-line - Compare rational numbers using a number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 320,
@@ -7854,7 +7854,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7863,7 +7863,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers using a number line
 // Widget key: image_1
-test("number-line - Compare rational numbers using a number line", () => {
+test("number-line - Compare rational numbers using a number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 320,
@@ -7904,7 +7904,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7913,7 +7913,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers using a number line
 // Widget key: image_1
-test("number-line - Compare rational numbers using a number line", () => {
+test("number-line - Compare rational numbers using a number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 320,
@@ -7954,7 +7954,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7963,7 +7963,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers using a number line
 // Widget key: image_1
-test("number-line - Compare rational numbers using a number line", () => {
+test("number-line - Compare rational numbers using a number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 320,
@@ -8004,7 +8004,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8013,7 +8013,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers using a number line
 // Widget key: image_1
-test("number-line - Compare rational numbers using a number line", () => {
+test("number-line - Compare rational numbers using a number line", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 100,
@@ -8054,7 +8054,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8063,7 +8063,7 @@ test("number-line - Compare rational numbers using a number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers
 // Widget key: image_1
-test("number-line - Compare rational numbers", () => {
+test("number-line - Compare rational numbers", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -8104,7 +8104,7 @@ test("number-line - Compare rational numbers", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8113,7 +8113,7 @@ test("number-line - Compare rational numbers", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers
 // Widget key: image_1
-test("number-line - Compare rational numbers", () => {
+test("number-line - Compare rational numbers", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -8140,7 +8140,7 @@ test("number-line - Compare rational numbers", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8149,7 +8149,7 @@ test("number-line - Compare rational numbers", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers
 // Widget key: image_1
-test("number-line - Compare rational numbers", () => {
+test("number-line - Compare rational numbers", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -8190,7 +8190,7 @@ test("number-line - Compare rational numbers", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8199,7 +8199,7 @@ test("number-line - Compare rational numbers", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers
 // Widget key: image_1
-test("number-line - Compare rational numbers", () => {
+test("number-line - Compare rational numbers", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -8240,7 +8240,7 @@ test("number-line - Compare rational numbers", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8249,7 +8249,7 @@ test("number-line - Compare rational numbers", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers
 // Widget key: image_1
-test("number-line - Compare rational numbers", () => {
+test("number-line - Compare rational numbers", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -8290,7 +8290,7 @@ test("number-line - Compare rational numbers", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8299,7 +8299,7 @@ test("number-line - Compare rational numbers", () => {
 // Course: 6th grade math
 // Exercise: Meaning of absolute value
 // Widget key: image_1
-test("number-line - Meaning of absolute value", () => {
+test("number-line - Meaning of absolute value", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 380,
@@ -8334,7 +8334,7 @@ test("number-line - Meaning of absolute value", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8343,7 +8343,7 @@ test("number-line - Meaning of absolute value", () => {
 // Course: 6th grade math
 // Exercise: Meaning of absolute value
 // Widget key: image_1
-test("number-line - Meaning of absolute value", () => {
+test("number-line - Meaning of absolute value", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 380,
@@ -8384,7 +8384,7 @@ test("number-line - Meaning of absolute value", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8393,7 +8393,7 @@ test("number-line - Meaning of absolute value", () => {
 // Course: 6th grade math
 // Exercise: Meaning of absolute value
 // Widget key: image_1
-test("number-line - Meaning of absolute value", () => {
+test("number-line - Meaning of absolute value", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 144,
@@ -8428,7 +8428,7 @@ test("number-line - Meaning of absolute value", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8437,7 +8437,7 @@ test("number-line - Meaning of absolute value", () => {
 // Course: 6th grade math
 // Exercise: Meaning of absolute value
 // Widget key: image_1
-test("number-line - Meaning of absolute value", () => {
+test("number-line - Meaning of absolute value", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 380,
@@ -8472,7 +8472,7 @@ test("number-line - Meaning of absolute value", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8481,7 +8481,7 @@ test("number-line - Meaning of absolute value", () => {
 // Course: 6th grade math
 // Exercise: Meaning of absolute value
 // Widget key: image_1
-test("number-line - Meaning of absolute value", () => {
+test("number-line - Meaning of absolute value", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 144,
@@ -8519,7 +8519,7 @@ test("number-line - Meaning of absolute value", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8528,7 +8528,7 @@ test("number-line - Meaning of absolute value", () => {
 // Course: 6th grade math
 // Exercise: Meaning of absolute value
 // Widget key: image_1
-test("number-line - Meaning of absolute value", () => {
+test("number-line - Meaning of absolute value", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 380,
@@ -8569,7 +8569,7 @@ test("number-line - Meaning of absolute value", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8578,7 +8578,7 @@ test("number-line - Meaning of absolute value", () => {
 // Course: 6th grade math
 // Exercise: Meaning of absolute value
 // Widget key: image_1
-test("number-line - Meaning of absolute value", () => {
+test("number-line - Meaning of absolute value", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 144,
@@ -8613,7 +8613,7 @@ test("number-line - Meaning of absolute value", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8622,7 +8622,7 @@ test("number-line - Meaning of absolute value", () => {
 // Course: 6th grade math
 // Exercise: Meaning of absolute value
 // Widget key: image_1
-test("number-line - Meaning of absolute value", () => {
+test("number-line - Meaning of absolute value", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 144,
@@ -8660,7 +8660,7 @@ test("number-line - Meaning of absolute value", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8669,7 +8669,7 @@ test("number-line - Meaning of absolute value", () => {
 // Course: 6th grade math
 // Exercise: Meaning of absolute value
 // Widget key: image_1
-test("number-line - Meaning of absolute value", () => {
+test("number-line - Meaning of absolute value", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 380,
@@ -8710,7 +8710,7 @@ test("number-line - Meaning of absolute value", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8719,7 +8719,7 @@ test("number-line - Meaning of absolute value", () => {
 // Course: 6th grade math
 // Exercise: Comparing absolute values challenge
 // Widget key: image_1
-test("number-line - Comparing absolute values challenge", () => {
+test("number-line - Comparing absolute values challenge", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -8763,7 +8763,7 @@ test("number-line - Comparing absolute values challenge", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8772,7 +8772,7 @@ test("number-line - Comparing absolute values challenge", () => {
 // Course: 6th grade math
 // Exercise: Comparing absolute values challenge
 // Widget key: image_1
-test("number-line - Comparing absolute values challenge", () => {
+test("number-line - Comparing absolute values challenge", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -8813,7 +8813,7 @@ test("number-line - Comparing absolute values challenge", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8822,7 +8822,7 @@ test("number-line - Comparing absolute values challenge", () => {
 // Course: 6th grade math
 // Exercise: Comparing absolute values challenge
 // Widget key: image_1
-test("number-line - Comparing absolute values challenge", () => {
+test("number-line - Comparing absolute values challenge", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -8863,7 +8863,7 @@ test("number-line - Comparing absolute values challenge", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8872,7 +8872,7 @@ test("number-line - Comparing absolute values challenge", () => {
 // Course: 6th grade math
 // Exercise: Comparing absolute values challenge
 // Widget key: image_1
-test("number-line - Comparing absolute values challenge", () => {
+test("number-line - Comparing absolute values challenge", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -8910,7 +8910,7 @@ test("number-line - Comparing absolute values challenge", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8919,7 +8919,7 @@ test("number-line - Comparing absolute values challenge", () => {
 // Course: 6th grade math
 // Exercise: Comparing absolute values challenge
 // Widget key: image_1
-test("number-line - Comparing absolute values challenge", () => {
+test("number-line - Comparing absolute values challenge", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -8963,7 +8963,7 @@ test("number-line - Comparing absolute values challenge", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8972,7 +8972,7 @@ test("number-line - Comparing absolute values challenge", () => {
 // Course: 6th grade math
 // Exercise: Comparing absolute values challenge
 // Widget key: image_1
-test("number-line - Comparing absolute values challenge", () => {
+test("number-line - Comparing absolute values challenge", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -9010,7 +9010,7 @@ test("number-line - Comparing absolute values challenge", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9019,7 +9019,7 @@ test("number-line - Comparing absolute values challenge", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_c_number_line
-test("number-line - Graphing basic inequalities", () => {
+test("number-line - Graphing basic inequalities", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -9054,7 +9054,7 @@ test("number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9063,7 +9063,7 @@ test("number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Graphing basic inequalities
 // Widget key: choice_b_number_line
-test("number-line - Graphing basic inequalities", () => {
+test("number-line - Graphing basic inequalities", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 600,
@@ -9098,7 +9098,7 @@ test("number-line - Graphing basic inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9107,7 +9107,7 @@ test("number-line - Graphing basic inequalities", () => {
 // Course: 6th grade math
 // Exercise: Plotting inequalities
 // Widget key: number_line_empty
-test("number-line - Plotting inequalities", () => {
+test("number-line - Plotting inequalities", async () => {
 	const input = {
 		"type": "numberLine",
 		"width": 460,
@@ -9134,7 +9134,7 @@ test("number-line - Plotting inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLine(parseResult.data)
+	const svg = await generateNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

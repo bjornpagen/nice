@@ -26,7 +26,7 @@ type PolyhedronNetDiagramInput = z.input<typeof PolyhedronNetDiagramPropsSchema>
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_a
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"type": "rectangle",
@@ -49,7 +49,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -58,7 +58,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_b
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -83,7 +83,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -92,7 +92,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_c
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -117,7 +117,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -126,7 +126,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_d
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"side": 4,
@@ -148,7 +148,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -157,7 +157,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_a
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"side": 6,
@@ -179,7 +179,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -188,7 +188,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_b
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -213,7 +213,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -222,7 +222,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_c
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"side": 4,
@@ -244,7 +244,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -253,7 +253,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_d
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -278,7 +278,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -287,7 +287,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_a
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"type": "rectangle",
@@ -310,7 +310,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -319,7 +319,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_b
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 4,
@@ -344,7 +344,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -353,7 +353,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_c
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -378,7 +378,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -387,7 +387,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_d
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 4,
@@ -412,7 +412,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -421,7 +421,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: image_1
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"side": 1,
@@ -442,7 +442,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -451,7 +451,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: image_1
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -476,7 +476,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -485,7 +485,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: choice_a_net
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"side": 4,
@@ -507,7 +507,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -516,7 +516,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: choice_b_net
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 4,
@@ -541,7 +541,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -550,7 +550,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: choice_c_net
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"side": 3.5,
@@ -572,7 +572,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -581,7 +581,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: choice_d_net
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 4.5,
@@ -606,7 +606,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -615,7 +615,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_a
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -640,7 +640,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -649,7 +649,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_b
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -674,7 +674,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -683,7 +683,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_c
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"side": 4,
@@ -705,7 +705,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -714,7 +714,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_d
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"side": 5,
@@ -735,7 +735,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -744,7 +744,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: image_1
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"side": 5,
@@ -766,7 +766,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -775,7 +775,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: image_1
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -800,7 +800,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -809,7 +809,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_a
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"side": 6,
@@ -831,7 +831,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -840,7 +840,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_b
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -865,7 +865,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -874,7 +874,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_c
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 5,
@@ -899,7 +899,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -908,7 +908,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_d
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -933,7 +933,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -942,7 +942,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: image_1
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -967,7 +967,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -976,7 +976,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: image_1
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -1001,7 +1001,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1010,7 +1010,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: image_1
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -1035,7 +1035,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1044,7 +1044,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: image_1
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"side": 6,
@@ -1066,7 +1066,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1075,7 +1075,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_a
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"side": 6,
@@ -1097,7 +1097,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1106,7 +1106,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_b
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"type": "rectangle",
@@ -1129,7 +1129,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1138,7 +1138,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_c
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 8,
@@ -1163,7 +1163,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1172,7 +1172,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: net_choice_d
-test("polyhedron-net-diagram - Nets of polyhedra", () => {
+test("polyhedron-net-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -1197,7 +1197,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1206,7 +1206,7 @@ test("polyhedron-net-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Surface area using nets
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area using nets", () => {
+test("polyhedron-net-diagram - Surface area using nets", async () => {
 	const input = {
 	"base": {
 		"side": 3,
@@ -1227,7 +1227,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1236,7 +1236,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 // Course: 6th grade math
 // Exercise: Surface area using nets
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area using nets", () => {
+test("polyhedron-net-diagram - Surface area using nets", async () => {
 	const input = {
 	"base": {
 		"side": 5,
@@ -1258,7 +1258,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1267,7 +1267,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 // Course: 6th grade math
 // Exercise: Surface area using nets
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area using nets", () => {
+test("polyhedron-net-diagram - Surface area using nets", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -1292,7 +1292,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1301,7 +1301,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 // Course: 6th grade math
 // Exercise: Surface area using nets
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area using nets", () => {
+test("polyhedron-net-diagram - Surface area using nets", async () => {
 	const input = {
 	"base": {
 		"base": 4,
@@ -1326,7 +1326,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1335,7 +1335,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 // Course: 6th grade math
 // Exercise: Surface area using nets
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area using nets", () => {
+test("polyhedron-net-diagram - Surface area using nets", async () => {
 	const input = {
 	"base": {
 		"type": "rectangle",
@@ -1358,7 +1358,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1367,7 +1367,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 // Course: 6th grade math
 // Exercise: Surface area using nets
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area using nets", () => {
+test("polyhedron-net-diagram - Surface area using nets", async () => {
 	const input = {
 	"base": {
 		"base": 4,
@@ -1392,7 +1392,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1401,7 +1401,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 // Course: 6th grade math
 // Exercise: Surface area using nets
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area using nets", () => {
+test("polyhedron-net-diagram - Surface area using nets", async () => {
 	const input = {
 	"base": {
 		"side": 2,
@@ -1423,7 +1423,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1432,7 +1432,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 // Course: 6th grade math
 // Exercise: Surface area using nets
 // Widget key: image_1
-test("polyhedron-net-diagram - Surface area using nets", () => {
+test("polyhedron-net-diagram - Surface area using nets", async () => {
 	const input = {
 	"base": {
 		"side": 2,
@@ -1453,7 +1453,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1462,7 +1462,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 // Course: 6th grade math
 // Exercise: Surface area using nets
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area using nets", () => {
+test("polyhedron-net-diagram - Surface area using nets", async () => {
 	const input = {
 	"base": {
 		"side": 3,
@@ -1484,7 +1484,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1493,7 +1493,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 // Course: 6th grade math
 // Exercise: Surface area using nets
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area using nets", () => {
+test("polyhedron-net-diagram - Surface area using nets", async () => {
 	const input = {
 	"base": {
 		"side": 4,
@@ -1514,7 +1514,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1523,7 +1523,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 // Course: 6th grade math
 // Exercise: Surface area using nets
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area using nets", () => {
+test("polyhedron-net-diagram - Surface area using nets", async () => {
 	const input = {
 	"base": {
 		"type": "rectangle",
@@ -1546,7 +1546,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1555,7 +1555,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 // Course: 6th grade math
 // Exercise: Surface area using nets
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area using nets", () => {
+test("polyhedron-net-diagram - Surface area using nets", async () => {
 	const input = {
 	"base": {
 		"type": "rectangle",
@@ -1578,7 +1578,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1587,7 +1587,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 // Course: 6th grade math
 // Exercise: Surface area using nets
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area using nets", () => {
+test("polyhedron-net-diagram - Surface area using nets", async () => {
 	const input = {
 	"base": {
 		"base": 6,
@@ -1612,7 +1612,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1621,7 +1621,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 // Course: 6th grade math
 // Exercise: Surface area using nets
 // Widget key: image_6
-test("polyhedron-net-diagram - Surface area using nets", () => {
+test("polyhedron-net-diagram - Surface area using nets", async () => {
 	const input = {
 	"base": {
 		"type": "rectangle",
@@ -1644,7 +1644,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1653,7 +1653,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 // Course: 6th grade math
 // Exercise: Surface area using nets
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area using nets", () => {
+test("polyhedron-net-diagram - Surface area using nets", async () => {
 	const input = {
 	"base": {
 		"side": 5,
@@ -1674,7 +1674,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1683,7 +1683,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 // Course: 6th grade math
 // Exercise: Surface area using nets
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area using nets", () => {
+test("polyhedron-net-diagram - Surface area using nets", async () => {
 	const input = {
 	"base": {
 		"side": 4,
@@ -1705,7 +1705,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1714,7 +1714,7 @@ test("polyhedron-net-diagram - Surface area using nets", () => {
 // Course: 6th grade math
 // Exercise: Surface area word problems
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area word problems", () => {
+test("polyhedron-net-diagram - Surface area word problems", async () => {
 	const input = {
 	"base": {
 		"side": 13,
@@ -1735,7 +1735,7 @@ test("polyhedron-net-diagram - Surface area word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1744,7 +1744,7 @@ test("polyhedron-net-diagram - Surface area word problems", () => {
 // Course: 6th grade math
 // Exercise: Surface area word problems
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area word problems", () => {
+test("polyhedron-net-diagram - Surface area word problems", async () => {
 	const input = {
 	"base": {
 		"type": "rectangle",
@@ -1767,7 +1767,7 @@ test("polyhedron-net-diagram - Surface area word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1776,7 +1776,7 @@ test("polyhedron-net-diagram - Surface area word problems", () => {
 // Course: 6th grade math
 // Exercise: Surface area word problems
 // Widget key: image_1
-test("polyhedron-net-diagram - Surface area word problems", () => {
+test("polyhedron-net-diagram - Surface area word problems", async () => {
 	const input = {
 	"base": {
 		"base": 1.2,
@@ -1801,7 +1801,7 @@ test("polyhedron-net-diagram - Surface area word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1810,7 +1810,7 @@ test("polyhedron-net-diagram - Surface area word problems", () => {
 // Course: 6th grade math
 // Exercise: Surface area word problems
 // Widget key: image_1
-test("polyhedron-net-diagram - Surface area word problems", () => {
+test("polyhedron-net-diagram - Surface area word problems", async () => {
 	const input = {
 	"base": {
 		"base": 2,
@@ -1835,7 +1835,7 @@ test("polyhedron-net-diagram - Surface area word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1844,7 +1844,7 @@ test("polyhedron-net-diagram - Surface area word problems", () => {
 // Course: 6th grade math
 // Exercise: Surface area word problems
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area word problems", () => {
+test("polyhedron-net-diagram - Surface area word problems", async () => {
 	const input = {
 	"base": {
 		"side": 70,
@@ -1866,7 +1866,7 @@ test("polyhedron-net-diagram - Surface area word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1875,7 +1875,7 @@ test("polyhedron-net-diagram - Surface area word problems", () => {
 // Course: 6th grade math
 // Exercise: Surface area word problems
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area word problems", () => {
+test("polyhedron-net-diagram - Surface area word problems", async () => {
 	const input = {
 	"base": {
 		"side": 25,
@@ -1897,7 +1897,7 @@ test("polyhedron-net-diagram - Surface area word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1906,7 +1906,7 @@ test("polyhedron-net-diagram - Surface area word problems", () => {
 // Course: 6th grade math
 // Exercise: Surface area word problems
 // Widget key: image_2
-test("polyhedron-net-diagram - Surface area word problems", () => {
+test("polyhedron-net-diagram - Surface area word problems", async () => {
 	const input = {
 	"base": {
 		"type": "rectangle",
@@ -1929,7 +1929,7 @@ test("polyhedron-net-diagram - Surface area word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolyhedronNetDiagram(parseResult.data)
+	const svg = await generatePolyhedronNetDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

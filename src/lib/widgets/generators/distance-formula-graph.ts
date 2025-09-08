@@ -58,7 +58,7 @@ export const DistanceFormulaGraphPropsSchema = z
 
 export type DistanceFormulaGraphProps = z.infer<typeof DistanceFormulaGraphPropsSchema>
 
-export const generateDistanceFormulaGraph: WidgetGenerator<typeof DistanceFormulaGraphPropsSchema> = (props) => {
+export const generateDistanceFormulaGraph: WidgetGenerator<typeof DistanceFormulaGraphPropsSchema> = async (props) => {
 	const { width, height, xAxis, yAxis, showQuadrantLabels, points, distances } = props
 
 	// 1. Call the base generator and get the body content and extents object

@@ -58,7 +58,7 @@ export const LineEquationGraphPropsSchema = z
 
 export type LineEquationGraphProps = z.infer<typeof LineEquationGraphPropsSchema>
 
-export const generateLineEquationGraph: WidgetGenerator<typeof LineEquationGraphPropsSchema> = (props) => {
+export const generateLineEquationGraph: WidgetGenerator<typeof LineEquationGraphPropsSchema> = async (props) => {
 	const { width, height, xAxis, yAxis, showQuadrantLabels, lines, points } = props
 
 	// 1. Call the base generator and get the body content and extents object

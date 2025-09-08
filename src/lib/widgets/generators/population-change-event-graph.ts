@@ -56,7 +56,7 @@ export const PopulationChangeEventGraphPropsSchema = z
 
 export type PopulationChangeEventGraphProps = z.infer<typeof PopulationChangeEventGraphPropsSchema>
 
-export const generatePopulationChangeEventGraph: WidgetGenerator<typeof PopulationChangeEventGraphPropsSchema> = (
+export const generatePopulationChangeEventGraph: WidgetGenerator<typeof PopulationChangeEventGraphPropsSchema> = async (
 	props
 ) => {
 	const {

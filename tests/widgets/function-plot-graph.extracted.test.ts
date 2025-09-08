@@ -26,7 +26,7 @@ type FunctionPlotGraphInput = z.input<typeof FunctionPlotGraphPropsSchema>
 // Course: 8th grade math
 // Exercise: Evaluate functions from their graph
 // Widget key: image_1
-test("function-plot-graph - Evaluate functions from their graph", () => {
+test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -150,7 +150,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -159,7 +159,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 // Course: 8th grade math
 // Exercise: Evaluate functions from their graph
 // Widget key: image_1
-test("function-plot-graph - Evaluate functions from their graph", () => {
+test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -283,7 +283,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -292,7 +292,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 // Course: 8th grade math
 // Exercise: Evaluate functions from their graph
 // Widget key: image_1
-test("function-plot-graph - Evaluate functions from their graph", () => {
+test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -416,7 +416,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -425,7 +425,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 // Course: 8th grade math
 // Exercise: Evaluate functions from their graph
 // Widget key: image_1
-test("function-plot-graph - Evaluate functions from their graph", () => {
+test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -521,7 +521,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -530,7 +530,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 // Course: 8th grade math
 // Exercise: Evaluate functions from their graph
 // Widget key: image_1
-test("function-plot-graph - Evaluate functions from their graph", () => {
+test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -654,7 +654,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -663,7 +663,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 // Course: 8th grade math
 // Exercise: Evaluate functions from their graph
 // Widget key: image_1
-test("function-plot-graph - Evaluate functions from their graph", () => {
+test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -787,7 +787,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -796,7 +796,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 // Course: 8th grade math
 // Exercise: Evaluate functions from their graph
 // Widget key: image_1
-test("function-plot-graph - Evaluate functions from their graph", () => {
+test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -920,7 +920,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -929,7 +929,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 // Course: 8th grade math
 // Exercise: Evaluate functions from their graph
 // Widget key: image_1
-test("function-plot-graph - Evaluate functions from their graph", () => {
+test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -1053,7 +1053,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1062,7 +1062,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 // Course: 8th grade math
 // Exercise: Evaluate functions from their graph
 // Widget key: image_1
-test("function-plot-graph - Evaluate functions from their graph", () => {
+test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -1186,7 +1186,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1195,7 +1195,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 // Course: 8th grade math
 // Exercise: Evaluate functions from their graph
 // Widget key: image_1
-test("function-plot-graph - Evaluate functions from their graph", () => {
+test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -1319,7 +1319,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1328,7 +1328,7 @@ test("function-plot-graph - Evaluate functions from their graph", () => {
 // Course: 8th grade math
 // Exercise: Recognize functions from graphs
 // Widget key: image_1
-test("function-plot-graph - Recognize functions from graphs", () => {
+test("function-plot-graph - Recognize functions from graphs", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -1436,7 +1436,7 @@ test("function-plot-graph - Recognize functions from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1445,7 +1445,7 @@ test("function-plot-graph - Recognize functions from graphs", () => {
 // Course: 8th grade math
 // Exercise: Recognize functions from graphs
 // Widget key: image_1
-test("function-plot-graph - Recognize functions from graphs", () => {
+test("function-plot-graph - Recognize functions from graphs", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -1529,7 +1529,7 @@ test("function-plot-graph - Recognize functions from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1538,7 +1538,7 @@ test("function-plot-graph - Recognize functions from graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear & nonlinear functions
 // Widget key: image_1
-test("function-plot-graph - Linear nonlinear functions", () => {
+test("function-plot-graph - Linear nonlinear functions", async () => {
 	const input = {
 	"width": 400,
 	"xAxis": {
@@ -1617,7 +1617,7 @@ test("function-plot-graph - Linear nonlinear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1626,7 +1626,7 @@ test("function-plot-graph - Linear nonlinear functions", () => {
 // Course: 8th grade math
 // Exercise: Linear & nonlinear functions
 // Widget key: image_1
-test("function-plot-graph - Linear nonlinear functions", () => {
+test("function-plot-graph - Linear nonlinear functions", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -1686,7 +1686,7 @@ test("function-plot-graph - Linear nonlinear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1695,7 +1695,7 @@ test("function-plot-graph - Linear nonlinear functions", () => {
 // Course: 8th grade math
 // Exercise: Linear & nonlinear functions
 // Widget key: image_1
-test("function-plot-graph - Linear nonlinear functions", () => {
+test("function-plot-graph - Linear nonlinear functions", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -1759,7 +1759,7 @@ test("function-plot-graph - Linear nonlinear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1768,7 +1768,7 @@ test("function-plot-graph - Linear nonlinear functions", () => {
 // Course: 8th grade math
 // Exercise: Linear & nonlinear functions
 // Widget key: image_1
-test("function-plot-graph - Linear nonlinear functions", () => {
+test("function-plot-graph - Linear nonlinear functions", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -1917,7 +1917,7 @@ test("function-plot-graph - Linear nonlinear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1926,7 +1926,7 @@ test("function-plot-graph - Linear nonlinear functions", () => {
 // Course: 8th grade math
 // Exercise: Interpreting graphs of functions
 // Widget key: image_1
-test("function-plot-graph - Interpreting graphs of functions", () => {
+test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -2002,7 +2002,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2011,7 +2011,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 // Course: 8th grade math
 // Exercise: Interpreting graphs of functions
 // Widget key: image_1
-test("function-plot-graph - Interpreting graphs of functions", () => {
+test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
 	"width": 450,
 	"xAxis": {
@@ -2083,7 +2083,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2092,7 +2092,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 // Course: 8th grade math
 // Exercise: Interpreting graphs of functions
 // Widget key: image_1
-test("function-plot-graph - Interpreting graphs of functions", () => {
+test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
 	"width": 445,
 	"xAxis": {
@@ -2183,7 +2183,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2192,7 +2192,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 // Course: 8th grade math
 // Exercise: Interpreting graphs of functions
 // Widget key: image_1
-test("function-plot-graph - Interpreting graphs of functions", () => {
+test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -2244,7 +2244,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2253,7 +2253,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 // Course: 8th grade math
 // Exercise: Interpreting graphs of functions
 // Widget key: image_1
-test("function-plot-graph - Interpreting graphs of functions", () => {
+test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -2325,7 +2325,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2334,7 +2334,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 // Course: 8th grade math
 // Exercise: Interpreting graphs of functions
 // Widget key: image_1
-test("function-plot-graph - Interpreting graphs of functions", () => {
+test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -2410,7 +2410,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2419,7 +2419,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 // Course: 8th grade math
 // Exercise: Interpreting graphs of functions
 // Widget key: image_1
-test("function-plot-graph - Interpreting graphs of functions", () => {
+test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -2495,7 +2495,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2504,7 +2504,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 // Course: 8th grade math
 // Exercise: Interpreting graphs of functions
 // Widget key: image_1
-test("function-plot-graph - Interpreting graphs of functions", () => {
+test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -2556,7 +2556,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2565,7 +2565,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 // Course: 8th grade math
 // Exercise: Interpreting graphs of functions
 // Widget key: image_1
-test("function-plot-graph - Interpreting graphs of functions", () => {
+test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -2673,7 +2673,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2682,7 +2682,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 // Course: 8th grade math
 // Exercise: Interpreting graphs of functions
 // Widget key: image_1
-test("function-plot-graph - Interpreting graphs of functions", () => {
+test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -2764,7 +2764,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2773,7 +2773,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 // Course: 8th grade math
 // Exercise: Interpreting graphs of functions
 // Widget key: image_1
-test("function-plot-graph - Interpreting graphs of functions", () => {
+test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -2837,7 +2837,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2846,7 +2846,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 // Course: 8th grade math
 // Exercise: Interpreting graphs of functions
 // Widget key: image_1
-test("function-plot-graph - Interpreting graphs of functions", () => {
+test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
 	"width": 450,
 	"xAxis": {
@@ -2906,7 +2906,7 @@ test("function-plot-graph - Interpreting graphs of functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFunctionPlotGraph(parseResult.data)
+	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

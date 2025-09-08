@@ -72,7 +72,7 @@ export type NumberSetDiagramProps = z.infer<typeof NumberSetDiagramPropsSchema>
  * Generates a static SVG Euler diagram that visually represents the hierarchical
  * relationship between different sets of numbers (whole, integer, rational, irrational).
  */
-export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPropsSchema> = (data) => {
+export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPropsSchema> = async (data) => {
 	const { width, height, sets } = data
 
 	const canvas = new CanvasImpl({

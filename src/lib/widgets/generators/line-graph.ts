@@ -84,7 +84,7 @@ export const LineGraphPropsSchema = z
 
 export type LineGraphProps = z.infer<typeof LineGraphPropsSchema>
 
-export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (props) => {
+export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = async (props) => {
 	const { width, height, title, xAxis, yAxis, yAxisRight, series, showLegend } = props
 
 	for (const s of series) {

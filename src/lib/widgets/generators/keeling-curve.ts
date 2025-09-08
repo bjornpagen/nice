@@ -140,7 +140,7 @@ const renderMultiLineText = (
 	return `<text x="${x}" y="${y}" class="${className}" text-anchor="start">${tspans}</text>`
 }
 
-export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchema> = (props) => {
+export const generateKeelingCurve: WidgetGenerator<typeof KeelingCurvePropsSchema> = async (props) => {
 	const { width, height, xAxisLabel, yAxisLabel, annotations } = props
 
 	// Helper to find PPM for a given year via linear interpolation

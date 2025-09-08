@@ -45,7 +45,7 @@ function tForX(points: { x: number; y: number }[], targetX: number): number {
 	return 1
 }
 
-test("conceptual graph - frog population size", () => {
+test("conceptual graph - frog population size", async () => {
 	const input = {
 		type: "conceptualGraph",
 		width: 400,
@@ -134,13 +134,13 @@ test("conceptual graph - frog population size", () => {
 	const parsed = parseResult.data
 
 	// Generate the SVG
-	const svg = generateConceptualGraph(parsed)
+	const svg = await generateConceptualGraph(parsed)
 
 	// Snapshot test the generated SVG
 	expect(svg).toMatchSnapshot()
 })
 
-test("conceptual graph - wolf population lowest competition", () => {
+test("conceptual graph - wolf population lowest competition", async () => {
 	const input = {
 		type: "conceptualGraph",
 		width: 300,
@@ -221,7 +221,7 @@ test("conceptual graph - wolf population lowest competition", () => {
 	const parsed = parseResult.data
 
 	// Generate the SVG
-	const svg = generateConceptualGraph(parsed)
+	const svg = await generateConceptualGraph(parsed)
 
 	// Snapshot test the generated SVG
 	expect(svg).toMatchSnapshot()

@@ -52,7 +52,7 @@ export const ParabolaGraphPropsSchema = z
 
 export type ParabolaGraphProps = z.infer<typeof ParabolaGraphPropsSchema>
 
-export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSchema> = (props) => {
+export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSchema> = async (props) => {
 	const { width, height, xAxis, yAxis, parabola } = props
 
 	// Vertex-form parabola: y = a (x - h)^2 + k

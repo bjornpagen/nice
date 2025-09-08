@@ -58,7 +58,7 @@ export const FunctionPlotGraphPropsSchema = z
 
 export type FunctionPlotGraphProps = z.infer<typeof FunctionPlotGraphPropsSchema>
 
-export const generateFunctionPlotGraph: WidgetGenerator<typeof FunctionPlotGraphPropsSchema> = (props) => {
+export const generateFunctionPlotGraph: WidgetGenerator<typeof FunctionPlotGraphPropsSchema> = async (props) => {
 	const { width, height, xAxis, yAxis, showQuadrantLabels, polylines, points } = props
 
 	// 1. Call the base generator and get the body content and extents object

@@ -172,7 +172,7 @@ export const ShapeTransformationGraphPropsSchema = z
 
 export type ShapeTransformationGraphProps = z.infer<typeof ShapeTransformationGraphPropsSchema>
 
-export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTransformationGraphPropsSchema> = (
+export const generateShapeTransformationGraph: WidgetGenerator<typeof ShapeTransformationGraphPropsSchema> = async (
 	props
 ) => {
 	const { width, height, xAxis, yAxis, showQuadrantLabels, preImage, transformation, points, lines } = props

@@ -4,7 +4,7 @@ import type { AssessmentItemInput } from "@/lib/qti-generation/schemas"
 
 // This suite focuses ONLY on prompt/body deduplication behavior.
 
-test("dedupes paraphrased prompt - modern-day country of Anatolia", () => {
+test("dedupes paraphrased prompt - modern-day country of Anatolia", async () => {
 	const item: AssessmentItemInput = {
 		identifier: "hittites-anatolia-modern-country",
 		title: "Modern-day country of Anatolia",
@@ -50,14 +50,14 @@ test("dedupes paraphrased prompt - modern-day country of Anatolia", () => {
 		}
 	}
 
-	const xml = compile(item)
+	const xml = await compile(item)
 	// Prompt must be present
 	expect(xml).toContain("Select the modern-day country where Anatolia is located.")
 	// Body variant should be removed
 	expect(xml).not.toContain("In which modern-day country is Anatolia located?")
 })
 
-test("dedupes paraphrased prompt - red vs green lasers selection phrase", () => {
+test("dedupes paraphrased prompt - red vs green lasers selection phrase", async () => {
 	const item: AssessmentItemInput = {
 		identifier: "red-green-laser-wave-properties",
 		title: "Different wave properties for red and green lasers",
@@ -144,7 +144,7 @@ test("dedupes paraphrased prompt - red vs green lasers selection phrase", () => 
 		}
 	}
 
-	const xml = compile(item)
+	const xml = await compile(item)
 	// Prompt must be present
 	expect(xml).toContain("Which wave properties are different for the two lights? Select all that apply.")
 	// Body variant should be removed
@@ -152,7 +152,7 @@ test("dedupes paraphrased prompt - red vs green lasers selection phrase", () => 
 	expect(xml).not.toContain("<p>Which wave properties are different for the two lights?</p>")
 })
 
-test("dedupes paraphrased prompt - balanced forces selection phrase", () => {
+test("dedupes paraphrased prompt - balanced forces selection phrase", async () => {
 	const item: AssessmentItemInput = {
 		identifier: "balanced-forces-conditions",
 		title: "Conditions for Balanced Forces",
@@ -233,14 +233,14 @@ test("dedupes paraphrased prompt - balanced forces selection phrase", () => {
 		}
 	}
 
-	const xml = compile(item)
+	const xml = await compile(item)
 	// Prompt must be present
 	expect(xml).toContain("What must be true of the two forces? Select all that apply.")
 	// Body variant should be removed
 	expect(xml).not.toContain("<p>What must be true of the two forces?</p>")
 })
 
-test("dedupes paraphrased prompt - food provides describe vs describes", () => {
+test("dedupes paraphrased prompt - food provides describe vs describes", async () => {
 	const item: AssessmentItemInput = {
 		identifier: "what-food-provides-organisms-multiselect",
 		title: "What food provides to organisms",
@@ -320,14 +320,14 @@ test("dedupes paraphrased prompt - food provides describe vs describes", () => {
 		}
 	}
 
-	const xml = compile(item)
+	const xml = await compile(item)
 	// Prompt must be present
 	expect(xml).toContain("Which of the following best describes what food provides to organisms?")
 	// Body variant should be removed
 	expect(xml).not.toContain("<p>Which of the following best describe what food provides to organisms?</p>")
 })
 
-test("dedupes paraphrased prompt - american decline excerpt", () => {
+test("dedupes paraphrased prompt - american decline excerpt", async () => {
 	const item: AssessmentItemInput = {
 		identifier: "american-decline-belief",
 		title: "Factors contributing to belief in “American decline”",
@@ -453,7 +453,7 @@ test("dedupes paraphrased prompt - american decline excerpt", () => {
 		}
 	}
 
-	const xml = compile(item)
+	const xml = await compile(item)
 	// Prompt must be present
 	expect(xml).toContain(
 		"Which of the following most likely contributed to the rise in belief in the “American decline” referred to in the excerpt?"
@@ -464,7 +464,7 @@ test("dedupes paraphrased prompt - american decline excerpt", () => {
 	)
 })
 
-test("dedupes paraphrased prompt - affordable care act provisions", () => {
+test("dedupes paraphrased prompt - affordable care act provisions", async () => {
 	const item: AssessmentItemInput = {
 		identifier: "affordable-care-act-provisions",
 		title: "Provisions of the Affordable Care Act",
@@ -567,14 +567,14 @@ test("dedupes paraphrased prompt - affordable care act provisions", () => {
 		}
 	}
 
-	const xml = compile(item)
+	const xml = await compile(item)
 	// Prompt must be present
 	expect(xml).toContain("Which of the following was among the provisions of the Affordable Care Act?")
 	// Body variant should be removed
 	expect(xml).not.toContain("Which of the following were among the provisions of the Affordable Care Act?")
 })
 
-test("dedupes repeated prompt - kinetic energy selection phrase (duplicate body)", () => {
+test("dedupes repeated prompt - kinetic energy selection phrase (duplicate body)", async () => {
 	const item: AssessmentItemInput = {
 		identifier: "which-objects-have-kinetic-energy",
 		title: "Identify objects with kinetic energy",
@@ -676,14 +676,14 @@ test("dedupes repeated prompt - kinetic energy selection phrase (duplicate body)
 		}
 	}
 
-	const xml = compile(item)
+	const xml = await compile(item)
 	// Prompt must be present
 	expect(xml).toContain("Which of the following objects have kinetic energy? Select all that apply.")
 	// Body variant should be removed
 	expect(xml).not.toContain("<p>Which of the following objects have kinetic energy? Select all that apply.</p>")
 })
 
-test("dedupes paraphrased prompt - same pitch different loudness wave properties", () => {
+test("dedupes paraphrased prompt - same pitch different loudness wave properties", async () => {
 	const item: AssessmentItemInput = {
 		identifier: "same-pitch-different-loudness-wave-properties",
 		title: "Identify wave properties shared by two sounds in the same medium",
@@ -772,14 +772,14 @@ test("dedupes paraphrased prompt - same pitch different loudness wave properties
 		}
 	}
 
-	const xml = compile(item)
+	const xml = await compile(item)
 	// Prompt must be present
 	expect(xml).toContain("Which wave properties are the same for the two sounds? Select all that apply.")
 	// Body variant should be removed (only the question paragraph, not the context paragraph)
 	expect(xml).not.toContain("<p>Which wave properties are the same for the two sounds? Select all that apply.</p>")
 })
 
-test("dedupes repeated prompt - heliocentric model selection phrase", () => {
+test("dedupes repeated prompt - heliocentric model selection phrase", async () => {
 	const item: AssessmentItemInput = {
 		identifier: "heliocentric-model-multi-select",
 		title: "Facts about the heliocentric model",
@@ -870,14 +870,14 @@ test("dedupes repeated prompt - heliocentric model selection phrase", () => {
 		}
 	}
 
-	const xml = compile(item)
+	const xml = await compile(item)
 	// Prompt must be present
 	expect(xml).toContain("Which statements are true about the heliocentric model? Select all that apply.")
 	// Body variant should be removed
 	expect(xml).not.toContain("<p>Which statements are true about the heliocentric model? Select all that apply.</p>")
 })
 
-test("does not remove instruction-augmented body question - zinc pieces vs concentration", () => {
+test("does not remove instruction-augmented body question - zinc pieces vs concentration", async () => {
 	const item: AssessmentItemInput = {
 		identifier: "zinc-pieces-temperature-rise",
 		title: "Identify the experiment with larger zinc pieces",
@@ -1074,7 +1074,7 @@ test("does not remove instruction-augmented body question - zinc pieces vs conce
 		}
 	}
 
-	const xml = compile(item)
+	const xml = await compile(item)
 	// Prompt must be present
 	expect(xml).toContain(
 		"Which experiment represents the trial where they used larger pieces of zinc? Select one answer."
@@ -1083,7 +1083,7 @@ test("does not remove instruction-augmented body question - zinc pieces vs conce
 	expect(xml).toContain("Justify your answer using evidence from the data.")
 })
 
-test("does not remove instruction-augmented body question - stirred vs cooled trial", () => {
+test("does not remove instruction-augmented body question - stirred vs cooled trial", async () => {
 	const item: AssessmentItemInput = {
 		identifier: "stirred-vs-cooled-temperature-trial",
 		title: "Identify the stirred reaction trial from temperature data",
@@ -1281,7 +1281,7 @@ test("does not remove instruction-augmented body question - stirred vs cooled tr
 		}
 	}
 
-	const xml = compile(item)
+	const xml = await compile(item)
 	// Prompt must be present
 	expect(xml).toContain(
 		"Which experiment represents the trial where they continuously stirred the mixture? Select one answer."
@@ -1290,7 +1290,7 @@ test("does not remove instruction-augmented body question - stirred vs cooled tr
 	expect(xml).toContain("Justify your answer using evidence from the data.")
 })
 
-test("dedupes paraphrased prompt - pure substances particle diagrams", () => {
+test("dedupes paraphrased prompt - pure substances particle diagrams", async () => {
 	const item: AssessmentItemInput = {
 		identifier: "pure-substance-identification-samples",
 		title: "Identify Pure Substances from Particle Diagrams",
@@ -1435,14 +1435,14 @@ test("dedupes paraphrased prompt - pure substances particle diagrams", () => {
 		}
 	}
 
-	const xml = compile(item)
+	const xml = await compile(item)
 	// Prompt must be present
 	expect(xml).toContain("Which of the following samples depict pure substances? Select all that apply.")
 	// Body variant should be removed
 	expect(xml).not.toContain("<p>Which of the following samples depicts a pure substance?</p>")
 })
 
-test("dedupes paraphrased prompt - volcanic hazards from map", () => {
+test("dedupes paraphrased prompt - volcanic hazards from map", async () => {
 	const item: AssessmentItemInput = {
 		identifier: "crater-lake-volcanic-hazards",
 		title: "Identify volcanic hazards from a map",
@@ -1545,7 +1545,7 @@ test("dedupes paraphrased prompt - volcanic hazards from map", () => {
 		}
 	}
 
-	const xml = compile(item)
+	const xml = await compile(item)
 	// Prompt must be present
 	expect(xml).toContain(
 		"Which two volcanic hazards could affect the campsite during a volcanic eruption? Select all that apply."
@@ -1556,7 +1556,7 @@ test("dedupes paraphrased prompt - volcanic hazards from map", () => {
 	)
 })
 
-test("dedupes paraphrased prompt - outputs of photosynthesis selection phrase", () => {
+test("dedupes paraphrased prompt - outputs of photosynthesis selection phrase", async () => {
 	const item: AssessmentItemInput = {
 		identifier: "outputs-of-photosynthesis-multiple-select",
 		title: "Outputs of photosynthesis",
@@ -1624,14 +1624,14 @@ test("dedupes paraphrased prompt - outputs of photosynthesis selection phrase", 
 		}
 	}
 
-	const xml = compile(item)
+	const xml = await compile(item)
 	// Prompt must be present
 	expect(xml).toContain("Which of the following are outputs of photosynthesis? Select all that apply.")
 	// Body variant should be removed
 	expect(xml).not.toContain("<p>Which of these are outputs of photosynthesis?</p>")
 })
 
-test("dedupes paraphrased prompt - genetic variation birds with separated instruction", () => {
+test("dedupes paraphrased prompt - genetic variation birds with separated instruction", async () => {
 	const item: AssessmentItemInput = {
 		identifier: "genetic-variation-birds-results",
 		title: "Genetic variation outcomes in a bird population",
@@ -1746,7 +1746,7 @@ test("dedupes paraphrased prompt - genetic variation birds with separated instru
 		}
 	}
 
-	const xml = compile(item)
+	const xml = await compile(item)
 	// Prompt must be present
 	expect(xml).toContain(
 		"Which of the following describe likely results of genetic variation in a population of birds? Select all that apply."

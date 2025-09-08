@@ -106,7 +106,7 @@ export type PythagoreanProofDiagramProps = z.infer<typeof PythagoreanProofDiagra
  * Generates a visual diagram to illustrate the Pythagorean theorem by rendering a
  * right triangle with a square constructed on each side, labeled with its area.
  */
-export const generatePythagoreanProofDiagram: WidgetGenerator<typeof PythagoreanProofDiagramPropsSchema> = (data) => {
+export const generatePythagoreanProofDiagram: WidgetGenerator<typeof PythagoreanProofDiagramPropsSchema> = async (data) => {
 	const { width, height, sideA, sideB, sideC } = data
 
 	const aAreaNum = sideA?.square?.type === "value" && sideA.square.area > 0 ? sideA.square.area : undefined

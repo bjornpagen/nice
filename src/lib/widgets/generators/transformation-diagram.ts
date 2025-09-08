@@ -193,7 +193,7 @@ export type TransformationDiagramProps = z.infer<typeof TransformationDiagramPro
 /**
  * Generates an SVG diagram illustrating a geometric transformation.
  */
-export const generateTransformationDiagram: WidgetGenerator<typeof TransformationDiagramPropsSchema> = (props) => {
+export const generateTransformationDiagram: WidgetGenerator<typeof TransformationDiagramPropsSchema> = async (props) => {
 	const { width, height, preImage, transformation } = props
 
 	const canvas = new CanvasImpl({

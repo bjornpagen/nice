@@ -93,7 +93,7 @@ function getCellLabel(content: { type: "text"; content: string } | { type: "math
  * Generates an SVG diagram of a grid of cells, with each cell capable of
  * displaying data and having a custom background color for highlighting.
  */
-export const generateBoxGrid: WidgetGenerator<typeof BoxGridPropsSchema> = (props) => {
+export const generateBoxGrid: WidgetGenerator<typeof BoxGridPropsSchema> = async (props) => {
 	const { width, height, data, showGridLines } = props
 
 	const numRows = data.length

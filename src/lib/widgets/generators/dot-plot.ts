@@ -104,7 +104,7 @@ export type DotPlotProps = z.infer<typeof DotPlotPropsSchema>
  * Dot plots are used to visualize the distribution of a numerical data set,
  * especially when the data consists of discrete values or has been binned.
  */
-export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data) => {
+export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = async (data) => {
 	const { width, height, axis, data: plotData, dotColor, dotRadius } = data
 
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true)

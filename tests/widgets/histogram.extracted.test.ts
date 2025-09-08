@@ -26,7 +26,7 @@ type HistogramInput = z.input<typeof HistogramPropsSchema>
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -67,7 +67,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -76,7 +76,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -117,7 +117,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -126,7 +126,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -167,7 +167,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -176,7 +176,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -217,7 +217,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -226,7 +226,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -267,7 +267,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -276,7 +276,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -317,7 +317,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -326,7 +326,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -375,7 +375,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -384,7 +384,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -433,7 +433,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -442,7 +442,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -491,7 +491,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -500,7 +500,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -549,7 +549,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -558,7 +558,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -607,7 +607,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -616,7 +616,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -665,7 +665,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -674,7 +674,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -715,7 +715,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -724,7 +724,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -765,7 +765,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -774,7 +774,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -815,7 +815,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -824,7 +824,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -865,7 +865,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -874,7 +874,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -919,7 +919,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -928,7 +928,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -973,7 +973,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -982,7 +982,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1027,7 +1027,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1036,7 +1036,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1081,7 +1081,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1090,7 +1090,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1139,7 +1139,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1148,7 +1148,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1197,7 +1197,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1206,7 +1206,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1255,7 +1255,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1264,7 +1264,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1313,7 +1313,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1322,7 +1322,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1371,7 +1371,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1380,7 +1380,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1429,7 +1429,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1438,7 +1438,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1487,7 +1487,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1496,7 +1496,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1545,7 +1545,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1554,7 +1554,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1599,7 +1599,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1608,7 +1608,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1653,7 +1653,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1662,7 +1662,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1707,7 +1707,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1716,7 +1716,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1761,7 +1761,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1770,7 +1770,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1811,7 +1811,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1820,7 +1820,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1861,7 +1861,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1870,7 +1870,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1911,7 +1911,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1920,7 +1920,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -1961,7 +1961,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1970,7 +1970,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2011,7 +2011,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2020,7 +2020,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2061,7 +2061,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2070,7 +2070,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2111,7 +2111,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2120,7 +2120,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2161,7 +2161,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2170,7 +2170,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2211,7 +2211,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2220,7 +2220,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2261,7 +2261,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2270,7 +2270,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2311,7 +2311,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2320,7 +2320,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2361,7 +2361,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2370,7 +2370,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2411,7 +2411,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2420,7 +2420,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2461,7 +2461,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2470,7 +2470,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2515,7 +2515,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2524,7 +2524,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2569,7 +2569,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2578,7 +2578,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2623,7 +2623,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2632,7 +2632,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2673,7 +2673,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2682,7 +2682,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2723,7 +2723,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2732,7 +2732,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2773,7 +2773,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2782,7 +2782,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2827,7 +2827,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2836,7 +2836,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2881,7 +2881,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2890,7 +2890,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2935,7 +2935,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2944,7 +2944,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -2989,7 +2989,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2998,7 +2998,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3047,7 +3047,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3056,7 +3056,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3105,7 +3105,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3114,7 +3114,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3163,7 +3163,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3172,7 +3172,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3221,7 +3221,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3230,7 +3230,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3279,7 +3279,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3288,7 +3288,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3337,7 +3337,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3346,7 +3346,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3395,7 +3395,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3404,7 +3404,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3453,7 +3453,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3462,7 +3462,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3507,7 +3507,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3516,7 +3516,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3561,7 +3561,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3570,7 +3570,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3615,7 +3615,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3624,7 +3624,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3669,7 +3669,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3678,7 +3678,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3727,7 +3727,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3736,7 +3736,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3785,7 +3785,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3794,7 +3794,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3843,7 +3843,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3852,7 +3852,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3897,7 +3897,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3906,7 +3906,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -3951,7 +3951,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3960,7 +3960,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4005,7 +4005,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4014,7 +4014,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4059,7 +4059,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4068,7 +4068,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4113,7 +4113,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4122,7 +4122,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4167,7 +4167,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4176,7 +4176,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4221,7 +4221,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4230,7 +4230,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4275,7 +4275,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4284,7 +4284,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4329,7 +4329,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4338,7 +4338,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4383,7 +4383,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4392,7 +4392,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4437,7 +4437,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4446,7 +4446,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4491,7 +4491,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4500,7 +4500,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4545,7 +4545,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4554,7 +4554,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4599,7 +4599,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4608,7 +4608,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4653,7 +4653,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4662,7 +4662,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4707,7 +4707,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4716,7 +4716,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4761,7 +4761,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4770,7 +4770,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4815,7 +4815,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4824,7 +4824,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4873,7 +4873,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4882,7 +4882,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4931,7 +4931,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4940,7 +4940,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -4989,7 +4989,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4998,7 +4998,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5047,7 +5047,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5056,7 +5056,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5101,7 +5101,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5110,7 +5110,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5155,7 +5155,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5164,7 +5164,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5209,7 +5209,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5218,7 +5218,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5263,7 +5263,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5272,7 +5272,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5313,7 +5313,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5322,7 +5322,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5363,7 +5363,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5372,7 +5372,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5413,7 +5413,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5422,7 +5422,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5467,7 +5467,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5476,7 +5476,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5521,7 +5521,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5530,7 +5530,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5575,7 +5575,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5584,7 +5584,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5629,7 +5629,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5638,7 +5638,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5687,7 +5687,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5696,7 +5696,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5745,7 +5745,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5754,7 +5754,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5803,7 +5803,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5812,7 +5812,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5861,7 +5861,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5870,7 +5870,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5919,7 +5919,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5928,7 +5928,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -5977,7 +5977,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5986,7 +5986,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6035,7 +6035,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6044,7 +6044,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6089,7 +6089,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6098,7 +6098,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6143,7 +6143,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6152,7 +6152,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6197,7 +6197,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6206,7 +6206,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6251,7 +6251,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6260,7 +6260,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6309,7 +6309,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6318,7 +6318,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6367,7 +6367,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6376,7 +6376,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6425,7 +6425,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6434,7 +6434,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6479,7 +6479,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6488,7 +6488,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6533,7 +6533,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6542,7 +6542,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hist_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6587,7 +6587,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6596,7 +6596,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6637,7 +6637,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6646,7 +6646,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6687,7 +6687,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6696,7 +6696,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6737,7 +6737,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6746,7 +6746,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_initial
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6795,7 +6795,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6804,7 +6804,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_a
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6853,7 +6853,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6862,7 +6862,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_b
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6911,7 +6911,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6920,7 +6920,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: histogram_choice_c
-test("histogram - Create histograms", () => {
+test("histogram - Create histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -6969,7 +6969,7 @@ test("histogram - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6978,7 +6978,7 @@ test("histogram - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7023,7 +7023,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7032,7 +7032,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7081,7 +7081,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7090,7 +7090,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7135,7 +7135,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7144,7 +7144,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7197,7 +7197,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7206,7 +7206,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7259,7 +7259,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7268,7 +7268,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7317,7 +7317,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7326,7 +7326,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7375,7 +7375,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7384,7 +7384,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7433,7 +7433,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7442,7 +7442,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: histogram_image
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7495,7 +7495,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7504,7 +7504,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7557,7 +7557,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7566,7 +7566,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7619,7 +7619,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7628,7 +7628,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7681,7 +7681,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7690,7 +7690,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7739,7 +7739,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7748,7 +7748,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7801,7 +7801,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7810,7 +7810,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7863,7 +7863,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7872,7 +7872,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7917,7 +7917,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7926,7 +7926,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -7975,7 +7975,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7984,7 +7984,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8029,7 +8029,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8038,7 +8038,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8091,7 +8091,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8100,7 +8100,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8153,7 +8153,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8162,7 +8162,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8215,7 +8215,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8224,7 +8224,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8273,7 +8273,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8282,7 +8282,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8335,7 +8335,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8344,7 +8344,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8393,7 +8393,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8402,7 +8402,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8451,7 +8451,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8460,7 +8460,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8513,7 +8513,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8522,7 +8522,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8575,7 +8575,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8584,7 +8584,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8629,7 +8629,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8638,7 +8638,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8687,7 +8687,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8696,7 +8696,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8749,7 +8749,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8758,7 +8758,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8811,7 +8811,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8820,7 +8820,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8873,7 +8873,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8882,7 +8882,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8931,7 +8931,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8940,7 +8940,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -8993,7 +8993,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9002,7 +9002,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -9055,7 +9055,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9064,7 +9064,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -9113,7 +9113,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9122,7 +9122,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -9175,7 +9175,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9184,7 +9184,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -9237,7 +9237,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9246,7 +9246,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -9295,7 +9295,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9304,7 +9304,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -9357,7 +9357,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9366,7 +9366,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -9415,7 +9415,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9424,7 +9424,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Read histograms
 // Widget key: image_1
-test("histogram - Read histograms", () => {
+test("histogram - Read histograms", async () => {
 	const input = {
 	"bins": [
 		{
@@ -9473,7 +9473,7 @@ test("histogram - Read histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9482,7 +9482,7 @@ test("histogram - Read histograms", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: image_1
-test("histogram - Calculating the median data displays", () => {
+test("histogram - Calculating the median data displays", async () => {
 	const input = {
 	"bins": [
 		{
@@ -9531,7 +9531,7 @@ test("histogram - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9540,7 +9540,7 @@ test("histogram - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: image_1
-test("histogram - Calculating the median data displays", () => {
+test("histogram - Calculating the median data displays", async () => {
 	const input = {
 	"bins": [
 		{
@@ -9585,7 +9585,7 @@ test("histogram - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9594,7 +9594,7 @@ test("histogram - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: image_2
-test("histogram - Calculating the median data displays", () => {
+test("histogram - Calculating the median data displays", async () => {
 	const input = {
 	"bins": [
 		{
@@ -9651,7 +9651,7 @@ test("histogram - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9660,7 +9660,7 @@ test("histogram - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: image_1
-test("histogram - Calculating the median data displays", () => {
+test("histogram - Calculating the median data displays", async () => {
 	const input = {
 	"bins": [
 		{
@@ -9709,7 +9709,7 @@ test("histogram - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9718,7 +9718,7 @@ test("histogram - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_1
-test("histogram - Comparing data displays", () => {
+test("histogram - Comparing data displays", async () => {
 	const input = {
 	"bins": [
 		{
@@ -9771,7 +9771,7 @@ test("histogram - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9780,7 +9780,7 @@ test("histogram - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_1
-test("histogram - Comparing data displays", () => {
+test("histogram - Comparing data displays", async () => {
 	const input = {
 	"bins": [
 		{
@@ -9833,7 +9833,7 @@ test("histogram - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9842,7 +9842,7 @@ test("histogram - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_1
-test("histogram - Comparing data displays", () => {
+test("histogram - Comparing data displays", async () => {
 	const input = {
 	"bins": [
 		{
@@ -9895,7 +9895,7 @@ test("histogram - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9904,7 +9904,7 @@ test("histogram - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_2
-test("histogram - Comparing data displays", () => {
+test("histogram - Comparing data displays", async () => {
 	const input = {
 	"bins": [
 		{
@@ -9945,7 +9945,7 @@ test("histogram - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9954,7 +9954,7 @@ test("histogram - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_2
-test("histogram - Comparing data displays", () => {
+test("histogram - Comparing data displays", async () => {
 	const input = {
 	"bins": [
 		{
@@ -10007,7 +10007,7 @@ test("histogram - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10016,7 +10016,7 @@ test("histogram - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_3
-test("histogram - Comparing data displays", () => {
+test("histogram - Comparing data displays", async () => {
 	const input = {
 	"bins": [
 		{
@@ -10057,7 +10057,7 @@ test("histogram - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10066,7 +10066,7 @@ test("histogram - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_1
-test("histogram - Comparing data displays", () => {
+test("histogram - Comparing data displays", async () => {
 	const input = {
 	"bins": [
 		{
@@ -10115,7 +10115,7 @@ test("histogram - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10124,7 +10124,7 @@ test("histogram - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_1
-test("histogram - Comparing data displays", () => {
+test("histogram - Comparing data displays", async () => {
 	const input = {
 	"bins": [
 		{
@@ -10173,7 +10173,7 @@ test("histogram - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10182,7 +10182,7 @@ test("histogram - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_1
-test("histogram - Comparing data displays", () => {
+test("histogram - Comparing data displays", async () => {
 	const input = {
 	"bins": [
 		{
@@ -10235,7 +10235,7 @@ test("histogram - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10244,7 +10244,7 @@ test("histogram - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_1
-test("histogram - Comparing data displays", () => {
+test("histogram - Comparing data displays", async () => {
 	const input = {
 	"bins": [
 		{
@@ -10297,7 +10297,7 @@ test("histogram - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10306,7 +10306,7 @@ test("histogram - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_1
-test("histogram - Shape of distributions", () => {
+test("histogram - Shape of distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -10375,7 +10375,7 @@ test("histogram - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10384,7 +10384,7 @@ test("histogram - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_1
-test("histogram - Shape of distributions", () => {
+test("histogram - Shape of distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -10453,7 +10453,7 @@ test("histogram - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10462,7 +10462,7 @@ test("histogram - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_1
-test("histogram - Shape of distributions", () => {
+test("histogram - Shape of distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -10531,7 +10531,7 @@ test("histogram - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10540,7 +10540,7 @@ test("histogram - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_1
-test("histogram - Shape of distributions", () => {
+test("histogram - Shape of distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -10609,7 +10609,7 @@ test("histogram - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10618,7 +10618,7 @@ test("histogram - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_1
-test("histogram - Shape of distributions", () => {
+test("histogram - Shape of distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -10687,7 +10687,7 @@ test("histogram - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10696,7 +10696,7 @@ test("histogram - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_1
-test("histogram - Shape of distributions", () => {
+test("histogram - Shape of distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -10765,7 +10765,7 @@ test("histogram - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10774,7 +10774,7 @@ test("histogram - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_1
-test("histogram - Shape of distributions", () => {
+test("histogram - Shape of distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -10835,7 +10835,7 @@ test("histogram - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10844,7 +10844,7 @@ test("histogram - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_1
-test("histogram - Shape of distributions", () => {
+test("histogram - Shape of distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -10905,7 +10905,7 @@ test("histogram - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10914,7 +10914,7 @@ test("histogram - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_1
-test("histogram - Shape of distributions", () => {
+test("histogram - Shape of distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -10983,7 +10983,7 @@ test("histogram - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10992,7 +10992,7 @@ test("histogram - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_1
-test("histogram - Shape of distributions", () => {
+test("histogram - Shape of distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -11061,7 +11061,7 @@ test("histogram - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11070,7 +11070,7 @@ test("histogram - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_1
-test("histogram - Shape of distributions", () => {
+test("histogram - Shape of distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -11135,7 +11135,7 @@ test("histogram - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11144,7 +11144,7 @@ test("histogram - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_1
-test("histogram - Clusters gaps peaks in data distributions", () => {
+test("histogram - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -11197,7 +11197,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11206,7 +11206,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_1
-test("histogram - Clusters gaps peaks in data distributions", () => {
+test("histogram - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -11275,7 +11275,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11284,7 +11284,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_1
-test("histogram - Clusters gaps peaks in data distributions", () => {
+test("histogram - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -11353,7 +11353,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11362,7 +11362,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_1
-test("histogram - Clusters gaps peaks in data distributions", () => {
+test("histogram - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -11431,7 +11431,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11440,7 +11440,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_1
-test("histogram - Clusters gaps peaks in data distributions", () => {
+test("histogram - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -11509,7 +11509,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11518,7 +11518,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_1
-test("histogram - Clusters gaps peaks in data distributions", () => {
+test("histogram - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -11587,7 +11587,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11596,7 +11596,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_1
-test("histogram - Clusters gaps peaks in data distributions", () => {
+test("histogram - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -11657,7 +11657,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11666,7 +11666,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_1
-test("histogram - Clusters gaps peaks in data distributions", () => {
+test("histogram - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -11735,7 +11735,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11744,7 +11744,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_1
-test("histogram - Clusters gaps peaks in data distributions", () => {
+test("histogram - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"bins": [
 		{
@@ -11813,7 +11813,7 @@ test("histogram - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateHistogram(parseResult.data)
+	const svg = await generateHistogram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

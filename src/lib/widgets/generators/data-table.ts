@@ -187,7 +187,7 @@ const renderCellContent = (c: TableCell | undefined): string => {
  * Generates a versatile HTML table for all tabular data needs, including simple lists,
  * frequency tables, and two-way tables. Supports interactive input cells.
  */
-export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (props) => {
+export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = async (props) => {
 	const { title, columns, data, rowHeaderKey, footer } = props
 
 	const commonCellStyle = `border: 1px solid ${theme.colors.black}; padding: ${theme.table.padding}; text-align: left;`

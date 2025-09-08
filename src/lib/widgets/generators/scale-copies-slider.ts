@@ -86,7 +86,7 @@ export type ScaleCopiesSliderProps = z.infer<typeof ScaleCopiesSliderPropsSchema
  * Generates an SVG diagram to visually compare a proportional scaling
  * transformation against a non-proportional one.
  */
-export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSliderPropsSchema> = (props) => {
+export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSliderPropsSchema> = async (props) => {
 	const { width, height, shapeA, shapeB } = props
 
 	const padding = { top: PADDING * 1.5, right: PADDING, bottom: PADDING * 1.5, left: PADDING }

@@ -26,7 +26,7 @@ type PointPlotGraphInput = z.input<typeof PointPlotGraphPropsSchema>
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: image_1
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 380,
 	"xAxis": {
@@ -82,7 +82,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -91,7 +91,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: image_1
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 380,
 	"xAxis": {
@@ -147,7 +147,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -156,7 +156,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: graph_choice_a
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -204,7 +204,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -213,7 +213,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: graph_choice_b
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -261,7 +261,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -270,7 +270,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: graph_choice_c
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -318,7 +318,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -327,7 +327,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: image_1
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 380,
 	"xAxis": {
@@ -383,7 +383,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -392,7 +392,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: graph_choice_a
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -448,7 +448,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -457,7 +457,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: graph_choice_b
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -513,7 +513,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -522,7 +522,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: graph_choice_c
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 345,
 	"xAxis": {
@@ -578,7 +578,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -587,7 +587,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: coordinate_plane_empty
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -618,7 +618,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -627,7 +627,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: image_1
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 380,
 	"xAxis": {
@@ -683,7 +683,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -692,7 +692,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: image_1
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 380,
 	"xAxis": {
@@ -748,7 +748,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -757,7 +757,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: image_1
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 380,
 	"xAxis": {
@@ -813,7 +813,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -822,7 +822,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: image_1
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 380,
 	"xAxis": {
@@ -878,7 +878,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -887,7 +887,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: image_1
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 380,
 	"xAxis": {
@@ -943,7 +943,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -952,7 +952,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: graph_initial
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -992,7 +992,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1001,7 +1001,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: graph_choice_a
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -1057,7 +1057,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1066,7 +1066,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: graph_choice_b
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -1122,7 +1122,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1131,7 +1131,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: graph_choice_c
-test("point-plot-graph - Ratios on coordinate plane", () => {
+test("point-plot-graph - Ratios on coordinate plane", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -1187,7 +1187,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1196,7 +1196,7 @@ test("point-plot-graph - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: choice_a_graph
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -1252,7 +1252,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1261,7 +1261,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: choice_b_graph
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -1317,7 +1317,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1326,7 +1326,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: choice_c_graph
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -1382,7 +1382,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1391,7 +1391,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: choice_a_graph
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -1447,7 +1447,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1456,7 +1456,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: choice_b_graph
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -1512,7 +1512,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1521,7 +1521,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: choice_c_graph
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -1577,7 +1577,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1586,7 +1586,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: graph_choice_a
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -1642,7 +1642,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1651,7 +1651,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: graph_choice_b
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -1707,7 +1707,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1716,7 +1716,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: graph_choice_c
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -1772,7 +1772,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1781,7 +1781,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: graph_choice_a
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -1837,7 +1837,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1846,7 +1846,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: graph_choice_b
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -1902,7 +1902,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1911,7 +1911,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: graph_choice_c
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -1967,7 +1967,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1976,7 +1976,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: image_1
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 350,
 	"xAxis": {
@@ -2032,7 +2032,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2041,7 +2041,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: choice_a_graph
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -2097,7 +2097,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2106,7 +2106,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: choice_b_graph
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -2162,7 +2162,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2171,7 +2171,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: choice_c_graph
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -2227,7 +2227,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2236,7 +2236,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: image_1
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 350,
 	"xAxis": {
@@ -2292,7 +2292,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2301,7 +2301,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: image_1
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 350,
 	"xAxis": {
@@ -2357,7 +2357,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2366,7 +2366,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: choice_a_graph
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -2422,7 +2422,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2431,7 +2431,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: choice_b_graph
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -2487,7 +2487,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2496,7 +2496,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: choice_c_graph
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -2552,7 +2552,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2561,7 +2561,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: image_1
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 350,
 	"xAxis": {
@@ -2617,7 +2617,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2626,7 +2626,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: graph_choice_a
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -2682,7 +2682,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2691,7 +2691,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: graph_choice_b
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -2747,7 +2747,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2756,7 +2756,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: graph_choice_c
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 220,
 	"xAxis": {
@@ -2812,7 +2812,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2821,7 +2821,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: image_1
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 350,
 	"xAxis": {
@@ -2877,7 +2877,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2886,7 +2886,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: image_1
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 350,
 	"xAxis": {
@@ -2942,7 +2942,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2951,7 +2951,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Match equations to coordinates on a graph
 // Widget key: image_1
-test("point-plot-graph - Match equations to coordinates on a graph", () => {
+test("point-plot-graph - Match equations to coordinates on a graph", async () => {
 	const input = {
 	"width": 350,
 	"xAxis": {
@@ -3007,7 +3007,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3016,7 +3016,7 @@ test("point-plot-graph - Match equations to coordinates on a graph", () => {
 // Course: 6th grade math
 // Exercise: Analyze relationships between variables
 // Widget key: image_1
-test("point-plot-graph - Analyze relationships between variables", () => {
+test("point-plot-graph - Analyze relationships between variables", async () => {
 	const input = {
 	"width": 300,
 	"xAxis": {
@@ -3072,7 +3072,7 @@ test("point-plot-graph - Analyze relationships between variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3081,7 +3081,7 @@ test("point-plot-graph - Analyze relationships between variables", () => {
 // Course: 6th grade math
 // Exercise: Analyze relationships between variables
 // Widget key: image_1
-test("point-plot-graph - Analyze relationships between variables", () => {
+test("point-plot-graph - Analyze relationships between variables", async () => {
 	const input = {
 	"width": 307,
 	"xAxis": {
@@ -3137,7 +3137,7 @@ test("point-plot-graph - Analyze relationships between variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3146,7 +3146,7 @@ test("point-plot-graph - Analyze relationships between variables", () => {
 // Course: 6th grade math
 // Exercise: Analyze relationships between variables
 // Widget key: image_1
-test("point-plot-graph - Analyze relationships between variables", () => {
+test("point-plot-graph - Analyze relationships between variables", async () => {
 	const input = {
 	"width": 300,
 	"xAxis": {
@@ -3202,7 +3202,7 @@ test("point-plot-graph - Analyze relationships between variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3211,7 +3211,7 @@ test("point-plot-graph - Analyze relationships between variables", () => {
 // Course: 6th grade math
 // Exercise: Analyze relationships between variables
 // Widget key: image_1
-test("point-plot-graph - Analyze relationships between variables", () => {
+test("point-plot-graph - Analyze relationships between variables", async () => {
 	const input = {
 	"width": 293,
 	"xAxis": {
@@ -3267,7 +3267,7 @@ test("point-plot-graph - Analyze relationships between variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3276,7 +3276,7 @@ test("point-plot-graph - Analyze relationships between variables", () => {
 // Course: 6th grade math
 // Exercise: Analyze relationships between variables
 // Widget key: image_1
-test("point-plot-graph - Analyze relationships between variables", () => {
+test("point-plot-graph - Analyze relationships between variables", async () => {
 	const input = {
 	"width": 314,
 	"xAxis": {
@@ -3332,7 +3332,7 @@ test("point-plot-graph - Analyze relationships between variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3341,7 +3341,7 @@ test("point-plot-graph - Analyze relationships between variables", () => {
 // Course: 6th grade math
 // Exercise: Analyze relationships between variables
 // Widget key: image_1
-test("point-plot-graph - Analyze relationships between variables", () => {
+test("point-plot-graph - Analyze relationships between variables", async () => {
 	const input = {
 	"width": 293,
 	"xAxis": {
@@ -3397,7 +3397,7 @@ test("point-plot-graph - Analyze relationships between variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3406,7 +3406,7 @@ test("point-plot-graph - Analyze relationships between variables", () => {
 // Course: 6th grade math
 // Exercise: Analyze relationships between variables
 // Widget key: image_1
-test("point-plot-graph - Analyze relationships between variables", () => {
+test("point-plot-graph - Analyze relationships between variables", async () => {
 	const input = {
 	"width": 303,
 	"xAxis": {
@@ -3462,7 +3462,7 @@ test("point-plot-graph - Analyze relationships between variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3471,7 +3471,7 @@ test("point-plot-graph - Analyze relationships between variables", () => {
 // Course: 6th grade math
 // Exercise: Analyze relationships between variables
 // Widget key: image_1
-test("point-plot-graph - Analyze relationships between variables", () => {
+test("point-plot-graph - Analyze relationships between variables", async () => {
 	const input = {
 	"width": 299,
 	"xAxis": {
@@ -3527,7 +3527,7 @@ test("point-plot-graph - Analyze relationships between variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3536,7 +3536,7 @@ test("point-plot-graph - Analyze relationships between variables", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: image_2
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -3576,7 +3576,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3585,7 +3585,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: image_2
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -3625,7 +3625,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3634,7 +3634,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: image_1
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -3674,7 +3674,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3683,7 +3683,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: image_1
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -3723,7 +3723,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3732,7 +3732,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: image_2
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -3772,7 +3772,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3781,7 +3781,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: image_2
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -3821,7 +3821,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3830,7 +3830,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: graph_choice_a
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -3870,7 +3870,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3879,7 +3879,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: graph_choice_b
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -3919,7 +3919,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3928,7 +3928,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: graph_choice_c
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -3968,7 +3968,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3977,7 +3977,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: image_2
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4017,7 +4017,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4026,7 +4026,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: image_1
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4066,7 +4066,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4075,7 +4075,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: point_choice_a
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4115,7 +4115,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4124,7 +4124,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: point_choice_b
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4164,7 +4164,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4173,7 +4173,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: point_choice_c
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4213,7 +4213,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4222,7 +4222,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: image_2
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4262,7 +4262,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4271,7 +4271,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: image_1
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4311,7 +4311,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4320,7 +4320,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: image_1
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4360,7 +4360,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4369,7 +4369,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: image_2
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4409,7 +4409,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4418,7 +4418,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: image_1
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4458,7 +4458,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4467,7 +4467,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: image_1
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4507,7 +4507,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4516,7 +4516,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: graph_choice_a
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4556,7 +4556,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4565,7 +4565,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: graph_choice_b
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4605,7 +4605,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4614,7 +4614,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: graph_choice_c
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4654,7 +4654,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4663,7 +4663,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: graph_choice_a
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4703,7 +4703,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4712,7 +4712,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: graph_choice_b
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4752,7 +4752,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4761,7 +4761,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Points on the coordinate plane
 // Widget key: graph_choice_c
-test("point-plot-graph - Points on the coordinate plane", () => {
+test("point-plot-graph - Points on the coordinate plane", async () => {
 	const input = {
 	"width": 325,
 	"xAxis": {
@@ -4801,7 +4801,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4810,7 +4810,7 @@ test("point-plot-graph - Points on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: graph_choice_a
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -4866,7 +4866,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4875,7 +4875,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: graph_choice_b
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -4923,7 +4923,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4932,7 +4932,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: graph_choice_c
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -4980,7 +4980,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4989,7 +4989,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: graph_choice_a
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -5045,7 +5045,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5054,7 +5054,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: graph_choice_b
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -5102,7 +5102,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5111,7 +5111,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: graph_choice_c
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -5159,7 +5159,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5168,7 +5168,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: graph_choice_a
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -5216,7 +5216,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5225,7 +5225,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: graph_choice_b
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -5273,7 +5273,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5282,7 +5282,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: graph_choice_c
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -5330,7 +5330,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5339,7 +5339,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: image_1
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -5395,7 +5395,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5404,7 +5404,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: image_1
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 400,
 	"xAxis": {
@@ -5460,7 +5460,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5469,7 +5469,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: image_1
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -5525,7 +5525,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5534,7 +5534,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: image_1
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -5590,7 +5590,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5599,7 +5599,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: image_1
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -5655,7 +5655,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5664,7 +5664,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: graph_choice_a
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -5712,7 +5712,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5721,7 +5721,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: graph_choice_b
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -5777,7 +5777,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5786,7 +5786,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: graph_choice_c
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -5834,7 +5834,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5843,7 +5843,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: graph_choice_a
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -5891,7 +5891,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5900,7 +5900,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: graph_choice_b
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -5956,7 +5956,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5965,7 +5965,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Distance between points: vertical or horizontal
 // Widget key: graph_choice_c
-test("point-plot-graph - Distance between points vertical or horizontal", () => {
+test("point-plot-graph - Distance between points vertical or horizontal", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -6013,7 +6013,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6022,7 +6022,7 @@ test("point-plot-graph - Distance between points vertical or horizontal", () => 
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: image_2
-test("point-plot-graph - Coordinate plane problems in all four quadrants", () => {
+test("point-plot-graph - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"width": 463,
 	"xAxis": {
@@ -6110,7 +6110,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6119,7 +6119,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: image_1
-test("point-plot-graph - Coordinate plane problems in all four quadrants", () => {
+test("point-plot-graph - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"width": 440,
 	"xAxis": {
@@ -6207,7 +6207,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6216,7 +6216,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: image_2
-test("point-plot-graph - Coordinate plane problems in all four quadrants", () => {
+test("point-plot-graph - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"width": 463,
 	"xAxis": {
@@ -6304,7 +6304,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6313,7 +6313,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: image_3
-test("point-plot-graph - Coordinate plane problems in all four quadrants", () => {
+test("point-plot-graph - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"width": 463,
 	"xAxis": {
@@ -6393,7 +6393,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6402,7 +6402,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: image_1
-test("point-plot-graph - Coordinate plane problems in all four quadrants", () => {
+test("point-plot-graph - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"width": 440,
 	"xAxis": {
@@ -6490,7 +6490,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6499,7 +6499,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: image_3
-test("point-plot-graph - Coordinate plane problems in all four quadrants", () => {
+test("point-plot-graph - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"width": 440,
 	"xAxis": {
@@ -6611,7 +6611,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6620,7 +6620,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: image_1
-test("point-plot-graph - Coordinate plane problems in all four quadrants", () => {
+test("point-plot-graph - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"width": 440,
 	"xAxis": {
@@ -6708,7 +6708,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6717,7 +6717,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: image_5
-test("point-plot-graph - Coordinate plane problems in all four quadrants", () => {
+test("point-plot-graph - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"width": 440,
 	"xAxis": {
@@ -6829,7 +6829,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6838,7 +6838,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: image_1
-test("point-plot-graph - Coordinate plane problems in all four quadrants", () => {
+test("point-plot-graph - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"width": 440,
 	"xAxis": {
@@ -6926,7 +6926,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6935,7 +6935,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: image_1
-test("point-plot-graph - Coordinate plane problems in all four quadrants", () => {
+test("point-plot-graph - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"width": 440,
 	"xAxis": {
@@ -7047,7 +7047,7 @@ test("point-plot-graph - Coordinate plane problems in all four quadrants", () =>
 	}
 
 	// Generate the widget
-	const svg = generatePointPlotGraph(parseResult.data)
+	const svg = await generatePointPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

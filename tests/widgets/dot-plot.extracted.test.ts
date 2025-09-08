@@ -26,7 +26,7 @@ type DotPlotInput = z.input<typeof DotPlotPropsSchema>
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 4,
@@ -71,7 +71,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -80,7 +80,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 4,
@@ -125,7 +125,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -134,7 +134,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 4,
@@ -179,7 +179,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -188,7 +188,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_initial
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 19,
@@ -233,7 +233,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -242,7 +242,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 19,
@@ -287,7 +287,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -296,7 +296,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 19,
@@ -341,7 +341,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -350,7 +350,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 19,
@@ -395,7 +395,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -404,7 +404,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 56,
@@ -445,7 +445,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -454,7 +454,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 56,
@@ -495,7 +495,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -504,7 +504,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 56,
@@ -545,7 +545,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -554,7 +554,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 47,
@@ -599,7 +599,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -608,7 +608,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 47,
@@ -653,7 +653,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -662,7 +662,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 47,
@@ -707,7 +707,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -716,7 +716,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_initial
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 12,
@@ -740,7 +740,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -749,7 +749,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 12,
@@ -790,7 +790,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -799,7 +799,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 12,
@@ -840,7 +840,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -849,7 +849,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 12,
@@ -890,7 +890,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -899,7 +899,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_initial
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 23,
@@ -923,7 +923,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -932,7 +932,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 23,
@@ -969,7 +969,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -978,7 +978,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 23,
@@ -1015,7 +1015,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1024,7 +1024,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 23,
@@ -1061,7 +1061,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1070,7 +1070,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 11,
@@ -1111,7 +1111,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1120,7 +1120,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 11,
@@ -1149,7 +1149,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1158,7 +1158,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 11,
@@ -1199,7 +1199,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1208,7 +1208,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: fines_dotplot_initial
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 4,
@@ -1232,7 +1232,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1241,7 +1241,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: fines_dotplot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 4,
@@ -1278,7 +1278,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1287,7 +1287,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: fines_dotplot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 4,
@@ -1324,7 +1324,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1333,7 +1333,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: fines_dotplot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 4,
@@ -1374,7 +1374,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1383,7 +1383,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_initial
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 6,
@@ -1407,7 +1407,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1416,7 +1416,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 6,
@@ -1457,7 +1457,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1466,7 +1466,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 6,
@@ -1507,7 +1507,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1516,7 +1516,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 6,
@@ -1557,7 +1557,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1566,7 +1566,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 35,
@@ -1611,7 +1611,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1620,7 +1620,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 35,
@@ -1665,7 +1665,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1674,7 +1674,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 35,
@@ -1719,7 +1719,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1728,7 +1728,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_initial
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 9,
@@ -1752,7 +1752,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1761,7 +1761,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 9,
@@ -1806,7 +1806,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1815,7 +1815,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 9,
@@ -1860,7 +1860,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1869,7 +1869,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 9,
@@ -1914,7 +1914,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1923,7 +1923,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_initial
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 7,
@@ -1947,7 +1947,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1956,7 +1956,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 7,
@@ -1997,7 +1997,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2006,7 +2006,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 7,
@@ -2047,7 +2047,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2056,7 +2056,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 7,
@@ -2097,7 +2097,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2106,7 +2106,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 3,
@@ -2147,7 +2147,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2156,7 +2156,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 3,
@@ -2197,7 +2197,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2206,7 +2206,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 3,
@@ -2247,7 +2247,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2256,7 +2256,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 83,
@@ -2297,7 +2297,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2306,7 +2306,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 83,
@@ -2335,7 +2335,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2344,7 +2344,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 83,
@@ -2385,7 +2385,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2394,7 +2394,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 12,
@@ -2435,7 +2435,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2444,7 +2444,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 12,
@@ -2473,7 +2473,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2482,7 +2482,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 12,
@@ -2523,7 +2523,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2532,7 +2532,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 3,
@@ -2573,7 +2573,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2582,7 +2582,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 3,
@@ -2623,7 +2623,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2632,7 +2632,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 3,
@@ -2673,7 +2673,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2682,7 +2682,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_a
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 28,
@@ -2723,7 +2723,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2732,7 +2732,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_b
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 28,
@@ -2773,7 +2773,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2782,7 +2782,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: dot_plot_choice_c
-test("dot-plot - Creating dot plots", () => {
+test("dot-plot - Creating dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 28,
@@ -2823,7 +2823,7 @@ test("dot-plot - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2832,7 +2832,7 @@ test("dot-plot - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: image_1
-test("dot-plot - Reading dot plots frequency tables", () => {
+test("dot-plot - Reading dot plots frequency tables", async () => {
 	const input = {
 	"axis": {
 		"max": 86,
@@ -2877,7 +2877,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2886,7 +2886,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: image_1
-test("dot-plot - Reading dot plots frequency tables", () => {
+test("dot-plot - Reading dot plots frequency tables", async () => {
 	const input = {
 	"axis": {
 		"max": 47,
@@ -2931,7 +2931,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2940,7 +2940,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: image_1
-test("dot-plot - Reading dot plots frequency tables", () => {
+test("dot-plot - Reading dot plots frequency tables", async () => {
 	const input = {
 	"axis": {
 		"max": 16,
@@ -3001,7 +3001,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3010,7 +3010,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: image_1
-test("dot-plot - Reading dot plots frequency tables", () => {
+test("dot-plot - Reading dot plots frequency tables", async () => {
 	const input = {
 	"axis": {
 		"max": 8,
@@ -3063,7 +3063,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3072,7 +3072,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: image_1
-test("dot-plot - Reading dot plots frequency tables", () => {
+test("dot-plot - Reading dot plots frequency tables", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -3149,7 +3149,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3158,7 +3158,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: image_1
-test("dot-plot - Reading dot plots frequency tables", () => {
+test("dot-plot - Reading dot plots frequency tables", async () => {
 	const input = {
 	"axis": {
 		"max": 47,
@@ -3199,7 +3199,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3208,7 +3208,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: image_1
-test("dot-plot - Reading dot plots frequency tables", () => {
+test("dot-plot - Reading dot plots frequency tables", async () => {
 	const input = {
 	"axis": {
 		"max": 45,
@@ -3261,7 +3261,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3270,7 +3270,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: image_1
-test("dot-plot - Reading dot plots frequency tables", () => {
+test("dot-plot - Reading dot plots frequency tables", async () => {
 	const input = {
 	"axis": {
 		"max": 8,
@@ -3323,7 +3323,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3332,7 +3332,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: image_1
-test("dot-plot - Reading dot plots frequency tables", () => {
+test("dot-plot - Reading dot plots frequency tables", async () => {
 	const input = {
 	"axis": {
 		"max": 6,
@@ -3381,7 +3381,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3390,7 +3390,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: image_1
-test("dot-plot - Reading dot plots frequency tables", () => {
+test("dot-plot - Reading dot plots frequency tables", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -3439,7 +3439,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3448,7 +3448,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: image_1
-test("dot-plot - Reading dot plots frequency tables", () => {
+test("dot-plot - Reading dot plots frequency tables", async () => {
 	const input = {
 	"axis": {
 		"max": 6,
@@ -3497,7 +3497,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3506,7 +3506,7 @@ test("dot-plot - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_1
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 60,
@@ -3559,7 +3559,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3568,7 +3568,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_2
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 60,
@@ -3617,7 +3617,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3626,7 +3626,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_1
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -3675,7 +3675,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3684,7 +3684,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_1
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 9,
@@ -3733,7 +3733,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3742,7 +3742,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_2
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 9,
@@ -3795,7 +3795,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3804,7 +3804,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_1
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 8,
@@ -3853,7 +3853,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3862,7 +3862,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_2
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 8,
@@ -3919,7 +3919,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3928,7 +3928,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_1
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -3981,7 +3981,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3990,7 +3990,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_1
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 9,
@@ -4035,7 +4035,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4044,7 +4044,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_2
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 9,
@@ -4089,7 +4089,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4098,7 +4098,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_1
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 5,
@@ -4143,7 +4143,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4152,7 +4152,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_2
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 5,
@@ -4197,7 +4197,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4206,7 +4206,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_1
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 4,
@@ -4251,7 +4251,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4260,7 +4260,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_1
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 3.8,
@@ -4329,7 +4329,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4338,7 +4338,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_1
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 12,
@@ -4395,7 +4395,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4404,7 +4404,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_1
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 12,
@@ -4477,7 +4477,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4486,7 +4486,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_1
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 5,
@@ -4527,7 +4527,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4536,7 +4536,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Estimate center using dot plots
 // Widget key: image_2
-test("dot-plot - Estimate center using dot plots", () => {
+test("dot-plot - Estimate center using dot plots", async () => {
 	const input = {
 	"axis": {
 		"max": 5,
@@ -4577,7 +4577,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4586,7 +4586,7 @@ test("dot-plot - Estimate center using dot plots", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_1
-test("dot-plot - Calculating the mean data displays", () => {
+test("dot-plot - Calculating the mean data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -4627,7 +4627,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4636,7 +4636,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_1
-test("dot-plot - Calculating the mean data displays", () => {
+test("dot-plot - Calculating the mean data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -4677,7 +4677,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4686,7 +4686,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_1
-test("dot-plot - Calculating the mean data displays", () => {
+test("dot-plot - Calculating the mean data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 86,
@@ -4727,7 +4727,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4736,7 +4736,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_1
-test("dot-plot - Calculating the mean data displays", () => {
+test("dot-plot - Calculating the mean data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 45,
@@ -4777,7 +4777,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4786,7 +4786,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_1
-test("dot-plot - Calculating the mean data displays", () => {
+test("dot-plot - Calculating the mean data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 5,
@@ -4827,7 +4827,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4836,7 +4836,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_1
-test("dot-plot - Calculating the mean data displays", () => {
+test("dot-plot - Calculating the mean data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 6,
@@ -4873,7 +4873,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4882,7 +4882,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_1
-test("dot-plot - Calculating the mean data displays", () => {
+test("dot-plot - Calculating the mean data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 7,
@@ -4915,7 +4915,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4924,7 +4924,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_1
-test("dot-plot - Calculating the mean data displays", () => {
+test("dot-plot - Calculating the mean data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 28,
@@ -4965,7 +4965,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4974,7 +4974,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_1
-test("dot-plot - Calculating the mean data displays", () => {
+test("dot-plot - Calculating the mean data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 3,
@@ -5015,7 +5015,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5024,7 +5024,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_2
-test("dot-plot - Calculating the mean data displays", () => {
+test("dot-plot - Calculating the mean data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 5,
@@ -5057,7 +5057,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5066,7 +5066,7 @@ test("dot-plot - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: image_1
-test("dot-plot - Calculating the median data displays", () => {
+test("dot-plot - Calculating the median data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 9,
@@ -5111,7 +5111,7 @@ test("dot-plot - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5120,7 +5120,7 @@ test("dot-plot - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: image_2
-test("dot-plot - Calculating the median data displays", () => {
+test("dot-plot - Calculating the median data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 86,
@@ -5165,7 +5165,7 @@ test("dot-plot - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5174,7 +5174,7 @@ test("dot-plot - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: image_2
-test("dot-plot - Calculating the median data displays", () => {
+test("dot-plot - Calculating the median data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 7,
@@ -5215,7 +5215,7 @@ test("dot-plot - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5224,7 +5224,7 @@ test("dot-plot - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Effects of shifting, adding, & removing a data point
 // Widget key: image_1
-test("dot-plot - Effects of shifting adding removing a data", () => {
+test("dot-plot - Effects of shifting adding removing a data", async () => {
 	const input = {
 	"axis": {
 		"max": 40,
@@ -5273,7 +5273,7 @@ test("dot-plot - Effects of shifting adding removing a data", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5282,7 +5282,7 @@ test("dot-plot - Effects of shifting adding removing a data", () => {
 // Course: 6th grade math
 // Exercise: Effects of shifting, adding, & removing a data point
 // Widget key: image_1
-test("dot-plot - Effects of shifting adding removing a data", () => {
+test("dot-plot - Effects of shifting adding removing a data", async () => {
 	const input = {
 	"axis": {
 		"max": 5000,
@@ -5327,7 +5327,7 @@ test("dot-plot - Effects of shifting adding removing a data", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5336,7 +5336,7 @@ test("dot-plot - Effects of shifting adding removing a data", () => {
 // Course: 6th grade math
 // Exercise: Effects of shifting, adding, & removing a data point
 // Widget key: image_1
-test("dot-plot - Effects of shifting adding removing a data", () => {
+test("dot-plot - Effects of shifting adding removing a data", async () => {
 	const input = {
 	"axis": {
 		"max": 100,
@@ -5381,7 +5381,7 @@ test("dot-plot - Effects of shifting adding removing a data", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5390,7 +5390,7 @@ test("dot-plot - Effects of shifting adding removing a data", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: image_1
-test("dot-plot - Mean absolute deviation MAD", () => {
+test("dot-plot - Mean absolute deviation MAD", async () => {
 	const input = {
 	"axis": {
 		"max": 6,
@@ -5439,7 +5439,7 @@ test("dot-plot - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5448,7 +5448,7 @@ test("dot-plot - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: image_1
-test("dot-plot - Mean absolute deviation MAD", () => {
+test("dot-plot - Mean absolute deviation MAD", async () => {
 	const input = {
 	"axis": {
 		"max": 27,
@@ -5489,7 +5489,7 @@ test("dot-plot - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5498,7 +5498,7 @@ test("dot-plot - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: image_1
-test("dot-plot - Mean absolute deviation MAD", () => {
+test("dot-plot - Mean absolute deviation MAD", async () => {
 	const input = {
 	"axis": {
 		"max": 45,
@@ -5543,7 +5543,7 @@ test("dot-plot - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5552,7 +5552,7 @@ test("dot-plot - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_1
-test("dot-plot - Comparing data displays", () => {
+test("dot-plot - Comparing data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 16,
@@ -5617,7 +5617,7 @@ test("dot-plot - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5626,7 +5626,7 @@ test("dot-plot - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_1
-test("dot-plot - Comparing data displays", () => {
+test("dot-plot - Comparing data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -5703,7 +5703,7 @@ test("dot-plot - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5712,7 +5712,7 @@ test("dot-plot - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_2
-test("dot-plot - Comparing data displays", () => {
+test("dot-plot - Comparing data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 24,
@@ -5777,7 +5777,7 @@ test("dot-plot - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5786,7 +5786,7 @@ test("dot-plot - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_2
-test("dot-plot - Comparing data displays", () => {
+test("dot-plot - Comparing data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 24,
@@ -5851,7 +5851,7 @@ test("dot-plot - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5860,7 +5860,7 @@ test("dot-plot - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_1
-test("dot-plot - Comparing data displays", () => {
+test("dot-plot - Comparing data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -5937,7 +5937,7 @@ test("dot-plot - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5946,7 +5946,7 @@ test("dot-plot - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_1
-test("dot-plot - Comparing data displays", () => {
+test("dot-plot - Comparing data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 16,
@@ -6011,7 +6011,7 @@ test("dot-plot - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6020,7 +6020,7 @@ test("dot-plot - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("dot-plot - Shape of distributions", () => {
+test("dot-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -6077,7 +6077,7 @@ test("dot-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6086,7 +6086,7 @@ test("dot-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("dot-plot - Shape of distributions", () => {
+test("dot-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -6147,7 +6147,7 @@ test("dot-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6156,7 +6156,7 @@ test("dot-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("dot-plot - Shape of distributions", () => {
+test("dot-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 15,
@@ -6221,7 +6221,7 @@ test("dot-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6230,7 +6230,7 @@ test("dot-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("dot-plot - Shape of distributions", () => {
+test("dot-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 12,
@@ -6295,7 +6295,7 @@ test("dot-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6304,7 +6304,7 @@ test("dot-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("dot-plot - Shape of distributions", () => {
+test("dot-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -6361,7 +6361,7 @@ test("dot-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6370,7 +6370,7 @@ test("dot-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("dot-plot - Shape of distributions", () => {
+test("dot-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -6435,7 +6435,7 @@ test("dot-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6444,7 +6444,7 @@ test("dot-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("dot-plot - Shape of distributions", () => {
+test("dot-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 26,
@@ -6497,7 +6497,7 @@ test("dot-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6506,7 +6506,7 @@ test("dot-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_1
-test("dot-plot - Shape of distributions", () => {
+test("dot-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 12,
@@ -6563,7 +6563,7 @@ test("dot-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6572,7 +6572,7 @@ test("dot-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("dot-plot - Shape of distributions", () => {
+test("dot-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 4,
@@ -6633,7 +6633,7 @@ test("dot-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6642,7 +6642,7 @@ test("dot-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("dot-plot - Shape of distributions", () => {
+test("dot-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -6699,7 +6699,7 @@ test("dot-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6708,7 +6708,7 @@ test("dot-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("dot-plot - Shape of distributions", () => {
+test("dot-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -6761,7 +6761,7 @@ test("dot-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6770,7 +6770,7 @@ test("dot-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("dot-plot - Shape of distributions", () => {
+test("dot-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 50,
@@ -6863,7 +6863,7 @@ test("dot-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6872,7 +6872,7 @@ test("dot-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_2
-test("dot-plot - Clusters gaps peaks in data distributions", () => {
+test("dot-plot - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -6941,7 +6941,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6950,7 +6950,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_2
-test("dot-plot - Clusters gaps peaks in data distributions", () => {
+test("dot-plot - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 15,
@@ -7023,7 +7023,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7032,7 +7032,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_2
-test("dot-plot - Clusters gaps peaks in data distributions", () => {
+test("dot-plot - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 44,
@@ -7129,7 +7129,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7138,7 +7138,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_2
-test("dot-plot - Clusters gaps peaks in data distributions", () => {
+test("dot-plot - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -7207,7 +7207,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7216,7 +7216,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_2
-test("dot-plot - Clusters gaps peaks in data distributions", () => {
+test("dot-plot - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -7285,7 +7285,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7294,7 +7294,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_3
-test("dot-plot - Clusters gaps peaks in data distributions", () => {
+test("dot-plot - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 30,
@@ -7367,7 +7367,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7376,7 +7376,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_2
-test("dot-plot - Clusters gaps peaks in data distributions", () => {
+test("dot-plot - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -7445,7 +7445,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7454,7 +7454,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_2
-test("dot-plot - Clusters gaps peaks in data distributions", () => {
+test("dot-plot - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 12,
@@ -7531,7 +7531,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7540,7 +7540,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_2
-test("dot-plot - Clusters gaps peaks in data distributions", () => {
+test("dot-plot - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 50,
@@ -7649,7 +7649,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7658,7 +7658,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Clusters, gaps, & peaks in data distributions
 // Widget key: image_2
-test("dot-plot - Clusters gaps peaks in data distributions", () => {
+test("dot-plot - Clusters gaps peaks in data distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 26,
@@ -7719,7 +7719,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7728,7 +7728,7 @@ test("dot-plot - Clusters gaps peaks in data distributions", () => {
 // Course: 6th grade math
 // Exercise: Interquartile range (IQR)
 // Widget key: image_2
-test("dot-plot - Interquartile range IQR", () => {
+test("dot-plot - Interquartile range IQR", async () => {
 	const input = {
 	"axis": {
 		"max": 86,
@@ -7773,7 +7773,7 @@ test("dot-plot - Interquartile range IQR", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7782,7 +7782,7 @@ test("dot-plot - Interquartile range IQR", () => {
 // Course: 6th grade math
 // Exercise: Interquartile range (IQR)
 // Widget key: image_2
-test("dot-plot - Interquartile range IQR", () => {
+test("dot-plot - Interquartile range IQR", async () => {
 	const input = {
 	"axis": {
 		"max": 48,
@@ -7827,7 +7827,7 @@ test("dot-plot - Interquartile range IQR", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7836,7 +7836,7 @@ test("dot-plot - Interquartile range IQR", () => {
 // Course: 6th grade math
 // Exercise: Interquartile range (IQR)
 // Widget key: image_2
-test("dot-plot - Interquartile range IQR", () => {
+test("dot-plot - Interquartile range IQR", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -7885,7 +7885,7 @@ test("dot-plot - Interquartile range IQR", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7894,7 +7894,7 @@ test("dot-plot - Interquartile range IQR", () => {
 // Course: 6th grade math
 // Exercise: Interquartile range (IQR)
 // Widget key: image_2
-test("dot-plot - Interquartile range IQR", () => {
+test("dot-plot - Interquartile range IQR", async () => {
 	const input = {
 	"axis": {
 		"max": 6,
@@ -7939,7 +7939,7 @@ test("dot-plot - Interquartile range IQR", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7948,7 +7948,7 @@ test("dot-plot - Interquartile range IQR", () => {
 // Course: 6th grade math
 // Exercise: Interquartile range (IQR)
 // Widget key: image_2
-test("dot-plot - Interquartile range IQR", () => {
+test("dot-plot - Interquartile range IQR", async () => {
 	const input = {
 	"axis": {
 		"max": 7,
@@ -7997,7 +7997,7 @@ test("dot-plot - Interquartile range IQR", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8006,7 +8006,7 @@ test("dot-plot - Interquartile range IQR", () => {
 // Course: 6th grade math
 // Exercise: Interquartile range (IQR)
 // Widget key: image_2
-test("dot-plot - Interquartile range IQR", () => {
+test("dot-plot - Interquartile range IQR", async () => {
 	const input = {
 	"axis": {
 		"max": 8,
@@ -8051,7 +8051,7 @@ test("dot-plot - Interquartile range IQR", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8060,7 +8060,7 @@ test("dot-plot - Interquartile range IQR", () => {
 // Course: 6th grade math
 // Exercise: Interquartile range (IQR)
 // Widget key: image_2
-test("dot-plot - Interquartile range IQR", () => {
+test("dot-plot - Interquartile range IQR", async () => {
 	const input = {
 	"axis": {
 		"max": 15,
@@ -8109,7 +8109,7 @@ test("dot-plot - Interquartile range IQR", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8118,7 +8118,7 @@ test("dot-plot - Interquartile range IQR", () => {
 // Course: 6th grade math
 // Exercise: Interquartile range (IQR)
 // Widget key: image_2
-test("dot-plot - Interquartile range IQR", () => {
+test("dot-plot - Interquartile range IQR", async () => {
 	const input = {
 	"axis": {
 		"max": 4,
@@ -8163,7 +8163,7 @@ test("dot-plot - Interquartile range IQR", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDotPlot(parseResult.data)
+	const svg = await generateDotPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

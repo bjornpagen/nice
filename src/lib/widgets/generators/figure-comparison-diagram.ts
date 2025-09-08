@@ -136,7 +136,7 @@ export type FigureComparisonDiagramProps = z.infer<typeof FigureComparisonDiagra
  * Generates diagrams for comparing multiple independent geometric figures.
  * Perfect for scale copies, similarity problems, and geometric comparisons.
  */
-export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureComparisonDiagramPropsSchema> = (data) => {
+export const generateFigureComparisonDiagram: WidgetGenerator<typeof FigureComparisonDiagramPropsSchema> = async (data) => {
 	const { width, height, figures, layout, spacing } = data
 
 	if (figures.length === 0) return `<svg width="${width}" height="${height}" />`

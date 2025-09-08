@@ -26,7 +26,7 @@ type TreeDiagramInput = z.input<typeof TreeDiagramPropsSchema>
 // Course: 7th grade math
 // Exercise: Sample spaces for compound events
 // Widget key: image_1
-test("tree-diagram - Sample spaces for compound events", () => {
+test("tree-diagram - Sample spaces for compound events", async () => {
 	const input = {
 	"edges": [
 		{
@@ -192,7 +192,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTreeDiagram(parseResult.data)
+	const svg = await generateTreeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -201,7 +201,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 // Course: 7th grade math
 // Exercise: Sample spaces for compound events
 // Widget key: image_1
-test("tree-diagram - Sample spaces for compound events", () => {
+test("tree-diagram - Sample spaces for compound events", async () => {
 	const input = {
 	"edges": [
 		{
@@ -352,7 +352,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTreeDiagram(parseResult.data)
+	const svg = await generateTreeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -361,7 +361,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 // Course: 7th grade math
 // Exercise: Sample spaces for compound events
 // Widget key: image_2
-test("tree-diagram - Sample spaces for compound events", () => {
+test("tree-diagram - Sample spaces for compound events", async () => {
 	const input = {
 	"edges": [
 		{
@@ -527,7 +527,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTreeDiagram(parseResult.data)
+	const svg = await generateTreeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -536,7 +536,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 // Course: 7th grade math
 // Exercise: Sample spaces for compound events
 // Widget key: image_2
-test("tree-diagram - Sample spaces for compound events", () => {
+test("tree-diagram - Sample spaces for compound events", async () => {
 	const input = {
 	"edges": [
 		{
@@ -747,7 +747,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTreeDiagram(parseResult.data)
+	const svg = await generateTreeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -756,7 +756,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 // Course: 7th grade math
 // Exercise: Sample spaces for compound events
 // Widget key: image_1
-test("tree-diagram - Sample spaces for compound events", () => {
+test("tree-diagram - Sample spaces for compound events", async () => {
 	const input = {
 	"edges": [
 		{
@@ -847,7 +847,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTreeDiagram(parseResult.data)
+	const svg = await generateTreeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -856,7 +856,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 // Course: 7th grade math
 // Exercise: Sample spaces for compound events
 // Widget key: image_2
-test("tree-diagram - Sample spaces for compound events", () => {
+test("tree-diagram - Sample spaces for compound events", async () => {
 	const input = {
 	"edges": [
 		{
@@ -1097,7 +1097,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTreeDiagram(parseResult.data)
+	const svg = await generateTreeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1106,7 +1106,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 // Course: 7th grade math
 // Exercise: Sample spaces for compound events
 // Widget key: image_1
-test("tree-diagram - Sample spaces for compound events", () => {
+test("tree-diagram - Sample spaces for compound events", async () => {
 	const input = {
 	"edges": [
 		{
@@ -1197,7 +1197,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTreeDiagram(parseResult.data)
+	const svg = await generateTreeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1206,7 +1206,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 // Course: 7th grade math
 // Exercise: Sample spaces for compound events
 // Widget key: image_2
-test("tree-diagram - Sample spaces for compound events", () => {
+test("tree-diagram - Sample spaces for compound events", async () => {
 	const input = {
 	"edges": [
 		{
@@ -1447,7 +1447,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTreeDiagram(parseResult.data)
+	const svg = await generateTreeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1456,7 +1456,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 // Course: 7th grade math
 // Exercise: Sample spaces for compound events
 // Widget key: image_1
-test("tree-diagram - Sample spaces for compound events", () => {
+test("tree-diagram - Sample spaces for compound events", async () => {
 	const input = {
 	"edges": [
 		{
@@ -1622,7 +1622,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTreeDiagram(parseResult.data)
+	const svg = await generateTreeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1631,7 +1631,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 // Course: 7th grade math
 // Exercise: Sample spaces for compound events
 // Widget key: image_2
-test("tree-diagram - Sample spaces for compound events", () => {
+test("tree-diagram - Sample spaces for compound events", async () => {
 	const input = {
 	"edges": [
 		{
@@ -1782,7 +1782,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTreeDiagram(parseResult.data)
+	const svg = await generateTreeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1791,7 +1791,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 // Course: 7th grade math
 // Exercise: Sample spaces for compound events
 // Widget key: image_1
-test("tree-diagram - Sample spaces for compound events", () => {
+test("tree-diagram - Sample spaces for compound events", async () => {
 	const input = {
 	"edges": [
 		{
@@ -2032,7 +2032,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTreeDiagram(parseResult.data)
+	const svg = await generateTreeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2041,7 +2041,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 // Course: 7th grade math
 // Exercise: Sample spaces for compound events
 // Widget key: image_2
-test("tree-diagram - Sample spaces for compound events", () => {
+test("tree-diagram - Sample spaces for compound events", async () => {
 	const input = {
 	"edges": [
 		{
@@ -2252,7 +2252,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTreeDiagram(parseResult.data)
+	const svg = await generateTreeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2261,7 +2261,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 // Course: 7th grade math
 // Exercise: Sample spaces for compound events
 // Widget key: image_3
-test("tree-diagram - Sample spaces for compound events", () => {
+test("tree-diagram - Sample spaces for compound events", async () => {
 	const input = {
 	"edges": [
 		{
@@ -2427,7 +2427,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTreeDiagram(parseResult.data)
+	const svg = await generateTreeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2436,7 +2436,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 // Course: 7th grade math
 // Exercise: Sample spaces for compound events
 // Widget key: image_1
-test("tree-diagram - Sample spaces for compound events", () => {
+test("tree-diagram - Sample spaces for compound events", async () => {
 	const input = {
 	"edges": [
 		{
@@ -2617,7 +2617,7 @@ test("tree-diagram - Sample spaces for compound events", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTreeDiagram(parseResult.data)
+	const svg = await generateTreeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

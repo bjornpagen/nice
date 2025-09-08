@@ -95,7 +95,7 @@ export type HistogramProps = z.infer<typeof HistogramPropsSchema>
  * Histograms are used to visualize the distribution of continuous numerical data by dividing it into intervals (bins).
  * Unlike bar charts, histogram bars are adjacent to each other.
  */
-export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (data) => {
+export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = async (data) => {
 	const { width, height, title, xAxis, yAxis, bins, separators } = data
 
 	// Runtime validation (no refine allowed in schema for structured outputs)

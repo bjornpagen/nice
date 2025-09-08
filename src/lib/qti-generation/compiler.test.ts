@@ -12,14 +12,14 @@ import type { AssessmentItemInput } from "./schemas"
 describe("QTI Compiler", () => {
 	// Dynamic tests generated from unified examples
 	for (const example of allExamples) {
-		test(`should correctly compile ${example.identifier}`, () => {
-			const compiledXml = compile(example)
+		test(`should correctly compile ${example.identifier}`, async () => {
+			const compiledXml = await compile(example)
 			expect(compiledXml).toMatchSnapshot()
 			expect(compiledXml).toContain(`identifier="${example.identifier}"`)
 		})
 	}
 
-	test("deduplicates identical prompt text paragraph from body", () => {
+	test("deduplicates identical prompt text paragraph from body", async () => {
 		const promptText = "Which is the smallest truck that they can use?"
 		const item: AssessmentItemInput = {
 			identifier: "moving-truck-volume-choice",
@@ -61,12 +61,12 @@ describe("QTI Compiler", () => {
 			}
 		}
 
-		const xml = compile(item)
+		const xml = await compile(item)
 		const occurrences = (xml.match(new RegExp(promptText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length
 		expect(occurrences).toBe(1)
 	})
 
-	test("deduplicates multi-paragraph instruction when prompt equals their concatenation", () => {
+	test("deduplicates multi-paragraph instruction when prompt equals their concatenation", async () => {
 		const p1 = "Choose the best phrase to fill in the blank."
 		const p2 = "A diploid organism has _____ in each cell."
 		const item: AssessmentItemInput = {
@@ -107,7 +107,7 @@ describe("QTI Compiler", () => {
 			}
 		}
 
-		const xml = compile(item)
+		const xml = await compile(item)
 		// ensure each sentence appears only once (in prompt) – not duplicated in body paragraphs
 		const occ1 = (xml.match(new RegExp(p1.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length
 		const occ2 = (xml.match(new RegExp(p2.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length
@@ -117,7 +117,7 @@ describe("QTI Compiler", () => {
 })
 
 describe("QTI Compiler Robustness Checks", () => {
-	test("should throw for duplicate responseIdentifier across dataTable dropdowns and interactions", () => {
+	test("should throw for duplicate responseIdentifier across dataTable dropdowns and interactions", async () => {
 		const item: AssessmentItemInput = {
 			identifier: "duplicate-response-id-table-dropdowns",
 			title: "Duplicate Response ID in Data Table Dropdowns",
@@ -163,7 +163,7 @@ describe("QTI Compiler Robustness Checks", () => {
 			feedback: { correct: [], incorrect: [] }
 		}
 
-		const result = errors.trySync(() => compile(item))
+		const result = await errors.try(compile(item))
 		expect(result.error).toBeInstanceOf(Error)
 		if (result.error) {
 			expect(errors.is(result.error, ErrDuplicateResponseIdentifier)).toBe(true)
@@ -171,7 +171,7 @@ describe("QTI Compiler Robustness Checks", () => {
 		}
 	})
 
-	test("should throw for non-unique choice.identifier (case-sensitive) within a single dataTable dropdown", () => {
+	test("should throw for non-unique choice.identifier (case-sensitive) within a single dataTable dropdown", async () => {
 		const item: AssessmentItemInput = {
 			identifier: "non-unique-choice-id-table-dropdown",
 			title: "Non-Unique Choice ID in Data Table Dropdown",
@@ -203,7 +203,7 @@ describe("QTI Compiler Robustness Checks", () => {
 			feedback: { correct: [], incorrect: [] }
 		}
 
-		const result = errors.trySync(() => compile(item))
+		const result = await errors.try(compile(item))
 		expect(result.error).toBeInstanceOf(Error)
 		if (result.error) {
 			expect(errors.is(result.error, ErrDuplicateChoiceIdentifier)).toBe(true)
@@ -247,7 +247,7 @@ describe("QTI Compiler Robustness Checks", () => {
 		expect(result.error).toBeUndefined() // Should compile successfully
 	})
 
-	test("should throw for invalid rowHeaderKey in dataTable", () => {
+	test("should throw for invalid rowHeaderKey in dataTable", async () => {
 		const item: AssessmentItemInput = {
 			identifier: "invalid-row-header-key-table",
 			title: "Invalid Row Header Key in Data Table",
@@ -286,7 +286,7 @@ describe("QTI Compiler Robustness Checks", () => {
 			feedback: { correct: [], incorrect: [] }
 		}
 
-		const result = errors.trySync(() => compile(item))
+		const result = await errors.try(compile(item))
 		expect(result.error).toBeInstanceOf(Error)
 		if (result.error) {
 			expect(errors.is(result.error, ErrInvalidRowHeaderKey)).toBe(true)

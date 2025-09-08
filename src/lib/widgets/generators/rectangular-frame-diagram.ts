@@ -123,7 +123,7 @@ export type RectangularFrameDiagramProps = z.infer<typeof RectangularFrameDiagra
  * (like picture frames with depth). It renders the frame in an isometric view to provide
  * depth perception.
  */
-export const generateRectangularFrameDiagram: WidgetGenerator<typeof RectangularFrameDiagramPropsSchema> = (data) => {
+export const generateRectangularFrameDiagram: WidgetGenerator<typeof RectangularFrameDiagramPropsSchema> = async (data) => {
 	const {
 		width,
 		height,

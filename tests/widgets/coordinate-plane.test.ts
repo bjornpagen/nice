@@ -6,7 +6,7 @@ import { CoordinatePlaneComprehensivePropsSchema, generateCoordinatePlane } from
 
 type CoordinatePlaneInput = z.input<typeof CoordinatePlaneComprehensivePropsSchema>
 
-test("coordinate plane - kinetic energy vs mass", () => {
+test("coordinate plane - kinetic energy vs mass", async () => {
 	const input = {
 		type: "coordinatePlane",
 		width: 363,
@@ -48,7 +48,7 @@ test("coordinate plane - kinetic energy vs mass", () => {
 	const parsed = validation.data
 
 	// Generate the SVG
-	const svg = generateCoordinatePlane(parsed)
+	const svg = await generateCoordinatePlane(parsed)
 
 	// Snapshot test the generated SVG
 	expect(svg).toMatchSnapshot()

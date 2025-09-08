@@ -6,7 +6,7 @@ import { generatePieChart, PieChartWidgetPropsSchema } from "@/lib/widgets/gener
 
 type PieChartInput = z.input<typeof PieChartWidgetPropsSchema>
 
-test("pie chart - earth land breakdown", () => {
+test("pie chart - earth land breakdown", async () => {
 	const input = {
 		type: "pieChart",
 		width: 350,
@@ -46,6 +46,6 @@ test("pie chart - earth land breakdown", () => {
 		throw errors.wrap(parseResult.error, "input validation")
 	}
 	const parsed = parseResult.data
-	const svg = generatePieChart(parsed)
+	const svg = await generatePieChart(parsed)
 	expect(svg).toMatchSnapshot()
 })

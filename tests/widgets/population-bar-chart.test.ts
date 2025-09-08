@@ -11,7 +11,7 @@ function normalizeClipIds(svg: string): string {
 
 type PopulationBarChartInput = z.input<typeof PopulationBarChartPropsSchema>
 
-test("population bar chart - elk population 1990-2005", () => {
+test("population bar chart - elk population 1990-2005", async () => {
 	const input = {
 		type: "populationBarChart",
 		width: 700,
@@ -52,12 +52,12 @@ test("population bar chart - elk population 1990-2005", () => {
 		throw errors.wrap(validation.error, "input validation")
 	}
 	const parsed = validation.data
-	const svg = generatePopulationBarChart(parsed)
+	const svg = await generatePopulationBarChart(parsed)
 	expect(normalizeClipIds(svg)).toMatchSnapshot()
 })
 
 // Verifies auto label thinning when visible list is empty to prevent overcrowding
-test("population bar chart - auto label thinning when visible list empty", () => {
+test("population bar chart - auto label thinning when visible list empty", async () => {
 	const input = {
 		type: "populationBarChart",
 		width: 390,
@@ -93,7 +93,7 @@ test("population bar chart - auto label thinning when visible list empty", () =>
 		throw errors.wrap(validation.error, "input validation")
 	}
 	const parsed = validation.data
-	const svg = generatePopulationBarChart(parsed)
+	const svg = await generatePopulationBarChart(parsed)
 
 	// Count x-axis labels (middle-anchored only)
 	const xTickLabelMatches = svg.match(/<text[^>]*text-anchor="middle"[^>]*dominant-baseline="hanging"[^>]*>[^<]+<\/text>/g) ?? []
@@ -112,7 +112,7 @@ test("population bar chart - auto label thinning when visible list empty", () =>
 	expect(svg).toContain(">1990<")
 })
 
-test("population bar chart - bird population 2010-2015", () => {
+test("population bar chart - bird population 2010-2015", async () => {
 	const input = {
 		type: "populationBarChart",
 		width: 360,
@@ -143,11 +143,11 @@ test("population bar chart - bird population 2010-2015", () => {
 		throw errors.wrap(validation.error, "input validation")
 	}
 	const parsed = validation.data
-	const svg = generatePopulationBarChart(parsed)
+	const svg = await generatePopulationBarChart(parsed)
 	expect(normalizeClipIds(svg)).toMatchSnapshot()
 })
 
-test("population bar chart - aftershocks 4 weeks", () => {
+test("population bar chart - aftershocks 4 weeks", async () => {
 	const input = {
 		type: "populationBarChart",
 		width: 300,
@@ -176,6 +176,6 @@ test("population bar chart - aftershocks 4 weeks", () => {
 		throw errors.wrap(validation.error, "input validation")
 	}
 	const parsed = validation.data
-	const svg = generatePopulationBarChart(parsed)
+	const svg = await generatePopulationBarChart(parsed)
 	expect(normalizeClipIds(svg)).toMatchSnapshot()
 })

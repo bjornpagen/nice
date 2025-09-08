@@ -26,7 +26,7 @@ type BoxPlotInput = z.input<typeof BoxPlotPropsSchema>
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -74,7 +74,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -83,7 +83,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 1,
@@ -125,7 +125,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -134,7 +134,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 15,
@@ -181,7 +181,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -190,7 +190,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_1
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 12,
@@ -234,7 +234,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -243,7 +243,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 8,
@@ -291,7 +291,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -300,7 +300,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -344,7 +344,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -353,7 +353,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 14,
@@ -399,7 +399,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -408,7 +408,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 15,
@@ -455,7 +455,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -464,7 +464,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 14,
@@ -510,7 +510,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -519,7 +519,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 26,
@@ -573,7 +573,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -582,7 +582,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 1,
@@ -624,7 +624,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -633,7 +633,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 1,
@@ -675,7 +675,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -684,7 +684,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 8,
@@ -732,7 +732,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -741,7 +741,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 8,
@@ -783,7 +783,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -792,7 +792,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_1
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 12,
@@ -836,7 +836,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -845,7 +845,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -897,7 +897,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -906,7 +906,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -954,7 +954,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -963,7 +963,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_1
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 12,
@@ -1007,7 +1007,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1016,7 +1016,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -1068,7 +1068,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1077,7 +1077,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 26,
@@ -1131,7 +1131,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1140,7 +1140,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -1192,7 +1192,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1201,7 +1201,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -1245,7 +1245,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1254,7 +1254,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -1302,7 +1302,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1311,7 +1311,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -1363,7 +1363,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1372,7 +1372,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 26,
@@ -1426,7 +1426,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1435,7 +1435,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -1487,7 +1487,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1496,7 +1496,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 15,
@@ -1543,7 +1543,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1552,7 +1552,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -1604,7 +1604,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1613,7 +1613,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 14,
@@ -1659,7 +1659,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1668,7 +1668,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Reading box plots
 // Widget key: image_2
-test("box-plot - Reading box plots", () => {
+test("box-plot - Reading box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 10,
@@ -1712,7 +1712,7 @@ test("box-plot - Reading box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1721,7 +1721,7 @@ test("box-plot - Reading box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_a
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 29,
@@ -1767,7 +1767,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1776,7 +1776,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_b
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 29,
@@ -1822,7 +1822,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1831,7 +1831,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_c
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 29,
@@ -1877,7 +1877,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1886,7 +1886,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: image_1
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -1925,7 +1925,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1934,7 +1934,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_a
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 80,
@@ -1996,7 +1996,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2005,7 +2005,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_b
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 80,
@@ -2067,7 +2067,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2076,7 +2076,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_c
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 80,
@@ -2138,7 +2138,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2147,7 +2147,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: image_1
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 16,
@@ -2195,7 +2195,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2204,7 +2204,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_a
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 40,
@@ -2252,7 +2252,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2261,7 +2261,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_b
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 40,
@@ -2309,7 +2309,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2318,7 +2318,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_c
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 40,
@@ -2366,7 +2366,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2375,7 +2375,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: image_1
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 30,
@@ -2423,7 +2423,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2432,7 +2432,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_a
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 36,
@@ -2480,7 +2480,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2489,7 +2489,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_b
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 36,
@@ -2537,7 +2537,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2546,7 +2546,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_c
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 36,
@@ -2594,7 +2594,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2603,7 +2603,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: image_1
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 36,
@@ -2651,7 +2651,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2660,7 +2660,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: image_1
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -2712,7 +2712,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2721,7 +2721,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: image_1
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 15,
@@ -2768,7 +2768,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2777,7 +2777,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_a
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 14,
@@ -2823,7 +2823,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2832,7 +2832,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_b
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 14,
@@ -2878,7 +2878,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2887,7 +2887,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_c
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 14,
@@ -2933,7 +2933,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2942,7 +2942,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: image_1
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 80,
@@ -3004,7 +3004,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3013,7 +3013,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: image_1
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 50,
@@ -3055,7 +3055,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3064,7 +3064,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: image_1
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 26,
@@ -3112,7 +3112,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3121,7 +3121,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_image
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 40,
@@ -3168,7 +3168,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3177,7 +3177,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: choice_a_boxplot
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 25,
@@ -3223,7 +3223,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3232,7 +3232,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: choice_b_boxplot
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 25,
@@ -3278,7 +3278,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3287,7 +3287,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: choice_c_boxplot
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 25,
@@ -3333,7 +3333,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3342,7 +3342,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_a
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 50,
@@ -3384,7 +3384,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3393,7 +3393,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_b
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 50,
@@ -3435,7 +3435,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3444,7 +3444,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_c
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 50,
@@ -3486,7 +3486,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3495,7 +3495,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: choice_a_boxplot
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 16,
@@ -3543,7 +3543,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3552,7 +3552,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: choice_b_boxplot
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 16,
@@ -3600,7 +3600,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3609,7 +3609,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: choice_c_boxplot
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 16,
@@ -3657,7 +3657,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3666,7 +3666,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_a
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -3718,7 +3718,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3727,7 +3727,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_b
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -3779,7 +3779,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3788,7 +3788,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_c
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -3840,7 +3840,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3849,7 +3849,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_a
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 15,
@@ -3896,7 +3896,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3905,7 +3905,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_b
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 15,
@@ -3952,7 +3952,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3961,7 +3961,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Creating box plots
 // Widget key: boxplot_choice_c
-test("box-plot - Creating box plots", () => {
+test("box-plot - Creating box plots", async () => {
 	const input = {
 	"axis": {
 		"max": 15,
@@ -4008,7 +4008,7 @@ test("box-plot - Creating box plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4017,7 +4017,7 @@ test("box-plot - Creating box plots", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: image_1
-test("box-plot - Interpreting quartiles", () => {
+test("box-plot - Interpreting quartiles", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -4069,7 +4069,7 @@ test("box-plot - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4078,7 +4078,7 @@ test("box-plot - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: image_1
-test("box-plot - Interpreting quartiles", () => {
+test("box-plot - Interpreting quartiles", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -4130,7 +4130,7 @@ test("box-plot - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4139,7 +4139,7 @@ test("box-plot - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: image_1
-test("box-plot - Interpreting quartiles", () => {
+test("box-plot - Interpreting quartiles", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -4191,7 +4191,7 @@ test("box-plot - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4200,7 +4200,7 @@ test("box-plot - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: image_1
-test("box-plot - Interpreting quartiles", () => {
+test("box-plot - Interpreting quartiles", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -4252,7 +4252,7 @@ test("box-plot - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4261,7 +4261,7 @@ test("box-plot - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: image_1
-test("box-plot - Interpreting quartiles", () => {
+test("box-plot - Interpreting quartiles", async () => {
 	const input = {
 	"axis": {
 		"max": 80,
@@ -4299,7 +4299,7 @@ test("box-plot - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4308,7 +4308,7 @@ test("box-plot - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: image_1
-test("box-plot - Interpreting quartiles", () => {
+test("box-plot - Interpreting quartiles", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -4360,7 +4360,7 @@ test("box-plot - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4369,7 +4369,7 @@ test("box-plot - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: image_1
-test("box-plot - Interpreting quartiles", () => {
+test("box-plot - Interpreting quartiles", async () => {
 	const input = {
 	"axis": {
 		"max": 150,
@@ -4411,7 +4411,7 @@ test("box-plot - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4420,7 +4420,7 @@ test("box-plot - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: image_1
-test("box-plot - Interpreting quartiles", () => {
+test("box-plot - Interpreting quartiles", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -4472,7 +4472,7 @@ test("box-plot - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4481,7 +4481,7 @@ test("box-plot - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: image_1
-test("box-plot - Interpreting quartiles", () => {
+test("box-plot - Interpreting quartiles", async () => {
 	const input = {
 	"axis": {
 		"max": 100,
@@ -4527,7 +4527,7 @@ test("box-plot - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4536,7 +4536,7 @@ test("box-plot - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: image_1
-test("box-plot - Interpreting quartiles", () => {
+test("box-plot - Interpreting quartiles", async () => {
 	const input = {
 	"axis": {
 		"max": 30,
@@ -4588,7 +4588,7 @@ test("box-plot - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4597,7 +4597,7 @@ test("box-plot - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_2
-test("box-plot - Comparing data displays", () => {
+test("box-plot - Comparing data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 16,
@@ -4638,7 +4638,7 @@ test("box-plot - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4647,7 +4647,7 @@ test("box-plot - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_2
-test("box-plot - Comparing data displays", () => {
+test("box-plot - Comparing data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -4699,7 +4699,7 @@ test("box-plot - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4708,7 +4708,7 @@ test("box-plot - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_2
-test("box-plot - Comparing data displays", () => {
+test("box-plot - Comparing data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -4760,7 +4760,7 @@ test("box-plot - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4769,7 +4769,7 @@ test("box-plot - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_2
-test("box-plot - Comparing data displays", () => {
+test("box-plot - Comparing data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 15,
@@ -4816,7 +4816,7 @@ test("box-plot - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4825,7 +4825,7 @@ test("box-plot - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_2
-test("box-plot - Comparing data displays", () => {
+test("box-plot - Comparing data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 15,
@@ -4872,7 +4872,7 @@ test("box-plot - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4881,7 +4881,7 @@ test("box-plot - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_2
-test("box-plot - Comparing data displays", () => {
+test("box-plot - Comparing data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 300,
@@ -4919,7 +4919,7 @@ test("box-plot - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4928,7 +4928,7 @@ test("box-plot - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_2
-test("box-plot - Comparing data displays", () => {
+test("box-plot - Comparing data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 16,
@@ -4969,7 +4969,7 @@ test("box-plot - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4978,7 +4978,7 @@ test("box-plot - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Comparing data displays
 // Widget key: image_2
-test("box-plot - Comparing data displays", () => {
+test("box-plot - Comparing data displays", async () => {
 	const input = {
 	"axis": {
 		"max": 300,
@@ -5016,7 +5016,7 @@ test("box-plot - Comparing data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5025,7 +5025,7 @@ test("box-plot - Comparing data displays", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_1
-test("box-plot - Shape of distributions", () => {
+test("box-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -5077,7 +5077,7 @@ test("box-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5086,7 +5086,7 @@ test("box-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("box-plot - Shape of distributions", () => {
+test("box-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 26,
@@ -5134,7 +5134,7 @@ test("box-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5143,7 +5143,7 @@ test("box-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("box-plot - Shape of distributions", () => {
+test("box-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 40,
@@ -5190,7 +5190,7 @@ test("box-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5199,7 +5199,7 @@ test("box-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("box-plot - Shape of distributions", () => {
+test("box-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 36,
@@ -5247,7 +5247,7 @@ test("box-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5256,7 +5256,7 @@ test("box-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_1
-test("box-plot - Shape of distributions", () => {
+test("box-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 36,
@@ -5304,7 +5304,7 @@ test("box-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5313,7 +5313,7 @@ test("box-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("box-plot - Shape of distributions", () => {
+test("box-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 30,
@@ -5360,7 +5360,7 @@ test("box-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5369,7 +5369,7 @@ test("box-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("box-plot - Shape of distributions", () => {
+test("box-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 50,
@@ -5411,7 +5411,7 @@ test("box-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5420,7 +5420,7 @@ test("box-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("box-plot - Shape of distributions", () => {
+test("box-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -5472,7 +5472,7 @@ test("box-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5481,7 +5481,7 @@ test("box-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("box-plot - Shape of distributions", () => {
+test("box-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 80,
@@ -5543,7 +5543,7 @@ test("box-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5552,7 +5552,7 @@ test("box-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("box-plot - Shape of distributions", () => {
+test("box-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 20,
@@ -5604,7 +5604,7 @@ test("box-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5613,7 +5613,7 @@ test("box-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("box-plot - Shape of distributions", () => {
+test("box-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 40,
@@ -5661,7 +5661,7 @@ test("box-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5670,7 +5670,7 @@ test("box-plot - Shape of distributions", () => {
 // Course: 6th grade math
 // Exercise: Shape of distributions
 // Widget key: image_2
-test("box-plot - Shape of distributions", () => {
+test("box-plot - Shape of distributions", async () => {
 	const input = {
 	"axis": {
 		"max": 15,
@@ -5717,7 +5717,7 @@ test("box-plot - Shape of distributions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxPlot(parseResult.data)
+	const svg = await generateBoxPlot(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

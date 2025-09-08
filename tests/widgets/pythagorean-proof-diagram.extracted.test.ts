@@ -26,7 +26,7 @@ type PythagoreanProofDiagramInput = z.input<typeof PythagoreanProofDiagramPropsS
 // Course: 8th grade math
 // Exercise: Use area of squares to visualize Pythagorean theorem
 // Widget key: image_1
-test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", () => {
+test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", async () => {
 	const input = {
 	"width": 281,
 	"height": 400,
@@ -44,7 +44,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	}
 
 	// Generate the widget
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -53,7 +53,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 // Course: 8th grade math
 // Exercise: Use area of squares to visualize Pythagorean theorem
 // Widget key: image_1
-test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", () => {
+test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", async () => {
 	const input = {
 	"width": 240,
 	"height": 193,
@@ -71,7 +71,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	}
 
 	// Generate the widget
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -80,7 +80,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 // Course: 8th grade math
 // Exercise: Use area of squares to visualize Pythagorean theorem
 // Widget key: image_1
-test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", () => {
+test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", async () => {
 	const input = {
 	"width": 300,
 	"height": 263,
@@ -98,7 +98,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	}
 
 	// Generate the widget
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -107,7 +107,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 // Course: 8th grade math
 // Exercise: Use area of squares to visualize Pythagorean theorem
 // Widget key: image_1
-test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", () => {
+test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", async () => {
 	const input = {
 	"width": 224,
 	"height": 240,
@@ -125,7 +125,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	}
 
 	// Generate the widget
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -134,7 +134,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 // Course: 8th grade math
 // Exercise: Use area of squares to visualize Pythagorean theorem
 // Widget key: image_1
-test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", () => {
+test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", async () => {
 	const input = {
 	"width": 240,
 	"height": 197,
@@ -152,7 +152,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	}
 
 	// Generate the widget
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -161,7 +161,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 // Course: 8th grade math
 // Exercise: Use area of squares to visualize Pythagorean theorem
 // Widget key: image_1
-test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", () => {
+test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", async () => {
 	const input = {
 	"width": 219,
 	"height": 240,
@@ -179,7 +179,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	}
 
 	// Generate the widget
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -188,7 +188,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 // Course: 8th grade math
 // Exercise: Use area of squares to visualize Pythagorean theorem
 // Widget key: image_1
-test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", () => {
+test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", async () => {
 	const input = {
 	"width": 300,
 	"height": 170,
@@ -206,7 +206,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	}
 
 	// Generate the widget
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -215,7 +215,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 // Course: 8th grade math
 // Exercise: Use area of squares to visualize Pythagorean theorem
 // Widget key: image_1
-test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", () => {
+test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", async () => {
 	const input = {
 	"width": 272,
 	"height": 300,
@@ -233,7 +233,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	}
 
 	// Generate the widget
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -242,7 +242,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 // Course: 8th grade math
 // Exercise: Use area of squares to visualize Pythagorean theorem
 // Widget key: image_1
-test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", () => {
+test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", async () => {
 	const input = {
 	"width": 300,
 	"height": 300,
@@ -260,7 +260,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	}
 
 	// Generate the widget
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -269,7 +269,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 // Course: 8th grade math
 // Exercise: Use area of squares to visualize Pythagorean theorem
 // Widget key: image_1
-test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", () => {
+test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", async () => {
 	const input = {
 	"width": 300,
 	"height": 255,
@@ -287,7 +287,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	}
 
 	// Generate the widget
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -296,7 +296,7 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 // Course: 8th grade math
 // Exercise: Use area of squares to visualize Pythagorean theorem
 // Widget key: image_1
-test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", () => {
+test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean th", async () => {
 	const input = {
 	"width": 300,
 	"height": 209,
@@ -314,11 +314,11 @@ test("pythagorean-proof-diagram - Use area of squares to visualize Pythagorean t
 	}
 
 	// Generate the widget
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
-test("pythagorean-proof-diagram - renders a side label without a square", () => {
+test("pythagorean-proof-diagram - renders a side label without a square", async () => {
 	const input = {
 		width: 300,
 		height: 300,
@@ -332,11 +332,11 @@ test("pythagorean-proof-diagram - renders a side label without a square", () => 
 	if (!parseResult.success) {
 		return
 	}
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
-test("pythagorean-proof-diagram - renders a square without a side label", () => {
+test("pythagorean-proof-diagram - renders a square without a side label", async () => {
 	const input = {
 		width: 300,
 		height: 300,
@@ -350,11 +350,11 @@ test("pythagorean-proof-diagram - renders a square without a side label", () => 
 	if (!parseResult.success) {
 		return
 	}
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
-test("pythagorean-proof-diagram - renders a side with both a square and a label", () => {
+test("pythagorean-proof-diagram - renders a side with both a square and a label", async () => {
 	const input = {
 		width: 600,
 		height: 600,
@@ -368,11 +368,11 @@ test("pythagorean-proof-diagram - renders a side with both a square and a label"
 	if (!parseResult.success) {
 		return
 	}
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
-test("pythagorean-proof-diagram - renders a diagram with a bare side", () => {
+test("pythagorean-proof-diagram - renders a diagram with a bare side", async () => {
 	const input = {
 		width: 300,
 		height: 300,
@@ -386,11 +386,11 @@ test("pythagorean-proof-diagram - renders a diagram with a bare side", () => {
 	if (!parseResult.success) {
 		return
 	}
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
-test("pythagorean-proof-diagram - correctly calculates a missing numeric area with the new schema", () => {
+test("pythagorean-proof-diagram - correctly calculates a missing numeric area with the new schema", async () => {
 	const input = {
 		width: 300,
 		height: 300,
@@ -405,11 +405,11 @@ test("pythagorean-proof-diagram - correctly calculates a missing numeric area wi
 		return
 	}
 
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
-test("pythagorean-proof-diagram - renders string square label for B", () => {
+test("pythagorean-proof-diagram - renders string square label for B", async () => {
 	const input = {
 		width: 300,
 		height: 240,
@@ -423,7 +423,7 @@ test("pythagorean-proof-diagram - renders string square label for B", () => {
 	if (!parseResult.success) {
 		return
 	}
-	const svg = generatePythagoreanProofDiagram(parseResult.data)
+	const svg = await generatePythagoreanProofDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

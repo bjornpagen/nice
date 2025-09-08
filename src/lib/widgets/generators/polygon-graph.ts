@@ -58,7 +58,7 @@ export const PolygonGraphPropsSchema = z
 
 export type PolygonGraphProps = z.infer<typeof PolygonGraphPropsSchema>
 
-export const generatePolygonGraph: WidgetGenerator<typeof PolygonGraphPropsSchema> = (props) => {
+export const generatePolygonGraph: WidgetGenerator<typeof PolygonGraphPropsSchema> = async (props) => {
 	const { width, height, xAxis, yAxis, showQuadrantLabels, points, polygons } = props
 
 	// 1. Call the base generator and get the body content and extents object

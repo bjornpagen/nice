@@ -26,7 +26,7 @@ type StackedItemsDiagramInput = z.input<typeof StackedItemsDiagramPropsSchema>
 // Course: 6th grade math
 // Exercise: Evaluating expressions with variables word problems
 // Widget key: image_1
-test("stacked-items-diagram - Evaluating expressions with variables word prob", () => {
+test("stacked-items-diagram - Evaluating expressions with variables word prob", async () => {
 	const input = {
 	"count": 5,
 	"width": 86,
@@ -55,7 +55,7 @@ test("stacked-items-diagram - Evaluating expressions with variables word prob", 
 	}
 
 	// Generate the widget
-	const svg = generateStackedItemsDiagram(parseResult.data)
+	const svg = await generateStackedItemsDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

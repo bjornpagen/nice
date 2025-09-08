@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test"
 import { generateParabolaGraph, ParabolaGraphPropsSchema } from "@/lib/widgets/generators"
 
-test("parabola graph - enzyme activity", () => {
+test("parabola graph - enzyme activity", async () => {
 	const input = {
 		type: "parabolaGraph",
 		width: 400,
@@ -36,6 +36,6 @@ test("parabola graph - enzyme activity", () => {
 		return
 	}
 
-	const svg = generateParabolaGraph(parsed.data)
+	const svg = await generateParabolaGraph(parsed.data)
 	expect(svg).toMatchSnapshot()
 })

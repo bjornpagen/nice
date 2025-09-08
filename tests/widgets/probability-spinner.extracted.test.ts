@@ -26,7 +26,7 @@ type ProbabilitySpinnerInput = z.input<typeof ProbabilitySpinnerPropsSchema>
 // Course: 7th grade math
 // Exercise: Making predictions with probability
 // Widget key: image_1
-test("probability-spinner - Making predictions with probability", () => {
+test("probability-spinner - Making predictions with probability", async () => {
 	const input = {
 	"title": " ",
 	"width": 265,
@@ -60,7 +60,7 @@ test("probability-spinner - Making predictions with probability", () => {
 	}
 
 	// Generate the widget
-	const svg = generateProbabilitySpinner(parseResult.data)
+	const svg = await generateProbabilitySpinner(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -69,7 +69,7 @@ test("probability-spinner - Making predictions with probability", () => {
 // Course: 7th grade math
 // Exercise: Making predictions with probability
 // Widget key: image_1
-test("probability-spinner - Making predictions with probability", () => {
+test("probability-spinner - Making predictions with probability", async () => {
 	const input = {
 	"title": "Animal Spinner",
 	"width": 265,
@@ -103,7 +103,7 @@ test("probability-spinner - Making predictions with probability", () => {
 	}
 
 	// Generate the widget
-	const svg = generateProbabilitySpinner(parseResult.data)
+	const svg = await generateProbabilitySpinner(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -112,7 +112,7 @@ test("probability-spinner - Making predictions with probability", () => {
 // Course: 7th grade math
 // Exercise: Making predictions with probability
 // Widget key: spinner_image
-test("probability-spinner - Making predictions with probability", () => {
+test("probability-spinner - Making predictions with probability", async () => {
 	const input = {
 	"title": "Spinner with 5 equal sections",
 	"width": 280,
@@ -141,7 +141,7 @@ test("probability-spinner - Making predictions with probability", () => {
 	}
 
 	// Generate the widget
-	const svg = generateProbabilitySpinner(parseResult.data)
+	const svg = await generateProbabilitySpinner(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -150,7 +150,7 @@ test("probability-spinner - Making predictions with probability", () => {
 // Course: 7th grade math
 // Exercise: Simple probability
 // Widget key: image_1
-test("probability-spinner - Simple probability", () => {
+test("probability-spinner - Simple probability", async () => {
 	const input = {
 	"title": null,
 	"width": 265,
@@ -184,7 +184,7 @@ test("probability-spinner - Simple probability", () => {
 	}
 
 	// Generate the widget
-	const svg = generateProbabilitySpinner(parseResult.data)
+	const svg = await generateProbabilitySpinner(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -193,7 +193,7 @@ test("probability-spinner - Simple probability", () => {
 // Course: 7th grade math
 // Exercise: Simple probability
 // Widget key: image_1
-test("probability-spinner - Simple probability", () => {
+test("probability-spinner - Simple probability", async () => {
 	const input = {
 	"title": "Spinner",
 	"width": 280,
@@ -222,7 +222,7 @@ test("probability-spinner - Simple probability", () => {
 	}
 
 	// Generate the widget
-	const svg = generateProbabilitySpinner(parseResult.data)
+	const svg = await generateProbabilitySpinner(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -231,7 +231,7 @@ test("probability-spinner - Simple probability", () => {
 // Course: 7th grade math
 // Exercise: Simple probability
 // Widget key: image_1
-test("probability-spinner - Simple probability", () => {
+test("probability-spinner - Simple probability", async () => {
 	const input = {
 	"title": null,
 	"width": 220,
@@ -270,7 +270,7 @@ test("probability-spinner - Simple probability", () => {
 	}
 
 	// Generate the widget
-	const svg = generateProbabilitySpinner(parseResult.data)
+	const svg = await generateProbabilitySpinner(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -279,7 +279,7 @@ test("probability-spinner - Simple probability", () => {
 // Course: 7th grade math
 // Exercise: Simple probability
 // Widget key: image_1
-test("probability-spinner - Simple probability", () => {
+test("probability-spinner - Simple probability", async () => {
 	const input = {
 	"title": null,
 	"width": 200,
@@ -318,7 +318,7 @@ test("probability-spinner - Simple probability", () => {
 	}
 
 	// Generate the widget
-	const svg = generateProbabilitySpinner(parseResult.data)
+	const svg = await generateProbabilitySpinner(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -327,7 +327,7 @@ test("probability-spinner - Simple probability", () => {
 // Course: 7th grade math
 // Exercise: Simple probability
 // Widget key: image_1
-test("probability-spinner - Simple probability", () => {
+test("probability-spinner - Simple probability", async () => {
 	const input = {
 	"title": "Animal Spinner",
 	"width": 265,
@@ -356,7 +356,7 @@ test("probability-spinner - Simple probability", () => {
 	}
 
 	// Generate the widget
-	const svg = generateProbabilitySpinner(parseResult.data)
+	const svg = await generateProbabilitySpinner(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -365,7 +365,7 @@ test("probability-spinner - Simple probability", () => {
 // Course: 7th grade math
 // Exercise: Simple probability
 // Widget key: image_1
-test("probability-spinner - Simple probability", () => {
+test("probability-spinner - Simple probability", async () => {
 	const input = {
 	"title": null,
 	"width": 280,
@@ -444,7 +444,7 @@ test("probability-spinner - Simple probability", () => {
 	}
 
 	// Generate the widget
-	const svg = generateProbabilitySpinner(parseResult.data)
+	const svg = await generateProbabilitySpinner(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -453,7 +453,7 @@ test("probability-spinner - Simple probability", () => {
 // Course: 7th grade math
 // Exercise: Simple probability
 // Widget key: image_1
-test("probability-spinner - Simple probability", () => {
+test("probability-spinner - Simple probability", async () => {
 	const input = {
 	"title": "Animal Spinner",
 	"width": 350,
@@ -497,7 +497,7 @@ test("probability-spinner - Simple probability", () => {
 	}
 
 	// Generate the widget
-	const svg = generateProbabilitySpinner(parseResult.data)
+	const svg = await generateProbabilitySpinner(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -506,7 +506,7 @@ test("probability-spinner - Simple probability", () => {
 // Course: 7th grade math
 // Exercise: Simple probability
 // Widget key: image_1
-test("probability-spinner - Simple probability", () => {
+test("probability-spinner - Simple probability", async () => {
 	const input = {
 	"title": null,
 	"width": 200,
@@ -545,7 +545,7 @@ test("probability-spinner - Simple probability", () => {
 	}
 
 	// Generate the widget
-	const svg = generateProbabilitySpinner(parseResult.data)
+	const svg = await generateProbabilitySpinner(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

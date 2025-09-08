@@ -26,7 +26,7 @@ type PolygonGraphInput = z.input<typeof PolygonGraphPropsSchema>
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: pentagon_choice_a
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -113,7 +113,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -122,7 +122,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: pentagon_choice_b
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -209,7 +209,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -218,7 +218,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: pentagon_choice_c
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -305,7 +305,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -314,7 +314,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_a
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -383,7 +383,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -392,7 +392,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_b
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -461,7 +461,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -470,7 +470,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_c
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -539,7 +539,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -548,7 +548,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_a
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -617,7 +617,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -626,7 +626,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_b
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -695,7 +695,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -704,7 +704,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_c
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -773,7 +773,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -782,7 +782,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_a
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -869,7 +869,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -878,7 +878,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_b
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -965,7 +965,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -974,7 +974,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_c
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -1061,7 +1061,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1070,7 +1070,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: triangle_choice_a
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -1139,7 +1139,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1148,7 +1148,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: triangle_choice_b
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -1217,7 +1217,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1226,7 +1226,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: triangle_choice_c
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -1295,7 +1295,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1304,7 +1304,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_a
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -1382,7 +1382,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1391,7 +1391,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_b
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -1469,7 +1469,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1478,7 +1478,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_c
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -1556,7 +1556,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1565,7 +1565,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_a
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -1643,7 +1643,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1652,7 +1652,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_b
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -1730,7 +1730,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1739,7 +1739,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Drawing polygons with coordinates
 // Widget key: graph_choice_c
-test("polygon-graph - Drawing polygons with coordinates", () => {
+test("polygon-graph - Drawing polygons with coordinates", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -1817,7 +1817,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1826,7 +1826,7 @@ test("polygon-graph - Drawing polygons with coordinates", () => {
 // Course: 6th grade math
 // Exercise: Quadrilateral problems on the coordinate plane
 // Widget key: image_1
-test("polygon-graph - Quadrilateral problems on the coordinate plane", () => {
+test("polygon-graph - Quadrilateral problems on the coordinate plane", async () => {
 	const input = {
 	"width": 400,
 	"xAxis": {
@@ -1904,7 +1904,7 @@ test("polygon-graph - Quadrilateral problems on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1913,7 +1913,7 @@ test("polygon-graph - Quadrilateral problems on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrilateral problems on the coordinate plane
 // Widget key: image_1
-test("polygon-graph - Quadrilateral problems on the coordinate plane", () => {
+test("polygon-graph - Quadrilateral problems on the coordinate plane", async () => {
 	const input = {
 	"width": 300,
 	"xAxis": {
@@ -1991,7 +1991,7 @@ test("polygon-graph - Quadrilateral problems on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2000,7 +2000,7 @@ test("polygon-graph - Quadrilateral problems on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrilateral problems on the coordinate plane
 // Widget key: image_1
-test("polygon-graph - Quadrilateral problems on the coordinate plane", () => {
+test("polygon-graph - Quadrilateral problems on the coordinate plane", async () => {
 	const input = {
 	"width": 425,
 	"xAxis": {
@@ -2078,7 +2078,7 @@ test("polygon-graph - Quadrilateral problems on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2087,7 +2087,7 @@ test("polygon-graph - Quadrilateral problems on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrilateral problems on the coordinate plane
 // Widget key: image_1
-test("polygon-graph - Quadrilateral problems on the coordinate plane", () => {
+test("polygon-graph - Quadrilateral problems on the coordinate plane", async () => {
 	const input = {
 	"width": 270,
 	"xAxis": {
@@ -2165,7 +2165,7 @@ test("polygon-graph - Quadrilateral problems on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2174,7 +2174,7 @@ test("polygon-graph - Quadrilateral problems on the coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Quadrilateral problems on the coordinate plane
 // Widget key: image_1
-test("polygon-graph - Quadrilateral problems on the coordinate plane", () => {
+test("polygon-graph - Quadrilateral problems on the coordinate plane", async () => {
 	const input = {
 	"width": 206,
 	"xAxis": {
@@ -2252,7 +2252,7 @@ test("polygon-graph - Quadrilateral problems on the coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePolygonGraph(parseResult.data)
+	const svg = await generatePolygonGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

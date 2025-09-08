@@ -169,7 +169,7 @@ export type ParallelogramTrapezoidDiagramProps = z.infer<typeof ParallelogramTra
 /**
  * Generates an SVG diagram for a parallelogram or trapezoid directly with layout utilities.
  */
-export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof ParallelogramTrapezoidDiagramPropsSchema> = (
+export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof ParallelogramTrapezoidDiagramPropsSchema> = async (
 	props
 ) => {
 	const { width, height, shape } = props

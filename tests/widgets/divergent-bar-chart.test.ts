@@ -11,7 +11,7 @@ function normalizeClipIds(svg: string): string {
 
 type DivergentBarChartInput = z.input<typeof DivergentBarChartPropsSchema>
 
-test("divergent bar chart - sea level change by century", () => {
+test("divergent bar chart - sea level change by century", async () => {
 	const input = {
 		type: "divergentBarChart",
 		width: 760,
@@ -57,11 +57,11 @@ test("divergent bar chart - sea level change by century", () => {
 		throw errors.wrap(parseResult.error, "input validation")
 	}
 	const parsed = parseResult.data
-	const svg = generateDivergentBarChart(parsed)
+	const svg = await generateDivergentBarChart(parsed)
 	expect(normalizeClipIds(svg)).toMatchSnapshot()
 })
 
-test("divergent bar chart - auto label thinning prevents overcrowding deterministically", () => {
+test("divergent bar chart - auto label thinning prevents overcrowding deterministically", async () => {
 	const input = {
 		type: "divergentBarChart",
 		width: 374,
@@ -106,7 +106,7 @@ test("divergent bar chart - auto label thinning prevents overcrowding determinis
 		throw errors.wrap(parseResult.error, "input validation")
 	}
 	const parsed = parseResult.data
-	const svg = generateDivergentBarChart(parsed)
+	const svg = await generateDivergentBarChart(parsed)
 
 	// Count how many x-axis tick labels were rendered (middle-anchored only)
 	const xTickLabelMatches = svg.match(/<text[^>]*text-anchor="middle"[^>]*dominant-baseline="hanging"[^>]*>[^<]+<\/text>/g) ?? []
@@ -125,7 +125,7 @@ test("divergent bar chart - auto label thinning prevents overcrowding determinis
 	expect(svg).toContain(">1st<")
 })
 
-test("divergent bar chart - sea level by century (QA payload)", () => {
+test("divergent bar chart - sea level by century (QA payload)", async () => {
 	const input = {
 		type: "divergentBarChart",
 		width: 374,
@@ -170,6 +170,6 @@ test("divergent bar chart - sea level by century (QA payload)", () => {
 		throw errors.wrap(parseResult.error, "input validation")
 	}
 	const parsed = parseResult.data
-	const svg = generateDivergentBarChart(parsed)
+	const svg = await generateDivergentBarChart(parsed)
 	expect(normalizeClipIds(svg)).toMatchSnapshot()
 })

@@ -100,7 +100,7 @@ export type GeometricSolidDiagramProps = z.infer<typeof GeometricSolidDiagramPro
  * Generates a 3D diagram of a geometric solid with curved surfaces (e.g., cylinder, cone).
  * Supports dimension labels for volume and surface area problems.
  */
-export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSolidDiagramPropsSchema> = (data) => {
+export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSolidDiagramPropsSchema> = async (data) => {
 	const { width, height, shape, labels } = data
 
 	// --- NEW SCALING AND DRAWING LOGIC ---

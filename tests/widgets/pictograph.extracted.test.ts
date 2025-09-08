@@ -26,7 +26,7 @@ type PictographInput = z.input<typeof PictographPropsSchema>
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_2
-test("pictograph - Calculating the mean data displays", () => {
+test("pictograph - Calculating the mean data displays", async () => {
 	const input = {
 	"key": {
 		"icon": "⚾",
@@ -45,7 +45,7 @@ test("pictograph - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePictograph(parseResult.data)
+	const svg = await generatePictograph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -54,7 +54,7 @@ test("pictograph - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_3
-test("pictograph - Calculating the mean data displays", () => {
+test("pictograph - Calculating the mean data displays", async () => {
 	const input = {
 	"key": {
 		"icon": "⚾",
@@ -90,7 +90,7 @@ test("pictograph - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePictograph(parseResult.data)
+	const svg = await generatePictograph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -99,7 +99,7 @@ test("pictograph - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_2
-test("pictograph - Calculating the mean data displays", () => {
+test("pictograph - Calculating the mean data displays", async () => {
 	const input = {
 	"key": {
 		"icon": "🍨",
@@ -135,7 +135,7 @@ test("pictograph - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePictograph(parseResult.data)
+	const svg = await generatePictograph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -144,7 +144,7 @@ test("pictograph - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_3
-test("pictograph - Calculating the mean data displays", () => {
+test("pictograph - Calculating the mean data displays", async () => {
 	const input = {
 	"key": {
 		"icon": "🍨",
@@ -180,7 +180,7 @@ test("pictograph - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePictograph(parseResult.data)
+	const svg = await generatePictograph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -189,7 +189,7 @@ test("pictograph - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_2
-test("pictograph - Calculating the mean data displays", () => {
+test("pictograph - Calculating the mean data displays", async () => {
 	const input = {
 	"key": {
 		"icon": "🐳",
@@ -225,7 +225,7 @@ test("pictograph - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePictograph(parseResult.data)
+	const svg = await generatePictograph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -234,7 +234,7 @@ test("pictograph - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_3
-test("pictograph - Calculating the mean data displays", () => {
+test("pictograph - Calculating the mean data displays", async () => {
 	const input = {
 	"key": {
 		"icon": "🐳",
@@ -253,7 +253,7 @@ test("pictograph - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePictograph(parseResult.data)
+	const svg = await generatePictograph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -262,7 +262,7 @@ test("pictograph - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: image_1
-test("pictograph - Mean absolute deviation MAD", () => {
+test("pictograph - Mean absolute deviation MAD", async () => {
 	const input = {
 	"key": {
 		"icon": "🪄",
@@ -298,7 +298,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePictograph(parseResult.data)
+	const svg = await generatePictograph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -307,7 +307,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: image_2
-test("pictograph - Mean absolute deviation MAD", () => {
+test("pictograph - Mean absolute deviation MAD", async () => {
 	const input = {
 	"key": {
 		"icon": "🪄",
@@ -326,7 +326,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePictograph(parseResult.data)
+	const svg = await generatePictograph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -335,7 +335,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: image_1
-test("pictograph - Mean absolute deviation MAD", () => {
+test("pictograph - Mean absolute deviation MAD", async () => {
 	const input = {
 	"key": {
 		"icon": "⚾",
@@ -371,7 +371,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePictograph(parseResult.data)
+	const svg = await generatePictograph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -380,7 +380,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: image_2
-test("pictograph - Mean absolute deviation MAD", () => {
+test("pictograph - Mean absolute deviation MAD", async () => {
 	const input = {
 	"key": {
 		"icon": "⚾",
@@ -399,7 +399,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePictograph(parseResult.data)
+	const svg = await generatePictograph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -408,7 +408,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: image_2
-test("pictograph - Mean absolute deviation MAD", () => {
+test("pictograph - Mean absolute deviation MAD", async () => {
 	const input = {
 	"key": {
 		"icon": "🍨",
@@ -444,7 +444,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePictograph(parseResult.data)
+	const svg = await generatePictograph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -453,7 +453,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: image_3
-test("pictograph - Mean absolute deviation MAD", () => {
+test("pictograph - Mean absolute deviation MAD", async () => {
 	const input = {
 	"key": {
 		"icon": "🍨",
@@ -472,7 +472,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePictograph(parseResult.data)
+	const svg = await generatePictograph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -481,7 +481,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: image_2
-test("pictograph - Mean absolute deviation MAD", () => {
+test("pictograph - Mean absolute deviation MAD", async () => {
 	const input = {
 	"key": {
 		"icon": "🪄",
@@ -517,7 +517,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePictograph(parseResult.data)
+	const svg = await generatePictograph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -526,7 +526,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: image_3
-test("pictograph - Mean absolute deviation MAD", () => {
+test("pictograph - Mean absolute deviation MAD", async () => {
 	const input = {
 	"key": {
 		"icon": "🪄",
@@ -545,7 +545,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePictograph(parseResult.data)
+	const svg = await generatePictograph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -554,7 +554,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: image_2
-test("pictograph - Mean absolute deviation MAD", () => {
+test("pictograph - Mean absolute deviation MAD", async () => {
 	const input = {
 	"key": {
 		"icon": "🧀",
@@ -590,7 +590,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePictograph(parseResult.data)
+	const svg = await generatePictograph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -599,7 +599,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: image_3
-test("pictograph - Mean absolute deviation MAD", () => {
+test("pictograph - Mean absolute deviation MAD", async () => {
 	const input = {
 	"key": {
 		"icon": "🧀",
@@ -618,7 +618,7 @@ test("pictograph - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePictograph(parseResult.data)
+	const svg = await generatePictograph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

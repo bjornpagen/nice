@@ -26,7 +26,7 @@ type BoxGridInput = z.input<typeof BoxGridPropsSchema>
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: image_1
-test("box-grid - Creating frequency tables", () => {
+test("box-grid - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -104,7 +104,7 @@ test("box-grid - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxGrid(parseResult.data)
+	const svg = await generateBoxGrid(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -113,7 +113,7 @@ test("box-grid - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: image_1
-test("box-grid - Creating frequency tables", () => {
+test("box-grid - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -200,7 +200,7 @@ test("box-grid - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxGrid(parseResult.data)
+	const svg = await generateBoxGrid(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -209,7 +209,7 @@ test("box-grid - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: image_1
-test("box-grid - Creating frequency tables", () => {
+test("box-grid - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -296,7 +296,7 @@ test("box-grid - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxGrid(parseResult.data)
+	const svg = await generateBoxGrid(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -305,7 +305,7 @@ test("box-grid - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: image_1
-test("box-grid - Creating frequency tables", () => {
+test("box-grid - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -392,7 +392,7 @@ test("box-grid - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxGrid(parseResult.data)
+	const svg = await generateBoxGrid(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -401,7 +401,7 @@ test("box-grid - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: image_1
-test("box-grid - Creating frequency tables", () => {
+test("box-grid - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -479,7 +479,7 @@ test("box-grid - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBoxGrid(parseResult.data)
+	const svg = await generateBoxGrid(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

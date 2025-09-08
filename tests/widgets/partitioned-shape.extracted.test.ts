@@ -26,7 +26,7 @@ type PartitionedShapeInput = z.input<typeof PartitionedShapePropsSchema>
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_1
-test("partitioned-shape - Percents from fraction models", () => {
+test("partitioned-shape - Percents from fraction models", async () => {
 	const input = {
 	"mode": "partition",
 	"width": 154,
@@ -62,7 +62,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePartitionedShape(parseResult.data)
+	const svg = await generatePartitionedShape(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -71,7 +71,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_2
-test("partitioned-shape - Percents from fraction models", () => {
+test("partitioned-shape - Percents from fraction models", async () => {
 	const input = {
 	"mode": "partition",
 	"width": 154,
@@ -106,7 +106,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePartitionedShape(parseResult.data)
+	const svg = await generatePartitionedShape(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -115,7 +115,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_1
-test("partitioned-shape - Percents from fraction models", () => {
+test("partitioned-shape - Percents from fraction models", async () => {
 	const input = {
 	"mode": "partition",
 	"width": 300,
@@ -157,7 +157,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePartitionedShape(parseResult.data)
+	const svg = await generatePartitionedShape(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -166,7 +166,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_1
-test("partitioned-shape - Percents from fraction models", () => {
+test("partitioned-shape - Percents from fraction models", async () => {
 	const input = {
 	"mode": "partition",
 	"width": 154,
@@ -203,7 +203,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePartitionedShape(parseResult.data)
+	const svg = await generatePartitionedShape(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -212,7 +212,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_1
-test("partitioned-shape - Percents from fraction models", () => {
+test("partitioned-shape - Percents from fraction models", async () => {
 	const input = {
 	"mode": "partition",
 	"width": 300,
@@ -245,7 +245,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePartitionedShape(parseResult.data)
+	const svg = await generatePartitionedShape(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -254,7 +254,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_1
-test("partitioned-shape - Percents from fraction models", () => {
+test("partitioned-shape - Percents from fraction models", async () => {
 	const input = {
 	"mode": "partition",
 	"width": 200,
@@ -292,7 +292,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePartitionedShape(parseResult.data)
+	const svg = await generatePartitionedShape(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -301,7 +301,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_1
-test("partitioned-shape - Percents from fraction models", () => {
+test("partitioned-shape - Percents from fraction models", async () => {
 	const input = {
 	"mode": "partition",
 	"width": 180,
@@ -336,7 +336,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePartitionedShape(parseResult.data)
+	const svg = await generatePartitionedShape(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -345,7 +345,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_2
-test("partitioned-shape - Percents from fraction models", () => {
+test("partitioned-shape - Percents from fraction models", async () => {
 	const input = {
 	"mode": "partition",
 	"width": 180,
@@ -379,7 +379,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePartitionedShape(parseResult.data)
+	const svg = await generatePartitionedShape(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -388,7 +388,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_1
-test("partitioned-shape - Percents from fraction models", () => {
+test("partitioned-shape - Percents from fraction models", async () => {
 	const input = {
 	"mode": "partition",
 	"width": 100,
@@ -421,7 +421,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePartitionedShape(parseResult.data)
+	const svg = await generatePartitionedShape(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -430,7 +430,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_2
-test("partitioned-shape - Percents from fraction models", () => {
+test("partitioned-shape - Percents from fraction models", async () => {
 	const input = {
 	"mode": "partition",
 	"width": 100,
@@ -462,7 +462,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePartitionedShape(parseResult.data)
+	const svg = await generatePartitionedShape(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -471,7 +471,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_1
-test("partitioned-shape - Percents from fraction models", () => {
+test("partitioned-shape - Percents from fraction models", async () => {
 	const input = {
 	"mode": "partition",
 	"width": 154,
@@ -527,7 +527,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePartitionedShape(parseResult.data)
+	const svg = await generatePartitionedShape(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -536,7 +536,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_2
-test("partitioned-shape - Percents from fraction models", () => {
+test("partitioned-shape - Percents from fraction models", async () => {
 	const input = {
 	"mode": "partition",
 	"width": 154,
@@ -580,7 +580,7 @@ test("partitioned-shape - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePartitionedShape(parseResult.data)
+	const svg = await generatePartitionedShape(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

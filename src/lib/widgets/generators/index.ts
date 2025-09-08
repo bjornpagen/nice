@@ -421,135 +421,135 @@ export {
 }
 
 // The generateWidget function is a comprehensive switch that can handle any widget type.
-export function generateWidget(widget: Widget): string {
+export async function generateWidget(widget: Widget): Promise<string> {
 	switch (widget.type) {
 		case "threeDIntersectionDiagram":
-			return generateThreeDIntersectionDiagram(widget)
+			return await generateThreeDIntersectionDiagram(widget)
 		case "absoluteValueNumberLine":
-			return generateAbsoluteValueNumberLine(widget)
+			return await generateAbsoluteValueNumberLine(widget)
 		case "angleDiagram":
-			return generateAngleDiagram(widget)
+			return await generateAngleDiagram(widget)
 		case "areaGraph":
-			return generateAreaGraph(widget)
+			return await generateAreaGraph(widget)
 		case "barChart":
-			return generateBarChart(widget)
+			return await generateBarChart(widget)
 		case "boxGrid":
-			return generateBoxGrid(widget)
+			return await generateBoxGrid(widget)
 		case "boxPlot":
-			return generateBoxPlot(widget)
+			return await generateBoxPlot(widget)
 		case "circleDiagram":
-			return generateCircleDiagram(widget)
+			return await generateCircleDiagram(widget)
 		case "compositeShapeDiagram":
-			return generateCompositeShapeDiagram(widget)
+			return await generateCompositeShapeDiagram(widget)
 		case "conceptualGraph":
-			return generateConceptualGraph(widget)
+			return await generateConceptualGraph(widget)
 		case "coordinatePlane":
-			return generateCoordinatePlaneComprehensive(widget)
+			return await generateCoordinatePlaneComprehensive(widget)
 		case "dataTable":
-			return generateDataTable(widget)
+			return await generateDataTable(widget)
 		case "discreteObjectRatioDiagram":
-			return generateDiscreteObjectRatioDiagram(widget)
+			return await generateDiscreteObjectRatioDiagram(widget)
 		case "distanceFormulaGraph":
-			return generateDistanceFormulaGraph(widget)
+			return await generateDistanceFormulaGraph(widget)
 		case "divergentBarChart":
-			return generateDivergentBarChart(widget)
+			return await generateDivergentBarChart(widget)
 		case "dotPlot":
-			return generateDotPlot(widget)
+			return await generateDotPlot(widget)
 		case "doubleNumberLine":
-			return generateDoubleNumberLine(widget)
+			return await generateDoubleNumberLine(widget)
 		case "populationBarChart":
-			return generatePopulationBarChart(widget)
+			return await generatePopulationBarChart(widget)
 		case "emojiImage":
-			return generateEmojiImage(widget)
+			return await generateEmojiImage(widget)
 		case "figureComparisonDiagram":
-			return generateFigureComparisonDiagram(widget)
+			return await generateFigureComparisonDiagram(widget)
 		case "fractionNumberLine":
-			return generateFractionNumberLine(widget)
+			return await generateFractionNumberLine(widget)
 		case "functionPlotGraph":
-			return generateFunctionPlotGraph(widget)
+			return await generateFunctionPlotGraph(widget)
 		case "geometricSolidDiagram":
-			return generateGeometricSolidDiagram(widget)
+			return await generateGeometricSolidDiagram(widget)
 		case "hangerDiagram":
-			return generateHangerDiagram(widget)
+			return await generateHangerDiagram(widget)
 		case "histogram":
-			return generateHistogram(widget)
+			return await generateHistogram(widget)
 		case "nPolygon":
-			return generateNPolygon(widget)
+			return await generateNPolygon(widget)
 
 		case "inequalityNumberLine":
-			return generateInequalityNumberLine(widget)
+			return await generateInequalityNumberLine(widget)
 		case "keelingCurve":
-			return generateKeelingCurve(widget)
+			return await generateKeelingCurve(widget)
 		case "lineEquationGraph":
-			return generateLineEquationGraph(widget)
+			return await generateLineEquationGraph(widget)
 		case "lineGraph":
-			return generateLineGraph(widget)
+			return await generateLineGraph(widget)
 		case "numberLine":
-			return generateNumberLine(widget)
+			return await generateNumberLine(widget)
 		case "numberLineForOpposites":
-			return generateNumberLineForOpposites(widget)
+			return await generateNumberLineForOpposites(widget)
 		case "numberLineWithAction":
-			return generateNumberLineWithAction(widget)
+			return await generateNumberLineWithAction(widget)
 		case "numberLineWithFractionGroups":
-			return generateNumberLineWithFractionGroups(widget)
+			return await generateNumberLineWithFractionGroups(widget)
 		case "numberSetDiagram":
-			return generateNumberSetDiagram(widget)
+			return await generateNumberSetDiagram(widget)
 		case "parabolaGraph":
-			return generateParabolaGraph(widget)
+			return await generateParabolaGraph(widget)
 		case "parallelogramTrapezoidDiagram":
-			return generateParallelogramTrapezoidDiagram(widget)
+			return await generateParallelogramTrapezoidDiagram(widget)
 		case "partitionedShape":
-			return generatePartitionedShape(widget)
+			return await generatePartitionedShape(widget)
 		case "pentagonIntersectionDiagram":
-			return generatePentagonIntersectionDiagram(widget)
+			return await generatePentagonIntersectionDiagram(widget)
 		case "pictograph":
-			return generatePictograph(widget)
+			return await generatePictograph(widget)
 		case "pointPlotGraph":
-			return generatePointPlotGraph(widget)
+			return await generatePointPlotGraph(widget)
 		case "populationChangeEventGraph":
-			return generatePopulationChangeEventGraph(widget)
+			return await generatePopulationChangeEventGraph(widget)
 		case "polygonGraph":
-			return generatePolygonGraph(widget)
+			return await generatePolygonGraph(widget)
 		case "polyhedronDiagram":
-			return generatePolyhedronDiagram(widget)
+			return await generatePolyhedronDiagram(widget)
 		case "polyhedronNetDiagram":
-			return generatePolyhedronNetDiagram(widget)
+			return await generatePolyhedronNetDiagram(widget)
 		case "probabilitySpinner":
-			return generateProbabilitySpinner(widget)
+			return await generateProbabilitySpinner(widget)
 		case "pythagoreanProofDiagram":
-			return generatePythagoreanProofDiagram(widget)
+			return await generatePythagoreanProofDiagram(widget)
 		case "ratioBoxDiagram":
-			return generateRatioBoxDiagram(widget)
+			return await generateRatioBoxDiagram(widget)
 		case "rectangularFrameDiagram":
-			return generateRectangularFrameDiagram(widget)
+			return await generateRectangularFrameDiagram(widget)
 		case "scaleCopiesSlider":
-			return generateScaleCopiesSlider(widget)
+			return await generateScaleCopiesSlider(widget)
 		case "scatterPlot":
-			return generateScatterPlot(widget)
+			return await generateScatterPlot(widget)
 		case "shapeTransformationGraph":
-			return generateShapeTransformationGraph(widget)
+			return await generateShapeTransformationGraph(widget)
 		case "stackedItemsDiagram":
-			return generateStackedItemsDiagram(widget)
+			return await generateStackedItemsDiagram(widget)
 		case "tapeDiagram":
-			return generateTapeDiagram(widget)
+			return await generateTapeDiagram(widget)
 		case "transformationDiagram":
-			return generateTransformationDiagram(widget)
+			return await generateTransformationDiagram(widget)
 		case "treeDiagram":
-			return generateTreeDiagram(widget)
+			return await generateTreeDiagram(widget)
 		case "triangleDiagram":
-			return generateTriangleDiagram(widget)
+			return await generateTriangleDiagram(widget)
 		case "unitBlockDiagram":
-			return generateUnitBlockDiagram(widget)
+			return await generateUnitBlockDiagram(widget)
 		case "periodicTable":
-			return generatePeriodicTable(widget)
+			return await generatePeriodicTable(widget)
 		case "urlImage":
-			return generateUrlImage(widget)
+			return await generateUrlImage(widget)
 		case "vennDiagram":
-			return generateVennDiagram(widget)
+			return await generateVennDiagram(widget)
 		case "verticalArithmeticSetup":
-			return generateVerticalArithmeticSetup(widget)
+			return await generateVerticalArithmeticSetup(widget)
 		case "pieChart":
-			return generatePieChart(widget)
+			return await generatePieChart(widget)
 		default:
 			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)

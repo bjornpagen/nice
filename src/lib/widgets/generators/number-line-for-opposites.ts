@@ -62,7 +62,7 @@ export const NumberLineForOppositesPropsSchema = z
 
 export type NumberLineForOppositesProps = z.infer<typeof NumberLineForOppositesPropsSchema>
 
-export const generateNumberLineForOpposites: WidgetGenerator<typeof NumberLineForOppositesPropsSchema> = (data) => {
+export const generateNumberLineForOpposites: WidgetGenerator<typeof NumberLineForOppositesPropsSchema> = async (data) => {
 	const { width, height, maxAbsValue, tickInterval, value, positiveLabel, negativeLabel, showArrows } = data
 	const min = -maxAbsValue
 	const max = maxAbsValue

@@ -192,7 +192,7 @@ export type TriangleDiagramProps = z.infer<typeof TriangleDiagramPropsSchema>
  * Generates a versatile diagram of a triangle and its components.
  * Ideal for a wide range of geometry problems.
  */
-export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramPropsSchema> = (props) => {
+export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramPropsSchema> = async (props) => {
 	const { width, height, points, sides, angles, internalLines, shadedRegions } = props
 
 	// Initialize extents tracking

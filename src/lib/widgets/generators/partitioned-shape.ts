@@ -452,7 +452,7 @@ const generateGeometryView = (props: GeometryModeProps): string => {
 }
 
 // MODIFIED: The main generator function is now a switcher
-export const generatePartitionedShape: WidgetGenerator<typeof PartitionedShapePropsSchema> = (props) => {
+export const generatePartitionedShape: WidgetGenerator<typeof PartitionedShapePropsSchema> = async (props) => {
 	switch (props.mode) {
 		case "partition":
 			return generatePartitionView(props)

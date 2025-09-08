@@ -24,7 +24,7 @@ export const NPolygonPropsSchema = z
 
 export type NPolygonProps = z.infer<typeof NPolygonPropsSchema>
 
-export const generateNPolygon: WidgetGenerator<typeof NPolygonPropsSchema> = (props) => {
+export const generateNPolygon: WidgetGenerator<typeof NPolygonPropsSchema> = async (props) => {
 	const { width, height, shape, fillColor } = props
 
 	const canvas = new CanvasImpl({

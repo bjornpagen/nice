@@ -32,7 +32,7 @@ export type EmojiImageProps = z.infer<typeof EmojiImagePropsSchema>
  * Generates an SVG image widget that displays an emoji at a specified size.
  * Can be used to replace various Perseus image widgets with emoji representations.
  */
-export const generateEmojiImage: WidgetGenerator<typeof EmojiImagePropsSchema> = (data) => {
+export const generateEmojiImage: WidgetGenerator<typeof EmojiImagePropsSchema> = async (data) => {
 	const { emoji, size } = data
 
 	const canvas = new CanvasImpl({

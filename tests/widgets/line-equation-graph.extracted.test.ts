@@ -26,7 +26,7 @@ type LineEquationGraphInput = z.input<typeof LineEquationGraphPropsSchema>
 // Course: 8th grade math
 // Exercise: Slope-intercept equation from graph
 // Widget key: image_1
-test("line-equation-graph - Slope-intercept equation from graph", () => {
+test("line-equation-graph - Slope-intercept equation from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -69,7 +69,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -78,7 +78,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope-intercept equation from graph
 // Widget key: image_1
-test("line-equation-graph - Slope-intercept equation from graph", () => {
+test("line-equation-graph - Slope-intercept equation from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -121,7 +121,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -130,7 +130,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope-intercept equation from graph
 // Widget key: image_1
-test("line-equation-graph - Slope-intercept equation from graph", () => {
+test("line-equation-graph - Slope-intercept equation from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -173,7 +173,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -182,7 +182,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope-intercept equation from graph
 // Widget key: image_1
-test("line-equation-graph - Slope-intercept equation from graph", () => {
+test("line-equation-graph - Slope-intercept equation from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -226,7 +226,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -235,7 +235,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope-intercept equation from graph
 // Widget key: image_1
-test("line-equation-graph - Slope-intercept equation from graph", () => {
+test("line-equation-graph - Slope-intercept equation from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -278,7 +278,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -287,7 +287,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope-intercept equation from graph
 // Widget key: image_1
-test("line-equation-graph - Slope-intercept equation from graph", () => {
+test("line-equation-graph - Slope-intercept equation from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -347,7 +347,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -356,7 +356,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope-intercept equation from graph
 // Widget key: image_1
-test("line-equation-graph - Slope-intercept equation from graph", () => {
+test("line-equation-graph - Slope-intercept equation from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -399,7 +399,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -408,7 +408,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope-intercept equation from graph
 // Widget key: image_1
-test("line-equation-graph - Slope-intercept equation from graph", () => {
+test("line-equation-graph - Slope-intercept equation from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -451,7 +451,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -460,7 +460,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope-intercept equation from graph
 // Widget key: image_1
-test("line-equation-graph - Slope-intercept equation from graph", () => {
+test("line-equation-graph - Slope-intercept equation from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -503,7 +503,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -512,7 +512,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope-intercept equation from graph
 // Widget key: image_1
-test("line-equation-graph - Slope-intercept equation from graph", () => {
+test("line-equation-graph - Slope-intercept equation from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -555,7 +555,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -564,7 +564,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope-intercept equation from graph
 // Widget key: image_1
-test("line-equation-graph - Slope-intercept equation from graph", () => {
+test("line-equation-graph - Slope-intercept equation from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -607,7 +607,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -616,7 +616,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope-intercept equation from graph
 // Widget key: image_1
-test("line-equation-graph - Slope-intercept equation from graph", () => {
+test("line-equation-graph - Slope-intercept equation from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -659,7 +659,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -668,7 +668,7 @@ test("line-equation-graph - Slope-intercept equation from graph", () => {
 // Course: 8th grade math
 // Exercise: Rates & proportional relationships
 // Widget key: image_1
-test("line-equation-graph - Rates proportional relationships", () => {
+test("line-equation-graph - Rates proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -728,7 +728,7 @@ test("line-equation-graph - Rates proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -737,7 +737,7 @@ test("line-equation-graph - Rates proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Rates & proportional relationships
 // Widget key: image_1
-test("line-equation-graph - Rates proportional relationships", () => {
+test("line-equation-graph - Rates proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -780,7 +780,7 @@ test("line-equation-graph - Rates proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -789,7 +789,7 @@ test("line-equation-graph - Rates proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Rates & proportional relationships
 // Widget key: image_1
-test("line-equation-graph - Rates proportional relationships", () => {
+test("line-equation-graph - Rates proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -832,7 +832,7 @@ test("line-equation-graph - Rates proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -841,7 +841,7 @@ test("line-equation-graph - Rates proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Rates & proportional relationships
 // Widget key: image_1
-test("line-equation-graph - Rates proportional relationships", () => {
+test("line-equation-graph - Rates proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -884,7 +884,7 @@ test("line-equation-graph - Rates proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -893,7 +893,7 @@ test("line-equation-graph - Rates proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Rates & proportional relationships
 // Widget key: image_1
-test("line-equation-graph - Rates proportional relationships", () => {
+test("line-equation-graph - Rates proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -936,7 +936,7 @@ test("line-equation-graph - Rates proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -945,7 +945,7 @@ test("line-equation-graph - Rates proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Rates & proportional relationships
 // Widget key: image_1
-test("line-equation-graph - Rates proportional relationships", () => {
+test("line-equation-graph - Rates proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -988,7 +988,7 @@ test("line-equation-graph - Rates proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -997,7 +997,7 @@ test("line-equation-graph - Rates proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Rates & proportional relationships
 // Widget key: image_1
-test("line-equation-graph - Rates proportional relationships", () => {
+test("line-equation-graph - Rates proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1040,7 +1040,7 @@ test("line-equation-graph - Rates proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1049,7 +1049,7 @@ test("line-equation-graph - Rates proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Rates & proportional relationships
 // Widget key: image_1
-test("line-equation-graph - Rates proportional relationships", () => {
+test("line-equation-graph - Rates proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1092,7 +1092,7 @@ test("line-equation-graph - Rates proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1101,7 +1101,7 @@ test("line-equation-graph - Rates proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1144,7 +1144,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1153,7 +1153,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1196,7 +1196,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1205,7 +1205,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1248,7 +1248,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1257,7 +1257,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1300,7 +1300,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1309,7 +1309,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1352,7 +1352,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1361,7 +1361,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1404,7 +1404,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1413,7 +1413,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: coordinate_plane_empty
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -1445,7 +1445,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1454,7 +1454,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1497,7 +1497,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1506,7 +1506,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1549,7 +1549,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1558,7 +1558,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1601,7 +1601,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1610,7 +1610,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1653,7 +1653,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1662,7 +1662,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1705,7 +1705,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1714,7 +1714,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1757,7 +1757,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1766,7 +1766,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1826,7 +1826,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1835,7 +1835,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1895,7 +1895,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1904,7 +1904,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -1964,7 +1964,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1973,7 +1973,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: coordinate_plane
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [],
 	"width": 450,
@@ -2005,7 +2005,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2014,7 +2014,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2057,7 +2057,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2066,7 +2066,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2109,7 +2109,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2118,7 +2118,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2161,7 +2161,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2170,7 +2170,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2213,7 +2213,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2222,7 +2222,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2265,7 +2265,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2274,7 +2274,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2317,7 +2317,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2326,7 +2326,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2369,7 +2369,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2378,7 +2378,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2421,7 +2421,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2430,7 +2430,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2473,7 +2473,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2482,7 +2482,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2525,7 +2525,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2534,7 +2534,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2577,7 +2577,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2586,7 +2586,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2629,7 +2629,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2638,7 +2638,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: coordinate_plane_empty
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -2670,7 +2670,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2679,7 +2679,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2722,7 +2722,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2731,7 +2731,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2774,7 +2774,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2783,7 +2783,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2826,7 +2826,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2835,7 +2835,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2878,7 +2878,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2887,7 +2887,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2930,7 +2930,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2939,7 +2939,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -2982,7 +2982,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2991,7 +2991,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: coordinate_plane_empty
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -3023,7 +3023,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3032,7 +3032,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -3075,7 +3075,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3084,7 +3084,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -3127,7 +3127,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3136,7 +3136,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -3179,7 +3179,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3188,7 +3188,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -3231,7 +3231,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3240,7 +3240,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -3283,7 +3283,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3292,7 +3292,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -3335,7 +3335,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3344,7 +3344,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: coordinate_plane_empty
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -3376,7 +3376,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3385,7 +3385,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: coordinate_plane_empty
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [],
 	"width": 500,
@@ -3417,7 +3417,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3426,7 +3426,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -3469,7 +3469,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3478,7 +3478,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -3538,7 +3538,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3547,7 +3547,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -3590,7 +3590,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3599,7 +3599,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: coordinate_plane_initial
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -3631,7 +3631,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3640,7 +3640,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: coordinate_plane_empty
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [],
 	"width": 450,
@@ -3672,7 +3672,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3681,7 +3681,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -3724,7 +3724,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3733,7 +3733,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -3776,7 +3776,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3785,7 +3785,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -3828,7 +3828,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3837,7 +3837,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -3880,7 +3880,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3889,7 +3889,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -3932,7 +3932,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3941,7 +3941,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -3984,7 +3984,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3993,7 +3993,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4036,7 +4036,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4045,7 +4045,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4088,7 +4088,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4097,7 +4097,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4140,7 +4140,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4149,7 +4149,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4192,7 +4192,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4201,7 +4201,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4244,7 +4244,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4253,7 +4253,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4296,7 +4296,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4305,7 +4305,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: coordinate_plane_empty
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -4337,7 +4337,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4346,7 +4346,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_initial
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [],
 	"width": 425,
@@ -4378,7 +4378,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4387,7 +4387,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4430,7 +4430,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4439,7 +4439,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4482,7 +4482,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4491,7 +4491,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Graphing proportional relationships
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing proportional relationships", () => {
+test("line-equation-graph - Graphing proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4534,7 +4534,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4543,7 +4543,7 @@ test("line-equation-graph - Graphing proportional relationships", () => {
 // Course: 8th grade math
 // Exercise: Intercepts from a graph
 // Widget key: image_1
-test("line-equation-graph - Intercepts from a graph", () => {
+test("line-equation-graph - Intercepts from a graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4586,7 +4586,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4595,7 +4595,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 // Course: 8th grade math
 // Exercise: Intercepts from a graph
 // Widget key: image_1
-test("line-equation-graph - Intercepts from a graph", () => {
+test("line-equation-graph - Intercepts from a graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4638,7 +4638,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4647,7 +4647,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 // Course: 8th grade math
 // Exercise: Intercepts from a graph
 // Widget key: image_1
-test("line-equation-graph - Intercepts from a graph", () => {
+test("line-equation-graph - Intercepts from a graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4691,7 +4691,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4700,7 +4700,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 // Course: 8th grade math
 // Exercise: Intercepts from a graph
 // Widget key: image_1
-test("line-equation-graph - Intercepts from a graph", () => {
+test("line-equation-graph - Intercepts from a graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4743,7 +4743,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4752,7 +4752,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 // Course: 8th grade math
 // Exercise: Intercepts from a graph
 // Widget key: image_1
-test("line-equation-graph - Intercepts from a graph", () => {
+test("line-equation-graph - Intercepts from a graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4795,7 +4795,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4804,7 +4804,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 // Course: 8th grade math
 // Exercise: Intercepts from a graph
 // Widget key: image_1
-test("line-equation-graph - Intercepts from a graph", () => {
+test("line-equation-graph - Intercepts from a graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4864,7 +4864,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4873,7 +4873,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 // Course: 8th grade math
 // Exercise: Intercepts from a graph
 // Widget key: image_1
-test("line-equation-graph - Intercepts from a graph", () => {
+test("line-equation-graph - Intercepts from a graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4916,7 +4916,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4925,7 +4925,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 // Course: 8th grade math
 // Exercise: Intercepts from a graph
 // Widget key: image_1
-test("line-equation-graph - Intercepts from a graph", () => {
+test("line-equation-graph - Intercepts from a graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -4968,7 +4968,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4977,7 +4977,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 // Course: 8th grade math
 // Exercise: Intercepts from a graph
 // Widget key: image_1
-test("line-equation-graph - Intercepts from a graph", () => {
+test("line-equation-graph - Intercepts from a graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5020,7 +5020,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5029,7 +5029,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 // Course: 8th grade math
 // Exercise: Intercepts from a graph
 // Widget key: image_1
-test("line-equation-graph - Intercepts from a graph", () => {
+test("line-equation-graph - Intercepts from a graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5073,7 +5073,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5082,7 +5082,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 // Course: 8th grade math
 // Exercise: Intercepts from a graph
 // Widget key: image_1
-test("line-equation-graph - Intercepts from a graph", () => {
+test("line-equation-graph - Intercepts from a graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5125,7 +5125,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5134,7 +5134,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 // Course: 8th grade math
 // Exercise: Intercepts from a graph
 // Widget key: image_1
-test("line-equation-graph - Intercepts from a graph", () => {
+test("line-equation-graph - Intercepts from a graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5177,7 +5177,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5186,7 +5186,7 @@ test("line-equation-graph - Intercepts from a graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5229,7 +5229,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5238,7 +5238,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5281,7 +5281,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5290,7 +5290,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5334,7 +5334,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5343,7 +5343,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5386,7 +5386,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5395,7 +5395,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5438,7 +5438,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5447,7 +5447,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5490,7 +5490,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5499,7 +5499,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5543,7 +5543,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5552,7 +5552,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5595,7 +5595,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5604,7 +5604,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5648,7 +5648,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5657,7 +5657,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5700,7 +5700,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5709,7 +5709,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5753,7 +5753,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5762,7 +5762,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5805,7 +5805,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5814,7 +5814,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5857,7 +5857,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5866,7 +5866,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5909,7 +5909,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5918,7 +5918,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -5962,7 +5962,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5971,7 +5971,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6014,7 +6014,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6023,7 +6023,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6067,7 +6067,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6076,7 +6076,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6119,7 +6119,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6128,7 +6128,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6172,7 +6172,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6181,7 +6181,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6225,7 +6225,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6234,7 +6234,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6277,7 +6277,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6286,7 +6286,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6329,7 +6329,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6338,7 +6338,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6381,7 +6381,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6390,7 +6390,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Slope from graph
 // Widget key: image_1
-test("line-equation-graph - Slope from graph", () => {
+test("line-equation-graph - Slope from graph", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6450,7 +6450,7 @@ test("line-equation-graph - Slope from graph", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6459,7 +6459,7 @@ test("line-equation-graph - Slope from graph", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_a
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6502,7 +6502,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6511,7 +6511,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_b
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6554,7 +6554,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6563,7 +6563,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_c
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6606,7 +6606,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6615,7 +6615,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: coordinate_plane_empty
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [],
 	"width": 400,
@@ -6647,7 +6647,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6656,7 +6656,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_a
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6699,7 +6699,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6708,7 +6708,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_b
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6751,7 +6751,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6760,7 +6760,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_c
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6803,7 +6803,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6812,7 +6812,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: coordinate_plane_empty
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [],
 	"width": 400,
@@ -6844,7 +6844,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6853,7 +6853,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_a
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6896,7 +6896,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6905,7 +6905,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_b
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -6948,7 +6948,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6957,7 +6957,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_c
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7000,7 +7000,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7009,7 +7009,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: coordinate_plane_empty
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [],
 	"width": 400,
@@ -7041,7 +7041,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7050,7 +7050,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_a
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7093,7 +7093,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7102,7 +7102,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_b
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7145,7 +7145,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7154,7 +7154,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_c
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7197,7 +7197,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7206,7 +7206,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_a
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7249,7 +7249,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7258,7 +7258,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_b
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7301,7 +7301,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7310,7 +7310,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_c
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7353,7 +7353,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7362,7 +7362,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_a
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7405,7 +7405,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7414,7 +7414,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_b
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7457,7 +7457,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7466,7 +7466,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_c
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7509,7 +7509,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7518,7 +7518,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_a
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7561,7 +7561,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7570,7 +7570,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_b
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7613,7 +7613,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7622,7 +7622,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_c
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7665,7 +7665,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7674,7 +7674,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_a
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7717,7 +7717,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7726,7 +7726,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_b
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7769,7 +7769,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7778,7 +7778,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_c
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7821,7 +7821,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7830,7 +7830,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_a
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7873,7 +7873,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7882,7 +7882,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_b
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7925,7 +7925,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7934,7 +7934,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_c
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -7977,7 +7977,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7986,7 +7986,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_a
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8030,7 +8030,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8039,7 +8039,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_b
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8083,7 +8083,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8092,7 +8092,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_c
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8136,7 +8136,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8145,7 +8145,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_a
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8188,7 +8188,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8197,7 +8197,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_b
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8240,7 +8240,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8249,7 +8249,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: graph_choice_c
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8292,7 +8292,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8301,7 +8301,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Graph from slope-intercept form
 // Widget key: coordinate_plane_empty
-test("line-equation-graph - Graph from slope-intercept form", () => {
+test("line-equation-graph - Graph from slope-intercept form", async () => {
 	const input = {
 	"lines": [],
 	"width": 400,
@@ -8333,7 +8333,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8342,7 +8342,7 @@ test("line-equation-graph - Graph from slope-intercept form", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8385,7 +8385,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8394,7 +8394,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8437,7 +8437,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8446,7 +8446,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8489,7 +8489,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8498,7 +8498,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8541,7 +8541,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8550,7 +8550,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8593,7 +8593,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8602,7 +8602,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8645,7 +8645,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8654,7 +8654,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8697,7 +8697,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8706,7 +8706,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8749,7 +8749,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8758,7 +8758,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8801,7 +8801,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8810,7 +8810,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8853,7 +8853,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8862,7 +8862,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8905,7 +8905,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8914,7 +8914,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -8957,7 +8957,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8966,7 +8966,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9009,7 +9009,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9018,7 +9018,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9061,7 +9061,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9070,7 +9070,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9113,7 +9113,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9122,7 +9122,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9165,7 +9165,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9174,7 +9174,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9217,7 +9217,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9226,7 +9226,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9269,7 +9269,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9278,7 +9278,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9321,7 +9321,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9330,7 +9330,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9373,7 +9373,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9382,7 +9382,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9425,7 +9425,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9434,7 +9434,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9477,7 +9477,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9486,7 +9486,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9529,7 +9529,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9538,7 +9538,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9581,7 +9581,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9590,7 +9590,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9633,7 +9633,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9642,7 +9642,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9685,7 +9685,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9694,7 +9694,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9737,7 +9737,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9746,7 +9746,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9789,7 +9789,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9798,7 +9798,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9841,7 +9841,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9850,7 +9850,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9893,7 +9893,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9902,7 +9902,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9945,7 +9945,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9954,7 +9954,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -9997,7 +9997,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10006,7 +10006,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10049,7 +10049,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10058,7 +10058,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10118,7 +10118,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10127,7 +10127,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10170,7 +10170,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10179,7 +10179,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10222,7 +10222,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10231,7 +10231,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10274,7 +10274,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10283,7 +10283,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10326,7 +10326,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10335,7 +10335,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10378,7 +10378,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10387,7 +10387,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear equations word problems: graphs
 // Widget key: image_1
-test("line-equation-graph - Linear equations word problems graphs", () => {
+test("line-equation-graph - Linear equations word problems graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10430,7 +10430,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10439,7 +10439,7 @@ test("line-equation-graph - Linear equations word problems graphs", () => {
 // Course: 8th grade math
 // Exercise: Compare linear functions
 // Widget key: image_1
-test("line-equation-graph - Compare linear functions", () => {
+test("line-equation-graph - Compare linear functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10482,7 +10482,7 @@ test("line-equation-graph - Compare linear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10491,7 +10491,7 @@ test("line-equation-graph - Compare linear functions", () => {
 // Course: 8th grade math
 // Exercise: Compare linear functions
 // Widget key: image_1
-test("line-equation-graph - Compare linear functions", () => {
+test("line-equation-graph - Compare linear functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10534,7 +10534,7 @@ test("line-equation-graph - Compare linear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10543,7 +10543,7 @@ test("line-equation-graph - Compare linear functions", () => {
 // Course: 8th grade math
 // Exercise: Compare linear functions
 // Widget key: image_1
-test("line-equation-graph - Compare linear functions", () => {
+test("line-equation-graph - Compare linear functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10586,7 +10586,7 @@ test("line-equation-graph - Compare linear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10595,7 +10595,7 @@ test("line-equation-graph - Compare linear functions", () => {
 // Course: 8th grade math
 // Exercise: Compare linear functions
 // Widget key: image_1
-test("line-equation-graph - Compare linear functions", () => {
+test("line-equation-graph - Compare linear functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10638,7 +10638,7 @@ test("line-equation-graph - Compare linear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10647,7 +10647,7 @@ test("line-equation-graph - Compare linear functions", () => {
 // Course: 8th grade math
 // Exercise: Compare linear functions
 // Widget key: image_1
-test("line-equation-graph - Compare linear functions", () => {
+test("line-equation-graph - Compare linear functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10690,7 +10690,7 @@ test("line-equation-graph - Compare linear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10699,7 +10699,7 @@ test("line-equation-graph - Compare linear functions", () => {
 // Course: 8th grade math
 // Exercise: Compare linear functions
 // Widget key: image_1
-test("line-equation-graph - Compare linear functions", () => {
+test("line-equation-graph - Compare linear functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10743,7 +10743,7 @@ test("line-equation-graph - Compare linear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10752,7 +10752,7 @@ test("line-equation-graph - Compare linear functions", () => {
 // Course: 8th grade math
 // Exercise: Compare linear functions
 // Widget key: image_1
-test("line-equation-graph - Compare linear functions", () => {
+test("line-equation-graph - Compare linear functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10812,7 +10812,7 @@ test("line-equation-graph - Compare linear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10821,7 +10821,7 @@ test("line-equation-graph - Compare linear functions", () => {
 // Course: 8th grade math
 // Exercise: Compare linear functions
 // Widget key: image_1
-test("line-equation-graph - Compare linear functions", () => {
+test("line-equation-graph - Compare linear functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10864,7 +10864,7 @@ test("line-equation-graph - Compare linear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10873,7 +10873,7 @@ test("line-equation-graph - Compare linear functions", () => {
 // Course: 8th grade math
 // Exercise: Compare linear functions
 // Widget key: image_1
-test("line-equation-graph - Compare linear functions", () => {
+test("line-equation-graph - Compare linear functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10916,7 +10916,7 @@ test("line-equation-graph - Compare linear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10925,7 +10925,7 @@ test("line-equation-graph - Compare linear functions", () => {
 // Course: 8th grade math
 // Exercise: Compare linear functions
 // Widget key: image_1
-test("line-equation-graph - Compare linear functions", () => {
+test("line-equation-graph - Compare linear functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -10968,7 +10968,7 @@ test("line-equation-graph - Compare linear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10977,7 +10977,7 @@ test("line-equation-graph - Compare linear functions", () => {
 // Course: 8th grade math
 // Exercise: Compare linear functions
 // Widget key: image_1
-test("line-equation-graph - Compare linear functions", () => {
+test("line-equation-graph - Compare linear functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11020,7 +11020,7 @@ test("line-equation-graph - Compare linear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11029,7 +11029,7 @@ test("line-equation-graph - Compare linear functions", () => {
 // Course: 8th grade math
 // Exercise: Comparing linear functions word problems
 // Widget key: image_1
-test("line-equation-graph - Comparing linear functions word problems", () => {
+test("line-equation-graph - Comparing linear functions word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11072,7 +11072,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11081,7 +11081,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 // Course: 8th grade math
 // Exercise: Comparing linear functions word problems
 // Widget key: image_1
-test("line-equation-graph - Comparing linear functions word problems", () => {
+test("line-equation-graph - Comparing linear functions word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11124,7 +11124,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11133,7 +11133,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 // Course: 8th grade math
 // Exercise: Comparing linear functions word problems
 // Widget key: image_1
-test("line-equation-graph - Comparing linear functions word problems", () => {
+test("line-equation-graph - Comparing linear functions word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11176,7 +11176,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11185,7 +11185,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 // Course: 8th grade math
 // Exercise: Comparing linear functions word problems
 // Widget key: image_1
-test("line-equation-graph - Comparing linear functions word problems", () => {
+test("line-equation-graph - Comparing linear functions word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11228,7 +11228,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11237,7 +11237,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 // Course: 8th grade math
 // Exercise: Comparing linear functions word problems
 // Widget key: image_1
-test("line-equation-graph - Comparing linear functions word problems", () => {
+test("line-equation-graph - Comparing linear functions word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11280,7 +11280,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11289,7 +11289,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 // Course: 8th grade math
 // Exercise: Comparing linear functions word problems
 // Widget key: image_1
-test("line-equation-graph - Comparing linear functions word problems", () => {
+test("line-equation-graph - Comparing linear functions word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11332,7 +11332,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11341,7 +11341,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 // Course: 8th grade math
 // Exercise: Comparing linear functions word problems
 // Widget key: image_1
-test("line-equation-graph - Comparing linear functions word problems", () => {
+test("line-equation-graph - Comparing linear functions word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11384,7 +11384,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11393,7 +11393,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 // Course: 8th grade math
 // Exercise: Comparing linear functions word problems
 // Widget key: image_1
-test("line-equation-graph - Comparing linear functions word problems", () => {
+test("line-equation-graph - Comparing linear functions word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11436,7 +11436,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11445,7 +11445,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 // Course: 8th grade math
 // Exercise: Comparing linear functions word problems
 // Widget key: image_1
-test("line-equation-graph - Comparing linear functions word problems", () => {
+test("line-equation-graph - Comparing linear functions word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11488,7 +11488,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11497,7 +11497,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 // Course: 8th grade math
 // Exercise: Comparing linear functions word problems
 // Widget key: image_1
-test("line-equation-graph - Comparing linear functions word problems", () => {
+test("line-equation-graph - Comparing linear functions word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11540,7 +11540,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11549,7 +11549,7 @@ test("line-equation-graph - Comparing linear functions word problems", () => {
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11592,7 +11592,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11601,7 +11601,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11644,7 +11644,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11653,7 +11653,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11696,7 +11696,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11705,7 +11705,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: coordinate_plane_initial
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [],
 	"width": 400,
@@ -11737,7 +11737,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11746,7 +11746,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11789,7 +11789,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11798,7 +11798,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11841,7 +11841,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11850,7 +11850,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11893,7 +11893,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11902,7 +11902,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: graph_initial
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [],
 	"width": 400,
@@ -11934,7 +11934,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11943,7 +11943,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -11986,7 +11986,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11995,7 +11995,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12038,7 +12038,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12047,7 +12047,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12090,7 +12090,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12099,7 +12099,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12142,7 +12142,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12151,7 +12151,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12194,7 +12194,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12203,7 +12203,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12246,7 +12246,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12255,7 +12255,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: graph_choice_a
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12298,7 +12298,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12307,7 +12307,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: graph_choice_b
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12350,7 +12350,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12359,7 +12359,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Graphing linear relationships word problems
 // Widget key: graph_choice_c
-test("line-equation-graph - Graphing linear relationships word problems", () => {
+test("line-equation-graph - Graphing linear relationships word problems", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12402,7 +12402,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12411,7 +12411,7 @@ test("line-equation-graph - Graphing linear relationships word problems", () => 
 // Course: 8th grade math
 // Exercise: Recognize functions from graphs
 // Widget key: image_1
-test("line-equation-graph - Recognize functions from graphs", () => {
+test("line-equation-graph - Recognize functions from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12454,7 +12454,7 @@ test("line-equation-graph - Recognize functions from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12463,7 +12463,7 @@ test("line-equation-graph - Recognize functions from graphs", () => {
 // Course: 8th grade math
 // Exercise: Recognize functions from graphs
 // Widget key: image_1
-test("line-equation-graph - Recognize functions from graphs", () => {
+test("line-equation-graph - Recognize functions from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12506,7 +12506,7 @@ test("line-equation-graph - Recognize functions from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12515,7 +12515,7 @@ test("line-equation-graph - Recognize functions from graphs", () => {
 // Course: 8th grade math
 // Exercise: Recognize functions from graphs
 // Widget key: image_1
-test("line-equation-graph - Recognize functions from graphs", () => {
+test("line-equation-graph - Recognize functions from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12559,7 +12559,7 @@ test("line-equation-graph - Recognize functions from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12568,7 +12568,7 @@ test("line-equation-graph - Recognize functions from graphs", () => {
 // Course: 8th grade math
 // Exercise: Recognize functions from graphs
 // Widget key: image_1
-test("line-equation-graph - Recognize functions from graphs", () => {
+test("line-equation-graph - Recognize functions from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12611,7 +12611,7 @@ test("line-equation-graph - Recognize functions from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12620,7 +12620,7 @@ test("line-equation-graph - Recognize functions from graphs", () => {
 // Course: 8th grade math
 // Exercise: Linear & nonlinear functions
 // Widget key: image_1
-test("line-equation-graph - Linear nonlinear functions", () => {
+test("line-equation-graph - Linear nonlinear functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12688,7 +12688,7 @@ test("line-equation-graph - Linear nonlinear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12697,7 +12697,7 @@ test("line-equation-graph - Linear nonlinear functions", () => {
 // Course: 8th grade math
 // Exercise: Linear & nonlinear functions
 // Widget key: image_1
-test("line-equation-graph - Linear nonlinear functions", () => {
+test("line-equation-graph - Linear nonlinear functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12740,7 +12740,7 @@ test("line-equation-graph - Linear nonlinear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12749,7 +12749,7 @@ test("line-equation-graph - Linear nonlinear functions", () => {
 // Course: 8th grade math
 // Exercise: Linear & nonlinear functions
 // Widget key: image_1
-test("line-equation-graph - Linear nonlinear functions", () => {
+test("line-equation-graph - Linear nonlinear functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12792,7 +12792,7 @@ test("line-equation-graph - Linear nonlinear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12801,7 +12801,7 @@ test("line-equation-graph - Linear nonlinear functions", () => {
 // Course: 8th grade math
 // Exercise: Linear & nonlinear functions
 // Widget key: image_1
-test("line-equation-graph - Linear nonlinear functions", () => {
+test("line-equation-graph - Linear nonlinear functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12844,7 +12844,7 @@ test("line-equation-graph - Linear nonlinear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12853,7 +12853,7 @@ test("line-equation-graph - Linear nonlinear functions", () => {
 // Course: 8th grade math
 // Exercise: Linear & nonlinear functions
 // Widget key: image_1
-test("line-equation-graph - Linear nonlinear functions", () => {
+test("line-equation-graph - Linear nonlinear functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -12896,7 +12896,7 @@ test("line-equation-graph - Linear nonlinear functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12905,7 +12905,7 @@ test("line-equation-graph - Linear nonlinear functions", () => {
 // Course: 8th grade math
 // Exercise: Interpreting graphs of functions
 // Widget key: image_1
-test("line-equation-graph - Interpreting graphs of functions", () => {
+test("line-equation-graph - Interpreting graphs of functions", async () => {
 	const input = {
 	"lines": [],
 	"width": 447,
@@ -12962,7 +12962,7 @@ test("line-equation-graph - Interpreting graphs of functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12971,7 +12971,7 @@ test("line-equation-graph - Interpreting graphs of functions", () => {
 // Course: 8th grade math
 // Exercise: Interpreting graphs of functions
 // Widget key: image_1
-test("line-equation-graph - Interpreting graphs of functions", () => {
+test("line-equation-graph - Interpreting graphs of functions", async () => {
 	const input = {
 	"lines": [
 		{
@@ -13014,7 +13014,7 @@ test("line-equation-graph - Interpreting graphs of functions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13023,7 +13023,7 @@ test("line-equation-graph - Interpreting graphs of functions", () => {
 // Course: 8th grade math
 // Exercise: Systems of equations with graphing
 // Widget key: interaction_1
-test("line-equation-graph - Systems of equations with graphing", () => {
+test("line-equation-graph - Systems of equations with graphing", async () => {
 	const input = {
 	"lines": [],
 	"width": 280,
@@ -13055,7 +13055,7 @@ test("line-equation-graph - Systems of equations with graphing", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13064,7 +13064,7 @@ test("line-equation-graph - Systems of equations with graphing", () => {
 // Course: 8th grade math
 // Exercise: Systems of equations with graphing
 // Widget key: interaction_1
-test("line-equation-graph - Systems of equations with graphing", () => {
+test("line-equation-graph - Systems of equations with graphing", async () => {
 	const input = {
 	"lines": [],
 	"width": 280,
@@ -13096,7 +13096,7 @@ test("line-equation-graph - Systems of equations with graphing", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13105,7 +13105,7 @@ test("line-equation-graph - Systems of equations with graphing", () => {
 // Course: 8th grade math
 // Exercise: Systems of equations with graphing
 // Widget key: coordinate_plane_initial
-test("line-equation-graph - Systems of equations with graphing", () => {
+test("line-equation-graph - Systems of equations with graphing", async () => {
 	const input = {
 	"lines": [
 		{
@@ -13191,7 +13191,7 @@ test("line-equation-graph - Systems of equations with graphing", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13200,7 +13200,7 @@ test("line-equation-graph - Systems of equations with graphing", () => {
 // Course: 8th grade math
 // Exercise: Systems of equations with graphing
 // Widget key: interaction_1_visual
-test("line-equation-graph - Systems of equations with graphing", () => {
+test("line-equation-graph - Systems of equations with graphing", async () => {
 	const input = {
 	"lines": [],
 	"width": 280,
@@ -13232,7 +13232,7 @@ test("line-equation-graph - Systems of equations with graphing", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13241,7 +13241,7 @@ test("line-equation-graph - Systems of equations with graphing", () => {
 // Course: 8th grade math
 // Exercise: Systems of equations with graphing
 // Widget key: interaction_1
-test("line-equation-graph - Systems of equations with graphing", () => {
+test("line-equation-graph - Systems of equations with graphing", async () => {
 	const input = {
 	"lines": [
 		{
@@ -13294,7 +13294,7 @@ test("line-equation-graph - Systems of equations with graphing", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13303,7 +13303,7 @@ test("line-equation-graph - Systems of equations with graphing", () => {
 // Course: 8th grade math
 // Exercise: Systems of equations with graphing
 // Widget key: graph_image
-test("line-equation-graph - Systems of equations with graphing", () => {
+test("line-equation-graph - Systems of equations with graphing", async () => {
 	const input = {
 	"lines": [
 		{
@@ -13389,7 +13389,7 @@ test("line-equation-graph - Systems of equations with graphing", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13398,7 +13398,7 @@ test("line-equation-graph - Systems of equations with graphing", () => {
 // Course: 8th grade math
 // Exercise: Systems of equations with graphing
 // Widget key: graph_widget
-test("line-equation-graph - Systems of equations with graphing", () => {
+test("line-equation-graph - Systems of equations with graphing", async () => {
 	const input = {
 	"lines": [
 		{
@@ -13451,7 +13451,7 @@ test("line-equation-graph - Systems of equations with graphing", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13460,7 +13460,7 @@ test("line-equation-graph - Systems of equations with graphing", () => {
 // Course: 8th grade math
 // Exercise: Number of solutions to a system of equations graphically
 // Widget key: reference_graph
-test("line-equation-graph - Number of solutions to a system of equations gr", () => {
+test("line-equation-graph - Number of solutions to a system of equations gr", async () => {
 	const input = {
 	"lines": [
 		{
@@ -13546,7 +13546,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13555,7 +13555,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 // Course: 8th grade math
 // Exercise: Number of solutions to a system of equations graphically
 // Widget key: system_graph
-test("line-equation-graph - Number of solutions to a system of equations gr", () => {
+test("line-equation-graph - Number of solutions to a system of equations gr", async () => {
 	const input = {
 	"lines": [
 		{
@@ -13643,7 +13643,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13652,7 +13652,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 // Course: 8th grade math
 // Exercise: Number of solutions to a system of equations graphically
 // Widget key: interaction_1
-test("line-equation-graph - Number of solutions to a system of equations gr", () => {
+test("line-equation-graph - Number of solutions to a system of equations gr", async () => {
 	const input = {
 	"lines": [
 		{
@@ -13740,7 +13740,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13749,7 +13749,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 // Course: 8th grade math
 // Exercise: Number of solutions to a system of equations graphically
 // Widget key: graph_reference
-test("line-equation-graph - Number of solutions to a system of equations gr", () => {
+test("line-equation-graph - Number of solutions to a system of equations gr", async () => {
 	const input = {
 	"lines": [
 		{
@@ -13835,7 +13835,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13844,7 +13844,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 // Course: 8th grade math
 // Exercise: Number of solutions to a system of equations graphically
 // Widget key: graph_initial
-test("line-equation-graph - Number of solutions to a system of equations gr", () => {
+test("line-equation-graph - Number of solutions to a system of equations gr", async () => {
 	const input = {
 	"lines": [],
 	"width": 280,
@@ -13876,7 +13876,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13885,7 +13885,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 // Course: 8th grade math
 // Exercise: Number of solutions to a system of equations graphically
 // Widget key: interaction_1
-test("line-equation-graph - Number of solutions to a system of equations gr", () => {
+test("line-equation-graph - Number of solutions to a system of equations gr", async () => {
 	const input = {
 	"lines": [
 		{
@@ -13938,7 +13938,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13947,7 +13947,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 // Course: 8th grade math
 // Exercise: Number of solutions to a system of equations graphically
 // Widget key: interaction_1
-test("line-equation-graph - Number of solutions to a system of equations gr", () => {
+test("line-equation-graph - Number of solutions to a system of equations gr", async () => {
 	const input = {
 	"lines": [],
 	"width": 280,
@@ -13979,7 +13979,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13988,7 +13988,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 // Course: 8th grade math
 // Exercise: Number of solutions to a system of equations graphically
 // Widget key: graph_widget
-test("line-equation-graph - Number of solutions to a system of equations gr", () => {
+test("line-equation-graph - Number of solutions to a system of equations gr", async () => {
 	const input = {
 	"lines": [
 		{
@@ -14043,7 +14043,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14052,7 +14052,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 // Course: 8th grade math
 // Exercise: Number of solutions to a system of equations graphically
 // Widget key: graph_widget
-test("line-equation-graph - Number of solutions to a system of equations gr", () => {
+test("line-equation-graph - Number of solutions to a system of equations gr", async () => {
 	const input = {
 	"lines": [],
 	"width": 345,
@@ -14084,7 +14084,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14093,7 +14093,7 @@ test("line-equation-graph - Number of solutions to a system of equations gr", ()
 // Course: 8th grade math
 // Exercise: Determine reflections
 // Widget key: graph_choice_a
-test("line-equation-graph - Determine reflections", () => {
+test("line-equation-graph - Determine reflections", async () => {
 	const input = {
 	"lines": [
 		{
@@ -14136,7 +14136,7 @@ test("line-equation-graph - Determine reflections", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14145,7 +14145,7 @@ test("line-equation-graph - Determine reflections", () => {
 // Course: 8th grade math
 // Exercise: Determine reflections
 // Widget key: graph_choice_b
-test("line-equation-graph - Determine reflections", () => {
+test("line-equation-graph - Determine reflections", async () => {
 	const input = {
 	"lines": [
 		{
@@ -14188,7 +14188,7 @@ test("line-equation-graph - Determine reflections", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14197,7 +14197,7 @@ test("line-equation-graph - Determine reflections", () => {
 // Course: 8th grade math
 // Exercise: Determine reflections
 // Widget key: graph_choice_c
-test("line-equation-graph - Determine reflections", () => {
+test("line-equation-graph - Determine reflections", async () => {
 	const input = {
 	"lines": [
 		{
@@ -14241,7 +14241,7 @@ test("line-equation-graph - Determine reflections", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14250,7 +14250,7 @@ test("line-equation-graph - Determine reflections", () => {
 // Course: 7th grade math
 // Exercise: Constant of proportionality from graphs
 // Widget key: image_1
-test("line-equation-graph - Constant of proportionality from graphs", () => {
+test("line-equation-graph - Constant of proportionality from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -14302,7 +14302,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14311,7 +14311,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 // Course: 7th grade math
 // Exercise: Constant of proportionality from graphs
 // Widget key: image_1
-test("line-equation-graph - Constant of proportionality from graphs", () => {
+test("line-equation-graph - Constant of proportionality from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -14363,7 +14363,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14372,7 +14372,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 // Course: 7th grade math
 // Exercise: Constant of proportionality from graphs
 // Widget key: image_1
-test("line-equation-graph - Constant of proportionality from graphs", () => {
+test("line-equation-graph - Constant of proportionality from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -14424,7 +14424,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14433,7 +14433,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 // Course: 7th grade math
 // Exercise: Constant of proportionality from graphs
 // Widget key: image_1
-test("line-equation-graph - Constant of proportionality from graphs", () => {
+test("line-equation-graph - Constant of proportionality from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -14493,7 +14493,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14502,7 +14502,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 // Course: 7th grade math
 // Exercise: Constant of proportionality from graphs
 // Widget key: image_1
-test("line-equation-graph - Constant of proportionality from graphs", () => {
+test("line-equation-graph - Constant of proportionality from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -14562,7 +14562,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14571,7 +14571,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 // Course: 7th grade math
 // Exercise: Constant of proportionality from graphs
 // Widget key: image_1
-test("line-equation-graph - Constant of proportionality from graphs", () => {
+test("line-equation-graph - Constant of proportionality from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -14659,7 +14659,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14668,7 +14668,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 // Course: 7th grade math
 // Exercise: Constant of proportionality from graphs
 // Widget key: image_1
-test("line-equation-graph - Constant of proportionality from graphs", () => {
+test("line-equation-graph - Constant of proportionality from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -14721,7 +14721,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14730,7 +14730,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 // Course: 7th grade math
 // Exercise: Constant of proportionality from graphs
 // Widget key: image_1
-test("line-equation-graph - Constant of proportionality from graphs", () => {
+test("line-equation-graph - Constant of proportionality from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -14782,7 +14782,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14791,7 +14791,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 // Course: 7th grade math
 // Exercise: Constant of proportionality from graphs
 // Widget key: image_1
-test("line-equation-graph - Constant of proportionality from graphs", () => {
+test("line-equation-graph - Constant of proportionality from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -14879,7 +14879,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14888,7 +14888,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 // Course: 7th grade math
 // Exercise: Constant of proportionality from graphs
 // Widget key: image_1
-test("line-equation-graph - Constant of proportionality from graphs", () => {
+test("line-equation-graph - Constant of proportionality from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -14940,7 +14940,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14949,7 +14949,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 // Course: 7th grade math
 // Exercise: Constant of proportionality from graphs
 // Widget key: image_1
-test("line-equation-graph - Constant of proportionality from graphs", () => {
+test("line-equation-graph - Constant of proportionality from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -15001,7 +15001,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15010,7 +15010,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 // Course: 7th grade math
 // Exercise: Constant of proportionality from graphs
 // Widget key: image_1
-test("line-equation-graph - Constant of proportionality from graphs", () => {
+test("line-equation-graph - Constant of proportionality from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -15070,7 +15070,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15079,7 +15079,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 // Course: 7th grade math
 // Exercise: Constant of proportionality from graphs
 // Widget key: image_1
-test("line-equation-graph - Constant of proportionality from graphs", () => {
+test("line-equation-graph - Constant of proportionality from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -15167,7 +15167,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15176,7 +15176,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 // Course: 7th grade math
 // Exercise: Constant of proportionality from graphs
 // Widget key: image_1
-test("line-equation-graph - Constant of proportionality from graphs", () => {
+test("line-equation-graph - Constant of proportionality from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -15236,7 +15236,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15245,7 +15245,7 @@ test("line-equation-graph - Constant of proportionality from graphs", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: choice_c_image
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -15297,7 +15297,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15306,7 +15306,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: choice_d_image
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -15358,7 +15358,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15367,7 +15367,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: choice_b_graph
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -15419,7 +15419,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15428,7 +15428,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: choice_c_graph
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -15480,7 +15480,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15489,7 +15489,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: image_1
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -15541,7 +15541,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15550,7 +15550,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: choice_c_graph
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -15602,7 +15602,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15611,7 +15611,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: choice_a_visual
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -15663,7 +15663,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15672,7 +15672,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: choice_c_graph
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -15724,7 +15724,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15733,7 +15733,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: choice_d_graph
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -15785,7 +15785,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15794,7 +15794,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: choice_e_graph
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -15846,7 +15846,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15855,7 +15855,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: choice_c_graph
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -15907,7 +15907,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15916,7 +15916,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: choice_b_graph
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -15968,7 +15968,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15977,7 +15977,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: choice_c_image
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -16020,7 +16020,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16029,7 +16029,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: image_1
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -16081,7 +16081,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16090,7 +16090,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: choice_graph_image
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -16142,7 +16142,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16151,7 +16151,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: choice_c_graph
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -16203,7 +16203,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16212,7 +16212,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: choice_b_image
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -16255,7 +16255,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16264,7 +16264,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Compare constants of proportionality
 // Widget key: choice_c_image
-test("line-equation-graph - Compare constants of proportionality", () => {
+test("line-equation-graph - Compare constants of proportionality", async () => {
 	const input = {
 	"lines": [
 		{
@@ -16307,7 +16307,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16316,7 +16316,7 @@ test("line-equation-graph - Compare constants of proportionality", () => {
 // Course: 7th grade math
 // Exercise: Interpret constant of proportionality in graphs
 // Widget key: image_1
-test("line-equation-graph - Interpret constant of proportionality in graphs", () => {
+test("line-equation-graph - Interpret constant of proportionality in graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -16368,7 +16368,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16377,7 +16377,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 // Course: 7th grade math
 // Exercise: Interpret constant of proportionality in graphs
 // Widget key: image_1
-test("line-equation-graph - Interpret constant of proportionality in graphs", () => {
+test("line-equation-graph - Interpret constant of proportionality in graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -16465,7 +16465,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16474,7 +16474,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 // Course: 7th grade math
 // Exercise: Interpret constant of proportionality in graphs
 // Widget key: image_1
-test("line-equation-graph - Interpret constant of proportionality in graphs", () => {
+test("line-equation-graph - Interpret constant of proportionality in graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -16526,7 +16526,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16535,7 +16535,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 // Course: 7th grade math
 // Exercise: Interpret constant of proportionality in graphs
 // Widget key: image_1
-test("line-equation-graph - Interpret constant of proportionality in graphs", () => {
+test("line-equation-graph - Interpret constant of proportionality in graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -16587,7 +16587,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16596,7 +16596,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 // Course: 7th grade math
 // Exercise: Interpret constant of proportionality in graphs
 // Widget key: image_1
-test("line-equation-graph - Interpret constant of proportionality in graphs", () => {
+test("line-equation-graph - Interpret constant of proportionality in graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -16648,7 +16648,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16657,7 +16657,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 // Course: 7th grade math
 // Exercise: Interpret constant of proportionality in graphs
 // Widget key: image_1
-test("line-equation-graph - Interpret constant of proportionality in graphs", () => {
+test("line-equation-graph - Interpret constant of proportionality in graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -16709,7 +16709,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16718,7 +16718,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 // Course: 7th grade math
 // Exercise: Interpret constant of proportionality in graphs
 // Widget key: image_1
-test("line-equation-graph - Interpret constant of proportionality in graphs", () => {
+test("line-equation-graph - Interpret constant of proportionality in graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -16770,7 +16770,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16779,7 +16779,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 // Course: 7th grade math
 // Exercise: Interpret constant of proportionality in graphs
 // Widget key: image_1
-test("line-equation-graph - Interpret constant of proportionality in graphs", () => {
+test("line-equation-graph - Interpret constant of proportionality in graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -16867,7 +16867,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16876,7 +16876,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 // Course: 7th grade math
 // Exercise: Interpret constant of proportionality in graphs
 // Widget key: image_1
-test("line-equation-graph - Interpret constant of proportionality in graphs", () => {
+test("line-equation-graph - Interpret constant of proportionality in graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -16928,7 +16928,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16937,7 +16937,7 @@ test("line-equation-graph - Interpret constant of proportionality in graphs", ()
 // Course: 7th grade math
 // Exercise: Identify proportional relationships from graphs
 // Widget key: choice_a_graph
-test("line-equation-graph - Identify proportional relationships from graphs", () => {
+test("line-equation-graph - Identify proportional relationships from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -16989,7 +16989,7 @@ test("line-equation-graph - Identify proportional relationships from graphs", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16998,7 +16998,7 @@ test("line-equation-graph - Identify proportional relationships from graphs", ()
 // Course: 7th grade math
 // Exercise: Identify proportional relationships from graphs
 // Widget key: choice_b_graph
-test("line-equation-graph - Identify proportional relationships from graphs", () => {
+test("line-equation-graph - Identify proportional relationships from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -17051,7 +17051,7 @@ test("line-equation-graph - Identify proportional relationships from graphs", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17060,7 +17060,7 @@ test("line-equation-graph - Identify proportional relationships from graphs", ()
 // Course: 7th grade math
 // Exercise: Identify proportional relationships from graphs
 // Widget key: choice_a_graph
-test("line-equation-graph - Identify proportional relationships from graphs", () => {
+test("line-equation-graph - Identify proportional relationships from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -17112,7 +17112,7 @@ test("line-equation-graph - Identify proportional relationships from graphs", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17121,7 +17121,7 @@ test("line-equation-graph - Identify proportional relationships from graphs", ()
 // Course: 7th grade math
 // Exercise: Identify proportional relationships from graphs
 // Widget key: choice_b_graph
-test("line-equation-graph - Identify proportional relationships from graphs", () => {
+test("line-equation-graph - Identify proportional relationships from graphs", async () => {
 	const input = {
 	"lines": [
 		{
@@ -17173,7 +17173,7 @@ test("line-equation-graph - Identify proportional relationships from graphs", ()
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17182,7 +17182,7 @@ test("line-equation-graph - Identify proportional relationships from graphs", ()
 // Course: 7th grade math
 // Exercise: Interpreting graphs of proportional relationships
 // Widget key: image_1
-test("line-equation-graph - Interpreting graphs of proportional relationships", () => {
+test("line-equation-graph - Interpreting graphs of proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -17242,7 +17242,7 @@ test("line-equation-graph - Interpreting graphs of proportional relationships", 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17251,7 +17251,7 @@ test("line-equation-graph - Interpreting graphs of proportional relationships", 
 // Course: 7th grade math
 // Exercise: Interpreting graphs of proportional relationships
 // Widget key: image_1
-test("line-equation-graph - Interpreting graphs of proportional relationships", () => {
+test("line-equation-graph - Interpreting graphs of proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -17311,7 +17311,7 @@ test("line-equation-graph - Interpreting graphs of proportional relationships", 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17320,7 +17320,7 @@ test("line-equation-graph - Interpreting graphs of proportional relationships", 
 // Course: 7th grade math
 // Exercise: Interpreting graphs of proportional relationships
 // Widget key: image_1
-test("line-equation-graph - Interpreting graphs of proportional relationships", () => {
+test("line-equation-graph - Interpreting graphs of proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -17372,7 +17372,7 @@ test("line-equation-graph - Interpreting graphs of proportional relationships", 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17381,7 +17381,7 @@ test("line-equation-graph - Interpreting graphs of proportional relationships", 
 // Course: 7th grade math
 // Exercise: Interpreting graphs of proportional relationships
 // Widget key: image_1
-test("line-equation-graph - Interpreting graphs of proportional relationships", () => {
+test("line-equation-graph - Interpreting graphs of proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -17441,7 +17441,7 @@ test("line-equation-graph - Interpreting graphs of proportional relationships", 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17450,7 +17450,7 @@ test("line-equation-graph - Interpreting graphs of proportional relationships", 
 // Course: 7th grade math
 // Exercise: Interpreting graphs of proportional relationships
 // Widget key: image_1
-test("line-equation-graph - Interpreting graphs of proportional relationships", () => {
+test("line-equation-graph - Interpreting graphs of proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -17510,7 +17510,7 @@ test("line-equation-graph - Interpreting graphs of proportional relationships", 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17519,7 +17519,7 @@ test("line-equation-graph - Interpreting graphs of proportional relationships", 
 // Course: 7th grade math
 // Exercise: Interpreting graphs of proportional relationships
 // Widget key: image_1
-test("line-equation-graph - Interpreting graphs of proportional relationships", () => {
+test("line-equation-graph - Interpreting graphs of proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -17579,7 +17579,7 @@ test("line-equation-graph - Interpreting graphs of proportional relationships", 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17588,7 +17588,7 @@ test("line-equation-graph - Interpreting graphs of proportional relationships", 
 // Course: 7th grade math
 // Exercise: Interpreting graphs of proportional relationships
 // Widget key: image_1
-test("line-equation-graph - Interpreting graphs of proportional relationships", () => {
+test("line-equation-graph - Interpreting graphs of proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -17640,7 +17640,7 @@ test("line-equation-graph - Interpreting graphs of proportional relationships", 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17649,7 +17649,7 @@ test("line-equation-graph - Interpreting graphs of proportional relationships", 
 // Course: 7th grade math
 // Exercise: Interpreting graphs of proportional relationships
 // Widget key: image_1
-test("line-equation-graph - Interpreting graphs of proportional relationships", () => {
+test("line-equation-graph - Interpreting graphs of proportional relationships", async () => {
 	const input = {
 	"lines": [
 		{
@@ -17709,7 +17709,7 @@ test("line-equation-graph - Interpreting graphs of proportional relationships", 
 	}
 
 	// Generate the widget
-	const svg = generateLineEquationGraph(parseResult.data)
+	const svg = await generateLineEquationGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

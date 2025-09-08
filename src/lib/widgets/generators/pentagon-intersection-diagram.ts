@@ -133,7 +133,7 @@ export const PentagonIntersectionDiagramPropsSchema = z
 
 export type PentagonIntersectionDiagramProps = z.infer<typeof PentagonIntersectionDiagramPropsSchema>
 
-export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof PentagonIntersectionDiagramPropsSchema> = (
+export const generatePentagonIntersectionDiagram: WidgetGenerator<typeof PentagonIntersectionDiagramPropsSchema> = async (
 	data
 ) => {
 	// Validate exactly 5 pentagon points

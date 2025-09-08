@@ -295,7 +295,7 @@ type ${titleCaseType}Input = z.input<typeof ${schemaName}>
 // Course: ${widget.courseTitle}
 // Exercise: ${widget.exerciseTitle}
 // Widget key: ${widget.widgetKey}
-test("${testName}", () => {
+test("${testName}", async () => {
 	const input = ${inputJson} satisfies ${titleCaseType}Input
 
 	// Validate the input
@@ -306,7 +306,7 @@ test("${testName}", () => {
 	}
 
 	// Generate the widget
-	const svg = ${generatorName}(parseResult.data)
+	const svg = await ${generatorName}(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 `

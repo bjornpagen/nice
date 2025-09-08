@@ -26,7 +26,7 @@ type NumberLineForOppositesInput = z.input<typeof NumberLineForOppositesPropsSch
 // Course: 7th grade math
 // Exercise: Signs of sums
 // Widget key: image_1
-test("number-line-for-opposites - Signs of sums", () => {
+test("number-line-for-opposites - Signs of sums", async () => {
 	const input = {
 	"value": 7,
 	"width": 460,
@@ -47,7 +47,7 @@ test("number-line-for-opposites - Signs of sums", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineForOpposites(parseResult.data)
+	const svg = await generateNumberLineForOpposites(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -56,7 +56,7 @@ test("number-line-for-opposites - Signs of sums", () => {
 // Course: 7th grade math
 // Exercise: Signs of sums
 // Widget key: image_1
-test("number-line-for-opposites - Signs of sums", () => {
+test("number-line-for-opposites - Signs of sums", async () => {
 	const input = {
 	"value": 8,
 	"width": 600,
@@ -77,7 +77,7 @@ test("number-line-for-opposites - Signs of sums", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineForOpposites(parseResult.data)
+	const svg = await generateNumberLineForOpposites(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

@@ -126,7 +126,7 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 		// Step 3: Compile structured JSON to QTI XML.
 		logger.debug("compiling structured item to xml", { questionId })
 		// Pass the sanitized object to the compiler.
-		const compileResult = errors.trySync(() => compile(sanitizedAssessmentItem))
+		const compileResult = await errors.try(compile(sanitizedAssessmentItem))
 		if (compileResult.error) {
 			logger.error("qti compilation failed", {
 				questionId,

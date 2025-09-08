@@ -70,7 +70,7 @@ export type DivergentBarChartProps = z.infer<typeof DivergentBarChartPropsSchema
 /**
  * Generates a divergent bar chart styled to replicate the provided sea level change graph.
  */
-export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChartPropsSchema> = (data) => {
+export const generateDivergentBarChart: WidgetGenerator<typeof DivergentBarChartPropsSchema> = async (data) => {
 	const { width, height, xAxisLabel, yAxis, data: chartData, positiveBarColor, negativeBarColor, gridColor } = data
 
 	if (chartData.length === 0 || yAxis.min >= yAxis.max) {

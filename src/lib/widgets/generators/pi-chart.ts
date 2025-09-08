@@ -74,7 +74,7 @@ export type PieChartWidgetProps = z.infer<typeof PieChartWidgetPropsSchema>
 /**
  * Generates one or more SVG pie charts from a declarative JSON structure.
  */
-export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema> = (props) => {
+export const generatePieChart: WidgetGenerator<typeof PieChartWidgetPropsSchema> = async (props) => {
 	const { width, height, charts, spacing } = props
 	const numCharts = charts.length
 

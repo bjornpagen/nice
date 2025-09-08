@@ -144,7 +144,7 @@ export async function generateDifferentiatedItems(
 			newIdentifier: qtiIdentifier
 		})
 
-		const compileResult = errors.trySync(() => compile(sanitizedItem))
+		const compileResult = await errors.try(compile(sanitizedItem))
 		if (compileResult.error) {
 			// Make resilient: log and continue to next variation instead of throwing
 			logger.error("failed to compile a single differentiated item to xml, skipping this variation", {

@@ -26,7 +26,7 @@ type DoubleNumberLineInput = z.input<typeof DoubleNumberLinePropsSchema>
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: image_1
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -61,7 +61,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -70,7 +70,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_a_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -105,7 +105,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -114,7 +114,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_b_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -149,7 +149,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -158,7 +158,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: image_1
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -193,7 +193,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -202,7 +202,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_a_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -237,7 +237,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -246,7 +246,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_b_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -281,7 +281,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -290,7 +290,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: image_1
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -325,7 +325,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -334,7 +334,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_a_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -369,7 +369,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -378,7 +378,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_b_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -413,7 +413,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -422,7 +422,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: image_1
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -457,7 +457,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -466,7 +466,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_a_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -501,7 +501,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -510,7 +510,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_b_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -545,7 +545,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -554,7 +554,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: image_1
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -589,7 +589,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -598,7 +598,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_a_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -633,7 +633,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -642,7 +642,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_b_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -677,7 +677,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -686,7 +686,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: image_1
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -721,7 +721,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -730,7 +730,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_a_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -765,7 +765,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -774,7 +774,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_b_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -809,7 +809,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -818,7 +818,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: image_1
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -853,7 +853,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -862,7 +862,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_a_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -897,7 +897,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -906,7 +906,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_b_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -941,7 +941,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -950,7 +950,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: image_1
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -985,7 +985,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -994,7 +994,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_a_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1029,7 +1029,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1038,7 +1038,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_b_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1073,7 +1073,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1082,7 +1082,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: image_1
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1117,7 +1117,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1126,7 +1126,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_a_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1161,7 +1161,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1170,7 +1170,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_b_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1205,7 +1205,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1214,7 +1214,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: image_1
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1249,7 +1249,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1258,7 +1258,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_a_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1293,7 +1293,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1302,7 +1302,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_b_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1337,7 +1337,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1346,7 +1346,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: image_1
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1381,7 +1381,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1390,7 +1390,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_a_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1425,7 +1425,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1434,7 +1434,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_b_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1469,7 +1469,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1478,7 +1478,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: image_1
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1513,7 +1513,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1522,7 +1522,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_a_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1557,7 +1557,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1566,7 +1566,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Create double number lines
 // Widget key: choice_b_dnl
-test("double-number-line - Create double number lines", () => {
+test("double-number-line - Create double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1601,7 +1601,7 @@ test("double-number-line - Create double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1610,7 +1610,7 @@ test("double-number-line - Create double number lines", () => {
 // Course: 6th grade math
 // Exercise: Ratios with double number lines
 // Widget key: image_1
-test("double-number-line - Ratios with double number lines", () => {
+test("double-number-line - Ratios with double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1647,7 +1647,7 @@ test("double-number-line - Ratios with double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1656,7 +1656,7 @@ test("double-number-line - Ratios with double number lines", () => {
 // Course: 6th grade math
 // Exercise: Ratios with double number lines
 // Widget key: image_1
-test("double-number-line - Ratios with double number lines", () => {
+test("double-number-line - Ratios with double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1693,7 +1693,7 @@ test("double-number-line - Ratios with double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1702,7 +1702,7 @@ test("double-number-line - Ratios with double number lines", () => {
 // Course: 6th grade math
 // Exercise: Ratios with double number lines
 // Widget key: image_1
-test("double-number-line - Ratios with double number lines", () => {
+test("double-number-line - Ratios with double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1739,7 +1739,7 @@ test("double-number-line - Ratios with double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1748,7 +1748,7 @@ test("double-number-line - Ratios with double number lines", () => {
 // Course: 6th grade math
 // Exercise: Ratios with double number lines
 // Widget key: image_1
-test("double-number-line - Ratios with double number lines", () => {
+test("double-number-line - Ratios with double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1783,7 +1783,7 @@ test("double-number-line - Ratios with double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1792,7 +1792,7 @@ test("double-number-line - Ratios with double number lines", () => {
 // Course: 6th grade math
 // Exercise: Ratios with double number lines
 // Widget key: image_1
-test("double-number-line - Ratios with double number lines", () => {
+test("double-number-line - Ratios with double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1829,7 +1829,7 @@ test("double-number-line - Ratios with double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1838,7 +1838,7 @@ test("double-number-line - Ratios with double number lines", () => {
 // Course: 6th grade math
 // Exercise: Ratios with double number lines
 // Widget key: image_1
-test("double-number-line - Ratios with double number lines", () => {
+test("double-number-line - Ratios with double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1875,7 +1875,7 @@ test("double-number-line - Ratios with double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1884,7 +1884,7 @@ test("double-number-line - Ratios with double number lines", () => {
 // Course: 6th grade math
 // Exercise: Ratios with double number lines
 // Widget key: image_1
-test("double-number-line - Ratios with double number lines", () => {
+test("double-number-line - Ratios with double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1921,7 +1921,7 @@ test("double-number-line - Ratios with double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1930,7 +1930,7 @@ test("double-number-line - Ratios with double number lines", () => {
 // Course: 6th grade math
 // Exercise: Ratios with double number lines
 // Widget key: image_1
-test("double-number-line - Ratios with double number lines", () => {
+test("double-number-line - Ratios with double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -1967,7 +1967,7 @@ test("double-number-line - Ratios with double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1976,7 +1976,7 @@ test("double-number-line - Ratios with double number lines", () => {
 // Course: 6th grade math
 // Exercise: Ratios with double number lines
 // Widget key: image_1
-test("double-number-line - Ratios with double number lines", () => {
+test("double-number-line - Ratios with double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -2011,7 +2011,7 @@ test("double-number-line - Ratios with double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2020,7 +2020,7 @@ test("double-number-line - Ratios with double number lines", () => {
 // Course: 6th grade math
 // Exercise: Ratios with double number lines
 // Widget key: image_1
-test("double-number-line - Ratios with double number lines", () => {
+test("double-number-line - Ratios with double number lines", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -2057,7 +2057,7 @@ test("double-number-line - Ratios with double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2066,7 +2066,7 @@ test("double-number-line - Ratios with double number lines", () => {
 // Course: 6th grade math
 // Exercise: Ratios with double number lines
 // Widget key: image_1
-test("double-number-line - Ratios with double number lines", () => {
+test("double-number-line - Ratios with double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -2103,7 +2103,7 @@ test("double-number-line - Ratios with double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2112,7 +2112,7 @@ test("double-number-line - Ratios with double number lines", () => {
 // Course: 6th grade math
 // Exercise: Ratios with double number lines
 // Widget key: image_1
-test("double-number-line - Ratios with double number lines", () => {
+test("double-number-line - Ratios with double number lines", async () => {
 	const input = {
 	"width": 280,
 	"height": 120,
@@ -2149,7 +2149,7 @@ test("double-number-line - Ratios with double number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2158,7 +2158,7 @@ test("double-number-line - Ratios with double number lines", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: image_1
-test("double-number-line - Relate double number lines and ratio tables", () => {
+test("double-number-line - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -2187,7 +2187,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2196,7 +2196,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: image_1
-test("double-number-line - Relate double number lines and ratio tables", () => {
+test("double-number-line - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"width": 330,
 	"height": 120,
@@ -2225,7 +2225,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2234,7 +2234,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: image_1
-test("double-number-line - Relate double number lines and ratio tables", () => {
+test("double-number-line - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -2263,7 +2263,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2272,7 +2272,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: image_1
-test("double-number-line - Relate double number lines and ratio tables", () => {
+test("double-number-line - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -2301,7 +2301,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2310,7 +2310,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: image_1
-test("double-number-line - Relate double number lines and ratio tables", () => {
+test("double-number-line - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 200,
@@ -2343,7 +2343,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2352,7 +2352,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: image_1
-test("double-number-line - Relate double number lines and ratio tables", () => {
+test("double-number-line - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -2381,7 +2381,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2390,7 +2390,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: image_1
-test("double-number-line - Relate double number lines and ratio tables", () => {
+test("double-number-line - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -2419,7 +2419,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2428,7 +2428,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: image_1
-test("double-number-line - Relate double number lines and ratio tables", () => {
+test("double-number-line - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -2457,7 +2457,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2466,7 +2466,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: image_1
-test("double-number-line - Relate double number lines and ratio tables", () => {
+test("double-number-line - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"width": 330,
 	"height": 120,
@@ -2495,7 +2495,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2504,7 +2504,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: image_1
-test("double-number-line - Relate double number lines and ratio tables", () => {
+test("double-number-line - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -2533,7 +2533,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2542,7 +2542,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: image_1
-test("double-number-line - Relate double number lines and ratio tables", () => {
+test("double-number-line - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -2571,7 +2571,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2580,7 +2580,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: image_1
-test("double-number-line - Relate double number lines and ratio tables", () => {
+test("double-number-line - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"width": 330,
 	"height": 120,
@@ -2609,7 +2609,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2618,7 +2618,7 @@ test("double-number-line - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratios and units of measurement
 // Widget key: image_1
-test("double-number-line - Ratios and units of measurement", () => {
+test("double-number-line - Ratios and units of measurement", async () => {
 	const input = {
 	"width": 330,
 	"height": 120,
@@ -2651,7 +2651,7 @@ test("double-number-line - Ratios and units of measurement", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2660,7 +2660,7 @@ test("double-number-line - Ratios and units of measurement", () => {
 // Course: 6th grade math
 // Exercise: Ratios and units of measurement
 // Widget key: image_1
-test("double-number-line - Ratios and units of measurement", () => {
+test("double-number-line - Ratios and units of measurement", async () => {
 	const input = {
 	"width": 330,
 	"height": 120,
@@ -2695,7 +2695,7 @@ test("double-number-line - Ratios and units of measurement", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2704,7 +2704,7 @@ test("double-number-line - Ratios and units of measurement", () => {
 // Course: 6th grade math
 // Exercise: Ratios and units of measurement
 // Widget key: image_1
-test("double-number-line - Ratios and units of measurement", () => {
+test("double-number-line - Ratios and units of measurement", async () => {
 	const input = {
 	"width": 330,
 	"height": 120,
@@ -2741,7 +2741,7 @@ test("double-number-line - Ratios and units of measurement", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2750,7 +2750,7 @@ test("double-number-line - Ratios and units of measurement", () => {
 // Course: 6th grade math
 // Exercise: Ratios and units of measurement
 // Widget key: image_1
-test("double-number-line - Ratios and units of measurement", () => {
+test("double-number-line - Ratios and units of measurement", async () => {
 	const input = {
 	"width": 330,
 	"height": 120,
@@ -2785,7 +2785,7 @@ test("double-number-line - Ratios and units of measurement", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2794,7 +2794,7 @@ test("double-number-line - Ratios and units of measurement", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("double-number-line - Find percents visually", () => {
+test("double-number-line - Find percents visually", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -2823,7 +2823,7 @@ test("double-number-line - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2832,7 +2832,7 @@ test("double-number-line - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("double-number-line - Find percents visually", () => {
+test("double-number-line - Find percents visually", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -2861,7 +2861,7 @@ test("double-number-line - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2870,7 +2870,7 @@ test("double-number-line - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("double-number-line - Find percents visually", () => {
+test("double-number-line - Find percents visually", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -2899,7 +2899,7 @@ test("double-number-line - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2908,7 +2908,7 @@ test("double-number-line - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("double-number-line - Find percents visually", () => {
+test("double-number-line - Find percents visually", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -2937,7 +2937,7 @@ test("double-number-line - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2946,7 +2946,7 @@ test("double-number-line - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("double-number-line - Find percents visually", () => {
+test("double-number-line - Find percents visually", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -2975,7 +2975,7 @@ test("double-number-line - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2984,7 +2984,7 @@ test("double-number-line - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("double-number-line - Find percents visually", () => {
+test("double-number-line - Find percents visually", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -3013,7 +3013,7 @@ test("double-number-line - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3022,7 +3022,7 @@ test("double-number-line - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("double-number-line - Find percents visually", () => {
+test("double-number-line - Find percents visually", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -3051,7 +3051,7 @@ test("double-number-line - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3060,7 +3060,7 @@ test("double-number-line - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("double-number-line - Find percents visually", () => {
+test("double-number-line - Find percents visually", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -3089,7 +3089,7 @@ test("double-number-line - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3098,7 +3098,7 @@ test("double-number-line - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("double-number-line - Find percents visually", () => {
+test("double-number-line - Find percents visually", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -3127,7 +3127,7 @@ test("double-number-line - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3136,7 +3136,7 @@ test("double-number-line - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("double-number-line - Find percents visually", () => {
+test("double-number-line - Find percents visually", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -3165,7 +3165,7 @@ test("double-number-line - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3174,7 +3174,7 @@ test("double-number-line - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("double-number-line - Find percents visually", () => {
+test("double-number-line - Find percents visually", async () => {
 	const input = {
 	"width": 350,
 	"height": 120,
@@ -3203,7 +3203,7 @@ test("double-number-line - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDoubleNumberLine(parseResult.data)
+	const svg = await generateDoubleNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

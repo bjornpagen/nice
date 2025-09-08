@@ -87,7 +87,7 @@ export type StackedItemsDiagramProps = z.infer<typeof StackedItemsDiagramPropsSc
  * by stacking emoji items on top of a base emoji. It is particularly useful for word problems where
  * a count of items (like scoops of ice cream, pancakes, or blocks) is central to the problem.
  */
-export const generateStackedItemsDiagram: WidgetGenerator<typeof StackedItemsDiagramPropsSchema> = (data) => {
+export const generateStackedItemsDiagram: WidgetGenerator<typeof StackedItemsDiagramPropsSchema> = async (data) => {
 	const { width, height, altText, baseItem, stackedItem, count, orientation, overlap } = data
 	let html = `<div style="position: relative; width: ${width}px; height: ${height}px;" role="img" aria-label="${altText}">`
 

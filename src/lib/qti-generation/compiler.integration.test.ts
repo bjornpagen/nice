@@ -48,10 +48,10 @@ describe("QTI Compiler API Validation", () => {
 			"reactant-amounts-temp-change-table-perseus"
 		])
 		const selected = allExamples.filter((ex) => allowedIds.has(ex.identifier))
-		const compiledExamples = selected.map((example) => ({
+		const compiledExamples = await Promise.all(selected.map(async (example) => ({
 			identifier: example.identifier,
-			xml: compile(example)
-		}))
+			xml: await compile(example)
+		})))
 
 		// Step 2: Validate all XML documents against the QTI API in parallel.
 		// This sends all validation requests concurrently, dramatically reducing

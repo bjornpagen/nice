@@ -268,7 +268,7 @@ export type PolyhedronDiagramProps = z.infer<typeof PolyhedronDiagramPropsSchema
  * polyhedra with flat faces, such as prisms and pyramids. It renders the shapes in a
  * standard isometric or perspective view to provide depth perception.
  */
-export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagramPropsSchema> = (data) => {
+export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagramPropsSchema> = async (data) => {
 	const { width, height, shape, labels, diagonals, segments, angleMarkers, shadedFace, showHiddenEdges } = data
 
 	const canvas = new CanvasImpl({

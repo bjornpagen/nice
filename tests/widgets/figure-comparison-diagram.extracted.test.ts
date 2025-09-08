@@ -26,7 +26,7 @@ type FigureComparisonDiagramInput = z.input<typeof FigureComparisonDiagramPropsS
 // Course: 7th grade math
 // Exercise: Corresponding sides and points
 // Widget key: image_1
-test("figure-comparison-diagram - Corresponding sides and points", () => {
+test("figure-comparison-diagram - Corresponding sides and points", async () => {
 	const input = {
 	"width": 600,
 	"height": 300,
@@ -105,7 +105,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -114,7 +114,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 // Course: 7th grade math
 // Exercise: Corresponding sides and points
 // Widget key: image_1
-test("figure-comparison-diagram - Corresponding sides and points", () => {
+test("figure-comparison-diagram - Corresponding sides and points", async () => {
 	const input = {
 	"width": 600,
 	"height": 300,
@@ -193,7 +193,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -202,7 +202,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 // Course: 7th grade math
 // Exercise: Corresponding sides and points
 // Widget key: image_1
-test("figure-comparison-diagram - Corresponding sides and points", () => {
+test("figure-comparison-diagram - Corresponding sides and points", async () => {
 	const input = {
 	"width": 650,
 	"height": 300,
@@ -281,7 +281,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -290,7 +290,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 // Course: 7th grade math
 // Exercise: Corresponding sides and points
 // Widget key: image_1
-test("figure-comparison-diagram - Corresponding sides and points", () => {
+test("figure-comparison-diagram - Corresponding sides and points", async () => {
 	const input = {
 	"width": 600,
 	"height": 320,
@@ -369,7 +369,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -378,7 +378,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 // Course: 7th grade math
 // Exercise: Corresponding sides and points
 // Widget key: image_1
-test("figure-comparison-diagram - Corresponding sides and points", () => {
+test("figure-comparison-diagram - Corresponding sides and points", async () => {
 	const input = {
 	"width": 600,
 	"height": 300,
@@ -477,7 +477,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -486,7 +486,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 // Course: 7th grade math
 // Exercise: Corresponding sides and points
 // Widget key: image_1
-test("figure-comparison-diagram - Corresponding sides and points", () => {
+test("figure-comparison-diagram - Corresponding sides and points", async () => {
 	const input = {
 	"width": 700,
 	"height": 300,
@@ -573,7 +573,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -582,7 +582,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 // Course: 7th grade math
 // Exercise: Corresponding sides and points
 // Widget key: image_1
-test("figure-comparison-diagram - Corresponding sides and points", () => {
+test("figure-comparison-diagram - Corresponding sides and points", async () => {
 	const input = {
 	"width": 700,
 	"height": 350,
@@ -681,7 +681,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -690,7 +690,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 // Course: 7th grade math
 // Exercise: Corresponding sides and points
 // Widget key: image_1
-test("figure-comparison-diagram - Corresponding sides and points", () => {
+test("figure-comparison-diagram - Corresponding sides and points", async () => {
 	const input = {
 	"width": 500,
 	"height": 300,
@@ -761,7 +761,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -770,7 +770,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 // Course: 7th grade math
 // Exercise: Corresponding sides and points
 // Widget key: image_1
-test("figure-comparison-diagram - Corresponding sides and points", () => {
+test("figure-comparison-diagram - Corresponding sides and points", async () => {
 	const input = {
 	"width": 600,
 	"height": 300,
@@ -857,7 +857,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -866,7 +866,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 // Course: 7th grade math
 // Exercise: Corresponding sides and points
 // Widget key: image_1
-test("figure-comparison-diagram - Corresponding sides and points", () => {
+test("figure-comparison-diagram - Corresponding sides and points", async () => {
 	const input = {
 	"width": 300,
 	"height": 320,
@@ -975,7 +975,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -984,7 +984,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 // Course: 7th grade math
 // Exercise: Corresponding sides and points
 // Widget key: image_1
-test("figure-comparison-diagram - Corresponding sides and points", () => {
+test("figure-comparison-diagram - Corresponding sides and points", async () => {
 	const input = {
 	"width": 600,
 	"height": 240,
@@ -1073,7 +1073,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1082,7 +1082,7 @@ test("figure-comparison-diagram - Corresponding sides and points", () => {
 // Course: 7th grade math
 // Exercise: Identify scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Identify scale copies", () => {
+test("figure-comparison-diagram - Identify scale copies", async () => {
 	const input = {
 	"width": 325,
 	"height": 200,
@@ -1177,7 +1177,7 @@ test("figure-comparison-diagram - Identify scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1186,7 +1186,7 @@ test("figure-comparison-diagram - Identify scale copies", () => {
 // Course: 7th grade math
 // Exercise: Identify scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Identify scale copies", () => {
+test("figure-comparison-diagram - Identify scale copies", async () => {
 	const input = {
 	"width": 600,
 	"height": 260,
@@ -1275,7 +1275,7 @@ test("figure-comparison-diagram - Identify scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1284,7 +1284,7 @@ test("figure-comparison-diagram - Identify scale copies", () => {
 // Course: 7th grade math
 // Exercise: Identify scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Identify scale copies", () => {
+test("figure-comparison-diagram - Identify scale copies", async () => {
 	const input = {
 	"width": 650,
 	"height": 300,
@@ -1371,7 +1371,7 @@ test("figure-comparison-diagram - Identify scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1380,7 +1380,7 @@ test("figure-comparison-diagram - Identify scale copies", () => {
 // Course: 7th grade math
 // Exercise: Identify scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Identify scale copies", () => {
+test("figure-comparison-diagram - Identify scale copies", async () => {
 	const input = {
 	"width": 700,
 	"height": 320,
@@ -1469,7 +1469,7 @@ test("figure-comparison-diagram - Identify scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1478,7 +1478,7 @@ test("figure-comparison-diagram - Identify scale copies", () => {
 // Course: 7th grade math
 // Exercise: Identify scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Identify scale copies", () => {
+test("figure-comparison-diagram - Identify scale copies", async () => {
 	const input = {
 	"width": 325,
 	"height": 500,
@@ -1557,7 +1557,7 @@ test("figure-comparison-diagram - Identify scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1566,7 +1566,7 @@ test("figure-comparison-diagram - Identify scale copies", () => {
 // Course: 7th grade math
 // Exercise: Identify scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Identify scale copies", () => {
+test("figure-comparison-diagram - Identify scale copies", async () => {
 	const input = {
 	"width": 600,
 	"height": 325,
@@ -1661,7 +1661,7 @@ test("figure-comparison-diagram - Identify scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1670,7 +1670,7 @@ test("figure-comparison-diagram - Identify scale copies", () => {
 // Course: 7th grade math
 // Exercise: Identify scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Identify scale copies", () => {
+test("figure-comparison-diagram - Identify scale copies", async () => {
 	const input = {
 	"width": 600,
 	"height": 300,
@@ -1749,7 +1749,7 @@ test("figure-comparison-diagram - Identify scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1758,7 +1758,7 @@ test("figure-comparison-diagram - Identify scale copies", () => {
 // Course: 7th grade math
 // Exercise: Identify scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Identify scale copies", () => {
+test("figure-comparison-diagram - Identify scale copies", async () => {
 	const input = {
 	"width": 600,
 	"height": 260,
@@ -1847,7 +1847,7 @@ test("figure-comparison-diagram - Identify scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1856,7 +1856,7 @@ test("figure-comparison-diagram - Identify scale copies", () => {
 // Course: 7th grade math
 // Exercise: Identify scale factor in scale drawings
 // Widget key: image_1
-test("figure-comparison-diagram - Identify scale factor in scale drawings", () => {
+test("figure-comparison-diagram - Identify scale factor in scale drawings", async () => {
 	const input = {
 	"width": 700,
 	"height": 325,
@@ -1945,7 +1945,7 @@ test("figure-comparison-diagram - Identify scale factor in scale drawings", () =
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1954,7 +1954,7 @@ test("figure-comparison-diagram - Identify scale factor in scale drawings", () =
 // Course: 7th grade math
 // Exercise: Identify scale factor in scale drawings
 // Widget key: image_1
-test("figure-comparison-diagram - Identify scale factor in scale drawings", () => {
+test("figure-comparison-diagram - Identify scale factor in scale drawings", async () => {
 	const input = {
 	"width": 300,
 	"height": 250,
@@ -2043,7 +2043,7 @@ test("figure-comparison-diagram - Identify scale factor in scale drawings", () =
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2052,7 +2052,7 @@ test("figure-comparison-diagram - Identify scale factor in scale drawings", () =
 // Course: 7th grade math
 // Exercise: Identify scale factor in scale drawings
 // Widget key: image_1
-test("figure-comparison-diagram - Identify scale factor in scale drawings", () => {
+test("figure-comparison-diagram - Identify scale factor in scale drawings", async () => {
 	const input = {
 	"width": 600,
 	"height": 300,
@@ -2141,7 +2141,7 @@ test("figure-comparison-diagram - Identify scale factor in scale drawings", () =
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2150,7 +2150,7 @@ test("figure-comparison-diagram - Identify scale factor in scale drawings", () =
 // Course: 7th grade math
 // Exercise: Identify scale factor in scale drawings
 // Widget key: image_1
-test("figure-comparison-diagram - Identify scale factor in scale drawings", () => {
+test("figure-comparison-diagram - Identify scale factor in scale drawings", async () => {
 	const input = {
 	"width": 600,
 	"height": 300,
@@ -2239,7 +2239,7 @@ test("figure-comparison-diagram - Identify scale factor in scale drawings", () =
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2248,7 +2248,7 @@ test("figure-comparison-diagram - Identify scale factor in scale drawings", () =
 // Course: 7th grade math
 // Exercise: Identify scale factor in scale drawings
 // Widget key: image_1
-test("figure-comparison-diagram - Identify scale factor in scale drawings", () => {
+test("figure-comparison-diagram - Identify scale factor in scale drawings", async () => {
 	const input = {
 	"width": 600,
 	"height": 320,
@@ -2337,7 +2337,7 @@ test("figure-comparison-diagram - Identify scale factor in scale drawings", () =
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2346,7 +2346,7 @@ test("figure-comparison-diagram - Identify scale factor in scale drawings", () =
 // Course: 7th grade math
 // Exercise: Identify scale factor in scale drawings
 // Widget key: image_1
-test("figure-comparison-diagram - Identify scale factor in scale drawings", () => {
+test("figure-comparison-diagram - Identify scale factor in scale drawings", async () => {
 	const input = {
 	"width": 500,
 	"height": 250,
@@ -2425,7 +2425,7 @@ test("figure-comparison-diagram - Identify scale factor in scale drawings", () =
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2434,7 +2434,7 @@ test("figure-comparison-diagram - Identify scale factor in scale drawings", () =
 // Course: 7th grade math
 // Exercise: Identify scale factor in scale drawings
 // Widget key: image_1
-test("figure-comparison-diagram - Identify scale factor in scale drawings", () => {
+test("figure-comparison-diagram - Identify scale factor in scale drawings", async () => {
 	const input = {
 	"width": 600,
 	"height": 400,
@@ -2523,7 +2523,7 @@ test("figure-comparison-diagram - Identify scale factor in scale drawings", () =
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2532,7 +2532,7 @@ test("figure-comparison-diagram - Identify scale factor in scale drawings", () =
 // Course: 7th grade math
 // Exercise: Scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Scale copies", () => {
+test("figure-comparison-diagram - Scale copies", async () => {
 	const input = {
 	"width": 600,
 	"height": 320,
@@ -2621,7 +2621,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2630,7 +2630,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 // Course: 7th grade math
 // Exercise: Scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Scale copies", () => {
+test("figure-comparison-diagram - Scale copies", async () => {
 	const input = {
 	"width": 600,
 	"height": 300,
@@ -2719,7 +2719,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2728,7 +2728,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 // Course: 7th grade math
 // Exercise: Scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Scale copies", () => {
+test("figure-comparison-diagram - Scale copies", async () => {
 	const input = {
 	"width": 325,
 	"height": 325,
@@ -2817,7 +2817,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2826,7 +2826,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 // Course: 7th grade math
 // Exercise: Scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Scale copies", () => {
+test("figure-comparison-diagram - Scale copies", async () => {
 	const input = {
 	"width": 500,
 	"height": 260,
@@ -2915,7 +2915,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2924,7 +2924,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 // Course: 7th grade math
 // Exercise: Scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Scale copies", () => {
+test("figure-comparison-diagram - Scale copies", async () => {
 	const input = {
 	"width": 600,
 	"height": 260,
@@ -3013,7 +3013,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3022,7 +3022,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 // Course: 7th grade math
 // Exercise: Scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Scale copies", () => {
+test("figure-comparison-diagram - Scale copies", async () => {
 	const input = {
 	"width": 600,
 	"height": 320,
@@ -3111,7 +3111,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3120,7 +3120,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 // Course: 7th grade math
 // Exercise: Scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Scale copies", () => {
+test("figure-comparison-diagram - Scale copies", async () => {
 	const input = {
 	"width": 600,
 	"height": 300,
@@ -3209,7 +3209,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3218,7 +3218,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 // Course: 7th grade math
 // Exercise: Scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Scale copies", () => {
+test("figure-comparison-diagram - Scale copies", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -3297,7 +3297,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3306,7 +3306,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 // Course: 7th grade math
 // Exercise: Scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Scale copies", () => {
+test("figure-comparison-diagram - Scale copies", async () => {
 	const input = {
 	"width": 600,
 	"height": 220,
@@ -3395,7 +3395,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3404,7 +3404,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 // Course: 7th grade math
 // Exercise: Scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Scale copies", () => {
+test("figure-comparison-diagram - Scale copies", async () => {
 	const input = {
 	"width": 325,
 	"height": 220,
@@ -3483,7 +3483,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3492,7 +3492,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 // Course: 7th grade math
 // Exercise: Scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Scale copies", () => {
+test("figure-comparison-diagram - Scale copies", async () => {
 	const input = {
 	"width": 600,
 	"height": 300,
@@ -3571,7 +3571,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3580,7 +3580,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 // Course: 7th grade math
 // Exercise: Scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Scale copies", () => {
+test("figure-comparison-diagram - Scale copies", async () => {
 	const input = {
 	"width": 600,
 	"height": 260,
@@ -3669,7 +3669,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3678,7 +3678,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 // Course: 7th grade math
 // Exercise: Scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Scale copies", () => {
+test("figure-comparison-diagram - Scale copies", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -3757,7 +3757,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3766,7 +3766,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 // Course: 7th grade math
 // Exercise: Scale copies
 // Widget key: image_1
-test("figure-comparison-diagram - Scale copies", () => {
+test("figure-comparison-diagram - Scale copies", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -3855,7 +3855,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3864,7 +3864,7 @@ test("figure-comparison-diagram - Scale copies", () => {
 // Course: 7th grade math
 // Exercise: Cross sections of 3D objects (basic)
 // Widget key: choice_c_shape
-test("figure-comparison-diagram - Cross sections of 3D objects basic", () => {
+test("figure-comparison-diagram - Cross sections of 3D objects basic", async () => {
 	const input = {
 	"width": 260,
 	"height": 240,
@@ -3929,7 +3929,7 @@ test("figure-comparison-diagram - Cross sections of 3D objects basic", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFigureComparisonDiagram(parseResult.data)
+	const svg = await generateFigureComparisonDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

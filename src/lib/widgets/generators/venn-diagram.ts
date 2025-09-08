@@ -82,7 +82,7 @@ export type VennDiagramProps = z.infer<typeof VennDiagramPropsSchema>
  * This template generates a classic two-circle Venn diagram as an SVG graphic
  * to visually represent the relationship between two sets of data.
  */
-export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema> = (data) => {
+export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema> = async (data) => {
 	const { width, height, circleA, circleB, intersectionCount, outsideCount } = data
 	const padding = { top: PADDING * 2, bottom: PADDING * 2, horizontal: PADDING / 2 }
 	const chartHeight = height - padding.top - padding.bottom

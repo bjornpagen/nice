@@ -26,7 +26,7 @@ type GeometricSolidDiagramInput = z.input<typeof GeometricSolidDiagramPropsSchem
 // Course: 6th grade math
 // Exercise: Identify geometric solids (3D shapes)
 // Widget key: image_1
-test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
+test("geometric-solid-diagram - Identify geometric solids 3D shapes", async () => {
 	const input = {
 	"shape": {
 		"type": "cylinder",
@@ -47,7 +47,7 @@ test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
 	}
 
 	// Generate the widget
-	const svg = generateGeometricSolidDiagram(parseResult.data)
+	const svg = await generateGeometricSolidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -56,7 +56,7 @@ test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
 // Course: 6th grade math
 // Exercise: Identify geometric solids (3D shapes)
 // Widget key: image_1
-test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
+test("geometric-solid-diagram - Identify geometric solids 3D shapes", async () => {
 	const input = {
 	"shape": {
 		"type": "cylinder",
@@ -77,7 +77,7 @@ test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
 	}
 
 	// Generate the widget
-	const svg = generateGeometricSolidDiagram(parseResult.data)
+	const svg = await generateGeometricSolidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -86,7 +86,7 @@ test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
 // Course: 6th grade math
 // Exercise: Identify geometric solids (3D shapes)
 // Widget key: image_1
-test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
+test("geometric-solid-diagram - Identify geometric solids 3D shapes", async () => {
 	const input = {
 	"shape": {
 		"type": "cone",
@@ -107,7 +107,7 @@ test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
 	}
 
 	// Generate the widget
-	const svg = generateGeometricSolidDiagram(parseResult.data)
+	const svg = await generateGeometricSolidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -116,7 +116,7 @@ test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
 // Course: 6th grade math
 // Exercise: Identify geometric solids (3D shapes)
 // Widget key: image_1
-test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
+test("geometric-solid-diagram - Identify geometric solids 3D shapes", async () => {
 	const input = {
 	"shape": {
 		"type": "cylinder",
@@ -137,7 +137,7 @@ test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
 	}
 
 	// Generate the widget
-	const svg = generateGeometricSolidDiagram(parseResult.data)
+	const svg = await generateGeometricSolidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -146,7 +146,7 @@ test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
 // Course: 6th grade math
 // Exercise: Identify geometric solids (3D shapes)
 // Widget key: image_1
-test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
+test("geometric-solid-diagram - Identify geometric solids 3D shapes", async () => {
 	const input = {
 	"shape": {
 		"type": "cone",
@@ -167,7 +167,7 @@ test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
 	}
 
 	// Generate the widget
-	const svg = generateGeometricSolidDiagram(parseResult.data)
+	const svg = await generateGeometricSolidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -176,7 +176,7 @@ test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
 // Course: 6th grade math
 // Exercise: Identify geometric solids (3D shapes)
 // Widget key: image_1
-test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
+test("geometric-solid-diagram - Identify geometric solids 3D shapes", async () => {
 	const input = {
 	"shape": {
 		"type": "sphere",
@@ -196,7 +196,7 @@ test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
 	}
 
 	// Generate the widget
-	const svg = generateGeometricSolidDiagram(parseResult.data)
+	const svg = await generateGeometricSolidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -205,7 +205,7 @@ test("geometric-solid-diagram - Identify geometric solids 3D shapes", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: choice_c_shape
-test("geometric-solid-diagram - Nets of polyhedra", () => {
+test("geometric-solid-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"shape": {
 		"type": "sphere",
@@ -225,7 +225,7 @@ test("geometric-solid-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generateGeometricSolidDiagram(parseResult.data)
+	const svg = await generateGeometricSolidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -234,7 +234,7 @@ test("geometric-solid-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: choice_b_shape
-test("geometric-solid-diagram - Nets of polyhedra", () => {
+test("geometric-solid-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"shape": {
 		"type": "sphere",
@@ -254,7 +254,7 @@ test("geometric-solid-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generateGeometricSolidDiagram(parseResult.data)
+	const svg = await generateGeometricSolidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -263,7 +263,7 @@ test("geometric-solid-diagram - Nets of polyhedra", () => {
 // Course: 6th grade math
 // Exercise: Nets of polyhedra
 // Widget key: choice_c_shape
-test("geometric-solid-diagram - Nets of polyhedra", () => {
+test("geometric-solid-diagram - Nets of polyhedra", async () => {
 	const input = {
 	"shape": {
 		"type": "sphere",
@@ -283,7 +283,7 @@ test("geometric-solid-diagram - Nets of polyhedra", () => {
 	}
 
 	// Generate the widget
-	const svg = generateGeometricSolidDiagram(parseResult.data)
+	const svg = await generateGeometricSolidDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

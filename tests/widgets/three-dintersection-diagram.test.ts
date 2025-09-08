@@ -5,7 +5,7 @@ import { generateThreeDIntersectionDiagram, ThreeDIntersectionDiagramPropsSchema
 type ThreeDIntersectionDiagramInput = z.input<typeof ThreeDIntersectionDiagramPropsSchema>
 
 // Manual test modeling a pentagonal prism with an oblique slicing plane
-test("three-dintersection-diagram - pentagonal prism with oblique plane", () => {
+test("three-dintersection-diagram - pentagonal prism with oblique plane", async () => {
 	const input = {
 		plane: {
 			orientation: "oblique",
@@ -34,7 +34,7 @@ test("three-dintersection-diagram - pentagonal prism with oblique plane", () => 
 		return
 	}
 
-	const svg = generateThreeDIntersectionDiagram(parseResult.data)
+	const svg = await generateThreeDIntersectionDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

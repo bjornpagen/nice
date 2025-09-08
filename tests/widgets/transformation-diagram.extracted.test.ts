@@ -26,7 +26,7 @@ type TransformationDiagramInput = z.input<typeof TransformationDiagramPropsSchem
 // Course: 8th grade math
 // Exercise: Determine rotations (basic)
 // Widget key: image_1
-test("transformation-diagram - Determine rotations basic", () => {
+test("transformation-diagram - Determine rotations basic", async () => {
 	const input = {
 	"width": 300,
 	"height": 300,
@@ -80,7 +80,7 @@ test("transformation-diagram - Determine rotations basic", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -89,7 +89,7 @@ test("transformation-diagram - Determine rotations basic", () => {
 // Course: 8th grade math
 // Exercise: Determine rotations (basic)
 // Widget key: image_1
-test("transformation-diagram - Determine rotations basic", () => {
+test("transformation-diagram - Determine rotations basic", async () => {
 	const input = {
 	"width": 325,
 	"height": 175,
@@ -138,7 +138,7 @@ test("transformation-diagram - Determine rotations basic", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -147,7 +147,7 @@ test("transformation-diagram - Determine rotations basic", () => {
 // Course: 8th grade math
 // Exercise: Determine rotations (basic)
 // Widget key: image_1
-test("transformation-diagram - Determine rotations basic", () => {
+test("transformation-diagram - Determine rotations basic", async () => {
 	const input = {
 	"width": 325,
 	"height": 250,
@@ -201,7 +201,7 @@ test("transformation-diagram - Determine rotations basic", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -210,7 +210,7 @@ test("transformation-diagram - Determine rotations basic", () => {
 // Course: 8th grade math
 // Exercise: Find measures using rigid transformations
 // Widget key: image_1
-test("transformation-diagram - Find measures using rigid transformations", () => {
+test("transformation-diagram - Find measures using rigid transformations", async () => {
 	const input = {
 	"width": 350,
 	"height": 263,
@@ -287,7 +287,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -296,7 +296,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 // Course: 8th grade math
 // Exercise: Find measures using rigid transformations
 // Widget key: image_1
-test("transformation-diagram - Find measures using rigid transformations", () => {
+test("transformation-diagram - Find measures using rigid transformations", async () => {
 	const input = {
 	"width": 350,
 	"height": 350,
@@ -384,7 +384,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -393,7 +393,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 // Course: 8th grade math
 // Exercise: Find measures using rigid transformations
 // Widget key: image_1
-test("transformation-diagram - Find measures using rigid transformations", () => {
+test("transformation-diagram - Find measures using rigid transformations", async () => {
 	const input = {
 	"width": 350,
 	"height": 318,
@@ -486,7 +486,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -495,7 +495,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 // Course: 8th grade math
 // Exercise: Find measures using rigid transformations
 // Widget key: image_1
-test("transformation-diagram - Find measures using rigid transformations", () => {
+test("transformation-diagram - Find measures using rigid transformations", async () => {
 	const input = {
 	"width": 350,
 	"height": 303.333,
@@ -564,7 +564,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -573,7 +573,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 // Course: 8th grade math
 // Exercise: Find measures using rigid transformations
 // Widget key: image_1
-test("transformation-diagram - Find measures using rigid transformations", () => {
+test("transformation-diagram - Find measures using rigid transformations", async () => {
 	const input = {
 	"width": 225,
 	"height": 350,
@@ -627,7 +627,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -636,7 +636,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 // Course: 8th grade math
 // Exercise: Find measures using rigid transformations
 // Widget key: image_1
-test("transformation-diagram - Find measures using rigid transformations", () => {
+test("transformation-diagram - Find measures using rigid transformations", async () => {
 	const input = {
 	"width": 350,
 	"height": 318,
@@ -700,7 +700,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -709,7 +709,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 // Course: 8th grade math
 // Exercise: Find measures using rigid transformations
 // Widget key: image_1
-test("transformation-diagram - Find measures using rigid transformations", () => {
+test("transformation-diagram - Find measures using rigid transformations", async () => {
 	const input = {
 	"width": 286.364,
 	"height": 350,
@@ -781,7 +781,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -790,7 +790,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 // Course: 8th grade math
 // Exercise: Find measures using rigid transformations
 // Widget key: image_1
-test("transformation-diagram - Find measures using rigid transformations", () => {
+test("transformation-diagram - Find measures using rigid transformations", async () => {
 	const input = {
 	"width": 350,
 	"height": 239,
@@ -867,7 +867,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -876,7 +876,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 // Course: 8th grade math
 // Exercise: Find measures using rigid transformations
 // Widget key: image_1
-test("transformation-diagram - Find measures using rigid transformations", () => {
+test("transformation-diagram - Find measures using rigid transformations", async () => {
 	const input = {
 	"width": 350,
 	"height": 254.545,
@@ -958,7 +958,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -967,7 +967,7 @@ test("transformation-diagram - Find measures using rigid transformations", () =>
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_a_figure
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -1016,7 +1016,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1025,7 +1025,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_b_figure
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -1074,7 +1074,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1083,7 +1083,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_c_figure
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -1132,7 +1132,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1141,7 +1141,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_d_figure
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -1190,7 +1190,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1199,7 +1199,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: dilation_choice_a
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 400,
 	"height": 400,
@@ -1248,7 +1248,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1257,7 +1257,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: dilation_choice_b
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 400,
 	"height": 400,
@@ -1306,7 +1306,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1315,7 +1315,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: dilation_choice_c
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 400,
 	"height": 400,
@@ -1364,7 +1364,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1373,7 +1373,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: figure_choice_a
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -1422,7 +1422,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1431,7 +1431,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: figure_choice_b
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -1480,7 +1480,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1489,7 +1489,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: figure_choice_c
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -1538,7 +1538,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1547,7 +1547,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: figure_choice_d
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -1596,7 +1596,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1605,7 +1605,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_a_figure
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 146,
@@ -1654,7 +1654,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1663,7 +1663,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_b_figure
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 146,
@@ -1712,7 +1712,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1721,7 +1721,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_c_figure
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 146,
@@ -1770,7 +1770,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1779,7 +1779,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_d_figure
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 146,
@@ -1828,7 +1828,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1837,7 +1837,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_a_figure
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -1886,7 +1886,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1895,7 +1895,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_b_figure
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -1944,7 +1944,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1953,7 +1953,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_c_figure
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -2002,7 +2002,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2011,7 +2011,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_d_figure
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -2060,7 +2060,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2069,7 +2069,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_a_image
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -2118,7 +2118,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2127,7 +2127,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_b_image
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -2176,7 +2176,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2185,7 +2185,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_c_image
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -2234,7 +2234,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2243,7 +2243,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_d_image
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -2292,7 +2292,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2301,7 +2301,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_a_figure
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -2350,7 +2350,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2359,7 +2359,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_b_figure
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -2408,7 +2408,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2417,7 +2417,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_c_figure
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -2466,7 +2466,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2475,7 +2475,7 @@ test("transformation-diagram - Dilate triangles", () => {
 // Course: 8th grade math
 // Exercise: Dilate triangles
 // Widget key: choice_d_figure
-test("transformation-diagram - Dilate triangles", () => {
+test("transformation-diagram - Dilate triangles", async () => {
 	const input = {
 	"width": 170,
 	"height": 170,
@@ -2524,7 +2524,7 @@ test("transformation-diagram - Dilate triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTransformationDiagram(parseResult.data)
+	const svg = await generateTransformationDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

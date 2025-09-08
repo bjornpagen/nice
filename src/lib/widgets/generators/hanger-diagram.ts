@@ -71,7 +71,7 @@ export type HangerDiagramProps = z.infer<typeof HangerDiagramPropsSchema>
  * algebraic equation, rendered as an SVG graphic. This diagram is ideal for introducing
  * students to the concept of solving equations by maintaining balance.
  */
-export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSchema> = (data) => {
+export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSchema> = async (data) => {
 	const { width, height, leftSide, rightSide } = data
 	const centerX = width / 2
 

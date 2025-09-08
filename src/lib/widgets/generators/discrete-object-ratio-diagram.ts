@@ -72,7 +72,7 @@ export type DiscreteObjectRatioDiagramProps = z.infer<typeof DiscreteObjectRatio
  * of discrete, countable objects. It is perfect for introductory ratio problems where
  * students can directly count the items to understand the relationship.
  */
-export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof DiscreteObjectRatioDiagramPropsSchema> = (
+export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof DiscreteObjectRatioDiagramPropsSchema> = async (
 	data
 ) => {
 	const { width, height, objects, layout, title } = data

@@ -122,7 +122,7 @@ export type RatioBoxDiagramProps = z.infer<typeof RatioBoxDiagramPropsSchema>
 /**
  * Generates an SVG diagram of items in a grid with box overlays to illustrate ratios.
  */
-export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramPropsSchema> = (props) => {
+export const generateRatioBoxDiagram: WidgetGenerator<typeof RatioBoxDiagramPropsSchema> = async (props) => {
 	const { width, height, items, itemsPerRow, boxes, partitions, layout } = props
 
 	const totalItems = items.reduce((sum, item) => sum + item.count, 0)

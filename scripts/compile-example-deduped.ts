@@ -64,7 +64,7 @@ function buildDiploidItem(): AssessmentItemInput {
 
 async function main(): Promise<void> {
 	const item = buildDiploidItem()
-	const result = errors.trySync(() => compile(item))
+	const result = await errors.try(compile(item))
 	if (result.error) {
 		logger.error("compile failed", { error: result.error })
 		throw errors.wrap(result.error, "compile example")

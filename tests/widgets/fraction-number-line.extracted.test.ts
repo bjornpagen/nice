@@ -25,7 +25,7 @@ type FractionNumberLineInput = z.input<typeof FractionNumberLinePropsSchema>
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("fraction-number-line - Divide whole numbers by fractions", () => {
+test("fraction-number-line - Divide whole numbers by fractions", async () => {
 	const input = {
 		max: 1.25,
 		min: 0,
@@ -149,7 +149,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -157,7 +157,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("fraction-number-line - Divide whole numbers by fractions", () => {
+test("fraction-number-line - Divide whole numbers by fractions", async () => {
 	const input = {
 		max: 1.6666666667,
 		min: 0,
@@ -272,7 +272,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -280,7 +280,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("fraction-number-line - Divide whole numbers by fractions", () => {
+test("fraction-number-line - Divide whole numbers by fractions", async () => {
 	const input = {
 		max: 2,
 		min: 0,
@@ -383,7 +383,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -391,7 +391,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("fraction-number-line - Divide whole numbers by fractions", () => {
+test("fraction-number-line - Divide whole numbers by fractions", async () => {
 	const input = {
 		max: 1.5714285714,
 		min: 0,
@@ -512,7 +512,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -520,7 +520,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("fraction-number-line - Divide whole numbers by fractions", () => {
+test("fraction-number-line - Divide whole numbers by fractions", async () => {
 	const input = {
 		max: 4.8,
 		min: 0,
@@ -737,7 +737,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -745,7 +745,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("fraction-number-line - Divide whole numbers by fractions", () => {
+test("fraction-number-line - Divide whole numbers by fractions", async () => {
 	const input = {
 		max: 2.222222,
 		min: 0,
@@ -935,7 +935,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -943,7 +943,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("fraction-number-line - Divide whole numbers by fractions", () => {
+test("fraction-number-line - Divide whole numbers by fractions", async () => {
 	const input = {
 		max: 7.5,
 		min: 0,
@@ -1250,7 +1250,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1258,7 +1258,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("fraction-number-line - Divide whole numbers by fractions", () => {
+test("fraction-number-line - Divide whole numbers by fractions", async () => {
 	const input = {
 		max: 5,
 		min: 0,
@@ -1364,7 +1364,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1372,7 +1372,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("fraction-number-line - Divide whole numbers by fractions", () => {
+test("fraction-number-line - Divide whole numbers by fractions", async () => {
 	const input = {
 		max: 2,
 		min: 0,
@@ -1478,7 +1478,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1486,7 +1486,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("fraction-number-line - Divide whole numbers by fractions", () => {
+test("fraction-number-line - Divide whole numbers by fractions", async () => {
 	const input = {
 		max: 9,
 		min: 0,
@@ -1679,7 +1679,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1687,7 +1687,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("fraction-number-line - Divide whole numbers by fractions", () => {
+test("fraction-number-line - Divide whole numbers by fractions", async () => {
 	const input = {
 		max: 3.125,
 		min: 0,
@@ -1919,7 +1919,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1927,7 +1927,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("fraction-number-line - Divide whole numbers by fractions", () => {
+test("fraction-number-line - Divide whole numbers by fractions", async () => {
 	const input = {
 		max: 9.3333333333,
 		min: 0,
@@ -2160,7 +2160,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2168,7 +2168,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("fraction-number-line - Divide whole numbers by fractions", () => {
+test("fraction-number-line - Divide whole numbers by fractions", async () => {
 	const input = {
 		max: 6.25,
 		min: 0,
@@ -2388,7 +2388,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2396,7 +2396,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("fraction-number-line - Divide whole numbers by fractions", () => {
+test("fraction-number-line - Divide whole numbers by fractions", async () => {
 	const input = {
 		max: 5.6,
 		min: 0,
@@ -2634,7 +2634,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2642,7 +2642,7 @@ test("fraction-number-line - Divide whole numbers by fractions", () => {
 // Course: 6th grade math
 // Exercise: Negative fractions on the number line
 // Widget key: image_1
-test("fraction-number-line - Negative fractions on the number line", () => {
+test("fraction-number-line - Negative fractions on the number line", async () => {
 	const input = {
 		max: 1,
 		min: -2,
@@ -2813,7 +2813,7 @@ test("fraction-number-line - Negative fractions on the number line", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2821,7 +2821,7 @@ test("fraction-number-line - Negative fractions on the number line", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers
 // Widget key: image_1
-test("fraction-number-line - Compare rational numbers", () => {
+test("fraction-number-line - Compare rational numbers", async () => {
 	const input = {
 		max: 1,
 		min: -1,
@@ -2956,7 +2956,7 @@ test("fraction-number-line - Compare rational numbers", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2964,7 +2964,7 @@ test("fraction-number-line - Compare rational numbers", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers
 // Widget key: image_1
-test("fraction-number-line - Compare rational numbers", () => {
+test("fraction-number-line - Compare rational numbers", async () => {
 	const input = {
 		max: 1,
 		min: -1,
@@ -3087,7 +3087,7 @@ test("fraction-number-line - Compare rational numbers", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3095,7 +3095,7 @@ test("fraction-number-line - Compare rational numbers", () => {
 // Course: 6th grade math
 // Exercise: Compare rational numbers
 // Widget key: image_1
-test("fraction-number-line - Compare rational numbers", () => {
+test("fraction-number-line - Compare rational numbers", async () => {
 	const input = {
 		max: 1,
 		min: -1,
@@ -3194,6 +3194,6 @@ test("fraction-number-line - Compare rational numbers", () => {
 	}
 
 	// Generate the widget
-	const svg = generateFractionNumberLine(parseResult.data)
+	const svg = await generateFractionNumberLine(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })

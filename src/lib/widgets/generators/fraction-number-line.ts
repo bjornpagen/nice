@@ -151,7 +151,7 @@ export type FractionNumberLineProps = z.infer<typeof FractionNumberLinePropsSche
  * Generates an SVG diagram of a number line with features specifically designed
  * for visualizing fraction concepts, including an optional cell-based model.
  */
-export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLinePropsSchema> = (props) => {
+export const generateFractionNumberLine: WidgetGenerator<typeof FractionNumberLinePropsSchema> = async (props) => {
 	const { width, height, min, max, ticks, segments, model } = props
 
 	const padding = { top: 80, right: 20, bottom: 40, left: 20 }

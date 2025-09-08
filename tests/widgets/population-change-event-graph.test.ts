@@ -6,7 +6,7 @@ import { generatePopulationChangeEventGraph, PopulationChangeEventGraphPropsSche
 
 type PopulationChangeEventGraphInput = z.input<typeof PopulationChangeEventGraphPropsSchema>
 
-test("population change event graph - initial question prompt", () => {
+test("population change event graph - initial question prompt", async () => {
 	const input = {
 		type: "populationChangeEventGraph",
 		width: 400,
@@ -43,11 +43,11 @@ test("population change event graph - initial question prompt", () => {
 		throw errors.wrap(validation.error, "input validation")
 	}
 	const parsed = validation.data
-	const svg = generatePopulationChangeEventGraph(parsed)
+	const svg = await generatePopulationChangeEventGraph(parsed)
 	expect(svg).toMatchSnapshot()
 })
 
-test("population change event graph - choice A steady population", () => {
+test("population change event graph - choice A steady population", async () => {
 	const input = {
 		type: "populationChangeEventGraph",
 		width: 400,
@@ -72,12 +72,12 @@ test("population change event graph - choice A steady population", () => {
 		},
 		afterSegment: {
 			points: [
-				{ x: 5, y: 5.0 },
-				{ x: 6, y: 4.8 },
-				{ x: 7, y: 5.1 },
-				{ x: 8, y: 4.9 },
-				{ x: 9, y: 5.0 },
-				{ x: 10, y: 4.8 }
+				{ x: 0, y: 5 },
+				{ x: 1, y: 5 },
+				{ x: 2, y: 5 },
+				{ x: 3, y: 5 },
+				{ x: 4, y: 5 },
+				{ x: 5, y: 5 }
 			],
 			color: "#00A2C7",
 			label: "After decreased rain"
@@ -91,11 +91,11 @@ test("population change event graph - choice A steady population", () => {
 		throw errors.wrap(validation.error, "input validation")
 	}
 	const parsed = validation.data
-	const svg = generatePopulationChangeEventGraph(parsed)
+	const svg = await generatePopulationChangeEventGraph(parsed)
 	expect(svg).toMatchSnapshot()
 })
 
-test("population change event graph - choice B decreased population", () => {
+test("population change event graph - choice B decreased population", async () => {
 	const input = {
 		type: "populationChangeEventGraph",
 		width: 400,
@@ -139,11 +139,11 @@ test("population change event graph - choice B decreased population", () => {
 		throw errors.wrap(validation.error, "input validation")
 	}
 	const parsed = validation.data
-	const svg = generatePopulationChangeEventGraph(parsed)
+	const svg = await generatePopulationChangeEventGraph(parsed)
 	expect(svg).toMatchSnapshot()
 })
 
-test("population change event graph - choice C increased population", () => {
+test("population change event graph - choice C increased population", async () => {
 	const input = {
 		type: "populationChangeEventGraph",
 		width: 400,
@@ -187,11 +187,11 @@ test("population change event graph - choice C increased population", () => {
 		throw errors.wrap(validation.error, "input validation")
 	}
 	const parsed = validation.data
-	const svg = generatePopulationChangeEventGraph(parsed)
+	const svg = await generatePopulationChangeEventGraph(parsed)
 	expect(svg).toMatchSnapshot()
 })
 
-test("population change event graph - snake body length example legend does not cut off", () => {
+test("population change event graph - snake body length example legend does not cut off", async () => {
 	const input = {
 		type: "populationChangeEventGraph",
 		width: 325,
@@ -236,7 +236,7 @@ test("population change event graph - snake body length example legend does not 
 		throw errors.wrap(validation.error, "input validation")
 	}
 	const parsed = validation.data
-	const svg = generatePopulationChangeEventGraph(parsed)
+	const svg = await generatePopulationChangeEventGraph(parsed)
 	// Assert that legend text is within the viewBox by checking approximate placement
 	// We ensure no negative X positions for legend text and lines by basic substring checks
 	expect(svg).toContain("After environmental change")

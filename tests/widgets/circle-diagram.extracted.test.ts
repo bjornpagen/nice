@@ -26,7 +26,7 @@ type CircleDiagramInput = z.input<typeof CircleDiagramPropsSchema>
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_1
-test("circle-diagram - Percents from fraction models", () => {
+test("circle-diagram - Percents from fraction models", async () => {
 	const input = {
 	"arcs": [],
 	"shape": "circle",
@@ -74,7 +74,7 @@ test("circle-diagram - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCircleDiagram(parseResult.data)
+	const svg = await generateCircleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -83,7 +83,7 @@ test("circle-diagram - Percents from fraction models", () => {
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_1
-test("circle-diagram - Percents from fraction models", () => {
+test("circle-diagram - Percents from fraction models", async () => {
 	const input = {
 	"arcs": [],
 	"shape": "circle",
@@ -131,7 +131,7 @@ test("circle-diagram - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCircleDiagram(parseResult.data)
+	const svg = await generateCircleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

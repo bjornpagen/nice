@@ -119,7 +119,7 @@ export type BoxPlotProps = z.infer<typeof BoxPlotPropsSchema>
  * This type of plot is a powerful tool for summarizing the distribution of a numerical
  * data set through its five-number summary.
  */
-export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data) => {
+export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = async (data) => {
 	const { width, height, axis, summary, boxColor, medianColor } = data
 
 	const { bottomMargin, xAxisTitleY } = calculateXAxisLayout(true, 15) // has tick labels, less padding

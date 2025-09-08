@@ -113,7 +113,12 @@ class ClippedCanvas implements Canvas {
 	}
 }
 
+// Deterministic yet unique clip ids within a single compilation run.
+// A module-scoped counter is reset by callers (e.g., compiler) per run to keep outputs stable.
 let canvasIdCounter = 0
+export function resetCanvasIdCounter(): void {
+	canvasIdCounter = 0
+}
 
 export class CanvasImpl implements Canvas {
 	public readonly clipId: string

@@ -26,7 +26,7 @@ type DataTableInput = z.input<typeof DataTablePropsSchema>
 // Course: 6th grade math
 // Exercise: Basic ratios
 // Widget key: activity_hours_table
-test("data-table - Basic ratios", () => {
+test("data-table - Basic ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -111,7 +111,7 @@ test("data-table - Basic ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -120,7 +120,7 @@ test("data-table - Basic ratios", () => {
 // Course: 6th grade math
 // Exercise: Basic ratios
 // Widget key: birds_table
-test("data-table - Basic ratios", () => {
+test("data-table - Basic ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -220,7 +220,7 @@ test("data-table - Basic ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -229,7 +229,7 @@ test("data-table - Basic ratios", () => {
 // Course: 6th grade math
 // Exercise: Basic ratios
 // Widget key: lunch_foods_table
-test("data-table - Basic ratios", () => {
+test("data-table - Basic ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -329,7 +329,7 @@ test("data-table - Basic ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -338,7 +338,7 @@ test("data-table - Basic ratios", () => {
 // Course: 6th grade math
 // Exercise: Basic ratios
 // Widget key: fruit_table
-test("data-table - Basic ratios", () => {
+test("data-table - Basic ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -423,7 +423,7 @@ test("data-table - Basic ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -432,7 +432,7 @@ test("data-table - Basic ratios", () => {
 // Course: 6th grade math
 // Exercise: Basic ratios
 // Widget key: snack_table
-test("data-table - Basic ratios", () => {
+test("data-table - Basic ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -517,7 +517,7 @@ test("data-table - Basic ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -526,7 +526,7 @@ test("data-table - Basic ratios", () => {
 // Course: 6th grade math
 // Exercise: Basic ratios
 // Widget key: ride_wait_table
-test("data-table - Basic ratios", () => {
+test("data-table - Basic ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -626,7 +626,7 @@ test("data-table - Basic ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -635,7 +635,7 @@ test("data-table - Basic ratios", () => {
 // Course: 6th grade math
 // Exercise: Basic ratios
 // Widget key: instrument_table
-test("data-table - Basic ratios", () => {
+test("data-table - Basic ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -735,7 +735,7 @@ test("data-table - Basic ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -744,7 +744,7 @@ test("data-table - Basic ratios", () => {
 // Course: 6th grade math
 // Exercise: Basic ratios
 // Widget key: movies_table
-test("data-table - Basic ratios", () => {
+test("data-table - Basic ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -844,7 +844,7 @@ test("data-table - Basic ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -853,7 +853,7 @@ test("data-table - Basic ratios", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: food_table
-test("data-table - Ratios with tape diagrams", () => {
+test("data-table - Ratios with tape diagrams", async () => {
 	const input = {
 	"data": [
 		[
@@ -943,7 +943,7 @@ test("data-table - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -952,7 +952,7 @@ test("data-table - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: tower_table
-test("data-table - Ratios with tape diagrams", () => {
+test("data-table - Ratios with tape diagrams", async () => {
 	const input = {
 	"data": [
 		[
@@ -1042,7 +1042,7 @@ test("data-table - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1051,7 +1051,7 @@ test("data-table - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: winning_total_table
-test("data-table - Ratios with tape diagrams", () => {
+test("data-table - Ratios with tape diagrams", async () => {
 	const input = {
 	"data": [
 		[
@@ -1123,7 +1123,7 @@ test("data-table - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1132,7 +1132,7 @@ test("data-table - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: quilts_table
-test("data-table - Ratios with tape diagrams", () => {
+test("data-table - Ratios with tape diagrams", async () => {
 	const input = {
 	"data": [
 		[
@@ -1222,7 +1222,7 @@ test("data-table - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1231,7 +1231,7 @@ test("data-table - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: flies_mosquitoes_table
-test("data-table - Ratios with tape diagrams", () => {
+test("data-table - Ratios with tape diagrams", async () => {
 	const input = {
 	"data": [
 		[
@@ -1321,7 +1321,7 @@ test("data-table - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1330,7 +1330,7 @@ test("data-table - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: cupcake_price_table
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -1403,7 +1403,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1412,7 +1412,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: table_choice_a
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -1482,7 +1482,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1491,7 +1491,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: table_choice_b
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -1561,7 +1561,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1570,7 +1570,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: snowball_table
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -1643,7 +1643,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1652,7 +1652,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: supervision_table
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -1725,7 +1725,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1734,7 +1734,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: banana_table
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -1822,7 +1822,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1831,7 +1831,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: time_distance_table
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -1904,7 +1904,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1913,7 +1913,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: table_choice_a
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -1998,7 +1998,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2007,7 +2007,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: table_choice_b
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -2092,7 +2092,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2101,7 +2101,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: table_choice_a
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -2201,7 +2201,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2210,7 +2210,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: table_choice_b
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -2310,7 +2310,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2319,7 +2319,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: table_choice_a
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -2389,7 +2389,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2398,7 +2398,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: table_choice_b
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -2468,7 +2468,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2477,7 +2477,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: eggs_time_table
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -2550,7 +2550,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2559,7 +2559,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: table_choice_a
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -2629,7 +2629,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2638,7 +2638,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: table_choice_b
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -2708,7 +2708,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2717,7 +2717,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: table_choice_a
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -2802,7 +2802,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2811,7 +2811,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Relate double number lines and ratio tables
 // Widget key: table_choice_b
-test("data-table - Relate double number lines and ratio tables", () => {
+test("data-table - Relate double number lines and ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -2896,7 +2896,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2905,7 +2905,7 @@ test("data-table - Relate double number lines and ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratio tables
 // Widget key: ratio_table
-test("data-table - Ratio tables", () => {
+test("data-table - Ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -2977,7 +2977,7 @@ test("data-table - Ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2986,7 +2986,7 @@ test("data-table - Ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratio tables
 // Widget key: ratio_table
-test("data-table - Ratio tables", () => {
+test("data-table - Ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -3066,7 +3066,7 @@ test("data-table - Ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3075,7 +3075,7 @@ test("data-table - Ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratio tables
 // Widget key: ratio_table
-test("data-table - Ratio tables", () => {
+test("data-table - Ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -3155,7 +3155,7 @@ test("data-table - Ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3164,7 +3164,7 @@ test("data-table - Ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratio tables
 // Widget key: ratio_table
-test("data-table - Ratio tables", () => {
+test("data-table - Ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -3236,7 +3236,7 @@ test("data-table - Ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3245,7 +3245,7 @@ test("data-table - Ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratio tables
 // Widget key: ratio_table
-test("data-table - Ratio tables", () => {
+test("data-table - Ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -3317,7 +3317,7 @@ test("data-table - Ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3326,7 +3326,7 @@ test("data-table - Ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratio tables
 // Widget key: hectares_cabins_table
-test("data-table - Ratio tables", () => {
+test("data-table - Ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -3418,7 +3418,7 @@ test("data-table - Ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3427,7 +3427,7 @@ test("data-table - Ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratio tables
 // Widget key: ratio_table
-test("data-table - Ratio tables", () => {
+test("data-table - Ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -3499,7 +3499,7 @@ test("data-table - Ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3508,7 +3508,7 @@ test("data-table - Ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratio tables
 // Widget key: balloon_table
-test("data-table - Ratio tables", () => {
+test("data-table - Ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -3580,7 +3580,7 @@ test("data-table - Ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3589,7 +3589,7 @@ test("data-table - Ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratio tables
 // Widget key: ratio_table
-test("data-table - Ratio tables", () => {
+test("data-table - Ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -3661,7 +3661,7 @@ test("data-table - Ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3670,7 +3670,7 @@ test("data-table - Ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratio tables
 // Widget key: bulbs_chandeliers_table
-test("data-table - Ratio tables", () => {
+test("data-table - Ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -3742,7 +3742,7 @@ test("data-table - Ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3751,7 +3751,7 @@ test("data-table - Ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratio tables
 // Widget key: screws_chairs_table
-test("data-table - Ratio tables", () => {
+test("data-table - Ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -3843,7 +3843,7 @@ test("data-table - Ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3852,7 +3852,7 @@ test("data-table - Ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratio tables
 // Widget key: fabric_cloaks_table
-test("data-table - Ratio tables", () => {
+test("data-table - Ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -3924,7 +3924,7 @@ test("data-table - Ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3933,7 +3933,7 @@ test("data-table - Ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratio tables
 // Widget key: ratio_table
-test("data-table - Ratio tables", () => {
+test("data-table - Ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -4005,7 +4005,7 @@ test("data-table - Ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4014,7 +4014,7 @@ test("data-table - Ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratio tables
 // Widget key: ratio_table
-test("data-table - Ratio tables", () => {
+test("data-table - Ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -4086,7 +4086,7 @@ test("data-table - Ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4095,7 +4095,7 @@ test("data-table - Ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratio tables
 // Widget key: crew_ship_table
-test("data-table - Ratio tables", () => {
+test("data-table - Ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -4167,7 +4167,7 @@ test("data-table - Ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4176,7 +4176,7 @@ test("data-table - Ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratio tables
 // Widget key: butter_cookies_table
-test("data-table - Ratio tables", () => {
+test("data-table - Ratio tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -4248,7 +4248,7 @@ test("data-table - Ratio tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4257,7 +4257,7 @@ test("data-table - Ratio tables", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: ratio_table
-test("data-table - Ratios on coordinate plane", () => {
+test("data-table - Ratios on coordinate plane", async () => {
 	const input = {
 	"data": [
 		[
@@ -4337,7 +4337,7 @@ test("data-table - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4346,7 +4346,7 @@ test("data-table - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: ratio_table
-test("data-table - Ratios on coordinate plane", () => {
+test("data-table - Ratios on coordinate plane", async () => {
 	const input = {
 	"data": [
 		[
@@ -4426,7 +4426,7 @@ test("data-table - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4435,7 +4435,7 @@ test("data-table - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios on coordinate plane
 // Widget key: ratio_table
-test("data-table - Ratios on coordinate plane", () => {
+test("data-table - Ratios on coordinate plane", async () => {
 	const input = {
 	"data": [
 		[
@@ -4535,7 +4535,7 @@ test("data-table - Ratios on coordinate plane", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4544,7 +4544,7 @@ test("data-table - Ratios on coordinate plane", () => {
 // Course: 6th grade math
 // Exercise: Ratios and units of measurement
 // Widget key: ratio_table
-test("data-table - Ratios and units of measurement", () => {
+test("data-table - Ratios and units of measurement", async () => {
 	const input = {
 	"data": [
 		[
@@ -4616,7 +4616,7 @@ test("data-table - Ratios and units of measurement", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4625,7 +4625,7 @@ test("data-table - Ratios and units of measurement", () => {
 // Course: 6th grade math
 // Exercise: Ratios and units of measurement
 // Widget key: ratio_table
-test("data-table - Ratios and units of measurement", () => {
+test("data-table - Ratios and units of measurement", async () => {
 	const input = {
 	"data": [
 		[
@@ -4697,7 +4697,7 @@ test("data-table - Ratios and units of measurement", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4706,7 +4706,7 @@ test("data-table - Ratios and units of measurement", () => {
 // Course: 6th grade math
 // Exercise: Ratios and units of measurement
 // Widget key: ratio_table
-test("data-table - Ratios and units of measurement", () => {
+test("data-table - Ratios and units of measurement", async () => {
 	const input = {
 	"data": [
 		[
@@ -4798,7 +4798,7 @@ test("data-table - Ratios and units of measurement", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4807,7 +4807,7 @@ test("data-table - Ratios and units of measurement", () => {
 // Course: 6th grade math
 // Exercise: Part-part-whole ratios
 // Widget key: ratio_table
-test("data-table - Part-part-whole ratios", () => {
+test("data-table - Part-part-whole ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -4912,7 +4912,7 @@ test("data-table - Part-part-whole ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4921,7 +4921,7 @@ test("data-table - Part-part-whole ratios", () => {
 // Course: 6th grade math
 // Exercise: Part-part-whole ratios
 // Widget key: camel_ratio_table
-test("data-table - Part-part-whole ratios", () => {
+test("data-table - Part-part-whole ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -5041,7 +5041,7 @@ test("data-table - Part-part-whole ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5050,7 +5050,7 @@ test("data-table - Part-part-whole ratios", () => {
 // Course: 6th grade math
 // Exercise: Part-part-whole ratios
 // Widget key: prizes_table
-test("data-table - Part-part-whole ratios", () => {
+test("data-table - Part-part-whole ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -5155,7 +5155,7 @@ test("data-table - Part-part-whole ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5164,7 +5164,7 @@ test("data-table - Part-part-whole ratios", () => {
 // Course: 6th grade math
 // Exercise: Part-part-whole ratios
 // Widget key: duck_table
-test("data-table - Part-part-whole ratios", () => {
+test("data-table - Part-part-whole ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -5269,7 +5269,7 @@ test("data-table - Part-part-whole ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5278,7 +5278,7 @@ test("data-table - Part-part-whole ratios", () => {
 // Course: 6th grade math
 // Exercise: Part-part-whole ratios
 // Widget key: ratio_table
-test("data-table - Part-part-whole ratios", () => {
+test("data-table - Part-part-whole ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -5383,7 +5383,7 @@ test("data-table - Part-part-whole ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5392,7 +5392,7 @@ test("data-table - Part-part-whole ratios", () => {
 // Course: 6th grade math
 // Exercise: Part-part-whole ratios
 // Widget key: balloon_table
-test("data-table - Part-part-whole ratios", () => {
+test("data-table - Part-part-whole ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -5502,7 +5502,7 @@ test("data-table - Part-part-whole ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5511,7 +5511,7 @@ test("data-table - Part-part-whole ratios", () => {
 // Course: 6th grade math
 // Exercise: Part-part-whole ratios
 // Widget key: ratio_table
-test("data-table - Part-part-whole ratios", () => {
+test("data-table - Part-part-whole ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -5616,7 +5616,7 @@ test("data-table - Part-part-whole ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5625,7 +5625,7 @@ test("data-table - Part-part-whole ratios", () => {
 // Course: 6th grade math
 // Exercise: Part-part-whole ratios
 // Widget key: movies_table
-test("data-table - Part-part-whole ratios", () => {
+test("data-table - Part-part-whole ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -5745,7 +5745,7 @@ test("data-table - Part-part-whole ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5754,7 +5754,7 @@ test("data-table - Part-part-whole ratios", () => {
 // Course: 6th grade math
 // Exercise: Part-part-whole ratios
 // Widget key: dressing_table
-test("data-table - Part-part-whole ratios", () => {
+test("data-table - Part-part-whole ratios", async () => {
 	const input = {
 	"data": [
 		[
@@ -5859,7 +5859,7 @@ test("data-table - Part-part-whole ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5868,7 +5868,7 @@ test("data-table - Part-part-whole ratios", () => {
 // Course: 6th grade math
 // Exercise: Division by 2-digits
 // Widget key: division_table
-test("data-table - Division by 2-digits", () => {
+test("data-table - Division by 2-digits", async () => {
 	const input = {
 	"data": [
 		[
@@ -5920,7 +5920,7 @@ test("data-table - Division by 2-digits", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5929,7 +5929,7 @@ test("data-table - Division by 2-digits", () => {
 // Course: 6th grade math
 // Exercise: Unit rates
 // Widget key: toy_pack_table
-test("data-table - Unit rates", () => {
+test("data-table - Unit rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -6075,7 +6075,7 @@ test("data-table - Unit rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6084,7 +6084,7 @@ test("data-table - Unit rates", () => {
 // Course: 6th grade math
 // Exercise: Unit rates
 // Widget key: heartbeats_table
-test("data-table - Unit rates", () => {
+test("data-table - Unit rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -6210,7 +6210,7 @@ test("data-table - Unit rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6219,7 +6219,7 @@ test("data-table - Unit rates", () => {
 // Course: 6th grade math
 // Exercise: Unit rates
 // Widget key: speed_table
-test("data-table - Unit rates", () => {
+test("data-table - Unit rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -6345,7 +6345,7 @@ test("data-table - Unit rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6354,7 +6354,7 @@ test("data-table - Unit rates", () => {
 // Course: 6th grade math
 // Exercise: Unit rates
 // Widget key: student_rate_table
-test("data-table - Unit rates", () => {
+test("data-table - Unit rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -6480,7 +6480,7 @@ test("data-table - Unit rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6489,7 +6489,7 @@ test("data-table - Unit rates", () => {
 // Course: 6th grade math
 // Exercise: Unit rates
 // Widget key: teams_table
-test("data-table - Unit rates", () => {
+test("data-table - Unit rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -6615,7 +6615,7 @@ test("data-table - Unit rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6624,7 +6624,7 @@ test("data-table - Unit rates", () => {
 // Course: 6th grade math
 // Exercise: Unit rates
 // Widget key: fruit_costs_table
-test("data-table - Unit rates", () => {
+test("data-table - Unit rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -6790,7 +6790,7 @@ test("data-table - Unit rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6799,7 +6799,7 @@ test("data-table - Unit rates", () => {
 // Course: 6th grade math
 // Exercise: Unit rates
 // Widget key: speeds_table
-test("data-table - Unit rates", () => {
+test("data-table - Unit rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -6925,7 +6925,7 @@ test("data-table - Unit rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6934,7 +6934,7 @@ test("data-table - Unit rates", () => {
 // Course: 6th grade math
 // Exercise: Comparing rates
 // Widget key: raffle_table
-test("data-table - Comparing rates", () => {
+test("data-table - Comparing rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -7041,7 +7041,7 @@ test("data-table - Comparing rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7050,7 +7050,7 @@ test("data-table - Comparing rates", () => {
 // Course: 6th grade math
 // Exercise: Comparing rates
 // Widget key: sales_table
-test("data-table - Comparing rates", () => {
+test("data-table - Comparing rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -7157,7 +7157,7 @@ test("data-table - Comparing rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7166,7 +7166,7 @@ test("data-table - Comparing rates", () => {
 // Course: 6th grade math
 // Exercise: Comparing rates
 // Widget key: hike_data_table
-test("data-table - Comparing rates", () => {
+test("data-table - Comparing rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -7273,7 +7273,7 @@ test("data-table - Comparing rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7282,7 +7282,7 @@ test("data-table - Comparing rates", () => {
 // Course: 6th grade math
 // Exercise: Comparing rates
 // Widget key: earnings_table
-test("data-table - Comparing rates", () => {
+test("data-table - Comparing rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -7389,7 +7389,7 @@ test("data-table - Comparing rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7398,7 +7398,7 @@ test("data-table - Comparing rates", () => {
 // Course: 6th grade math
 // Exercise: Comparing rates
 // Widget key: divers_table
-test("data-table - Comparing rates", () => {
+test("data-table - Comparing rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -7505,7 +7505,7 @@ test("data-table - Comparing rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7514,7 +7514,7 @@ test("data-table - Comparing rates", () => {
 // Course: 6th grade math
 // Exercise: Comparing rates
 // Widget key: rafting_table
-test("data-table - Comparing rates", () => {
+test("data-table - Comparing rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -7621,7 +7621,7 @@ test("data-table - Comparing rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7630,7 +7630,7 @@ test("data-table - Comparing rates", () => {
 // Course: 6th grade math
 // Exercise: Comparing rates
 // Widget key: orchard_table
-test("data-table - Comparing rates", () => {
+test("data-table - Comparing rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -7767,7 +7767,7 @@ test("data-table - Comparing rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7776,7 +7776,7 @@ test("data-table - Comparing rates", () => {
 // Course: 6th grade math
 // Exercise: Comparing rates
 // Widget key: farmland_table
-test("data-table - Comparing rates", () => {
+test("data-table - Comparing rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -7898,7 +7898,7 @@ test("data-table - Comparing rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7907,7 +7907,7 @@ test("data-table - Comparing rates", () => {
 // Course: 6th grade math
 // Exercise: Comparing rates
 // Widget key: apartment_table
-test("data-table - Comparing rates", () => {
+test("data-table - Comparing rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -8048,7 +8048,7 @@ test("data-table - Comparing rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8057,7 +8057,7 @@ test("data-table - Comparing rates", () => {
 // Course: 6th grade math
 // Exercise: Comparing rates
 // Widget key: hotel_price_table
-test("data-table - Comparing rates", () => {
+test("data-table - Comparing rates", async () => {
 	const input = {
 	"data": [
 		[
@@ -8164,7 +8164,7 @@ test("data-table - Comparing rates", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8173,7 +8173,7 @@ test("data-table - Comparing rates", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: students_percentage_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -8297,7 +8297,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8306,7 +8306,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: hair_length_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -8406,7 +8406,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8415,7 +8415,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: banjo_percentage_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -8488,7 +8488,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8497,7 +8497,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: distance_percentage_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -8570,7 +8570,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8579,7 +8579,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: time_percent_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -8703,7 +8703,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8712,7 +8712,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: time_percentage_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -8836,7 +8836,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8845,7 +8845,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: people_percent_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -8969,7 +8969,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -8978,7 +8978,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: age_percentage_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -9078,7 +9078,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9087,7 +9087,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: attendance_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -9187,7 +9187,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9196,7 +9196,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: time_percentage_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -9308,7 +9308,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9317,7 +9317,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: time_percent_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -9429,7 +9429,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9438,7 +9438,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: rotation_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -9538,7 +9538,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9547,7 +9547,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: mass_percent_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -9635,7 +9635,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9644,7 +9644,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: games_percentage_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -9733,7 +9733,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9742,7 +9742,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: haircuts_percent_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -9831,7 +9831,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9840,7 +9840,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: poems_percentage_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -9929,7 +9929,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -9938,7 +9938,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: teeth_percentage_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -10011,7 +10011,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10020,7 +10020,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: pretest_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -10120,7 +10120,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10129,7 +10129,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: distance_percent_table
-test("data-table - Find percents visually", () => {
+test("data-table - Find percents visually", async () => {
 	const input = {
 	"data": [
 		[
@@ -10202,7 +10202,7 @@ test("data-table - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10211,7 +10211,7 @@ test("data-table - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Interpreting negative numbers
 // Widget key: income_expense_table
-test("data-table - Interpreting negative numbers", () => {
+test("data-table - Interpreting negative numbers", async () => {
 	const input = {
 	"data": [
 		[
@@ -10371,7 +10371,7 @@ test("data-table - Interpreting negative numbers", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10380,7 +10380,7 @@ test("data-table - Interpreting negative numbers", () => {
 // Course: 6th grade math
 // Exercise: Writing numerical inequalities
 // Widget key: rain_table
-test("data-table - Writing numerical inequalities", () => {
+test("data-table - Writing numerical inequalities", async () => {
 	const input = {
 	"data": [
 		[
@@ -10450,7 +10450,7 @@ test("data-table - Writing numerical inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10459,7 +10459,7 @@ test("data-table - Writing numerical inequalities", () => {
 // Course: 6th grade math
 // Exercise: Writing numerical inequalities
 // Widget key: messages_table
-test("data-table - Writing numerical inequalities", () => {
+test("data-table - Writing numerical inequalities", async () => {
 	const input = {
 	"data": [
 		[
@@ -10539,7 +10539,7 @@ test("data-table - Writing numerical inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10548,7 +10548,7 @@ test("data-table - Writing numerical inequalities", () => {
 // Course: 6th grade math
 // Exercise: Writing numerical inequalities
 // Widget key: rain_table
-test("data-table - Writing numerical inequalities", () => {
+test("data-table - Writing numerical inequalities", async () => {
 	const input = {
 	"data": [
 		[
@@ -10636,7 +10636,7 @@ test("data-table - Writing numerical inequalities", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10645,7 +10645,7 @@ test("data-table - Writing numerical inequalities", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: function_rule_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -10718,7 +10718,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10727,7 +10727,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: xy_rule_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -10800,7 +10800,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10809,7 +10809,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: values_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -10882,7 +10882,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10891,7 +10891,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: rule_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -10964,7 +10964,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -10973,7 +10973,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: value_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -11061,7 +11061,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11070,7 +11070,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: xy_rule_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -11158,7 +11158,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11167,7 +11167,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: value_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -11240,7 +11240,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11249,7 +11249,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: values_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -11322,7 +11322,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11331,7 +11331,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: values_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -11404,7 +11404,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11413,7 +11413,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: rule_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -11486,7 +11486,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11495,7 +11495,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: xy_rule_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -11568,7 +11568,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11577,7 +11577,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: xy_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -11650,7 +11650,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11659,7 +11659,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: values_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -11732,7 +11732,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11741,7 +11741,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: rule_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -11814,7 +11814,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11823,7 +11823,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: xy_rule_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -11896,7 +11896,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -11905,7 +11905,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: xy_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -11993,7 +11993,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12002,7 +12002,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: value_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -12075,7 +12075,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12084,7 +12084,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Tables from equations with 2 variables
 // Widget key: value_table
-test("data-table - Tables from equations with 2 variables", () => {
+test("data-table - Tables from equations with 2 variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -12157,7 +12157,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12166,7 +12166,7 @@ test("data-table - Tables from equations with 2 variables", () => {
 // Course: 6th grade math
 // Exercise: Analyze relationships between variables
 // Widget key: age_table
-test("data-table - Analyze relationships between variables", () => {
+test("data-table - Analyze relationships between variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -12265,7 +12265,7 @@ test("data-table - Analyze relationships between variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12274,7 +12274,7 @@ test("data-table - Analyze relationships between variables", () => {
 // Course: 6th grade math
 // Exercise: Analyze relationships between variables
 // Widget key: nisha_hakim_table
-test("data-table - Analyze relationships between variables", () => {
+test("data-table - Analyze relationships between variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -12398,7 +12398,7 @@ test("data-table - Analyze relationships between variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12407,7 +12407,7 @@ test("data-table - Analyze relationships between variables", () => {
 // Course: 6th grade math
 // Exercise: Analyze relationships between variables
 // Widget key: sugar_table
-test("data-table - Analyze relationships between variables", () => {
+test("data-table - Analyze relationships between variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -12508,7 +12508,7 @@ test("data-table - Analyze relationships between variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12517,7 +12517,7 @@ test("data-table - Analyze relationships between variables", () => {
 // Course: 6th grade math
 // Exercise: Analyze relationships between variables
 // Widget key: fare_table
-test("data-table - Analyze relationships between variables", () => {
+test("data-table - Analyze relationships between variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -12618,7 +12618,7 @@ test("data-table - Analyze relationships between variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12627,7 +12627,7 @@ test("data-table - Analyze relationships between variables", () => {
 // Course: 6th grade math
 // Exercise: Analyze relationships between variables
 // Widget key: coral_growth_table
-test("data-table - Analyze relationships between variables", () => {
+test("data-table - Analyze relationships between variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -12728,7 +12728,7 @@ test("data-table - Analyze relationships between variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12737,7 +12737,7 @@ test("data-table - Analyze relationships between variables", () => {
 // Course: 6th grade math
 // Exercise: Analyze relationships between variables
 // Widget key: height_table
-test("data-table - Analyze relationships between variables", () => {
+test("data-table - Analyze relationships between variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -12843,7 +12843,7 @@ test("data-table - Analyze relationships between variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12852,7 +12852,7 @@ test("data-table - Analyze relationships between variables", () => {
 // Course: 6th grade math
 // Exercise: Analyze relationships between variables
 // Widget key: ages_table
-test("data-table - Analyze relationships between variables", () => {
+test("data-table - Analyze relationships between variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -12951,7 +12951,7 @@ test("data-table - Analyze relationships between variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -12960,7 +12960,7 @@ test("data-table - Analyze relationships between variables", () => {
 // Course: 6th grade math
 // Exercise: Analyze relationships between variables
 // Widget key: books_table
-test("data-table - Analyze relationships between variables", () => {
+test("data-table - Analyze relationships between variables", async () => {
 	const input = {
 	"data": [
 		[
@@ -13124,7 +13124,7 @@ test("data-table - Analyze relationships between variables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13133,7 +13133,7 @@ test("data-table - Analyze relationships between variables", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: area_table
-test("data-table - Decompose area with triangles", () => {
+test("data-table - Decompose area with triangles", async () => {
 	const input = {
 	"data": [
 		[
@@ -13221,7 +13221,7 @@ test("data-table - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13230,7 +13230,7 @@ test("data-table - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: area_table
-test("data-table - Decompose area with triangles", () => {
+test("data-table - Decompose area with triangles", async () => {
 	const input = {
 	"data": [
 		[
@@ -13318,7 +13318,7 @@ test("data-table - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13327,7 +13327,7 @@ test("data-table - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: area_table
-test("data-table - Decompose area with triangles", () => {
+test("data-table - Decompose area with triangles", async () => {
 	const input = {
 	"data": [
 		[
@@ -13445,7 +13445,7 @@ test("data-table - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13454,7 +13454,7 @@ test("data-table - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: area_table
-test("data-table - Decompose area with triangles", () => {
+test("data-table - Decompose area with triangles", async () => {
 	const input = {
 	"data": [
 		[
@@ -13542,7 +13542,7 @@ test("data-table - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13551,7 +13551,7 @@ test("data-table - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: figure_area_table
-test("data-table - Decompose area with triangles", () => {
+test("data-table - Decompose area with triangles", async () => {
 	const input = {
 	"data": [
 		[
@@ -13654,7 +13654,7 @@ test("data-table - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13663,7 +13663,7 @@ test("data-table - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: area_table
-test("data-table - Decompose area with triangles", () => {
+test("data-table - Decompose area with triangles", async () => {
 	const input = {
 	"data": [
 		[
@@ -13766,7 +13766,7 @@ test("data-table - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13775,7 +13775,7 @@ test("data-table - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: area_table
-test("data-table - Decompose area with triangles", () => {
+test("data-table - Decompose area with triangles", async () => {
 	const input = {
 	"data": [
 		[
@@ -13863,7 +13863,7 @@ test("data-table - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13872,7 +13872,7 @@ test("data-table - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: area_table
-test("data-table - Decompose area with triangles", () => {
+test("data-table - Decompose area with triangles", async () => {
 	const input = {
 	"data": [
 		[
@@ -13960,7 +13960,7 @@ test("data-table - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -13969,7 +13969,7 @@ test("data-table - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: area_table
-test("data-table - Decompose area with triangles", () => {
+test("data-table - Decompose area with triangles", async () => {
 	const input = {
 	"data": [
 		[
@@ -14057,7 +14057,7 @@ test("data-table - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14066,7 +14066,7 @@ test("data-table - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: area_table
-test("data-table - Decompose area with triangles", () => {
+test("data-table - Decompose area with triangles", async () => {
 	const input = {
 	"data": [
 		[
@@ -14154,7 +14154,7 @@ test("data-table - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14163,7 +14163,7 @@ test("data-table - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: statements_table
-test("data-table - Coordinate plane problems in all four quadrants", () => {
+test("data-table - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"data": [
 		[
@@ -14283,7 +14283,7 @@ test("data-table - Coordinate plane problems in all four quadrants", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14292,7 +14292,7 @@ test("data-table - Coordinate plane problems in all four quadrants", () => {
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: statements_table
-test("data-table - Coordinate plane problems in all four quadrants", () => {
+test("data-table - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"data": [
 		[
@@ -14420,7 +14420,7 @@ test("data-table - Coordinate plane problems in all four quadrants", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14429,7 +14429,7 @@ test("data-table - Coordinate plane problems in all four quadrants", () => {
 // Course: 6th grade math
 // Exercise: Coordinate plane problems in all four quadrants
 // Widget key: statements_table
-test("data-table - Coordinate plane problems in all four quadrants", () => {
+test("data-table - Coordinate plane problems in all four quadrants", async () => {
 	const input = {
 	"data": [
 		[
@@ -14549,7 +14549,7 @@ test("data-table - Coordinate plane problems in all four quadrants", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14558,7 +14558,7 @@ test("data-table - Coordinate plane problems in all four quadrants", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: frequency_table
-test("data-table - Creating frequency tables", () => {
+test("data-table - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -14646,7 +14646,7 @@ test("data-table - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14655,7 +14655,7 @@ test("data-table - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: frequency_table
-test("data-table - Creating frequency tables", () => {
+test("data-table - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -14750,7 +14750,7 @@ test("data-table - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14759,7 +14759,7 @@ test("data-table - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: frequency_table
-test("data-table - Creating frequency tables", () => {
+test("data-table - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -14863,7 +14863,7 @@ test("data-table - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14872,7 +14872,7 @@ test("data-table - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: frequency_table
-test("data-table - Creating frequency tables", () => {
+test("data-table - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -14976,7 +14976,7 @@ test("data-table - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -14985,7 +14985,7 @@ test("data-table - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: frequency_table
-test("data-table - Creating frequency tables", () => {
+test("data-table - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -15105,7 +15105,7 @@ test("data-table - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15114,7 +15114,7 @@ test("data-table - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: freq_table
-test("data-table - Creating frequency tables", () => {
+test("data-table - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -15234,7 +15234,7 @@ test("data-table - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15243,7 +15243,7 @@ test("data-table - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: frequency_table
-test("data-table - Creating frequency tables", () => {
+test("data-table - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -15347,7 +15347,7 @@ test("data-table - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15356,7 +15356,7 @@ test("data-table - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: frequency_table
-test("data-table - Creating frequency tables", () => {
+test("data-table - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -15444,7 +15444,7 @@ test("data-table - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15453,7 +15453,7 @@ test("data-table - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: frequency_table
-test("data-table - Creating frequency tables", () => {
+test("data-table - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -15541,7 +15541,7 @@ test("data-table - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15550,7 +15550,7 @@ test("data-table - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: frequency_table
-test("data-table - Creating frequency tables", () => {
+test("data-table - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -15654,7 +15654,7 @@ test("data-table - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15663,7 +15663,7 @@ test("data-table - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: frequency_table
-test("data-table - Creating frequency tables", () => {
+test("data-table - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -15783,7 +15783,7 @@ test("data-table - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15792,7 +15792,7 @@ test("data-table - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: frequency_table
-test("data-table - Creating frequency tables", () => {
+test("data-table - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -15876,7 +15876,7 @@ test("data-table - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -15885,7 +15885,7 @@ test("data-table - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: frequency_table
-test("data-table - Creating frequency tables", () => {
+test("data-table - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -16005,7 +16005,7 @@ test("data-table - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16014,7 +16014,7 @@ test("data-table - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: frequency_table
-test("data-table - Creating frequency tables", () => {
+test("data-table - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -16109,7 +16109,7 @@ test("data-table - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16118,7 +16118,7 @@ test("data-table - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating frequency tables
 // Widget key: frequency_table
-test("data-table - Creating frequency tables", () => {
+test("data-table - Creating frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -16206,7 +16206,7 @@ test("data-table - Creating frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16215,7 +16215,7 @@ test("data-table - Creating frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: pets_frequency_table
-test("data-table - Creating dot plots", () => {
+test("data-table - Creating dot plots", async () => {
 	const input = {
 	"data": [
 		[
@@ -16305,7 +16305,7 @@ test("data-table - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16314,7 +16314,7 @@ test("data-table - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: freq_table
-test("data-table - Creating dot plots", () => {
+test("data-table - Creating dot plots", async () => {
 	const input = {
 	"data": [
 		[
@@ -16394,7 +16394,7 @@ test("data-table - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16403,7 +16403,7 @@ test("data-table - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: hours_table
-test("data-table - Creating dot plots", () => {
+test("data-table - Creating dot plots", async () => {
 	const input = {
 	"data": [
 		[
@@ -16483,7 +16483,7 @@ test("data-table - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16492,7 +16492,7 @@ test("data-table - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: fines_table
-test("data-table - Creating dot plots", () => {
+test("data-table - Creating dot plots", async () => {
 	const input = {
 	"data": [
 		[
@@ -16592,7 +16592,7 @@ test("data-table - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16601,7 +16601,7 @@ test("data-table - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: walks_table
-test("data-table - Creating dot plots", () => {
+test("data-table - Creating dot plots", async () => {
 	const input = {
 	"data": [
 		[
@@ -16691,7 +16691,7 @@ test("data-table - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16700,7 +16700,7 @@ test("data-table - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: resting_heart_rate_table
-test("data-table - Creating dot plots", () => {
+test("data-table - Creating dot plots", async () => {
 	const input = {
 	"data": [
 		[
@@ -16780,7 +16780,7 @@ test("data-table - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16789,7 +16789,7 @@ test("data-table - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: frequency_table
-test("data-table - Creating dot plots", () => {
+test("data-table - Creating dot plots", async () => {
 	const input = {
 	"data": [
 		[
@@ -16909,7 +16909,7 @@ test("data-table - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -16918,7 +16918,7 @@ test("data-table - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Creating dot plots
 // Widget key: frequency_table
-test("data-table - Creating dot plots", () => {
+test("data-table - Creating dot plots", async () => {
 	const input = {
 	"data": [
 		[
@@ -17038,7 +17038,7 @@ test("data-table - Creating dot plots", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17047,7 +17047,7 @@ test("data-table - Creating dot plots", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: strokes_table
-test("data-table - Reading dot plots frequency tables", () => {
+test("data-table - Reading dot plots frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -17147,7 +17147,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17156,7 +17156,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: strokes_table
-test("data-table - Reading dot plots frequency tables", () => {
+test("data-table - Reading dot plots frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -17256,7 +17256,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17265,7 +17265,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: essay_scores_table
-test("data-table - Reading dot plots frequency tables", () => {
+test("data-table - Reading dot plots frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -17365,7 +17365,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17374,7 +17374,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: fish_frequency_table
-test("data-table - Reading dot plots frequency tables", () => {
+test("data-table - Reading dot plots frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -17464,7 +17464,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17473,7 +17473,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: cavities_table
-test("data-table - Reading dot plots frequency tables", () => {
+test("data-table - Reading dot plots frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -17563,7 +17563,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17572,7 +17572,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: frequency_table
-test("data-table - Reading dot plots frequency tables", () => {
+test("data-table - Reading dot plots frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -17672,7 +17672,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17681,7 +17681,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: frequency_table
-test("data-table - Reading dot plots frequency tables", () => {
+test("data-table - Reading dot plots frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -17781,7 +17781,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17790,7 +17790,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: frequency_table
-test("data-table - Reading dot plots frequency tables", () => {
+test("data-table - Reading dot plots frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -17880,7 +17880,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -17889,7 +17889,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: strokes_table
-test("data-table - Reading dot plots frequency tables", () => {
+test("data-table - Reading dot plots frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -18049,7 +18049,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -18058,7 +18058,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: frequency_table
-test("data-table - Reading dot plots frequency tables", () => {
+test("data-table - Reading dot plots frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -18148,7 +18148,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -18157,7 +18157,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Reading dot plots & frequency tables
 // Widget key: frequency_table
-test("data-table - Reading dot plots frequency tables", () => {
+test("data-table - Reading dot plots frequency tables", async () => {
 	const input = {
 	"data": [
 		[
@@ -18247,7 +18247,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -18256,7 +18256,7 @@ test("data-table - Reading dot plots frequency tables", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: image_1
-test("data-table - Create histograms", () => {
+test("data-table - Create histograms", async () => {
 	const input = {
 	"data": [
 		[
@@ -18378,7 +18378,7 @@ test("data-table - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -18387,7 +18387,7 @@ test("data-table - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Create histograms
 // Widget key: hours_table
-test("data-table - Create histograms", () => {
+test("data-table - Create histograms", async () => {
 	const input = {
 	"data": [
 		[
@@ -18577,7 +18577,7 @@ test("data-table - Create histograms", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -18586,7 +18586,7 @@ test("data-table - Create histograms", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean
 // Widget key: salaries_table
-test("data-table - Calculating the mean", () => {
+test("data-table - Calculating the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -18701,7 +18701,7 @@ test("data-table - Calculating the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -18710,7 +18710,7 @@ test("data-table - Calculating the mean", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean
 // Widget key: points_table
-test("data-table - Calculating the mean", () => {
+test("data-table - Calculating the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -18825,7 +18825,7 @@ test("data-table - Calculating the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -18834,7 +18834,7 @@ test("data-table - Calculating the mean", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean
 // Widget key: lemons_table
-test("data-table - Calculating the mean", () => {
+test("data-table - Calculating the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -18931,7 +18931,7 @@ test("data-table - Calculating the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -18940,7 +18940,7 @@ test("data-table - Calculating the mean", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean
 // Widget key: spells_table
-test("data-table - Calculating the mean", () => {
+test("data-table - Calculating the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -19040,7 +19040,7 @@ test("data-table - Calculating the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -19049,7 +19049,7 @@ test("data-table - Calculating the mean", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean
 // Widget key: votes_table
-test("data-table - Calculating the mean", () => {
+test("data-table - Calculating the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -19164,7 +19164,7 @@ test("data-table - Calculating the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -19173,7 +19173,7 @@ test("data-table - Calculating the mean", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean
 // Widget key: alligators_table
-test("data-table - Calculating the mean", () => {
+test("data-table - Calculating the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -19273,7 +19273,7 @@ test("data-table - Calculating the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -19282,7 +19282,7 @@ test("data-table - Calculating the mean", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean
 // Widget key: words_table
-test("data-table - Calculating the mean", () => {
+test("data-table - Calculating the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -19365,7 +19365,7 @@ test("data-table - Calculating the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -19374,7 +19374,7 @@ test("data-table - Calculating the mean", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean
 // Widget key: distance_table
-test("data-table - Calculating the mean", () => {
+test("data-table - Calculating the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -19471,7 +19471,7 @@ test("data-table - Calculating the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -19480,7 +19480,7 @@ test("data-table - Calculating the mean", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean
 // Widget key: raisins_table
-test("data-table - Calculating the mean", () => {
+test("data-table - Calculating the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -19605,7 +19605,7 @@ test("data-table - Calculating the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -19614,7 +19614,7 @@ test("data-table - Calculating the mean", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean
 // Widget key: minutes_table
-test("data-table - Calculating the mean", () => {
+test("data-table - Calculating the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -19744,7 +19744,7 @@ test("data-table - Calculating the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -19753,7 +19753,7 @@ test("data-table - Calculating the mean", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: age_frequency_table
-test("data-table - Calculating the median data displays", () => {
+test("data-table - Calculating the median data displays", async () => {
 	const input = {
 	"data": [
 		[
@@ -19843,7 +19843,7 @@ test("data-table - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -19852,7 +19852,7 @@ test("data-table - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: chinups_table
-test("data-table - Calculating the median data displays", () => {
+test("data-table - Calculating the median data displays", async () => {
 	const input = {
 	"data": [
 		[
@@ -19963,7 +19963,7 @@ test("data-table - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -19972,7 +19972,7 @@ test("data-table - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: laps_frequency_table
-test("data-table - Calculating the median data displays", () => {
+test("data-table - Calculating the median data displays", async () => {
 	const input = {
 	"data": [
 		[
@@ -20062,7 +20062,7 @@ test("data-table - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -20071,7 +20071,7 @@ test("data-table - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: hydrant_table
-test("data-table - Calculating the median data displays", () => {
+test("data-table - Calculating the median data displays", async () => {
 	const input = {
 	"data": [
 		[
@@ -20186,7 +20186,7 @@ test("data-table - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -20195,7 +20195,7 @@ test("data-table - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: frequency_table
-test("data-table - Calculating the median data displays", () => {
+test("data-table - Calculating the median data displays", async () => {
 	const input = {
 	"data": [
 		[
@@ -20285,7 +20285,7 @@ test("data-table - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -20294,7 +20294,7 @@ test("data-table - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: frequency_table
-test("data-table - Calculating the median data displays", () => {
+test("data-table - Calculating the median data displays", async () => {
 	const input = {
 	"data": [
 		[
@@ -20384,7 +20384,7 @@ test("data-table - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -20393,7 +20393,7 @@ test("data-table - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: scores_table
-test("data-table - Calculating the median data displays", () => {
+test("data-table - Calculating the median data displays", async () => {
 	const input = {
 	"data": [
 		[
@@ -20523,7 +20523,7 @@ test("data-table - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -20532,7 +20532,7 @@ test("data-table - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: users_table
-test("data-table - Calculating the median data displays", () => {
+test("data-table - Calculating the median data displays", async () => {
 	const input = {
 	"data": [
 		[
@@ -20643,7 +20643,7 @@ test("data-table - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -20652,7 +20652,7 @@ test("data-table - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: bags_frequency_table
-test("data-table - Calculating the median data displays", () => {
+test("data-table - Calculating the median data displays", async () => {
 	const input = {
 	"data": [
 		[
@@ -20742,7 +20742,7 @@ test("data-table - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -20751,7 +20751,7 @@ test("data-table - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Missing value given the mean
 // Widget key: hydrants_table
-test("data-table - Missing value given the mean", () => {
+test("data-table - Missing value given the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -20871,7 +20871,7 @@ test("data-table - Missing value given the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -20880,7 +20880,7 @@ test("data-table - Missing value given the mean", () => {
 // Course: 6th grade math
 // Exercise: Missing value given the mean
 // Widget key: apples_table
-test("data-table - Missing value given the mean", () => {
+test("data-table - Missing value given the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -20985,7 +20985,7 @@ test("data-table - Missing value given the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -20994,7 +20994,7 @@ test("data-table - Missing value given the mean", () => {
 // Course: 6th grade math
 // Exercise: Missing value given the mean
 // Widget key: attendance_table
-test("data-table - Missing value given the mean", () => {
+test("data-table - Missing value given the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -21082,7 +21082,7 @@ test("data-table - Missing value given the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -21091,7 +21091,7 @@ test("data-table - Missing value given the mean", () => {
 // Course: 6th grade math
 // Exercise: Missing value given the mean
 // Widget key: revenue_table
-test("data-table - Missing value given the mean", () => {
+test("data-table - Missing value given the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -21196,7 +21196,7 @@ test("data-table - Missing value given the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -21205,7 +21205,7 @@ test("data-table - Missing value given the mean", () => {
 // Course: 6th grade math
 // Exercise: Missing value given the mean
 // Widget key: score_table
-test("data-table - Missing value given the mean", () => {
+test("data-table - Missing value given the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -21310,7 +21310,7 @@ test("data-table - Missing value given the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -21319,7 +21319,7 @@ test("data-table - Missing value given the mean", () => {
 // Course: 6th grade math
 // Exercise: Missing value given the mean
 // Widget key: snow_days_table
-test("data-table - Missing value given the mean", () => {
+test("data-table - Missing value given the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -21435,7 +21435,7 @@ test("data-table - Missing value given the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -21444,7 +21444,7 @@ test("data-table - Missing value given the mean", () => {
 // Course: 6th grade math
 // Exercise: Missing value given the mean
 // Widget key: innings_table
-test("data-table - Missing value given the mean", () => {
+test("data-table - Missing value given the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -21560,7 +21560,7 @@ test("data-table - Missing value given the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -21569,7 +21569,7 @@ test("data-table - Missing value given the mean", () => {
 // Course: 6th grade math
 // Exercise: Missing value given the mean
 // Widget key: calls_table
-test("data-table - Missing value given the mean", () => {
+test("data-table - Missing value given the mean", async () => {
 	const input = {
 	"data": [
 		[
@@ -21689,7 +21689,7 @@ test("data-table - Missing value given the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -21698,7 +21698,7 @@ test("data-table - Missing value given the mean", () => {
 // Course: 6th grade math
 // Exercise: Effects of shifting, adding, & removing a data point
 // Widget key: weights_table
-test("data-table - Effects of shifting adding removing a data", () => {
+test("data-table - Effects of shifting adding removing a data", async () => {
 	const input = {
 	"data": [
 		[
@@ -21798,7 +21798,7 @@ test("data-table - Effects of shifting adding removing a data", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -21807,7 +21807,7 @@ test("data-table - Effects of shifting adding removing a data", () => {
 // Course: 6th grade math
 // Exercise: Effects of shifting, adding, & removing a data point
 // Widget key: animal_weights_table
-test("data-table - Effects of shifting adding removing a data", () => {
+test("data-table - Effects of shifting adding removing a data", async () => {
 	const input = {
 	"data": [
 		[
@@ -21982,7 +21982,7 @@ test("data-table - Effects of shifting adding removing a data", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -21991,7 +21991,7 @@ test("data-table - Effects of shifting adding removing a data", () => {
 // Course: 6th grade math
 // Exercise: Effects of shifting, adding, & removing a data point
 // Widget key: salary_table
-test("data-table - Effects of shifting adding removing a data", () => {
+test("data-table - Effects of shifting adding removing a data", async () => {
 	const input = {
 	"data": [
 		[
@@ -22106,7 +22106,7 @@ test("data-table - Effects of shifting adding removing a data", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -22115,7 +22115,7 @@ test("data-table - Effects of shifting adding removing a data", () => {
 // Course: 6th grade math
 // Exercise: Effects of shifting, adding, & removing a data point
 // Widget key: prices_table
-test("data-table - Effects of shifting adding removing a data", () => {
+test("data-table - Effects of shifting adding removing a data", async () => {
 	const input = {
 	"data": [
 		[
@@ -22395,7 +22395,7 @@ test("data-table - Effects of shifting adding removing a data", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -22404,7 +22404,7 @@ test("data-table - Effects of shifting adding removing a data", () => {
 // Course: 6th grade math
 // Exercise: Effects of shifting, adding, & removing a data point
 // Widget key: kitten_weights_table
-test("data-table - Effects of shifting adding removing a data", () => {
+test("data-table - Effects of shifting adding removing a data", async () => {
 	const input = {
 	"data": [
 		[
@@ -22504,7 +22504,7 @@ test("data-table - Effects of shifting adding removing a data", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -22513,7 +22513,7 @@ test("data-table - Effects of shifting adding removing a data", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: five_number_summary_table
-test("data-table - Interpreting quartiles", () => {
+test("data-table - Interpreting quartiles", async () => {
 	const input = {
 	"data": [
 		[
@@ -22605,7 +22605,7 @@ test("data-table - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -22614,7 +22614,7 @@ test("data-table - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: five_number_summary_table
-test("data-table - Interpreting quartiles", () => {
+test("data-table - Interpreting quartiles", async () => {
 	const input = {
 	"data": [
 		[
@@ -22706,7 +22706,7 @@ test("data-table - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -22715,7 +22715,7 @@ test("data-table - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: summary_table
-test("data-table - Interpreting quartiles", () => {
+test("data-table - Interpreting quartiles", async () => {
 	const input = {
 	"data": [
 		[
@@ -22807,7 +22807,7 @@ test("data-table - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -22816,7 +22816,7 @@ test("data-table - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: five_number_summary_table
-test("data-table - Interpreting quartiles", () => {
+test("data-table - Interpreting quartiles", async () => {
 	const input = {
 	"data": [
 		[
@@ -22908,7 +22908,7 @@ test("data-table - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -22917,7 +22917,7 @@ test("data-table - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: five_number_table
-test("data-table - Interpreting quartiles", () => {
+test("data-table - Interpreting quartiles", async () => {
 	const input = {
 	"data": [
 		[
@@ -23009,7 +23009,7 @@ test("data-table - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -23018,7 +23018,7 @@ test("data-table - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: five_number_table
-test("data-table - Interpreting quartiles", () => {
+test("data-table - Interpreting quartiles", async () => {
 	const input = {
 	"data": [
 		[
@@ -23110,7 +23110,7 @@ test("data-table - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -23119,7 +23119,7 @@ test("data-table - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: five_number_table
-test("data-table - Interpreting quartiles", () => {
+test("data-table - Interpreting quartiles", async () => {
 	const input = {
 	"data": [
 		[
@@ -23211,7 +23211,7 @@ test("data-table - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -23220,7 +23220,7 @@ test("data-table - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: five_number_table
-test("data-table - Interpreting quartiles", () => {
+test("data-table - Interpreting quartiles", async () => {
 	const input = {
 	"data": [
 		[
@@ -23312,7 +23312,7 @@ test("data-table - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -23321,7 +23321,7 @@ test("data-table - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: five_number_table
-test("data-table - Interpreting quartiles", () => {
+test("data-table - Interpreting quartiles", async () => {
 	const input = {
 	"data": [
 		[
@@ -23413,7 +23413,7 @@ test("data-table - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -23422,7 +23422,7 @@ test("data-table - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Interpreting quartiles
 // Widget key: five_number_summary_table
-test("data-table - Interpreting quartiles", () => {
+test("data-table - Interpreting quartiles", async () => {
 	const input = {
 	"data": [
 		[
@@ -23514,7 +23514,7 @@ test("data-table - Interpreting quartiles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -23523,7 +23523,7 @@ test("data-table - Interpreting quartiles", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: classes_table
-test("data-table - Mean absolute deviation MAD", () => {
+test("data-table - Mean absolute deviation MAD", async () => {
 	const input = {
 	"data": [
 		[
@@ -23620,7 +23620,7 @@ test("data-table - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -23629,7 +23629,7 @@ test("data-table - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: lemons_table
-test("data-table - Mean absolute deviation MAD", () => {
+test("data-table - Mean absolute deviation MAD", async () => {
 	const input = {
 	"data": [
 		[
@@ -23729,7 +23729,7 @@ test("data-table - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -23738,7 +23738,7 @@ test("data-table - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: points_table
-test("data-table - Mean absolute deviation MAD", () => {
+test("data-table - Mean absolute deviation MAD", async () => {
 	const input = {
 	"data": [
 		[
@@ -23853,7 +23853,7 @@ test("data-table - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -23862,7 +23862,7 @@ test("data-table - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: raisins_table
-test("data-table - Mean absolute deviation MAD", () => {
+test("data-table - Mean absolute deviation MAD", async () => {
 	const input = {
 	"data": [
 		[
@@ -23992,7 +23992,7 @@ test("data-table - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -24001,7 +24001,7 @@ test("data-table - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: distance_table
-test("data-table - Mean absolute deviation MAD", () => {
+test("data-table - Mean absolute deviation MAD", async () => {
 	const input = {
 	"data": [
 		[
@@ -24098,7 +24098,7 @@ test("data-table - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -24107,7 +24107,7 @@ test("data-table - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: snow_days_table
-test("data-table - Mean absolute deviation MAD", () => {
+test("data-table - Mean absolute deviation MAD", async () => {
 	const input = {
 	"data": [
 		[
@@ -24218,7 +24218,7 @@ test("data-table - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generateDataTable(parseResult.data)
+	const svg = await generateDataTable(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

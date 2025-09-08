@@ -134,7 +134,7 @@ Identify the widget type and generate complete input data that matches the schem
           }
 
           // Test that the widget actually generates without errors
-          const testGenerateResult = errors.trySync(() => generateWidget(validation.data as any))
+          const testGenerateResult = await errors.try(generateWidget(validation.data as any))
           if (testGenerateResult.error) {
             if (attempt < MAX_RETRIES) {
               logger.warn("widget generation test failed, retrying", { 

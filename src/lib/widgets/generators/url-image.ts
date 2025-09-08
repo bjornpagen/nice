@@ -43,7 +43,7 @@ export const UrlImageWidgetPropsSchema = z
 		"Static image widget rendered from a direct HTTPS URL. Use 'alt' for accessibility, optional 'width'/'height' for sizing, 'caption' for descriptive figure text, and 'attribution' for source/credit/licensing. Keep captions strictly descriptive; place any credits or licensing details in 'attribution'."
 	)
 
-export const generateUrlImage: WidgetGenerator<typeof UrlImageWidgetPropsSchema> = (props) => {
+export const generateUrlImage: WidgetGenerator<typeof UrlImageWidgetPropsSchema> = async (props) => {
 	const { url, alt, width, height, caption: _caption } = props
 	// Temporarily disable caption rendering: we deliberately do not render captions right now.
 	// We still accept the field in the schema, but force it to be ignored at generation time

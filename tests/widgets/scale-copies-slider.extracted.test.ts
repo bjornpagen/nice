@@ -26,7 +26,7 @@ type ScaleCopiesSliderInput = z.input<typeof ScaleCopiesSliderPropsSchema>
 // Course: 7th grade math
 // Exercise: Explore scale copies
 // Widget key: interaction_3
-test("scale-copies-slider - Explore scale copies", () => {
+test("scale-copies-slider - Explore scale copies", async () => {
 	const input = {
 	"width": 700,
 	"height": 350,
@@ -65,7 +65,7 @@ test("scale-copies-slider - Explore scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateScaleCopiesSlider(parseResult.data)
+	const svg = await generateScaleCopiesSlider(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -74,7 +74,7 @@ test("scale-copies-slider - Explore scale copies", () => {
 // Course: 7th grade math
 // Exercise: Explore scale copies
 // Widget key: sliders_visual
-test("scale-copies-slider - Explore scale copies", () => {
+test("scale-copies-slider - Explore scale copies", async () => {
 	const input = {
 	"width": 700,
 	"height": 320,
@@ -113,7 +113,7 @@ test("scale-copies-slider - Explore scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateScaleCopiesSlider(parseResult.data)
+	const svg = await generateScaleCopiesSlider(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -122,7 +122,7 @@ test("scale-copies-slider - Explore scale copies", () => {
 // Course: 7th grade math
 // Exercise: Explore scale copies
 // Widget key: scale_sliders_initial
-test("scale-copies-slider - Explore scale copies", () => {
+test("scale-copies-slider - Explore scale copies", async () => {
 	const input = {
 	"width": 700,
 	"height": 350,
@@ -161,7 +161,7 @@ test("scale-copies-slider - Explore scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateScaleCopiesSlider(parseResult.data)
+	const svg = await generateScaleCopiesSlider(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -170,7 +170,7 @@ test("scale-copies-slider - Explore scale copies", () => {
 // Course: 7th grade math
 // Exercise: Explore scale copies
 // Widget key: interaction_2
-test("scale-copies-slider - Explore scale copies", () => {
+test("scale-copies-slider - Explore scale copies", async () => {
 	const input = {
 	"width": 700,
 	"height": 350,
@@ -209,7 +209,7 @@ test("scale-copies-slider - Explore scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateScaleCopiesSlider(parseResult.data)
+	const svg = await generateScaleCopiesSlider(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -218,7 +218,7 @@ test("scale-copies-slider - Explore scale copies", () => {
 // Course: 7th grade math
 // Exercise: Explore scale copies
 // Widget key: slider_diagram
-test("scale-copies-slider - Explore scale copies", () => {
+test("scale-copies-slider - Explore scale copies", async () => {
 	const input = {
 	"width": 700,
 	"height": 300,
@@ -257,7 +257,7 @@ test("scale-copies-slider - Explore scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateScaleCopiesSlider(parseResult.data)
+	const svg = await generateScaleCopiesSlider(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -266,7 +266,7 @@ test("scale-copies-slider - Explore scale copies", () => {
 // Course: 7th grade math
 // Exercise: Explore scale copies
 // Widget key: interaction_4_visual
-test("scale-copies-slider - Explore scale copies", () => {
+test("scale-copies-slider - Explore scale copies", async () => {
 	const input = {
 	"width": 700,
 	"height": 320,
@@ -305,7 +305,7 @@ test("scale-copies-slider - Explore scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateScaleCopiesSlider(parseResult.data)
+	const svg = await generateScaleCopiesSlider(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -314,7 +314,7 @@ test("scale-copies-slider - Explore scale copies", () => {
 // Course: 7th grade math
 // Exercise: Explore scale copies
 // Widget key: scale_sliders_initial
-test("scale-copies-slider - Explore scale copies", () => {
+test("scale-copies-slider - Explore scale copies", async () => {
 	const input = {
 	"width": 700,
 	"height": 350,
@@ -353,7 +353,7 @@ test("scale-copies-slider - Explore scale copies", () => {
 	}
 
 	// Generate the widget
-	const svg = generateScaleCopiesSlider(parseResult.data)
+	const svg = await generateScaleCopiesSlider(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

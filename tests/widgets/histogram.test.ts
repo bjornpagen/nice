@@ -4,7 +4,7 @@ import { generateHistogram, HistogramPropsSchema } from "@/lib/widgets/generator
 
 type HistogramInput = z.input<typeof HistogramPropsSchema>
 
-test("histogram - tomato production per plant", () => {
+test("histogram - tomato production per plant", async () => {
 	const input = {
 		type: "histogram",
 		width: 310,
@@ -37,11 +37,11 @@ test("histogram - tomato production per plant", () => {
 		expect(parsedResult.success).toBeTrue()
 		return
 	}
-	const svg = generateHistogram(parsedResult.data)
+	const svg = await generateHistogram(parsedResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
-test("histogram - tomato plants production bins", () => {
+test("histogram - tomato plants production bins", async () => {
 	const input = {
 		type: "histogram",
 		width: 600,
@@ -66,6 +66,6 @@ test("histogram - tomato plants production bins", () => {
 		expect(parsedResult.success).toBeTrue()
 		return
 	}
-	const svg = generateHistogram(parsedResult.data)
+	const svg = await generateHistogram(parsedResult.data)
 	expect(svg).toMatchSnapshot()
 })

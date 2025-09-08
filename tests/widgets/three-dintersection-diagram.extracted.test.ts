@@ -26,7 +26,7 @@ type ThreeDIntersectionDiagramInput = z.input<typeof ThreeDIntersectionDiagramPr
 // Course: 7th grade math
 // Exercise: Cross sections of 3D objects (basic)
 // Widget key: image_1
-test("three-dintersection-diagram - Cross sections of 3D objects basic", () => {
+test("three-dintersection-diagram - Cross sections of 3D objects basic", async () => {
 	const input = {
 	"plane": {
 		"position": 0.7,
@@ -57,7 +57,7 @@ test("three-dintersection-diagram - Cross sections of 3D objects basic", () => {
 	}
 
 	// Generate the widget
-	const svg = generateThreeDIntersectionDiagram(parseResult.data)
+	const svg = await generateThreeDIntersectionDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -66,7 +66,7 @@ test("three-dintersection-diagram - Cross sections of 3D objects basic", () => {
 // Course: 7th grade math
 // Exercise: Cross sections of 3D objects (basic)
 // Widget key: image_1
-test("three-dintersection-diagram - Cross sections of 3D objects basic", () => {
+test("three-dintersection-diagram - Cross sections of 3D objects basic", async () => {
 	const input = {
 	"plane": {
 		"position": 0.6,
@@ -97,7 +97,7 @@ test("three-dintersection-diagram - Cross sections of 3D objects basic", () => {
 	}
 
 	// Generate the widget
-	const svg = generateThreeDIntersectionDiagram(parseResult.data)
+	const svg = await generateThreeDIntersectionDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -106,7 +106,7 @@ test("three-dintersection-diagram - Cross sections of 3D objects basic", () => {
 // Course: 7th grade math
 // Exercise: Cross sections of 3D objects (basic)
 // Widget key: image_1
-test("three-dintersection-diagram - Cross sections of 3D objects basic", () => {
+test("three-dintersection-diagram - Cross sections of 3D objects basic", async () => {
 	const input = {
 	"plane": {
 		"position": 0.3,
@@ -136,7 +136,7 @@ test("three-dintersection-diagram - Cross sections of 3D objects basic", () => {
 	}
 
 	// Generate the widget
-	const svg = generateThreeDIntersectionDiagram(parseResult.data)
+	const svg = await generateThreeDIntersectionDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -145,7 +145,7 @@ test("three-dintersection-diagram - Cross sections of 3D objects basic", () => {
 // Course: 7th grade math
 // Exercise: Cross sections of 3D objects (basic)
 // Widget key: image_1
-test("three-dintersection-diagram - Cross sections of 3D objects basic", () => {
+test("three-dintersection-diagram - Cross sections of 3D objects basic", async () => {
 	const input = {
 	"plane": {
 		"position": 0.5,
@@ -176,7 +176,7 @@ test("three-dintersection-diagram - Cross sections of 3D objects basic", () => {
 	}
 
 	// Generate the widget
-	const svg = generateThreeDIntersectionDiagram(parseResult.data)
+	const svg = await generateThreeDIntersectionDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

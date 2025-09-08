@@ -26,7 +26,7 @@ type TriangleDiagramInput = z.input<typeof TriangleDiagramPropsSchema>
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: match_choice_a
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -120,7 +120,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -129,7 +129,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: match_choice_b
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -223,7 +223,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -232,7 +232,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: match_choice_c
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -338,7 +338,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -347,7 +347,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: image_1
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -428,7 +428,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -437,7 +437,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: match_choice_a
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -571,7 +571,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -580,7 +580,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: match_choice_b
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -714,7 +714,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -723,7 +723,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: match_choice_c
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -857,7 +857,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -866,7 +866,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: match_choice_a
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -1000,7 +1000,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1009,7 +1009,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: match_choice_b
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -1143,7 +1143,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1152,7 +1152,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: match_choice_c
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -1286,7 +1286,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1295,7 +1295,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: image_1
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -1376,7 +1376,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1385,7 +1385,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: image_1
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -1466,7 +1466,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1475,7 +1475,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: image_1
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -1556,7 +1556,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1565,7 +1565,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: image_1
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -1646,7 +1646,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1655,7 +1655,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: image_1
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -1742,7 +1742,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1751,7 +1751,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: match_choice_a
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -1866,7 +1866,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1875,7 +1875,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: match_choice_b
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -1990,7 +1990,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1999,7 +1999,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: match_choice_c
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -2132,7 +2132,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2141,7 +2141,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: match_choice_a_visual
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -2235,7 +2235,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2244,7 +2244,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: match_choice_b_visual
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -2338,7 +2338,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2347,7 +2347,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Find base and height on a triangle
 // Widget key: match_choice_c_visual
-test("triangle-diagram - Find base and height on a triangle", () => {
+test("triangle-diagram - Find base and height on a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -2459,7 +2459,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2468,7 +2468,7 @@ test("triangle-diagram - Find base and height on a triangle", () => {
 // Course: 6th grade math
 // Exercise: Area of right triangles
 // Widget key: image_1
-test("triangle-diagram - Area of right triangles", () => {
+test("triangle-diagram - Area of right triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -2546,7 +2546,7 @@ test("triangle-diagram - Area of right triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2555,7 +2555,7 @@ test("triangle-diagram - Area of right triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of right triangles
 // Widget key: image_1
-test("triangle-diagram - Area of right triangles", () => {
+test("triangle-diagram - Area of right triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -2624,7 +2624,7 @@ test("triangle-diagram - Area of right triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2633,7 +2633,7 @@ test("triangle-diagram - Area of right triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of right triangles
 // Widget key: image_1
-test("triangle-diagram - Area of right triangles", () => {
+test("triangle-diagram - Area of right triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -2711,7 +2711,7 @@ test("triangle-diagram - Area of right triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2720,7 +2720,7 @@ test("triangle-diagram - Area of right triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of right triangles
 // Widget key: image_1
-test("triangle-diagram - Area of right triangles", () => {
+test("triangle-diagram - Area of right triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -2798,7 +2798,7 @@ test("triangle-diagram - Area of right triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2807,7 +2807,7 @@ test("triangle-diagram - Area of right triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of right triangles
 // Widget key: image_1
-test("triangle-diagram - Area of right triangles", () => {
+test("triangle-diagram - Area of right triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -2885,7 +2885,7 @@ test("triangle-diagram - Area of right triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2894,7 +2894,7 @@ test("triangle-diagram - Area of right triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of right triangles
 // Widget key: image_1
-test("triangle-diagram - Area of right triangles", () => {
+test("triangle-diagram - Area of right triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -2963,7 +2963,7 @@ test("triangle-diagram - Area of right triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2972,7 +2972,7 @@ test("triangle-diagram - Area of right triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of right triangles
 // Widget key: image_1
-test("triangle-diagram - Area of right triangles", () => {
+test("triangle-diagram - Area of right triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -3050,7 +3050,7 @@ test("triangle-diagram - Area of right triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3059,7 +3059,7 @@ test("triangle-diagram - Area of right triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of right triangles
 // Widget key: image_1
-test("triangle-diagram - Area of right triangles", () => {
+test("triangle-diagram - Area of right triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -3137,7 +3137,7 @@ test("triangle-diagram - Area of right triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3146,7 +3146,7 @@ test("triangle-diagram - Area of right triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of right triangles
 // Widget key: image_1
-test("triangle-diagram - Area of right triangles", () => {
+test("triangle-diagram - Area of right triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -3215,7 +3215,7 @@ test("triangle-diagram - Area of right triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3224,7 +3224,7 @@ test("triangle-diagram - Area of right triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of right triangles
 // Widget key: image_1
-test("triangle-diagram - Area of right triangles", () => {
+test("triangle-diagram - Area of right triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -3302,7 +3302,7 @@ test("triangle-diagram - Area of right triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3311,7 +3311,7 @@ test("triangle-diagram - Area of right triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of right triangles
 // Widget key: image_1
-test("triangle-diagram - Area of right triangles", () => {
+test("triangle-diagram - Area of right triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -3389,7 +3389,7 @@ test("triangle-diagram - Area of right triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3398,7 +3398,7 @@ test("triangle-diagram - Area of right triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of right triangles
 // Widget key: image_1
-test("triangle-diagram - Area of right triangles", () => {
+test("triangle-diagram - Area of right triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -3467,7 +3467,7 @@ test("triangle-diagram - Area of right triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3476,7 +3476,7 @@ test("triangle-diagram - Area of right triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of right triangles
 // Widget key: image_1
-test("triangle-diagram - Area of right triangles", () => {
+test("triangle-diagram - Area of right triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -3554,7 +3554,7 @@ test("triangle-diagram - Area of right triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3563,7 +3563,7 @@ test("triangle-diagram - Area of right triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of right triangles
 // Widget key: image_1
-test("triangle-diagram - Area of right triangles", () => {
+test("triangle-diagram - Area of right triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -3632,7 +3632,7 @@ test("triangle-diagram - Area of right triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3641,7 +3641,7 @@ test("triangle-diagram - Area of right triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -3722,7 +3722,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3731,7 +3731,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -3800,7 +3800,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3809,7 +3809,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -3896,7 +3896,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3905,7 +3905,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -3992,7 +3992,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4001,7 +4001,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -4097,7 +4097,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4106,7 +4106,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -4193,7 +4193,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4202,7 +4202,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -4283,7 +4283,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4292,7 +4292,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -4361,7 +4361,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4370,7 +4370,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -4457,7 +4457,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4466,7 +4466,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -4547,7 +4547,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4556,7 +4556,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -4643,7 +4643,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4652,7 +4652,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -4739,7 +4739,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4748,7 +4748,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -4835,7 +4835,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4844,7 +4844,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -4931,7 +4931,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4940,7 +4940,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -5009,7 +5009,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5018,7 +5018,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -5105,7 +5105,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5114,7 +5114,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -5195,7 +5195,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5204,7 +5204,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -5291,7 +5291,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5300,7 +5300,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -5369,7 +5369,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5378,7 +5378,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -5447,7 +5447,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5456,7 +5456,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -5543,7 +5543,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5552,7 +5552,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -5621,7 +5621,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5630,7 +5630,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -5717,7 +5717,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5726,7 +5726,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of triangles
 // Widget key: image_1
-test("triangle-diagram - Area of triangles", () => {
+test("triangle-diagram - Area of triangles", async () => {
 	const input = {
 	"sides": [
 		{
@@ -5813,7 +5813,7 @@ test("triangle-diagram - Area of triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5822,7 +5822,7 @@ test("triangle-diagram - Area of triangles", () => {
 // Course: 6th grade math
 // Exercise: Find missing length when given area of a triangle
 // Widget key: image_1
-test("triangle-diagram - Find missing length when given area of a triangle", () => {
+test("triangle-diagram - Find missing length when given area of a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -5909,7 +5909,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5918,7 +5918,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 // Course: 6th grade math
 // Exercise: Find missing length when given area of a triangle
 // Widget key: image_1
-test("triangle-diagram - Find missing length when given area of a triangle", () => {
+test("triangle-diagram - Find missing length when given area of a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -6005,7 +6005,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6014,7 +6014,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 // Course: 6th grade math
 // Exercise: Find missing length when given area of a triangle
 // Widget key: image_1
-test("triangle-diagram - Find missing length when given area of a triangle", () => {
+test("triangle-diagram - Find missing length when given area of a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -6101,7 +6101,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6110,7 +6110,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 // Course: 6th grade math
 // Exercise: Find missing length when given area of a triangle
 // Widget key: image_1
-test("triangle-diagram - Find missing length when given area of a triangle", () => {
+test("triangle-diagram - Find missing length when given area of a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -6197,7 +6197,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6206,7 +6206,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 // Course: 6th grade math
 // Exercise: Find missing length when given area of a triangle
 // Widget key: image_1
-test("triangle-diagram - Find missing length when given area of a triangle", () => {
+test("triangle-diagram - Find missing length when given area of a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -6293,7 +6293,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6302,7 +6302,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 // Course: 6th grade math
 // Exercise: Find missing length when given area of a triangle
 // Widget key: image_1
-test("triangle-diagram - Find missing length when given area of a triangle", () => {
+test("triangle-diagram - Find missing length when given area of a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -6389,7 +6389,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6398,7 +6398,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 // Course: 6th grade math
 // Exercise: Find missing length when given area of a triangle
 // Widget key: image_1
-test("triangle-diagram - Find missing length when given area of a triangle", () => {
+test("triangle-diagram - Find missing length when given area of a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -6485,7 +6485,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6494,7 +6494,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 // Course: 6th grade math
 // Exercise: Find missing length when given area of a triangle
 // Widget key: image_1
-test("triangle-diagram - Find missing length when given area of a triangle", () => {
+test("triangle-diagram - Find missing length when given area of a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -6581,7 +6581,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6590,7 +6590,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 // Course: 6th grade math
 // Exercise: Find missing length when given area of a triangle
 // Widget key: image_1
-test("triangle-diagram - Find missing length when given area of a triangle", () => {
+test("triangle-diagram - Find missing length when given area of a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -6677,7 +6677,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6686,7 +6686,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 // Course: 6th grade math
 // Exercise: Find missing length when given area of a triangle
 // Widget key: image_1
-test("triangle-diagram - Find missing length when given area of a triangle", () => {
+test("triangle-diagram - Find missing length when given area of a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -6755,7 +6755,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6764,7 +6764,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 // Course: 6th grade math
 // Exercise: Find missing length when given area of a triangle
 // Widget key: image_1
-test("triangle-diagram - Find missing length when given area of a triangle", () => {
+test("triangle-diagram - Find missing length when given area of a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -6833,7 +6833,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6842,7 +6842,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 // Course: 6th grade math
 // Exercise: Find missing length when given area of a triangle
 // Widget key: image_1
-test("triangle-diagram - Find missing length when given area of a triangle", () => {
+test("triangle-diagram - Find missing length when given area of a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -6929,7 +6929,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -6938,7 +6938,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 // Course: 6th grade math
 // Exercise: Find missing length when given area of a triangle
 // Widget key: image_1
-test("triangle-diagram - Find missing length when given area of a triangle", () => {
+test("triangle-diagram - Find missing length when given area of a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -7025,7 +7025,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7034,7 +7034,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 // Course: 6th grade math
 // Exercise: Find missing length when given area of a triangle
 // Widget key: image_1
-test("triangle-diagram - Find missing length when given area of a triangle", () => {
+test("triangle-diagram - Find missing length when given area of a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -7121,7 +7121,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -7130,7 +7130,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 // Course: 6th grade math
 // Exercise: Find missing length when given area of a triangle
 // Widget key: image_1
-test("triangle-diagram - Find missing length when given area of a triangle", () => {
+test("triangle-diagram - Find missing length when given area of a triangle", async () => {
 	const input = {
 	"sides": [
 		{
@@ -7199,7 +7199,7 @@ test("triangle-diagram - Find missing length when given area of a triangle", () 
 	}
 
 	// Generate the widget
-	const svg = generateTriangleDiagram(parseResult.data)
+	const svg = await generateTriangleDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

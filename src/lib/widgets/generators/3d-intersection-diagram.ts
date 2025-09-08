@@ -182,7 +182,7 @@ type Edge = { startIdx: number; endIdx: number; isHidden: boolean | null }
  * Generates an SVG diagram of a 3D solid being intersected by a plane,
  * highlighting the resulting 2D cross-section.
  */
-export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDIntersectionDiagramPropsSchema> = (
+export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDIntersectionDiagramPropsSchema> = async (
 	props
 ) => {
 	const { width, height, solid, plane, viewOptions } = props

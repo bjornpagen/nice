@@ -122,7 +122,7 @@ export type TreeDiagramProps = z.infer<typeof TreeDiagramPropsSchema>
  * Generates a flexible SVG tree diagram from a set of nodes and edges.
  * Ideal for factor trees, probability trees, and other hierarchical structures.
  */
-export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema> = (props) => {
+export const generateTreeDiagram: WidgetGenerator<typeof TreeDiagramPropsSchema> = async (props) => {
 	const { width, height, nodes, edges, nodeFontSize, nodeRadius } = props
 
 	const canvas = new CanvasImpl({

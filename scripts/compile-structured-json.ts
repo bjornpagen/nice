@@ -49,7 +49,7 @@ async function main() {
 	}
 
 	logger.info("compiling qti item")
-	const compileResult = errors.trySync(() => compile(sanitizeResult.data))
+	const compileResult = await errors.try(compile(sanitizeResult.data))
 	if (compileResult.error) {
 		logger.error("qti compile", { error: compileResult.error })
 		throw errors.wrap(compileResult.error, "qti compile")

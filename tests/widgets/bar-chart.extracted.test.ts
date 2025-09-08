@@ -26,7 +26,7 @@ type BarChartInput = z.input<typeof BarChartPropsSchema>
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_1
-test("bar-chart - Calculating the mean data displays", () => {
+test("bar-chart - Calculating the mean data displays", async () => {
 	const input = {
 	"data": [
 		{
@@ -77,7 +77,7 @@ test("bar-chart - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBarChart(parseResult.data)
+	const svg = await generateBarChart(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -86,7 +86,7 @@ test("bar-chart - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_1
-test("bar-chart - Calculating the mean data displays", () => {
+test("bar-chart - Calculating the mean data displays", async () => {
 	const input = {
 	"data": [
 		{
@@ -132,7 +132,7 @@ test("bar-chart - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBarChart(parseResult.data)
+	const svg = await generateBarChart(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -141,7 +141,7 @@ test("bar-chart - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_1
-test("bar-chart - Calculating the mean data displays", () => {
+test("bar-chart - Calculating the mean data displays", async () => {
 	const input = {
 	"data": [
 		{
@@ -187,7 +187,7 @@ test("bar-chart - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBarChart(parseResult.data)
+	const svg = await generateBarChart(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -196,7 +196,7 @@ test("bar-chart - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_1
-test("bar-chart - Calculating the mean data displays", () => {
+test("bar-chart - Calculating the mean data displays", async () => {
 	const input = {
 	"data": [
 		{
@@ -242,7 +242,7 @@ test("bar-chart - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBarChart(parseResult.data)
+	const svg = await generateBarChart(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -251,7 +251,7 @@ test("bar-chart - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the mean: data displays
 // Widget key: image_1
-test("bar-chart - Calculating the mean data displays", () => {
+test("bar-chart - Calculating the mean data displays", async () => {
 	const input = {
 	"data": [
 		{
@@ -297,7 +297,7 @@ test("bar-chart - Calculating the mean data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBarChart(parseResult.data)
+	const svg = await generateBarChart(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -306,7 +306,7 @@ test("bar-chart - Calculating the mean data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: image_1
-test("bar-chart - Calculating the median data displays", () => {
+test("bar-chart - Calculating the median data displays", async () => {
 	const input = {
 	"data": [
 		{
@@ -357,7 +357,7 @@ test("bar-chart - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBarChart(parseResult.data)
+	const svg = await generateBarChart(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -366,7 +366,7 @@ test("bar-chart - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Calculating the median: data displays
 // Widget key: image_2
-test("bar-chart - Calculating the median data displays", () => {
+test("bar-chart - Calculating the median data displays", async () => {
 	const input = {
 	"data": [
 		{
@@ -412,7 +412,7 @@ test("bar-chart - Calculating the median data displays", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBarChart(parseResult.data)
+	const svg = await generateBarChart(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -421,7 +421,7 @@ test("bar-chart - Calculating the median data displays", () => {
 // Course: 6th grade math
 // Exercise: Missing value given the mean
 // Widget key: image_1
-test("bar-chart - Missing value given the mean", () => {
+test("bar-chart - Missing value given the mean", async () => {
 	const input = {
 	"data": [
 		{
@@ -467,7 +467,7 @@ test("bar-chart - Missing value given the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBarChart(parseResult.data)
+	const svg = await generateBarChart(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -476,7 +476,7 @@ test("bar-chart - Missing value given the mean", () => {
 // Course: 6th grade math
 // Exercise: Missing value given the mean
 // Widget key: image_1
-test("bar-chart - Missing value given the mean", () => {
+test("bar-chart - Missing value given the mean", async () => {
 	const input = {
 	"data": [
 		{
@@ -517,7 +517,7 @@ test("bar-chart - Missing value given the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBarChart(parseResult.data)
+	const svg = await generateBarChart(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -526,7 +526,7 @@ test("bar-chart - Missing value given the mean", () => {
 // Course: 6th grade math
 // Exercise: Missing value given the mean
 // Widget key: image_1
-test("bar-chart - Missing value given the mean", () => {
+test("bar-chart - Missing value given the mean", async () => {
 	const input = {
 	"data": [
 		{
@@ -577,7 +577,7 @@ test("bar-chart - Missing value given the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBarChart(parseResult.data)
+	const svg = await generateBarChart(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -586,7 +586,7 @@ test("bar-chart - Missing value given the mean", () => {
 // Course: 6th grade math
 // Exercise: Missing value given the mean
 // Widget key: image_1
-test("bar-chart - Missing value given the mean", () => {
+test("bar-chart - Missing value given the mean", async () => {
 	const input = {
 	"data": [
 		{
@@ -632,7 +632,7 @@ test("bar-chart - Missing value given the mean", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBarChart(parseResult.data)
+	const svg = await generateBarChart(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -641,7 +641,7 @@ test("bar-chart - Missing value given the mean", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: image_1
-test("bar-chart - Mean absolute deviation MAD", () => {
+test("bar-chart - Mean absolute deviation MAD", async () => {
 	const input = {
 	"data": [
 		{
@@ -687,7 +687,7 @@ test("bar-chart - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBarChart(parseResult.data)
+	const svg = await generateBarChart(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -696,7 +696,7 @@ test("bar-chart - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: image_1
-test("bar-chart - Mean absolute deviation MAD", () => {
+test("bar-chart - Mean absolute deviation MAD", async () => {
 	const input = {
 	"data": [
 		{
@@ -747,7 +747,7 @@ test("bar-chart - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBarChart(parseResult.data)
+	const svg = await generateBarChart(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -756,7 +756,7 @@ test("bar-chart - Mean absolute deviation MAD", () => {
 // Course: 6th grade math
 // Exercise: Mean absolute deviation (MAD)
 // Widget key: image_1
-test("bar-chart - Mean absolute deviation MAD", () => {
+test("bar-chart - Mean absolute deviation MAD", async () => {
 	const input = {
 	"data": [
 		{
@@ -802,7 +802,7 @@ test("bar-chart - Mean absolute deviation MAD", () => {
 	}
 
 	// Generate the widget
-	const svg = generateBarChart(parseResult.data)
+	const svg = await generateBarChart(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

@@ -268,7 +268,7 @@ Provide 3-5 ranked candidates with estimated input data for each.`
           }
 
           // Generate and compare
-          const generatedSvg = generateWidget(validationResult.data as any)
+          const generatedSvg = await generateWidget(validationResult.data as any)
           const similarityAnalysis = await analyzeSimilarityWithAI(svgContent, generatedSvg, candidate.widgetType, sourceId)
           
           const combinedScore = candidate.confidence * similarityAnalysis.similarity

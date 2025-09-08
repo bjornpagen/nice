@@ -26,7 +26,7 @@ type TapeDiagramInput = z.input<typeof TapeDiagramPropsSchema>
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: image_1
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 600,
 	"height": 220,
@@ -92,7 +92,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -101,7 +101,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: choice_a_diagram
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 600,
 	"height": 220,
@@ -167,7 +167,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -176,7 +176,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: choice_b_diagram
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 600,
 	"height": 220,
@@ -242,7 +242,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -251,7 +251,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: choice_c_diagram
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 600,
 	"height": 220,
@@ -317,7 +317,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -326,7 +326,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: image_1
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 200,
 	"height": 168,
@@ -384,7 +384,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -393,7 +393,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: diagram_choice_a
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 200,
 	"height": 168,
@@ -451,7 +451,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -460,7 +460,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: diagram_choice_b
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 200,
 	"height": 168,
@@ -518,7 +518,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -527,7 +527,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: diagram_choice_c
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 200,
 	"height": 168,
@@ -585,7 +585,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -594,7 +594,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: image_1
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 600,
 	"height": 220,
@@ -652,7 +652,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -661,7 +661,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: tape_choice_a
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 600,
 	"height": 220,
@@ -719,7 +719,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -728,7 +728,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: tape_choice_b
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 600,
 	"height": 220,
@@ -786,7 +786,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -795,7 +795,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: tape_choice_c
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 600,
 	"height": 220,
@@ -853,7 +853,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -862,7 +862,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: image_1
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 320,
 	"height": 168,
@@ -940,7 +940,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -949,7 +949,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: image_1
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 320,
 	"height": 168,
@@ -999,7 +999,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1008,7 +1008,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: image_1
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -1066,7 +1066,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1075,7 +1075,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: choice_a_tape
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -1133,7 +1133,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1142,7 +1142,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: choice_b_tape
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -1200,7 +1200,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1209,7 +1209,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: choice_c_tape
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -1267,7 +1267,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1276,7 +1276,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: image_1
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 320,
 	"height": 168,
@@ -1342,7 +1342,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1351,7 +1351,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: image_1
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 320,
 	"height": 168,
@@ -1425,7 +1425,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1434,7 +1434,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: image_1
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 320,
 	"height": 168,
@@ -1496,7 +1496,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1505,7 +1505,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: image_1
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 320,
 	"height": 168,
@@ -1551,7 +1551,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1560,7 +1560,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: image_1
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -1610,7 +1610,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1619,7 +1619,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: choice_a_tape
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -1669,7 +1669,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1678,7 +1678,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: choice_b_tape
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -1728,7 +1728,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1737,7 +1737,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: choice_c_tape
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -1787,7 +1787,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1796,7 +1796,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: image_1
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 320,
 	"height": 168,
@@ -1854,7 +1854,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1863,7 +1863,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: image_1
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 200,
 	"height": 168,
@@ -1933,7 +1933,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1942,7 +1942,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: image_1
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 320,
 	"height": 168,
@@ -1992,7 +1992,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2001,7 +2001,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Ratios with tape diagrams
 // Widget key: image_1
-test("tape-diagram - Ratios with tape diagrams", () => {
+test("tape-diagram - Ratios with tape diagrams", async () => {
 	const input = {
 	"width": 320,
 	"height": 168,
@@ -2063,7 +2063,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2072,7 +2072,7 @@ test("tape-diagram - Ratios with tape diagrams", () => {
 // Course: 6th grade math
 // Exercise: Equivalent ratios with equal groups
 // Widget key: image_1
-test("tape-diagram - Equivalent ratios with equal groups", () => {
+test("tape-diagram - Equivalent ratios with equal groups", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -2142,7 +2142,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2151,7 +2151,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 // Course: 6th grade math
 // Exercise: Equivalent ratios with equal groups
 // Widget key: image_1
-test("tape-diagram - Equivalent ratios with equal groups", () => {
+test("tape-diagram - Equivalent ratios with equal groups", async () => {
 	const input = {
 	"width": 265,
 	"height": 168,
@@ -2245,7 +2245,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2254,7 +2254,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 // Course: 6th grade math
 // Exercise: Equivalent ratios with equal groups
 // Widget key: image_1
-test("tape-diagram - Equivalent ratios with equal groups", () => {
+test("tape-diagram - Equivalent ratios with equal groups", async () => {
 	const input = {
 	"width": 265,
 	"height": 168,
@@ -2348,7 +2348,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2357,7 +2357,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 // Course: 6th grade math
 // Exercise: Equivalent ratios with equal groups
 // Widget key: choice_tape_visual_1
-test("tape-diagram - Equivalent ratios with equal groups", () => {
+test("tape-diagram - Equivalent ratios with equal groups", async () => {
 	const input = {
 	"width": 265,
 	"height": 168,
@@ -2419,7 +2419,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2428,7 +2428,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 // Course: 6th grade math
 // Exercise: Equivalent ratios with equal groups
 // Widget key: choice_tape_visual_2
-test("tape-diagram - Equivalent ratios with equal groups", () => {
+test("tape-diagram - Equivalent ratios with equal groups", async () => {
 	const input = {
 	"width": 265,
 	"height": 168,
@@ -2490,7 +2490,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2499,7 +2499,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 // Course: 6th grade math
 // Exercise: Equivalent ratios with equal groups
 // Widget key: image_1
-test("tape-diagram - Equivalent ratios with equal groups", () => {
+test("tape-diagram - Equivalent ratios with equal groups", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -2585,7 +2585,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2594,7 +2594,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 // Course: 6th grade math
 // Exercise: Equivalent ratios with equal groups
 // Widget key: image_1
-test("tape-diagram - Equivalent ratios with equal groups", () => {
+test("tape-diagram - Equivalent ratios with equal groups", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -2684,7 +2684,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2693,7 +2693,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 // Course: 6th grade math
 // Exercise: Equivalent ratios with equal groups
 // Widget key: image_1
-test("tape-diagram - Equivalent ratios with equal groups", () => {
+test("tape-diagram - Equivalent ratios with equal groups", async () => {
 	const input = {
 	"width": 600,
 	"height": 220,
@@ -2771,7 +2771,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2780,7 +2780,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 // Course: 6th grade math
 // Exercise: Equivalent ratios with equal groups
 // Widget key: choice_a_visual
-test("tape-diagram - Equivalent ratios with equal groups", () => {
+test("tape-diagram - Equivalent ratios with equal groups", async () => {
 	const input = {
 	"width": 600,
 	"height": 220,
@@ -2838,7 +2838,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2847,7 +2847,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 // Course: 6th grade math
 // Exercise: Equivalent ratios with equal groups
 // Widget key: choice_b_visual
-test("tape-diagram - Equivalent ratios with equal groups", () => {
+test("tape-diagram - Equivalent ratios with equal groups", async () => {
 	const input = {
 	"width": 600,
 	"height": 220,
@@ -2901,7 +2901,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2910,7 +2910,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 // Course: 6th grade math
 // Exercise: Equivalent ratios with equal groups
 // Widget key: choice_c_visual
-test("tape-diagram - Equivalent ratios with equal groups", () => {
+test("tape-diagram - Equivalent ratios with equal groups", async () => {
 	const input = {
 	"width": 600,
 	"height": 220,
@@ -2956,7 +2956,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2965,7 +2965,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 // Course: 6th grade math
 // Exercise: Equivalent ratios with equal groups
 // Widget key: choice_d_visual
-test("tape-diagram - Equivalent ratios with equal groups", () => {
+test("tape-diagram - Equivalent ratios with equal groups", async () => {
 	const input = {
 	"width": 600,
 	"height": 220,
@@ -3015,7 +3015,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3024,7 +3024,7 @@ test("tape-diagram - Equivalent ratios with equal groups", () => {
 // Course: 6th grade math
 // Exercise: Part-part-whole ratios
 // Widget key: image_1
-test("tape-diagram - Part-part-whole ratios", () => {
+test("tape-diagram - Part-part-whole ratios", async () => {
 	const input = {
 	"width": 320,
 	"height": 168,
@@ -3086,7 +3086,7 @@ test("tape-diagram - Part-part-whole ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3095,7 +3095,7 @@ test("tape-diagram - Part-part-whole ratios", () => {
 // Course: 6th grade math
 // Exercise: Part-part-whole ratios
 // Widget key: image_1
-test("tape-diagram - Part-part-whole ratios", () => {
+test("tape-diagram - Part-part-whole ratios", async () => {
 	const input = {
 	"width": 320,
 	"height": 168,
@@ -3149,7 +3149,7 @@ test("tape-diagram - Part-part-whole ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3158,7 +3158,7 @@ test("tape-diagram - Part-part-whole ratios", () => {
 // Course: 6th grade math
 // Exercise: Part-part-whole ratios
 // Widget key: image_1
-test("tape-diagram - Part-part-whole ratios", () => {
+test("tape-diagram - Part-part-whole ratios", async () => {
 	const input = {
 	"width": 320,
 	"height": 168,
@@ -3216,7 +3216,7 @@ test("tape-diagram - Part-part-whole ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3225,7 +3225,7 @@ test("tape-diagram - Part-part-whole ratios", () => {
 // Course: 6th grade math
 // Exercise: Part-part-whole ratios
 // Widget key: image_1
-test("tape-diagram - Part-part-whole ratios", () => {
+test("tape-diagram - Part-part-whole ratios", async () => {
 	const input = {
 	"width": 320,
 	"height": 168,
@@ -3275,7 +3275,7 @@ test("tape-diagram - Part-part-whole ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3284,7 +3284,7 @@ test("tape-diagram - Part-part-whole ratios", () => {
 // Course: 6th grade math
 // Exercise: Part-part-whole ratios
 // Widget key: image_1
-test("tape-diagram - Part-part-whole ratios", () => {
+test("tape-diagram - Part-part-whole ratios", async () => {
 	const input = {
 	"width": 320,
 	"height": 168,
@@ -3326,7 +3326,7 @@ test("tape-diagram - Part-part-whole ratios", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3335,7 +3335,7 @@ test("tape-diagram - Part-part-whole ratios", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("tape-diagram - Find percents visually", () => {
+test("tape-diagram - Find percents visually", async () => {
 	const input = {
 	"width": 320,
 	"height": 128,
@@ -3385,7 +3385,7 @@ test("tape-diagram - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3394,7 +3394,7 @@ test("tape-diagram - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("tape-diagram - Find percents visually", () => {
+test("tape-diagram - Find percents visually", async () => {
 	const input = {
 	"width": 320,
 	"height": 128,
@@ -3443,7 +3443,7 @@ test("tape-diagram - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3452,7 +3452,7 @@ test("tape-diagram - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("tape-diagram - Find percents visually", () => {
+test("tape-diagram - Find percents visually", async () => {
 	const input = {
 	"width": 320,
 	"height": 128,
@@ -3501,7 +3501,7 @@ test("tape-diagram - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3510,7 +3510,7 @@ test("tape-diagram - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("tape-diagram - Find percents visually", () => {
+test("tape-diagram - Find percents visually", async () => {
 	const input = {
 	"width": 320,
 	"height": 168,
@@ -3624,7 +3624,7 @@ test("tape-diagram - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3633,7 +3633,7 @@ test("tape-diagram - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("tape-diagram - Find percents visually", () => {
+test("tape-diagram - Find percents visually", async () => {
 	const input = {
 	"width": 320,
 	"height": 128,
@@ -3702,7 +3702,7 @@ test("tape-diagram - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3711,7 +3711,7 @@ test("tape-diagram - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("tape-diagram - Find percents visually", () => {
+test("tape-diagram - Find percents visually", async () => {
 	const input = {
 	"width": 320,
 	"height": 128,
@@ -3785,7 +3785,7 @@ test("tape-diagram - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3794,7 +3794,7 @@ test("tape-diagram - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("tape-diagram - Find percents visually", () => {
+test("tape-diagram - Find percents visually", async () => {
 	const input = {
 	"width": 320,
 	"height": 128,
@@ -3863,7 +3863,7 @@ test("tape-diagram - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3872,7 +3872,7 @@ test("tape-diagram - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Find percents visually
 // Widget key: image_1
-test("tape-diagram - Find percents visually", () => {
+test("tape-diagram - Find percents visually", async () => {
 	const input = {
 	"width": 320,
 	"height": 128,
@@ -3929,7 +3929,7 @@ test("tape-diagram - Find percents visually", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3938,7 +3938,7 @@ test("tape-diagram - Find percents visually", () => {
 // Course: 6th grade math
 // Exercise: Identify equations from visual models (tape diagrams)
 // Widget key: image_1
-test("tape-diagram - Identify equations from visual models tape dia", () => {
+test("tape-diagram - Identify equations from visual models tape dia", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -3988,7 +3988,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3997,7 +3997,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 // Course: 6th grade math
 // Exercise: Identify equations from visual models (tape diagrams)
 // Widget key: image_1
-test("tape-diagram - Identify equations from visual models tape dia", () => {
+test("tape-diagram - Identify equations from visual models tape dia", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -4039,7 +4039,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4048,7 +4048,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 // Course: 6th grade math
 // Exercise: Identify equations from visual models (tape diagrams)
 // Widget key: image_1
-test("tape-diagram - Identify equations from visual models tape dia", () => {
+test("tape-diagram - Identify equations from visual models tape dia", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -4090,7 +4090,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4099,7 +4099,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 // Course: 6th grade math
 // Exercise: Identify equations from visual models (tape diagrams)
 // Widget key: image_1
-test("tape-diagram - Identify equations from visual models tape dia", () => {
+test("tape-diagram - Identify equations from visual models tape dia", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -4141,7 +4141,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4150,7 +4150,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 // Course: 6th grade math
 // Exercise: Identify equations from visual models (tape diagrams)
 // Widget key: image_1
-test("tape-diagram - Identify equations from visual models tape dia", () => {
+test("tape-diagram - Identify equations from visual models tape dia", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -4192,7 +4192,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4201,7 +4201,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 // Course: 6th grade math
 // Exercise: Identify equations from visual models (tape diagrams)
 // Widget key: image_1
-test("tape-diagram - Identify equations from visual models tape dia", () => {
+test("tape-diagram - Identify equations from visual models tape dia", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -4243,7 +4243,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4252,7 +4252,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 // Course: 6th grade math
 // Exercise: Identify equations from visual models (tape diagrams)
 // Widget key: image_1
-test("tape-diagram - Identify equations from visual models tape dia", () => {
+test("tape-diagram - Identify equations from visual models tape dia", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -4294,7 +4294,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4303,7 +4303,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 // Course: 6th grade math
 // Exercise: Identify equations from visual models (tape diagrams)
 // Widget key: image_1
-test("tape-diagram - Identify equations from visual models tape dia", () => {
+test("tape-diagram - Identify equations from visual models tape dia", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -4361,7 +4361,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4370,7 +4370,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 // Course: 6th grade math
 // Exercise: Identify equations from visual models (tape diagrams)
 // Widget key: image_1
-test("tape-diagram - Identify equations from visual models tape dia", () => {
+test("tape-diagram - Identify equations from visual models tape dia", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -4428,7 +4428,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4437,7 +4437,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 // Course: 6th grade math
 // Exercise: Identify equations from visual models (tape diagrams)
 // Widget key: image_1
-test("tape-diagram - Identify equations from visual models tape dia", () => {
+test("tape-diagram - Identify equations from visual models tape dia", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -4491,7 +4491,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4500,7 +4500,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 // Course: 6th grade math
 // Exercise: Identify equations from visual models (tape diagrams)
 // Widget key: image_1
-test("tape-diagram - Identify equations from visual models tape dia", () => {
+test("tape-diagram - Identify equations from visual models tape dia", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -4542,7 +4542,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4551,7 +4551,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 // Course: 6th grade math
 // Exercise: Identify equations from visual models (tape diagrams)
 // Widget key: image_1
-test("tape-diagram - Identify equations from visual models tape dia", () => {
+test("tape-diagram - Identify equations from visual models tape dia", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -4593,7 +4593,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4602,7 +4602,7 @@ test("tape-diagram - Identify equations from visual models tape dia", () => {
 // Course: 6th grade math
 // Exercise: Solve equations from visual models
 // Widget key: image_1
-test("tape-diagram - Solve equations from visual models", () => {
+test("tape-diagram - Solve equations from visual models", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -4644,7 +4644,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4653,7 +4653,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 // Course: 6th grade math
 // Exercise: Solve equations from visual models
 // Widget key: image_1
-test("tape-diagram - Solve equations from visual models", () => {
+test("tape-diagram - Solve equations from visual models", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -4695,7 +4695,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4704,7 +4704,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 // Course: 6th grade math
 // Exercise: Solve equations from visual models
 // Widget key: image_1
-test("tape-diagram - Solve equations from visual models", () => {
+test("tape-diagram - Solve equations from visual models", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -4746,7 +4746,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4755,7 +4755,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 // Course: 6th grade math
 // Exercise: Solve equations from visual models
 // Widget key: image_1
-test("tape-diagram - Solve equations from visual models", () => {
+test("tape-diagram - Solve equations from visual models", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -4797,7 +4797,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4806,7 +4806,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 // Course: 6th grade math
 // Exercise: Solve equations from visual models
 // Widget key: image_1
-test("tape-diagram - Solve equations from visual models", () => {
+test("tape-diagram - Solve equations from visual models", async () => {
 	const input = {
 	"width": 600,
 	"height": 200,
@@ -4848,7 +4848,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4857,7 +4857,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 // Course: 6th grade math
 // Exercise: Solve equations from visual models
 // Widget key: image_1
-test("tape-diagram - Solve equations from visual models", () => {
+test("tape-diagram - Solve equations from visual models", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -4903,7 +4903,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4912,7 +4912,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 // Course: 6th grade math
 // Exercise: Solve equations from visual models
 // Widget key: image_1
-test("tape-diagram - Solve equations from visual models", () => {
+test("tape-diagram - Solve equations from visual models", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -4954,7 +4954,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -4963,7 +4963,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 // Course: 6th grade math
 // Exercise: Solve equations from visual models
 // Widget key: image_1
-test("tape-diagram - Solve equations from visual models", () => {
+test("tape-diagram - Solve equations from visual models", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -5017,7 +5017,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5026,7 +5026,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 // Course: 6th grade math
 // Exercise: Solve equations from visual models
 // Widget key: image_1
-test("tape-diagram - Solve equations from visual models", () => {
+test("tape-diagram - Solve equations from visual models", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -5084,7 +5084,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5093,7 +5093,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 // Course: 6th grade math
 // Exercise: Solve equations from visual models
 // Widget key: image_1
-test("tape-diagram - Solve equations from visual models", () => {
+test("tape-diagram - Solve equations from visual models", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -5159,7 +5159,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5168,7 +5168,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 // Course: 6th grade math
 // Exercise: Solve equations from visual models
 // Widget key: image_1
-test("tape-diagram - Solve equations from visual models", () => {
+test("tape-diagram - Solve equations from visual models", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -5218,7 +5218,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -5227,7 +5227,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 // Course: 6th grade math
 // Exercise: Solve equations from visual models
 // Widget key: image_1
-test("tape-diagram - Solve equations from visual models", () => {
+test("tape-diagram - Solve equations from visual models", async () => {
 	const input = {
 	"width": 320,
 	"height": 160,
@@ -5289,7 +5289,7 @@ test("tape-diagram - Solve equations from visual models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateTapeDiagram(parseResult.data)
+	const svg = await generateTapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

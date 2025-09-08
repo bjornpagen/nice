@@ -79,7 +79,7 @@ export type PopulationBarChartProps = z.infer<typeof PopulationBarChartPropsSche
 /**
  * Generates a vertical bar chart styled to replicate the provided elk population graph.
  */
-export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarChartPropsSchema> = (data) => {
+export const generatePopulationBarChart: WidgetGenerator<typeof PopulationBarChartPropsSchema> = async (data) => {
 	const { width, height, xAxisLabel, yAxis, data: chartData, barColor, gridColor, xAxisVisibleLabels } = data
 
 	if (chartData.length === 0) {

@@ -26,7 +26,7 @@ type CompositeShapeDiagramInput = z.input<typeof CompositeShapeDiagramPropsSchem
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: image_1
-test("composite-shape-diagram - Decompose area with triangles", () => {
+test("composite-shape-diagram - Decompose area with triangles", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 320,
@@ -72,7 +72,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -81,7 +81,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: image_1
-test("composite-shape-diagram - Decompose area with triangles", () => {
+test("composite-shape-diagram - Decompose area with triangles", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 280,
@@ -122,7 +122,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -131,7 +131,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: image_1
-test("composite-shape-diagram - Decompose area with triangles", () => {
+test("composite-shape-diagram - Decompose area with triangles", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 320,
@@ -174,7 +174,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -183,7 +183,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: image_1
-test("composite-shape-diagram - Decompose area with triangles", () => {
+test("composite-shape-diagram - Decompose area with triangles", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 320,
@@ -220,7 +220,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -229,7 +229,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: image_1
-test("composite-shape-diagram - Decompose area with triangles", () => {
+test("composite-shape-diagram - Decompose area with triangles", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 320,
@@ -271,7 +271,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -280,7 +280,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: image_1
-test("composite-shape-diagram - Decompose area with triangles", () => {
+test("composite-shape-diagram - Decompose area with triangles", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 291,
@@ -317,7 +317,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -326,7 +326,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: image_1
-test("composite-shape-diagram - Decompose area with triangles", () => {
+test("composite-shape-diagram - Decompose area with triangles", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 420,
@@ -368,7 +368,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -377,7 +377,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: image_1
-test("composite-shape-diagram - Decompose area with triangles", () => {
+test("composite-shape-diagram - Decompose area with triangles", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 420,
@@ -420,7 +420,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -429,7 +429,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: image_1
-test("composite-shape-diagram - Decompose area with triangles", () => {
+test("composite-shape-diagram - Decompose area with triangles", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 320,
@@ -467,7 +467,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -476,7 +476,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Decompose area with triangles
 // Widget key: image_1
-test("composite-shape-diagram - Decompose area with triangles", () => {
+test("composite-shape-diagram - Decompose area with triangles", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 320,
@@ -517,7 +517,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -526,7 +526,7 @@ test("composite-shape-diagram - Decompose area with triangles", () => {
 // Course: 6th grade math
 // Exercise: Area of composite shapes
 // Widget key: image_1
-test("composite-shape-diagram - Area of composite shapes", () => {
+test("composite-shape-diagram - Area of composite shapes", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 320,
@@ -564,7 +564,7 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -573,7 +573,7 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 // Course: 6th grade math
 // Exercise: Area of composite shapes
 // Widget key: image_1
-test("composite-shape-diagram - Area of composite shapes", () => {
+test("composite-shape-diagram - Area of composite shapes", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 400,
@@ -606,7 +606,7 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -615,7 +615,7 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 // Course: 6th grade math
 // Exercise: Area of composite shapes
 // Widget key: image_1
-test("composite-shape-diagram - Area of composite shapes", () => {
+test("composite-shape-diagram - Area of composite shapes", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 320,
@@ -657,7 +657,7 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -666,7 +666,7 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 // Course: 6th grade math
 // Exercise: Area of composite shapes
 // Widget key: image_1
-test("composite-shape-diagram - Area of composite shapes", () => {
+test("composite-shape-diagram - Area of composite shapes", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 300,
@@ -706,7 +706,7 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -715,7 +715,7 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 // Course: 6th grade math
 // Exercise: Area of composite shapes
 // Widget key: image_1
-test("composite-shape-diagram - Area of composite shapes", () => {
+test("composite-shape-diagram - Area of composite shapes", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 320,
@@ -759,7 +759,7 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -768,7 +768,7 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 // Course: 6th grade math
 // Exercise: Area of composite shapes
 // Widget key: image_1
-test("composite-shape-diagram - Area of composite shapes", () => {
+test("composite-shape-diagram - Area of composite shapes", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 271.145,
@@ -807,7 +807,7 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -816,7 +816,7 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 // Course: 6th grade math
 // Exercise: Area of composite shapes
 // Widget key: image_1
-test("composite-shape-diagram - Area of composite shapes", () => {
+test("composite-shape-diagram - Area of composite shapes", async () => {
 	const input = {
 		"type": "compositeShapeDiagram",
 		"width": 320,
@@ -857,6 +857,6 @@ test("composite-shape-diagram - Area of composite shapes", () => {
 	}
 
 	// Generate the widget
-	const svg = generateCompositeShapeDiagram(parseResult.data)
+	const svg = await generateCompositeShapeDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })

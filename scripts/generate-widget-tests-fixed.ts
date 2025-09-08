@@ -120,7 +120,7 @@ import { ${generatorName}, ${schemaName} } from "@/lib/widgets/generators"
 type ${inputType} = z.input<typeof ${schemaName}>`
 
   const helperFunction = `
-const validateAndGenerate = (input: ${inputType}): string => {
+const validateAndGenerate = async (input: ${inputType}): Promise<string> => {
   const parseResult = errors.trySync(() => ${schemaName}.parse(input))
   if (parseResult.error) {
     logger.error("input validation", { error: parseResult.error })
@@ -150,14 +150,14 @@ const validateAndGenerate = (input: ${inputType}): string => {
   
   checkUnboundedValues(parsed, "input")
   
-  return ${generatorName}(parsed)
+  return await ${generatorName}(parsed)
 }`
 
   // Generate 50 normal test cases with reasonable values
   const normalTests = Array.from({ length: 50 }, (_, i) => {
     const seed = i + 1
     return `
-test("${kebabName} - normal variation ${i + 1}", () => {
+test("${kebabName} - normal variation ${i + 1}", async () => {
   // Set faker seed for reproducible tests
   faker.seed(${seed})
   
@@ -168,7 +168,7 @@ test("${kebabName} - normal variation ${i + 1}", () => {
     optional: { probability: 0.8 }
   })
   
-  const svg = validateAndGenerate(mockData)
+  const svg = await validateAndGenerate(mockData)
   expect(svg).toMatchSnapshot()
 })`
   }).join('\n')

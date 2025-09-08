@@ -433,7 +433,7 @@ import { ${generatorName}, ${schemaName} } from "@/lib/widgets/generators"
 type ${inputType} = z.input<typeof ${schemaName}>`
 
   const helperFunction = `
-const validateAndGenerate = (input: ${inputType}): string => {
+const validateAndGenerate = async (input: ${inputType}): Promise<string> => {
   const parseResult = errors.trySync(() => ${schemaName}.parse(input))
   if (parseResult.error) {
     logger.error("input validation", { error: parseResult.error })
@@ -490,7 +490,7 @@ const validateAndGenerate = (input: ${inputType}): string => {
     console.warn(\`\\n📸 Snapshot will still be generated to show current output\\n\`)
   }
   
-  return ${generatorName}(parsed)
+  return await ${generatorName}(parsed)
 }`
 
   
@@ -510,15 +510,15 @@ const mockeryMapper = (keyName: string, fakerInstance: any) => {
   return undefined
 }
 
-test("${kebabName} - basic functionality", () => {
-  console.log('\\n🧪 Testing ${kebabName} widget...')
+test("${kebabName} - basic functionality", async () => {
+  console.log('\n🧪 Testing ${kebabName} widget...')
   
   const mockData = generateMock(${schemaName}, { 
     seed: 1,
     mockeryMapper
   })
   
-  const result = validateAndGenerate(mockData)
+  const result = await validateAndGenerate(mockData)
   expect(result).toBeDefined()
   expect(typeof result).toBe("string")
   expect(result.length).toBeGreaterThan(0)
@@ -527,13 +527,13 @@ test("${kebabName} - basic functionality", () => {
 // Generate 25 variations with different seeds to test more mock data combinations
 ${Array.from({ length: 25 }, (_, i) => {
   const seed = (i + 1) * 10 + 7; // Seeds: 17, 27, 37, ..., 257
-  return `test("${kebabName} - variation ${i + 1} (seed ${seed})", () => {
+  return `test("${kebabName} - variation ${i + 1} (seed ${seed})", async () => {
   const mockData = generateMock(${schemaName}, { 
     seed: ${seed},
     mockeryMapper
   })
   
-  const result = validateAndGenerate(mockData)
+  const result = await validateAndGenerate(mockData)
   expect(result).toMatchSnapshot()
 })`;
 }).join('\n\n')}`

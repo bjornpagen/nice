@@ -103,7 +103,7 @@ export type TapeDiagramProps = z.infer<typeof TapeDiagramPropsSchema>
  * Generates a "tape diagram" (bar model) to visually represent part-whole relationships,
  * perfect for modeling ratios and simple algebraic equations.
  */
-export const generateTapeDiagram: WidgetGenerator<typeof TapeDiagramPropsSchema> = (data) => {
+export const generateTapeDiagram: WidgetGenerator<typeof TapeDiagramPropsSchema> = async (data) => {
 	const { width, height, modelType, topTape, bottomTape, showTotalBracket, totalLabel } = data
 	const padding = PADDING
 	const chartWidth = width - 2 * padding

@@ -106,7 +106,7 @@ export type NumberLineProps = z.infer<typeof NumberLinePropsSchema>
  * number line as an SVG graphic. It can be rendered horizontally (for general number
  * comparisons) or vertically (often used for temperature, elevation, or financial contexts).
  */
-export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> = (data) => {
+export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> = async (data) => {
 	const { width, height, orientation, bounds, interval, primaryLabels, secondaryLabels } = data
 	const { lower: min, upper: max } = bounds
 	const isHorizontal = orientation === "horizontal"

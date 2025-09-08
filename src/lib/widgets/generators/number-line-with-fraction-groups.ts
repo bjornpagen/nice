@@ -74,7 +74,7 @@ function renderFraction(numerator: number, denominator: number): string {
  * specifically designed to build conceptual understanding of fraction division.
  * It automatically generates ticks, labels, and boxes based on fraction bounds and intervals.
  */
-export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof NumberLineWithFractionGroupsPropsSchema> = (
+export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof NumberLineWithFractionGroupsPropsSchema> = async (
 	data
 ) => {
 	const { width, height, axis, boxes } = data

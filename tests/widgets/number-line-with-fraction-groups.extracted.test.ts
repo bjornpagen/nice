@@ -26,7 +26,7 @@ type NumberLineWithFractionGroupsInput = z.input<typeof NumberLineWithFractionGr
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("number-line-with-fraction-groups - Divide whole numbers by fractions", () => {
+test("number-line-with-fraction-groups - Divide whole numbers by fractions", async () => {
 	const input = {
 	"max": 2,
 	"min": 0,
@@ -134,7 +134,7 @@ test("number-line-with-fraction-groups - Divide whole numbers by fractions", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithFractionGroups(parseResult.data)
+	const svg = await generateNumberLineWithFractionGroups(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -143,7 +143,7 @@ test("number-line-with-fraction-groups - Divide whole numbers by fractions", () 
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("number-line-with-fraction-groups - Divide whole numbers by fractions", () => {
+test("number-line-with-fraction-groups - Divide whole numbers by fractions", async () => {
 	const input = {
 	"max": 1.6666666667,
 	"min": 0,
@@ -200,7 +200,7 @@ test("number-line-with-fraction-groups - Divide whole numbers by fractions", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithFractionGroups(parseResult.data)
+	const svg = await generateNumberLineWithFractionGroups(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

@@ -229,7 +229,7 @@ function drawClippedDottedLine(
 	}
 }
 
-export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWithActionPropsSchema> = (data) => {
+export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWithActionPropsSchema> = async (data) => {
 	const { width, height, orientation, min, max, tickInterval, startValue, customLabels, actions } = data
 	const isHorizontal = orientation === "horizontal"
 	const lineLength = (isHorizontal ? width : height) - 2 * PADDING

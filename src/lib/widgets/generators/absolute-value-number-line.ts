@@ -43,7 +43,7 @@ export type AbsoluteValueNumberLineProps = z.infer<typeof AbsoluteValueNumberLin
  * Generates an SVG number line to visually demonstrate the concept of absolute value as
  * a distance from zero, perfect for introductory questions on the topic.
  */
-export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteValueNumberLinePropsSchema> = (data) => {
+export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteValueNumberLinePropsSchema> = async (data) => {
 	const { width, min, max, tickInterval, value, highlightColor, showDistanceLabel } = data
 	const absValue = Math.abs(value)
 	const canvas = new CanvasImpl({

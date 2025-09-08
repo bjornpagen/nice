@@ -148,7 +148,7 @@ function drawClippedDottedLine(
  * This visualization tool is excellent for illustrating the relationship between two
  * different quantities that share a constant ratio.
  */
-export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePropsSchema> = (data) => {
+export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePropsSchema> = async (data) => {
 	const { width, height, topLine, bottomLine } = data
 	const lineLength = width - 2 * PADDING
 

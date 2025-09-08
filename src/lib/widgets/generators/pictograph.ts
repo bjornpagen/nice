@@ -67,7 +67,7 @@ export type PictographProps = z.infer<typeof PictographPropsSchema>
  * (often emojis) to represent data quantities, making it visually engaging and
  * easy to understand at a glance.
  */
-export const generatePictograph: WidgetGenerator<typeof PictographPropsSchema> = (data) => {
+export const generatePictograph: WidgetGenerator<typeof PictographPropsSchema> = async (data) => {
 	const { title, key, data: pictographData } = data
 	let html = `<div style="font-family: ${theme.font.family.sans}; border: 1px solid ${theme.colors.border}; padding: ${theme.table.padding}; border-radius: 5px;">`
 

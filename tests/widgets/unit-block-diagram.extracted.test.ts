@@ -26,7 +26,7 @@ type UnitBlockDiagramInput = z.input<typeof UnitBlockDiagramPropsSchema>
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -45,7 +45,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -54,7 +54,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_2
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -73,7 +73,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -82,7 +82,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -101,7 +101,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -110,7 +110,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_2
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -129,7 +129,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -138,7 +138,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -157,7 +157,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -166,7 +166,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -185,7 +185,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -194,7 +194,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -213,7 +213,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -222,7 +222,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -241,7 +241,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -250,7 +250,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -269,7 +269,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -278,7 +278,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_2
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -297,7 +297,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -306,7 +306,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -325,7 +325,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -334,7 +334,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_2
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -353,7 +353,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -362,7 +362,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -381,7 +381,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -390,7 +390,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -409,7 +409,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -418,7 +418,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_2
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -437,7 +437,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -446,7 +446,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -465,7 +465,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -474,7 +474,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_2
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -493,7 +493,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -502,7 +502,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -521,7 +521,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -530,7 +530,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -549,7 +549,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -558,7 +558,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -577,7 +577,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -586,7 +586,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -605,7 +605,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -614,7 +614,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_2
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -633,7 +633,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -642,7 +642,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -661,7 +661,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -670,7 +670,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -689,7 +689,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -698,7 +698,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_2
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -717,7 +717,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -726,7 +726,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -745,7 +745,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -754,7 +754,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -773,7 +773,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -782,7 +782,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_2
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -801,7 +801,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -810,7 +810,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_1
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -829,7 +829,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -838,7 +838,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Intro to percents
 // Widget key: image_2
-test("unit-block-diagram - Intro to percents", () => {
+test("unit-block-diagram - Intro to percents", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -857,7 +857,7 @@ test("unit-block-diagram - Intro to percents", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -866,7 +866,7 @@ test("unit-block-diagram - Intro to percents", () => {
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_1
-test("unit-block-diagram - Percents from fraction models", () => {
+test("unit-block-diagram - Percents from fraction models", async () => {
 	const input = {
 	"blockWidth": 200,
 	"shadeColor": "#11accd",
@@ -885,7 +885,7 @@ test("unit-block-diagram - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -894,7 +894,7 @@ test("unit-block-diagram - Percents from fraction models", () => {
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_1
-test("unit-block-diagram - Percents from fraction models", () => {
+test("unit-block-diagram - Percents from fraction models", async () => {
 	const input = {
 	"blockWidth": 130,
 	"shadeColor": "#11accd",
@@ -913,7 +913,7 @@ test("unit-block-diagram - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -922,7 +922,7 @@ test("unit-block-diagram - Percents from fraction models", () => {
 // Course: 6th grade math
 // Exercise: Percents from fraction models
 // Widget key: image_2
-test("unit-block-diagram - Percents from fraction models", () => {
+test("unit-block-diagram - Percents from fraction models", async () => {
 	const input = {
 	"blockWidth": 130,
 	"shadeColor": "#11accd",
@@ -941,7 +941,7 @@ test("unit-block-diagram - Percents from fraction models", () => {
 	}
 
 	// Generate the widget
-	const svg = generateUnitBlockDiagram(parseResult.data)
+	const svg = await generateUnitBlockDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

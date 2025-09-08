@@ -12,6 +12,7 @@ import { compileResponseDeclarations, compileResponseProcessing } from "./respon
 import type { AssessmentItem, AssessmentItemInput } from "./schemas"
 import { createDynamicAssessmentItemSchema } from "./schemas"
 import { generateWidget } from "./widget-generator"
+import { resetCanvasIdCounter } from "@/lib/widgets/utils/canvas-impl"
 import {
 	convertHtmlEntities,
 	fixInequalityOperators,
@@ -798,7 +799,9 @@ function enforceIdentifierOnlyMatching(item: AssessmentItem): void {
 	}
 }
 
-export function compile(itemData: AssessmentItemInput): string {
+export async function compile(itemData: AssessmentItemInput): Promise<string> {
+    // Reset canvas counter to make clip ids deterministic within this compile run
+    resetCanvasIdCounter()
 	// Step 0: Build widget mapping prior to schema enforcement
 	const widgetMapping: Record<string, string> = {}
 	if (itemData.widgets) {
@@ -870,7 +873,7 @@ export function compile(itemData: AssessmentItemInput): string {
 	if (enforcedItem.widgets) {
 		for (const [widgetId, widgetDef] of Object.entries(enforcedItem.widgets)) {
 			// widgetDef is already typed correctly from the schema parse
-			const widgetHtml = generateWidget(widgetDef)
+			const widgetHtml = await generateWidget(widgetDef)
 			if (widgetHtml.trim().startsWith("<svg")) {
 				slots.set(widgetId, `<img src="${encodeDataUri(widgetHtml)}" alt="Widget visualization" />`)
 			} else {

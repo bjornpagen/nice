@@ -161,7 +161,7 @@ export type AngleDiagramProps = z.infer<typeof AngleDiagramPropsSchema>
  * Generates a flexible diagram of angles from a set of points and rays.
  * Ideal for a wide range of geometry problems.
  */
-export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchema> = (props) => {
+export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchema> = async (props) => {
 	const { width, height, points, rays, angles } = props
 
 	// Validate that every point is connected to at least one ray

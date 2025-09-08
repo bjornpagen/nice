@@ -66,7 +66,7 @@ export type UnitBlockDiagramProps = z.infer<typeof UnitBlockDiagramPropsSchema>
  * place value and percentages of large numbers that are multiples of 100.
  * It is particularly effective for explaining concepts like "1% of 800" in a concrete, countable manner.
  */
-export const generateUnitBlockDiagram: WidgetGenerator<typeof UnitBlockDiagramPropsSchema> = (data) => {
+export const generateUnitBlockDiagram: WidgetGenerator<typeof UnitBlockDiagramPropsSchema> = async (data) => {
 	const { totalBlocks, shadedUnitsPerBlock, blocksPerRow, blockWidth, blockHeight, shadeColor } = data
 	const gap = 10
 	const numRows = Math.ceil(totalBlocks / blocksPerRow)

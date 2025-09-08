@@ -26,7 +26,7 @@ type NumberLineWithActionInput = z.input<typeof NumberLineWithActionPropsSchema>
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_a_number_line
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -12,
@@ -57,7 +57,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -66,7 +66,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_b_number_line
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -12,
@@ -97,7 +97,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -106,7 +106,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_c_number_line
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -12,
@@ -137,7 +137,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -146,7 +146,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_a
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 11,
 	"min": -4,
@@ -177,7 +177,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -186,7 +186,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_b
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 11,
 	"min": -4,
@@ -217,7 +217,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -226,7 +226,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_c
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 11,
 	"min": -4,
@@ -257,7 +257,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -266,7 +266,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_a_number_line
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -9,
@@ -318,7 +318,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -327,7 +327,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_b_number_line
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -9,
@@ -379,7 +379,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -388,7 +388,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_c_number_line
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -9,
@@ -440,7 +440,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -449,7 +449,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_a
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 8,
 	"min": -5,
@@ -480,7 +480,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -489,7 +489,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_b
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 8,
 	"min": -5,
@@ -520,7 +520,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -529,7 +529,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_c
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 8,
 	"min": -5,
@@ -560,7 +560,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -569,7 +569,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_a_model
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 8,
 	"min": -9,
@@ -600,7 +600,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -609,7 +609,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_b_model
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 8,
 	"min": -9,
@@ -640,7 +640,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -649,7 +649,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_c_model
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 8,
 	"min": -9,
@@ -680,7 +680,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -689,7 +689,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_a_numberline
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 8,
 	"min": -5,
@@ -720,7 +720,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -729,7 +729,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_b_numberline
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 8,
 	"min": -5,
@@ -760,7 +760,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -769,7 +769,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_c_numberline
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 8,
 	"min": -5,
@@ -800,7 +800,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -809,7 +809,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_a
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -9,
@@ -840,7 +840,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -849,7 +849,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_b
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -9,
@@ -880,7 +880,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -889,7 +889,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_c
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -9,
@@ -920,7 +920,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -929,7 +929,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_a
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 1,
 	"min": -1,
@@ -960,7 +960,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -969,7 +969,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_b
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 1,
 	"min": -1,
@@ -1000,7 +1000,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1009,7 +1009,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_c
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 1,
 	"min": -1,
@@ -1040,7 +1040,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1049,7 +1049,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_a_image
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -3,
@@ -1093,7 +1093,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1102,7 +1102,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_b_image
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -3,
@@ -1146,7 +1146,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1155,7 +1155,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_c_image
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -3,
@@ -1199,7 +1199,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1208,7 +1208,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_a
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -9,
@@ -1239,7 +1239,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1248,7 +1248,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_b
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -9,
@@ -1279,7 +1279,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1288,7 +1288,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_c
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -9,
@@ -1319,7 +1319,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1328,7 +1328,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_a
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 8,
 	"min": -8,
@@ -1359,7 +1359,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1368,7 +1368,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_b
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 8,
 	"min": -8,
@@ -1399,7 +1399,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1408,7 +1408,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_c
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 8,
 	"min": -8,
@@ -1439,7 +1439,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1448,7 +1448,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_a_numberline
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 6,
 	"min": -9,
@@ -1479,7 +1479,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1488,7 +1488,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_b_numberline
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 6,
 	"min": -9,
@@ -1519,7 +1519,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1528,7 +1528,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_c_numberline
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 6,
 	"min": -9,
@@ -1559,7 +1559,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1568,7 +1568,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_a_number_line
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 4,
 	"min": -4,
@@ -1599,7 +1599,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1608,7 +1608,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_b_number_line
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 4,
 	"min": -4,
@@ -1639,7 +1639,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1648,7 +1648,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_c_number_line
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 4,
 	"min": -4,
@@ -1679,7 +1679,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1688,7 +1688,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: nl_choice_a
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 6,
 	"min": -6,
@@ -1719,7 +1719,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1728,7 +1728,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: nl_choice_b
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 6,
 	"min": -6,
@@ -1759,7 +1759,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1768,7 +1768,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: nl_choice_c
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 6,
 	"min": -6,
@@ -1799,7 +1799,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1808,7 +1808,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_a_number_line
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 6,
 	"min": -9,
@@ -1839,7 +1839,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1848,7 +1848,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_b_number_line
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 6,
 	"min": -9,
@@ -1879,7 +1879,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1888,7 +1888,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_c_number_line
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 6,
 	"min": -9,
@@ -1919,7 +1919,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1928,7 +1928,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_a_numberline
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 1,
 	"min": -1,
@@ -1972,7 +1972,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -1981,7 +1981,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_b_numberline
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 1,
 	"min": -1,
@@ -2025,7 +2025,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2034,7 +2034,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_c_numberline
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 1,
 	"min": -1,
@@ -2078,7 +2078,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2087,7 +2087,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_a
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 1,
 	"min": -1,
@@ -2131,7 +2131,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2140,7 +2140,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_b
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 1,
 	"min": -1,
@@ -2184,7 +2184,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2193,7 +2193,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_c
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 1,
 	"min": -1,
@@ -2237,7 +2237,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2246,7 +2246,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_a
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 4,
 	"min": -4,
@@ -2277,7 +2277,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2286,7 +2286,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_b
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 4,
 	"min": -4,
@@ -2317,7 +2317,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2326,7 +2326,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: number_line_choice_c
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 4,
 	"min": -4,
@@ -2357,7 +2357,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2366,7 +2366,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_a_numberline
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 1,
 	"min": -1,
@@ -2410,7 +2410,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2419,7 +2419,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_b_numberline
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 1,
 	"min": -1,
@@ -2463,7 +2463,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2472,7 +2472,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_c_numberline
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 1,
 	"min": -1,
@@ -2516,7 +2516,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2525,7 +2525,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_a_number_line
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -9,
@@ -2556,7 +2556,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2565,7 +2565,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_b_number_line
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -9,
@@ -2596,7 +2596,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2605,7 +2605,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Adding negative numbers on the number line
 // Widget key: choice_c_number_line
-test("number-line-with-action - Adding negative numbers on the number line", () => {
+test("number-line-with-action - Adding negative numbers on the number line", async () => {
 	const input = {
 	"max": 3,
 	"min": -9,
@@ -2636,7 +2636,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2645,7 +2645,7 @@ test("number-line-with-action - Adding negative numbers on the number line", () 
 // Course: 7th grade math
 // Exercise: Number equations & number lines
 // Widget key: image_1
-test("number-line-with-action - Number equations number lines", () => {
+test("number-line-with-action - Number equations number lines", async () => {
 	const input = {
 	"max": 4,
 	"min": -12,
@@ -2676,7 +2676,7 @@ test("number-line-with-action - Number equations number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2685,7 +2685,7 @@ test("number-line-with-action - Number equations number lines", () => {
 // Course: 7th grade math
 // Exercise: Number equations & number lines
 // Widget key: image_1
-test("number-line-with-action - Number equations number lines", () => {
+test("number-line-with-action - Number equations number lines", async () => {
 	const input = {
 	"max": 3,
 	"min": -9,
@@ -2716,7 +2716,7 @@ test("number-line-with-action - Number equations number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2725,7 +2725,7 @@ test("number-line-with-action - Number equations number lines", () => {
 // Course: 7th grade math
 // Exercise: Number equations & number lines
 // Widget key: image_1
-test("number-line-with-action - Number equations number lines", () => {
+test("number-line-with-action - Number equations number lines", async () => {
 	const input = {
 	"max": 3,
 	"min": -3,
@@ -2756,7 +2756,7 @@ test("number-line-with-action - Number equations number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2765,7 +2765,7 @@ test("number-line-with-action - Number equations number lines", () => {
 // Course: 7th grade math
 // Exercise: Number equations & number lines
 // Widget key: image_1
-test("number-line-with-action - Number equations number lines", () => {
+test("number-line-with-action - Number equations number lines", async () => {
 	const input = {
 	"max": 3,
 	"min": -6,
@@ -2796,7 +2796,7 @@ test("number-line-with-action - Number equations number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2805,7 +2805,7 @@ test("number-line-with-action - Number equations number lines", () => {
 // Course: 7th grade math
 // Exercise: Number equations & number lines
 // Widget key: image_1
-test("number-line-with-action - Number equations number lines", () => {
+test("number-line-with-action - Number equations number lines", async () => {
 	const input = {
 	"max": 14,
 	"min": -5,
@@ -2836,7 +2836,7 @@ test("number-line-with-action - Number equations number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2845,7 +2845,7 @@ test("number-line-with-action - Number equations number lines", () => {
 // Course: 7th grade math
 // Exercise: Number equations & number lines
 // Widget key: image_1
-test("number-line-with-action - Number equations number lines", () => {
+test("number-line-with-action - Number equations number lines", async () => {
 	const input = {
 	"max": 10,
 	"min": 0,
@@ -2876,7 +2876,7 @@ test("number-line-with-action - Number equations number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2885,7 +2885,7 @@ test("number-line-with-action - Number equations number lines", () => {
 // Course: 7th grade math
 // Exercise: Number equations & number lines
 // Widget key: image_1
-test("number-line-with-action - Number equations number lines", () => {
+test("number-line-with-action - Number equations number lines", async () => {
 	const input = {
 	"max": 20,
 	"min": -20,
@@ -2916,7 +2916,7 @@ test("number-line-with-action - Number equations number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2925,7 +2925,7 @@ test("number-line-with-action - Number equations number lines", () => {
 // Course: 7th grade math
 // Exercise: Number equations & number lines
 // Widget key: image_1
-test("number-line-with-action - Number equations number lines", () => {
+test("number-line-with-action - Number equations number lines", async () => {
 	const input = {
 	"max": 3,
 	"min": -9,
@@ -2956,7 +2956,7 @@ test("number-line-with-action - Number equations number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -2965,7 +2965,7 @@ test("number-line-with-action - Number equations number lines", () => {
 // Course: 7th grade math
 // Exercise: Number equations & number lines
 // Widget key: image_1
-test("number-line-with-action - Number equations number lines", () => {
+test("number-line-with-action - Number equations number lines", async () => {
 	const input = {
 	"max": 6,
 	"min": -6,
@@ -2996,7 +2996,7 @@ test("number-line-with-action - Number equations number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3005,7 +3005,7 @@ test("number-line-with-action - Number equations number lines", () => {
 // Course: 7th grade math
 // Exercise: Number equations & number lines
 // Widget key: image_1
-test("number-line-with-action - Number equations number lines", () => {
+test("number-line-with-action - Number equations number lines", async () => {
 	const input = {
 	"max": 10,
 	"min": 0,
@@ -3036,7 +3036,7 @@ test("number-line-with-action - Number equations number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3045,7 +3045,7 @@ test("number-line-with-action - Number equations number lines", () => {
 // Course: 7th grade math
 // Exercise: Number equations & number lines
 // Widget key: image_1
-test("number-line-with-action - Number equations number lines", () => {
+test("number-line-with-action - Number equations number lines", async () => {
 	const input = {
 	"max": 10,
 	"min": -10,
@@ -3076,7 +3076,7 @@ test("number-line-with-action - Number equations number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3085,7 +3085,7 @@ test("number-line-with-action - Number equations number lines", () => {
 // Course: 7th grade math
 // Exercise: Number equations & number lines
 // Widget key: image_1
-test("number-line-with-action - Number equations number lines", () => {
+test("number-line-with-action - Number equations number lines", async () => {
 	const input = {
 	"max": 6,
 	"min": -6,
@@ -3116,7 +3116,7 @@ test("number-line-with-action - Number equations number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3125,7 +3125,7 @@ test("number-line-with-action - Number equations number lines", () => {
 // Course: 7th grade math
 // Exercise: Number equations & number lines
 // Widget key: image_1
-test("number-line-with-action - Number equations number lines", () => {
+test("number-line-with-action - Number equations number lines", async () => {
 	const input = {
 	"max": 12,
 	"min": -12,
@@ -3156,7 +3156,7 @@ test("number-line-with-action - Number equations number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3165,7 +3165,7 @@ test("number-line-with-action - Number equations number lines", () => {
 // Course: 7th grade math
 // Exercise: Number equations & number lines
 // Widget key: image_1
-test("number-line-with-action - Number equations number lines", () => {
+test("number-line-with-action - Number equations number lines", async () => {
 	const input = {
 	"max": 10,
 	"min": 0,
@@ -3196,7 +3196,7 @@ test("number-line-with-action - Number equations number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3205,7 +3205,7 @@ test("number-line-with-action - Number equations number lines", () => {
 // Course: 7th grade math
 // Exercise: Number equations & number lines
 // Widget key: image_1
-test("number-line-with-action - Number equations number lines", () => {
+test("number-line-with-action - Number equations number lines", async () => {
 	const input = {
 	"max": 4,
 	"min": -8,
@@ -3236,7 +3236,7 @@ test("number-line-with-action - Number equations number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -3245,7 +3245,7 @@ test("number-line-with-action - Number equations number lines", () => {
 // Course: 7th grade math
 // Exercise: Number equations & number lines
 // Widget key: image_1
-test("number-line-with-action - Number equations number lines", () => {
+test("number-line-with-action - Number equations number lines", async () => {
 	const input = {
 	"max": 12,
 	"min": -12,
@@ -3276,7 +3276,7 @@ test("number-line-with-action - Number equations number lines", () => {
 	}
 
 	// Generate the widget
-	const svg = generateNumberLineWithAction(parseResult.data)
+	const svg = await generateNumberLineWithAction(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

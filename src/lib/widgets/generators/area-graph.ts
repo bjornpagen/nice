@@ -74,7 +74,7 @@ export const AreaGraphPropsSchema = z
 
 export type AreaGraphProps = z.infer<typeof AreaGraphPropsSchema>
 
-export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (props) => {
+export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = async (props) => {
 	const { width, height, title, xAxis, yAxis, dataPoints, bottomArea, topArea, boundaryLine } = props
 
 	if (xAxis.tickValues.length < 2) {

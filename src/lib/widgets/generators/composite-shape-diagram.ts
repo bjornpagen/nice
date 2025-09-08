@@ -200,7 +200,7 @@ const formatLabel = (label: Label): string | null => {
  * Generates a diagram of a composite polygon from a set of vertices. Ideal for area
  * problems involving the decomposition of a complex shape into simpler figures.
  */
-export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShapeDiagramPropsSchema> = (data) => {
+export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShapeDiagramPropsSchema> = async (data) => {
 	const {
 		width,
 		height,

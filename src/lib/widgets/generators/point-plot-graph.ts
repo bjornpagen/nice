@@ -47,7 +47,7 @@ export const PointPlotGraphPropsSchema = z
 
 export type PointPlotGraphProps = z.infer<typeof PointPlotGraphPropsSchema>
 
-export const generatePointPlotGraph: WidgetGenerator<typeof PointPlotGraphPropsSchema> = (props) => {
+export const generatePointPlotGraph: WidgetGenerator<typeof PointPlotGraphPropsSchema> = async (props) => {
 	const { width, height, xAxis, yAxis, showQuadrantLabels, points } = props
 
 	// 1. Call the base generator and get the body content and extents object

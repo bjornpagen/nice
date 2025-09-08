@@ -6,7 +6,7 @@ import { generateScatterPlot, ScatterPlotPropsSchema } from "@/lib/widgets/gener
 
 type ScatterPlotInput = z.input<typeof ScatterPlotPropsSchema>
 
-test("scatter plot - acceleration vs mass with trend", () => {
+test("scatter plot - acceleration vs mass with trend", async () => {
 	const input = {
 		type: "scatterPlot",
 		width: 407,
@@ -61,13 +61,13 @@ test("scatter plot - acceleration vs mass with trend", () => {
 	const parsed = validation.data
 
 	// Generate the SVG
-	const svg = generateScatterPlot(parsed)
+	const svg = await generateScatterPlot(parsed)
 
 	// Snapshot test the generated SVG
 	expect(svg).toMatchSnapshot()
 })
 
-test("scatter plot - bacterial population growth with exponential trend", () => {
+test("scatter plot - bacterial population growth with exponential trend", async () => {
 	const input = {
 		type: "scatterPlot",
 		width: 407,
@@ -124,13 +124,13 @@ test("scatter plot - bacterial population growth with exponential trend", () => 
 	const parsed = validation.data
 
 	// Generate the SVG
-	const svg = generateScatterPlot(parsed)
+	const svg = await generateScatterPlot(parsed)
 
 	// Snapshot test the generated SVG
 	expect(svg).toMatchSnapshot()
 })
 
-test("scatter plot - foraminifera species vs sea surface temperature", () => {
+test("scatter plot - foraminifera species vs sea surface temperature", async () => {
 	const input = {
 		type: "scatterPlot",
 		width: 466,
@@ -202,7 +202,7 @@ test("scatter plot - foraminifera species vs sea surface temperature", () => {
 	const parsed = validation.data
 
 	// Generate the SVG
-	const svg = generateScatterPlot(parsed)
+	const svg = await generateScatterPlot(parsed)
 
 	// Snapshot test the generated SVG
 	expect(svg).toMatchSnapshot()

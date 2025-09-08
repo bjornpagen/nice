@@ -26,7 +26,7 @@ type PentagonIntersectionDiagramInput = z.input<typeof PentagonIntersectionDiagr
 // Course: 8th grade math
 // Exercise: Finding angle measures using triangles
 // Widget key: image_1
-test("pentagon-intersection-diagram - Finding angle measures using triangles", () => {
+test("pentagon-intersection-diagram - Finding angle measures using triangles", async () => {
 	const input = {
 	"width": 500,
 	"height": 425,
@@ -110,7 +110,7 @@ test("pentagon-intersection-diagram - Finding angle measures using triangles", (
 	}
 
 	// Generate the widget
-	const svg = generatePentagonIntersectionDiagram(parseResult.data)
+	const svg = await generatePentagonIntersectionDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -119,7 +119,7 @@ test("pentagon-intersection-diagram - Finding angle measures using triangles", (
 // Course: 7th grade math
 // Exercise: Identifying supplementary, complementary, and vertical angles
 // Widget key: image_1
-test("pentagon-intersection-diagram - Identifying supplementary complementary and v", () => {
+test("pentagon-intersection-diagram - Identifying supplementary complementary and v", async () => {
 	const input = {
 	"width": 300,
 	"height": 300,
@@ -203,7 +203,7 @@ test("pentagon-intersection-diagram - Identifying supplementary complementary an
 	}
 
 	// Generate the widget
-	const svg = generatePentagonIntersectionDiagram(parseResult.data)
+	const svg = await generatePentagonIntersectionDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -212,7 +212,7 @@ test("pentagon-intersection-diagram - Identifying supplementary complementary an
 // Course: 7th grade math
 // Exercise: Identifying supplementary, complementary, and vertical angles
 // Widget key: image_1
-test("pentagon-intersection-diagram - Identifying supplementary complementary and v", () => {
+test("pentagon-intersection-diagram - Identifying supplementary complementary and v", async () => {
 	const input = {
 	"width": 300,
 	"height": 273,
@@ -296,7 +296,7 @@ test("pentagon-intersection-diagram - Identifying supplementary complementary an
 	}
 
 	// Generate the widget
-	const svg = generatePentagonIntersectionDiagram(parseResult.data)
+	const svg = await generatePentagonIntersectionDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -305,7 +305,7 @@ test("pentagon-intersection-diagram - Identifying supplementary complementary an
 // Course: 7th grade math
 // Exercise: Finding missing angles
 // Widget key: image_1
-test("pentagon-intersection-diagram - Finding missing angles", () => {
+test("pentagon-intersection-diagram - Finding missing angles", async () => {
 	const input = {
 	"width": 260,
 	"height": 246,
@@ -402,7 +402,7 @@ test("pentagon-intersection-diagram - Finding missing angles", () => {
 	}
 
 	// Generate the widget
-	const svg = generatePentagonIntersectionDiagram(parseResult.data)
+	const svg = await generatePentagonIntersectionDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -411,7 +411,7 @@ test("pentagon-intersection-diagram - Finding missing angles", () => {
 // Course: 7th grade math
 // Exercise: Cross sections of 3D objects (basic)
 // Widget key: image_1
-test("pentagon-intersection-diagram - Cross sections of 3D objects basic", () => {
+test("pentagon-intersection-diagram - Cross sections of 3D objects basic", async () => {
 	const input = {
 	"width": 300,
 	"height": 240,
@@ -455,7 +455,7 @@ test("pentagon-intersection-diagram - Cross sections of 3D objects basic", () =>
 	}
 
 	// Generate the widget
-	const svg = generatePentagonIntersectionDiagram(parseResult.data)
+	const svg = await generatePentagonIntersectionDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -464,7 +464,7 @@ test("pentagon-intersection-diagram - Cross sections of 3D objects basic", () =>
 // Course: 7th grade math
 // Exercise: Cross sections of 3D objects (basic)
 // Widget key: choice_a_shape
-test("pentagon-intersection-diagram - Cross sections of 3D objects basic", () => {
+test("pentagon-intersection-diagram - Cross sections of 3D objects basic", async () => {
 	const input = {
 	"width": 220,
 	"height": 200,
@@ -508,7 +508,7 @@ test("pentagon-intersection-diagram - Cross sections of 3D objects basic", () =>
 	}
 
 	// Generate the widget
-	const svg = generatePentagonIntersectionDiagram(parseResult.data)
+	const svg = await generatePentagonIntersectionDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -517,7 +517,7 @@ test("pentagon-intersection-diagram - Cross sections of 3D objects basic", () =>
 // Course: 7th grade math
 // Exercise: Cross sections of 3D objects (basic)
 // Widget key: choice_d_shape
-test("pentagon-intersection-diagram - Cross sections of 3D objects basic", () => {
+test("pentagon-intersection-diagram - Cross sections of 3D objects basic", async () => {
 	const input = {
 	"width": 300,
 	"height": 260,
@@ -561,7 +561,7 @@ test("pentagon-intersection-diagram - Cross sections of 3D objects basic", () =>
 	}
 
 	// Generate the widget
-	const svg = generatePentagonIntersectionDiagram(parseResult.data)
+	const svg = await generatePentagonIntersectionDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -570,7 +570,7 @@ test("pentagon-intersection-diagram - Cross sections of 3D objects basic", () =>
 // Course: 7th grade math
 // Exercise: Cross sections of 3D objects (basic)
 // Widget key: choice_d_shape
-test("pentagon-intersection-diagram - Cross sections of 3D objects basic", () => {
+test("pentagon-intersection-diagram - Cross sections of 3D objects basic", async () => {
 	const input = {
 	"width": 200,
 	"height": 200,
@@ -614,7 +614,7 @@ test("pentagon-intersection-diagram - Cross sections of 3D objects basic", () =>
 	}
 
 	// Generate the widget
-	const svg = generatePentagonIntersectionDiagram(parseResult.data)
+	const svg = await generatePentagonIntersectionDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 

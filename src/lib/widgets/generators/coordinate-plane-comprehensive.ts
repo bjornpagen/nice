@@ -95,7 +95,7 @@ export type CoordinatePlaneComprehensiveProps = z.infer<typeof CoordinatePlaneCo
  * - Full distance triangle visualization
  * - Polyline function plotting
  */
-export const generateCoordinatePlaneComprehensive: WidgetGenerator<typeof CoordinatePlaneComprehensivePropsSchema> = (
+export const generateCoordinatePlaneComprehensive: WidgetGenerator<typeof CoordinatePlaneComprehensivePropsSchema> = async (
 	props
 ) => {
 	const { width, height, xAxis, yAxis, showQuadrantLabels, points, lines, polygons, distances, polylines } = props

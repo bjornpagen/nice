@@ -26,7 +26,7 @@ type VennDiagramInput = z.input<typeof VennDiagramPropsSchema>
 // Course: 8th grade math
 // Exercise: Create two-way frequency tables
 // Widget key: image_1
-test("venn-diagram - Create two-way frequency tables", () => {
+test("venn-diagram - Create two-way frequency tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 262,
@@ -53,7 +53,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateVennDiagram(parseResult.data)
+	const svg = await generateVennDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -62,7 +62,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 // Course: 8th grade math
 // Exercise: Create two-way frequency tables
 // Widget key: image_1
-test("venn-diagram - Create two-way frequency tables", () => {
+test("venn-diagram - Create two-way frequency tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 262,
@@ -89,7 +89,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateVennDiagram(parseResult.data)
+	const svg = await generateVennDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -98,7 +98,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 // Course: 8th grade math
 // Exercise: Create two-way frequency tables
 // Widget key: image_1
-test("venn-diagram - Create two-way frequency tables", () => {
+test("venn-diagram - Create two-way frequency tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 262,
@@ -125,7 +125,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateVennDiagram(parseResult.data)
+	const svg = await generateVennDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -134,7 +134,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 // Course: 8th grade math
 // Exercise: Create two-way frequency tables
 // Widget key: venn_image
-test("venn-diagram - Create two-way frequency tables", () => {
+test("venn-diagram - Create two-way frequency tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 262,
@@ -161,7 +161,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateVennDiagram(parseResult.data)
+	const svg = await generateVennDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -170,7 +170,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 // Course: 8th grade math
 // Exercise: Create two-way frequency tables
 // Widget key: image_1
-test("venn-diagram - Create two-way frequency tables", () => {
+test("venn-diagram - Create two-way frequency tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 262,
@@ -197,7 +197,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateVennDiagram(parseResult.data)
+	const svg = await generateVennDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -206,7 +206,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 // Course: 8th grade math
 // Exercise: Create two-way frequency tables
 // Widget key: image_1
-test("venn-diagram - Create two-way frequency tables", () => {
+test("venn-diagram - Create two-way frequency tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 262,
@@ -233,7 +233,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateVennDiagram(parseResult.data)
+	const svg = await generateVennDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -242,7 +242,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 // Course: 8th grade math
 // Exercise: Create two-way frequency tables
 // Widget key: venn_image
-test("venn-diagram - Create two-way frequency tables", () => {
+test("venn-diagram - Create two-way frequency tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 262,
@@ -269,7 +269,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateVennDiagram(parseResult.data)
+	const svg = await generateVennDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -278,7 +278,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 // Course: 8th grade math
 // Exercise: Create two-way frequency tables
 // Widget key: image_1
-test("venn-diagram - Create two-way frequency tables", () => {
+test("venn-diagram - Create two-way frequency tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 262,
@@ -305,7 +305,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateVennDiagram(parseResult.data)
+	const svg = await generateVennDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -314,7 +314,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 // Course: 8th grade math
 // Exercise: Create two-way frequency tables
 // Widget key: image_1
-test("venn-diagram - Create two-way frequency tables", () => {
+test("venn-diagram - Create two-way frequency tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 262,
@@ -341,7 +341,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateVennDiagram(parseResult.data)
+	const svg = await generateVennDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
@@ -350,7 +350,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 // Course: 8th grade math
 // Exercise: Create two-way frequency tables
 // Widget key: venn_image
-test("venn-diagram - Create two-way frequency tables", () => {
+test("venn-diagram - Create two-way frequency tables", async () => {
 	const input = {
 	"width": 350,
 	"height": 262,
@@ -377,7 +377,7 @@ test("venn-diagram - Create two-way frequency tables", () => {
 	}
 
 	// Generate the widget
-	const svg = generateVennDiagram(parseResult.data)
+	const svg = await generateVennDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
 
