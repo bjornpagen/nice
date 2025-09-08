@@ -1,4 +1,5 @@
 import { z } from "zod"
+import * as errors from "@superbuilders/errors"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
 import { PADDING } from "@/lib/widgets/utils/constants"
@@ -234,6 +235,23 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 	const lineLength = (isHorizontal ? width : height) - 2 * PADDING
 
 	if (min >= max) return `<svg width="${width}" height="${height}"></svg>`
+	
+	// Validate that start value and all action points stay within bounds
+	if (startValue < min || startValue > max) {
+		throw errors.new(`start value ${startValue} is outside bounds [${min}, ${max}]`)
+	}
+	
+	let currentValue = startValue
+	for (let i = 0; i < actions.length; i++) {
+		const action = actions[i]
+		if (!action) continue
+		
+		currentValue += action.delta
+		if (currentValue < min || currentValue > max) {
+			throw errors.new(`action ${i + 1} (delta: ${action.delta}) results in value ${currentValue} outside bounds [${min}, ${max}]`)
+		}
+	}
+	
 	const scale = lineLength / (max - min)
 
 	const canvas = new CanvasImpl({
