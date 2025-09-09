@@ -142,6 +142,7 @@ import {
 	RectangularFrameDiagramPropsSchema
 } from "@/lib/widgets/generators/rectangular-frame-diagram"
 import { generateScaleCopiesSlider, ScaleCopiesSliderPropsSchema } from "@/lib/widgets/generators/scale-copies-slider"
+import { generateSimpleArrow, SimpleArrowPropsSchema } from "@/lib/widgets/generators/simple-arrow"
 import { generateScatterPlot, ScatterPlotPropsSchema } from "@/lib/widgets/generators/scatter-plot"
 import {
 	generateShapeTransformationGraph,
@@ -226,6 +227,7 @@ export const allWidgetSchemas = {
 	ratioBoxDiagram: RatioBoxDiagramPropsSchema,
 	rectangularFrameDiagram: RectangularFrameDiagramPropsSchema,
 	scaleCopiesSlider: ScaleCopiesSliderPropsSchema,
+	simpleArrow: SimpleArrowPropsSchema,
 	scatterPlot: ScatterPlotPropsSchema,
 	stackedItemsDiagram: StackedItemsDiagramPropsSchema,
 	tapeDiagram: TapeDiagramPropsSchema,
@@ -304,6 +306,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.ratioBoxDiagram,
 	typedSchemas.rectangularFrameDiagram,
 	typedSchemas.scaleCopiesSlider,
+	typedSchemas.simpleArrow,
 	typedSchemas.scatterPlot,
 	typedSchemas.stackedItemsDiagram,
 	typedSchemas.tapeDiagram,
@@ -387,6 +390,7 @@ export {
 	RatioBoxDiagramPropsSchema,
 	RectangularFrameDiagramPropsSchema,
 	ScaleCopiesSliderPropsSchema,
+	SimpleArrowPropsSchema,
 	ScatterPlotPropsSchema,
 	ShapeTransformationGraphPropsSchema,
 	StackedItemsDiagramPropsSchema,
@@ -462,6 +466,7 @@ export {
 	generateRatioBoxDiagram,
 	generateRectangularFrameDiagram,
 	generateScaleCopiesSlider,
+	generateSimpleArrow,
 	generateScatterPlot,
 	generateStackedItemsDiagram,
 	generateTapeDiagram,
@@ -591,6 +596,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateRectangularFrameDiagram(widget)
 		case "scaleCopiesSlider":
 			return await generateScaleCopiesSlider(widget)
+		case "simpleArrow":
+			return generateSimpleArrow(widget)
 		case "scatterPlot":
 			return await generateScatterPlot(widget)
 		case "shapeTransformationGraph":
