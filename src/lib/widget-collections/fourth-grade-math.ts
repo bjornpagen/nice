@@ -1,5 +1,6 @@
 import {
 	AdditionWithRegroupingPropsSchema,
+	AreaModelMultiplicationPropsSchema,
 	BarChartPropsSchema,
 	BoxGridPropsSchema,
 	DataTablePropsSchema,
@@ -33,7 +34,8 @@ export const fourthGradeMathCollection = {
 		fractionNumberLine: FractionNumberLinePropsSchema,
 		boxGrid: BoxGridPropsSchema,
 		barChart: BarChartPropsSchema,
-		equivalentFractionModel: EquivalentFractionModelPropsSchema
+		equivalentFractionModel: EquivalentFractionModelPropsSchema,
+		areaModelMultiplication: AreaModelMultiplicationPropsSchema
 	},
 	widgetTypeKeys: [
 		"dataTable",
@@ -50,6 +52,7 @@ export const fourthGradeMathCollection = {
 		"fractionNumberLine",
 		"boxGrid",
 		"barChart",
-		"equivalentFractionModel"
+		"equivalentFractionModel",
+		"areaModelMultiplication"
 	] as const
 } as const

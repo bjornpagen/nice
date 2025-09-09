@@ -69,6 +69,7 @@ import {
 	generateVerticalArithmeticSetup
 } from "@/lib/widgets/generators"
 import { generateAdditionWithRegrouping } from "@/lib/widgets/generators/addition-with-regrouping"
+import { generateAreaModelMultiplication } from "@/lib/widgets/generators/area-model-multiplication"
 import { generateDivisionModelDiagram } from "@/lib/widgets/generators/division-model-diagram"
 import { generateEquivalentFractionModel } from "@/lib/widgets/generators/equivalent-fraction-model"
 import { generateFactorizationDiagram } from "@/lib/widgets/generators/factorization-diagram"
@@ -78,6 +79,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 	switch (widget.type) {
 		case "areaGraph":
 			return await generateAreaGraph(widget)
+		case "areaModelMultiplication":
+			return await generateAreaModelMultiplication(widget)
 		case "threeDIntersectionDiagram":
 			return await generateThreeDIntersectionDiagram(widget)
 		case "absoluteValueNumberLine":

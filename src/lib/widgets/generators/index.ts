@@ -15,6 +15,10 @@ import {
 	generateAdditionWithRegrouping
 } from "@/lib/widgets/generators/addition-with-regrouping"
 import { AngleDiagramPropsSchema, generateAngleDiagram } from "@/lib/widgets/generators/angle-diagram"
+import {
+	AreaModelMultiplicationPropsSchema,
+	generateAreaModelMultiplication
+} from "@/lib/widgets/generators/area-model-multiplication"
 import { AreaGraphPropsSchema, generateAreaGraph } from "@/lib/widgets/generators/area-graph"
 import { BarChartPropsSchema, generateBarChart } from "@/lib/widgets/generators/bar-chart"
 import { BoxGridPropsSchema, generateBoxGrid } from "@/lib/widgets/generators/box-grid"
@@ -172,6 +176,7 @@ export const allWidgetSchemas = {
 	threeDIntersectionDiagram: ThreeDIntersectionDiagramPropsSchema,
 	absoluteValueNumberLine: AbsoluteValueNumberLinePropsSchema,
 	angleDiagram: AngleDiagramPropsSchema,
+	areaModelMultiplication: AreaModelMultiplicationPropsSchema,
 	areaGraph: AreaGraphPropsSchema,
 	barChart: BarChartPropsSchema,
 	boxGrid: BoxGridPropsSchema,
@@ -251,6 +256,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.threeDIntersectionDiagram,
 	typedSchemas.absoluteValueNumberLine,
 	typedSchemas.angleDiagram,
+	typedSchemas.areaModelMultiplication,
 	typedSchemas.areaGraph,
 	typedSchemas.barChart,
 	typedSchemas.boxGrid,
@@ -332,6 +338,7 @@ export {
 	ThreeDIntersectionDiagramPropsSchema,
 	AbsoluteValueNumberLinePropsSchema,
 	AngleDiagramPropsSchema,
+	AreaModelMultiplicationPropsSchema,
 	AreaGraphPropsSchema,
 	BarChartPropsSchema,
 	BoxGridPropsSchema,
@@ -406,6 +413,7 @@ export {
 	generateThreeDIntersectionDiagram,
 	generateAbsoluteValueNumberLine,
 	generateAngleDiagram,
+	generateAreaModelMultiplication,
 	generateAreaGraph,
 	generateBarChart,
 	generateBoxGrid,
@@ -484,6 +492,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateAbsoluteValueNumberLine(widget)
 		case "angleDiagram":
 			return await generateAngleDiagram(widget)
+		case "areaModelMultiplication":
+			return await generateAreaModelMultiplication(widget)
 		case "areaGraph":
 			return await generateAreaGraph(widget)
 		case "barChart":
