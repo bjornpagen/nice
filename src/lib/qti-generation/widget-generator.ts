@@ -68,6 +68,7 @@ import {
 	generateVennDiagram,
 	generateVerticalArithmeticSetup
 } from "@/lib/widgets/generators"
+import { generateFractionFrequencyPlot } from "@/lib/widgets/generators/fraction-frequency-plot"
 
 export async function generateWidget(widget: Widget): Promise<string> {
 	switch (widget.type) {
@@ -200,6 +201,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateUrlImage(widget)
 		case "pieChart":
 			return await generatePieChart(widget)
+		case "fractionFrequencyPlot":
+			return await generateFractionFrequencyPlot(widget)
 		default:
 			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)

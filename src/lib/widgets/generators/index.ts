@@ -139,6 +139,7 @@ import {
 	generateVerticalArithmeticSetup,
 	VerticalArithmeticSetupPropsSchema
 } from "@/lib/widgets/generators/vertical-arithmetic-setup"
+import { generateFractionFrequencyPlot, FractionFrequencyPlotPropsSchema } from "@/lib/widgets/generators/fraction-frequency-plot"
 
 // This object now contains every widget schema from every collection.
 // It serves as a master lookup for dynamic schema generation and compilation.
@@ -207,8 +208,9 @@ export const allWidgetSchemas = {
 	vennDiagram: VennDiagramPropsSchema,
 	verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema,
 	parallelogramTrapezoidDiagram: ParallelogramTrapezoidDiagramPropsSchema,
-	pieChart: PieChartWidgetPropsSchema
-}
+	pieChart: PieChartWidgetPropsSchema,
+	fractionFrequencyPlot: FractionFrequencyPlotPropsSchema
+} as const
 
 // The `type` field is now included in the base schemas, so we remove .extend()
 export const typedSchemas = allWidgetSchemas
@@ -278,7 +280,8 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.vennDiagram,
 	typedSchemas.verticalArithmeticSetup,
 	typedSchemas.parallelogramTrapezoidDiagram,
-	typedSchemas.pieChart
+	typedSchemas.pieChart,
+	typedSchemas.fractionFrequencyPlot
 ] as const
 
 export const WidgetSchema = z.union([
@@ -354,7 +357,8 @@ export {
 	UrlImageWidgetPropsSchema,
 	VennDiagramPropsSchema,
 	VerticalArithmeticSetupPropsSchema,
-	PieChartWidgetPropsSchema
+	PieChartWidgetPropsSchema,
+	FractionFrequencyPlotPropsSchema
 }
 
 // Export the individual generators for direct use
@@ -422,7 +426,8 @@ export {
 	generateVennDiagram,
 	generateVerticalArithmeticSetup,
 	generateParallelogramTrapezoidDiagram,
-	generatePieChart
+	generatePieChart,
+	generateFractionFrequencyPlot
 }
 
 // The generateWidget function is a comprehensive switch that can handle any widget type.
@@ -533,8 +538,6 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateScaleCopiesSlider(widget)
 		case "scatterPlot":
 			return await generateScatterPlot(widget)
-		case "shapeTransformationGraph":
-			return await generateShapeTransformationGraph(widget)
 		case "stackedItemsDiagram":
 			return await generateStackedItemsDiagram(widget)
 		case "tapeDiagram":
@@ -557,6 +560,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateVerticalArithmeticSetup(widget)
 		case "pieChart":
 			return await generatePieChart(widget)
+		case "fractionFrequencyPlot":
+			return await generateFractionFrequencyPlot(widget)
 		default:
 			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
