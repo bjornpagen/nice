@@ -1,18 +1,34 @@
-import { DataTablePropsSchema, TapeDiagramPropsSchema, CirclePieceComparisonDiagramPropsSchema, FractionFrequencyPlotPropsSchema, DivisionModelDiagramPropsSchema, FactorizationDiagramPropsSchema, NumberLinePropsSchema, EquivalentFractionModelPropsSchema } from "@/lib/widgets/generators"
+import {
+	BarChartPropsSchema,
+	BoxGridPropsSchema,
+	DataTablePropsSchema,
+	FractionNumberLinePropsSchema,
+	NumberLinePropsSchema,
+	SubtractionWithRegroupingPropsSchema,
+	TapeDiagramPropsSchema,
+	VerticalArithmeticSetupPropsSchema
+} from "@/lib/widgets/generators"
 
 export const fourthGradeMathCollection = {
 	name: "fourth-grade-math",
 	schemas: {
 		dataTable: DataTablePropsSchema,
 		tapeDiagram: TapeDiagramPropsSchema,
-		circlePieceComparisonDiagram: CirclePieceComparisonDiagramPropsSchema,
-		fractionFrequencyPlot: FractionFrequencyPlotPropsSchema,
-		divisionModelDiagram: DivisionModelDiagramPropsSchema,
-		factorizationDiagram: FactorizationDiagramPropsSchema,
 		numberLine: NumberLinePropsSchema,
-		equivalentFractionModel: EquivalentFractionModelPropsSchema
+		subtractionWithRegrouping: SubtractionWithRegroupingPropsSchema,
+		verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema,
+		fractionNumberLine: FractionNumberLinePropsSchema,
+		boxGrid: BoxGridPropsSchema,
+		barChart: BarChartPropsSchema
 	},
-	widgetTypeKeys: ["dataTable", "tapeDiagram", "circlePieceComparisonDiagram", "fractionFrequencyPlot", "divisionModelDiagram", "factorizationDiagram", "numberLine", "equivalentFractionModel"] as const
+	widgetTypeKeys: [
+		"dataTable",
+		"tapeDiagram",
+		"numberLine",
+		"subtractionWithRegrouping",
+		"verticalArithmeticSetup",
+		"fractionNumberLine",
+		"boxGrid",
+		"barChart"
+	] as const
 } as const
-
-

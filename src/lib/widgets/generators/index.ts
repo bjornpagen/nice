@@ -16,7 +16,6 @@ import { BarChartPropsSchema, generateBarChart } from "@/lib/widgets/generators/
 import { BoxGridPropsSchema, generateBoxGrid } from "@/lib/widgets/generators/box-grid"
 import { BoxPlotPropsSchema, generateBoxPlot } from "@/lib/widgets/generators/box-plot"
 import { CircleDiagramPropsSchema, generateCircleDiagram } from "@/lib/widgets/generators/circle-diagram"
-import { generateCirclePieceComparisonDiagram, CirclePieceComparisonDiagramPropsSchema } from "@/lib/widgets/generators/circle-piece-comparison-diagram"
 import {
 	CompositeShapeDiagramPropsSchema,
 	generateCompositeShapeDiagram
@@ -54,8 +53,6 @@ import {
 } from "@/lib/widgets/generators/geometric-solid-diagram"
 import { generateHangerDiagram, HangerDiagramPropsSchema } from "@/lib/widgets/generators/hanger-diagram"
 import { generateHistogram, HistogramPropsSchema } from "@/lib/widgets/generators/histogram"
-import { generateNPolygon, NPolygonPropsSchema } from "@/lib/widgets/generators/n-polygon"
-
 import {
 	generateInequalityNumberLine,
 	InequalityNumberLinePropsSchema
@@ -63,6 +60,7 @@ import {
 import { generateKeelingCurve, KeelingCurvePropsSchema } from "@/lib/widgets/generators/keeling-curve"
 import { generateLineEquationGraph, LineEquationGraphPropsSchema } from "@/lib/widgets/generators/line-equation-graph"
 import { generateLineGraph, LineGraphPropsSchema } from "@/lib/widgets/generators/line-graph"
+import { generateNPolygon, NPolygonPropsSchema } from "@/lib/widgets/generators/n-polygon"
 import { generateNumberLine, NumberLinePropsSchema } from "@/lib/widgets/generators/number-line"
 import {
 	generateNumberLineForOpposites,
@@ -125,6 +123,10 @@ import {
 	generateStackedItemsDiagram,
 	StackedItemsDiagramPropsSchema
 } from "@/lib/widgets/generators/stacked-items-diagram"
+import {
+	generateSubtractionWithRegrouping,
+	SubtractionWithRegroupingPropsSchema
+} from "@/lib/widgets/generators/subtraction-with-regrouping"
 import { generateTapeDiagram, TapeDiagramPropsSchema } from "@/lib/widgets/generators/tape-diagram"
 import {
 	generateTransformationDiagram,
@@ -139,10 +141,6 @@ import {
 	generateVerticalArithmeticSetup,
 	VerticalArithmeticSetupPropsSchema
 } from "@/lib/widgets/generators/vertical-arithmetic-setup"
-import { generateFractionFrequencyPlot, FractionFrequencyPlotPropsSchema } from "@/lib/widgets/generators/fraction-frequency-plot"
-import { generateDivisionModelDiagram, DivisionModelDiagramPropsSchema } from "@/lib/widgets/generators/division-model-diagram"
-import { generateFactorizationDiagram, FactorizationDiagramPropsSchema } from "@/lib/widgets/generators/factorization-diagram"
-import { generateEquivalentFractionModel, EquivalentFractionModelPropsSchema } from "@/lib/widgets/generators/equivalent-fraction-model"
 
 // This object now contains every widget schema from every collection.
 // It serves as a master lookup for dynamic schema generation and compilation.
@@ -155,7 +153,6 @@ export const allWidgetSchemas = {
 	boxGrid: BoxGridPropsSchema,
 	boxPlot: BoxPlotPropsSchema,
 	circleDiagram: CircleDiagramPropsSchema,
-	circlePieceComparisonDiagram: CirclePieceComparisonDiagramPropsSchema,
 	compositeShapeDiagram: CompositeShapeDiagramPropsSchema,
 	conceptualGraph: ConceptualGraphPropsSchema,
 	coordinatePlane: CoordinatePlaneComprehensivePropsSchema,
@@ -212,11 +209,8 @@ export const allWidgetSchemas = {
 	verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema,
 	parallelogramTrapezoidDiagram: ParallelogramTrapezoidDiagramPropsSchema,
 	pieChart: PieChartWidgetPropsSchema,
-	fractionFrequencyPlot: FractionFrequencyPlotPropsSchema,
-	divisionModelDiagram: DivisionModelDiagramPropsSchema,
-	factorizationDiagram: FactorizationDiagramPropsSchema,
-	equivalentFractionModel: EquivalentFractionModelPropsSchema
-} as const
+	subtractionWithRegrouping: SubtractionWithRegroupingPropsSchema
+}
 
 // The `type` field is now included in the base schemas, so we remove .extend()
 export const typedSchemas = allWidgetSchemas
@@ -232,7 +226,6 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.boxGrid,
 	typedSchemas.boxPlot,
 	typedSchemas.circleDiagram,
-	typedSchemas.circlePieceComparisonDiagram,
 	typedSchemas.compositeShapeDiagram,
 	typedSchemas.conceptualGraph,
 	typedSchemas.coordinatePlane,
@@ -287,10 +280,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.verticalArithmeticSetup,
 	typedSchemas.parallelogramTrapezoidDiagram,
 	typedSchemas.pieChart,
-	typedSchemas.fractionFrequencyPlot,
-	typedSchemas.divisionModelDiagram,
-	typedSchemas.factorizationDiagram,
-	typedSchemas.equivalentFractionModel
+	typedSchemas.subtractionWithRegrouping
 ] as const
 
 export const WidgetSchema = z.union([
@@ -311,7 +301,6 @@ export {
 	BoxGridPropsSchema,
 	BoxPlotPropsSchema,
 	CircleDiagramPropsSchema,
-	CirclePieceComparisonDiagramPropsSchema,
 	CompositeShapeDiagramPropsSchema,
 	ConceptualGraphPropsSchema,
 	CoordinatePlaneComprehensivePropsSchema,
@@ -367,10 +356,7 @@ export {
 	VennDiagramPropsSchema,
 	VerticalArithmeticSetupPropsSchema,
 	PieChartWidgetPropsSchema,
-	FractionFrequencyPlotPropsSchema,
-	DivisionModelDiagramPropsSchema,
-	FactorizationDiagramPropsSchema,
-	EquivalentFractionModelPropsSchema
+	SubtractionWithRegroupingPropsSchema
 }
 
 // Export the individual generators for direct use
@@ -383,7 +369,6 @@ export {
 	generateBoxGrid,
 	generateBoxPlot,
 	generateCircleDiagram,
-	generateCirclePieceComparisonDiagram,
 	generateCompositeShapeDiagram,
 	generateConceptualGraph,
 	generateCoordinatePlaneComprehensive as generateCoordinatePlane,
@@ -439,10 +424,7 @@ export {
 	generateVerticalArithmeticSetup,
 	generateParallelogramTrapezoidDiagram,
 	generatePieChart,
-	generateFractionFrequencyPlot,
-	generateDivisionModelDiagram,
-	generateFactorizationDiagram,
-	generateEquivalentFractionModel
+	generateSubtractionWithRegrouping
 }
 
 // The generateWidget function is a comprehensive switch that can handle any widget type.
@@ -464,8 +446,6 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateBoxPlot(widget)
 		case "circleDiagram":
 			return await generateCircleDiagram(widget)
-		case "circlePieceComparisonDiagram":
-			return await generateCirclePieceComparisonDiagram(widget)
 		case "compositeShapeDiagram":
 			return await generateCompositeShapeDiagram(widget)
 		case "conceptualGraph":
@@ -553,6 +533,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateScaleCopiesSlider(widget)
 		case "scatterPlot":
 			return await generateScatterPlot(widget)
+		case "shapeTransformationGraph":
+			return await generateShapeTransformationGraph(widget)
 		case "stackedItemsDiagram":
 			return await generateStackedItemsDiagram(widget)
 		case "tapeDiagram":
@@ -575,14 +557,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateVerticalArithmeticSetup(widget)
 		case "pieChart":
 			return await generatePieChart(widget)
-		case "fractionFrequencyPlot":
-			return await generateFractionFrequencyPlot(widget)
-		case "divisionModelDiagram":
-			return await generateDivisionModelDiagram(widget)
-		case "factorizationDiagram":
-			return await generateFactorizationDiagram(widget)
-		case "equivalentFractionModel":
-			return await generateEquivalentFractionModel(widget)
+		case "subtractionWithRegrouping":
+			return await generateSubtractionWithRegrouping(widget)
 		default:
 			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
