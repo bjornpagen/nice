@@ -124,6 +124,10 @@ import { generatePointPlotGraph, PointPlotGraphPropsSchema } from "@/lib/widgets
 import { generatePolygonGraph, PolygonGraphPropsSchema } from "@/lib/widgets/generators/polygon-graph"
 import { generatePolyhedronDiagram, PolyhedronDiagramPropsSchema } from "@/lib/widgets/generators/polyhedron-diagram"
 import {
+	generateProtractorAngleDiagram,
+	ProtractorAngleDiagramPropsSchema
+} from "@/lib/widgets/generators/protractor-angle-diagram"
+import {
 	generatePolyhedronNetDiagram,
 	PolyhedronNetDiagramPropsSchema
 } from "@/lib/widgets/generators/polyhedron-net-diagram"
@@ -207,6 +211,7 @@ export const allWidgetSchemas = {
 	pointPlotGraph: PointPlotGraphPropsSchema,
 	populationChangeEventGraph: PopulationChangeEventGraphPropsSchema,
 	polygonGraph: PolygonGraphPropsSchema,
+	protractorAngleDiagram: ProtractorAngleDiagramPropsSchema,
 	shapeTransformationGraph: ShapeTransformationGraphPropsSchema,
 	dataTable: DataTablePropsSchema,
 	discreteObjectRatioDiagram: DiscreteObjectRatioDiagramPropsSchema,
@@ -291,6 +296,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.pointPlotGraph,
 	typedSchemas.populationChangeEventGraph,
 	typedSchemas.polygonGraph,
+	typedSchemas.protractorAngleDiagram,
 	typedSchemas.shapeTransformationGraph,
 	typedSchemas.dataTable,
 	typedSchemas.discreteObjectRatioDiagram,
@@ -419,6 +425,7 @@ export {
 	TreeDiagramPropsSchema,
 	TriangleDiagramPropsSchema,
 	PeriodicTableWidgetPropsSchema,
+	ProtractorAngleDiagramPropsSchema,
 	UnitBlockDiagramPropsSchema,
 	UrlImageWidgetPropsSchema,
 	VennDiagramPropsSchema,
@@ -497,6 +504,7 @@ export {
 	generateTreeDiagram,
 	generateTriangleDiagram,
 	generatePeriodicTable,
+	generateProtractorAngleDiagram,
 	generateUnitBlockDiagram,
 	generateUrlImage,
 	generateVennDiagram,
@@ -612,6 +620,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generatePolyhedronDiagram(widget)
 		case "polyhedronNetDiagram":
 			return await generatePolyhedronNetDiagram(widget)
+		case "protractorAngleDiagram":
+			return await generateProtractorAngleDiagram(widget)
 		case "probabilitySpinner":
 			return await generateProbabilitySpinner(widget)
 		case "pythagoreanProofDiagram":
