@@ -51,7 +51,7 @@ describe("Widget type consistency", () => {
 	test("widget count is as expected", () => {
 		const schemaKeys = Object.keys(typedSchemas)
 		// Update this number when adding/removing widgets
-		const EXPECTED_WIDGET_COUNT = 68
+		const EXPECTED_WIDGET_COUNT = 69
 		expect(schemaKeys.length).toBe(EXPECTED_WIDGET_COUNT)
 	})
 })

@@ -16,6 +16,7 @@ import { BarChartPropsSchema, generateBarChart } from "@/lib/widgets/generators/
 import { BoxGridPropsSchema, generateBoxGrid } from "@/lib/widgets/generators/box-grid"
 import { BoxPlotPropsSchema, generateBoxPlot } from "@/lib/widgets/generators/box-plot"
 import { CircleDiagramPropsSchema, generateCircleDiagram } from "@/lib/widgets/generators/circle-diagram"
+import { generateFractionModelDiagram, FractionModelDiagramPropsSchema } from "@/lib/widgets/generators/fractional-model-diagram"
 import {
 	CompositeShapeDiagramPropsSchema,
 	generateCompositeShapeDiagram
@@ -141,6 +142,10 @@ import {
 	generateVerticalArithmeticSetup,
 	VerticalArithmeticSetupPropsSchema
 } from "@/lib/widgets/generators/vertical-arithmetic-setup"
+import { generateFractionFrequencyPlot, FractionFrequencyPlotPropsSchema } from "@/lib/widgets/generators/fraction-frequency-plot"
+import { generateDivisionModelDiagram, DivisionModelDiagramPropsSchema } from "@/lib/widgets/generators/division-model-diagram"
+import { generateFactorizationDiagram, FactorizationDiagramPropsSchema } from "@/lib/widgets/generators/factorization-diagram"
+import { generateEquivalentFractionModel, EquivalentFractionModelPropsSchema } from "@/lib/widgets/generators/equivalent-fraction-model"
 
 // This object now contains every widget schema from every collection.
 // It serves as a master lookup for dynamic schema generation and compilation.
@@ -153,6 +158,7 @@ export const allWidgetSchemas = {
 	boxGrid: BoxGridPropsSchema,
 	boxPlot: BoxPlotPropsSchema,
 	circleDiagram: CircleDiagramPropsSchema,
+	fractionModelDiagram: FractionModelDiagramPropsSchema,
 	compositeShapeDiagram: CompositeShapeDiagramPropsSchema,
 	conceptualGraph: ConceptualGraphPropsSchema,
 	coordinatePlane: CoordinatePlaneComprehensivePropsSchema,
@@ -209,6 +215,10 @@ export const allWidgetSchemas = {
 	verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema,
 	parallelogramTrapezoidDiagram: ParallelogramTrapezoidDiagramPropsSchema,
 	pieChart: PieChartWidgetPropsSchema,
+	fractionFrequencyPlot: FractionFrequencyPlotPropsSchema,
+	divisionModelDiagram: DivisionModelDiagramPropsSchema,
+	factorizationDiagram: FactorizationDiagramPropsSchema,
+	equivalentFractionModel: EquivalentFractionModelPropsSchema,
 	subtractionWithRegrouping: SubtractionWithRegroupingPropsSchema
 }
 
@@ -226,6 +236,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.boxGrid,
 	typedSchemas.boxPlot,
 	typedSchemas.circleDiagram,
+	typedSchemas.fractionModelDiagram,
 	typedSchemas.compositeShapeDiagram,
 	typedSchemas.conceptualGraph,
 	typedSchemas.coordinatePlane,
@@ -280,6 +291,10 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.verticalArithmeticSetup,
 	typedSchemas.parallelogramTrapezoidDiagram,
 	typedSchemas.pieChart,
+	typedSchemas.fractionFrequencyPlot,
+	typedSchemas.divisionModelDiagram,
+	typedSchemas.factorizationDiagram,
+	typedSchemas.equivalentFractionModel,
 	typedSchemas.subtractionWithRegrouping
 ] as const
 
@@ -301,6 +316,7 @@ export {
 	BoxGridPropsSchema,
 	BoxPlotPropsSchema,
 	CircleDiagramPropsSchema,
+	FractionModelDiagramPropsSchema,
 	CompositeShapeDiagramPropsSchema,
 	ConceptualGraphPropsSchema,
 	CoordinatePlaneComprehensivePropsSchema,
@@ -356,6 +372,10 @@ export {
 	VennDiagramPropsSchema,
 	VerticalArithmeticSetupPropsSchema,
 	PieChartWidgetPropsSchema,
+	FractionFrequencyPlotPropsSchema,
+	DivisionModelDiagramPropsSchema,
+	FactorizationDiagramPropsSchema,
+	EquivalentFractionModelPropsSchema,
 	SubtractionWithRegroupingPropsSchema
 }
 
@@ -369,6 +389,7 @@ export {
 	generateBoxGrid,
 	generateBoxPlot,
 	generateCircleDiagram,
+	generateFractionModelDiagram,
 	generateCompositeShapeDiagram,
 	generateConceptualGraph,
 	generateCoordinatePlaneComprehensive as generateCoordinatePlane,
@@ -424,6 +445,10 @@ export {
 	generateVerticalArithmeticSetup,
 	generateParallelogramTrapezoidDiagram,
 	generatePieChart,
+	generateFractionFrequencyPlot,
+	generateDivisionModelDiagram,
+	generateFactorizationDiagram,
+	generateEquivalentFractionModel,
 	generateSubtractionWithRegrouping
 }
 
@@ -446,6 +471,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateBoxPlot(widget)
 		case "circleDiagram":
 			return await generateCircleDiagram(widget)
+		case "fractionModelDiagram":
+			return await generateFractionModelDiagram(widget)
 		case "compositeShapeDiagram":
 			return await generateCompositeShapeDiagram(widget)
 		case "conceptualGraph":
@@ -557,6 +584,14 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateVerticalArithmeticSetup(widget)
 		case "pieChart":
 			return await generatePieChart(widget)
+		case "fractionFrequencyPlot":
+			return await generateFractionFrequencyPlot(widget)
+		case "divisionModelDiagram":
+			return await generateDivisionModelDiagram(widget)
+		case "factorizationDiagram":
+			return await generateFactorizationDiagram(widget)
+		case "equivalentFractionModel":
+			return await generateEquivalentFractionModel(widget)
 		case "subtractionWithRegrouping":
 			return await generateSubtractionWithRegrouping(widget)
 		default:

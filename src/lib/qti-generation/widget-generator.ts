@@ -9,7 +9,7 @@ import {
 	generateBoxGrid,
 	generateBoxPlot,
 	generateCircleDiagram,
-	generateCirclePieceComparisonDiagram,
+	generateFractionModelDiagram,
 	generateCompositeShapeDiagram,
 	generateConceptualGraph,
 	generateCoordinatePlane,
@@ -72,6 +72,7 @@ import { generateFractionFrequencyPlot } from "@/lib/widgets/generators/fraction
 import { generateEquivalentFractionModel } from "@/lib/widgets/generators/equivalent-fraction-model"
 import { generateFactorizationDiagram } from "@/lib/widgets/generators/factorization-diagram"
 import { generateDivisionModelDiagram } from "@/lib/widgets/generators/division-model-diagram"
+import { generateSubtractionWithRegrouping } from "@/lib/widgets/generators/subtraction-with-regrouping"
 
 export async function generateWidget(widget: Widget): Promise<string> {
 	switch (widget.type) {
@@ -93,8 +94,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateBoxPlot(widget)
 		case "circleDiagram":
 			return await generateCircleDiagram(widget)
-		case "circlePieceComparisonDiagram":
-			return await generateCirclePieceComparisonDiagram(widget)
+		case "fractionModelDiagram":
+			return await generateFractionModelDiagram(widget)
 		case "compositeShapeDiagram":
 			return await generateCompositeShapeDiagram(widget)
 		case "coordinatePlane":
@@ -212,6 +213,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateFactorizationDiagram(widget)
 		case "equivalentFractionModel":
 			return await generateEquivalentFractionModel(widget)
+		case "subtractionWithRegrouping":
+			return await generateSubtractionWithRegrouping(widget)
 		default:
 			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
