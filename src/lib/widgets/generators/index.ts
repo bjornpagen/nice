@@ -74,6 +74,10 @@ import {
 	FractionModelDiagramPropsSchema,
 	generateFractionModelDiagram
 } from "@/lib/widgets/generators/fractional-model-diagram"
+import {
+	FractionMultiplicationModelPropsSchema,
+	generateFractionMultiplicationModel
+} from "@/lib/widgets/generators/fraction-multiplication-model"
 import { FunctionPlotGraphPropsSchema, generateFunctionPlotGraph } from "@/lib/widgets/generators/function-plot-graph"
 import {
 	GeometricSolidDiagramPropsSchema,
@@ -192,6 +196,7 @@ export const allWidgetSchemas = {
 	boxPlot: BoxPlotPropsSchema,
 	circleDiagram: CircleDiagramPropsSchema,
 	fractionModelDiagram: FractionModelDiagramPropsSchema,
+	fractionMultiplicationModel: FractionMultiplicationModelPropsSchema,
 	compositeShapeDiagram: CompositeShapeDiagramPropsSchema,
 	conceptualGraph: ConceptualGraphPropsSchema,
 	coordinatePlane: CoordinatePlaneComprehensivePropsSchema,
@@ -275,6 +280,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.boxPlot,
 	typedSchemas.circleDiagram,
 	typedSchemas.fractionModelDiagram,
+	typedSchemas.fractionMultiplicationModel,
 	typedSchemas.compositeShapeDiagram,
 	typedSchemas.conceptualGraph,
 	typedSchemas.coordinatePlane,
@@ -360,6 +366,7 @@ export {
 	BoxPlotPropsSchema,
 	CircleDiagramPropsSchema,
 	FractionModelDiagramPropsSchema,
+	FractionMultiplicationModelPropsSchema,
 	CompositeShapeDiagramPropsSchema,
 	ConceptualGraphPropsSchema,
 	CoordinatePlaneComprehensivePropsSchema,
@@ -438,6 +445,7 @@ export {
 	generateBoxPlot,
 	generateCircleDiagram,
 	generateFractionModelDiagram,
+	generateFractionMultiplicationModel,
 	generateCompositeShapeDiagram,
 	generateConceptualGraph,
 	generateCoordinatePlaneComprehensive as generateCoordinatePlane,
@@ -527,6 +535,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateCircleDiagram(widget)
 		case "fractionModelDiagram":
 			return await generateFractionModelDiagram(widget)
+		case "fractionMultiplicationModel":
+			return await generateFractionMultiplicationModel(widget)
 		case "compositeShapeDiagram":
 			return await generateCompositeShapeDiagram(widget)
 		case "conceptualGraph":

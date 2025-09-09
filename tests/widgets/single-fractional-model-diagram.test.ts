@@ -223,3 +223,31 @@ test("single-fractional-model-diagram - Circle 0/5", async () => {
 	const svg = await generateSingleFractionalModelDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
+
+// Test case 9: Question 136848 example - 8/14 fraction with rectangle (base fraction for 8/14 × 4)
+test("single-fractional-model-diagram - Rectangle 8/14", async () => {
+	const input = {
+		type: "singleFractionalModelDiagram",
+		width: 350,
+		height: 200,
+		shape: {
+			type: "rectangle",
+			rows: 2,
+			columns: 7
+		},
+		totalParts: 14,
+		shadedParts: 8,
+		shadeColor: "#4472C4"
+	} satisfies SingleFractionalModelDiagramInput
+
+	// Validate the input
+	const parseResult = SingleFractionalModelDiagramPropsSchema.safeParse(input)
+	if (!parseResult.success) {
+		console.error("Schema validation failed for single-fractional-model-diagram:", parseResult.error)
+		return
+	}
+
+	// Generate the widget
+	const svg = await generateSingleFractionalModelDiagram(parseResult.data)
+	expect(svg).toMatchSnapshot()
+})
