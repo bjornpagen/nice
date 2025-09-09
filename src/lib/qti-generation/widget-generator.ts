@@ -69,6 +69,7 @@ import {
 	generateVerticalArithmeticSetup
 } from "@/lib/widgets/generators"
 import { generateFractionFrequencyPlot } from "@/lib/widgets/generators/fraction-frequency-plot"
+import { generateEquivalentFractionModel } from "@/lib/widgets/generators/equivalent-fraction-model"
 import { generateFactorizationDiagram } from "@/lib/widgets/generators/factorization-diagram"
 import { generateDivisionModelDiagram } from "@/lib/widgets/generators/division-model-diagram"
 
@@ -209,6 +210,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateDivisionModelDiagram(widget)
 		case "factorizationDiagram":
 			return await generateFactorizationDiagram(widget)
+		case "equivalentFractionModel":
+			return await generateEquivalentFractionModel(widget)
 		default:
 			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)

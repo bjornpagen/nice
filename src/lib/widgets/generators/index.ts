@@ -142,6 +142,7 @@ import {
 import { generateFractionFrequencyPlot, FractionFrequencyPlotPropsSchema } from "@/lib/widgets/generators/fraction-frequency-plot"
 import { generateDivisionModelDiagram, DivisionModelDiagramPropsSchema } from "@/lib/widgets/generators/division-model-diagram"
 import { generateFactorizationDiagram, FactorizationDiagramPropsSchema } from "@/lib/widgets/generators/factorization-diagram"
+import { generateEquivalentFractionModel, EquivalentFractionModelPropsSchema } from "@/lib/widgets/generators/equivalent-fraction-model"
 
 // This object now contains every widget schema from every collection.
 // It serves as a master lookup for dynamic schema generation and compilation.
@@ -213,7 +214,8 @@ export const allWidgetSchemas = {
 	pieChart: PieChartWidgetPropsSchema,
 	fractionFrequencyPlot: FractionFrequencyPlotPropsSchema,
 	divisionModelDiagram: DivisionModelDiagramPropsSchema,
-	factorizationDiagram: FactorizationDiagramPropsSchema
+	factorizationDiagram: FactorizationDiagramPropsSchema,
+	equivalentFractionModel: EquivalentFractionModelPropsSchema
 } as const
 
 // The `type` field is now included in the base schemas, so we remove .extend()
@@ -287,7 +289,8 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.pieChart,
 	typedSchemas.fractionFrequencyPlot,
 	typedSchemas.divisionModelDiagram,
-	typedSchemas.factorizationDiagram
+	typedSchemas.factorizationDiagram,
+	typedSchemas.equivalentFractionModel
 ] as const
 
 export const WidgetSchema = z.union([
@@ -366,7 +369,8 @@ export {
 	PieChartWidgetPropsSchema,
 	FractionFrequencyPlotPropsSchema,
 	DivisionModelDiagramPropsSchema,
-	FactorizationDiagramPropsSchema
+	FactorizationDiagramPropsSchema,
+	EquivalentFractionModelPropsSchema
 }
 
 // Export the individual generators for direct use
@@ -437,7 +441,8 @@ export {
 	generatePieChart,
 	generateFractionFrequencyPlot,
 	generateDivisionModelDiagram,
-	generateFactorizationDiagram
+	generateFactorizationDiagram,
+	generateEquivalentFractionModel
 }
 
 // The generateWidget function is a comprehensive switch that can handle any widget type.
@@ -576,6 +581,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateDivisionModelDiagram(widget)
 		case "factorizationDiagram":
 			return await generateFactorizationDiagram(widget)
+		case "equivalentFractionModel":
+			return await generateEquivalentFractionModel(widget)
 		default:
 			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
