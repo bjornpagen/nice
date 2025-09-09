@@ -60,8 +60,8 @@ test("area-model-multiplication - Multiple columns with mixed content", async ()
 	expect(svg).toMatchSnapshot()
 })
 
-// Test case 3: Area model with all derived values (showing the complete calculation)
-test("area-model-multiplication - All derived values", async () => {
+// Test case 3: Area model with specific integer values (showing the complete calculation)
+test("area-model-multiplication - Specific integer values", async () => {
 	const input = {
 		type: "areaModelMultiplication",
 		width: 450,
@@ -72,8 +72,8 @@ test("area-model-multiplication - All derived values", async () => {
 			{ type: "value", value: 8 }
 		],
 		cellContents: [
-			{ type: "derived" },
-			{ type: "derived" }
+			{ type: "value", value: 120 },
+			{ type: "value", value: 48 }
 		],
 		cellColors: ["#baffc9", "#ffffba"]
 	} satisfies AreaModelMultiplicationInput
@@ -90,7 +90,7 @@ test("area-model-multiplication - All derived values", async () => {
 	expect(svg).toMatchSnapshot()
 })
 
-// Test case 4: Larger area model with alternating derived and unknown cells
+// Test case 4: Larger area model with alternating values and unknown cells
 test("area-model-multiplication - Large model with alternating content", async () => {
 	const input = {
 		type: "areaModelMultiplication",
@@ -104,9 +104,9 @@ test("area-model-multiplication - Large model with alternating content", async (
 			{ type: "value", value: 5 }
 		],
 		cellContents: [
-			{ type: "derived" },
+			{ type: "value", value: 600 },
 			{ type: "unknown" },
-			{ type: "derived" },
+			{ type: "value", value: 180 },
 			{ type: "unknown" }
 		],
 		cellColors: ["#e0e0e0", "#ffb3ba", "#bae1ff", "#baffc9"]
@@ -137,9 +137,9 @@ test("area-model-multiplication - Missing multiplier 423", async () => {
 			{ type: "value", value: 3 }
 		],
 		cellContents: [
-			{ type: "derived" },
-			{ type: "derived" },
-			{ type: "derived" }
+			{ type: "value", value: 2000 },
+			{ type: "value", value: 100 },
+			{ type: "value", value: 15 }
 		],
 		cellColors: ["#bae1ff", "#ffb3ba", "#baffc9"]
 	} satisfies AreaModelMultiplicationInput
@@ -169,9 +169,9 @@ test("area-model-multiplication - Missing multiplier 2", async () => {
 			{ type: "value", value: 4 }
 		],
 		cellContents: [
-			{ type: "derived" },
-			{ type: "derived" },
-			{ type: "derived" }
+			{ type: "value", value: 1400 },
+			{ type: "value", value: 100 },
+			{ type: "value", value: 8 }
 		],
 		cellColors: ["#ffffba", "#ffdfba", "#e0e0e0"]
 	} satisfies AreaModelMultiplicationInput
@@ -201,9 +201,9 @@ test("area-model-multiplication - Known factors 236 × 6", async () => {
 			{ type: "value", value: 6 }
 		],
 		cellContents: [
-			{ type: "derived" },
-			{ type: "derived" },
-			{ type: "derived" }
+			{ type: "value", value: 1200 },
+			{ type: "value", value: 180 },
+			{ type: "value", value: 36 }
 		],
 		cellColors: ["#bae1ff", "#ffb3ba", "#ffdfba"]
 	} satisfies AreaModelMultiplicationInput
@@ -233,9 +233,9 @@ test("area-model-multiplication - Known factors 136 × 4", async () => {
 			{ type: "value", value: 6 }
 		],
 		cellContents: [
-			{ type: "derived" },
-			{ type: "derived" },
-			{ type: "derived" }
+			{ type: "value", value: 400 },
+			{ type: "value", value: 120 },
+			{ type: "value", value: 24 }
 		],
 		cellColors: ["#bae1ff", "#ffb3ba", "#ffdfba"]
 	} satisfies AreaModelMultiplicationInput
@@ -265,9 +265,9 @@ test("area-model-multiplication - Unknown row factor", async () => {
 			{ type: "value", value: 6 }
 		],
 		cellContents: [
-			{ type: "derived" },
-			{ type: "derived" },
-			{ type: "derived" }
+			{ type: "value", value: 1200 },
+			{ type: "value", value: 180 },
+			{ type: "value", value: 36 }
 		],
 		cellColors: ["#bae1ff", "#ffb3ba", "#ffdfba"]
 	} satisfies AreaModelMultiplicationInput
@@ -297,9 +297,9 @@ test("area-model-multiplication - Unknown column factors", async () => {
 			{ type: "unknown" }
 		],
 		cellContents: [
-			{ type: "derived" },
-			{ type: "derived" },
-			{ type: "derived" }
+			{ type: "value", value: 160 },
+			{ type: "value", value: 120 },
+			{ type: "value", value: 12 }
 		],
 		cellColors: ["#bae1ff", "#ffb3ba", "#ffdfba"]
 	} satisfies AreaModelMultiplicationInput
@@ -329,11 +329,41 @@ test("area-model-multiplication - All factors unknown", async () => {
 			{ type: "unknown" }
 		],
 		cellContents: [
-			{ type: "derived" },
-			{ type: "derived" },
-			{ type: "derived" }
+			{ type: "unknown" },
+			{ type: "unknown" },
+			{ type: "unknown" }
 		],
 		cellColors: ["#bae1ff", "#ffb3ba", "#ffdfba"]
+	} satisfies AreaModelMultiplicationInput
+
+	// Validate the input
+	const parseResult = AreaModelMultiplicationPropsSchema.safeParse(input)
+	if (!parseResult.success) {
+		console.error("Schema validation failed for area-model-multiplication:", parseResult.error)
+		return
+	}
+
+	// Generate the widget
+	const svg = await generateAreaModelMultiplication(parseResult.data)
+	expect(svg).toMatchSnapshot()
+})
+
+// Test case 12: Division problem example - 5,632 ÷ 8 using area model (like Question 9 from user example)
+test("area-model-multiplication - Division problem 5632 ÷ 8", async () => {
+	const input = {
+		type: "areaModelMultiplication",
+		width: 500,
+		height: 250,
+		rowFactor: { type: "value", value: 8 },
+		columnFactors: [
+			{ type: "unknown" },
+			{ type: "value", value: 32 }
+		],
+		cellContents: [
+			{ type: "value", value: 5600 },
+			{ type: "value", value: 32 }
+		],
+		cellColors: ["#2c72ae1a", "#c07ea41a"]
 	} satisfies AreaModelMultiplicationInput
 
 	// Validate the input

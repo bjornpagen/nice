@@ -19,12 +19,13 @@ const createValueOrUnknownSchema = () => z.discriminatedUnion("type", [
 // Defines the content for a single cell in the area model.
 const CellContentSchema = z.discriminatedUnion("type", [
     z.object({
-        type: z.literal("derived").describe("The cell's value is derived by multiplying the corresponding row and column factors.")
+        type: z.literal("value").describe("The cell displays a specific positive integer value."),
+        value: z.number().int().positive().describe("The positive integer value to display in the cell.")
     }),
     z.object({
         type: z.literal("unknown").describe("The cell's value is unknown and should be represented by an empty box.")
     })
-]).describe("Determines what is displayed inside a cell: the calculated product or an empty box for a missing number.");
+]).describe("Determines what is displayed inside a cell: a specific positive integer value or an empty box for a missing number.");
 
 // The main Zod schema for the area model multiplication widget.
 export const AreaModelMultiplicationPropsSchema = z.object({
@@ -51,9 +52,20 @@ export const generateAreaModelMultiplication: WidgetGenerator<typeof AreaModelMu
         throw new Error("The 'columnFactors', 'cellContents', and 'cellColors' arrays must have the same length.");
     }
 
-    // Helper function to get numeric value from ValueOrUnknownSchema, using 1 as default for layout
-    const getFactorValueForLayout = (factor: typeof rowFactor | typeof columnFactors[0]): number => {
-        return factor.type === "value" ? factor.value : 1;
+    // Helper function to get numeric value from ValueOrUnknownSchema
+    // For unknown factors, use place value sizing: 10^n where n is distance from end of array
+    // (rightmost = ones = 10^0, next left = tens = 10^1, next = hundreds = 10^2, etc.)
+    const getFactorValueForLayout = (factor: typeof rowFactor | typeof columnFactors[0], index?: number): number => {
+        if (factor.type === "value") {
+            return factor.value;
+        }
+        // For unknown factors, calculate place value based on position from right
+        if (index !== undefined) {
+            const distanceFromEnd = columnFactors.length - 1 - index;
+            return Math.pow(10, distanceFromEnd);
+        }
+        // Fallback for row factor (not indexed)
+        return 100;
     };
 
     const labelSpace = 40;
@@ -70,7 +82,7 @@ export const generateAreaModelMultiplication: WidgetGenerator<typeof AreaModelMu
     // Use a log-scale-like approach to prevent tiny cells from small factors
     // This ensures all cells are reasonably sized while still showing proportional relationships
     const minCellWidth = 60; // Minimum width for readability
-    const columnFactorValues = columnFactors.map(getFactorValueForLayout);
+    const columnFactorValues = columnFactors.map((factor, index) => getFactorValueForLayout(factor, index));
     const logFactors = columnFactorValues.map(factor => Math.log10(factor + 1)); // +1 to handle factor=1
     const totalLogWidth = logFactors.reduce((sum, logFactor) => sum + logFactor, 0);
     
@@ -159,29 +171,17 @@ export const generateAreaModelMultiplication: WidgetGenerator<typeof AreaModelMu
         }
 
         switch(content.type) {
-            case "derived": {
-                // Only show derived product if both factors are known
-                if (rowFactor.type === "value" && colFactor.type === "value") {
-                    const product = rowFactor.value * colFactor.value;
-                    canvas.drawText({
-                        x: cellCenterX,
-                        y: cellCenterY,
-                        text: String(product),
-                        anchor: "middle",
-                        dominantBaseline: "middle",
-                        fontPx: 20,
-                        fontWeight: theme.font.weight.bold
-                    });
-                } else {
-                    // If either factor is unknown, show unknown box
-                    const boxWidth = Math.min(colWidth * 0.6, 80);
-                    const boxHeight = 30;
-                    canvas.drawRect(cellCenterX - boxWidth / 2, cellCenterY - boxHeight / 2, boxWidth, boxHeight, {
-                        fill: theme.colors.white,
-                        stroke: theme.colors.black,
-                        strokeWidth: theme.stroke.width.base
-                    });
-                }
+            case "value": {
+                // Display the specific integer value
+                canvas.drawText({
+                    x: cellCenterX,
+                    y: cellCenterY,
+                    text: String(content.value),
+                    anchor: "middle",
+                    dominantBaseline: "middle",
+                    fontPx: 20,
+                    fontWeight: theme.font.weight.bold
+                });
                 break;
             }
             case "unknown": {
