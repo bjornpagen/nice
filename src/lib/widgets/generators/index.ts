@@ -15,11 +15,11 @@ import {
 	generateAdditionWithRegrouping
 } from "@/lib/widgets/generators/addition-with-regrouping"
 import { AngleDiagramPropsSchema, generateAngleDiagram } from "@/lib/widgets/generators/angle-diagram"
+import { AreaGraphPropsSchema, generateAreaGraph } from "@/lib/widgets/generators/area-graph"
 import {
 	AreaModelMultiplicationPropsSchema,
 	generateAreaModelMultiplication
 } from "@/lib/widgets/generators/area-model-multiplication"
-import { AreaGraphPropsSchema, generateAreaGraph } from "@/lib/widgets/generators/area-graph"
 import { BarChartPropsSchema, generateBarChart } from "@/lib/widgets/generators/bar-chart"
 import { BoxGridPropsSchema, generateBoxGrid } from "@/lib/widgets/generators/box-grid"
 import { BoxPlotPropsSchema, generateBoxPlot } from "@/lib/widgets/generators/box-plot"
@@ -67,6 +67,10 @@ import {
 	generateFractionFrequencyPlot
 } from "@/lib/widgets/generators/fraction-frequency-plot"
 import {
+	FractionMultiplicationModelPropsSchema,
+	generateFractionMultiplicationModel
+} from "@/lib/widgets/generators/fraction-multiplication-model"
+import {
 	FractionNumberLinePropsSchema,
 	generateFractionNumberLine
 } from "@/lib/widgets/generators/fraction-number-line"
@@ -74,10 +78,6 @@ import {
 	FractionModelDiagramPropsSchema,
 	generateFractionModelDiagram
 } from "@/lib/widgets/generators/fractional-model-diagram"
-import {
-	FractionMultiplicationModelPropsSchema,
-	generateFractionMultiplicationModel
-} from "@/lib/widgets/generators/fraction-multiplication-model"
 import { FunctionPlotGraphPropsSchema, generateFunctionPlotGraph } from "@/lib/widgets/generators/function-plot-graph"
 import {
 	GeometricSolidDiagramPropsSchema,
@@ -124,10 +124,6 @@ import { generatePointPlotGraph, PointPlotGraphPropsSchema } from "@/lib/widgets
 import { generatePolygonGraph, PolygonGraphPropsSchema } from "@/lib/widgets/generators/polygon-graph"
 import { generatePolyhedronDiagram, PolyhedronDiagramPropsSchema } from "@/lib/widgets/generators/polyhedron-diagram"
 import {
-	generateProtractorAngleDiagram,
-	ProtractorAngleDiagramPropsSchema
-} from "@/lib/widgets/generators/protractor-angle-diagram"
-import {
 	generatePolyhedronNetDiagram,
 	PolyhedronNetDiagramPropsSchema
 } from "@/lib/widgets/generators/polyhedron-net-diagram"
@@ -141,6 +137,10 @@ import {
 } from "@/lib/widgets/generators/population-change-event-graph"
 import { generateProbabilitySpinner, ProbabilitySpinnerPropsSchema } from "@/lib/widgets/generators/probability-spinner"
 import {
+	generateProtractorAngleDiagram,
+	ProtractorAngleDiagramPropsSchema
+} from "@/lib/widgets/generators/protractor-angle-diagram"
+import {
 	generatePythagoreanProofDiagram,
 	PythagoreanProofDiagramPropsSchema
 } from "@/lib/widgets/generators/pythagorean-proof-diagram"
@@ -150,12 +150,13 @@ import {
 	RectangularFrameDiagramPropsSchema
 } from "@/lib/widgets/generators/rectangular-frame-diagram"
 import { generateScaleCopiesSlider, ScaleCopiesSliderPropsSchema } from "@/lib/widgets/generators/scale-copies-slider"
-import { generateSimpleArrow, SimpleArrowPropsSchema } from "@/lib/widgets/generators/simple-arrow"
 import { generateScatterPlot, ScatterPlotPropsSchema } from "@/lib/widgets/generators/scatter-plot"
 import {
 	generateShapeTransformationGraph,
 	ShapeTransformationGraphPropsSchema
 } from "@/lib/widgets/generators/shape-transformation-graph"
+import { generateSimpleArrow, SimpleArrowPropsSchema } from "@/lib/widgets/generators/simple-arrow"
+import { generateSinCosineWidget, SinCosineWidgetPropsSchema } from "@/lib/widgets/generators/sin-cosine-widget"
 import {
 	generateSingleFractionalModelDiagram,
 	SingleFractionalModelDiagramPropsSchema
@@ -177,15 +178,12 @@ import { generateTreeDiagram, TreeDiagramPropsSchema } from "@/lib/widgets/gener
 import { generateTriangleDiagram, TriangleDiagramPropsSchema } from "@/lib/widgets/generators/triangle-diagram"
 import { generateUnitBlockDiagram, UnitBlockDiagramPropsSchema } from "@/lib/widgets/generators/unit-block-diagram"
 import { generateUrlImage, UrlImageWidgetPropsSchema } from "@/lib/widgets/generators/url-image"
+import { generateVectorDiagram, VectorDiagramPropsSchema } from "@/lib/widgets/generators/vector-diagram"
 import { generateVennDiagram, VennDiagramPropsSchema } from "@/lib/widgets/generators/venn-diagram"
 import {
 	generateVerticalArithmeticSetup,
 	VerticalArithmeticSetupPropsSchema
 } from "@/lib/widgets/generators/vertical-arithmetic-setup"
-import {
-	generateVectorDiagram,
-	VectorDiagramPropsSchema
-} from "@/lib/widgets/generators/vector-diagram"
 
 // This object now contains every widget schema from every collection.
 // It serves as a master lookup for dynamic schema generation and compilation.
@@ -246,6 +244,7 @@ export const allWidgetSchemas = {
 	rectangularFrameDiagram: RectangularFrameDiagramPropsSchema,
 	scaleCopiesSlider: ScaleCopiesSliderPropsSchema,
 	simpleArrow: SimpleArrowPropsSchema,
+	sinCosineWidget: SinCosineWidgetPropsSchema,
 	scatterPlot: ScatterPlotPropsSchema,
 	singleFractionalModelDiagram: SingleFractionalModelDiagramPropsSchema,
 	stackedItemsDiagram: StackedItemsDiagramPropsSchema,
@@ -329,6 +328,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.rectangularFrameDiagram,
 	typedSchemas.scaleCopiesSlider,
 	typedSchemas.simpleArrow,
+	typedSchemas.sinCosineWidget,
 	typedSchemas.scatterPlot,
 	typedSchemas.singleFractionalModelDiagram,
 	typedSchemas.stackedItemsDiagram,
@@ -416,6 +416,7 @@ export {
 	RectangularFrameDiagramPropsSchema,
 	ScaleCopiesSliderPropsSchema,
 	SimpleArrowPropsSchema,
+	SinCosineWidgetPropsSchema,
 	ScatterPlotPropsSchema,
 	ShapeTransformationGraphPropsSchema,
 	SingleFractionalModelDiagramPropsSchema,
@@ -496,6 +497,7 @@ export {
 	generateRectangularFrameDiagram,
 	generateScaleCopiesSlider,
 	generateSimpleArrow,
+	generateSinCosineWidget,
 	generateScatterPlot,
 	generateSingleFractionalModelDiagram,
 	generateStackedItemsDiagram,
@@ -634,6 +636,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateScaleCopiesSlider(widget)
 		case "simpleArrow":
 			return generateSimpleArrow(widget)
+		case "sinCosineWidget":
+			return await generateSinCosineWidget(widget)
 		case "scatterPlot":
 			return await generateScatterPlot(widget)
 		case "shapeTransformationGraph":
