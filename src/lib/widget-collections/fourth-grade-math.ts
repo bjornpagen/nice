@@ -12,9 +12,11 @@ import {
 	FractionNumberLinePropsSchema,
 	NumberLinePropsSchema,
 	NumberLineWithActionPropsSchema,
+	SimpleArrowPropsSchema,
 	SingleFractionalModelDiagramPropsSchema,
 	SubtractionWithRegroupingPropsSchema,
 	TapeDiagramPropsSchema,
+	VectorDiagramPropsSchema,
 	VerticalArithmeticSetupPropsSchema
 } from "@/lib/widgets/generators"
 
@@ -37,7 +39,9 @@ export const fourthGradeMathCollection = {
 		barChart: BarChartPropsSchema,
 		equivalentFractionModel: EquivalentFractionModelPropsSchema,
 		areaModelMultiplication: AreaModelMultiplicationPropsSchema,
-		singleFractionalModelDiagram: SingleFractionalModelDiagramPropsSchema
+		singleFractionalModelDiagram: SingleFractionalModelDiagramPropsSchema,
+		simpleArrow: SimpleArrowPropsSchema,
+		vectorDiagram: VectorDiagramPropsSchema
 	},
 	widgetTypeKeys: [
 		"dataTable",
@@ -56,6 +60,8 @@ export const fourthGradeMathCollection = {
 		"barChart",
 		"equivalentFractionModel",
 		"areaModelMultiplication",
-		"singleFractionalModelDiagram"
+		"singleFractionalModelDiagram",
+		"simpleArrow",
+		"vectorDiagram"
 	] as const
 } as const

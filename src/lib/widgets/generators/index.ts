@@ -415,6 +415,7 @@ export {
 	UnitBlockDiagramPropsSchema,
 	UrlImageWidgetPropsSchema,
 	VennDiagramPropsSchema,
+	VectorDiagramPropsSchema,
 	VerticalArithmeticSetupPropsSchema,
 	PieChartWidgetPropsSchema,
 	FractionFrequencyPlotPropsSchema,
