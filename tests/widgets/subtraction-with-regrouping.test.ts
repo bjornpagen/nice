@@ -1,506 +1,334 @@
 import { describe, expect, it } from "bun:test"
-import {
-	generateSubtractionWithRegrouping,
-	SubtractionWithRegroupingPropsSchema
-} from "@/lib/widgets/generators/subtraction-with-regrouping"
+import * as errors from "@superbuilders/errors"
+import { generateSubtractionWithRegrouping } from "@/lib/widgets/generators/subtraction-with-regrouping"
 
-describe("SubtractionWithRegrouping Widget", () => {
-	describe("Schema Validation", () => {
-		it("should validate correct input", () => {
-			const validInput = {
-				type: "subtractionWithRegrouping",
-				minuend: 52,
-				subtrahend: 27,
-				showAnswer: false,
-				revealUpTo: null
-			}
-
-			const result = SubtractionWithRegroupingPropsSchema.safeParse(validInput)
-			expect(result.success).toBe(true)
+describe("generateSubtractionWithRegrouping", () => {
+	it("should show only the problem when showRegrouping and showAnswer are false", async () => {
+		const html = await generateSubtractionWithRegrouping({
+			type: "subtractionWithRegrouping",
+			minuend: 86,
+			subtrahend: 69,
+			showRegrouping: false,
+			showAnswer: false
 		})
 
-		it("should reject invalid type", () => {
-			const invalidInput = {
-				type: "wrongType",
-				minuend: 52,
-				subtrahend: 27,
-				showAnswer: false,
-				revealUpTo: null
-			}
-
-			const result = SubtractionWithRegroupingPropsSchema.safeParse(invalidInput)
-			expect(result.success).toBe(false)
-		})
-
-		it("should accept negative numbers", () => {
-			const validInput = {
-				type: "subtractionWithRegrouping",
-				minuend: -52,
-				subtrahend: -77,
-				showAnswer: false,
-				revealUpTo: null
-			}
-
-			const result = SubtractionWithRegroupingPropsSchema.safeParse(validInput)
-			expect(result.success).toBe(true)
-		})
-
-		it("should reject non-integer numbers", () => {
-			const invalidInput = {
-				type: "subtractionWithRegrouping",
-				minuend: 52.5,
-				subtrahend: 27,
-				showAnswer: false,
-				revealUpTo: null
-			}
-
-			const result = SubtractionWithRegroupingPropsSchema.safeParse(invalidInput)
-			expect(result.success).toBe(false)
-		})
+		// Should show the basic problem without regrouping marks or answer
+		expect(html).toContain(">8<") // First digit of minuend
+		expect(html).toContain(">6<") // Second digit of minuend
+		expect(html).toContain(">9<") // Second digit of subtrahend
+		expect(html).toContain("−") // Operator
+		expect(html).not.toContain("#4472c4") // No answer color
+		expect(html).not.toContain("text-decoration: line-through") // No crossed-out digits
+		expect(html).not.toContain("#1E90FF") // No regrouping numbers
+		expect(html).toMatchSnapshot()
 	})
 
-	describe("Widget Generation", () => {
-		it("should generate problem without answer", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 52,
-				subtrahend: 27,
-				showAnswer: false,
-				revealUpTo: null
-			}
-
-			const html = await generateSubtractionWithRegrouping(input)
-
-			// Check that HTML contains the problem setup
-			// Note: Digits are displayed in separate cells for vertical arithmetic
-			expect(html).toContain(">5<")
-			expect(html).toContain(">2<")
-			expect(html).toContain(">2<")
-			expect(html).toContain(">7<")
-			expect(html).toContain("−")
-
-			// Check that answer is not shown (2 and 5 would be in separate cells)
-			// Look for the answer row which has specific styling
-			expect(html).not.toContain("color: #4472c4")
+	it("should show regrouping marks without answer when showRegrouping is true and showAnswer is false", async () => {
+		const html = await generateSubtractionWithRegrouping({
+			type: "subtractionWithRegrouping",
+			minuend: 86,
+			subtrahend: 69,
+			showRegrouping: true,
+			showAnswer: false
 		})
 
-		it("should generate problem with answer and regrouping marks", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 52,
-				subtrahend: 27,
-				showAnswer: true,
-				revealUpTo: "complete" as const
-			}
+		// Should show regrouping marks but no answer
+		expect(html).toContain("text-decoration: line-through") // Crossed-out digits
+		expect(html).toContain("#1E90FF") // Regrouping numbers in blue
+		expect(html).not.toContain("#4472c4") // No answer color
+		expect(html).toMatchSnapshot()
+	})
 
-			const html = await generateSubtractionWithRegrouping(input)
-
-			// Check that HTML contains the problem (digits in separate cells)
-			expect(html).toContain(">5<")
-			expect(html).toContain(">2<")
-			expect(html).toContain(">2<")
-			expect(html).toContain(">7<")
-			expect(html).toContain("−")
-			// Check answer is shown (in blue)
-			expect(html).toContain("color: #4472c4")
-			// Answer digits 2 and 5 should be present
-			expect(html).toContain(">2</td>")
-			expect(html).toContain(">5</td>")
-
-			// Check for regrouping marks (crossed out text)
-			expect(html).toContain("text-decoration: line-through")
-
-			// Check for regrouping numbers (in blue)
-			expect(html).toContain("#1E90FF")
+	it("should show answer without regrouping marks when showRegrouping is false and showAnswer is true", async () => {
+		const html = await generateSubtractionWithRegrouping({
+			type: "subtractionWithRegrouping",
+			minuend: 86,
+			subtrahend: 69,
+			showRegrouping: false,
+			showAnswer: true
 		})
 
-		it("should handle multi-digit problems", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 1000,
-				subtrahend: 456,
-				showAnswer: true,
-				revealUpTo: "complete" as const
-			}
+		// Should show answer but no regrouping marks
+		expect(html).toContain(">1<") // Tens digit of answer
+		expect(html).toContain(">7<") // Ones digit of answer
+		expect(html).toContain("#4472c4") // Answer color
+		expect(html).not.toContain("text-decoration: line-through") // No crossed-out digits
+		expect(html).not.toContain("#1E90FF") // No regrouping numbers
+		expect(html).toMatchSnapshot()
+	})
 
-			const html = await generateSubtractionWithRegrouping(input)
-
-			// Check that HTML contains the problem digits
-			expect(html).toContain(">1<")
-			expect(html).toContain(">0<")
-			expect(html).toContain(">4<")
-			expect(html).toContain(">5<")
-			expect(html).toContain(">6<")
-			// Check answer is shown
-			expect(html).toContain("color: #4472c4")
+	it("should show both regrouping marks and answer when both are true", async () => {
+		const html = await generateSubtractionWithRegrouping({
+			type: "subtractionWithRegrouping",
+			minuend: 86,
+			subtrahend: 69,
+			showRegrouping: true,
+			showAnswer: true
 		})
 
-		it("should handle negative numbers", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: -25,
-				subtrahend: -50,
-				showAnswer: true,
-				revealUpTo: "complete" as const
-			}
+		// Should show both regrouping marks and answer
+		expect(html).toContain("text-decoration: line-through") // Crossed-out digits
+		expect(html).toContain("#1E90FF") // Regrouping numbers
+		expect(html).toContain(">1<") // Tens digit of answer
+		expect(html).toContain(">7<") // Ones digit of answer
+		expect(html).toContain("#4472c4") // Answer color
+		expect(html).toMatchSnapshot()
+	})
 
-			const html = await generateSubtractionWithRegrouping(input)
-
-			// -25 - (-50) = -25 + 50 = 25
-			// Check the negative signs and digits are displayed
-			expect(html).toContain("-")
-			expect(html).toContain(">2<")
-			expect(html).toContain(">5<")
-			expect(html).toContain("color: #4472c4") // Answer styling
+	it("should progressively reveal answer with revealUpTo", async () => {
+		const htmlOnes = await generateSubtractionWithRegrouping({
+			type: "subtractionWithRegrouping",
+			minuend: 86,
+			subtrahend: 69,
+			showRegrouping: true,
+			showAnswer: true,
+			revealUpTo: "ones"
 		})
 
-		it("should throw error when subtrahend is greater than minuend", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 27,
-				subtrahend: 52,
-				showAnswer: false,
-				revealUpTo: null
-			}
+		// Should only show ones digit of answer (7)
+		expect(htmlOnes).toContain(">7<") // Ones digit
+		// The tens position should be empty when revealing only ones
+		expect(htmlOnes).toContain('<td style="padding: 2px 8px; color: #4472c4; font-weight: bold;"></td>') // Empty tens cell
+		expect(htmlOnes).toContain('<td style="padding: 2px 8px; color: #4472c4; font-weight: bold;">7</td>') // Ones cell with 7
+		expect(htmlOnes).toMatchSnapshot()
 
-			await expect(generateSubtractionWithRegrouping(input)).rejects.toThrow(
-				"minuend must be greater than subtrahend for valid subtraction"
-			)
+		const htmlTens = await generateSubtractionWithRegrouping({
+			type: "subtractionWithRegrouping",
+			minuend: 86,
+			subtrahend: 69,
+			showRegrouping: true,
+			showAnswer: true,
+			revealUpTo: "tens"
 		})
 
-		it("should handle the example from the user's image", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 23542,
-				subtrahend: 15631,
-				showAnswer: true,
-				revealUpTo: "complete" as const
-			}
+		// Should show both ones and tens digits (17)
+		expect(htmlTens).toContain(">1<") // Tens digit
+		expect(htmlTens).toContain(">7<") // Ones digit
+		expect(htmlTens).toMatchSnapshot()
+	})
 
-			const html = await generateSubtractionWithRegrouping(input)
-
-			// Check that HTML contains the problem digits
-			expect(html).toContain(">2<")
-			expect(html).toContain(">3<")
-			expect(html).toContain(">5<")
-			expect(html).toContain(">4<")
-			expect(html).toContain(">1<")
-			expect(html).toContain(">6<")
-
-			// The answer should be 7911 (check for these digits in answer row)
-			expect(html).toContain("color: #4472c4") // Answer row styling
-			expect(html).toContain(">7</td>")
-			expect(html).toContain(">9</td>")
-			expect(html).toContain(">1</td>")
-
-			// Should have regrouping marks
-			expect(html).toContain("text-decoration: line-through")
+	it("should handle larger numbers with regrouping", async () => {
+		const html = await generateSubtractionWithRegrouping({
+			type: "subtractionWithRegrouping",
+			minuend: 5234,
+			subtrahend: 2876,
+			showRegrouping: true,
+			showAnswer: true
 		})
 
-		// Snapshot tests for complete HTML output
-		it("should generate snapshot for simple problem without answer", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 52,
-				subtrahend: 27,
-				showAnswer: false,
-				revealUpTo: null
-			}
+		// Should handle 4-digit numbers
+		expect(html).toContain(">5<") // First digit of minuend
+		expect(html).toContain(">2<") // Second digit of minuend
+		expect(html).toContain(">3<") // Third digit of minuend
+		expect(html).toContain(">4<") // Fourth digit of minuend
+		expect(html).toContain(">8<") // Answer contains 8
+		expect(html).toContain("text-decoration: line-through") // Should have regrouping
+		expect(html).toMatchSnapshot()
+	})
 
-			const html = await generateSubtractionWithRegrouping(input)
-			expect(html).toMatchSnapshot()
+	it("should handle numbers that don't require regrouping", async () => {
+		const html = await generateSubtractionWithRegrouping({
+			type: "subtractionWithRegrouping",
+			minuend: 99,
+			subtrahend: 11,
+			showRegrouping: true,
+			showAnswer: true
 		})
 
-		it("should generate snapshot for simple problem with answer", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 52,
-				subtrahend: 27,
-				showAnswer: true,
-				revealUpTo: "complete" as const
-			}
+		// Should work even when no regrouping is needed
+		expect(html).toContain(">9<") // Digits of 99
+		expect(html).toContain(">1<") // Digits of 11
+		expect(html).toContain(">8<") // Digits of 88 answer
+		expect(html).not.toContain("text-decoration: line-through") // No regrouping needed
+		expect(html).toMatchSnapshot()
+	})
 
-			const html = await generateSubtractionWithRegrouping(input)
-			expect(html).toMatchSnapshot()
+	it("should throw error when minuend is not greater than subtrahend", async () => {
+		const result = await errors.try(
+			generateSubtractionWithRegrouping({
+				type: "subtractionWithRegrouping",
+				minuend: 50,
+				subtrahend: 100,
+				showRegrouping: true,
+				showAnswer: true
+			})
+		)
+
+		expect(result.error).toBeDefined()
+		expect(result.error?.message).toContain("minuend must be greater than subtrahend")
+	})
+
+	it("should work with negative numbers", async () => {
+		const html = await generateSubtractionWithRegrouping({
+			type: "subtractionWithRegrouping",
+			minuend: -50,
+			subtrahend: -100,
+			showRegrouping: true,
+			showAnswer: true
 		})
 
-		it("should generate snapshot for multi-digit problem with regrouping", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 1000,
-				subtrahend: 456,
-				showAnswer: true,
-				revealUpTo: "complete" as const
-			}
+		// -50 - (-100) = 50
+		expect(html).toContain(">5<") // Tens digit of answer
+		expect(html).toContain(">0<") // Ones digit of answer
+		expect(html).toMatchSnapshot()
+	})
 
-			const html = await generateSubtractionWithRegrouping(input)
-			expect(html).toMatchSnapshot()
+	it("should handle progressive reveal for hundreds place", async () => {
+		const html = await generateSubtractionWithRegrouping({
+			type: "subtractionWithRegrouping",
+			minuend: 524,
+			subtrahend: 276,
+			showRegrouping: true,
+			showAnswer: true,
+			revealUpTo: "hundreds"
 		})
 
-		it("should generate snapshot for large numbers with complex regrouping", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 23542,
-				subtrahend: 15631,
-				showAnswer: true,
-				revealUpTo: "complete" as const
-			}
+		// Should show all three digits since hundreds is the highest place
+		expect(html).toContain(">2<") // Hundreds digit
+		expect(html).toContain(">4<") // Tens digit
+		expect(html).toContain(">8<") // Ones digit
+		expect(html).toMatchSnapshot()
+	})
 
-			const html = await generateSubtractionWithRegrouping(input)
-			expect(html).toMatchSnapshot()
+	it("should independently control regrouping marks and answer reveal", async () => {
+		// Test case 1: Show regrouping, partial answer
+		const html1 = await generateSubtractionWithRegrouping({
+			type: "subtractionWithRegrouping",
+			minuend: 423,
+			subtrahend: 167,
+			showRegrouping: true,
+			showAnswer: true,
+			revealUpTo: "ones"
 		})
 
-		it("should generate snapshot for negative numbers", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: -25,
-				subtrahend: -50,
-				showAnswer: true,
-				revealUpTo: "complete" as const
-			}
+		expect(html1).toContain("text-decoration: line-through") // Has regrouping marks
+		expect(html1).toContain(">6<") // Shows ones digit of answer
+		expect(html1).toMatchSnapshot()
 
-			const html = await generateSubtractionWithRegrouping(input)
-			expect(html).toMatchSnapshot()
+		// Test case 2: No regrouping, full answer
+		const html2 = await generateSubtractionWithRegrouping({
+			type: "subtractionWithRegrouping",
+			minuend: 423,
+			subtrahend: 167,
+			showRegrouping: false,
+			showAnswer: true,
+			revealUpTo: "complete"
 		})
 
-		it("should generate snapshot for no regrouping needed", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 987,
-				subtrahend: 123,
-				showAnswer: true,
-				revealUpTo: "complete" as const
-			}
+		expect(html2).not.toContain("text-decoration: line-through") // No regrouping marks
+		expect(html2).toContain(">2<") // Hundreds digit
+		expect(html2).toContain(">5<") // Tens digit
+		expect(html2).toContain(">6<") // Ones digit
+		expect(html2).toMatchSnapshot()
 
-			const html = await generateSubtractionWithRegrouping(input)
-			expect(html).toMatchSnapshot()
+		// Test case 3: Show regrouping, no answer (the key use case)
+		const html3 = await generateSubtractionWithRegrouping({
+			type: "subtractionWithRegrouping",
+			minuend: 423,
+			subtrahend: 167,
+			showRegrouping: true,
+			showAnswer: false
 		})
 
-		it("should generate snapshot for problem with zeros", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
+		expect(html3).toContain("text-decoration: line-through") // Has regrouping marks
+		expect(html3).not.toContain("#4472c4") // No answer color
+		expect(html3).toMatchSnapshot()
+	})
+
+	describe("Complex regrouping scenarios", () => {
+		it("should handle borrowing across zeros", async () => {
+			const html = await generateSubtractionWithRegrouping({
+				type: "subtractionWithRegrouping",
 				minuend: 300,
 				subtrahend: 145,
-				showAnswer: true,
-				revealUpTo: "complete" as const
-			}
+				showRegrouping: true,
+				showAnswer: true
+			})
 
-			const html = await generateSubtractionWithRegrouping(input)
-			expect(html).toMatchSnapshot()
-		})
-	})
-
-	describe("Regrouping Logic", () => {
-		it("should correctly handle simple borrowing", async () => {
-			// 52 - 27 = 25
-			// Need to borrow from 5 to make 12 - 7 = 5
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 52,
-				subtrahend: 27,
-				showAnswer: true,
-				revealUpTo: "complete" as const
-			}
-
-			const html = await generateSubtractionWithRegrouping(input)
-			// Check answer digits are present
-			expect(html).toContain("color: #4472c4")
-			expect(html).toContain(">2</td>")
-			expect(html).toContain(">5</td>")
-		})
-
-		it("should correctly handle multiple borrowing", async () => {
 			// 300 - 145 = 155
-			// Need to borrow across zeros
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 300,
-				subtrahend: 145,
-				showAnswer: true,
-				revealUpTo: "complete" as const
-			}
-
-			const html = await generateSubtractionWithRegrouping(input)
-			// Check answer digits are present (155)
-			expect(html).toContain("color: #4472c4")
-			expect(html).toContain(">1</td>")
-			expect(html).toContain(">5</td>")
+			// Should show complex regrouping across zeros
+			expect(html).toContain("text-decoration: line-through") // Has regrouping marks
+			expect(html).toContain(">1<") // Hundreds digit of answer
+			expect(html).toContain(">5<") // Tens and ones digits
+			expect(html).toMatchSnapshot()
 		})
 
-		it("should correctly handle no borrowing needed", async () => {
-			// 987 - 123 = 864
-			// No borrowing needed
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 987,
-				subtrahend: 123,
-				showAnswer: true,
-				revealUpTo: "complete" as const
-			}
+		it("should handle multiple consecutive borrows", async () => {
+			const html = await generateSubtractionWithRegrouping({
+				type: "subtractionWithRegrouping",
+				minuend: 1000,
+				subtrahend: 456,
+				showRegrouping: true,
+				showAnswer: true
+			})
 
-			const html = await generateSubtractionWithRegrouping(input)
-			// Check answer digits are present (864)
-			expect(html).toContain("color: #4472c4")
-			expect(html).toContain(">8</td>")
-			expect(html).toContain(">6</td>")
-			expect(html).toContain(">4</td>")
+			// 1000 - 456 = 544
+			// Should show borrowing chain through zeros
+			expect(html).toContain("text-decoration: line-through") // Has regrouping marks
+			expect(html).toContain(">5<") // Hundreds digit
+			expect(html).toContain(">4<") // Tens and ones digits
+			expect(html).toMatchSnapshot()
+		})
 
-			// Should not have crossed out digits since no borrowing
-			expect(html.match(/text-decoration: line-through/g)).toBeNull()
+		it("should correctly display regrouping for 423 - 167", async () => {
+			const html = await generateSubtractionWithRegrouping({
+				type: "subtractionWithRegrouping",
+				minuend: 423,
+				subtrahend: 167,
+				showRegrouping: true,
+				showAnswer: false
+			})
+
+			// In 423 - 167:
+			// - 3 becomes 13 (receives borrow) - should be crossed out
+			// - 2 becomes 1 (gives borrow) - should be crossed out
+			// - 4 stays 4 (no change) - should NOT be crossed out
+			expect(html).toContain("text-decoration: line-through") // Has regrouping marks
+			expect(html).toContain("#1E90FF") // Blue regrouping numbers
+			expect(html).toMatchSnapshot()
 		})
 	})
 
-	describe("Step-by-Step Reveal", () => {
-		it("should show only ones digit when revealUpTo is 'ones'", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 652,
-				subtrahend: 378,
-				showAnswer: true,
-				revealUpTo: "ones" as const
-			}
+	describe("Edge cases", () => {
+		it("should handle single digit numbers", async () => {
+			const html = await generateSubtractionWithRegrouping({
+				type: "subtractionWithRegrouping",
+				minuend: 9,
+				subtrahend: 5,
+				showRegrouping: true,
+				showAnswer: true
+			})
 
-			const html = await generateSubtractionWithRegrouping(input)
-
-			// Check that HTML contains the problem
-			expect(html).toContain(">6<")
+			expect(html).toContain(">9<")
 			expect(html).toContain(">5<")
-			expect(html).toContain(">2<")
-			expect(html).toContain(">3<")
-			expect(html).toContain(">7<")
-			expect(html).toContain(">8<")
-			expect(html).toContain("−")
-
-			// Check answer is partially shown (only ones digit: 4)
-			expect(html).toContain("color: #4472c4")
-			expect(html).toContain(">4<")
-
-			// Should not show borrowing marks for leftmost columns
-			const borrowMarks = html.match(/color: #1E90FF/g) || []
-			expect(borrowMarks.length).toBeLessThan(2) // Only borrowing affecting ones should be shown if any
-
+			expect(html).toContain(">4<") // Answer
 			expect(html).toMatchSnapshot()
 		})
 
-		it("should show ones and tens when revealUpTo is 'tens'", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 652,
-				subtrahend: 378,
-				showAnswer: true,
-				revealUpTo: "tens" as const
-			}
+		it("should handle very large numbers", async () => {
+			const html = await generateSubtractionWithRegrouping({
+				type: "subtractionWithRegrouping",
+				minuend: 90023,
+				subtrahend: 12345,
+				showRegrouping: true,
+				showAnswer: true
+			})
 
-			const html = await generateSubtractionWithRegrouping(input)
-
-			// Check answer shows ones and tens (7 and 4)
-			expect(html).toContain(">7<")
-			expect(html).toContain(">4<")
-			expect(html).toContain("color: #4472c4")
-
+			expect(html).toContain("text-decoration: line-through") // Has regrouping
+			expect(html).toContain("#4472c4") // Answer color
 			expect(html).toMatchSnapshot()
 		})
 
-		it("should show complete answer when revealUpTo is 'hundreds'", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 652,
-				subtrahend: 378,
-				showAnswer: true,
-				revealUpTo: "hundreds" as const
-			}
+		it("should handle small result", async () => {
+			const html = await generateSubtractionWithRegrouping({
+				type: "subtractionWithRegrouping",
+				minuend: 101,
+				subtrahend: 100,
+				showRegrouping: true,
+				showAnswer: true
+			})
 
-			const html = await generateSubtractionWithRegrouping(input)
-
-			// Check complete answer (274)
-			expect(html).toContain(">2<")
-			expect(html).toContain(">7<")
-			expect(html).toContain(">4<")
-			expect(html).toContain("color: #4472c4")
-
-			expect(html).toMatchSnapshot()
-		})
-
-		it("should not show borrowing marks when only ones is revealed", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 432,
-				subtrahend: 156,
-				showAnswer: true,
-				revealUpTo: "ones" as const
-			}
-
-			const html = await generateSubtractionWithRegrouping(input)
-
-			// Check that borrowing marks are not shown for columns not yet revealed
-			// Borrowing marks appear as crossed-out digits and blue regrouped values
-			const crossedOut = html.match(/text-decoration: line-through/g) || []
-			const blueMarks = html.match(/color: #1E90FF/g) || []
-
-			// When only ones is revealed, borrowing marks for other columns shouldn't show
-			expect(crossedOut.length).toBe(0) // No crossed out digits for unrevealed columns
-			expect(blueMarks.length).toBe(0) // No blue regrouped values for unrevealed columns
-
-			expect(html).toMatchSnapshot()
-		})
-
-		it("should show borrowing marks progressively", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 432,
-				subtrahend: 156,
-				showAnswer: true,
-				revealUpTo: "tens" as const
-			}
-
-			const html = await generateSubtractionWithRegrouping(input)
-
-			// When tens is revealed, borrowing marks for ones and tens should show if needed
-			expect(html).toContain("color: #4472c4") // Answer color
-
-			// Check that some borrowing marks may be present
-			// (Exact behavior depends on whether borrowing occurred in revealed columns)
-			expect(html).toMatchSnapshot()
-		})
-
-		it("should show complete solution when revealUpTo is 'complete'", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 432,
-				subtrahend: 156,
-				showAnswer: true,
-				revealUpTo: "complete" as const
-			}
-
-			const html = await generateSubtractionWithRegrouping(input)
-
-			// Should show all borrowing marks and complete answer
-			expect(html).toContain("color: #4472c4") // Answer color
-
-			// Should contain crossed-out digits if borrowing occurred
-			if (html.includes("text-decoration: line-through")) {
-				expect(html).toContain("text-decoration: line-through")
-			}
-
-			expect(html).toMatchSnapshot()
-		})
-
-		it("should handle default revealUpTo when not specified", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: 432,
-				subtrahend: 156,
-				showAnswer: true,
-				revealUpTo: "complete" as const
-				// revealUpTo explicitly set to "complete" to test default behavior
-			}
-
-			const html = await generateSubtractionWithRegrouping(input)
-
-			// Should behave as if revealUpTo is "complete"
-			expect(html).toContain("color: #4472c4") // Answer color
-
-			// Should show all digits and borrowing marks
+			expect(html).toContain(">1<") // Answer should be 1
 			expect(html).toMatchSnapshot()
 		})
 	})

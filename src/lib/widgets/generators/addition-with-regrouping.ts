@@ -25,22 +25,26 @@ function createAdditionWithRegroupingPropsSchema() {
 				.describe(
 					"The bottom number (second addend) as a positive integer (e.g., 27, 168, 543, 9028). Must be non-negative."
 				),
+			showCarrying: z
+				.boolean()
+				.describe(
+					"Whether to show the carrying/regrouping marks (carried digits above columns). When true, displays the carrying visualization. When false, shows clean numbers without carrying marks."
+				),
 			showAnswer: z
 				.boolean()
 				.describe(
-					"Whether to show the answer. When false, shows only the problem setup. When true, uses 'revealUpTo' to control how much to show."
+					"Whether to show the sum/result. When true, displays the answer below the line. When false, shows only the problem setup. Works independently from showCarrying."
 				),
 			revealUpTo: z
 				.enum(["ones", "tens", "hundreds", "thousands", "ten-thousands", "complete"])
-				.nullable()
-				.default("complete")
+				.optional()
 				.describe(
-					"Controls progressive reveal of the answer. 'ones' shows only the ones digit, 'tens' shows ones and tens, etc. Default 'complete' shows full answer with all carrying marks. Only applies when showAnswer is true."
+					"ONLY USE THIS WHEN showAnswer IS TRUE. Controls progressive reveal of the answer digits. 'ones' reveals only ones digit, 'tens' reveals ones and tens, etc. If omitted, defaults to 'complete' (shows all answer digits). IGNORED when showAnswer is false. Common patterns: omit this for full answer, use 'ones' or 'tens' for step-by-step teaching."
 				)
 		})
 		.strict()
 		.describe(
-			"Creates a visual representation of addition with regrouping (carrying). Shows the traditional column format with optional display of the carrying process and answer. Perfect for teaching the standard addition algorithm when carrying is required."
+			"Creates a visual representation of addition with regrouping (carrying). Shows the traditional column format with independent control of carrying marks and answer display. Perfect for step-by-step teaching. Common usage: 1) showCarrying=false, showAnswer=false for plain problem, 2) showCarrying=true, showAnswer=false to show carrying process, 3) showCarrying=true, showAnswer=true for complete solution. The revealUpTo field is optional and only matters when showAnswer=true."
 		)
 }
 
@@ -115,15 +119,14 @@ function performAdditionWithRegrouping(addend1: number, addend2: number) {
 export const generateAdditionWithRegrouping: WidgetGenerator<typeof AdditionWithRegroupingPropsSchema> = async (
 	data
 ) => {
-	const { addend1, addend2, showAnswer, revealUpTo } = data
-	const finalRevealUpTo = revealUpTo ?? "complete"
+	const { addend1, addend2, showCarrying, showAnswer, revealUpTo = "complete" } = data
 
 	const result = performAdditionWithRegrouping(addend1, addend2)
 	const { addend1Digits, addend2Digits, sumDigits, carried, maxLength, hasFinalCarry } = result
 
-	// Determine which columns to reveal based on finalRevealUpTo
+	// Determine which columns to reveal based on revealUpTo
 	let columnsToReveal = maxLength // Default to all columns
-	if (showAnswer && finalRevealUpTo !== "complete") {
+	if (showAnswer && revealUpTo !== "complete") {
 		const placeValueMap = {
 			ones: 1,
 			tens: 2,
@@ -131,15 +134,15 @@ export const generateAdditionWithRegrouping: WidgetGenerator<typeof AdditionWith
 			thousands: 4,
 			"ten-thousands": 5
 		}
-		columnsToReveal = Math.min(placeValueMap[finalRevealUpTo] ?? maxLength, maxLength)
+		columnsToReveal = Math.min(placeValueMap[revealUpTo] ?? maxLength, maxLength)
 	}
 
 	let html = `<div style="display: inline-block; font-family: ${theme.font.family.mono}; font-size: 1.4em; text-align: right;">`
 
-	// Build the addition problem with carrying marks if showing answer
+	// Build the addition problem with carrying marks if showing carrying
 	html += '<table style="border-collapse: collapse; position: relative;">'
 
-	if (showAnswer) {
+	if (showCarrying) {
 		// Row for carried numbers (shown above the addend1)
 		html += "<tr>"
 		html += "<td></td>" // Empty cell for operator column
@@ -152,13 +155,8 @@ export const generateAdditionWithRegrouping: WidgetGenerator<typeof AdditionWith
 		// Show carried values above the columns they affect
 		for (let index = 0; index < maxLength; index++) {
 			const carryValue = carried[index] ?? 0
-			// Only show carry if we're revealing enough columns
-			// The carry appears above the column it affects (where it's added)
-			const columnPosition = maxLength - index // Position from right (1 = ones, 2 = tens, etc.)
-			// We show the carry if we're revealing at least up to this column
-			const shouldShowCarry = carryValue > 0 && (finalRevealUpTo === "complete" || columnsToReveal >= columnPosition)
 
-			if (shouldShowCarry) {
+			if (carryValue > 0) {
 				html += '<td style="padding: 0 8px; position: relative;">'
 				html +=
 					'<div style="position: absolute; top: -18px; left: 0; right: 0; text-align: center; font-size: 0.7em; color: #1E90FF; font-weight: bold;">'
@@ -176,7 +174,7 @@ export const generateAdditionWithRegrouping: WidgetGenerator<typeof AdditionWith
 	html += "<tr>"
 	html += "<td></td>" // Empty cell for operator column
 
-	// Add empty cell if sum has extra digit
+	// Add empty cell if sum has extra digit and we're showing the answer
 	if (hasFinalCarry && showAnswer) {
 		html += '<td style="padding: 2px 8px;"></td>'
 	}
@@ -215,7 +213,7 @@ export const generateAdditionWithRegrouping: WidgetGenerator<typeof AdditionWith
 			const digit = sumDigits[index]
 			// Calculate position from right (1 = ones, 2 = tens, etc.)
 			const columnPosition = sumDigits.length - index
-			const shouldReveal = finalRevealUpTo === "complete" || columnPosition <= columnsToReveal
+			const shouldReveal = revealUpTo === "complete" || columnPosition <= columnsToReveal
 
 			if (shouldReveal) {
 				html += '<td style="padding: 2px 8px; color: #4472c4; font-weight: bold;">'
