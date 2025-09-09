@@ -174,6 +174,10 @@ import {
 	generateVerticalArithmeticSetup,
 	VerticalArithmeticSetupPropsSchema
 } from "@/lib/widgets/generators/vertical-arithmetic-setup"
+import {
+	generateVectorDiagram,
+	VectorDiagramPropsSchema
+} from "@/lib/widgets/generators/vector-diagram"
 
 // This object now contains every widget schema from every collection.
 // It serves as a master lookup for dynamic schema generation and compilation.
@@ -244,6 +248,7 @@ export const allWidgetSchemas = {
 	urlImage: UrlImageWidgetPropsSchema,
 	vennDiagram: VennDiagramPropsSchema,
 	verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema,
+	vectorDiagram: VectorDiagramPropsSchema,
 	parallelogramTrapezoidDiagram: ParallelogramTrapezoidDiagramPropsSchema,
 	pieChart: PieChartWidgetPropsSchema,
 	fractionFrequencyPlot: FractionFrequencyPlotPropsSchema,
@@ -324,6 +329,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.urlImage,
 	typedSchemas.vennDiagram,
 	typedSchemas.verticalArithmeticSetup,
+	typedSchemas.vectorDiagram,
 	typedSchemas.parallelogramTrapezoidDiagram,
 	typedSchemas.pieChart,
 	typedSchemas.fractionFrequencyPlot,
@@ -486,6 +492,7 @@ export {
 	generateUrlImage,
 	generateVennDiagram,
 	generateVerticalArithmeticSetup,
+	generateVectorDiagram,
 	generateParallelogramTrapezoidDiagram,
 	generatePieChart,
 	generateFractionFrequencyPlot,
@@ -632,6 +639,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateVennDiagram(widget)
 		case "verticalArithmeticSetup":
 			return await generateVerticalArithmeticSetup(widget)
+		case "vectorDiagram":
+			return await generateVectorDiagram(widget)
 		case "pieChart":
 			return await generatePieChart(widget)
 		case "fractionFrequencyPlot":
