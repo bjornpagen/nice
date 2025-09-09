@@ -10,10 +10,10 @@ test("area-model-multiplication - Single unknown cell", async () => {
 		type: "areaModelMultiplication",
 		width: 400,
 		height: 300,
-		rowFactor: { type: "value", value: 3 },
+		rowFactors: [{ type: "value", value: 3 }],
 		columnFactors: [{ type: "value", value: 70 }],
-		cellContents: [{ type: "unknown" }],
-		cellColors: ["#ffb3ba"]
+		cellContents: [[{ type: "unknown" }]],
+		cellColors: [["#ffb3ba"]]
 	} satisfies AreaModelMultiplicationInput
 
 	// Validate the input
@@ -34,18 +34,18 @@ test("area-model-multiplication - Multiple columns with mixed content", async ()
 		type: "areaModelMultiplication",
 		width: 500,
 		height: 300,
-		rowFactor: { type: "value", value: 4 },
+		rowFactors: [{ type: "value", value: 4 }],
 		columnFactors: [
 			{ type: "value", value: 300 },
 			{ type: "value", value: 90 },
 			{ type: "value", value: 5 }
 		],
-		cellContents: [
+		cellContents: [[
 			{ type: "unknown" },
 			{ type: "unknown" },
 			{ type: "unknown" }
-		],
-		cellColors: ["#bae1ff", "#ffb3ba", "#ffdfba"]
+		]],
+		cellColors: [["#bae1ff", "#ffb3ba", "#ffdfba"]]
 	} satisfies AreaModelMultiplicationInput
 
 	// Validate the input
@@ -66,16 +66,16 @@ test("area-model-multiplication - Specific integer values", async () => {
 		type: "areaModelMultiplication",
 		width: 450,
 		height: 250,
-		rowFactor: { type: "value", value: 6 },
+		rowFactors: [{ type: "value", value: 6 }],
 		columnFactors: [
 			{ type: "value", value: 20 },
 			{ type: "value", value: 8 }
 		],
-		cellContents: [
+		cellContents: [[
 			{ type: "value", value: 120 },
 			{ type: "value", value: 48 }
-		],
-		cellColors: ["#baffc9", "#ffffba"]
+		]],
+		cellColors: [["#baffc9", "#ffffba"]]
 	} satisfies AreaModelMultiplicationInput
 
 	// Validate the input
@@ -96,20 +96,20 @@ test("area-model-multiplication - Large model with alternating content", async (
 		type: "areaModelMultiplication",
 		width: 600,
 		height: 350,
-		rowFactor: { type: "value", value: 12 },
+		rowFactors: [{ type: "value", value: 12 }],
 		columnFactors: [
 			{ type: "value", value: 50 },
 			{ type: "value", value: 30 },
 			{ type: "value", value: 15 },
 			{ type: "value", value: 5 }
 		],
-		cellContents: [
+		cellContents: [[
 			{ type: "value", value: 600 },
 			{ type: "unknown" },
 			{ type: "value", value: 180 },
 			{ type: "unknown" }
-		],
-		cellColors: ["#e0e0e0", "#ffb3ba", "#bae1ff", "#baffc9"]
+		]],
+		cellColors: [["#e0e0e0", "#ffb3ba", "#bae1ff", "#baffc9"]]
 	} satisfies AreaModelMultiplicationInput
 
 	// Validate the input
@@ -130,18 +130,18 @@ test("area-model-multiplication - Missing multiplier 423", async () => {
 		type: "areaModelMultiplication",
 		width: 500,
 		height: 250,
-		rowFactor: { type: "value", value: 5 },
+		rowFactors: [{ type: "value", value: 5 }],
 		columnFactors: [
 			{ type: "value", value: 400 },
 			{ type: "value", value: 20 },
 			{ type: "value", value: 3 }
 		],
-		cellContents: [
+		cellContents: [[
 			{ type: "value", value: 2000 },
 			{ type: "value", value: 100 },
 			{ type: "value", value: 15 }
-		],
-		cellColors: ["#bae1ff", "#ffb3ba", "#baffc9"]
+		]],
+		cellColors: [["#bae1ff", "#ffb3ba", "#baffc9"]]
 	} satisfies AreaModelMultiplicationInput
 
 	// Validate the input
@@ -162,18 +162,18 @@ test("area-model-multiplication - Missing multiplier 2", async () => {
 		type: "areaModelMultiplication",
 		width: 500,
 		height: 200,
-		rowFactor: { type: "value", value: 2 },
+		rowFactors: [{ type: "value", value: 2 }],
 		columnFactors: [
 			{ type: "value", value: 700 },
 			{ type: "value", value: 50 },
 			{ type: "value", value: 4 }
 		],
-		cellContents: [
+		cellContents: [[
 			{ type: "value", value: 1400 },
 			{ type: "value", value: 100 },
 			{ type: "value", value: 8 }
-		],
-		cellColors: ["#ffffba", "#ffdfba", "#e0e0e0"]
+		]],
+		cellColors: [["#ffffba", "#ffdfba", "#e0e0e0"]]
 	} satisfies AreaModelMultiplicationInput
 
 	// Validate the input
@@ -194,18 +194,18 @@ test("area-model-multiplication - Known factors 236 × 6", async () => {
 		type: "areaModelMultiplication",
 		width: 500,
 		height: 250,
-		rowFactor: { type: "value", value: 6 },
+		rowFactors: [{ type: "value", value: 6 }],
 		columnFactors: [
 			{ type: "value", value: 200 },
 			{ type: "value", value: 30 },
 			{ type: "value", value: 6 }
 		],
-		cellContents: [
+		cellContents: [[
 			{ type: "value", value: 1200 },
 			{ type: "value", value: 180 },
 			{ type: "value", value: 36 }
-		],
-		cellColors: ["#bae1ff", "#ffb3ba", "#ffdfba"]
+		]],
+		cellColors: [["#bae1ff", "#ffb3ba", "#ffdfba"]]
 	} satisfies AreaModelMultiplicationInput
 
 	// Validate the input
@@ -226,18 +226,18 @@ test("area-model-multiplication - Known factors 136 × 4", async () => {
 		type: "areaModelMultiplication",
 		width: 500,
 		height: 250,
-		rowFactor: { type: "value", value: 4 },
+		rowFactors: [{ type: "value", value: 4 }],
 		columnFactors: [
 			{ type: "value", value: 100 },
 			{ type: "value", value: 30 },
 			{ type: "value", value: 6 }
 		],
-		cellContents: [
+		cellContents: [[
 			{ type: "value", value: 400 },
 			{ type: "value", value: 120 },
 			{ type: "value", value: 24 }
-		],
-		cellColors: ["#bae1ff", "#ffb3ba", "#ffdfba"]
+		]],
+		cellColors: [["#bae1ff", "#ffb3ba", "#ffdfba"]]
 	} satisfies AreaModelMultiplicationInput
 
 	// Validate the input
@@ -258,18 +258,18 @@ test("area-model-multiplication - Unknown row factor", async () => {
 		type: "areaModelMultiplication",
 		width: 500,
 		height: 250,
-		rowFactor: { type: "unknown" },
+		rowFactors: [{ type: "unknown" }],
 		columnFactors: [
 			{ type: "value", value: 200 },
 			{ type: "value", value: 30 },
 			{ type: "value", value: 6 }
 		],
-		cellContents: [
+		cellContents: [[
 			{ type: "value", value: 1200 },
 			{ type: "value", value: 180 },
 			{ type: "value", value: 36 }
-		],
-		cellColors: ["#bae1ff", "#ffb3ba", "#ffdfba"]
+		]],
+		cellColors: [["#bae1ff", "#ffb3ba", "#ffdfba"]]
 	} satisfies AreaModelMultiplicationInput
 
 	// Validate the input
@@ -290,18 +290,18 @@ test("area-model-multiplication - Unknown column factors", async () => {
 		type: "areaModelMultiplication",
 		width: 500,
 		height: 250,
-		rowFactor: { type: "value", value: 4 },
+		rowFactors: [{ type: "value", value: 4 }],
 		columnFactors: [
 			{ type: "unknown" },
 			{ type: "value", value: 30 },
 			{ type: "unknown" }
 		],
-		cellContents: [
+		cellContents: [[
 			{ type: "value", value: 160 },
 			{ type: "value", value: 120 },
 			{ type: "value", value: 12 }
-		],
-		cellColors: ["#bae1ff", "#ffb3ba", "#ffdfba"]
+		]],
+		cellColors: [["#bae1ff", "#ffb3ba", "#ffdfba"]]
 	} satisfies AreaModelMultiplicationInput
 
 	// Validate the input
@@ -322,18 +322,18 @@ test("area-model-multiplication - All factors unknown", async () => {
 		type: "areaModelMultiplication",
 		width: 500,
 		height: 250,
-		rowFactor: { type: "unknown" },
+		rowFactors: [{ type: "unknown" }],
 		columnFactors: [
 			{ type: "unknown" },
 			{ type: "unknown" },
 			{ type: "unknown" }
 		],
-		cellContents: [
+		cellContents: [[
 			{ type: "unknown" },
 			{ type: "unknown" },
 			{ type: "unknown" }
-		],
-		cellColors: ["#bae1ff", "#ffb3ba", "#ffdfba"]
+		]],
+		cellColors: [["#bae1ff", "#ffb3ba", "#ffdfba"]]
 	} satisfies AreaModelMultiplicationInput
 
 	// Validate the input
@@ -354,16 +354,58 @@ test("area-model-multiplication - Division problem 5632 ÷ 8", async () => {
 		type: "areaModelMultiplication",
 		width: 500,
 		height: 250,
-		rowFactor: { type: "value", value: 8 },
+		rowFactors: [{ type: "value", value: 8 }],
 		columnFactors: [
 			{ type: "unknown" },
 			{ type: "value", value: 32 }
 		],
-		cellContents: [
+		cellContents: [[
 			{ type: "value", value: 5600 },
 			{ type: "value", value: 32 }
+		]],
+		cellColors: [["#2c72ae1a", "#c07ea41a"]]
+	} satisfies AreaModelMultiplicationInput
+
+	// Validate the input
+	const parseResult = AreaModelMultiplicationPropsSchema.safeParse(input)
+	if (!parseResult.success) {
+		console.error("Schema validation failed for area-model-multiplication:", parseResult.error)
+		return
+	}
+
+	// Generate the widget
+	const svg = await generateAreaModelMultiplication(parseResult.data)
+	expect(svg).toMatchSnapshot()
+})
+
+// Test case 13: Multi-row area model (2×2 grid) - representing the HTML example
+test("area-model-multiplication - Multi-row 2x2 grid", async () => {
+	const input = {
+		type: "areaModelMultiplication",
+		width: 500,
+		height: 300,
+		rowFactors: [
+			{ type: "value", value: 70 },
+			{ type: "value", value: 2 }
 		],
-		cellColors: ["#2c72ae1a", "#c07ea41a"]
+		columnFactors: [
+			{ type: "value", value: 90 },
+			{ type: "value", value: 10 }
+		],
+		cellContents: [
+			[
+				{ type: "unknown" }, // 70 × 90 = 6300 (but shown as unknown)
+				{ type: "value", value: 700 } // 70 × 10 = 700
+			],
+			[
+				{ type: "value", value: 180 }, // 2 × 90 = 180  
+				{ type: "value", value: 20 } // 2 × 10 = 20
+			]
+		],
+		cellColors: [
+			["#bae1ff", "#ffb3ba"], // Top row colors
+			["#ffdfba", "#baffc9"]  // Bottom row colors
+		]
 	} satisfies AreaModelMultiplicationInput
 
 	// Validate the input

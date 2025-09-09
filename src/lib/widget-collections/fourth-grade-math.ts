@@ -11,6 +11,7 @@ import {
 	FractionModelDiagramPropsSchema,
 	FractionMultiplicationModelPropsSchema,
 	FractionNumberLinePropsSchema,
+	NPolygonPropsSchema,
 	NumberLinePropsSchema,
 	NumberLineWithActionPropsSchema,
 	SimpleArrowPropsSchema,
@@ -43,7 +44,8 @@ export const fourthGradeMathCollection = {
 		areaModelMultiplication: AreaModelMultiplicationPropsSchema,
 		singleFractionalModelDiagram: SingleFractionalModelDiagramPropsSchema,
 		simpleArrow: SimpleArrowPropsSchema,
-		vectorDiagram: VectorDiagramPropsSchema
+		vectorDiagram: VectorDiagramPropsSchema,
+		nPolygon: NPolygonPropsSchema
 	},
 	widgetTypeKeys: [
 		"dataTable",
@@ -65,6 +67,7 @@ export const fourthGradeMathCollection = {
 		"areaModelMultiplication",
 		"singleFractionalModelDiagram",
 		"simpleArrow",
-		"vectorDiagram"
+		"vectorDiagram",
+		"nPolygon"
 	] as const
 } as const

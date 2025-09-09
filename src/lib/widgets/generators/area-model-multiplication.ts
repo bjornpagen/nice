@@ -32,10 +32,10 @@ export const AreaModelMultiplicationPropsSchema = z.object({
     type: z.literal("areaModelMultiplication").describe("Identifies this as an area model for multiplication."),
     width: z.number().positive().describe("Total width of the diagram in pixels."),
     height: z.number().positive().describe("Total height of the diagram in pixels."),
-    rowFactor: createValueOrUnknownSchema().describe("The factor displayed vertically on the left, representing the height of the model."),
+    rowFactors: z.array(createValueOrUnknownSchema()).min(1).describe("An array of factors displayed vertically on the left, representing the height of each row."),
     columnFactors: z.array(createValueOrUnknownSchema()).min(1).describe("An array of factors displayed horizontally on top, representing the width of each column."),
-    cellContents: z.array(CellContentSchema).describe("An array defining the content for each cell, ordered from left to right. Its length must match the number of column factors."),
-    cellColors: z.array(z.string().regex(CSS_COLOR_PATTERN, "invalid css color")).describe("An array of background colors for each cell, ordered from left to right. Its length must match the number of column factors.")
+    cellContents: z.array(z.array(CellContentSchema)).describe("A 2D array defining the content for each cell. Outer array represents rows, inner array represents columns. Dimensions must match rowFactors.length × columnFactors.length."),
+    cellColors: z.array(z.array(z.string().regex(CSS_COLOR_PATTERN, "invalid css color"))).describe("A 2D array of background colors for each cell. Outer array represents rows, inner array represents columns. Dimensions must match rowFactors.length × columnFactors.length.")
 }).strict()
 .describe("Creates an area model diagram to visualize the distributive property of multiplication. The model consists of a rectangle partitioned into smaller cells, with factors along the sides and products (or placeholders) inside.");
 
@@ -45,26 +45,36 @@ export type AreaModelMultiplicationProps = z.infer<typeof AreaModelMultiplicatio
  * Generates an SVG diagram of an area model for multiplication.
  */
 export const generateAreaModelMultiplication: WidgetGenerator<typeof AreaModelMultiplicationPropsSchema> = async (props) => {
-    const { width, height, rowFactor, columnFactors, cellContents, cellColors } = props;
+    const { width, height, rowFactors, columnFactors, cellContents, cellColors } = props;
 
-    // Runtime validation to ensure arrays have matching lengths.
-    if (cellContents.length !== columnFactors.length || cellColors.length !== columnFactors.length) {
-        throw new Error("The 'columnFactors', 'cellContents', and 'cellColors' arrays must have the same length.");
+    // Runtime validation to ensure 2D arrays have matching dimensions.
+    if (cellContents.length !== rowFactors.length || cellColors.length !== rowFactors.length) {
+        throw new Error("The 'cellContents' and 'cellColors' arrays must have the same number of rows as 'rowFactors'.");
+    }
+    
+    for (let i = 0; i < cellContents.length; i++) {
+        if (cellContents[i]!.length !== columnFactors.length || cellColors[i]!.length !== columnFactors.length) {
+            throw new Error(`Row ${i} in 'cellContents' and 'cellColors' must have the same length as 'columnFactors'.`);
+        }
     }
 
     // Helper function to get numeric value from ValueOrUnknownSchema
     // For unknown factors, use place value sizing: 10^n where n is distance from end of array
     // (rightmost = ones = 10^0, next left = tens = 10^1, next = hundreds = 10^2, etc.)
-    const getFactorValueForLayout = (factor: typeof rowFactor | typeof columnFactors[0], index?: number): number => {
+    const getFactorValueForLayout = (factor: typeof rowFactors[0] | typeof columnFactors[0], index?: number, isColumn?: boolean): number => {
         if (factor.type === "value") {
             return factor.value;
         }
         // For unknown factors, calculate place value based on position from right
-        if (index !== undefined) {
+        if (index !== undefined && isColumn) {
             const distanceFromEnd = columnFactors.length - 1 - index;
             return Math.pow(10, distanceFromEnd);
         }
-        // Fallback for row factor (not indexed)
+        if (index !== undefined && !isColumn) {
+            // For row factors, use simpler sizing (larger numbers for top rows)
+            return Math.pow(10, index + 1);
+        }
+        // Fallback
         return 100;
     };
 
@@ -82,7 +92,10 @@ export const generateAreaModelMultiplication: WidgetGenerator<typeof AreaModelMu
     // Use a log-scale-like approach to prevent tiny cells from small factors
     // This ensures all cells are reasonably sized while still showing proportional relationships
     const minCellWidth = 60; // Minimum width for readability
-    const columnFactorValues = columnFactors.map((factor, index) => getFactorValueForLayout(factor, index));
+    const minCellHeight = 40; // Minimum height for readability
+    
+    // Calculate column widths
+    const columnFactorValues = columnFactors.map((factor, index) => getFactorValueForLayout(factor, index, true));
     const logFactors = columnFactorValues.map(factor => Math.log10(factor + 1)); // +1 to handle factor=1
     const totalLogWidth = logFactors.reduce((sum, logFactor) => sum + logFactor, 0);
     
@@ -99,56 +112,40 @@ export const generateAreaModelMultiplication: WidgetGenerator<typeof AreaModelMu
         });
     }
     
-    // Row height uses available height directly, not scaled by row factor value
-    const scaledRowHeight = availableHeight;
+    // Calculate row heights using similar approach
+    const rowFactorValues = rowFactors.map((factor, index) => getFactorValueForLayout(factor, index, false));
+    const logRowFactors = rowFactorValues.map(factor => Math.log10(factor + 1));
+    const totalLogHeight = logRowFactors.reduce((sum, logFactor) => sum + logFactor, 0);
+    
+    // Calculate base heights using log scale, then ensure minimum sizes
+    const baseHeights = logRowFactors.map(logFactor => (logFactor / totalLogHeight) * availableHeight);
+    const scaledRowHeights = baseHeights.map(baseHeight => Math.max(baseHeight, minCellHeight));
+    
+    // If minimum heights caused overflow, scale down proportionally
+    const totalActualHeight = scaledRowHeights.reduce((sum, h) => sum + h, 0);
+    if (totalActualHeight > availableHeight) {
+        const overflowScale = availableHeight / totalActualHeight;
+        scaledRowHeights.forEach((height, i) => {
+            scaledRowHeights[i] = height * overflowScale;
+        });
+    }
     
     const totalGridWidth = scaledColWidths.reduce((sum, w) => sum + w, 0);
+    const totalGridHeight = scaledRowHeights.reduce((sum, h) => sum + h, 0);
 
     const gridStartX = (width - totalGridWidth) / 2; // Center the grid horizontally
     const gridStartY = PADDING + labelSpace;
 
     // --- Rendering ---
+    
+    // Draw column factor labels above the grid
     let currentX = gridStartX;
-
-    // Draw row factor label (or unknown box)
-    if (rowFactor.type === "value") {
-        canvas.drawText({
-            x: gridStartX - PADDING,
-            y: gridStartY + scaledRowHeight / 2,
-            text: String(rowFactor.value),
-            anchor: "middle",
-            dominantBaseline: "middle",
-            fontPx: 18,
-            fontWeight: theme.font.weight.bold
-        });
-    } else {
-        // Draw unknown box for row factor
-        const boxWidth = 30;
-        const boxHeight = 20;
-        canvas.drawRect(gridStartX - PADDING - boxWidth / 2, gridStartY + scaledRowHeight / 2 - boxHeight / 2, boxWidth, boxHeight, {
-            fill: theme.colors.white,
-            stroke: theme.colors.black,
-            strokeWidth: theme.stroke.width.base
-        });
-    }
-
     for (let j = 0; j < columnFactors.length; j++) {
         const colFactor = columnFactors[j]!;
         const colWidth = scaledColWidths[j]!;
-        const content = cellContents[j]!;
-        const color = cellColors[j]!;
-
-        // Draw cell background
-        canvas.drawRect(currentX, gridStartY, colWidth, scaledRowHeight, {
-            fill: color,
-            stroke: theme.colors.black,
-            strokeWidth: theme.stroke.width.thick
-        });
-
         const cellCenterX = currentX + colWidth / 2;
-        const cellCenterY = gridStartY + scaledRowHeight / 2;
         
-        // Draw column factor label above this cell (or unknown box)
+        // Draw column factor label above this column (or unknown box)
         if (colFactor.type === "value") {
             canvas.drawText({
                 x: cellCenterX,
@@ -169,33 +166,84 @@ export const generateAreaModelMultiplication: WidgetGenerator<typeof AreaModelMu
                 strokeWidth: theme.stroke.width.base
             });
         }
-
-        switch(content.type) {
-            case "value": {
-                // Display the specific integer value
-                canvas.drawText({
-                    x: cellCenterX,
-                    y: cellCenterY,
-                    text: String(content.value),
-                    anchor: "middle",
-                    dominantBaseline: "middle",
-                    fontPx: 20,
-                    fontWeight: theme.font.weight.bold
-                });
-                break;
-            }
-            case "unknown": {
-                const boxWidth = Math.min(colWidth * 0.6, 80);
-                const boxHeight = 30;
-                canvas.drawRect(cellCenterX - boxWidth / 2, cellCenterY - boxHeight / 2, boxWidth, boxHeight, {
-                    fill: theme.colors.white,
-                    stroke: theme.colors.black,
-                    strokeWidth: theme.stroke.width.base
-                });
-                break;
-            }
-        }
         currentX += colWidth;
+    }
+
+    // Draw the grid of cells
+    let currentY = gridStartY;
+    for (let i = 0; i < rowFactors.length; i++) {
+        const rowFactor = rowFactors[i]!;
+        const rowHeight = scaledRowHeights[i]!;
+        const rowCenterY = currentY + rowHeight / 2;
+        
+        // Draw row factor label to the left of this row (or unknown box)
+        if (rowFactor.type === "value") {
+            canvas.drawText({
+                x: gridStartX - PADDING,
+                y: rowCenterY,
+                text: String(rowFactor.value),
+                anchor: "middle",
+                dominantBaseline: "middle",
+                fontPx: 18,
+                fontWeight: theme.font.weight.bold
+            });
+        } else {
+            // Draw unknown box for row factor
+            const boxWidth = 30;
+            const boxHeight = 20;
+            canvas.drawRect(gridStartX - PADDING - boxWidth / 2, rowCenterY - boxHeight / 2, boxWidth, boxHeight, {
+                fill: theme.colors.white,
+                stroke: theme.colors.black,
+                strokeWidth: theme.stroke.width.base
+            });
+        }
+
+        // Draw cells in this row
+        currentX = gridStartX;
+        for (let j = 0; j < columnFactors.length; j++) {
+            const colWidth = scaledColWidths[j]!;
+            const content = cellContents[i]![j]!;
+            const color = cellColors[i]![j]!;
+
+            // Draw cell background
+            canvas.drawRect(currentX, currentY, colWidth, rowHeight, {
+                fill: color,
+                stroke: theme.colors.black,
+                strokeWidth: theme.stroke.width.thick
+            });
+
+            const cellCenterX = currentX + colWidth / 2;
+            const cellCenterY = currentY + rowHeight / 2;
+            
+            // Draw cell content
+            switch(content.type) {
+                case "value": {
+                    // Display the specific integer value
+                    canvas.drawText({
+                        x: cellCenterX,
+                        y: cellCenterY,
+                        text: String(content.value),
+                        anchor: "middle",
+                        dominantBaseline: "middle",
+                        fontPx: 20,
+                        fontWeight: theme.font.weight.bold
+                    });
+                    break;
+                }
+                case "unknown": {
+                    const boxWidth = Math.min(colWidth * 0.6, 80);
+                    const boxHeight = Math.min(rowHeight * 0.6, 30);
+                    canvas.drawRect(cellCenterX - boxWidth / 2, cellCenterY - boxHeight / 2, boxWidth, boxHeight, {
+                        fill: theme.colors.white,
+                        stroke: theme.colors.black,
+                        strokeWidth: theme.stroke.width.base
+                    });
+                    break;
+                }
+            }
+            currentX += colWidth;
+        }
+        currentY += rowHeight;
     }
     
     const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING);
