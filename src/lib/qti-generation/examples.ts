@@ -780,16 +780,15 @@ export const verticalNumberLineComparison: AssessmentItemInput = {
 			width: 120,
 			height: 350,
 			orientation: "vertical",
-			bounds: { lower: -8, upper: 2 },
-			interval: 2,
-			primaryLabels: { type: "unfiltered" },
-			secondaryLabels: {
-				type: "labeled",
-				points: [
-					{ value: -1.4, label: "-1.4", color: "#800080", labelPosition: "left" },
-					{ value: -6.4, label: "-6.4", color: "#800000", labelPosition: "left" }
-				]
-			}
+			min: -8,
+			max: 2,
+			tickInterval: { type: "whole", interval: 2 },
+			secondaryTickInterval: null,
+			showTickLabels: true,
+			highlightedPoints: [
+				{ value: -1.4, label: "-1.4", color: "#800080", style: "arrowAndDot" },
+				{ value: -6.4, label: "-6.4", color: "#800000", style: "arrowAndDot" }
+			]
 		}
 	},
 	body: [
@@ -2951,13 +2950,14 @@ export const timeOnNumberLine: AssessmentItemInput = {
 			width: 700,
 			height: 100,
 			orientation: "horizontal",
-			bounds: { lower: 0, upper: 60 },
-			interval: 1,
-			primaryLabels: { type: "filtered", values: [0, 15, 30, 45, 60] },
-			secondaryLabels: {
-				type: "labeled",
-				points: [{ value: 55, label: "A", color: "#A0522D", labelPosition: "below" }]
-			}
+			min: 0,
+			max: 60,
+			tickInterval: { type: "whole", interval: 15 },
+			secondaryTickInterval: { type: "whole", interval: 1 },
+			showTickLabels: true,
+			highlightedPoints: [
+				{ value: 55, label: "A", color: "#A0522D", style: "arrowAndDot" }
+			]
 		}
 	},
 	body: [
