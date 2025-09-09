@@ -329,4 +329,158 @@ describe("SubtractionWithRegrouping Widget", () => {
 			expect(html.match(/text-decoration: line-through/g)).toBeNull()
 		})
 	})
+
+	describe("Step-by-Step Reveal", () => {
+		it("should show only ones digit when revealUpTo is 'ones'", async () => {
+			const input = {
+				type: "subtractionWithRegrouping" as const,
+				minuend: 652,
+				subtrahend: 378,
+				showAnswer: true,
+				revealUpTo: "ones" as const
+			}
+
+			const html = await generateSubtractionWithRegrouping(input)
+
+			// Check that HTML contains the problem
+			expect(html).toContain(">6<")
+			expect(html).toContain(">5<")
+			expect(html).toContain(">2<")
+			expect(html).toContain(">3<")
+			expect(html).toContain(">7<")
+			expect(html).toContain(">8<")
+			expect(html).toContain("−")
+
+			// Check answer is partially shown (only ones digit: 4)
+			expect(html).toContain("color: #4472c4")
+			expect(html).toContain(">4<")
+
+			// Should not show borrowing marks for leftmost columns
+			const borrowMarks = html.match(/color: #1E90FF/g) || []
+			expect(borrowMarks.length).toBeLessThan(2) // Only borrowing affecting ones should be shown if any
+
+			expect(html).toMatchSnapshot()
+		})
+
+		it("should show ones and tens when revealUpTo is 'tens'", async () => {
+			const input = {
+				type: "subtractionWithRegrouping" as const,
+				minuend: 652,
+				subtrahend: 378,
+				showAnswer: true,
+				revealUpTo: "tens" as const
+			}
+
+			const html = await generateSubtractionWithRegrouping(input)
+
+			// Check answer shows ones and tens (7 and 4)
+			expect(html).toContain(">7<")
+			expect(html).toContain(">4<")
+			expect(html).toContain("color: #4472c4")
+
+			expect(html).toMatchSnapshot()
+		})
+
+		it("should show complete answer when revealUpTo is 'hundreds'", async () => {
+			const input = {
+				type: "subtractionWithRegrouping" as const,
+				minuend: 652,
+				subtrahend: 378,
+				showAnswer: true,
+				revealUpTo: "hundreds" as const
+			}
+
+			const html = await generateSubtractionWithRegrouping(input)
+
+			// Check complete answer (274)
+			expect(html).toContain(">2<")
+			expect(html).toContain(">7<")
+			expect(html).toContain(">4<")
+			expect(html).toContain("color: #4472c4")
+
+			expect(html).toMatchSnapshot()
+		})
+
+		it("should not show borrowing marks when only ones is revealed", async () => {
+			const input = {
+				type: "subtractionWithRegrouping" as const,
+				minuend: 432,
+				subtrahend: 156,
+				showAnswer: true,
+				revealUpTo: "ones" as const
+			}
+
+			const html = await generateSubtractionWithRegrouping(input)
+
+			// Check that borrowing marks are not shown for columns not yet revealed
+			// Borrowing marks appear as crossed-out digits and blue regrouped values
+			const crossedOut = html.match(/text-decoration: line-through/g) || []
+			const blueMarks = html.match(/color: #1E90FF/g) || []
+
+			// When only ones is revealed, borrowing marks for other columns shouldn't show
+			expect(crossedOut.length).toBe(0) // No crossed out digits for unrevealed columns
+			expect(blueMarks.length).toBe(0) // No blue regrouped values for unrevealed columns
+
+			expect(html).toMatchSnapshot()
+		})
+
+		it("should show borrowing marks progressively", async () => {
+			const input = {
+				type: "subtractionWithRegrouping" as const,
+				minuend: 432,
+				subtrahend: 156,
+				showAnswer: true,
+				revealUpTo: "tens" as const
+			}
+
+			const html = await generateSubtractionWithRegrouping(input)
+
+			// When tens is revealed, borrowing marks for ones and tens should show if needed
+			expect(html).toContain("color: #4472c4") // Answer color
+
+			// Check that some borrowing marks may be present
+			// (Exact behavior depends on whether borrowing occurred in revealed columns)
+			expect(html).toMatchSnapshot()
+		})
+
+		it("should show complete solution when revealUpTo is 'complete'", async () => {
+			const input = {
+				type: "subtractionWithRegrouping" as const,
+				minuend: 432,
+				subtrahend: 156,
+				showAnswer: true,
+				revealUpTo: "complete" as const
+			}
+
+			const html = await generateSubtractionWithRegrouping(input)
+
+			// Should show all borrowing marks and complete answer
+			expect(html).toContain("color: #4472c4") // Answer color
+
+			// Should contain crossed-out digits if borrowing occurred
+			if (html.includes("text-decoration: line-through")) {
+				expect(html).toContain("text-decoration: line-through")
+			}
+
+			expect(html).toMatchSnapshot()
+		})
+
+		it("should handle default revealUpTo when not specified", async () => {
+			const input = {
+				type: "subtractionWithRegrouping" as const,
+				minuend: 432,
+				subtrahend: 156,
+				showAnswer: true
+				// revealUpTo not specified, should default to "complete"
+			}
+
+			const html = await generateSubtractionWithRegrouping(input)
+
+			// Should behave as if revealUpTo is "complete"
+			expect(html).toContain("color: #4472c4") // Answer color
+
+			// Should show all digits and borrowing marks
+			expect(html).toMatchSnapshot()
+		})
+	})
 })

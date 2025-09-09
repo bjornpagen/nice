@@ -28,6 +28,12 @@ export const SubtractionWithRegroupingPropsSchema = z
 			.boolean()
 			.describe(
 				"Whether to show the complete solution with regrouping marks and the difference. When true, displays crossed-out digits, carried values, and the final answer. When false, shows only the problem setup."
+			),
+		revealUpTo: z
+			.enum(["ones", "tens", "hundreds", "thousands", "ten-thousands", "complete"])
+			.optional()
+			.describe(
+				"Controls progressive reveal of the answer. 'ones' shows only the ones digit, 'tens' shows ones and tens, etc. Default 'complete' shows full answer with all borrowing marks. Only applies when showAnswer is true."
 			)
 	})
 	.strict()
@@ -98,7 +104,7 @@ function performSubtractionWithRegrouping(minuend: number, subtrahend: number) {
 export const generateSubtractionWithRegrouping: WidgetGenerator<typeof SubtractionWithRegroupingPropsSchema> = async (
 	data
 ) => {
-	const { minuend, subtrahend, showAnswer } = data
+	const { minuend, subtrahend, showAnswer, revealUpTo = "complete" } = data
 
 	// Validate that minuend > subtrahend
 	if (minuend <= subtrahend) {
@@ -108,6 +114,20 @@ export const generateSubtractionWithRegrouping: WidgetGenerator<typeof Subtracti
 
 	const result = performSubtractionWithRegrouping(minuend, subtrahend)
 	const { minuendDigits, subtrahendDigits, differenceDigits, borrowed, regroupedMinuend } = result
+
+	// Determine which columns to reveal based on revealUpTo
+	const maxLength = minuendDigits.length
+	let columnsToReveal = maxLength // Default to all columns
+	if (showAnswer && revealUpTo !== "complete") {
+		const placeValueMap = {
+			ones: 1,
+			tens: 2,
+			hundreds: 3,
+			thousands: 4,
+			"ten-thousands": 5
+		}
+		columnsToReveal = Math.min(placeValueMap[revealUpTo] ?? maxLength, maxLength)
+	}
 
 	let html = `<div style="display: inline-block; font-family: ${theme.font.family.mono}; font-size: 1.4em; text-align: right;">`
 
@@ -121,7 +141,10 @@ export const generateSubtractionWithRegrouping: WidgetGenerator<typeof Subtracti
 		for (let index = 0; index < minuendDigits.length; index++) {
 			const digit = minuendDigits[index]
 			const regroupedValue = regroupedMinuend[index]
-			if (borrowed[index] && regroupedValue !== undefined && regroupedValue !== digit) {
+			const columnPosition = maxLength - index // Column position from right (1-based)
+			const shouldShowBorrowing = revealUpTo === "complete" || columnPosition <= columnsToReveal
+
+			if (borrowed[index] && regroupedValue !== undefined && regroupedValue !== digit && shouldShowBorrowing) {
 				// Show the regrouped value in small blue text above
 				html += '<td style="padding: 0 8px; position: relative;">'
 				html +=
@@ -141,7 +164,10 @@ export const generateSubtractionWithRegrouping: WidgetGenerator<typeof Subtracti
 	html += "<td></td>" // Empty cell for operator column
 	for (let index = 0; index < minuendDigits.length; index++) {
 		const digit = minuendDigits[index]
-		if (showAnswer && borrowed[index]) {
+		const columnPosition = maxLength - index // Column position from right (1-based)
+		const shouldShowBorrowing = revealUpTo === "complete" || columnPosition <= columnsToReveal
+
+		if (showAnswer && borrowed[index] && shouldShowBorrowing) {
 			// Show crossed out original digit
 			html += '<td style="padding: 2px 8px; position: relative;">'
 			html += `<span style="text-decoration: line-through; text-decoration-color: #FF6B6B; text-decoration-thickness: 2px;">${digit}</span>`
@@ -166,11 +192,14 @@ export const generateSubtractionWithRegrouping: WidgetGenerator<typeof Subtracti
 		html += "<td></td>" // Empty cell for operator column
 		for (let index = 0; index < differenceDigits.length; index++) {
 			const digit = differenceDigits[index]
+			const columnPosition = maxLength - index // Column position from right (1-based)
+			const shouldReveal = revealUpTo === "complete" || columnPosition <= columnsToReveal
+
 			// Don't show leading zeros
 			const isLeadingZero =
 				index < differenceDigits.length - 1 && differenceDigits.slice(0, index + 1).every((d) => d === 0)
 			html += '<td style="padding: 2px 8px; color: #4472c4; font-weight: bold;">'
-			html += isLeadingZero ? "" : String(digit)
+			html += shouldReveal && !isLeadingZero ? String(digit) : ""
 			html += "</td>"
 		}
 		html += "</tr>"
