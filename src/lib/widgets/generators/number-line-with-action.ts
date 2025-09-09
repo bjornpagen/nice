@@ -428,7 +428,10 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 		const labels = tickLabels
 		const tickPositions = values.map(toSvgX)
 		
-		// Smart label selection to prevent overlaps
+		// Check if start value coincides with any tick and force it to have a label
+		const startValueAtTick = tickValues.some(tick => Math.abs(tick - startValue) < 1e-10)
+		
+		// Smart label selection to prevent overlaps, but force start value to be labeled
 		const selectedLabels = selectAxisLabels({
 			labels: labels,
 			positions: tickPositions,
@@ -437,6 +440,14 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			fontPx: theme.font.size.small,
 			minGapPx: 8
 		})
+
+		// If start value is at a tick position, force it to be selected
+		if (startValueAtTick) {
+			const startTickIndex = tickValues.findIndex(tick => Math.abs(tick - startValue) < 1e-10)
+			if (startTickIndex >= 0) {
+				selectedLabels.add(startTickIndex)
+			}
+		}
 
 		// Draw major ticks with full length and labels
 		values.forEach((t, i) => {
@@ -451,37 +462,38 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			}
 		})
 
-		// Draw secondary ticks with half length and no labels
+		// Draw secondary ticks with half length and no labels, BUT promote to primary if it's the start value
 		secondaryTickValues.forEach((t) => {
 			// Skip secondary ticks that overlap with major ticks
 			const isOverlapping = tickValues.some(majorTick => Math.abs(majorTick - t) < 1e-10)
 			if (!isOverlapping) {
 				const x = toSvgX(t)
-				canvas.drawLine(x, yPos - 2.5, x, yPos + 2.5, {
-					stroke: theme.colors.axis,
-					strokeWidth: theme.stroke.width.thin
-				})
+				const isStartValue = Math.abs(t - startValue) < 1e-10
+				
+				if (isStartValue) {
+					// Keep secondary tick size, but add label
+					canvas.drawLine(x, yPos - 2.5, x, yPos + 2.5, {
+						stroke: theme.colors.axis,
+						strokeWidth: theme.stroke.width.thin
+					})
+					const startLabel = formatPointLabel(startValue, min, max)
+					canvas.drawText({ x: x, y: yPos + 20, text: startLabel, fill: theme.colors.axis, anchor: "middle", fontPx: theme.font.size.small })
+				} else {
+					// Regular secondary tick
+					canvas.drawLine(x, yPos - 2.5, x, yPos + 2.5, {
+						stroke: theme.colors.axis,
+						strokeWidth: theme.stroke.width.thin
+					})
+				}
 			}
 		})
 
-		// Start value marker with forced label
+		// Start value marker (no separate label - uses tick label instead)
 		const startX = toSvgX(startValue)
 		canvas.drawCircle(startX, yPos, theme.geometry.pointRadius.small, {
 			fill: theme.colors.actionPrimary,
 			stroke: theme.colors.actionPrimary,
 			strokeWidth: theme.stroke.width.thin
-		})
-		
-		// Force start point label
-		const startLabel = formatPointLabel(startValue, min, max)
-		canvas.drawText({
-			x: startX,
-			y: yPos - 15,
-			text: startLabel,
-			fill: theme.colors.actionPrimary,
-			anchor: "middle",
-			fontPx: theme.font.size.small,
-			fontWeight: theme.font.weight.bold
 		})
 
 		// Action arrows - sequential with stacked labels
@@ -581,7 +593,10 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 		const labels = tickLabels
 		const tickPositions = values.map(toSvgY)
 		
-		// Smart label selection to prevent overlaps
+		// Check if start value coincides with any tick and force it to have a label
+		const startValueAtTick = tickValues.some(tick => Math.abs(tick - startValue) < 1e-10)
+		
+		// Smart label selection to prevent overlaps, but force start value to be labeled
 		const selectedLabels = selectAxisLabels({
 			labels: labels,
 			positions: tickPositions,
@@ -590,6 +605,14 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			fontPx: theme.font.size.small,
 			minGapPx: 12
 		})
+
+		// If start value is at a tick position, force it to be selected
+		if (startValueAtTick) {
+			const startTickIndex = tickValues.findIndex(tick => Math.abs(tick - startValue) < 1e-10)
+			if (startTickIndex >= 0) {
+				selectedLabels.add(startTickIndex)
+			}
+		}
 
 		// Draw major ticks with full length and labels
 		values.forEach((t, i) => {
@@ -605,37 +628,39 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			}
 		})
 
-		// Draw secondary ticks with half length and no labels
+		// Draw secondary ticks with half length and no labels, BUT promote to primary if it's the start value
 		secondaryTickValues.forEach((t) => {
 			// Skip secondary ticks that overlap with major ticks
 			const isOverlapping = tickValues.some(majorTick => Math.abs(majorTick - t) < 1e-10)
 			if (!isOverlapping) {
 				const y = toSvgY(t)
-				canvas.drawLine(xPos - 2.5, y, xPos + 2.5, y, {
-					stroke: theme.colors.axis,
-					strokeWidth: theme.stroke.width.thin
-				})
+				const isStartValue = Math.abs(t - startValue) < 1e-10
+				
+				if (isStartValue) {
+					// Keep secondary tick size, but add label
+					canvas.drawLine(xPos - 2.5, y, xPos + 2.5, y, {
+						stroke: theme.colors.axis,
+						strokeWidth: theme.stroke.width.thin
+					})
+					const startLabel = formatPointLabel(startValue, min, max)
+					const labelX = xPos - 10
+					canvas.drawText({ x: labelX, y: y + 4, text: startLabel, fill: theme.colors.axis, anchor: "end", fontPx: theme.font.size.small })
+				} else {
+					// Regular secondary tick
+					canvas.drawLine(xPos - 2.5, y, xPos + 2.5, y, {
+						stroke: theme.colors.axis,
+						strokeWidth: theme.stroke.width.thin
+					})
+				}
 			}
 		})
 
-		// Start value marker with forced label
+		// Start value marker (no separate label - uses tick label instead)
 		const startY = toSvgY(startValue)
 		canvas.drawCircle(xPos, startY, theme.geometry.pointRadius.small, {
 			fill: theme.colors.actionPrimary,
 			stroke: theme.colors.actionPrimary,
 			strokeWidth: theme.stroke.width.thin
-		})
-		
-		// Force start point label
-		const startLabel = formatPointLabel(startValue, min, max)
-		canvas.drawText({
-			x: xPos + 15,
-			y: startY + 4,
-			text: startLabel,
-			fill: theme.colors.actionPrimary,
-			anchor: "start",
-			fontPx: theme.font.size.small,
-			fontWeight: theme.font.weight.bold
 		})
 
 		// Action arrows - sequential with stacked labels
