@@ -138,28 +138,57 @@ Perseus misleadingly calls both types "widgets" - you MUST reclassify based on w
 
 ${supportedInteractionTypes}
 
-**CRITICAL: UNSUPPORTED INTERACTIVE WIDGETS - CONVERT TO MULTIPLE CHOICE**
-Some Perseus widgets require complex interactive features we cannot support (drawing, plotting, manipulating visuals). When you encounter these, you MUST convert them to multiple choice questions instead of failing.
+**Common Perseus elements that are UNSUPPORTED and their required conversions:**
+- \`plotter\` - interactive plotting/drawing → convert to \`choiceInteraction\` with static visuals in choices
+- \`interactive-graph\` - interactive graphing → convert to \`choiceInteraction\` with static visuals
+- \`grapher\` - interactive function graphing → convert to \`choiceInteraction\` with static visuals
+- \`matcher\` - matching items → convert to a SINGLE \`dataTable\` widget with inline dropdowns in the right column (see CRITICAL rule below)
+- \`number-line\` - when used for plotting points (not just display) → convert to \`choiceInteraction\` with static visuals
 
-**Unsupported Perseus Widget Types That MUST Be Converted:**
-- \`plotter\`: Creating histograms, dot plots, bar charts by adding elements
-- \`interactive-graph\`: Drawing lines, plotting points, moving objects on a coordinate plane
-- \`grapher\`: Interactive function graphing or manipulation
-- \`number-line\`: When used for plotting/adding points (not just display)
-- \`matcher\`: Matching or pairing items interactively
-- Any widget requiring drawing, dragging, or visual manipulation
+**Remember:** Perseus misleadingly calls interactive elements "widgets" in its JSON. IGNORE THIS. Reclassify based on whether user input is required, EXCEPT for tables which are ALWAYS widgets.
 
-**Conversion Strategy:**
-1. **CRITICAL: Create THREE ADDITIONAL widget slots** for the multiple choice options (e.g., \`choice_a_visual\`, \`choice_b_visual\`, \`choice_c_visual\`)
-2. Convert the interaction to a multiple choice question that will reference these three widget slots
-3. Place ONLY any initial visuals and the choice interaction in the body
-4. The three choice widget slots are declared in the \`widgets\` array but NOT placed in the body
+### CRITICAL: Matcher Conversion to Table + Dropdowns
+- When the original Perseus uses a \`matcher\` interaction, you MUST:
+  1) Create exactly one widget slot named \`data_table\` and include a \`{ "type": "blockSlot", "slotId": "data_table" }\` in the body where the interaction belongs.
+  2) Do NOT generate any multiple-choice interactions for matching. The \`interactions\` array MUST NOT include a \`choiceInteraction\` for matching.
+  3) Do NOT create per-choice tables or slots like \`choice_a_table\`, \`choice_b_table\`, \`match_*\`, or \`matching_*\`.
+  4) The left column lists the left-side items (e.g., formulas, values). The right column uses inline dropdowns (rendered as inline choice interactions) with choices taken from the right-side set.
+  5) The correct identifiers must be encoded in response declarations for each dropdown (handled downstream by the generator/validator).
 
-**Implementation Pattern:**
-- THREE additional widgets for choices (e.g., \`dot_plot_choice_a\`, \`dot_plot_choice_b\`, \`dot_plot_choice_c\`)
-- The interaction becomes a choice interaction (e.g., \`dot_plot_choice\`)
-- ONLY \`dot_plot_initial\` and \`dot_plot_choice\` appear in the body
-- The choice widgets are reserved for use by the interaction generation shot
+Example shell for matcher conversion:
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Match each item to its correct pair." }] },
+    { "type": "blockSlot", "slotId": "data_table" }
+  ],
+  "widgets": ["data_table"],
+  "interactions": []
+}
+\`\`\`
+
+Notes for implementation:
+- The single \`data_table\` will be generated as a \`dataTable\` widget.
+- Each right-column cell must be a dropdown rendered as an inlineChoiceInteraction (inline, not block).
+- The dropdown choices should be the full set from the matcher’s right side; correctness encoded in response declarations per row.
+- No per-choice visuals or per-choice tables are allowed for matcher conversions.
+
+### Perseus matcher field mapping (implementation detail)
+
+When \`widgets["matcher X"]\` is present in Perseus with the shape:
+
+- \`options.left\`: array of left-side items → becomes the table's first column (row headers). Render formulas as inline MathML.
+- \`options.right\`: array of right-side items → becomes the dropdown choices for EVERY row in the second column.
+- \`options.labels\`: \`[leftHeader, rightHeader]\` → becomes the two column headers, respectively.
+- \`options.orderMatters\`: can be ignored for dropdown rendering; scoring uses per-row correct identifiers.
+- \`options.padding\`: styling concern only; no effect on structure.
+
+Example mapping for the provided sample:
+- Left header: "Chemical formula " (note trailing space) → table column 1 header
+- Right header: "Name" → table column 2 header
+- Left values: \`SrS\`, \`Na2SO4\`, \`Na2S\`, \`SrSO4\`, \`SrSe\`, \`Na2Se\` (render from LaTeX to MathML inline)
+- Dropdown choices (same for each row): \`strontium sulfide\`, \`sodium sulfate\`, \`sodium sulfide\`, \`strontium sulfate\`, \`strontium selenide\`, \`sodium selenide\`
+- Correct mapping: per row, the right choice matching the left formula’s compound name
 
 ABSOLUTE REQUIREMENT: SLOT CONSISTENCY.
 This is the most critical rule. Any slot you include in the 'body' MUST have its slotId listed in either the 'widgets' array or the 'interactions' array. 
@@ -1577,7 +1606,6 @@ Perseus often calls interactive elements "widgets". You MUST correctly reclassif
 - \`plotter\` - interactive plotting/drawing
 - \`interactive-graph\` - interactive graphing
 - \`grapher\` - interactive function graphing
-- \`matcher\` - matching items
 - \`number-line\` - when used for plotting points (not just display)
 
 **Remember:** Perseus misleadingly calls interactive elements "widgets" in its JSON. IGNORE THIS. Reclassify based on whether user input is required, EXCEPT for tables which are ALWAYS widgets.
@@ -2405,7 +2433,7 @@ Widgets MUST NEVER display, label, or visually indicate the correct answer. This
 - ANY cramped layouts where equations, answer prompts, and input fields are all in one paragraph (use separate paragraphs for visual clarity)
 - ANY explanations, strategies, worked solutions, or teaching content in the 'body' (these belong ONLY in 'feedback' sections)
 - ANY widget or interaction that is NOT referenced in the Perseus content via \`[[☃ widget_name]]\` (unused widgets must be ignored) - EXCEPT for choice-level visuals and the 3 additional widgets created when converting unsupported interactive widgets
-- ANY unsupported interactive widget (plotter, interactive-graph, grapher, matcher) marked as an interaction instead of being converted to multiple choice
+- ANY unsupported interactive widget (plotter, interactive-graph, grapher) marked as an interaction instead of being converted to multiple choice
 
 **REMEMBER: Answers are ONLY allowed in feedback fields. HARD STOP. NO EXCEPTIONS.**
 **REMEMBER: Unsupported interactive widgets MUST be converted to multiple choice questions. NEVER mark them as interactions.**
