@@ -2,44 +2,50 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { theme } from "@/lib/widgets/utils/theme"
 
-// The main Zod schema for the additionWithRegrouping function
-export const AdditionWithRegroupingPropsSchema = z
-	.object({
-		type: z
-			.literal("additionWithRegrouping")
-			.describe(
-				"Identifies this as an addition with regrouping widget for teaching the carrying/regrouping algorithm in addition."
-			),
-		addend1: z
-			.number()
-			.int()
-			.min(0)
-			.describe(
-				"The top number (first addend) as a positive integer (e.g., 52, 235, 1000, 20129). Must be non-negative."
-			),
-		addend2: z
-			.number()
-			.int()
-			.min(0)
-			.describe(
-				"The bottom number (second addend) as a positive integer (e.g., 27, 168, 543, 9028). Must be non-negative."
-			),
-		showAnswer: z
-			.boolean()
-			.describe(
-				"Whether to show the answer. When false, shows only the problem setup. When true, uses 'revealUpTo' to control how much to show."
-			),
-		revealUpTo: z
-			.enum(["ones", "tens", "hundreds", "thousands", "ten-thousands", "complete"])
-			.optional()
-			.describe(
-				"Controls progressive reveal of the answer. 'ones' shows only the ones digit, 'tens' shows ones and tens, etc. Default 'complete' shows full answer with all carrying marks. Only applies when showAnswer is true."
-			)
-	})
-	.strict()
-	.describe(
-		"Creates a visual representation of addition with regrouping (carrying). Shows the traditional column format with optional display of the carrying process and answer. Perfect for teaching the standard addition algorithm when carrying is required."
-	)
+// Factory function to create addition with regrouping schema - avoids $ref in OpenAI JSON schema
+function createAdditionWithRegroupingPropsSchema() {
+	return z
+		.object({
+			type: z
+				.literal("additionWithRegrouping")
+				.describe(
+					"Identifies this as an addition with regrouping widget for teaching the carrying/regrouping algorithm in addition."
+				),
+			addend1: z
+				.number()
+				.int()
+				.min(0)
+				.describe(
+					"The top number (first addend) as a positive integer (e.g., 52, 235, 1000, 20129). Must be non-negative."
+				),
+			addend2: z
+				.number()
+				.int()
+				.min(0)
+				.describe(
+					"The bottom number (second addend) as a positive integer (e.g., 27, 168, 543, 9028). Must be non-negative."
+				),
+			showAnswer: z
+				.boolean()
+				.describe(
+					"Whether to show the answer. When false, shows only the problem setup. When true, uses 'revealUpTo' to control how much to show."
+				),
+			revealUpTo: z
+				.enum(["ones", "tens", "hundreds", "thousands", "ten-thousands", "complete"])
+				.nullable()
+				.default("complete")
+				.describe(
+					"Controls progressive reveal of the answer. 'ones' shows only the ones digit, 'tens' shows ones and tens, etc. Default 'complete' shows full answer with all carrying marks. Only applies when showAnswer is true."
+				)
+		})
+		.strict()
+		.describe(
+			"Creates a visual representation of addition with regrouping (carrying). Shows the traditional column format with optional display of the carrying process and answer. Perfect for teaching the standard addition algorithm when carrying is required."
+		)
+}
+
+// Export the schema created by the factory function
+export const AdditionWithRegroupingPropsSchema = createAdditionWithRegroupingPropsSchema()
 
 export type AdditionWithRegroupingProps = z.infer<typeof AdditionWithRegroupingPropsSchema>
 
@@ -109,14 +115,15 @@ function performAdditionWithRegrouping(addend1: number, addend2: number) {
 export const generateAdditionWithRegrouping: WidgetGenerator<typeof AdditionWithRegroupingPropsSchema> = async (
 	data
 ) => {
-	const { addend1, addend2, showAnswer, revealUpTo = "complete" } = data
+	const { addend1, addend2, showAnswer, revealUpTo } = data
+	const finalRevealUpTo = revealUpTo ?? "complete"
 
 	const result = performAdditionWithRegrouping(addend1, addend2)
 	const { addend1Digits, addend2Digits, sumDigits, carried, maxLength, hasFinalCarry } = result
 
-	// Determine which columns to reveal based on revealUpTo
+	// Determine which columns to reveal based on finalRevealUpTo
 	let columnsToReveal = maxLength // Default to all columns
-	if (showAnswer && revealUpTo !== "complete") {
+	if (showAnswer && finalRevealUpTo !== "complete") {
 		const placeValueMap = {
 			ones: 1,
 			tens: 2,
@@ -124,7 +131,7 @@ export const generateAdditionWithRegrouping: WidgetGenerator<typeof AdditionWith
 			thousands: 4,
 			"ten-thousands": 5
 		}
-		columnsToReveal = Math.min(placeValueMap[revealUpTo] ?? maxLength, maxLength)
+		columnsToReveal = Math.min(placeValueMap[finalRevealUpTo] ?? maxLength, maxLength)
 	}
 
 	let html = `<div style="display: inline-block; font-family: ${theme.font.family.mono}; font-size: 1.4em; text-align: right;">`
@@ -149,7 +156,7 @@ export const generateAdditionWithRegrouping: WidgetGenerator<typeof AdditionWith
 			// The carry appears above the column it affects (where it's added)
 			const columnPosition = maxLength - index // Position from right (1 = ones, 2 = tens, etc.)
 			// We show the carry if we're revealing at least up to this column
-			const shouldShowCarry = carryValue > 0 && (revealUpTo === "complete" || columnsToReveal >= columnPosition)
+			const shouldShowCarry = carryValue > 0 && (finalRevealUpTo === "complete" || columnsToReveal >= columnPosition)
 
 			if (shouldShowCarry) {
 				html += '<td style="padding: 0 8px; position: relative;">'
@@ -208,7 +215,7 @@ export const generateAdditionWithRegrouping: WidgetGenerator<typeof AdditionWith
 			const digit = sumDigits[index]
 			// Calculate position from right (1 = ones, 2 = tens, etc.)
 			const columnPosition = sumDigits.length - index
-			const shouldReveal = revealUpTo === "complete" || columnPosition <= columnsToReveal
+			const shouldReveal = finalRevealUpTo === "complete" || columnPosition <= columnsToReveal
 
 			if (shouldReveal) {
 				html += '<td style="padding: 2px 8px; color: #4472c4; font-weight: bold;">'

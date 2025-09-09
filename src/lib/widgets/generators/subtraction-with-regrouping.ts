@@ -4,42 +4,48 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { theme } from "@/lib/widgets/utils/theme"
 
-// The main Zod schema for the subtractionWithRegrouping function
-export const SubtractionWithRegroupingPropsSchema = z
-	.object({
-		type: z
-			.literal("subtractionWithRegrouping")
-			.describe(
-				"Identifies this as a subtraction with regrouping widget for teaching the borrowing/regrouping algorithm in subtraction."
-			),
-		minuend: z
-			.number()
-			.int()
-			.describe(
-				"The top number (the number being subtracted from) as an integer (e.g., 52, -27, 235, 1000, 4321). Can be positive or negative. Must be greater than the subtrahend for valid subtraction."
-			),
-		subtrahend: z
-			.number()
-			.int()
-			.describe(
-				"The bottom number (the number being subtracted) as an integer (e.g., 27, -15, 168, 543, 1876). Can be positive or negative. Must be less than the minuend."
-			),
-		showAnswer: z
-			.boolean()
-			.describe(
-				"Whether to show the complete solution with regrouping marks and the difference. When true, displays crossed-out digits, carried values, and the final answer. When false, shows only the problem setup."
-			),
-		revealUpTo: z
-			.enum(["ones", "tens", "hundreds", "thousands", "ten-thousands", "complete"])
-			.optional()
-			.describe(
-				"Controls progressive reveal of the answer. 'ones' shows only the ones digit, 'tens' shows ones and tens, etc. Default 'complete' shows full answer with all borrowing marks. Only applies when showAnswer is true."
-			)
-	})
-	.strict()
-	.describe(
-		"Creates a visual representation of subtraction with regrouping (borrowing). Shows the traditional column format with optional display of the regrouping process and answer. Perfect for teaching the standard subtraction algorithm when borrowing is required."
-	)
+// Factory function to create subtraction with regrouping schema - avoids $ref in OpenAI JSON schema
+function createSubtractionWithRegroupingPropsSchema() {
+	return z
+		.object({
+			type: z
+				.literal("subtractionWithRegrouping")
+				.describe(
+					"Identifies this as a subtraction with regrouping widget for teaching the borrowing/regrouping algorithm in subtraction."
+				),
+			minuend: z
+				.number()
+				.int()
+				.describe(
+					"The top number (the number being subtracted from) as an integer (e.g., 52, -27, 235, 1000, 4321). Can be positive or negative. Must be greater than the subtrahend for valid subtraction."
+				),
+			subtrahend: z
+				.number()
+				.int()
+				.describe(
+					"The bottom number (the number being subtracted) as an integer (e.g., 27, -15, 168, 543, 1876). Can be positive or negative. Must be less than the minuend."
+				),
+			showAnswer: z
+				.boolean()
+				.describe(
+					"Whether to show the complete solution with regrouping marks and the difference. When true, displays crossed-out digits, carried values, and the final answer. When false, shows only the problem setup."
+				),
+			revealUpTo: z
+				.enum(["ones", "tens", "hundreds", "thousands", "ten-thousands", "complete"])
+				.nullable()
+				.default("complete")
+				.describe(
+					"Controls progressive reveal of the answer. 'ones' shows only the ones digit, 'tens' shows ones and tens, etc. Default 'complete' shows full answer with all borrowing marks. Only applies when showAnswer is true."
+				)
+		})
+		.strict()
+		.describe(
+			"Creates a visual representation of subtraction with regrouping (borrowing). Shows the traditional column format with optional display of the regrouping process and answer. Perfect for teaching the standard subtraction algorithm when borrowing is required."
+		)
+}
+
+// Export the factory function call directly to avoid $ref generation
+export const SubtractionWithRegroupingPropsSchema = createSubtractionWithRegroupingPropsSchema()
 
 export type SubtractionWithRegroupingProps = z.infer<typeof SubtractionWithRegroupingPropsSchema>
 
@@ -104,7 +110,8 @@ function performSubtractionWithRegrouping(minuend: number, subtrahend: number) {
 export const generateSubtractionWithRegrouping: WidgetGenerator<typeof SubtractionWithRegroupingPropsSchema> = async (
 	data
 ) => {
-	const { minuend, subtrahend, showAnswer, revealUpTo = "complete" } = data
+	const { minuend, subtrahend, showAnswer, revealUpTo } = data
+	const finalRevealUpTo = revealUpTo ?? "complete"
 
 	// Validate that minuend > subtrahend
 	if (minuend <= subtrahend) {
@@ -115,10 +122,10 @@ export const generateSubtractionWithRegrouping: WidgetGenerator<typeof Subtracti
 	const result = performSubtractionWithRegrouping(minuend, subtrahend)
 	const { minuendDigits, subtrahendDigits, differenceDigits, borrowed, regroupedMinuend } = result
 
-	// Determine which columns to reveal based on revealUpTo
+	// Determine which columns to reveal based on finalRevealUpTo
 	const maxLength = minuendDigits.length
 	let columnsToReveal = maxLength // Default to all columns
-	if (showAnswer && revealUpTo !== "complete") {
+	if (showAnswer && finalRevealUpTo !== "complete") {
 		const placeValueMap = {
 			ones: 1,
 			tens: 2,
@@ -126,7 +133,7 @@ export const generateSubtractionWithRegrouping: WidgetGenerator<typeof Subtracti
 			thousands: 4,
 			"ten-thousands": 5
 		}
-		columnsToReveal = Math.min(placeValueMap[revealUpTo] ?? maxLength, maxLength)
+		columnsToReveal = Math.min(placeValueMap[finalRevealUpTo] ?? maxLength, maxLength)
 	}
 
 	let html = `<div style="display: inline-block; font-family: ${theme.font.family.mono}; font-size: 1.4em; text-align: right;">`
@@ -142,7 +149,7 @@ export const generateSubtractionWithRegrouping: WidgetGenerator<typeof Subtracti
 			const digit = minuendDigits[index]
 			const regroupedValue = regroupedMinuend[index]
 			const columnPosition = maxLength - index // Column position from right (1-based)
-			const shouldShowBorrowing = revealUpTo === "complete" || columnPosition <= columnsToReveal
+			const shouldShowBorrowing = finalRevealUpTo === "complete" || columnPosition <= columnsToReveal
 
 			if (borrowed[index] && regroupedValue !== undefined && regroupedValue !== digit && shouldShowBorrowing) {
 				// Show the regrouped value in small blue text above
@@ -165,7 +172,7 @@ export const generateSubtractionWithRegrouping: WidgetGenerator<typeof Subtracti
 	for (let index = 0; index < minuendDigits.length; index++) {
 		const digit = minuendDigits[index]
 		const columnPosition = maxLength - index // Column position from right (1-based)
-		const shouldShowBorrowing = revealUpTo === "complete" || columnPosition <= columnsToReveal
+		const shouldShowBorrowing = finalRevealUpTo === "complete" || columnPosition <= columnsToReveal
 
 		if (showAnswer && borrowed[index] && shouldShowBorrowing) {
 			// Show crossed out original digit
@@ -193,7 +200,7 @@ export const generateSubtractionWithRegrouping: WidgetGenerator<typeof Subtracti
 		for (let index = 0; index < differenceDigits.length; index++) {
 			const digit = differenceDigits[index]
 			const columnPosition = maxLength - index // Column position from right (1-based)
-			const shouldReveal = revealUpTo === "complete" || columnPosition <= columnsToReveal
+			const shouldReveal = finalRevealUpTo === "complete" || columnPosition <= columnsToReveal
 
 			// Don't show leading zeros
 			const isLeadingZero =

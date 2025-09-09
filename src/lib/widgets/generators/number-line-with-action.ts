@@ -8,61 +8,7 @@ import { theme } from "@/lib/widgets/utils/theme"
 import { buildTicks } from "@/lib/widgets/utils/ticks"
 import { selectAxisLabels } from "@/lib/widgets/utils/layout"
 
-const Label = z
-	.object({
-		value: z
-			.number()
-			.describe(
-				"The position on the number line where this custom label appears (e.g., 5, -2, 3.5). Must be within min/max range."
-			),
-		text: z
-			.string()
-			.describe(
-				"The text to display at this position instead of the default number (e.g., 'Start', 'A', 'Goal'). Replaces numeric label."
-			)
-	})
-	.strict()
 
-// Local factory function to create action delta schema without $ref
-const createActionDeltaSchema = () => z.discriminatedUnion("type", [
-	z
-		.object({
-			type: z.literal("number").describe("Plain numeric change"),
-			value: z.number().describe("Numeric value for the change, e.g. -3, 0, 5, 2.5")
-		})
-		.strict(),
-	z
-		.object({
-			type: z.literal("fraction").describe("Proper or improper fraction change"),
-			numerator: z.number().int().min(0).describe("Numerator (non-negative)"),
-			denominator: z.number().int().positive().describe("Denominator (positive)"),
-			sign: z.enum(["+", "-"]).describe("Sign of the fraction change")
-		})
-		.strict(),
-	z
-		.object({
-			type: z.literal("mixed").describe("Mixed number change like 1 1/4"),
-			whole: z.number().int().min(0).describe("Whole part (non-negative)"),
-			numerator: z.number().int().min(0).describe("Numerator of the fractional part"),
-			denominator: z.number().int().positive().describe("Denominator of the fractional part (positive)"),
-			sign: z.enum(["+", "-"]).describe("Sign of the mixed number change")
-		})
-		.strict()
-]);
-
-const Action = z
-	.object({
-		delta: createActionDeltaSchema()
-			.describe(
-				"The change amount for this action. Supports numeric, fractional, or mixed number values with explicit signs. Positive for addition/forward, negative for subtraction/backward."
-			),
-		label: z
-			.string()
-			.describe(
-				"Text label for this action arrow (e.g., '+3', '-5', 'add 2', 'back 1'). Displayed above/beside the curved arrow."
-			)
-	})
-	.strict()
 
 export const NumberLineWithActionPropsSchema = z
 	.object({
@@ -96,23 +42,75 @@ export const NumberLineWithActionPropsSchema = z
 			.describe(
 				"Maximum value shown on the number line (e.g., 20, 10, 15). Should be greater than startValue + sum of positive deltas."
 			),
-		tickInterval: z
-			.number()
-			.describe(
-				"Spacing between tick marks (e.g., 1, 2, 5, 0.5). Should evenly divide the range for clean appearance."
-			),
+		tickInterval: z.discriminatedUnion("type", [
+			z
+				.object({
+					type: z.literal("whole"),
+					interval: z.number().positive().describe("Whole number interval between major ticks (e.g., 1, 2, 5, 10)")
+				})
+				.strict(),
+			z
+				.object({
+					type: z.literal("fraction"),
+					numerator: z.literal(1).describe("Always 1 for unit fractions"),
+					denominator: z.number().int().positive().describe("Denominator for unit fractions (e.g., 5 for fifths, 7 for sevenths)")
+				})
+				.strict()
+		]).describe("Major tick interval specification with full-length ticks and labels"),
+		secondaryTickInterval: z.discriminatedUnion("type", [
+			z
+				.object({
+					type: z.literal("whole"),
+					interval: z.number().positive().describe("Whole number interval between minor ticks (e.g., 0.5, 1, 2.5)")
+				})
+				.strict(),
+			z
+				.object({
+					type: z.literal("fraction"),
+					numerator: z.literal(1).describe("Always 1 for unit fractions"),
+					denominator: z.number().int().positive().describe("Denominator for unit fractions (e.g., 10 for tenths, 20 for twentieths)")
+				})
+				.strict()
+		]).nullable().describe("Optional minor tick interval with half-length ticks and no labels"),
 		startValue: z
 			.number()
 			.describe(
 				"The initial position before any actions (e.g., 5, 0, -2). Marked with a distinct point. Actions begin from here."
 			),
-		customLabels: z
-			.array(Label)
-			.describe(
-				"Replace numeric labels at specific positions with custom text. Empty array uses default numeric labels. Useful for word problems."
-			),
 		actions: z
-			.array(Action)
+			.array(z
+				.object({
+					delta: z.discriminatedUnion("type", [
+						z
+							.object({
+								type: z.literal("whole").describe("Whole number change"),
+								value: z.number().int().describe("Integer value for the change, e.g. -3, 0, 5"),
+								sign: z.enum(["+", "-"]).describe("Sign of the whole number change")
+							})
+							.strict(),
+						z
+							.object({
+								type: z.literal("fraction").describe("Proper or improper fraction change"),
+								numerator: z.number().int().min(0).describe("Numerator (non-negative)"),
+								denominator: z.number().int().positive().describe("Denominator (positive)"),
+								sign: z.enum(["+", "-"]).describe("Sign of the fraction change")
+							})
+							.strict(),
+						z
+							.object({
+								type: z.literal("mixed").describe("Mixed number change like 1 1/4"),
+								whole: z.number().int().min(0).describe("Whole part (non-negative)"),
+								numerator: z.number().int().min(0).describe("Numerator of the fractional part"),
+								denominator: z.number().int().positive().describe("Denominator of the fractional part (positive)"),
+								sign: z.enum(["+", "-"]).describe("Sign of the mixed number change")
+							})
+							.strict()
+					]).describe(
+						"The change amount for this action. Supports numeric, fractional, or mixed number values with explicit signs. Positive for addition/forward, negative for subtraction/backward."
+					)
+				})
+				.strict()
+			)
 			.describe(
 				"Sequence of operations shown as curved arrows. Applied in order from startValue. Multiple actions create multi-step problems (e.g., 5 + 3 - 2)."
 			)
@@ -124,13 +122,15 @@ export const NumberLineWithActionPropsSchema = z
 
 export type NumberLineWithActionProps = z.infer<typeof NumberLineWithActionPropsSchema>
 
-type ActionDelta = z.infer<ReturnType<typeof createActionDeltaSchema>>
+type ActionDelta = z.infer<typeof NumberLineWithActionPropsSchema>["actions"][number]["delta"]
 
 /**
  * Calculates the numerical value of an action's delta.
  */
 const toNumericDelta = (delta: ActionDelta): number => {
-	if (delta.type === "number") return delta.value
+	if (delta.type === "whole") {
+		return delta.sign === "-" ? -delta.value : delta.value
+	}
 	if (delta.type === "fraction") {
 		const magnitude = delta.denominator === 0 ? 0 : delta.numerator / delta.denominator
 		return delta.sign === "-" ? -magnitude : magnitude
@@ -138,6 +138,52 @@ const toNumericDelta = (delta: ActionDelta): number => {
 	// mixed
 	const total = delta.whole + (delta.denominator === 0 ? 0 : delta.numerator / delta.denominator)
 	return delta.sign === "-" ? -total : total
+}
+
+/**
+ * Generates the display label for an action's delta.
+ */
+const toDeltaLabel = (delta: ActionDelta): string => {
+	if (delta.type === "whole") {
+		const sign = delta.sign === "-" ? "-" : "+"
+		return `${sign}${delta.value}`
+	}
+	if (delta.type === "fraction") {
+		const sign = delta.sign === "-" ? "-" : "+"
+		return `${sign}${delta.numerator}/${delta.denominator}`
+	}
+	// mixed
+	const sign = delta.sign === "-" ? "-" : "+"
+	return `${sign}${delta.whole} ${delta.numerator}/${delta.denominator}`
+}
+
+/**
+ * Formats a numeric value as a fraction when appropriate.
+ */
+const formatPointLabel = (value: number, min: number, max: number): string => {
+	if (Number.isInteger(value)) {
+		return value.toString()
+	}
+	
+	// For unit intervals [0,1], try to represent as simple fractions
+	if (min === 0 && max === 1) {
+		// Try common denominators
+		const denominators = [2, 3, 4, 5, 6, 7, 8, 9, 10, 12]
+		for (const den of denominators) {
+			const num = Math.round(value * den)
+			if (Math.abs(value - num / den) < 1e-10) {
+				if (num === 0) return "0"
+				if (num === den) return "1"
+				// Simplify the fraction
+				const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b)
+				const g = gcd(num, den)
+				return `${num / g}/${den / g}`
+			}
+		}
+	}
+	
+	// Fallback to decimal with limited precision
+	return value.toFixed(2).replace(/\.?0+$/, "")
 }
 
 /**
@@ -272,7 +318,7 @@ function drawClippedDottedLine(
 }
 
 export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWithActionPropsSchema> = async (data) => {
-	const { width, height, orientation, min, max, tickInterval, startValue, customLabels, actions } = data
+	const { width, height, orientation, min, max, tickInterval, secondaryTickInterval, startValue, actions } = data
 	const isHorizontal = orientation === "horizontal"
 	const lineLength = (isHorizontal ? width : height) - 2 * PADDING
 
@@ -297,6 +343,67 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 	
 	const scale = lineLength / (max - min)
 
+	// Helper function to generate tick values and labels
+	const generateTicks = (tickSpec: typeof tickInterval): { values: number[]; labels: string[] } => {
+		const values: number[] = []
+		const labels: string[] = []
+		
+		if (tickSpec.type === "whole") {
+			// Generate ticks at whole number intervals
+			const interval = tickSpec.interval
+			const startTick = Math.ceil(min / interval) * interval
+			
+			for (let value = startTick; value <= max; value += interval) {
+				if (value >= min) {
+					values.push(value)
+					labels.push(Number.isInteger(value) ? value.toString() : value.toFixed(2))
+				}
+			}
+		} else if (tickSpec.type === "fraction") {
+			// Generate ticks at fractional intervals (1/denominator)
+			const denominator = tickSpec.denominator
+			const interval = 1 / denominator
+			const numTicks = Math.floor((max - min) / interval) + 1
+			
+			for (let i = 0; i <= numTicks; i++) {
+				const value = min + i * interval
+				if (value <= max + 1e-10) { // Add small epsilon for floating point precision
+					values.push(value)
+					
+					// Generate proper fractional labels
+					if (Number.isInteger(value)) {
+						labels.push(value.toString())
+					} else {
+						// For unit intervals [0,1], show as simple fractions
+						if (min === 0 && max === 1) {
+							labels.push(`${i}/${denominator}`)
+						} else {
+							// For other ranges, show fractional representation
+							const wholePart = Math.floor(value)
+							const fracPart = value - wholePart
+							const fracNumerator = Math.round(fracPart * denominator)
+							
+							if (fracNumerator === 0) {
+								labels.push(wholePart.toString())
+							} else if (wholePart === 0) {
+								labels.push(`${fracNumerator}/${denominator}`)
+							} else {
+								labels.push(`${wholePart} ${fracNumerator}/${denominator}`)
+							}
+						}
+					}
+				}
+			}
+		}
+		return { values, labels }
+	}
+
+	// Generate major ticks
+	const { values: tickValues, labels: tickLabels } = generateTicks(tickInterval)
+	
+	// Generate secondary ticks if specified
+	const secondaryTickValues: number[] = secondaryTickInterval ? generateTicks(secondaryTickInterval).values : []
+
 	const canvas = new CanvasImpl({
 		chartArea: { left: 0, top: 0, width, height },
 		fontPxDefault: 12,
@@ -317,13 +424,13 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			strokeWidth: theme.stroke.width.thick
 		})
 
-		const { values, labels: tickLabels } = buildTicks(min, max, tickInterval)
-		const customLabelsMap = new Map(customLabels.map(l => [l.value, l.text]))
+		const values = tickValues
+		const labels = tickLabels
 		const tickPositions = values.map(toSvgX)
 		
 		// Smart label selection to prevent overlaps
 		const selectedLabels = selectAxisLabels({
-			labels: tickLabels,
+			labels: labels,
 			positions: tickPositions,
 			axisLengthPx: lineLength,
 			orientation: "horizontal",
@@ -331,6 +438,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			minGapPx: 8
 		})
 
+		// Draw major ticks with full length and labels
 		values.forEach((t, i) => {
 			const x = toSvgX(t)
 			canvas.drawLine(x, yPos - 5, x, yPos + 5, {
@@ -338,33 +446,42 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 				strokeWidth: theme.stroke.width.base
 			})
 
-			const customLabel = customLabelsMap.get(t)
-			if (customLabel) {
-				canvas.drawText({ x: x, y: yPos + 20, text: customLabel, fill: theme.colors.axis, anchor: "middle", fontWeight: theme.font.weight.bold })
-			} else if (selectedLabels.has(i)) {
-				canvas.drawText({ x: x, y: yPos + 20, text: tickLabels[i]!, fill: theme.colors.axis, anchor: "middle", fontPx: theme.font.size.small })
+			if (selectedLabels.has(i)) {
+				canvas.drawText({ x: x, y: yPos + 20, text: labels[i]!, fill: theme.colors.axis, anchor: "middle", fontPx: theme.font.size.small })
 			}
 		})
 
-		// Custom Labels
-		for (const label of customLabels) {
-			const x = toSvgX(label.value)
-			canvas.drawText({
-				x: x,
-				y: yPos + 20,
-				text: label.text,
-				fill: theme.colors.axis,
-				anchor: "middle",
-				fontWeight: theme.font.weight.bold
-			})
-		}
+		// Draw secondary ticks with half length and no labels
+		secondaryTickValues.forEach((t) => {
+			// Skip secondary ticks that overlap with major ticks
+			const isOverlapping = tickValues.some(majorTick => Math.abs(majorTick - t) < 1e-10)
+			if (!isOverlapping) {
+				const x = toSvgX(t)
+				canvas.drawLine(x, yPos - 2.5, x, yPos + 2.5, {
+					stroke: theme.colors.axis,
+					strokeWidth: theme.stroke.width.thin
+				})
+			}
+		})
 
-		// Start value marker
+		// Start value marker with forced label
 		const startX = toSvgX(startValue)
 		canvas.drawCircle(startX, yPos, theme.geometry.pointRadius.small, {
 			fill: theme.colors.actionPrimary,
 			stroke: theme.colors.actionPrimary,
 			strokeWidth: theme.stroke.width.thin
+		})
+		
+		// Force start point label
+		const startLabel = formatPointLabel(startValue, min, max)
+		canvas.drawText({
+			x: startX,
+			y: yPos - 15,
+			text: startLabel,
+			fill: theme.colors.actionPrimary,
+			anchor: "middle",
+			fontPx: theme.font.size.small,
+			fontWeight: theme.font.weight.bold
 		})
 
 		// Action arrows - sequential with stacked labels
@@ -374,9 +491,10 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 		// First pass: collect label bounds
 		for (let i = 0; i < actions.length; i++) {
 			const action = actions[i]
-			if (!action || !action.label) continue
+			if (!action) continue
 
 			const numericDelta = toNumericDelta(action.delta)
+			const actionLabel = toDeltaLabel(action.delta)
 			const actionStartX = toSvgX(currentValue)
 			const actionEndX = toSvgX(currentValue + numericDelta)
 			const midX = (actionStartX + actionEndX) / 2
@@ -385,7 +503,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const arrowY = yPos - baseOffset - (i * arrowSpacing)
 			
 			// Estimate label dimensions with tight bounds (server-safe approximation)
-			const labelWidth = action.label.length * theme.font.size.small * 0.6
+			const labelWidth = actionLabel.length * theme.font.size.small * 0.6
 			const labelHeight = theme.font.size.small
 			const padding = 2  // Minimal padding for tighter clipping
 			
@@ -427,17 +545,16 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			drawClippedDottedLine(canvas, actionEndX, arrowY, actionEndX, yPos, labelBounds, theme)
 
 			// Arrow label with better spacing
-			if (action.label) {
-				canvas.drawText({
-					x: midX,
-					y: arrowY - 8,
-					text: action.label,
-					fill: theme.colors.actionPrimary,
-					anchor: "middle",
-					fontPx: theme.font.size.small,
-					fontWeight: theme.font.weight.bold
-				})
-			}
+			const actionLabel = toDeltaLabel(action.delta)
+			canvas.drawText({
+				x: midX,
+				y: arrowY - 8,
+				text: actionLabel,
+				fill: theme.colors.actionPrimary,
+				anchor: "middle",
+				fontPx: theme.font.size.small,
+				fontWeight: theme.font.weight.bold
+			})
 
 			currentValue += numericDelta
 		}
@@ -460,13 +577,13 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			strokeWidth: theme.stroke.width.thick
 		})
 
-		const { values, labels: tickLabels } = buildTicks(min, max, tickInterval)
-		const customLabelsMap = new Map(customLabels.map(l => [l.value, l.text]))
+		const values = tickValues
+		const labels = tickLabels
 		const tickPositions = values.map(toSvgY)
 		
 		// Smart label selection to prevent overlaps
 		const selectedLabels = selectAxisLabels({
-			labels: tickLabels,
+			labels: labels,
 			positions: tickPositions,
 			axisLengthPx: lineLength,
 			orientation: "vertical",
@@ -474,6 +591,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			minGapPx: 12
 		})
 
+		// Draw major ticks with full length and labels
 		values.forEach((t, i) => {
 			const y = toSvgY(t)
 			canvas.drawLine(xPos - 5, y, xPos + 5, y, {
@@ -481,35 +599,43 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 				strokeWidth: theme.stroke.width.base
 			})
 
-			const customLabel = customLabelsMap.get(t)
 			const labelX = xPos - 10
-			if (customLabel) {
-				canvas.drawText({ x: labelX, y: y + 4, text: customLabel, fill: theme.colors.axis, anchor: "end", fontWeight: theme.font.weight.bold })
-			} else if (selectedLabels.has(i)) {
-				canvas.drawText({ x: labelX, y: y + 4, text: tickLabels[i]!, fill: theme.colors.axis, anchor: "end", fontPx: theme.font.size.small })
+			if (selectedLabels.has(i)) {
+				canvas.drawText({ x: labelX, y: y + 4, text: labels[i]!, fill: theme.colors.axis, anchor: "end", fontPx: theme.font.size.small })
 			}
 		})
 
-		// Custom Labels
-		for (const label of customLabels) {
-			const y = toSvgY(label.value)
-			const labelX = xPos - 10
-			canvas.drawText({
-				x: labelX,
-				y: y + 4,
-				text: label.text,
-				fill: theme.colors.axis,
-				anchor: "end",
-				fontWeight: theme.font.weight.bold
-			})
-		}
+		// Draw secondary ticks with half length and no labels
+		secondaryTickValues.forEach((t) => {
+			// Skip secondary ticks that overlap with major ticks
+			const isOverlapping = tickValues.some(majorTick => Math.abs(majorTick - t) < 1e-10)
+			if (!isOverlapping) {
+				const y = toSvgY(t)
+				canvas.drawLine(xPos - 2.5, y, xPos + 2.5, y, {
+					stroke: theme.colors.axis,
+					strokeWidth: theme.stroke.width.thin
+				})
+			}
+		})
 
-		// Start value marker
+		// Start value marker with forced label
 		const startY = toSvgY(startValue)
 		canvas.drawCircle(xPos, startY, theme.geometry.pointRadius.small, {
 			fill: theme.colors.actionPrimary,
 			stroke: theme.colors.actionPrimary,
 			strokeWidth: theme.stroke.width.thin
+		})
+		
+		// Force start point label
+		const startLabel = formatPointLabel(startValue, min, max)
+		canvas.drawText({
+			x: xPos + 15,
+			y: startY + 4,
+			text: startLabel,
+			fill: theme.colors.actionPrimary,
+			anchor: "start",
+			fontPx: theme.font.size.small,
+			fontWeight: theme.font.weight.bold
 		})
 
 		// Action arrows - sequential with stacked labels
@@ -519,9 +645,10 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 		// First pass: collect label bounds for vertical layout
 		for (let i = 0; i < actions.length; i++) {
 			const action = actions[i]
-			if (!action || !action.label) continue
+			if (!action) continue
 
 			const numericDelta = toNumericDelta(action.delta)
+			const actionLabel = toDeltaLabel(action.delta)
 			const actionStartY = toSvgY(currentValue)
 			const actionEndY = toSvgY(currentValue + numericDelta)
 			const midY = (actionStartY + actionEndY) / 2
@@ -531,7 +658,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const labelX = arrowX + 18  // Reduced from 25 to 18 for better balance
 			
 			// For rotated text (-90 degrees), calculate accurate bounding box
-			const textWidth = action.label.length * theme.font.size.small * 0.6  // original text width
+			const textWidth = actionLabel.length * theme.font.size.small * 0.6  // original text width
 			const textHeight = theme.font.size.small  // original text height
 			const padding = 3  // Adequate padding for proper clipping
 			
@@ -580,19 +707,18 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			drawClippedDottedLine(canvas, arrowX, actionEndY, xPos, actionEndY, labelBounds, theme)
 
 			// Arrow label (rotated for vertical layout) with better spacing
-			if (action.label) {
-				const labelX = arrowX + 18  // Reduced from 25 to 18 for better balance
-				canvas.drawText({
-					x: labelX,
-					y: midY,
-					text: action.label,
-					fill: theme.colors.actionPrimary,
-					anchor: "middle",
-					fontPx: theme.font.size.small,
-					fontWeight: theme.font.weight.bold,
-					rotate: { angle: -90, cx: labelX, cy: midY }
-				})
-			}
+			const actionLabel = toDeltaLabel(action.delta)
+			const labelX = arrowX + 18  // Reduced from 25 to 18 for better balance
+			canvas.drawText({
+				x: labelX,
+				y: midY,
+				text: actionLabel,
+				fill: theme.colors.actionPrimary,
+				anchor: "middle",
+				fontPx: theme.font.size.small,
+				fontWeight: theme.font.weight.bold,
+				rotate: { angle: -90, cx: labelX, cy: midY }
+			})
 
 			currentValue += numericDelta
 		}

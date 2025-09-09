@@ -1,4 +1,4 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`Addition With Regrouping Widget should generate a basic addition problem without answer 1`] = `"<div style="display: inline-block; font-family: 'Courier New', monospace; font-size: 1.4em; text-align: right;"><table style="border-collapse: collapse; position: relative;"><tr><td></td><td style="padding: 2px 8px;">3</td><td style="padding: 2px 8px;">4</td><td style="padding: 2px 8px;">5</td></tr><tr><td style="padding: 2px 8px;">+</td><td style="padding: 2px 8px; border-bottom: 2px solid #000000;">2</td><td style="padding: 2px 8px; border-bottom: 2px solid #000000;">7</td><td style="padding: 2px 8px; border-bottom: 2px solid #000000;">8</td></tr></table></div>"`;
 

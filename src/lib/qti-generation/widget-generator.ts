@@ -68,6 +68,7 @@ import {
 	generateVennDiagram,
 	generateVerticalArithmeticSetup
 } from "@/lib/widgets/generators"
+import { generateAdditionWithRegrouping } from "@/lib/widgets/generators/addition-with-regrouping"
 import { generateDivisionModelDiagram } from "@/lib/widgets/generators/division-model-diagram"
 import { generateEquivalentFractionModel } from "@/lib/widgets/generators/equivalent-fraction-model"
 import { generateFactorizationDiagram } from "@/lib/widgets/generators/factorization-diagram"
@@ -214,6 +215,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateFactorizationDiagram(widget)
 		case "equivalentFractionModel":
 			return await generateEquivalentFractionModel(widget)
+		case "additionWithRegrouping":
+			return await generateAdditionWithRegrouping(widget)
 		default:
 			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
