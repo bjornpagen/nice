@@ -37,14 +37,13 @@ function createAdditionWithRegroupingPropsSchema() {
 				),
 			revealUpTo: z
 				.enum(["ones", "tens", "hundreds", "thousands", "ten-thousands", "complete"])
-				.optional()
 				.describe(
-					"ONLY USE THIS WHEN showAnswer IS TRUE. Controls progressive reveal of the answer digits. 'ones' reveals only ones digit, 'tens' reveals ones and tens, etc. If omitted, defaults to 'complete' (shows all answer digits). IGNORED when showAnswer is false. Common patterns: omit this for full answer, use 'ones' or 'tens' for step-by-step teaching."
+					"Controls progressive reveal of the answer digits. 'ones' reveals only ones digit, 'tens' reveals ones and tens, etc. 'complete' shows all answer digits. This field is ignored when showAnswer is false. Common patterns: use 'complete' for full answer, use 'ones' or 'tens' for step-by-step teaching."
 				)
 		})
 		.strict()
 		.describe(
-			"Creates a visual representation of addition with regrouping (carrying). Shows the traditional column format with independent control of carrying marks and answer display. Perfect for step-by-step teaching. Common usage: 1) showCarrying=false, showAnswer=false for plain problem, 2) showCarrying=true, showAnswer=false to show carrying process, 3) showCarrying=true, showAnswer=true for complete solution. The revealUpTo field is optional and only matters when showAnswer=true."
+			"Creates a visual representation of addition with regrouping (carrying). Shows the traditional column format with independent control of carrying marks and answer display. Perfect for step-by-step teaching. Common usage: 1) showCarrying=false, showAnswer=false for plain problem, 2) showCarrying=true, showAnswer=false to show carrying process, 3) showCarrying=true, showAnswer=true for complete solution. The revealUpTo field is ignored when showAnswer is false."
 		)
 }
 

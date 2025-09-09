@@ -8,7 +8,8 @@ describe("generateAdditionWithRegrouping", () => {
 			addend1: 47,
 			addend2: 38,
 			showCarrying: false,
-			showAnswer: false
+			showAnswer: false,
+			revealUpTo: "complete"
 		})
 
 		// Should show the basic problem without carrying marks or answer
@@ -28,7 +29,8 @@ describe("generateAdditionWithRegrouping", () => {
 			addend1: 47,
 			addend2: 38,
 			showCarrying: true,
-			showAnswer: false
+			showAnswer: false,
+			revealUpTo: "complete"
 		})
 
 		// Should show carrying marks but no answer
@@ -43,7 +45,8 @@ describe("generateAdditionWithRegrouping", () => {
 			addend1: 47,
 			addend2: 38,
 			showCarrying: false,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete"
 		})
 
 		// Should show answer but no carrying marks
@@ -60,7 +63,8 @@ describe("generateAdditionWithRegrouping", () => {
 			addend1: 47,
 			addend2: 38,
 			showCarrying: true,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete"
 		})
 
 		// Should show both carrying marks and answer
@@ -108,7 +112,8 @@ describe("generateAdditionWithRegrouping", () => {
 			addend1: 456,
 			addend2: 789,
 			showCarrying: true,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete"
 		})
 
 		// Should handle 3-digit numbers with multiple carries
@@ -129,7 +134,8 @@ describe("generateAdditionWithRegrouping", () => {
 			addend1: 123,
 			addend2: 456,
 			showCarrying: true,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete"
 		})
 
 		// Should work even when no carrying is needed
@@ -146,7 +152,8 @@ describe("generateAdditionWithRegrouping", () => {
 			addend1: 20129,
 			addend2: 9028,
 			showCarrying: true,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete"
 		})
 
 		// 20129 + 9028 = 29157
@@ -166,7 +173,8 @@ describe("generateAdditionWithRegrouping", () => {
 			addend1: 7,
 			addend2: 8,
 			showCarrying: true,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete"
 		})
 
 		// 7 + 8 = 15
@@ -231,7 +239,8 @@ describe("generateAdditionWithRegrouping", () => {
 			addend1: 456,
 			addend2: 378,
 			showCarrying: true,
-			showAnswer: false
+			showAnswer: false,
+			revealUpTo: "complete"
 		})
 
 		expect(html3).toContain("#1E90FF") // Has carrying marks
@@ -246,7 +255,8 @@ describe("generateAdditionWithRegrouping", () => {
 				addend1: 999,
 				addend2: 1,
 				showCarrying: true,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete"
 			})
 
 			// 999 + 1 = 1000
@@ -262,7 +272,8 @@ describe("generateAdditionWithRegrouping", () => {
 				addend1: 999,
 				addend2: 999,
 				showCarrying: true,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete"
 			})
 
 			// 999 + 999 = 1998
@@ -279,7 +290,8 @@ describe("generateAdditionWithRegrouping", () => {
 				addend1: 456,
 				addend2: 378,
 				showCarrying: true,
-				showAnswer: false
+				showAnswer: false,
+				revealUpTo: "complete"
 			})
 
 			// In 456 + 378:
@@ -298,7 +310,8 @@ describe("generateAdditionWithRegrouping", () => {
 				addend1: 123,
 				addend2: 0,
 				showCarrying: true,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete"
 			})
 
 			expect(html).toContain(">1<")
@@ -314,7 +327,8 @@ describe("generateAdditionWithRegrouping", () => {
 				addend1: 99999,
 				addend2: 1,
 				showCarrying: true,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete"
 			})
 
 			// 99999 + 1 = 100000
@@ -330,7 +344,8 @@ describe("generateAdditionWithRegrouping", () => {
 				addend1: 555,
 				addend2: 555,
 				showCarrying: true,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete"
 			})
 
 			// 555 + 555 = 1110

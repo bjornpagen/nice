@@ -9,7 +9,8 @@ describe("generateSubtractionWithRegrouping", () => {
 			minuend: 86,
 			subtrahend: 69,
 			showRegrouping: false,
-			showAnswer: false
+			showAnswer: false,
+			revealUpTo: "complete"
 		})
 
 		// Should show the basic problem without regrouping marks or answer
@@ -29,7 +30,8 @@ describe("generateSubtractionWithRegrouping", () => {
 			minuend: 86,
 			subtrahend: 69,
 			showRegrouping: true,
-			showAnswer: false
+			showAnswer: false,
+			revealUpTo: "complete"
 		})
 
 		// Should show regrouping marks but no answer
@@ -45,7 +47,8 @@ describe("generateSubtractionWithRegrouping", () => {
 			minuend: 86,
 			subtrahend: 69,
 			showRegrouping: false,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete"
 		})
 
 		// Should show answer but no regrouping marks
@@ -63,7 +66,8 @@ describe("generateSubtractionWithRegrouping", () => {
 			minuend: 86,
 			subtrahend: 69,
 			showRegrouping: true,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete"
 		})
 
 		// Should show both regrouping marks and answer
@@ -113,7 +117,8 @@ describe("generateSubtractionWithRegrouping", () => {
 			minuend: 5234,
 			subtrahend: 2876,
 			showRegrouping: true,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete"
 		})
 
 		// Should handle 4-digit numbers
@@ -132,7 +137,8 @@ describe("generateSubtractionWithRegrouping", () => {
 			minuend: 99,
 			subtrahend: 11,
 			showRegrouping: true,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete"
 		})
 
 		// Should work even when no regrouping is needed
@@ -150,7 +156,8 @@ describe("generateSubtractionWithRegrouping", () => {
 				minuend: 50,
 				subtrahend: 100,
 				showRegrouping: true,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete"
 			})
 		)
 
@@ -164,7 +171,8 @@ describe("generateSubtractionWithRegrouping", () => {
 			minuend: -50,
 			subtrahend: -100,
 			showRegrouping: true,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete"
 		})
 
 		// -50 - (-100) = 50
@@ -227,7 +235,8 @@ describe("generateSubtractionWithRegrouping", () => {
 			minuend: 423,
 			subtrahend: 167,
 			showRegrouping: true,
-			showAnswer: false
+			showAnswer: false,
+			revealUpTo: "complete"
 		})
 
 		expect(html3).toContain("text-decoration: line-through") // Has regrouping marks
@@ -242,7 +251,8 @@ describe("generateSubtractionWithRegrouping", () => {
 				minuend: 300,
 				subtrahend: 145,
 				showRegrouping: true,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete"
 			})
 
 			// 300 - 145 = 155
@@ -259,7 +269,8 @@ describe("generateSubtractionWithRegrouping", () => {
 				minuend: 1000,
 				subtrahend: 456,
 				showRegrouping: true,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete"
 			})
 
 			// 1000 - 456 = 544
@@ -276,7 +287,8 @@ describe("generateSubtractionWithRegrouping", () => {
 				minuend: 423,
 				subtrahend: 167,
 				showRegrouping: true,
-				showAnswer: false
+				showAnswer: false,
+				revealUpTo: "complete"
 			})
 
 			// In 423 - 167:
@@ -296,7 +308,8 @@ describe("generateSubtractionWithRegrouping", () => {
 				minuend: 9,
 				subtrahend: 5,
 				showRegrouping: true,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete"
 			})
 
 			expect(html).toContain(">9<")
@@ -311,7 +324,8 @@ describe("generateSubtractionWithRegrouping", () => {
 				minuend: 90023,
 				subtrahend: 12345,
 				showRegrouping: true,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete"
 			})
 
 			expect(html).toContain("text-decoration: line-through") // Has regrouping
@@ -325,7 +339,8 @@ describe("generateSubtractionWithRegrouping", () => {
 				minuend: 101,
 				subtrahend: 100,
 				showRegrouping: true,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete"
 			})
 
 			expect(html).toContain(">1<") // Answer should be 1
