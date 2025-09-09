@@ -49,14 +49,12 @@ function createTriangleSidePropsSchema() {
 			label: z
 				.string()
 				.nullable()
-				.optional()
 				.describe(
-					"Optional text label for this triangle side (e.g., 'a', 'b', 'c', '5', '13'). Null or omit to hide."
+					"Optional text label for this triangle side (e.g., 'a', 'b', 'c', '5', '13'). Null to hide."
 				),
 			square: createSquarePropsSchema()
 				.nullable()
-				.optional()
-				.describe("Optional square attached to this side. Null or omit to hide the square.")
+				.describe("Optional square attached to this side. Null to hide the square.")
 		})
 		.strict()
 }

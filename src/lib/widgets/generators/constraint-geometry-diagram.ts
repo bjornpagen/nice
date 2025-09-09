@@ -32,12 +32,12 @@ const LineSchema = z.object({
   to: z.string().regex(vertexIdRegex).describe("The ID of the vertex that defines the line's end point or direction."),
   isRay: z.boolean().default(false).describe("If true, the line starts at 'from' and extends infinitely in the direction of 'to'. If false, it is a finite segment connecting the two vertices."),
   style: z.enum(["solid", "dashed"]).default("solid").describe("The visual style of the line for rendering."),
-  label: LabelSchema.optional().describe("An optional structured label for the line, typically used to display its length.")
+  label: LabelSchema.describe("An optional structured label for the line, typically used to display its length.")
 }).strict().describe("Represents a linear element, which can be a finite segment or an infinite ray, connecting two vertices.");
 
 const AngleVisualizationSchema = z.object({
   type: z.enum(["arc", "right", "none"]).default("arc").describe("The visual style for the angle marker: 'arc' for a curved line, 'right' for a square symbol (for 90° angles), or 'none' for no visual marker."),
-  radius: z.number().positive().optional().describe("For 'arc' type, the radius of the arc in pixels. If not provided, a default will be used."),
+  radius: z.number().positive().nullable().describe("For 'arc' type, the radius of the arc in pixels. If not provided, a default will be used."),
   color: z.string().regex(CSS_COLOR_PATTERN, "Invalid CSS color; use hex (#RGB, #RRGGBB, #RRGGBBAA)").describe("The CSS color for the angle marker (arc or square) and its accompanying label."),
   xAxisRotation: z.number().default(0).describe("For 'arc' type, the rotation of the arc's ellipse in degrees. Typically 0 for a standard circular arc."),
   largeArcFlag: z.literal(0).or(z.literal(1)).default(0).describe("The SVG large-arc-flag: 0 for angles less than 180°, 1 for angles greater than 180°."),
@@ -59,12 +59,12 @@ const ConstraintSchema = z.discriminatedUnion("type", [
   z.object({
     type: z.literal("equalLength"),
     lines: z.array(z.string().regex(lineIdRegex)).min(2).describe("An array of two or more line IDs that should be constrained to have the same length."),
-    value: z.number().optional().describe("An optional numeric value. If provided, all specified lines will be forced to this exact length.")
+    value: z.number().nullable().describe("An optional numeric value. If provided, all specified lines will be forced to this exact length.")
   }).strict().describe("Forces multiple lines to have the same length."),
   z.object({
     type: z.literal("equalAngle"),
     angles: z.array(z.string().regex(angleIdRegex)).min(2).describe("An array of two or more angle IDs that should be constrained to have the same measure."),
-    value: z.number().optional().describe("An optional numeric value. If provided, all specified angles will be forced to this exact measure in degrees.")
+    value: z.number().nullable().describe("An optional numeric value. If provided, all specified angles will be forced to this exact measure in degrees.")
   }).strict().describe("Forces multiple angles to have the same measure."),
   z.object({
     type: z.literal("parallel"),
@@ -76,8 +76,8 @@ const ConstraintSchema = z.discriminatedUnion("type", [
   }).strict().describe("Forces a set of lines to be perpendicular."),
   z.object({
     type: z.literal("symmetry"),
-    axisLine: z.string().regex(lineIdRegex).optional().describe("The ID of a line to be used as the axis of symmetry."),
-    axisType: z.enum(["horizontal", "vertical"]).optional().describe("If no axisLine is provided, specifies a global canvas axis for symmetry ('horizontal' or 'vertical')."),
+    axisLine: z.string().regex(lineIdRegex).nullable().describe("The ID of a line to be used as the axis of symmetry."),
+    axisType: z.enum(["horizontal", "vertical"]).nullable().describe("If no axisLine is provided, specifies a global canvas axis for symmetry ('horizontal' or 'vertical')."),
     elements: z.array(z.union([z.string().regex(vertexIdRegex), z.string().regex(lineIdRegex)])).min(2).describe("An array of vertex or line IDs to be made symmetric with respect to the axis.")
   }).strict().describe("Defines an axial symmetry relationship between a set of geometric elements."),
   z.object({
@@ -85,19 +85,19 @@ const ConstraintSchema = z.discriminatedUnion("type", [
     id: z.string().regex(vertexIdRegex).describe("A new, unique ID for the virtual vertex that will be created at the intersection, prefixed with 'vertex_'."),
     line1: z.string().regex(lineIdRegex).describe("The ID of the first intersecting line."),
     line2: z.string().regex(lineIdRegex).describe("The ID of the second intersecting line."),
-    label: z.string().nullable().optional().describe("An optional display label for the new intersection vertex.")
+    label: z.string().nullable().describe("An optional display label for the new intersection vertex.")
   }).strict().describe("Creates a 'virtual' vertex at the intersection of two lines. This new vertex can then be used in other constraints or for drawing."),
   z.object({
     type: z.literal("midpoint"),
     id: z.string().regex(vertexIdRegex).describe("A new, unique ID for the virtual vertex that will be created at the midpoint, prefixed with 'vertex_'."),
     line: z.string().regex(lineIdRegex).describe("The ID of the line on which to create the midpoint."),
-    label: z.string().nullable().optional().describe("An optional display label for the new midpoint vertex.")
+    label: z.string().nullable().describe("An optional display label for the new midpoint vertex.")
   }).strict().describe("Creates a 'virtual' vertex at the midpoint of a specified line."),
   z.object({
     type: z.literal("presetPolygon"),
     vertices: z.array(z.string().regex(vertexIdRegex)).min(3).describe("An ordered array of vertex IDs that form the vertices of the polygon."),
     isRegular: z.boolean().default(true).describe("If true, the solver will automatically generate the necessary 'equalLength' and 'equalAngle' sub-constraints to form a regular polygon."),
-    sideLength: z.number().optional().describe("An optional numeric value for the side length. If provided, all sides of the polygon will be set to this length."),
+    sideLength: z.number().nullable().describe("An optional numeric value for the side length. If provided, all sides of the polygon will be set to this length."),
     closed: z.boolean().default(true).describe("If true, the last vertex is connected to the first to form a closed shape.")
   }).strict().describe("A high-level convenience constraint for creating polygons like triangles, squares, and pentagons. Simplifies diagram creation by auto-generating sub-constraints.")
 ]).describe("The core of the diagram. This is an array of rules that define the geometric properties and relationships between vertices and lines. The solver uses these constraints to determine the final layout.");
@@ -121,7 +121,7 @@ const RegionLabelSchema = z.object({
       offset: z.number().describe("A normalized offset from the line's start point (0.0) to its end point (1.0). For example, 0.5 places the label at the midpoint.")
     }).strict()
   ]).describe("Defines the placement strategy for the label: either at the 'centroid' of a region or at a specific 'alongLine' offset."),
-  color: z.string().regex(CSS_COLOR_PATTERN).optional().describe("An optional CSS color for the label text. If not provided, a default theme color will be used.")
+  color: z.string().regex(CSS_COLOR_PATTERN).nullable().describe("An optional CSS color for the label text. If not provided, a default theme color will be used.")
 }).strict().describe("Defines a text label that is placed intelligently within the diagram, either relative to a region or a line.");
 
 export const ConstraintGeometryDiagramPropsSchema = z.object({
@@ -131,9 +131,9 @@ export const ConstraintGeometryDiagramPropsSchema = z.object({
   vertices: z.array(VertexSchema).min(1).describe("An array of all vertices to be used in the diagram. Their coordinates are not specified here; they are determined by the solver."),
   lines: z.array(LineSchema).min(0).describe("An array of all lines (segments or rays) connecting the vertices."),
   constraints: z.array(ConstraintSchema).min(1).describe("An array of geometric constraints that define the relationships between vertices and lines. The solver uses these to construct the final diagram."),
-  shadedRegions: z.array(ShadedRegionSchema).optional().describe("An optional array of polygonal areas to be shaded with a specified color."),
-  regionLabels: z.array(RegionLabelSchema).optional().describe("An optional array of text labels to be placed within the diagram."),
-  layoutHint: z.enum(["circle", "grid", "linear"]).optional().describe("An optional hint to the solver for an initial layout strategy, which can help with convergence for complex diagrams.")
+  shadedRegions: z.array(ShadedRegionSchema).nullable().describe("An optional array of polygonal areas to be shaded with a specified color."),
+  regionLabels: z.array(RegionLabelSchema).nullable().describe("An optional array of text labels to be placed within the diagram."),
+  layoutHint: z.enum(["circle", "grid", "linear"]).nullable().describe("An optional hint to the solver for an initial layout strategy, which can help with convergence for complex diagrams.")
 }).strict().describe("Describes a complete geometric diagram defined by constraints rather than explicit coordinates. This powerful approach allows for the creation of precise figures by specifying relationships (e.g., 'these lines are parallel', 'this angle is 90°'). The system uses the Z3 solver to find valid coordinates that satisfy all constraints.");
 
 // --- Helper Types ---
@@ -239,7 +239,7 @@ async function solveWithZ3(props: z.infer<typeof ConstraintGeometryDiagramPropsS
                   const distSq2 = v3.x.sub(v4.x).mul(v3.x.sub(v4.x)).add(v3.y.sub(v4.y).mul(v3.y.sub(v4.y)))
                   solver.add(baseDistSq.eq(distSq2))
                 }
-                if (c.value !== undefined) {
+                if (c.value !== null && c.value !== undefined) {
                   solver.add(baseDistSq.eq(c.value * c.value))
                 }
                 break
@@ -416,7 +416,7 @@ async function solveWithZ3(props: z.infer<typeof ConstraintGeometryDiagramPropsS
                   // Normalize and equate squared cosines to avoid division
                   solver.add(dot.mul(dot).mul(refLenSqAB.mul(refLenSqAC)).eq(refDot.mul(refDot).mul(lenSqAB.mul(lenSqAC))))
                 }
-                if (c.value !== undefined) {
+                if (c.value !== null && c.value !== undefined) {
                   const rad = c.value * Math.PI / 180
                   const cosTheta = Math.cos(rad)
                   solver.add(refDot.mul(refDot).eq(refLenSqAB.mul(refLenSqAC).mul(cosTheta * cosTheta)))

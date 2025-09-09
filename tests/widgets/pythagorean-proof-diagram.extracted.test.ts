@@ -322,9 +322,9 @@ test("pythagorean-proof-diagram - renders a side label without a square", async 
 	const input = {
 		width: 300,
 		height: 300,
-		sideA: { label: "5" },
-		sideB: { square: { type: "value", area: 144, color: "#90CAF9" } },
-		sideC: { square: { type: "value", area: 169, color: "#A5D6A7" } },
+		sideA: { label: "5", square: null },
+		sideB: { label: null, square: { type: "value", area: 144, color: "#90CAF9" } },
+		sideC: { label: null, square: { type: "value", area: 169, color: "#A5D6A7" } },
 		type: "pythagoreanProofDiagram"
 	} satisfies PythagoreanProofDiagramInput
 
@@ -340,9 +340,9 @@ test("pythagorean-proof-diagram - renders a square without a side label", async 
 	const input = {
 		width: 300,
 		height: 300,
-		sideA: { square: { type: "value", area: 25, color: "#FFE082" } },
-		sideB: { square: { type: "value", area: 144, color: "#90CAF9" } },
-		sideC: { label: "13" },
+		sideA: { label: null, square: { type: "value", area: 25, color: "#FFE082" } },
+		sideB: { label: null, square: { type: "value", area: 144, color: "#90CAF9" } },
+		sideC: { label: "13", square: null },
 		type: "pythagoreanProofDiagram"
 	} satisfies PythagoreanProofDiagramInput
 
@@ -376,9 +376,9 @@ test("pythagorean-proof-diagram - renders a diagram with a bare side", async () 
 	const input = {
 		width: 300,
 		height: 300,
-		sideA: {},
-		sideB: { square: { type: "value", area: 144, color: "#90CAF9" } },
-		sideC: { square: { type: "value", area: 169, color: "#A5D6A7" } },
+		sideA: { label: null, square: null },
+		sideB: { label: null, square: { type: "value", area: 144, color: "#90CAF9" } },
+		sideC: { label: null, square: { type: "value", area: 169, color: "#A5D6A7" } },
 		type: "pythagoreanProofDiagram"
 	} satisfies PythagoreanProofDiagramInput
 
@@ -394,9 +394,9 @@ test("pythagorean-proof-diagram - correctly calculates a missing numeric area wi
 	const input = {
 		width: 300,
 		height: 300,
-		sideA: { square: { type: "value", area: 8, color: "#FFE082" } },
-		sideB: { square: { type: "value", area: 15, color: "#90CAF9" } },
-		sideC: { square: { type: "unknown", color: "#A5D6A7" } },
+		sideA: { label: null, square: { type: "value", area: 8, color: "#FFE082" } },
+		sideB: { label: null, square: { type: "value", area: 15, color: "#90CAF9" } },
+		sideC: { label: null, square: { type: "unknown", color: "#A5D6A7" } },
 		type: "pythagoreanProofDiagram"
 	} satisfies PythagoreanProofDiagramInput
 
@@ -413,9 +413,9 @@ test("pythagorean-proof-diagram - renders string square label for B", async () =
 	const input = {
 		width: 300,
 		height: 240,
-		sideA: { square: { type: "value", area: 9, color: "#FFE082" } },
-		sideB: { square: { type: "unknown", color: "#90CAF9" } },
-		sideC: { square: { type: "value", area: 13, color: "#A5D6A7" } },
+		sideA: { label: null, square: { type: "value", area: 9, color: "#FFE082" } },
+		sideB: { label: null, square: { type: "unknown", color: "#90CAF9" } },
+		sideC: { label: null, square: { type: "value", area: 13, color: "#A5D6A7" } },
 		type: "pythagoreanProofDiagram"
 	} satisfies PythagoreanProofDiagramInput
 

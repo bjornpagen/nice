@@ -32,8 +32,6 @@ describe("SubtractionWithRegrouping Widget", () => {
 			expect(result.success).toBe(false)
 		})
 
-<<<<<<< HEAD
-=======
 		it("should accept negative numbers", () => {
 			const validInput = {
 				type: "subtractionWithRegrouping",
@@ -47,7 +45,6 @@ describe("SubtractionWithRegrouping Widget", () => {
 			expect(result.success).toBe(true)
 		})
 
->>>>>>> d7b5a17f (blob)
 		it("should reject non-integer numbers", () => {
 			const invalidInput = {
 				type: "subtractionWithRegrouping",
@@ -138,8 +135,6 @@ describe("SubtractionWithRegrouping Widget", () => {
 			expect(html).toContain("color: #4472c4")
 		})
 
-<<<<<<< HEAD
-=======
 		it("should handle negative numbers", async () => {
 			const input = {
 				type: "subtractionWithRegrouping" as const,
@@ -159,7 +154,6 @@ describe("SubtractionWithRegrouping Widget", () => {
 			expect(html).toContain("color: #4472c4") // Answer styling
 		})
 
->>>>>>> d7b5a17f (blob)
 		it("should throw error when subtrahend is greater than minuend", async () => {
 			const input = {
 				type: "subtractionWithRegrouping" as const,
@@ -256,8 +250,6 @@ describe("SubtractionWithRegrouping Widget", () => {
 			expect(html).toMatchSnapshot()
 		})
 
-<<<<<<< HEAD
-=======
 		it("should generate snapshot for negative numbers", async () => {
 			const input = {
 				type: "subtractionWithRegrouping" as const,
@@ -271,7 +263,6 @@ describe("SubtractionWithRegrouping Widget", () => {
 			expect(html).toMatchSnapshot()
 		})
 
->>>>>>> d7b5a17f (blob)
 		it("should generate snapshot for no regrouping needed", async () => {
 			const input = {
 				type: "subtractionWithRegrouping" as const,
