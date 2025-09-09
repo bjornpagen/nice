@@ -78,6 +78,7 @@ import {
 	FractionModelDiagramPropsSchema,
 	generateFractionModelDiagram
 } from "@/lib/widgets/generators/fractional-model-diagram"
+import { FreeBodyDiagramPropsSchema, generateFreeBodyDiagram } from "@/lib/widgets/generators/free-body-diagram"
 import { FunctionPlotGraphPropsSchema, generateFunctionPlotGraph } from "@/lib/widgets/generators/function-plot-graph"
 import {
 	GeometricSolidDiagramPropsSchema,
@@ -263,6 +264,7 @@ export const allWidgetSchemas = {
 	parallelogramTrapezoidDiagram: ParallelogramTrapezoidDiagramPropsSchema,
 	pieChart: PieChartWidgetPropsSchema,
 	fractionFrequencyPlot: FractionFrequencyPlotPropsSchema,
+	freeBodyDiagram: FreeBodyDiagramPropsSchema,
 	divisionModelDiagram: DivisionModelDiagramPropsSchema,
 	factorizationDiagram: FactorizationDiagramPropsSchema,
 	equivalentFractionModel: EquivalentFractionModelPropsSchema,
@@ -348,6 +350,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.parallelogramTrapezoidDiagram,
 	typedSchemas.pieChart,
 	typedSchemas.fractionFrequencyPlot,
+	typedSchemas.freeBodyDiagram,
 	typedSchemas.divisionModelDiagram,
 	typedSchemas.factorizationDiagram,
 	typedSchemas.equivalentFractionModel,
@@ -438,6 +441,7 @@ export {
 	VerticalArithmeticSetupPropsSchema,
 	PieChartWidgetPropsSchema,
 	FractionFrequencyPlotPropsSchema,
+	FreeBodyDiagramPropsSchema,
 	DivisionModelDiagramPropsSchema,
 	FactorizationDiagramPropsSchema,
 	EquivalentFractionModelPropsSchema,
@@ -677,6 +681,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generatePieChart(widget)
 		case "fractionFrequencyPlot":
 			return await generateFractionFrequencyPlot(widget)
+		case "freeBodyDiagram":
+			return await generateFreeBodyDiagram(widget)
 		case "divisionModelDiagram":
 			return await generateDivisionModelDiagram(widget)
 		case "factorizationDiagram":

@@ -10,7 +10,8 @@ import {
 	PieChartWidgetPropsSchema,
 	PopulationBarChartPropsSchema,
 	PopulationChangeEventGraphPropsSchema,
-	ScatterPlotPropsSchema
+	ScatterPlotPropsSchema,
+	FreeBodyDiagramPropsSchema
 } from "@/lib/widgets/generators"
 import { simpleVisualCollection } from "./simple-visual"
 
@@ -30,6 +31,7 @@ export const scienceCollection = {
 		histogram: HistogramPropsSchema,
 		parabolaGraph: ParabolaGraphPropsSchema,
 		scatterPlot: ScatterPlotPropsSchema,
+		freeBodyDiagram: FreeBodyDiagramPropsSchema,
 		pieChart: PieChartWidgetPropsSchema
 	},
 	widgetTypeKeys: [
@@ -46,6 +48,7 @@ export const scienceCollection = {
 		"histogram",
 		"parabolaGraph",
 		"scatterPlot",
+		"freeBodyDiagram",
 		"pieChart"
 	] as const
 } as const
