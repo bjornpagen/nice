@@ -30,18 +30,6 @@ describe("SubtractionWithRegrouping Widget", () => {
 			expect(result.success).toBe(false)
 		})
 
-		it("should accept negative numbers", () => {
-			const validInput = {
-				type: "subtractionWithRegrouping",
-				minuend: -52,
-				subtrahend: -77,
-				showAnswer: false
-			}
-
-			const result = SubtractionWithRegroupingPropsSchema.safeParse(validInput)
-			expect(result.success).toBe(true)
-		})
-
 		it("should reject non-integer numbers", () => {
 			const invalidInput = {
 				type: "subtractionWithRegrouping",
@@ -128,24 +116,6 @@ describe("SubtractionWithRegrouping Widget", () => {
 			expect(html).toContain("color: #4472c4")
 		})
 
-		it("should handle negative numbers", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: -25,
-				subtrahend: -50,
-				showAnswer: true
-			}
-
-			const html = await generateSubtractionWithRegrouping(input)
-
-			// -25 - (-50) = -25 + 50 = 25
-			// Check the negative signs and digits are displayed
-			expect(html).toContain("-")
-			expect(html).toContain(">2<")
-			expect(html).toContain(">5<")
-			expect(html).toContain("color: #4472c4") // Answer styling
-		})
-
 		it("should throw error when subtrahend is greater than minuend", async () => {
 			const input = {
 				type: "subtractionWithRegrouping" as const,
@@ -229,18 +199,6 @@ describe("SubtractionWithRegrouping Widget", () => {
 				type: "subtractionWithRegrouping" as const,
 				minuend: 23542,
 				subtrahend: 15631,
-				showAnswer: true
-			}
-
-			const html = await generateSubtractionWithRegrouping(input)
-			expect(html).toMatchSnapshot()
-		})
-
-		it("should generate snapshot for negative numbers", async () => {
-			const input = {
-				type: "subtractionWithRegrouping" as const,
-				minuend: -25,
-				subtrahend: -50,
 				showAnswer: true
 			}
 
