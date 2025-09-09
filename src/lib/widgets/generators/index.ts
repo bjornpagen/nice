@@ -143,6 +143,10 @@ import {
 	ProtractorAngleDiagramPropsSchema
 } from "@/lib/widgets/generators/protractor-angle-diagram"
 import {
+	generateRadiallyConstrainedAngleDiagram,
+	RadiallyConstrainedAngleDiagramPropsSchema
+} from "@/lib/widgets/generators/radially-constrained-angle-diagram"
+import {
 	generatePythagoreanProofDiagram,
 	PythagoreanProofDiagramPropsSchema
 } from "@/lib/widgets/generators/pythagorean-proof-diagram"
@@ -212,6 +216,7 @@ export const allWidgetSchemas = {
 	populationChangeEventGraph: PopulationChangeEventGraphPropsSchema,
 	polygonGraph: PolygonGraphPropsSchema,
 	protractorAngleDiagram: ProtractorAngleDiagramPropsSchema,
+	radiallyConstrainedAngleDiagram: RadiallyConstrainedAngleDiagramPropsSchema,
 	shapeTransformationGraph: ShapeTransformationGraphPropsSchema,
 	dataTable: DataTablePropsSchema,
 	discreteObjectRatioDiagram: DiscreteObjectRatioDiagramPropsSchema,
@@ -300,6 +305,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.populationChangeEventGraph,
 	typedSchemas.polygonGraph,
 	typedSchemas.protractorAngleDiagram,
+	typedSchemas.radiallyConstrainedAngleDiagram,
 	typedSchemas.shapeTransformationGraph,
 	typedSchemas.dataTable,
 	typedSchemas.discreteObjectRatioDiagram,
@@ -434,6 +440,7 @@ export {
 	TriangleDiagramPropsSchema,
 	PeriodicTableWidgetPropsSchema,
 	ProtractorAngleDiagramPropsSchema,
+	RadiallyConstrainedAngleDiagramPropsSchema,
 	UnitBlockDiagramPropsSchema,
 	UrlImageWidgetPropsSchema,
 	VennDiagramPropsSchema,
@@ -516,6 +523,7 @@ export {
 	generateTriangleDiagram,
 	generatePeriodicTable,
 	generateProtractorAngleDiagram,
+	generateRadiallyConstrainedAngleDiagram,
 	generateUnitBlockDiagram,
 	generateUrlImage,
 	generateVennDiagram,
@@ -635,6 +643,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generatePolyhedronNetDiagram(widget)
 		case "protractorAngleDiagram":
 			return await generateProtractorAngleDiagram(widget)
+		case "radiallyConstrainedAngleDiagram":
+			return await generateRadiallyConstrainedAngleDiagram(widget)
 		case "probabilitySpinner":
 			return await generateProbabilitySpinner(widget)
 		case "pythagoreanProofDiagram":
