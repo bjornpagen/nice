@@ -11,7 +11,8 @@ describe("SubtractionWithRegrouping Widget", () => {
 				type: "subtractionWithRegrouping",
 				minuend: 52,
 				subtrahend: 27,
-				showAnswer: false
+				showAnswer: false,
+				revealUpTo: null
 			}
 
 			const result = SubtractionWithRegroupingPropsSchema.safeParse(validInput)
@@ -23,19 +24,37 @@ describe("SubtractionWithRegrouping Widget", () => {
 				type: "wrongType",
 				minuend: 52,
 				subtrahend: 27,
-				showAnswer: false
+				showAnswer: false,
+				revealUpTo: null
 			}
 
 			const result = SubtractionWithRegroupingPropsSchema.safeParse(invalidInput)
 			expect(result.success).toBe(false)
 		})
 
+<<<<<<< HEAD
+=======
+		it("should accept negative numbers", () => {
+			const validInput = {
+				type: "subtractionWithRegrouping",
+				minuend: -52,
+				subtrahend: -77,
+				showAnswer: false,
+				revealUpTo: null
+			}
+
+			const result = SubtractionWithRegroupingPropsSchema.safeParse(validInput)
+			expect(result.success).toBe(true)
+		})
+
+>>>>>>> d7b5a17f (blob)
 		it("should reject non-integer numbers", () => {
 			const invalidInput = {
 				type: "subtractionWithRegrouping",
 				minuend: 52.5,
 				subtrahend: 27,
-				showAnswer: false
+				showAnswer: false,
+				revealUpTo: null
 			}
 
 			const result = SubtractionWithRegroupingPropsSchema.safeParse(invalidInput)
@@ -49,7 +68,8 @@ describe("SubtractionWithRegrouping Widget", () => {
 				type: "subtractionWithRegrouping" as const,
 				minuend: 52,
 				subtrahend: 27,
-				showAnswer: false
+				showAnswer: false,
+				revealUpTo: null
 			}
 
 			const html = await generateSubtractionWithRegrouping(input)
@@ -72,7 +92,8 @@ describe("SubtractionWithRegrouping Widget", () => {
 				type: "subtractionWithRegrouping" as const,
 				minuend: 52,
 				subtrahend: 27,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete" as const
 			}
 
 			const html = await generateSubtractionWithRegrouping(input)
@@ -101,7 +122,8 @@ describe("SubtractionWithRegrouping Widget", () => {
 				type: "subtractionWithRegrouping" as const,
 				minuend: 1000,
 				subtrahend: 456,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete" as const
 			}
 
 			const html = await generateSubtractionWithRegrouping(input)
@@ -116,12 +138,35 @@ describe("SubtractionWithRegrouping Widget", () => {
 			expect(html).toContain("color: #4472c4")
 		})
 
+<<<<<<< HEAD
+=======
+		it("should handle negative numbers", async () => {
+			const input = {
+				type: "subtractionWithRegrouping" as const,
+				minuend: -25,
+				subtrahend: -50,
+				showAnswer: true,
+				revealUpTo: "complete" as const
+			}
+
+			const html = await generateSubtractionWithRegrouping(input)
+
+			// -25 - (-50) = -25 + 50 = 25
+			// Check the negative signs and digits are displayed
+			expect(html).toContain("-")
+			expect(html).toContain(">2<")
+			expect(html).toContain(">5<")
+			expect(html).toContain("color: #4472c4") // Answer styling
+		})
+
+>>>>>>> d7b5a17f (blob)
 		it("should throw error when subtrahend is greater than minuend", async () => {
 			const input = {
 				type: "subtractionWithRegrouping" as const,
 				minuend: 27,
 				subtrahend: 52,
-				showAnswer: false
+				showAnswer: false,
+				revealUpTo: null
 			}
 
 			await expect(generateSubtractionWithRegrouping(input)).rejects.toThrow(
@@ -134,7 +179,8 @@ describe("SubtractionWithRegrouping Widget", () => {
 				type: "subtractionWithRegrouping" as const,
 				minuend: 23542,
 				subtrahend: 15631,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete" as const
 			}
 
 			const html = await generateSubtractionWithRegrouping(input)
@@ -163,7 +209,8 @@ describe("SubtractionWithRegrouping Widget", () => {
 				type: "subtractionWithRegrouping" as const,
 				minuend: 52,
 				subtrahend: 27,
-				showAnswer: false
+				showAnswer: false,
+				revealUpTo: null
 			}
 
 			const html = await generateSubtractionWithRegrouping(input)
@@ -175,7 +222,8 @@ describe("SubtractionWithRegrouping Widget", () => {
 				type: "subtractionWithRegrouping" as const,
 				minuend: 52,
 				subtrahend: 27,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete" as const
 			}
 
 			const html = await generateSubtractionWithRegrouping(input)
@@ -187,7 +235,8 @@ describe("SubtractionWithRegrouping Widget", () => {
 				type: "subtractionWithRegrouping" as const,
 				minuend: 1000,
 				subtrahend: 456,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete" as const
 			}
 
 			const html = await generateSubtractionWithRegrouping(input)
@@ -199,19 +248,37 @@ describe("SubtractionWithRegrouping Widget", () => {
 				type: "subtractionWithRegrouping" as const,
 				minuend: 23542,
 				subtrahend: 15631,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete" as const
 			}
 
 			const html = await generateSubtractionWithRegrouping(input)
 			expect(html).toMatchSnapshot()
 		})
 
+<<<<<<< HEAD
+=======
+		it("should generate snapshot for negative numbers", async () => {
+			const input = {
+				type: "subtractionWithRegrouping" as const,
+				minuend: -25,
+				subtrahend: -50,
+				showAnswer: true,
+				revealUpTo: "complete" as const
+			}
+
+			const html = await generateSubtractionWithRegrouping(input)
+			expect(html).toMatchSnapshot()
+		})
+
+>>>>>>> d7b5a17f (blob)
 		it("should generate snapshot for no regrouping needed", async () => {
 			const input = {
 				type: "subtractionWithRegrouping" as const,
 				minuend: 987,
 				subtrahend: 123,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete" as const
 			}
 
 			const html = await generateSubtractionWithRegrouping(input)
@@ -223,7 +290,8 @@ describe("SubtractionWithRegrouping Widget", () => {
 				type: "subtractionWithRegrouping" as const,
 				minuend: 300,
 				subtrahend: 145,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete" as const
 			}
 
 			const html = await generateSubtractionWithRegrouping(input)
@@ -239,7 +307,8 @@ describe("SubtractionWithRegrouping Widget", () => {
 				type: "subtractionWithRegrouping" as const,
 				minuend: 52,
 				subtrahend: 27,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete" as const
 			}
 
 			const html = await generateSubtractionWithRegrouping(input)
@@ -256,7 +325,8 @@ describe("SubtractionWithRegrouping Widget", () => {
 				type: "subtractionWithRegrouping" as const,
 				minuend: 300,
 				subtrahend: 145,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete" as const
 			}
 
 			const html = await generateSubtractionWithRegrouping(input)
@@ -273,7 +343,8 @@ describe("SubtractionWithRegrouping Widget", () => {
 				type: "subtractionWithRegrouping" as const,
 				minuend: 987,
 				subtrahend: 123,
-				showAnswer: true
+				showAnswer: true,
+				revealUpTo: "complete" as const
 			}
 
 			const html = await generateSubtractionWithRegrouping(input)
@@ -428,8 +499,9 @@ describe("SubtractionWithRegrouping Widget", () => {
 				type: "subtractionWithRegrouping" as const,
 				minuend: 432,
 				subtrahend: 156,
-				showAnswer: true
-				// revealUpTo not specified, should default to "complete"
+				showAnswer: true,
+				revealUpTo: "complete" as const
+				// revealUpTo explicitly set to "complete" to test default behavior
 			}
 
 			const html = await generateSubtractionWithRegrouping(input)

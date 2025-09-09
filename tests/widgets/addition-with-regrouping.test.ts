@@ -7,7 +7,8 @@ describe("Addition With Regrouping Widget", () => {
 			type: "additionWithRegrouping",
 			addend1: 345,
 			addend2: 278,
-			showAnswer: false
+			showAnswer: false,
+			revealUpTo: null
 		})
 
 		expect(result).toContain("<div")
@@ -27,7 +28,8 @@ describe("Addition With Regrouping Widget", () => {
 			type: "additionWithRegrouping",
 			addend1: 456,
 			addend2: 789,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete" as const
 		})
 
 		expect(result).toContain("<div")
@@ -48,7 +50,8 @@ describe("Addition With Regrouping Widget", () => {
 			type: "additionWithRegrouping",
 			addend1: 20129,
 			addend2: 9028,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete" as const
 		})
 
 		expect(result).toContain(">2</td>")
@@ -64,7 +67,8 @@ describe("Addition With Regrouping Widget", () => {
 			type: "additionWithRegrouping",
 			addend1: 123,
 			addend2: 456,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete" as const
 		})
 
 		expect(result).toContain(">1</td>")
@@ -83,7 +87,8 @@ describe("Addition With Regrouping Widget", () => {
 			type: "additionWithRegrouping",
 			addend1: 7,
 			addend2: 8,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete" as const
 		})
 
 		expect(result).toContain(">7</td>")
@@ -98,7 +103,8 @@ describe("Addition With Regrouping Widget", () => {
 			type: "additionWithRegrouping",
 			addend1: 999,
 			addend2: 999,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete" as const
 		})
 
 		expect(result).toContain(">9</td>")
@@ -113,7 +119,8 @@ describe("Addition With Regrouping Widget", () => {
 			type: "additionWithRegrouping",
 			addend1: 9999,
 			addend2: 1,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete" as const
 		})
 
 		expect(result).toContain(">9</td>")
@@ -128,7 +135,8 @@ describe("Addition With Regrouping Widget", () => {
 			type: "additionWithRegrouping",
 			addend1: 123456,
 			addend2: 789012,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete" as const
 		})
 
 		expect(result).toContain(">1</td>")
@@ -149,7 +157,8 @@ describe("Addition With Regrouping Widget", () => {
 			type: "additionWithRegrouping",
 			addend1: 999,
 			addend2: 999,
-			showAnswer: false
+			showAnswer: false,
+			revealUpTo: null
 		})
 
 		expect(result).not.toContain("color: #1E90FF") // No carry marks
@@ -162,7 +171,8 @@ describe("Addition With Regrouping Widget", () => {
 			type: "additionWithRegrouping",
 			addend1: 500,
 			addend2: 0,
-			showAnswer: true
+			showAnswer: true,
+			revealUpTo: "complete" as const
 		})
 
 		expect(result).toContain(">5</td>")
