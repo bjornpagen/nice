@@ -48,6 +48,34 @@ const getNumericInterval = (interval: z.infer<ReturnType<typeof createTickInterv
     return interval.type === "whole" ? interval.interval : 1 / interval.denominator;
 };
 
+// Helper to format tick labels based on interval type
+const formatTickLabel = (value: number, tickInterval: z.infer<ReturnType<typeof createTickIntervalSchema>>): string => {
+    if (tickInterval.type === "whole") {
+        // For whole number intervals, show integers or decimals as appropriate
+        return Number.isInteger(value) ? String(value) : value.toString();
+    } else {
+        // For fraction intervals, show as fractions
+        const denominator = tickInterval.denominator;
+        const numerator = Math.round(value * denominator);
+        
+        // Handle zero
+        if (numerator === 0) return "0";
+        
+        // Handle whole numbers (when numerator is a multiple of denominator)
+        if (numerator % denominator === 0) {
+            return String(numerator / denominator);
+        }
+        
+        // Simplify the fraction
+        const gcd = (a: number, b: number): number => b === 0 ? Math.abs(a) : gcd(b, a % b);
+        const g = gcd(Math.abs(numerator), denominator);
+        const simplifiedNum = numerator / g;
+        const simplifiedDen = denominator / g;
+        
+        return `${simplifiedNum}/${simplifiedDen}`;
+    }
+};
+
 export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> = async (data) => {
     const { width, height, orientation, min, max, tickInterval, secondaryTickInterval, showTickLabels, highlightedPoints } = data;
 
@@ -61,7 +89,10 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
     const scale = lineLength / (max - min);
 
     const majorInterval = getNumericInterval(tickInterval);
-    const { values: majorValues, labels: majorLabels } = buildTicks(min, max, majorInterval);
+    const { values: majorValues } = buildTicks(min, max, majorInterval);
+    
+    // Generate custom labels based on tick interval type
+    const majorLabels = majorValues.map(value => formatTickLabel(value, tickInterval));
     
     const minorValues = secondaryTickInterval ? buildTicks(min, max, getNumericInterval(secondaryTickInterval)).values : [];
     

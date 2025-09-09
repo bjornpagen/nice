@@ -76,6 +76,7 @@ import { generateEquivalentFractionModel } from "@/lib/widgets/generators/equiva
 import { generateFactorizationDiagram } from "@/lib/widgets/generators/factorization-diagram"
 import { generateFractionFrequencyPlot } from "@/lib/widgets/generators/fraction-frequency-plot"
 import { generateSimpleArrow } from "@/lib/widgets/generators/simple-arrow"
+import { generateVectorDiagram } from "@/lib/widgets/generators/vector-diagram"
 
 export async function generateWidget(widget: Widget): Promise<string> {
 	switch (widget.type) {
@@ -226,6 +227,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateAdditionWithRegrouping(widget)
 		case "simpleArrow":
 			return await generateSimpleArrow(widget)
+		case "vectorDiagram":
+			return await generateVectorDiagram(widget)
 		default:
 			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
