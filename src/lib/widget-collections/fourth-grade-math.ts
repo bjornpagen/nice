@@ -1,4 +1,4 @@
-import { DataTablePropsSchema, TapeDiagramPropsSchema, CirclePieceComparisonDiagramPropsSchema, FractionFrequencyPlotPropsSchema } from "@/lib/widgets/generators"
+import { DataTablePropsSchema, TapeDiagramPropsSchema, CirclePieceComparisonDiagramPropsSchema, FractionFrequencyPlotPropsSchema, DivisionModelDiagramPropsSchema, FactorizationDiagramPropsSchema } from "@/lib/widgets/generators"
 
 export const fourthGradeMathCollection = {
 	name: "fourth-grade-math",
@@ -6,9 +6,11 @@ export const fourthGradeMathCollection = {
 		dataTable: DataTablePropsSchema,
 		tapeDiagram: TapeDiagramPropsSchema,
 		circlePieceComparisonDiagram: CirclePieceComparisonDiagramPropsSchema,
-		fractionFrequencyPlot: FractionFrequencyPlotPropsSchema
+		fractionFrequencyPlot: FractionFrequencyPlotPropsSchema,
+		divisionModelDiagram: DivisionModelDiagramPropsSchema,
+		factorizationDiagram: FactorizationDiagramPropsSchema
 	},
-	widgetTypeKeys: ["dataTable", "tapeDiagram", "circlePieceComparisonDiagram", "fractionFrequencyPlot"] as const
+	widgetTypeKeys: ["dataTable", "tapeDiagram", "circlePieceComparisonDiagram", "fractionFrequencyPlot", "divisionModelDiagram", "factorizationDiagram"] as const
 } as const
 
 
