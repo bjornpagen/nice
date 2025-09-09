@@ -1,4 +1,19 @@
-import { BarChartPropsSchema, BoxGridPropsSchema, DataTablePropsSchema, FractionNumberLinePropsSchema, NumberLinePropsSchema, SubtractionWithRegroupingPropsSchema, TapeDiagramPropsSchema, VerticalArithmeticSetupPropsSchema, FractionModelDiagramPropsSchema, FractionFrequencyPlotPropsSchema, DivisionModelDiagramPropsSchema, FactorizationDiagramPropsSchema, EquivalentFractionModelPropsSchema } from "@/lib/widgets/generators"
+import {
+	AdditionWithRegroupingPropsSchema,
+	BarChartPropsSchema,
+	BoxGridPropsSchema,
+	DataTablePropsSchema,
+	DivisionModelDiagramPropsSchema,
+	EquivalentFractionModelPropsSchema,
+	FactorizationDiagramPropsSchema,
+	FractionFrequencyPlotPropsSchema,
+	FractionModelDiagramPropsSchema,
+	FractionNumberLinePropsSchema,
+	NumberLinePropsSchema,
+	SubtractionWithRegroupingPropsSchema,
+	TapeDiagramPropsSchema,
+	VerticalArithmeticSetupPropsSchema
+} from "@/lib/widgets/generators"
 
 export const fourthGradeMathCollection = {
 	name: "fourth-grade-math",
@@ -10,6 +25,7 @@ export const fourthGradeMathCollection = {
 		divisionModelDiagram: DivisionModelDiagramPropsSchema,
 		factorizationDiagram: FactorizationDiagramPropsSchema,
 		numberLine: NumberLinePropsSchema,
+		additionWithRegrouping: AdditionWithRegroupingPropsSchema,
 		subtractionWithRegrouping: SubtractionWithRegroupingPropsSchema,
 		verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema,
 		fractionNumberLine: FractionNumberLinePropsSchema,
@@ -25,6 +41,7 @@ export const fourthGradeMathCollection = {
 		"divisionModelDiagram",
 		"factorizationDiagram",
 		"numberLine",
+		"additionWithRegrouping",
 		"subtractionWithRegrouping",
 		"verticalArithmeticSetup",
 		"fractionNumberLine",

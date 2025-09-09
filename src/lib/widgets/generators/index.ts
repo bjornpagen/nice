@@ -10,13 +10,16 @@ import {
 	AbsoluteValueNumberLinePropsSchema,
 	generateAbsoluteValueNumberLine
 } from "@/lib/widgets/generators/absolute-value-number-line"
+import {
+	AdditionWithRegroupingPropsSchema,
+	generateAdditionWithRegrouping
+} from "@/lib/widgets/generators/addition-with-regrouping"
 import { AngleDiagramPropsSchema, generateAngleDiagram } from "@/lib/widgets/generators/angle-diagram"
 import { AreaGraphPropsSchema, generateAreaGraph } from "@/lib/widgets/generators/area-graph"
 import { BarChartPropsSchema, generateBarChart } from "@/lib/widgets/generators/bar-chart"
 import { BoxGridPropsSchema, generateBoxGrid } from "@/lib/widgets/generators/box-grid"
 import { BoxPlotPropsSchema, generateBoxPlot } from "@/lib/widgets/generators/box-plot"
 import { CircleDiagramPropsSchema, generateCircleDiagram } from "@/lib/widgets/generators/circle-diagram"
-import { generateFractionModelDiagram, FractionModelDiagramPropsSchema } from "@/lib/widgets/generators/fractional-model-diagram"
 import {
 	CompositeShapeDiagramPropsSchema,
 	generateCompositeShapeDiagram
@@ -36,17 +39,37 @@ import {
 	generateDistanceFormulaGraph
 } from "@/lib/widgets/generators/distance-formula-graph"
 import { DivergentBarChartPropsSchema, generateDivergentBarChart } from "@/lib/widgets/generators/divergent-bar-chart"
+import {
+	DivisionModelDiagramPropsSchema,
+	generateDivisionModelDiagram
+} from "@/lib/widgets/generators/division-model-diagram"
 import { DotPlotPropsSchema, generateDotPlot } from "@/lib/widgets/generators/dot-plot"
 import { DoubleNumberLinePropsSchema, generateDoubleNumberLine } from "@/lib/widgets/generators/double-number-line"
 import { EmojiImagePropsSchema, generateEmojiImage } from "@/lib/widgets/generators/emoji-image"
+import {
+	EquivalentFractionModelPropsSchema,
+	generateEquivalentFractionModel
+} from "@/lib/widgets/generators/equivalent-fraction-model"
+import {
+	FactorizationDiagramPropsSchema,
+	generateFactorizationDiagram
+} from "@/lib/widgets/generators/factorization-diagram"
 import {
 	FigureComparisonDiagramPropsSchema,
 	generateFigureComparisonDiagram
 } from "@/lib/widgets/generators/figure-comparison-diagram"
 import {
+	FractionFrequencyPlotPropsSchema,
+	generateFractionFrequencyPlot
+} from "@/lib/widgets/generators/fraction-frequency-plot"
+import {
 	FractionNumberLinePropsSchema,
 	generateFractionNumberLine
 } from "@/lib/widgets/generators/fraction-number-line"
+import {
+	FractionModelDiagramPropsSchema,
+	generateFractionModelDiagram
+} from "@/lib/widgets/generators/fractional-model-diagram"
 import { FunctionPlotGraphPropsSchema, generateFunctionPlotGraph } from "@/lib/widgets/generators/function-plot-graph"
 import {
 	GeometricSolidDiagramPropsSchema,
@@ -142,10 +165,6 @@ import {
 	generateVerticalArithmeticSetup,
 	VerticalArithmeticSetupPropsSchema
 } from "@/lib/widgets/generators/vertical-arithmetic-setup"
-import { generateFractionFrequencyPlot, FractionFrequencyPlotPropsSchema } from "@/lib/widgets/generators/fraction-frequency-plot"
-import { generateDivisionModelDiagram, DivisionModelDiagramPropsSchema } from "@/lib/widgets/generators/division-model-diagram"
-import { generateFactorizationDiagram, FactorizationDiagramPropsSchema } from "@/lib/widgets/generators/factorization-diagram"
-import { generateEquivalentFractionModel, EquivalentFractionModelPropsSchema } from "@/lib/widgets/generators/equivalent-fraction-model"
 
 // This object now contains every widget schema from every collection.
 // It serves as a master lookup for dynamic schema generation and compilation.
@@ -219,7 +238,8 @@ export const allWidgetSchemas = {
 	divisionModelDiagram: DivisionModelDiagramPropsSchema,
 	factorizationDiagram: FactorizationDiagramPropsSchema,
 	equivalentFractionModel: EquivalentFractionModelPropsSchema,
-	subtractionWithRegrouping: SubtractionWithRegroupingPropsSchema
+	subtractionWithRegrouping: SubtractionWithRegroupingPropsSchema,
+	additionWithRegrouping: AdditionWithRegroupingPropsSchema
 }
 
 // The `type` field is now included in the base schemas, so we remove .extend()
@@ -295,7 +315,8 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.divisionModelDiagram,
 	typedSchemas.factorizationDiagram,
 	typedSchemas.equivalentFractionModel,
-	typedSchemas.subtractionWithRegrouping
+	typedSchemas.subtractionWithRegrouping,
+	typedSchemas.additionWithRegrouping
 ] as const
 
 export const WidgetSchema = z.union([
@@ -376,7 +397,8 @@ export {
 	DivisionModelDiagramPropsSchema,
 	FactorizationDiagramPropsSchema,
 	EquivalentFractionModelPropsSchema,
-	SubtractionWithRegroupingPropsSchema
+	SubtractionWithRegroupingPropsSchema,
+	AdditionWithRegroupingPropsSchema
 }
 
 // Export the individual generators for direct use
@@ -449,7 +471,8 @@ export {
 	generateDivisionModelDiagram,
 	generateFactorizationDiagram,
 	generateEquivalentFractionModel,
-	generateSubtractionWithRegrouping
+	generateSubtractionWithRegrouping,
+	generateAdditionWithRegrouping
 }
 
 // The generateWidget function is a comprehensive switch that can handle any widget type.
@@ -594,6 +617,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateEquivalentFractionModel(widget)
 		case "subtractionWithRegrouping":
 			return await generateSubtractionWithRegrouping(widget)
+		case "additionWithRegrouping":
+			return await generateAdditionWithRegrouping(widget)
 		default:
 			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
