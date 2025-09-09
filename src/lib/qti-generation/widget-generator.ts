@@ -9,7 +9,6 @@ import {
 	generateBoxGrid,
 	generateBoxPlot,
 	generateCircleDiagram,
-	generateFractionModelDiagram,
 	generateCompositeShapeDiagram,
 	generateConceptualGraph,
 	generateCoordinatePlane,
@@ -21,17 +20,17 @@ import {
 	generateDoubleNumberLine,
 	generateEmojiImage,
 	generateFigureComparisonDiagram,
+	generateFractionModelDiagram,
 	generateFractionNumberLine,
 	generateFunctionPlotGraph,
 	generateGeometricSolidDiagram,
 	generateHangerDiagram,
 	generateHistogram,
-	generateNPolygon,
-
 	generateInequalityNumberLine,
 	generateKeelingCurve,
 	generateLineEquationGraph,
 	generateLineGraph,
+	generateNPolygon,
 	generateNumberLine,
 	generateNumberLineForOpposites,
 	generateNumberLineWithAction,
@@ -58,6 +57,7 @@ import {
 	generateScatterPlot,
 	generateShapeTransformationGraph,
 	generateStackedItemsDiagram,
+	generateSubtractionWithRegrouping,
 	generateTapeDiagram,
 	generateThreeDIntersectionDiagram,
 	generateTransformationDiagram,
@@ -68,11 +68,10 @@ import {
 	generateVennDiagram,
 	generateVerticalArithmeticSetup
 } from "@/lib/widgets/generators"
-import { generateFractionFrequencyPlot } from "@/lib/widgets/generators/fraction-frequency-plot"
+import { generateDivisionModelDiagram } from "@/lib/widgets/generators/division-model-diagram"
 import { generateEquivalentFractionModel } from "@/lib/widgets/generators/equivalent-fraction-model"
 import { generateFactorizationDiagram } from "@/lib/widgets/generators/factorization-diagram"
-import { generateDivisionModelDiagram } from "@/lib/widgets/generators/division-model-diagram"
-import { generateSubtractionWithRegrouping } from "@/lib/widgets/generators/subtraction-with-regrouping"
+import { generateFractionFrequencyPlot } from "@/lib/widgets/generators/fraction-frequency-plot"
 
 export async function generateWidget(widget: Widget): Promise<string> {
 	switch (widget.type) {
@@ -205,6 +204,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateUrlImage(widget)
 		case "pieChart":
 			return await generatePieChart(widget)
+		case "subtractionWithRegrouping":
+			return await generateSubtractionWithRegrouping(widget)
 		case "fractionFrequencyPlot":
 			return await generateFractionFrequencyPlot(widget)
 		case "divisionModelDiagram":
@@ -213,8 +214,6 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateFactorizationDiagram(widget)
 		case "equivalentFractionModel":
 			return await generateEquivalentFractionModel(widget)
-		case "subtractionWithRegrouping":
-			return await generateSubtractionWithRegrouping(widget)
 		default:
 			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
