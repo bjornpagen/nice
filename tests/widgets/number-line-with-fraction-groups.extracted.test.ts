@@ -28,103 +28,20 @@ type NumberLineWithFractionGroupsInput = z.input<typeof NumberLineWithFractionGr
 // Widget key: image_1
 test("number-line-with-fraction-groups - Divide whole numbers by fractions", async () => {
 	const input = {
-	"max": 2,
-	"min": 0,
-	"ticks": [
-		{
-			"label": "0",
-			"value": 0,
-			"isMajor": true
+		type: "numberLineWithFractionGroups",
+		width: 320,
+		height: 198,
+		axis: {
+			lowerBound: 0,
+			upperBound: 8,
+			denominator: 4
 		},
-		{
-			"label": "1 fourth",
-			"value": 0.25,
-			"isMajor": false
-		},
-		{
-			"label": "2 fourths",
-			"value": 0.5,
-			"isMajor": false
-		},
-		{
-			"label": "3 fourths",
-			"value": 0.75,
-			"isMajor": false
-		},
-		{
-			"label": "1",
-			"value": 1,
-			"isMajor": true
-		},
-		{
-			"label": "5 fourths",
-			"value": 1.25,
-			"isMajor": false
-		},
-		{
-			"label": "6 fourths",
-			"value": 1.5,
-			"isMajor": false
-		},
-		{
-			"label": "7 fourths",
-			"value": 1.75,
-			"isMajor": false
-		},
-		{
-			"label": "2",
-			"value": 2,
-			"isMajor": true
+		boxes: {
+			lowerBound: 0,
+			upperBound: 7,
+			fillTo: 4
 		}
-	],
-	"width": 320,
-	"height": 198,
-	"segments": [
-		{
-			"end": 0.25,
-			"color": "#11accd",
-			"label": " ",
-			"start": 0
-		},
-		{
-			"end": 0.5,
-			"color": "#11accd",
-			"label": " ",
-			"start": 0.25
-		},
-		{
-			"end": 0.75,
-			"color": "#11accd",
-			"label": " ",
-			"start": 0.5
-		},
-		{
-			"end": 1,
-			"color": "#11accd",
-			"label": " ",
-			"start": 0.75
-		},
-		{
-			"end": 1.25,
-			"color": "#ffffff",
-			"label": " ",
-			"start": 1
-		},
-		{
-			"end": 1.5,
-			"color": "#ffffff",
-			"label": " ",
-			"start": 1.25
-		},
-		{
-			"end": 1.75,
-			"color": "#ffffff",
-			"label": " ",
-			"start": 1.5
-		}
-	],
-	"type": "numberLineWithFractionGroups"
-} as any // TODO: Update when schema is regenerated with new format
+	}
 
 	// Validate the input
 	const parseResult = NumberLineWithFractionGroupsPropsSchema.safeParse(input)
@@ -143,54 +60,22 @@ test("number-line-with-fraction-groups - Divide whole numbers by fractions", asy
 // Course: 6th grade math
 // Exercise: Divide whole numbers by fractions
 // Widget key: image_1
-test("number-line-with-fraction-groups - Divide whole numbers by fractions", async () => {
+test("number-line-with-fraction-groups - Divide whole numbers by fractions - thirds", async () => {
 	const input = {
-	"max": 1.6666666667,
-	"min": 0,
-	"ticks": [
-		{
-			"label": "0",
-			"value": 0,
-			"isMajor": true
+		type: "numberLineWithFractionGroups",
+		width: 320,
+		height: 198,
+		axis: {
+			lowerBound: 0,
+			upperBound: 5,
+			denominator: 3
 		},
-		{
-			"label": "1/3",
-			"value": 0.3333333333,
-			"isMajor": false
-		},
-		{
-			"label": "2/3",
-			"value": 0.6666666667,
-			"isMajor": false
-		},
-		{
-			"label": "1",
-			"value": 1,
-			"isMajor": true
-		},
-		{
-			"label": "4/3",
-			"value": 1.3333333333,
-			"isMajor": false
-		},
-		{
-			"label": "5/3",
-			"value": 1.6666666667,
-			"isMajor": false
+		boxes: {
+			lowerBound: 0,
+			upperBound: 3,
+			fillTo: 3
 		}
-	],
-	"width": 320,
-	"height": 198,
-	"segments": [
-		{
-			"end": 1,
-			"color": "#11accd",
-			"label": null,
-			"start": 0
-		}
-	],
-	"type": "numberLineWithFractionGroups"
-} as any // TODO: Update when schema is regenerated with new format
+	}
 
 	// Validate the input
 	const parseResult = NumberLineWithFractionGroupsPropsSchema.safeParse(input)

@@ -23,12 +23,38 @@ const Label = z
 	})
 	.strict()
 
+// Local factory function to create action delta schema without $ref
+const createActionDeltaSchema = () => z.discriminatedUnion("type", [
+	z
+		.object({
+			type: z.literal("number").describe("Plain numeric change"),
+			value: z.number().describe("Numeric value for the change, e.g. -3, 0, 5, 2.5")
+		})
+		.strict(),
+	z
+		.object({
+			type: z.literal("fraction").describe("Proper or improper fraction change"),
+			numerator: z.number().int().min(0).describe("Numerator (non-negative)"),
+			denominator: z.number().int().positive().describe("Denominator (positive)"),
+			sign: z.enum(["+", "-"]).describe("Sign of the fraction change")
+		})
+		.strict(),
+	z
+		.object({
+			type: z.literal("mixed").describe("Mixed number change like 1 1/4"),
+			whole: z.number().int().min(0).describe("Whole part (non-negative)"),
+			numerator: z.number().int().min(0).describe("Numerator of the fractional part"),
+			denominator: z.number().int().positive().describe("Denominator of the fractional part (positive)"),
+			sign: z.enum(["+", "-"]).describe("Sign of the mixed number change")
+		})
+		.strict()
+]);
+
 const Action = z
 	.object({
-		delta: z
-			.number()
+		delta: createActionDeltaSchema()
 			.describe(
-				"The change amount for this action. Positive for addition/forward, negative for subtraction/backward (e.g., 3, -5, 2.5, -1)."
+				"The change amount for this action. Supports numeric, fractional, or mixed number values with explicit signs. Positive for addition/forward, negative for subtraction/backward."
 			),
 		label: z
 			.string()
@@ -97,6 +123,22 @@ export const NumberLineWithActionPropsSchema = z
 	)
 
 export type NumberLineWithActionProps = z.infer<typeof NumberLineWithActionPropsSchema>
+
+type ActionDelta = z.infer<ReturnType<typeof createActionDeltaSchema>>
+
+/**
+ * Calculates the numerical value of an action's delta.
+ */
+const toNumericDelta = (delta: ActionDelta): number => {
+	if (delta.type === "number") return delta.value
+	if (delta.type === "fraction") {
+		const magnitude = delta.denominator === 0 ? 0 : delta.numerator / delta.denominator
+		return delta.sign === "-" ? -magnitude : magnitude
+	}
+	// mixed
+	const total = delta.whole + (delta.denominator === 0 ? 0 : delta.numerator / delta.denominator)
+	return delta.sign === "-" ? -total : total
+}
 
 /**
  * Creates an interactive number line showing arithmetic operations as curved 'jump' arrows.
@@ -246,9 +288,10 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 		const action = actions[i]
 		if (!action) continue
 		
-		currentValue += action.delta
+		const numericDelta = toNumericDelta(action.delta)
+		currentValue += numericDelta
 		if (currentValue < min || currentValue > max) {
-			throw errors.new(`action ${i + 1} (delta: ${action.delta}) results in value ${currentValue} outside bounds [${min}, ${max}]`)
+			throw errors.new(`action ${i + 1} (delta: ${numericDelta}) results in value ${currentValue} outside bounds [${min}, ${max}]`)
 		}
 	}
 	
@@ -333,8 +376,9 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const action = actions[i]
 			if (!action || !action.label) continue
 
+			const numericDelta = toNumericDelta(action.delta)
 			const actionStartX = toSvgX(currentValue)
-			const actionEndX = toSvgX(currentValue + action.delta)
+			const actionEndX = toSvgX(currentValue + numericDelta)
 			const midX = (actionStartX + actionEndX) / 2
 			const baseOffset = 30
 			const arrowSpacing = 25
@@ -352,7 +396,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 				height: labelHeight + 2 * padding
 			})
 
-			currentValue += action.delta
+			currentValue += numericDelta
 		}
 		
 		// Second pass: draw arrows and clipped dotted lines
@@ -361,8 +405,9 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const action = actions[i]
 			if (!action) continue
 
+			const numericDelta = toNumericDelta(action.delta)
 			const actionStartX = toSvgX(currentValue)
-			const actionEndX = toSvgX(currentValue + action.delta)
+			const actionEndX = toSvgX(currentValue + numericDelta)
 			const midX = (actionStartX + actionEndX) / 2
 
 			// Stack arrows vertically with better spacing
@@ -394,7 +439,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 				})
 			}
 
-			currentValue += action.delta
+			currentValue += numericDelta
 		}
 
 		// Final value marker
@@ -476,8 +521,9 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const action = actions[i]
 			if (!action || !action.label) continue
 
+			const numericDelta = toNumericDelta(action.delta)
 			const actionStartY = toSvgY(currentValue)
-			const actionEndY = toSvgY(currentValue + action.delta)
+			const actionEndY = toSvgY(currentValue + numericDelta)
 			const midY = (actionStartY + actionEndY) / 2
 			const baseOffset = 30
 			const arrowSpacing = 32  // Reduced from 40 to 32 for tighter spacing
@@ -503,7 +549,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 				height: textWidth + topPadding + bottomPadding   // symmetric height
 			})
 
-			currentValue += action.delta
+			currentValue += numericDelta
 		}
 		
 		// Second pass: draw arrows and clipped dotted lines
@@ -512,8 +558,9 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 			const action = actions[i]
 			if (!action) continue
 
+			const numericDelta = toNumericDelta(action.delta)
 			const actionStartY = toSvgY(currentValue)
-			const actionEndY = toSvgY(currentValue + action.delta)
+			const actionEndY = toSvgY(currentValue + numericDelta)
 			const midY = (actionStartY + actionEndY) / 2
 
 			// Stack arrows horizontally with better spacing
@@ -547,7 +594,7 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 				})
 			}
 
-			currentValue += action.delta
+			currentValue += numericDelta
 		}
 
 		// Final value marker
