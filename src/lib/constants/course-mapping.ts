@@ -11,11 +11,19 @@ export const HARDCODED_COURSE_MAPPING = {
 	x7c7044d7: ["8"], // 8th grade math (Common Core)
 
 	// Science Courses
-	x0c5bb03129646fd6: ["8"], // ms-biology
-	x1baed5db7c1bb50b: ["6", "7", "8"], // ms-physics
-	x87d03b443efbea0a: ["7"], // middle-school-earth-and-space-science
-	x230b3ff252126bb6: ["9"], // hs-bio
-	xc370bc422b7f75fc: ["6"], // ms-chemistry
+	// x0c5bb03129646fd6: ["8"], // ms-biology
+	// x1baed5db7c1bb50b: ["6", "7", "8"], // ms-physics
+	// x87d03b443efbea0a: ["7"], // middle-school-earth-and-space-science
+	// x230b3ff252126bb6: ["9"], // hs-bio
+	// xc370bc422b7f75fc: ["6"], // ms-chemistry
+
+	// New Science Courses
+	xf557a762645cccc5: ["11", "12"], // AP College Physics 1
+	x0e2f5a2c: ["11", "12"], // AP College Physics 2
+	x2613d8165d88df5e: ["10"], // High School Chemistry
+	x2eef969c74e0d802: ["11", "12"], // AP College Chemistry
+	x6679aa2c65c01e53: ["11"], // High School Physics
+	x16acb03e699817e9: ["11", "12"], // AP College Bio
 
 	// History Courses
 	x71a94f19: ["11"], // us-history
@@ -35,11 +43,17 @@ export const ALL_HARDCODED_COURSE_IDS: CourseId[] = [
 	"x0267d782", // 6th grade math (Common Core)
 	"x6b17ba59", // 7th grade math (Common Core)
 	"x7c7044d7", // 8th grade math (Common Core)
-	"x0c5bb03129646fd6", // ms-biology
-	"x1baed5db7c1bb50b", // ms-physics
-	"x87d03b443efbea0a", // middle-school-earth-and-space-science
-	"x230b3ff252126bb6", // hs-bio
-	"xc370bc422b7f75fc", // ms-chemistry
+	// "x0c5bb03129646fd6", // ms-biology
+	// "x1baed5db7c1bb50b", // ms-physics
+	// "x87d03b443efbea0a", // middle-school-earth-and-space-science
+	// "x230b3ff252126bb6", // hs-bio
+	// "xc370bc422b7f75fc", // ms-chemistry
+	"xf557a762645cccc5", // AP College Physics 1
+	"x0e2f5a2c", // AP College Physics 2
+	"x2613d8165d88df5e", // High School Chemistry
+	"x2eef969c74e0d802", // AP College Chemistry
+	"x6679aa2c65c01e53", // High School Physics
+	"x16acb03e699817e9", // AP College Bio
 	"x71a94f19", // us-history
 	"xb87a304a", // ap-us-history
 	"x66f79d8a", // world-history
@@ -69,11 +83,17 @@ export const HARDCODED_MATH_COURSE_IDS = [
 ] as const
 
 export const HARDCODED_SCIENCE_COURSE_IDS = [
-	"x0c5bb03129646fd6", // ms-biology
-	"x1baed5db7c1bb50b", // ms-physics
-	"x87d03b443efbea0a", // middle-school-earth-and-space-science
-	"x230b3ff252126bb6", // hs-bio
-	"xc370bc422b7f75fc" // ms-chemistry
+	// "x0c5bb03129646fd6", // ms-biology
+	// "x1baed5db7c1bb50b", // ms-physics
+	// "x87d03b443efbea0a", // middle-school-earth-and-space-science
+	// "x230b3ff252126bb6", // hs-bio
+	// "xc370bc422b7f75fc", // ms-chemistry
+	"xf557a762645cccc5", // AP College Physics 1
+	"x0e2f5a2c", // AP College Physics 2
+	"x2613d8165d88df5e", // High School Chemistry
+	"x2eef969c74e0d802", // AP College Chemistry
+	"x6679aa2c65c01e53", // High School Physics
+	"x16acb03e699817e9" // AP College Bio
 ] as const
 
 export const HARDCODED_HISTORY_COURSE_IDS = [
@@ -87,13 +107,16 @@ export const HARDCODED_HISTORY_COURSE_IDS = [
 
 /**
  * Reading speed mapping (words per minute) by grade level.
- * Only 6th–9th grades are currently defined.
+ * Grades 6-12 are defined, following a pattern of +25 WPM per grade.
  */
 export const GRADE_TO_WPM: Readonly<Record<string, number>> = {
 	"6": 150,
 	"7": 175,
 	"8": 200,
-	"9": 225
+	"9": 225,
+	"10": 250,
+	"11": 250,
+	"12": 250
 }
 
 /**
@@ -102,9 +125,7 @@ export const GRADE_TO_WPM: Readonly<Record<string, number>> = {
  */
 export function getAverageReadingWpmForCourse(courseId: CourseId): number | null {
 	const grades = HARDCODED_COURSE_MAPPING[courseId]
-	const wpms = grades
-		.map((g) => GRADE_TO_WPM[g])
-		.filter((v): v is number => typeof v === "number")
+	const wpms = grades.map((g) => GRADE_TO_WPM[g]).filter((v): v is number => typeof v === "number")
 	if (wpms.length === 0) return null
 	const sum = wpms.reduce((acc, n) => acc + n, 0)
 	return Math.round(sum / wpms.length)
