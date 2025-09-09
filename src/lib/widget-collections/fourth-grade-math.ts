@@ -10,6 +10,7 @@ import {
 	FractionModelDiagramPropsSchema,
 	FractionNumberLinePropsSchema,
 	NumberLinePropsSchema,
+	NumberLineWithActionPropsSchema,
 	SubtractionWithRegroupingPropsSchema,
 	TapeDiagramPropsSchema,
 	VerticalArithmeticSetupPropsSchema
@@ -25,6 +26,7 @@ export const fourthGradeMathCollection = {
 		divisionModelDiagram: DivisionModelDiagramPropsSchema,
 		factorizationDiagram: FactorizationDiagramPropsSchema,
 		numberLine: NumberLinePropsSchema,
+		numberLineWithAction: NumberLineWithActionPropsSchema,
 		additionWithRegrouping: AdditionWithRegroupingPropsSchema,
 		subtractionWithRegrouping: SubtractionWithRegroupingPropsSchema,
 		verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema,
@@ -41,6 +43,7 @@ export const fourthGradeMathCollection = {
 		"divisionModelDiagram",
 		"factorizationDiagram",
 		"numberLine",
+		"numberLineWithAction",
 		"additionWithRegrouping",
 		"subtractionWithRegrouping",
 		"verticalArithmeticSetup",
