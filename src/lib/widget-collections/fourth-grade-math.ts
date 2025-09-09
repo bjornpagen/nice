@@ -12,6 +12,7 @@ import {
 	FractionNumberLinePropsSchema,
 	NumberLinePropsSchema,
 	NumberLineWithActionPropsSchema,
+	SingleFractionalModelDiagramPropsSchema,
 	SubtractionWithRegroupingPropsSchema,
 	TapeDiagramPropsSchema,
 	VerticalArithmeticSetupPropsSchema
@@ -35,7 +36,8 @@ export const fourthGradeMathCollection = {
 		boxGrid: BoxGridPropsSchema,
 		barChart: BarChartPropsSchema,
 		equivalentFractionModel: EquivalentFractionModelPropsSchema,
-		areaModelMultiplication: AreaModelMultiplicationPropsSchema
+		areaModelMultiplication: AreaModelMultiplicationPropsSchema,
+		singleFractionalModelDiagram: SingleFractionalModelDiagramPropsSchema
 	},
 	widgetTypeKeys: [
 		"dataTable",
@@ -53,6 +55,7 @@ export const fourthGradeMathCollection = {
 		"boxGrid",
 		"barChart",
 		"equivalentFractionModel",
-		"areaModelMultiplication"
+		"areaModelMultiplication",
+		"singleFractionalModelDiagram"
 	] as const
 } as const

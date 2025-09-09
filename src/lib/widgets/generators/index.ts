@@ -149,6 +149,10 @@ import {
 	ShapeTransformationGraphPropsSchema
 } from "@/lib/widgets/generators/shape-transformation-graph"
 import {
+	generateSingleFractionalModelDiagram,
+	SingleFractionalModelDiagramPropsSchema
+} from "@/lib/widgets/generators/single-fractional-model-diagram"
+import {
 	generateStackedItemsDiagram,
 	StackedItemsDiagramPropsSchema
 } from "@/lib/widgets/generators/stacked-items-diagram"
@@ -229,6 +233,7 @@ export const allWidgetSchemas = {
 	scaleCopiesSlider: ScaleCopiesSliderPropsSchema,
 	simpleArrow: SimpleArrowPropsSchema,
 	scatterPlot: ScatterPlotPropsSchema,
+	singleFractionalModelDiagram: SingleFractionalModelDiagramPropsSchema,
 	stackedItemsDiagram: StackedItemsDiagramPropsSchema,
 	tapeDiagram: TapeDiagramPropsSchema,
 	transformationDiagram: TransformationDiagramPropsSchema,
@@ -308,6 +313,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.scaleCopiesSlider,
 	typedSchemas.simpleArrow,
 	typedSchemas.scatterPlot,
+	typedSchemas.singleFractionalModelDiagram,
 	typedSchemas.stackedItemsDiagram,
 	typedSchemas.tapeDiagram,
 	typedSchemas.transformationDiagram,
@@ -393,6 +399,7 @@ export {
 	SimpleArrowPropsSchema,
 	ScatterPlotPropsSchema,
 	ShapeTransformationGraphPropsSchema,
+	SingleFractionalModelDiagramPropsSchema,
 	StackedItemsDiagramPropsSchema,
 	TapeDiagramPropsSchema,
 	TransformationDiagramPropsSchema,
@@ -468,6 +475,7 @@ export {
 	generateScaleCopiesSlider,
 	generateSimpleArrow,
 	generateScatterPlot,
+	generateSingleFractionalModelDiagram,
 	generateStackedItemsDiagram,
 	generateTapeDiagram,
 	generateTransformationDiagram,
@@ -602,6 +610,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateScatterPlot(widget)
 		case "shapeTransformationGraph":
 			return await generateShapeTransformationGraph(widget)
+		case "singleFractionalModelDiagram":
+			return await generateSingleFractionalModelDiagram(widget)
 		case "stackedItemsDiagram":
 			return await generateStackedItemsDiagram(widget)
 		case "tapeDiagram":

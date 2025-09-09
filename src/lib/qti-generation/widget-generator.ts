@@ -71,6 +71,7 @@ import {
 import { generateAdditionWithRegrouping } from "@/lib/widgets/generators/addition-with-regrouping"
 import { generateAreaModelMultiplication } from "@/lib/widgets/generators/area-model-multiplication"
 import { generateDivisionModelDiagram } from "@/lib/widgets/generators/division-model-diagram"
+import { generateSingleFractionalModelDiagram } from "@/lib/widgets/generators/single-fractional-model-diagram"
 import { generateEquivalentFractionModel } from "@/lib/widgets/generators/equivalent-fraction-model"
 import { generateFactorizationDiagram } from "@/lib/widgets/generators/factorization-diagram"
 import { generateFractionFrequencyPlot } from "@/lib/widgets/generators/fraction-frequency-plot"
@@ -178,6 +179,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateScaleCopiesSlider(widget)
 		case "scatterPlot":
 			return await generateScatterPlot(widget)
+		case "singleFractionalModelDiagram":
+			return await generateSingleFractionalModelDiagram(widget)
 		case "stackedItemsDiagram":
 			return await generateStackedItemsDiagram(widget)
 		case "tapeDiagram":
