@@ -169,4 +169,85 @@ describe("Addition With Regrouping Widget", () => {
 		expect(result).toContain(">0</td>")
 		expect(result).toContain("color: #4472c4") // Answer color
 	})
+
+	// Step-by-step reveal tests
+	it("should show only ones digit when revealUpTo is 'ones'", async () => {
+		const result = await generateAdditionWithRegrouping({
+			type: "additionWithRegrouping",
+			addend1: 507,
+			addend2: 252,
+			showAnswer: true,
+			revealUpTo: "ones"
+		})
+
+		expect(result).toContain(">7</td>") // Ones digit of first addend
+		expect(result).toContain(">2</td>") // Ones digit of second addend
+		expect(result).toContain("color: #4472c4") // Answer color
+		expect(result).toContain(">9</td>") // Ones digit of answer
+		// Check that we have exactly one answer cell with content (the ones)
+		const answerCells = result.match(/color: #4472c4[^>]*>[^<]*</g) || []
+		expect(answerCells.filter((cell) => !cell.includes("><"))).toHaveLength(1)
+		expect(result).toMatchSnapshot()
+	})
+
+	it("should show ones and tens when revealUpTo is 'tens'", async () => {
+		const result = await generateAdditionWithRegrouping({
+			type: "additionWithRegrouping",
+			addend1: 507,
+			addend2: 252,
+			showAnswer: true,
+			revealUpTo: "tens"
+		})
+
+		expect(result).toContain(">9</td>") // Ones digit of answer
+		expect(result).toContain(">5</td>") // Contains 5 (from tens of answer)
+		expect(result).not.toContain('>7</td><td style="padding: 2px 8px; color: #4472c4') // Should not show hundreds digit of answer
+		expect(result).toMatchSnapshot()
+	})
+
+	it("should show complete answer when revealUpTo is 'hundreds'", async () => {
+		const result = await generateAdditionWithRegrouping({
+			type: "additionWithRegrouping",
+			addend1: 507,
+			addend2: 252,
+			showAnswer: true,
+			revealUpTo: "hundreds"
+		})
+
+		expect(result).toContain(">9</td>") // Ones
+		expect(result).toContain(">5</td>") // Tens (multiple 5s expected)
+		expect(result).toContain(">7</td>") // Hundreds (multiple 7s expected)
+		expect(result).toMatchSnapshot()
+	})
+
+	it("should not show carries when only ones is revealed", async () => {
+		const result = await generateAdditionWithRegrouping({
+			type: "additionWithRegrouping",
+			addend1: 456,
+			addend2: 789,
+			showAnswer: true,
+			revealUpTo: "ones"
+		})
+
+		// Carries appear above the column they affect (tens), not where they come from (ones)
+		// So when only ones is revealed, no carries should be shown
+		expect(result).not.toContain("color: #1E90FF") // No carry marks
+		expect(result).toContain(">5</td>") // Ones digit of answer (5 from 15)
+		expect(result).toMatchSnapshot()
+	})
+
+	it("should show carry above tens when revealing tens", async () => {
+		const result = await generateAdditionWithRegrouping({
+			type: "additionWithRegrouping",
+			addend1: 456,
+			addend2: 789,
+			showAnswer: true,
+			revealUpTo: "tens"
+		})
+
+		expect(result).toContain("color: #1E90FF") // Should show carry mark
+		expect(result).toContain(">4</td>") // Tens digit of answer
+		expect(result).toContain(">5</td>") // Ones digit of answer
+		expect(result).toMatchSnapshot()
+	})
 })
