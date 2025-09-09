@@ -32,6 +32,7 @@ import {
 	generateLineGraph,
 	generateNPolygon,
 	generateNumberLine,
+	generatePatternDiagram,
 	generateNumberLineForOpposites,
 	generateNumberLineWithAction,
 	generateNumberLineWithFractionGroups,
@@ -148,6 +149,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateHistogram(widget)
 		case "nPolygon":
 			return await generateNPolygon(widget)
+		case "patternDiagram":
+			return await generatePatternDiagram(widget)
 		case "inequalityNumberLine":
 			return await generateInequalityNumberLine(widget)
 		case "numberLine":

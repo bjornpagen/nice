@@ -93,6 +93,7 @@ import { generateKeelingCurve, KeelingCurvePropsSchema } from "@/lib/widgets/gen
 import { generateLineEquationGraph, LineEquationGraphPropsSchema } from "@/lib/widgets/generators/line-equation-graph"
 import { generateLineGraph, LineGraphPropsSchema } from "@/lib/widgets/generators/line-graph"
 import { generateNPolygon, NPolygonPropsSchema } from "@/lib/widgets/generators/n-polygon"
+import { generatePatternDiagram, PatternDiagramPropsSchema } from "@/lib/widgets/generators/pattern-diagram"
 import { generateNumberLine, NumberLinePropsSchema } from "@/lib/widgets/generators/number-line"
 import {
 	generateNumberLineForOpposites,
@@ -223,6 +224,7 @@ export const allWidgetSchemas = {
 	hangerDiagram: HangerDiagramPropsSchema,
 	histogram: HistogramPropsSchema,
 	nPolygon: NPolygonPropsSchema,
+	patternDiagram: PatternDiagramPropsSchema,
 
 	inequalityNumberLine: InequalityNumberLinePropsSchema,
 	keelingCurve: KeelingCurvePropsSchema,
@@ -309,6 +311,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.hangerDiagram,
 	typedSchemas.histogram,
 	typedSchemas.nPolygon,
+	typedSchemas.patternDiagram,
 
 	typedSchemas.inequalityNumberLine,
 	typedSchemas.keelingCurve,
@@ -391,6 +394,7 @@ export {
 	HangerDiagramPropsSchema,
 	HistogramPropsSchema,
 	NPolygonPropsSchema,
+	PatternDiagramPropsSchema,
 	InequalityNumberLinePropsSchema,
 	KeelingCurvePropsSchema,
 	LineEquationGraphPropsSchema,
@@ -477,6 +481,7 @@ export {
 	generateHangerDiagram,
 	generateHistogram,
 	generateNPolygon,
+	generatePatternDiagram,
 	generateInequalityNumberLine,
 	generateKeelingCurve,
 	generateLineGraph,
@@ -583,6 +588,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateHistogram(widget)
 		case "nPolygon":
 			return await generateNPolygon(widget)
+		case "patternDiagram":
+			return await generatePatternDiagram(widget)
 
 		case "inequalityNumberLine":
 			return await generateInequalityNumberLine(widget)

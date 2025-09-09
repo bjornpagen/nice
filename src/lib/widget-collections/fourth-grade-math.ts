@@ -13,6 +13,7 @@ import {
 	FractionNumberLinePropsSchema,
 	NPolygonPropsSchema,
 	NumberLinePropsSchema,
+	PatternDiagramPropsSchema,
 	NumberLineWithActionPropsSchema,
 	ProtractorAngleDiagramPropsSchema,
 	SimpleArrowPropsSchema,
@@ -47,7 +48,8 @@ export const fourthGradeMathCollection = {
 		singleFractionalModelDiagram: SingleFractionalModelDiagramPropsSchema,
 		simpleArrow: SimpleArrowPropsSchema,
 		vectorDiagram: VectorDiagramPropsSchema,
-		nPolygon: NPolygonPropsSchema
+		nPolygon: NPolygonPropsSchema,
+		patternDiagram: PatternDiagramPropsSchema
 	},
 	widgetTypeKeys: [
 		"dataTable",
@@ -71,6 +73,7 @@ export const fourthGradeMathCollection = {
 		"singleFractionalModelDiagram",
 		"simpleArrow",
 		"vectorDiagram",
-		"nPolygon"
+		"nPolygon",
+		"patternDiagram"
 	] as const
 } as const
