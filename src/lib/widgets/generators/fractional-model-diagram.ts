@@ -10,9 +10,9 @@ import { theme } from "@/lib/widgets/utils/theme";
 const ShapeTypeEnum = z.enum(["circle", "polygon", "box"])
     .describe("The geometric shape for the model. 'circle' for pie charts, 'polygon' for regular polygons, and 'box' for partitioned rectangles.");
 
-// Defines the operator symbol displayed between the two shapes.
+// Defines the operator symbol displayed between shapes.
 const OperatorEnum = z.enum([">", "<", "=", "+", "-"])
-    .describe("The comparison or arithmetic operator to display between the two shapes.");
+    .describe("The comparison or arithmetic operator to display between shapes.");
 
 // Defines the properties for a single partitioned shape.
 function createPartitionedShapeSchema() {
@@ -30,20 +30,25 @@ export const FractionModelDiagramPropsSchema = z.object({
 		width: z.number().positive().describe("Total width of the SVG in pixels."),
 		height: z.number().positive().describe("Total height of the SVG in pixels."),
         shapeType: ShapeTypeEnum,
-		leftShape: createPartitionedShapeSchema().describe("The partitioned shape to be displayed on the left side."),
-		rightShape: createPartitionedShapeSchema().describe("The partitioned shape to be displayed on the right side."),
-		operator: OperatorEnum
+        shapes: z.array(createPartitionedShapeSchema()).min(1).describe("An array of partitioned shapes to display in sequence."),
+        operators: z.array(OperatorEnum).nullable().describe("An array of operators to display between the shapes. The number of operators should be one less than the number of shapes."),
 	})
 	.strict()
-	.describe("Creates a visual representation of fraction comparison or arithmetic using partitioned shapes (circles, regular polygons, or boxes). Ideal for teaching basic fraction concepts, equivalency, and operations like addition and subtraction.");
+	.describe("Creates a visual representation of fraction operations or comparisons using a sequence of partitioned shapes (circles, regular polygons, or boxes). Ideal for teaching fraction concepts, equivalency, and operations like repeated addition.");
 
 export type FractionModelDiagramProps = z.infer<typeof FractionModelDiagramPropsSchema>;
 
 /**
- * Generates an SVG diagram comparing or operating on two fractions, represented as partitioned shapes.
+ * Generates an SVG diagram showing a sequence of fractions, represented as partitioned shapes,
+ * with operators between them.
  */
 export const generateFractionModelDiagram: WidgetGenerator<typeof FractionModelDiagramPropsSchema> = async (props) => {
-	const { width, height, shapeType, leftShape, rightShape, operator } = props;
+	const { width, height, shapeType, shapes, operators } = props;
+
+    // --- Runtime Validation ---
+    if (operators && operators.length !== shapes.length - 1) {
+        throw new Error(`The number of operators (${operators.length}) must be exactly one less than the number of shapes (${shapes.length}).`);
+    }
 
 	const canvas = new CanvasImpl({
 		chartArea: { left: 0, top: 0, width, height },
@@ -52,24 +57,28 @@ export const generateFractionModelDiagram: WidgetGenerator<typeof FractionModelD
 	});
 
 	// --- Layout Calculations ---
-	const availableHeight = height - PADDING * 4;
-	const shapeDiameter = Math.min(width * 0.4, availableHeight);
-	const radius = shapeDiameter / 2;
-	const verticalCenter = PADDING + radius;
+    const numItems = shapes.length + (operators?.length || 0);
+    const availableWidth = width - PADDING * 2;
+	const availableHeight = height - PADDING * 2;
+    
+    // Allocate space proportionally. Let's assume operators take up 1/4 the space of a shape.
+    const operatorSpaceRatio = 0.25;
+    const totalUnits = shapes.length + (operators?.length || 0) * operatorSpaceRatio;
+    const shapeDiameter = availableWidth / totalUnits;
+    const operatorWidth = shapeDiameter * operatorSpaceRatio;
+    const radius = Math.min(shapeDiameter, availableHeight) / 2;
 
-	const leftShapeCx = PADDING + radius;
-	const rightShapeCx = width - PADDING - radius;
-	const middleX = width / 2;
+	const verticalCenter = height / 2;
+    let currentX = PADDING;
 
 	const toRad = (deg: number) => (deg * Math.PI) / 180;
 
     // --- Drawing Functions ---
-
     const drawPolygonFraction = (cx: number, cy: number, r: number, fraction: z.infer<ReturnType<typeof createPartitionedShapeSchema>>) => {
         const { numerator, denominator, color } = fraction;
-        const numSides = denominator;
+        const numSides = denominator; // For polygons, sides often equal denominator.
         const vertices = [];
-        const angleOffset = -Math.PI / 2;
+        const angleOffset = -Math.PI / 2; // Start from top
         for (let i = 0; i < numSides; i++) {
             const angle = (i / numSides) * 2 * Math.PI + angleOffset;
             vertices.push({ x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) });
@@ -136,32 +145,30 @@ export const generateFractionModelDiagram: WidgetGenerator<typeof FractionModelD
                 drawBoxFraction(cx, cy, r, fractionData);
                 break;
         }
-
-		const labelY = cy + r + PADDING * 1.5;
-		const numeratorStr = String(fractionData.numerator);
-		const denominatorStr = String(fractionData.denominator);
-		const maxLen = Math.max(numeratorStr.length, denominatorStr.length);
-		const lineWidth = maxLen * 10;
-		
-		canvas.drawText({ x: cx, y: labelY - 8, text: numeratorStr, anchor: "middle", fontPx: 18, fontWeight: theme.font.weight.bold });
-		canvas.drawLine(cx - lineWidth / 2, labelY, cx + lineWidth / 2, labelY, { stroke: theme.colors.black, strokeWidth: theme.stroke.width.thick });
-		canvas.drawText({ x: cx, y: labelY + 12, text: denominatorStr, anchor: "middle", dominantBaseline: "hanging", fontPx: 18, fontWeight: theme.font.weight.bold });
     };
 	
 	// --- Main Execution ---
-	drawPartitionedShape(leftShapeCx, verticalCenter, radius, leftShape);
-	drawPartitionedShape(rightShapeCx, verticalCenter, radius, rightShape);
+    shapes.forEach((shapeData, index) => {
+        const shapeCenterX = currentX + radius;
+        drawPartitionedShape(shapeCenterX, verticalCenter, radius, shapeData);
+        currentX += shapeDiameter;
 
-	canvas.drawText({
-		x: middleX,
-		y: verticalCenter,
-		text: operator,
-		anchor: "middle",
-		dominantBaseline: "middle",
-		fontPx: 48,
-		fontWeight: theme.font.weight.bold,
-		fill: theme.colors.textSecondary,
-	});
+        if (operators && index < operators.length) {
+            const operator = operators[index]!;
+            const operatorCenterX = currentX + operatorWidth / 2;
+            canvas.drawText({
+                x: operatorCenterX,
+                y: verticalCenter,
+                text: operator,
+                anchor: "middle",
+                dominantBaseline: "middle",
+                fontPx: 48,
+                fontWeight: theme.font.weight.bold,
+                fill: theme.colors.textSecondary,
+            });
+            currentX += operatorWidth;
+        }
+    });
 
 	const { svgBody, vbMinX, vbMinY, width: finalWidth, height: finalHeight } = canvas.finalize(PADDING);
 	return `<svg width="${finalWidth}" height="${finalHeight}" viewBox="${vbMinX} ${vbMinY} ${finalWidth} ${finalHeight}" xmlns="http://www.w3.org/2000/svg" font-family="${theme.font.family.sans}">${svgBody}</svg>`;
