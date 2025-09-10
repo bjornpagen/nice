@@ -1,8 +1,8 @@
 import { z } from "zod" // NEW: Import z for Zod schema definition
-import { mathCoreCollection } from "@/lib/widget-collections/math-core"
-import { scienceCollection } from "@/lib/widget-collections/science"
-import { simpleVisualCollection } from "@/lib/widget-collections/simple-visual"
-import { fourthGradeMathCollection } from "@/lib/widget-collections/fourth-grade-math"
+import { mathCoreCollection } from "./math-core"
+import { scienceCollection } from "./science"
+import { simpleVisualCollection } from "./simple-visual"
+import { fourthGradeMathCollection } from "./fourth-grade-math"
 
 export const widgetCollections = {
 	[mathCoreCollection.name]: mathCoreCollection,

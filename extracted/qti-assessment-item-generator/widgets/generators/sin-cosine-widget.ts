@@ -1,14 +1,14 @@
 import { z } from "zod"
 
-import type { WidgetGenerator } from "@/lib/widgets/types"
+import type { WidgetGenerator } from "../types"
 
-import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
-import { createAxisOptionsSchema, createPlotPointSchema, renderPoints } from "@/lib/widgets/utils/canvas-utils"
-import { PADDING, TICK_LABEL_FONT_PX, X_AXIS_MIN_LABEL_PADDING_PX } from "@/lib/widgets/utils/constants"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { selectAxisLabels } from "@/lib/widgets/utils/layout"
-import { theme } from "@/lib/widgets/utils/theme"
-import { buildTicks } from "@/lib/widgets/utils/ticks"
+import { CanvasImpl } from "../../utils/canvas-impl"
+import { createAxisOptionsSchema, createPlotPointSchema, renderPoints } from "../../utils/canvas-utils"
+import { PADDING, TICK_LABEL_FONT_PX, X_AXIS_MIN_LABEL_PADDING_PX } from "../../utils/constants"
+import { CSS_COLOR_PATTERN } from "../../utils/css-color"
+import { selectAxisLabels } from "../../utils/layout"
+import { theme } from "../../utils/theme"
+import { buildTicks } from "../../utils/ticks"
 
 // Factory functions to prevent Zod schema reuse issues ($ref)
 const createPlotConfigSchema = () =>

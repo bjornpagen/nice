@@ -1,10 +1,10 @@
 import { z } from "zod"
-import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
-import { PADDING } from "@/lib/widgets/utils/constants"
-import { theme } from "@/lib/widgets/utils/theme"
-import { buildTicks } from "@/lib/widgets/utils/ticks"
-import { selectAxisLabels } from "@/lib/widgets/utils/layout"
+import type { WidgetGenerator } from "../types"
+import { CanvasImpl } from "../../utils/canvas-impl"
+import { PADDING } from "../../utils/constants"
+import { theme } from "../../utils/theme"
+import { buildTicks } from "../../utils/ticks"
+import { selectAxisLabels } from "../../utils/layout"
 
 // strict schema with no nullables or fallbacks
 export const NumberLineForOppositesPropsSchema = z

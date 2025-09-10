@@ -1,4 +1,4 @@
-import { typedSchemas } from "@/lib/widgets/generators"
+import { typedSchemas } from "../widgets/registry"
 
 /**
  * Calculates the greatest common divisor (GCD) of two numbers using the Euclidean algorithm.

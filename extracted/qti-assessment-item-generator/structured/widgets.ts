@@ -3,6 +3,7 @@ import type { AnyInteraction } from "../compiler/schemas"
 import type { ImageContext } from "./perseus-image-resolver"
 import { type WidgetCollectionName, widgetCollections } from "../widgets/collections"
 import { allWidgetSchemas } from "../widgets/registry"
+
 export function createWidgetContentPrompt(
 	perseusJson: string,
 	assessmentShell: unknown,

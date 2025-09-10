@@ -1,9 +1,9 @@
 import { z } from "zod"
-import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
-import { PADDING } from "@/lib/widgets/utils/constants"
-import { theme } from "@/lib/widgets/utils/theme"
-import { selectAxisLabels } from "@/lib/widgets/utils/layout"
+import type { WidgetGenerator } from "../types"
+import { CanvasImpl } from "../../utils/canvas-impl"
+import { PADDING } from "../../utils/constants"
+import { theme } from "../../utils/theme"
+import { selectAxisLabels } from "../../utils/layout"
 
 export const NumberLineWithFractionGroupsPropsSchema = z
 	.object({

@@ -1,13 +1,13 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
-import { createAxisOptionsSchema, createPlotPointSchema, renderPoints, createLineSchema, renderLines } from "@/lib/widgets/utils/canvas-utils"
-import { PADDING } from "@/lib/widgets/utils/constants"
-import { setupCoordinatePlaneV2 } from "@/lib/widgets/utils/coordinate-plane-v2"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { theme } from "@/lib/widgets/utils/theme"
+import type { WidgetGenerator } from "../types"
+import { CanvasImpl } from "../../utils/canvas-impl"
+import { createAxisOptionsSchema, createPlotPointSchema, renderPoints, createLineSchema, renderLines } from "../../utils/canvas-utils"
+import { PADDING } from "../../utils/constants"
+import { setupCoordinatePlaneV2 } from "../../utils/coordinate-plane-v2"
+import { CSS_COLOR_PATTERN } from "../../utils/css-color"
+import { theme } from "../../utils/theme"
 
 export const ErrInvalidPolygon = errors.new("polygon must have at least 3 vertices")
 

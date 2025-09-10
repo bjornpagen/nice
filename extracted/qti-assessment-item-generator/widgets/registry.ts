@@ -1,5 +1,4 @@
-import * as errors from "@superbuilders/errors"
-import * as logger from "@superbuilders/slog"
+
 import { z } from "zod"
 
 // Import individual schemas and keep their generators defined in their own files
@@ -25,6 +24,9 @@ import {
     CompositeShapeDiagramPropsSchema
 } from "./generators/composite-shape-diagram"
 import { ConceptualGraphPropsSchema } from "./generators/conceptual-graph"
+import {
+    ConstraintGeometryDiagramPropsSchema
+} from "./generators/constraint-geometry-diagram"
 import {
     CoordinatePlaneComprehensivePropsSchema
 } from "./generators/coordinate-plane-comprehensive"
@@ -145,6 +147,7 @@ export const allWidgetSchemas = {
     fractionMultiplicationModel: FractionMultiplicationModelPropsSchema,
     compositeShapeDiagram: CompositeShapeDiagramPropsSchema,
     conceptualGraph: ConceptualGraphPropsSchema,
+    constraintGeometryDiagram: ConstraintGeometryDiagramPropsSchema,
     coordinatePlane: CoordinatePlaneComprehensivePropsSchema,
     distanceFormulaGraph: DistanceFormulaGraphPropsSchema,
     divergentBarChart: DivergentBarChartPropsSchema,
@@ -216,6 +219,91 @@ export const allWidgetSchemas = {
 
 export const typedSchemas = allWidgetSchemas
 
+// Re-export all individual schemas for use in collections
+export {
+    ThreeDIntersectionDiagramPropsSchema,
+    AbsoluteValueNumberLinePropsSchema,
+    AdditionWithRegroupingPropsSchema,
+    AngleDiagramPropsSchema,
+    AreaGraphPropsSchema,
+    AreaModelMultiplicationPropsSchema,
+    BarChartPropsSchema,
+    BoxGridPropsSchema,
+    BoxPlotPropsSchema,
+    CircleDiagramPropsSchema,
+    CompositeShapeDiagramPropsSchema,
+    ConceptualGraphPropsSchema,
+    ConstraintGeometryDiagramPropsSchema,
+    CoordinatePlaneComprehensivePropsSchema,
+    DataTablePropsSchema,
+    DiscreteObjectRatioDiagramPropsSchema,
+    DistanceFormulaGraphPropsSchema,
+    DivergentBarChartPropsSchema,
+    DivisionModelDiagramPropsSchema,
+    DotPlotPropsSchema,
+    DoubleNumberLinePropsSchema,
+    EmojiImagePropsSchema,
+    EquivalentFractionModelPropsSchema,
+    FactorizationDiagramPropsSchema,
+    FigureComparisonDiagramPropsSchema,
+    FractionFrequencyPlotPropsSchema,
+    FractionMultiplicationModelPropsSchema,
+    FractionNumberLinePropsSchema,
+    FractionModelDiagramPropsSchema,
+    FreeBodyDiagramPropsSchema,
+    FunctionPlotGraphPropsSchema,
+    GeometricSolidDiagramPropsSchema,
+    HangerDiagramPropsSchema,
+    HistogramPropsSchema,
+    InequalityNumberLinePropsSchema,
+    KeelingCurvePropsSchema,
+    LineEquationGraphPropsSchema,
+    LineGraphPropsSchema,
+    NPolygonPropsSchema,
+    PatternDiagramPropsSchema,
+    NumberLinePropsSchema,
+    NumberLineForOppositesPropsSchema,
+    NumberLineWithActionPropsSchema,
+    NumberLineWithFractionGroupsPropsSchema,
+    NumberSetDiagramPropsSchema,
+    ParabolaGraphPropsSchema,
+    ParallelogramTrapezoidDiagramPropsSchema,
+    PartitionedShapePropsSchema,
+    PentagonIntersectionDiagramPropsSchema,
+    PeriodicTableWidgetPropsSchema,
+    PieChartWidgetPropsSchema,
+    PictographPropsSchema,
+    PointPlotGraphPropsSchema,
+    PolygonGraphPropsSchema,
+    PolyhedronDiagramPropsSchema,
+    PolyhedronNetDiagramPropsSchema,
+    PopulationBarChartPropsSchema,
+    PopulationChangeEventGraphPropsSchema,
+    ProbabilitySpinnerPropsSchema,
+    ProtractorAngleDiagramPropsSchema,
+    RadiallyConstrainedAngleDiagramPropsSchema,
+    PythagoreanProofDiagramPropsSchema,
+    QuantityFractionalDiagramPropsSchema,
+    RatioBoxDiagramPropsSchema,
+    RectangularFrameDiagramPropsSchema,
+    ScaleCopiesSliderPropsSchema,
+    ScatterPlotPropsSchema,
+    ShapeTransformationGraphPropsSchema,
+    SimpleArrowPropsSchema,
+    SinCosineWidgetPropsSchema,
+    StackedItemsDiagramPropsSchema,
+    SubtractionWithRegroupingPropsSchema,
+    TapeDiagramPropsSchema,
+    TransformationDiagramPropsSchema,
+    TreeDiagramPropsSchema,
+    TriangleDiagramPropsSchema,
+    UnitBlockDiagramPropsSchema,
+    UrlImageWidgetPropsSchema,
+    VectorDiagramPropsSchema,
+    VennDiagramPropsSchema,
+    VerticalArithmeticSetupPropsSchema
+}
+
 const widgetSchemasWithoutSpecialUnions = [
     typedSchemas.threeDIntersectionDiagram,
     typedSchemas.absoluteValueNumberLine,
@@ -230,6 +318,7 @@ const widgetSchemasWithoutSpecialUnions = [
     typedSchemas.fractionMultiplicationModel,
     typedSchemas.compositeShapeDiagram,
     typedSchemas.conceptualGraph,
+    typedSchemas.constraintGeometryDiagram,
     typedSchemas.coordinatePlane,
     typedSchemas.distanceFormulaGraph,
     typedSchemas.divergentBarChart,

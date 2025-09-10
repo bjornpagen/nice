@@ -1,6 +1,6 @@
 import { z } from "zod"
-import { type WidgetCollectionName, widgetCollections } from "@/lib/widget-collections"
-import { allWidgetSchemas } from "@/lib/widgets/generators"
+import { type WidgetCollectionName, widgetCollections } from "../widgets/collections"
+import { allWidgetSchemas } from "../widgets/registry"
 
 function createWidgetMappingSchema(slotNames: string[], allowedWidgetKeys: readonly string[]) {
 	const shape: Record<string, z.ZodType<string>> = {}

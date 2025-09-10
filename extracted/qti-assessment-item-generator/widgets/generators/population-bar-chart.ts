@@ -1,13 +1,13 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
-import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
-import { setupCoordinatePlaneBaseV2 } from "@/lib/widgets/utils/coordinate-plane-utils"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { theme } from "@/lib/widgets/utils/theme"
+import type { WidgetGenerator } from "../types"
+import { CanvasImpl } from "../../utils/canvas-impl"
+import { AXIS_VIEWBOX_PADDING } from "../../utils/constants"
+import { setupCoordinatePlaneBaseV2 } from "../../utils/coordinate-plane-utils"
+import { CSS_COLOR_PATTERN } from "../../utils/css-color"
+import { abbreviateMonth } from "../../utils/labels"
+import { theme } from "../../utils/theme"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 

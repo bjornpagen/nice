@@ -22,7 +22,7 @@ import {
 	TapeDiagramPropsSchema,
 	VectorDiagramPropsSchema,
 	VerticalArithmeticSetupPropsSchema
-} from "@/lib/widgets/generators"
+} from "../registry"
 
 export const fourthGradeMathCollection = {
 	name: "fourth-grade-math",

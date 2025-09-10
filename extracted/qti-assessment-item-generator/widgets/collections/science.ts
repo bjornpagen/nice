@@ -12,7 +12,7 @@ import {
 	PopulationChangeEventGraphPropsSchema,
 	ScatterPlotPropsSchema,
 	FreeBodyDiagramPropsSchema
-} from "@/lib/widgets/generators"
+} from "../registry"
 import { simpleVisualCollection } from "./simple-visual"
 
 export const scienceCollection = {

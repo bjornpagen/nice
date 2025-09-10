@@ -1,7 +1,7 @@
 import { z } from "zod"
-import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
-import { theme } from "@/lib/widgets/utils/theme"
+import type { WidgetGenerator } from "../types"
+import { CanvasImpl } from "../../utils/canvas-impl"
+import { theme } from "../../utils/theme"
 
 const PADDING = 20
 

@@ -4,7 +4,7 @@ import {
 	PeriodicTableWidgetPropsSchema,
 	UrlImageWidgetPropsSchema,
 	VennDiagramPropsSchema
-} from "@/lib/widgets/generators"
+} from "../registry"
 
 export const simpleVisualCollection = {
 	name: "simple-visual",

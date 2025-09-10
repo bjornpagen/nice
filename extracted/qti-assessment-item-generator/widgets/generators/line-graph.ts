@@ -1,15 +1,15 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
-import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
-import { setupCoordinatePlaneBaseV2 } from "@/lib/widgets/utils/coordinate-plane-utils"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { estimateWrappedTextDimensions } from "@/lib/widgets/utils/text" // ADD THIS IMPORT
-import { theme } from "@/lib/widgets/utils/theme"
-import { buildTicks } from "@/lib/widgets/utils/ticks" // ADD THIS IMPORT
+import type { WidgetGenerator } from "../types"
+import { CanvasImpl } from "../../utils/canvas-impl"
+import { AXIS_VIEWBOX_PADDING } from "../../utils/constants"
+import { setupCoordinatePlaneBaseV2 } from "../../utils/coordinate-plane-utils"
+import { CSS_COLOR_PATTERN } from "../../utils/css-color"
+import { abbreviateMonth } from "../../utils/labels"
+import { estimateWrappedTextDimensions } from "../../utils/text" // ADD THIS IMPORT
+import { theme } from "../../utils/theme"
+import { buildTicks } from "../../utils/ticks" // ADD THIS IMPORT
 
 export const ErrMismatchedDataLength = errors.new("series data must have the same length as x-axis categories")
 

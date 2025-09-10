@@ -1,5 +1,5 @@
 import { z } from "zod"
-import type { WidgetGenerator } from "@/lib/widgets/types"
+import type { WidgetGenerator } from "../types"
 
 function createEmojiSchema() {
 	return z

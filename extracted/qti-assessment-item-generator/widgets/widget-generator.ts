@@ -114,7 +114,6 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateDivergentBarChart(widget)
 		case "distanceFormulaGraph":
 			return await generateDistanceFormulaGraph(widget)
-
 		case "functionPlotGraph":
 			return await generateFunctionPlotGraph(widget)
 		case "keelingCurve":

@@ -1,10 +1,10 @@
 import { z } from "zod"
-import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
-import { createAxisOptionsSchema, createPlotPointSchema, renderPoints } from "@/lib/widgets/utils/canvas-utils"
-import { PADDING } from "@/lib/widgets/utils/constants"
-import { setupCoordinatePlaneV2 } from "@/lib/widgets/utils/coordinate-plane-v2"
-import { theme } from "@/lib/widgets/utils/theme"
+import type { WidgetGenerator } from "../types"
+import { CanvasImpl } from "../../utils/canvas-impl"
+import { createAxisOptionsSchema, createPlotPointSchema, renderPoints } from "../../utils/canvas-utils"
+import { PADDING } from "../../utils/constants"
+import { setupCoordinatePlaneV2 } from "../../utils/coordinate-plane-v2"
+import { theme } from "../../utils/theme"
 
 export const PointPlotGraphPropsSchema = z
 	.object({

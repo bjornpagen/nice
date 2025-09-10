@@ -1,6 +1,7 @@
 import { caretBanPromptSection } from "./caret"
 import type { ImageContext } from "./perseus-image-resolver"
 import type { allWidgetSchemas } from "../widgets/registry"
+
 export function createInteractionContentPrompt(
 	perseusJson: string,
 	assessmentShell: unknown,

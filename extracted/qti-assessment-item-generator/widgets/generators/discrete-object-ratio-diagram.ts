@@ -1,11 +1,11 @@
 import { z } from "zod"
-import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
-import { PADDING } from "@/lib/widgets/utils/constants"
-import { abbreviateMonth } from "@/lib/widgets/utils/labels"
+import type { WidgetGenerator } from "../types"
+import { CanvasImpl } from "../../utils/canvas-impl"
+import { PADDING } from "../../utils/constants"
+import { abbreviateMonth } from "../../utils/labels"
 
-import { theme } from "@/lib/widgets/utils/theme"
-import { drawChartTitle } from "@/lib/widgets/utils/chart-layout-utils"
+import { theme } from "../../utils/theme"
+import { drawChartTitle } from "../../utils/chart-layout-utils"
 
 // Defines a type of object to be rendered
 const ObjectTypeSchema = z

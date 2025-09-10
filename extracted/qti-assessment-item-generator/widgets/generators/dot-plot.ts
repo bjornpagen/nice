@@ -1,14 +1,14 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
-import { PADDING } from "@/lib/widgets/utils/constants"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { selectAxisLabels, calculateXAxisLayout } from "@/lib/widgets/utils/layout"
-import { theme } from "@/lib/widgets/utils/theme"
-import { buildTicks } from "@/lib/widgets/utils/ticks"
+import type { WidgetGenerator } from "../types"
+import { CanvasImpl } from "../../utils/canvas-impl"
+import { PADDING } from "../../utils/constants"
+import { CSS_COLOR_PATTERN } from "../../utils/css-color"
+import { abbreviateMonth } from "../../utils/labels"
+import { selectAxisLabels, calculateXAxisLayout } from "../../utils/layout"
+import { theme } from "../../utils/theme"
+import { buildTicks } from "../../utils/ticks"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
 

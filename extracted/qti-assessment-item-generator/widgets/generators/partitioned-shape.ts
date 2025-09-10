@@ -1,12 +1,12 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
-import { PADDING } from "@/lib/widgets/utils/constants"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { Path2D } from "@/lib/widgets/utils/path-builder"
-import { theme } from "@/lib/widgets/utils/theme"
+import type { WidgetGenerator } from "../types"
+import { CanvasImpl } from "../../utils/canvas-impl"
+import { PADDING } from "../../utils/constants"
+import { CSS_COLOR_PATTERN } from "../../utils/css-color"
+import { Path2D } from "../../utils/path-builder"
+import { theme } from "../../utils/theme"
 
 export const ErrInvalidPartitionGeometry = errors.new("invalid partition geometry")
 

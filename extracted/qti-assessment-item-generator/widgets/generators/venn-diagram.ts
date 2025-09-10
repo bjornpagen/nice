@@ -1,11 +1,11 @@
 import { z } from "zod"
-import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
-import { PADDING } from "@/lib/widgets/utils/constants"
-import { CSS_COLOR_PATTERN } from "@/lib/widgets/utils/css-color"
-import { abbreviateMonth } from "@/lib/widgets/utils/labels"
-import { theme } from "@/lib/widgets/utils/theme"
-import { estimateWrappedTextDimensions } from "@/lib/widgets/utils/text"
+import type { WidgetGenerator } from "../types"
+import { CanvasImpl } from "../../utils/canvas-impl"
+import { PADDING } from "../../utils/constants"
+import { CSS_COLOR_PATTERN } from "../../utils/css-color"
+import { abbreviateMonth } from "../../utils/labels"
+import { theme } from "../../utils/theme"
+import { estimateWrappedTextDimensions } from "../../utils/text"
 
 function createCircleSchema() {
 	return z

@@ -1,6 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { escapeXmlAttribute } from "@/lib/xml-utils"
+import { escapeXmlAttribute } from "../utils/xml-utils"
 import { renderBlockContent, renderInlineContent } from "./content-renderer"
 import type { AnyInteraction } from "./schemas"
 

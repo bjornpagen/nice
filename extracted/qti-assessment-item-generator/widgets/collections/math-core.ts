@@ -51,7 +51,7 @@ import {
 	VennDiagramPropsSchema,
 	VerticalArithmeticSetupPropsSchema,
 	NPolygonPropsSchema
-} from "@/lib/widgets/generators"
+} from "../registry"
 
 export const mathCoreCollection = {
 	name: "math-core",

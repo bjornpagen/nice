@@ -1,11 +1,11 @@
 import { z } from "zod"
-import { renderInlineContent } from "@/lib/qti-generation/content-renderer"
+import { renderInlineContent } from "../../compiler/content-renderer"
 // Import the SAFE_IDENTIFIER_REGEX for consistent enforcement
-import { SAFE_IDENTIFIER_REGEX } from "@/lib/qti-generation/qti-constants"
-import type { WidgetGenerator } from "@/lib/widgets/types"
-import { MATHML_INNER_PATTERN } from "@/lib/widgets/utils/mathml"
-import { theme } from "@/lib/widgets/utils/theme"
-import { escapeXmlAttribute, sanitizeXmlAttributeValue } from "@/lib/xml-utils"
+import { SAFE_IDENTIFIER_REGEX } from "../../compiler/qti-constants"
+import type { WidgetGenerator } from "../types"
+import { MATHML_INNER_PATTERN } from "../../utils/mathml"
+import { theme } from "../../utils/theme"
+import { escapeXmlAttribute, sanitizeXmlAttributeValue } from "../../utils/xml-utils"
 
 // Factory function to create inline content schema - avoids $ref in OpenAI JSON schema
 function createInlineContentSchema() {

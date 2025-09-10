@@ -1,11 +1,11 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import type { WidgetGenerator } from "@/lib/widgets/types"
-import { CanvasImpl } from "@/lib/widgets/utils/canvas-impl"
-import { AXIS_VIEWBOX_PADDING } from "@/lib/widgets/utils/constants"
-import { setupCoordinatePlaneBaseV2 } from "@/lib/widgets/utils/coordinate-plane-utils"
-import { theme } from "@/lib/widgets/utils/theme"
+import type { WidgetGenerator } from "../types"
+import { CanvasImpl } from "../../utils/canvas-impl"
+import { AXIS_VIEWBOX_PADDING } from "../../utils/constants"
+import { setupCoordinatePlaneBaseV2 } from "../../utils/coordinate-plane-utils"
+import { theme } from "../../utils/theme"
 
 const Bin = z
 	.object({
