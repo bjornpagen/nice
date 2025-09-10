@@ -64,6 +64,21 @@ const ensureForceLabel = (label: string): string => {
  * into proper physics notation (F_subscript) using MathML.
  */
 export const generateFreeBodyDiagram: WidgetGenerator<typeof FreeBodyDiagramPropsSchema> = async (props) => {
+	// Normalize string "null" or whitespace-only labels to actual null (no arrow)
+	const normalize = (val: string | null): string | null => {
+		if (val === null) return null
+		const trimmed = val.trim()
+		if (trimmed === "" || trimmed.toLowerCase() === "null") return null
+		return val
+	}
+
+	const normalizedProps = {
+		...props,
+		top: normalize(props.top),
+		bottom: normalize(props.bottom),
+		left: normalize(props.left),
+		right: normalize(props.right)
+	}
 	const width = 700
 	const height = 700
 
@@ -81,7 +96,7 @@ export const generateFreeBodyDiagram: WidgetGenerator<typeof FreeBodyDiagramProp
 	})
 
 	// Top Arrow
-	if (props.top !== null) {
+	if (normalizedProps.top !== null) {
 		canvas.drawLine(349.45, 210.71, 349.69, 51.81, {
 			stroke: theme.colors.black,
 			strokeWidth: 8
@@ -94,15 +109,15 @@ export const generateFreeBodyDiagram: WidgetGenerator<typeof FreeBodyDiagramProp
 			],
 			{ fill: theme.colors.black, stroke: theme.colors.black, strokeWidth: 8 }
 		)
-		if (props.top) {
+		if (normalizedProps.top) {
 			// Position label to the right of the arrow, left-aligned to prevent overflow
-			const label = ensureForceLabel(props.top)
+			const label = ensureForceLabel(normalizedProps.top)
 			canvas.drawText({ x: 380, y: 100, text: label, anchor: "start", dominantBaseline: "middle" })
 		}
 	}
 
 	// Bottom Arrow
-	if (props.bottom !== null) {
+	if (normalizedProps.bottom !== null) {
 		canvas.drawLine(349.45, 487.56, 349.45, 648.19, {
 			stroke: theme.colors.black,
 			strokeWidth: 8
@@ -115,15 +130,15 @@ export const generateFreeBodyDiagram: WidgetGenerator<typeof FreeBodyDiagramProp
 			],
 			{ fill: theme.colors.black, stroke: theme.colors.black, strokeWidth: 8 }
 		)
-		if (props.bottom) {
+		if (normalizedProps.bottom) {
 			// Position label to the right of the arrow, left-aligned to prevent overflow
-			const label = ensureForceLabel(props.bottom)
+			const label = ensureForceLabel(normalizedProps.bottom)
 			canvas.drawText({ x: 380, y: 600, text: label, anchor: "start", dominantBaseline: "middle" })
 		}
 	}
 
 	// Left Arrow
-	if (props.left !== null) {
+	if (normalizedProps.left !== null) {
 		canvas.drawLine(207.38, 349.13, 52.61, 348.48, {
 			stroke: theme.colors.black,
 			strokeWidth: 8
@@ -136,15 +151,15 @@ export const generateFreeBodyDiagram: WidgetGenerator<typeof FreeBodyDiagramProp
 			],
 			{ fill: theme.colors.black, stroke: theme.colors.black, strokeWidth: 8 }
 		)
-		if (props.left) {
+		if (normalizedProps.left) {
 			// Position label above the arrow, centered but close to arrow tip
-			const label = ensureForceLabel(props.left)
+			const label = ensureForceLabel(normalizedProps.left)
 			canvas.drawText({ x: 100, y: 320, text: label, anchor: "middle", dominantBaseline: "baseline" })
 		}
 	}
 
 	// Right Arrow
-	if (props.right !== null) {
+	if (normalizedProps.right !== null) {
 		canvas.drawLine(492.61, 349.13, 647.38, 348.48, {
 			stroke: theme.colors.black,
 			strokeWidth: 8
@@ -157,9 +172,9 @@ export const generateFreeBodyDiagram: WidgetGenerator<typeof FreeBodyDiagramProp
 			],
 			{ fill: theme.colors.black, stroke: theme.colors.black, strokeWidth: 8 }
 		)
-		if (props.right) {
+		if (normalizedProps.right) {
 			// Position label above the arrow; wrap if it would clash with the box
-			const label = ensureForceLabel(props.right)
+			const label = ensureForceLabel(normalizedProps.right)
 			const fontPx = 24
 			const averageCharWidth = fontPx * 0.6 // matches CanvasImpl heuristic
 			const estimatedWidth = label.length * averageCharWidth

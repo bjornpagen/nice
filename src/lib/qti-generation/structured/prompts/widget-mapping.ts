@@ -135,6 +135,12 @@ Correct mapping when graph widgets are available:
 
 **CRITICAL RULE**: You MUST choose a widget type from the list (or "WIDGET_NOT_FOUND") for every slot. Do not refuse or omit any slot.
 
+**STRICT NAMING-BASED MAPPING RULES (DO NOT VIOLATE):**
+- For science collection free-body-diagram conversions, any slot whose name starts with \`fbd_\` MUST be mapped to \`freeBodyDiagram\`.
+  - Specifically: \`fbd_choice_a\`, \`fbd_choice_b\`, \`fbd_choice_c\` → \`freeBodyDiagram\`.
+  - NEVER return \`WIDGET_NOT_FOUND\` for these slots.
+- Choice-level visual widgets declared for multiple choice interactions (e.g., names ending with \`_choice_a\`, \`_choice_b\`, \`_choice_c\`) MUST be mapped to a concrete widget type, not \`WIDGET_NOT_FOUND\`. Inspect the scenario and choose the correct type from the allowed list.
+
 Widget Type Options:
 ${[...collection.widgetTypeKeys].sort().join("\n")}`
 
@@ -158,7 +164,7 @@ ${assessmentBody}
   Available Widget Types and Descriptions:
 ${buildWidgetTypeDescriptions()}
 
-Your response must be a JSON object with a single key "widget_mapping", mapping every slot name from the list below to its type. If no suitable type is found, you MUST use the string "WIDGET_NOT_FOUND".
+Your response must be a JSON object with a single key "widget_mapping", mapping every slot name from the list below to its type. If no suitable type is found, you MUST use the string "WIDGET_NOT_FOUND". However, for FBD slots (names starting with \`fbd_\`), you MUST map to \`freeBodyDiagram\` and MUST NOT use \`WIDGET_NOT_FOUND\`.
 
 Slot Names to Map:
 ${slotNames.join("\n")}`

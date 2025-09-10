@@ -1406,6 +1406,50 @@ When Perseus contains interactive widgets that require drawing, plotting, or man
 \`\`\`
 **Critical:** All four widget slots are declared in the \`widgets\` array, but only \`coordinate_plane_empty\` and \`graph_choice\` appear in the body. The three choice widgets will be embedded in the interaction's choices.
 
+**Perseus Input with Free-Body Diagram label-image (FBD):**
+\`\`\`json
+{
+  "question": {
+    "content": "A birdhouse hangs from a branch. The birdhouse is at rest.\\n\\n[[☃ image 1]]\\n\\n**Complete the free body diagram by labeling the forces acting on the birdhouse.**\\n\\n[[☃ label-image 2]]"
+  }
+}
+\`\`\`
+
+**CORRECT (Convert to 3 FBD choice visuals + multiple choice interaction):**
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [{ "type": "text", "content": "A birdhouse hangs from a branch. The birdhouse is at rest." }] },
+    
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Which free-body diagram correctly labels the forces?" }] },
+    { "type": "blockSlot", "slotId": "fbd_choice" }
+  ],
+  "widgets": [
+    "fbd_choice_a",    // Incorrect labeling
+    "fbd_choice_b",    // Correct labeling
+    "fbd_choice_c"     // Incorrect labeling
+  ],
+  "interactions": ["fbd_choice"],  // Multiple choice referencing the 3 FBD widgets
+  "responseDeclarations": [{
+    "identifier": "RESPONSE",
+    "cardinality": "single",
+    "baseType": "identifier",
+    "correct": "B"
+  }]
+}
+\`\`\`
+**Implementation notes for FBD conversion:**
+- Generate the FBD choice visuals using the \`freeBodyDiagram\` widget (top/bottom/left/right arrows). Example: tension up, gravity down; omit irrelevant arrows.
+- The three choice visuals (A/B/C) must reflect plausible alternatives; only one is correct.
+- Do NOT include answers or labels in the body text; labels appear only inside the FBD visuals used by the choices.
+- Declare the three choice widget slots in \`widgets\` but do not place them in the body; only \`fbd_choice\` appears in the body.
+ - Required slot-to-widget mapping for shot 2:
+   - \`fbd_choice_a\` → \`freeBodyDiagram\`
+   - \`fbd_choice_b\` → \`freeBodyDiagram\`
+   - \`fbd_choice_c\` → \`freeBodyDiagram\`
+ - If any \`fbd_choice_*\` is not mapped to \`freeBodyDiagram\`, the mapping pass MUST be considered a failure.
+**Critical:** All four widget slots are declared in the \`widgets\` array, but only \`coordinate_plane_empty\` and \`graph_choice\` appear in the body. The three choice widgets will be embedded in the interaction's choices.
+
 **Choice-Level Table Visuals — Reserve Table Widgets for Choices (Do NOT render as paragraphs):**
 
 **WRONG (shell shape incorrect — missing predeclared per-choice table widgets in \`widgets\`; tables implied in choices but not reserved here):**

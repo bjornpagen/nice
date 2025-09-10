@@ -32,7 +32,6 @@ import {
 	generateLineGraph,
 	generateNPolygon,
 	generateNumberLine,
-	generatePatternDiagram,
 	generateNumberLineForOpposites,
 	generateNumberLineWithAction,
 	generateNumberLineWithFractionGroups,
@@ -40,6 +39,7 @@ import {
 	generateParabolaGraph,
 	generateParallelogramTrapezoidDiagram,
 	generatePartitionedShape,
+	generatePatternDiagram,
 	generatePentagonIntersectionDiagram,
 	generatePeriodicTable,
 	generatePictograph,
@@ -72,12 +72,13 @@ import {
 import { generateAdditionWithRegrouping } from "@/lib/widgets/generators/addition-with-regrouping"
 import { generateAreaModelMultiplication } from "@/lib/widgets/generators/area-model-multiplication"
 import { generateDivisionModelDiagram } from "@/lib/widgets/generators/division-model-diagram"
-import { generateSingleFractionalModelDiagram } from "@/lib/widgets/generators/single-fractional-model-diagram"
-import { generateFractionMultiplicationModel } from "@/lib/widgets/generators/fraction-multiplication-model"
 import { generateEquivalentFractionModel } from "@/lib/widgets/generators/equivalent-fraction-model"
 import { generateFactorizationDiagram } from "@/lib/widgets/generators/factorization-diagram"
 import { generateFractionFrequencyPlot } from "@/lib/widgets/generators/fraction-frequency-plot"
+import { generateFractionMultiplicationModel } from "@/lib/widgets/generators/fraction-multiplication-model"
+import { generateFreeBodyDiagram } from "@/lib/widgets/generators/free-body-diagram"
 import { generateSimpleArrow } from "@/lib/widgets/generators/simple-arrow"
+import { generateSingleFractionalModelDiagram } from "@/lib/widgets/generators/single-fractional-model-diagram"
 import { generateVectorDiagram } from "@/lib/widgets/generators/vector-diagram"
 
 export async function generateWidget(widget: Widget): Promise<string> {
@@ -235,6 +236,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateSimpleArrow(widget)
 		case "vectorDiagram":
 			return await generateVectorDiagram(widget)
+		case "freeBodyDiagram":
+			return await generateFreeBodyDiagram(widget)
 		default:
 			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
