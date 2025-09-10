@@ -41,7 +41,7 @@ We FULLY support the following QTI interaction types:
 **CRITICAL: Perseus \`sorter\` widgets should be converted to QTI \`orderInteraction\`.** This is a fully supported interaction type where students drag items to arrange them in the correct sequence.
 
 **⚠️ CRITICAL: CHEMISTRY NOTATION MUST BE MATHML — NEVER PLAIN TEXT ⚠️**
-All chemistry notation in prompts, choices, and feedback MUST use MathML inline items, not plain text or HTML <sub>/<sup>. This is especially important for \`inlineChoiceInteraction\` (dropdowns), where each choice's \`content\` is an array of inline items per the schemas in \`@/lib/qti-generation/schemas.ts\`.
+All chemistry notation in prompts, choices, and feedback MUST use MathML inline items, not plain text or HTML <sub>/<sup>. This is especially important for \`inlineChoiceInteraction\` (dropdowns), where each choice's \`content\` is an array of inline items per the QTI interaction schemas.
 
 - Formulas/ions: Use <msub> for subscripts and <msup> for charges.
   - Example ions: Ca<sup>2+</sup> → <msup><mi>Ca</mi><mrow><mn>2</mn><mo>+</mo></mrow></msup>
