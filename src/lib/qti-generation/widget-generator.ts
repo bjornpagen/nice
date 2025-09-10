@@ -71,14 +71,17 @@ import {
 } from "@/lib/widgets/generators"
 import { generateAdditionWithRegrouping } from "@/lib/widgets/generators/addition-with-regrouping"
 import { generateAreaModelMultiplication } from "@/lib/widgets/generators/area-model-multiplication"
+import { generateQuantityFractionalDiagram } from "@/lib/widgets/generators/quantity-fractional-diagram"
 import { generateDivisionModelDiagram } from "@/lib/widgets/generators/division-model-diagram"
+import { generateProtractorAngleDiagram } from "@/lib/widgets/generators/protractor-angle-diagram"
+import { generateRadiallyConstrainedAngleDiagram } from "@/lib/widgets/generators/radially-constrained-angle-diagram"
+import { generateSinCosineWidget } from "@/lib/widgets/generators/sin-cosine-widget"
+import { generateFractionMultiplicationModel } from "@/lib/widgets/generators/fraction-multiplication-model"
 import { generateEquivalentFractionModel } from "@/lib/widgets/generators/equivalent-fraction-model"
 import { generateFactorizationDiagram } from "@/lib/widgets/generators/factorization-diagram"
 import { generateFractionFrequencyPlot } from "@/lib/widgets/generators/fraction-frequency-plot"
-import { generateFractionMultiplicationModel } from "@/lib/widgets/generators/fraction-multiplication-model"
 import { generateFreeBodyDiagram } from "@/lib/widgets/generators/free-body-diagram"
 import { generateSimpleArrow } from "@/lib/widgets/generators/simple-arrow"
-import { generateSingleFractionalModelDiagram } from "@/lib/widgets/generators/single-fractional-model-diagram"
 import { generateVectorDiagram } from "@/lib/widgets/generators/vector-diagram"
 
 export async function generateWidget(widget: Widget): Promise<string> {
@@ -174,6 +177,10 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generatePolyhedronDiagram(widget)
 		case "probabilitySpinner":
 			return await generateProbabilitySpinner(widget)
+		case "protractorAngleDiagram":
+			return await generateProtractorAngleDiagram(widget)
+		case "radiallyConstrainedAngleDiagram":
+			return await generateRadiallyConstrainedAngleDiagram(widget)
 		case "polyhedronNetDiagram":
 			return await generatePolyhedronNetDiagram(widget)
 		case "pythagoreanProofDiagram":
@@ -186,8 +193,6 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateScaleCopiesSlider(widget)
 		case "scatterPlot":
 			return await generateScatterPlot(widget)
-		case "singleFractionalModelDiagram":
-			return await generateSingleFractionalModelDiagram(widget)
 		case "fractionMultiplicationModel":
 			return await generateFractionMultiplicationModel(widget)
 		case "stackedItemsDiagram":
@@ -228,16 +233,20 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateDivisionModelDiagram(widget)
 		case "factorizationDiagram":
 			return await generateFactorizationDiagram(widget)
+		case "freeBodyDiagram":
+			return await generateFreeBodyDiagram(widget)
 		case "equivalentFractionModel":
 			return await generateEquivalentFractionModel(widget)
 		case "additionWithRegrouping":
 			return await generateAdditionWithRegrouping(widget)
+		case "quantityFractionalDiagram":
+			return await generateQuantityFractionalDiagram(widget)
 		case "simpleArrow":
 			return await generateSimpleArrow(widget)
+		case "sinCosineWidget":
+			return await generateSinCosineWidget(widget)
 		case "vectorDiagram":
 			return await generateVectorDiagram(widget)
-		case "freeBodyDiagram":
-			return await generateFreeBodyDiagram(widget)
 		default:
 			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)

@@ -150,6 +150,10 @@ import {
 	generatePythagoreanProofDiagram,
 	PythagoreanProofDiagramPropsSchema
 } from "@/lib/widgets/generators/pythagorean-proof-diagram"
+import {
+	generateQuantityFractionalDiagram,
+	QuantityFractionalDiagramPropsSchema
+} from "@/lib/widgets/generators/quantity-fractional-diagram"
 import { generateRatioBoxDiagram, RatioBoxDiagramPropsSchema } from "@/lib/widgets/generators/ratio-box-diagram"
 import {
 	generateRectangularFrameDiagram,
@@ -163,10 +167,6 @@ import {
 } from "@/lib/widgets/generators/shape-transformation-graph"
 import { generateSimpleArrow, SimpleArrowPropsSchema } from "@/lib/widgets/generators/simple-arrow"
 import { generateSinCosineWidget, SinCosineWidgetPropsSchema } from "@/lib/widgets/generators/sin-cosine-widget"
-import {
-	generateSingleFractionalModelDiagram,
-	SingleFractionalModelDiagramPropsSchema
-} from "@/lib/widgets/generators/single-fractional-model-diagram"
 import {
 	generateStackedItemsDiagram,
 	StackedItemsDiagramPropsSchema
@@ -248,13 +248,13 @@ export const allWidgetSchemas = {
 	probabilitySpinner: ProbabilitySpinnerPropsSchema,
 	polyhedronNetDiagram: PolyhedronNetDiagramPropsSchema,
 	pythagoreanProofDiagram: PythagoreanProofDiagramPropsSchema,
+	quantityFractionalDiagram: QuantityFractionalDiagramPropsSchema,
 	ratioBoxDiagram: RatioBoxDiagramPropsSchema,
 	rectangularFrameDiagram: RectangularFrameDiagramPropsSchema,
 	scaleCopiesSlider: ScaleCopiesSliderPropsSchema,
 	simpleArrow: SimpleArrowPropsSchema,
 	sinCosineWidget: SinCosineWidgetPropsSchema,
 	scatterPlot: ScatterPlotPropsSchema,
-	singleFractionalModelDiagram: SingleFractionalModelDiagramPropsSchema,
 	stackedItemsDiagram: StackedItemsDiagramPropsSchema,
 	tapeDiagram: TapeDiagramPropsSchema,
 	transformationDiagram: TransformationDiagramPropsSchema,
@@ -335,13 +335,13 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.polyhedronDiagram,
 	typedSchemas.probabilitySpinner,
 	typedSchemas.pythagoreanProofDiagram,
+	typedSchemas.quantityFractionalDiagram,
 	typedSchemas.ratioBoxDiagram,
 	typedSchemas.rectangularFrameDiagram,
 	typedSchemas.scaleCopiesSlider,
 	typedSchemas.simpleArrow,
 	typedSchemas.sinCosineWidget,
 	typedSchemas.scatterPlot,
-	typedSchemas.singleFractionalModelDiagram,
 	typedSchemas.stackedItemsDiagram,
 	typedSchemas.tapeDiagram,
 	typedSchemas.transformationDiagram,
@@ -425,6 +425,7 @@ export {
 	PolyhedronNetDiagramPropsSchema,
 	ProbabilitySpinnerPropsSchema,
 	PythagoreanProofDiagramPropsSchema,
+	QuantityFractionalDiagramPropsSchema,
 	RatioBoxDiagramPropsSchema,
 	RectangularFrameDiagramPropsSchema,
 	ScaleCopiesSliderPropsSchema,
@@ -432,7 +433,6 @@ export {
 	SinCosineWidgetPropsSchema,
 	ScatterPlotPropsSchema,
 	ShapeTransformationGraphPropsSchema,
-	SingleFractionalModelDiagramPropsSchema,
 	StackedItemsDiagramPropsSchema,
 	TapeDiagramPropsSchema,
 	TransformationDiagramPropsSchema,
@@ -509,13 +509,13 @@ export {
 	generateProbabilitySpinner,
 	generatePolyhedronNetDiagram,
 	generatePythagoreanProofDiagram,
+	generateQuantityFractionalDiagram,
 	generateRatioBoxDiagram,
 	generateRectangularFrameDiagram,
 	generateScaleCopiesSlider,
 	generateSimpleArrow,
 	generateSinCosineWidget,
 	generateScatterPlot,
-	generateSingleFractionalModelDiagram,
 	generateStackedItemsDiagram,
 	generateTapeDiagram,
 	generateTransformationDiagram,
@@ -649,6 +649,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateProbabilitySpinner(widget)
 		case "pythagoreanProofDiagram":
 			return await generatePythagoreanProofDiagram(widget)
+		case "quantityFractionalDiagram":
+			return await generateQuantityFractionalDiagram(widget)
 		case "ratioBoxDiagram":
 			return await generateRatioBoxDiagram(widget)
 		case "rectangularFrameDiagram":
@@ -663,8 +665,6 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateScatterPlot(widget)
 		case "shapeTransformationGraph":
 			return await generateShapeTransformationGraph(widget)
-		case "singleFractionalModelDiagram":
-			return await generateSingleFractionalModelDiagram(widget)
 		case "stackedItemsDiagram":
 			return await generateStackedItemsDiagram(widget)
 		case "tapeDiagram":
