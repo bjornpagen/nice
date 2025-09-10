@@ -260,3 +260,53 @@ test("quantity-fractional-diagram - Large mixed 3 2/5", async () => {
 	const svg = await generateQuantityFractionalDiagram(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
+
+// Test case 10: Mixed number - 1 1/4 (5/4) using circles
+test("quantity-fractional-diagram - Mixed number 1 1/4", async () => {
+	const input = {
+		type: "quantityFractionalDiagram",
+		width: 400,
+		height: 200,
+		shape: {
+			type: "circle"
+		},
+		numerator: 5,
+		denominator: 4,
+		shadeColor: "#6A5ACD",
+		shapesPerRow: 2
+	} satisfies QuantityFractionalDiagramInput
+
+	const parseResult = QuantityFractionalDiagramPropsSchema.safeParse(input)
+	if (!parseResult.success) {
+		throw new Error("schema validation failed for quantity-fractional-diagram: mixed 1 1/4")
+	}
+
+	const svg = await generateQuantityFractionalDiagram(parseResult.data)
+	expect(svg).toMatchSnapshot()
+})
+
+// Test case 11: Mixed number - 2 1/6 (13/6) using rectangle stripes (6 parts)
+test("quantity-fractional-diagram - Mixed number 2 1/6 (stripes)", async () => {
+	const input = {
+		type: "quantityFractionalDiagram",
+		width: 520,
+		height: 220,
+		shape: {
+			type: "rectangle",
+			rows: 6,
+			columns: 1
+		},
+		numerator: 13,
+		denominator: 6,
+		shadeColor: "#F4A460",
+		shapesPerRow: 3
+	} satisfies QuantityFractionalDiagramInput
+
+	const parseResult = QuantityFractionalDiagramPropsSchema.safeParse(input)
+	if (!parseResult.success) {
+		throw new Error("schema validation failed for quantity-fractional-diagram: mixed 2 1/6")
+	}
+
+	const svg = await generateQuantityFractionalDiagram(parseResult.data)
+	expect(svg).toMatchSnapshot()
+})
