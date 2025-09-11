@@ -59,6 +59,7 @@ import {
 	generateScatterPlot,
 	generateShapeTransformationGraph,
 	generateStackedItemsDiagram,
+	generateStickPlot,
 	generateSubtractionWithRegrouping,
 	generateTapeDiagram,
 	generateThreeDIntersectionDiagram,
@@ -228,6 +229,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generatePieChart(widget)
 		case "pesSpectrum":
 			return await generatePESSpectrum(widget)
+		case "stickPlot":
+			return await generateStickPlot(widget)
 		case "subtractionWithRegrouping":
 			return await generateSubtractionWithRegrouping(widget)
 		case "fractionFrequencyPlot":

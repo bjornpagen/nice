@@ -12,7 +12,8 @@ import {
 	PieChartWidgetPropsSchema,
 	PopulationBarChartPropsSchema,
 	PopulationChangeEventGraphPropsSchema,
-	ScatterPlotPropsSchema
+	ScatterPlotPropsSchema,
+	StickPlotPropsSchema
 } from "@/lib/widgets/generators"
 import { simpleVisualCollection } from "./simple-visual"
 
@@ -29,6 +30,7 @@ export const scienceCollection = {
 		divergentBarChart: DivergentBarChartPropsSchema,
 		keelingCurve: KeelingCurvePropsSchema,
 		pesSpectrum: PESSpectrumPropsSchema,
+		stickPlot: StickPlotPropsSchema,
 
 		histogram: HistogramPropsSchema,
 		parabolaGraph: ParabolaGraphPropsSchema,
@@ -47,6 +49,7 @@ export const scienceCollection = {
 		"divergentBarChart",
 		"keelingCurve",
 		"pesSpectrum",
+		"stickPlot",
 
 		"histogram",
 		"parabolaGraph",

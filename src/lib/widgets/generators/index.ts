@@ -172,6 +172,7 @@ import {
 	generateStackedItemsDiagram,
 	StackedItemsDiagramPropsSchema
 } from "@/lib/widgets/generators/stacked-items-diagram"
+import { generateStickPlot, StickPlotPropsSchema } from "@/lib/widgets/generators/stick-plot"
 import {
 	generateSubtractionWithRegrouping,
 	SubtractionWithRegroupingPropsSchema
@@ -270,6 +271,7 @@ export const allWidgetSchemas = {
 	parallelogramTrapezoidDiagram: ParallelogramTrapezoidDiagramPropsSchema,
 	pieChart: PieChartWidgetPropsSchema,
 	pesSpectrum: PESSpectrumPropsSchema,
+	stickPlot: StickPlotPropsSchema,
 	fractionFrequencyPlot: FractionFrequencyPlotPropsSchema,
 	freeBodyDiagram: FreeBodyDiagramPropsSchema,
 	divisionModelDiagram: DivisionModelDiagramPropsSchema,
@@ -358,6 +360,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.parallelogramTrapezoidDiagram,
 	typedSchemas.pieChart,
 	typedSchemas.pesSpectrum,
+	typedSchemas.stickPlot,
 	typedSchemas.fractionFrequencyPlot,
 	typedSchemas.freeBodyDiagram,
 	typedSchemas.divisionModelDiagram,
@@ -451,6 +454,7 @@ export {
 	VerticalArithmeticSetupPropsSchema,
 	PieChartWidgetPropsSchema,
 	PESSpectrumPropsSchema,
+	StickPlotPropsSchema,
 	FractionFrequencyPlotPropsSchema,
 	FreeBodyDiagramPropsSchema,
 	DivisionModelDiagramPropsSchema,
@@ -536,6 +540,7 @@ export {
 	generateParallelogramTrapezoidDiagram,
 	generatePieChart,
 	generatePESSpectrum,
+	generateStickPlot,
 	generateFractionFrequencyPlot,
 	generateDivisionModelDiagram,
 	generateFactorizationDiagram,
@@ -696,6 +701,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generatePieChart(widget)
 		case "pesSpectrum":
 			return await generatePESSpectrum(widget)
+		case "stickPlot":
+			return await generateStickPlot(widget)
 		case "fractionFrequencyPlot":
 			return await generateFractionFrequencyPlot(widget)
 		case "freeBodyDiagram":
