@@ -3,15 +3,16 @@ import {
 	ConceptualGraphPropsSchema,
 	CoordinatePlaneComprehensivePropsSchema,
 	DivergentBarChartPropsSchema,
+	FreeBodyDiagramPropsSchema,
 	HistogramPropsSchema,
 	KeelingCurvePropsSchema,
 	LineGraphPropsSchema,
 	ParabolaGraphPropsSchema,
+	PESSpectrumPropsSchema,
 	PieChartWidgetPropsSchema,
 	PopulationBarChartPropsSchema,
 	PopulationChangeEventGraphPropsSchema,
-	ScatterPlotPropsSchema,
-	FreeBodyDiagramPropsSchema
+	ScatterPlotPropsSchema
 } from "@/lib/widgets/generators"
 import { simpleVisualCollection } from "./simple-visual"
 
@@ -27,6 +28,7 @@ export const scienceCollection = {
 		areaGraph: AreaGraphPropsSchema,
 		divergentBarChart: DivergentBarChartPropsSchema,
 		keelingCurve: KeelingCurvePropsSchema,
+		pesSpectrum: PESSpectrumPropsSchema,
 
 		histogram: HistogramPropsSchema,
 		parabolaGraph: ParabolaGraphPropsSchema,
@@ -44,6 +46,7 @@ export const scienceCollection = {
 		"areaGraph",
 		"divergentBarChart",
 		"keelingCurve",
+		"pesSpectrum",
 
 		"histogram",
 		"parabolaGraph",

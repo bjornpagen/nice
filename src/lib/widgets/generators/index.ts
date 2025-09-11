@@ -94,7 +94,6 @@ import { generateKeelingCurve, KeelingCurvePropsSchema } from "@/lib/widgets/gen
 import { generateLineEquationGraph, LineEquationGraphPropsSchema } from "@/lib/widgets/generators/line-equation-graph"
 import { generateLineGraph, LineGraphPropsSchema } from "@/lib/widgets/generators/line-graph"
 import { generateNPolygon, NPolygonPropsSchema } from "@/lib/widgets/generators/n-polygon"
-import { generatePatternDiagram, PatternDiagramPropsSchema } from "@/lib/widgets/generators/pattern-diagram"
 import { generateNumberLine, NumberLinePropsSchema } from "@/lib/widgets/generators/number-line"
 import {
 	generateNumberLineForOpposites,
@@ -115,11 +114,13 @@ import {
 	ParallelogramTrapezoidDiagramPropsSchema
 } from "@/lib/widgets/generators/parallelogram-trapezoid-diagram"
 import { generatePartitionedShape, PartitionedShapePropsSchema } from "@/lib/widgets/generators/partitioned-shape"
+import { generatePatternDiagram, PatternDiagramPropsSchema } from "@/lib/widgets/generators/pattern-diagram"
 import {
 	generatePentagonIntersectionDiagram,
 	PentagonIntersectionDiagramPropsSchema
 } from "@/lib/widgets/generators/pentagon-intersection-diagram"
 import { generatePeriodicTable, PeriodicTableWidgetPropsSchema } from "@/lib/widgets/generators/periodic-table"
+import { generatePESSpectrum, PESSpectrumPropsSchema } from "@/lib/widgets/generators/pes-spectrum"
 import { generatePieChart, PieChartWidgetPropsSchema } from "@/lib/widgets/generators/pi-chart"
 import { generatePictograph, PictographPropsSchema } from "@/lib/widgets/generators/pictograph"
 import { generatePointPlotGraph, PointPlotGraphPropsSchema } from "@/lib/widgets/generators/point-plot-graph"
@@ -143,10 +144,6 @@ import {
 	ProtractorAngleDiagramPropsSchema
 } from "@/lib/widgets/generators/protractor-angle-diagram"
 import {
-	generateRadiallyConstrainedAngleDiagram,
-	RadiallyConstrainedAngleDiagramPropsSchema
-} from "@/lib/widgets/generators/radially-constrained-angle-diagram"
-import {
 	generatePythagoreanProofDiagram,
 	PythagoreanProofDiagramPropsSchema
 } from "@/lib/widgets/generators/pythagorean-proof-diagram"
@@ -154,6 +151,10 @@ import {
 	generateQuantityFractionalDiagram,
 	QuantityFractionalDiagramPropsSchema
 } from "@/lib/widgets/generators/quantity-fractional-diagram"
+import {
+	generateRadiallyConstrainedAngleDiagram,
+	RadiallyConstrainedAngleDiagramPropsSchema
+} from "@/lib/widgets/generators/radially-constrained-angle-diagram"
 import { generateRatioBoxDiagram, RatioBoxDiagramPropsSchema } from "@/lib/widgets/generators/ratio-box-diagram"
 import {
 	generateRectangularFrameDiagram,
@@ -268,6 +269,7 @@ export const allWidgetSchemas = {
 	vectorDiagram: VectorDiagramPropsSchema,
 	parallelogramTrapezoidDiagram: ParallelogramTrapezoidDiagramPropsSchema,
 	pieChart: PieChartWidgetPropsSchema,
+	pesSpectrum: PESSpectrumPropsSchema,
 	fractionFrequencyPlot: FractionFrequencyPlotPropsSchema,
 	freeBodyDiagram: FreeBodyDiagramPropsSchema,
 	divisionModelDiagram: DivisionModelDiagramPropsSchema,
@@ -355,6 +357,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.vectorDiagram,
 	typedSchemas.parallelogramTrapezoidDiagram,
 	typedSchemas.pieChart,
+	typedSchemas.pesSpectrum,
 	typedSchemas.fractionFrequencyPlot,
 	typedSchemas.freeBodyDiagram,
 	typedSchemas.divisionModelDiagram,
@@ -447,6 +450,7 @@ export {
 	VectorDiagramPropsSchema,
 	VerticalArithmeticSetupPropsSchema,
 	PieChartWidgetPropsSchema,
+	PESSpectrumPropsSchema,
 	FractionFrequencyPlotPropsSchema,
 	FreeBodyDiagramPropsSchema,
 	DivisionModelDiagramPropsSchema,
@@ -531,6 +535,7 @@ export {
 	generateVectorDiagram,
 	generateParallelogramTrapezoidDiagram,
 	generatePieChart,
+	generatePESSpectrum,
 	generateFractionFrequencyPlot,
 	generateDivisionModelDiagram,
 	generateFactorizationDiagram,
@@ -689,6 +694,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateVectorDiagram(widget)
 		case "pieChart":
 			return await generatePieChart(widget)
+		case "pesSpectrum":
+			return await generatePESSpectrum(widget)
 		case "fractionFrequencyPlot":
 			return await generateFractionFrequencyPlot(widget)
 		case "freeBodyDiagram":
