@@ -97,12 +97,13 @@ export const HARDCODED_SCIENCE_COURSE_IDS = [
 ] as const
 
 export const HARDCODED_HISTORY_COURSE_IDS = [
-	"x71a94f19", // us-history
-	"xb87a304a", // ap-us-history
-	"x66f79d8a", // world-history
-	"xb41992e0ff5e0f09", // ap-world-history
-	"x231f0f4241b58f49", // us-government-and-civics
-	"x3e2fc37246974751" // ap-college-us-government-and-politics
+	// "x71a94f19", // us-history
+	// "xb87a304a", // ap-us-history
+	// "x66f79d8a", // world-history
+	// "xb41992e0ff5e0f09", // ap-world-history
+	// "x231f0f4241b58f49", // us-government-and-civics
+	// "x3e2fc37246974751", // ap-college-us-government-and-politics
+	"x7a03a96a83aa80ff" // Constitution 101
 ] as const
 
 /**
