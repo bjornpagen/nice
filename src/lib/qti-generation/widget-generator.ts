@@ -40,6 +40,7 @@ import {
 	generateParallelogramTrapezoidDiagram,
 	generatePartitionedShape,
 	generatePatternDiagram,
+	generatePESSpectrum,
 	generatePentagonIntersectionDiagram,
 	generatePeriodicTable,
 	generatePictograph,
@@ -71,17 +72,17 @@ import {
 } from "@/lib/widgets/generators"
 import { generateAdditionWithRegrouping } from "@/lib/widgets/generators/addition-with-regrouping"
 import { generateAreaModelMultiplication } from "@/lib/widgets/generators/area-model-multiplication"
-import { generateQuantityFractionalDiagram } from "@/lib/widgets/generators/quantity-fractional-diagram"
 import { generateDivisionModelDiagram } from "@/lib/widgets/generators/division-model-diagram"
-import { generateProtractorAngleDiagram } from "@/lib/widgets/generators/protractor-angle-diagram"
-import { generateRadiallyConstrainedAngleDiagram } from "@/lib/widgets/generators/radially-constrained-angle-diagram"
-import { generateSinCosineWidget } from "@/lib/widgets/generators/sin-cosine-widget"
-import { generateFractionMultiplicationModel } from "@/lib/widgets/generators/fraction-multiplication-model"
 import { generateEquivalentFractionModel } from "@/lib/widgets/generators/equivalent-fraction-model"
 import { generateFactorizationDiagram } from "@/lib/widgets/generators/factorization-diagram"
 import { generateFractionFrequencyPlot } from "@/lib/widgets/generators/fraction-frequency-plot"
+import { generateFractionMultiplicationModel } from "@/lib/widgets/generators/fraction-multiplication-model"
 import { generateFreeBodyDiagram } from "@/lib/widgets/generators/free-body-diagram"
+import { generateProtractorAngleDiagram } from "@/lib/widgets/generators/protractor-angle-diagram"
+import { generateQuantityFractionalDiagram } from "@/lib/widgets/generators/quantity-fractional-diagram"
+import { generateRadiallyConstrainedAngleDiagram } from "@/lib/widgets/generators/radially-constrained-angle-diagram"
 import { generateSimpleArrow } from "@/lib/widgets/generators/simple-arrow"
+import { generateSinCosineWidget } from "@/lib/widgets/generators/sin-cosine-widget"
 import { generateVectorDiagram } from "@/lib/widgets/generators/vector-diagram"
 
 export async function generateWidget(widget: Widget): Promise<string> {
@@ -225,6 +226,8 @@ export async function generateWidget(widget: Widget): Promise<string> {
 			return await generateUrlImage(widget)
 		case "pieChart":
 			return await generatePieChart(widget)
+		case "pesSpectrum":
+			return await generatePESSpectrum(widget)
 		case "subtractionWithRegrouping":
 			return await generateSubtractionWithRegrouping(widget)
 		case "fractionFrequencyPlot":

@@ -22,10 +22,10 @@ import { orchestrateHardcodedMathStimulusMigration } from "@/inngest/functions/m
 import { orchestrateHardcodedScienceItemMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-item-migration"
 import { orchestrateHardcodedScienceOnerosterIngestion } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-oneroster-ingestion"
 import { orchestrateHardcodedScienceQAReview } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-qa-review"
+import { orchestrateHardcodedScienceQtiBackup } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-qti-backup"
 import { orchestrateHardcodedScienceQtiGenerateUndifferentiated } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-qti-generate-undifferentiated"
 import { orchestrateHardcodedScienceQtiUpload } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-qti-upload"
 import { orchestrateHardcodedScienceStimulusMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-stimulus-migration"
-import { orchestrateHardcodedScienceQtiBackup } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-qti-backup"
 // Import OneRoster workers
 import { generatePayloadForCourse as generateOnerosterPayloadForCourse } from "@/inngest/functions/oneroster/generate-payload-for-course"
 import { ingestAssessmentLineItems } from "@/inngest/functions/oneroster/ingest-assessment-line-items"
@@ -41,14 +41,17 @@ import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orches
 // Removed: orchestrateCourseXmlGeneration (generic course QTI generation)
 import { orchestrateCourseUploadToOneroster } from "@/inngest/functions/orchestrate-course-upload-to-oneroster"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
+import { extractAndProcessQtiSvgs } from "@/inngest/functions/qa/extract-and-process-qti-svgs"
 import { orchestrateCourseVisualQAReview } from "@/inngest/functions/qa/orchestrate-course-visual-qa-review"
 // Import Visual QA workers
 import { orchestrateVisualQAReview } from "@/inngest/functions/qa/orchestrate-visual-qa-review"
-import { reviewQuestionRendering } from "@/inngest/functions/qa/review-question-rendering"
-import { reverseEngineerWidgetFromSvg, reverseEngineerBatchFromDatabase } from "@/inngest/functions/qa/reverse-engineer-widget-from-svg"
 import { orchestrateWidgetReverseEngineering } from "@/inngest/functions/qa/orchestrate-widget-reverse-engineering"
 import { reverseEngineerSvgToWidget } from "@/inngest/functions/qa/reverse-engineer-svg-to-widget"
-import { extractAndProcessQtiSvgs } from "@/inngest/functions/qa/extract-and-process-qti-svgs"
+import {
+	reverseEngineerBatchFromDatabase,
+	reverseEngineerWidgetFromSvg
+} from "@/inngest/functions/qa/reverse-engineer-widget-from-svg"
+import { reviewQuestionRendering } from "@/inngest/functions/qa/review-question-rendering"
 import { testPerseusTextarea } from "@/inngest/functions/qa/test-perseus-textarea"
 // ✅ ADD: Import the new batch differentiation and assembly functions
 import { assembleDifferentiatedItemsAndCreateTests } from "@/inngest/functions/qti/assemble-differentiated-items-and-create-tests"
@@ -66,6 +69,7 @@ import { ingestAssessmentTestOne } from "@/inngest/functions/qti/ingest-assessme
 import { paraphraseStimulus } from "@/inngest/functions/qti/paraphrase-stimulus"
 import { requestAllItemMigrationsForCourse } from "@/inngest/functions/qti/request-all-item-migrations-for-course"
 import { requestAllStimulusMigrationsForCourse } from "@/inngest/functions/qti/request-all-stimulus-migrations-for-course"
+import { requestItemMigrationsForExercise } from "@/inngest/functions/qti/request-item-migrations-for-exercise"
 // ✅ ADD: Import the new validation function
 // Removed dangerous validator to prevent accidental runs
 
@@ -124,6 +128,7 @@ export const { GET, POST, PUT } = serve({
 		convertPerseusQuestionToDifferentiatedQtiItems,
 		requestAllItemMigrationsForCourse,
 		requestAllStimulusMigrationsForCourse,
+		requestItemMigrationsForExercise,
 		ingestAssessmentItemOne,
 		ingestAssessmentStimulusOne,
 		ingestAssessmentTestOne,

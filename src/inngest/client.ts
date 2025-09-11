@@ -29,6 +29,13 @@ const events = {
 			widgetCollection: WidgetCollectionNameSchema
 		})
 	},
+	// NEW: Exercise-scoped fanout orchestrator
+	"qti/exercise.items.migrate": {
+		data: z.object({
+			exerciseId: z.string().min(1),
+			widgetCollection: z.enum(["science", "math", "simple"]) // normalized by orchestrator
+		})
+	},
 	// REMOVED: "qti/item.migrate.focused" event is removed as it's merged.
 	"qti/stimulus.migrate": {
 		data: z.object({
@@ -407,7 +414,10 @@ const events = {
 	"qa/widget.orchestrate-reverse-engineering": {
 		data: z.object({
 			courseIds: z.array(z.string().min(1)).optional().describe("Specific course IDs to process"),
-			subjects: z.array(z.enum(["science", "math", "history"])).optional().describe("Subject areas to process"),
+			subjects: z
+				.array(z.enum(["science", "math", "history"]))
+				.optional()
+				.describe("Subject areas to process"),
 			limit: z.number().positive().default(100).describe("Maximum number of SVGs to process"),
 			generateValidation: z.boolean().default(true).describe("Whether to validate by regenerating widgets")
 		})

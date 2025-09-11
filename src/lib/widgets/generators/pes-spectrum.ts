@@ -24,7 +24,12 @@ const PeakSchema = z
 			.max(7)
 			.describe("Peak height measured in grid units (1-7). 7 reaches the top grid line."),
 		// Optional label shown above the peak tip. Use empty string to omit.
-		topLabel: z.string().describe('Label shown above the peak apex. Use empty string "" for no label.')
+		topLabel: z
+			.string()
+			.nullable()
+			.describe(
+				"Label shown above the peak apex. Do not fill out this field if you do not need a label as it is nullable"
+			)
 	})
 	.strict()
 	.describe("Defines a single PES peak: binding energy, height in units, and optional top label.")
@@ -207,7 +212,7 @@ export const generatePESSpectrum: WidgetGenerator<typeof PESSpectrumPropsSchema>
 
 		// Optional top label
 		if (peak.topLabel !== "") {
-			canvas.drawText({ x: xCenter, y: yTop - 6, text: peak.topLabel, anchor: "middle", fontPx: 10 })
+			canvas.drawText({ x: xCenter, y: yTop - 6, text: peak.topLabel ?? "", anchor: "middle", fontPx: 10 })
 		}
 	}
 
