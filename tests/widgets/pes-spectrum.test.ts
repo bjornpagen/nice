@@ -12,13 +12,15 @@ type PESSpectrumInput = z.input<typeof PESSpectrumPropsSchema>
 test("pes-spectrum - corrected svg 1 layout", async () => {
 	const input = {
 		type: "pesSpectrum",
+		title: null,
 		width: 413.333,
 		height: 264.016,
 		peaks: [
 			{ energy: 80, heightUnits: 4, topLabel: "Cl" },
 			{ energy: 5, heightUnits: 2, topLabel: "O" },
 			{ energy: 2, heightUnits: 2, topLabel: "H" }
-		]
+		],
+		yAxisLabel: "Intensity"
 	} satisfies PESSpectrumInput
 
 	const parsed = PESSpectrumPropsSchema.safeParse(input)

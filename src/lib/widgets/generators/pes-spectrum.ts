@@ -37,8 +37,16 @@ const PeakSchema = z
 export const PESSpectrumPropsSchema = z
 	.object({
 		type: z.literal("pesSpectrum"),
+		title: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe(
+				"Optional chart title to display above the plot. If the graph does not have a title, do not include this field or pass an empty string."
+			),
 		width: z.number().positive().describe("Total SVG width in pixels (e.g., 318.333)."),
 		height: z.number().positive().describe("Total SVG height in pixels (e.g., 208.357)."),
+		yAxisLabel: z.string().describe("The label for the vertical axis."),
 		// Peaks to render, left-to-right positioning derived from their energy values.
 		peaks: z
 			.array(PeakSchema)
@@ -60,7 +68,7 @@ const X_TICK_LABELS = ["1000", "100", "10", "1", "0"]
 const LOG_GAMMA = 1.5
 
 export const generatePESSpectrum: WidgetGenerator<typeof PESSpectrumPropsSchema> = async (props) => {
-	const { width, height, peaks } = props
+	const { width, height, peaks, title, yAxisLabel } = props
 
 	// Create canvas
 	const canvas = new CanvasImpl({
@@ -113,6 +121,18 @@ export const generatePESSpectrum: WidgetGenerator<typeof PESSpectrumPropsSchema>
 		canvas.drawText({ x, y: chartBottom + 17, text: X_TICK_LABELS[i] ?? "", anchor: "middle", fontPx: 10 })
 	}
 
+	// Optional title
+	if (title) {
+		canvas.drawText({
+			x: chartLeft + chartWidth / 2,
+			y: Math.max(14, topMargin - 6),
+			text: title,
+			anchor: "middle",
+			fontPx: 14,
+			fontWeight: "700"
+		})
+	}
+
 	// Axis labels
 	// Bottom: Binding Energy (Mj/mol)
 	canvas.drawText({
@@ -124,13 +144,13 @@ export const generatePESSpectrum: WidgetGenerator<typeof PESSpectrumPropsSchema>
 		fontWeight: "700"
 	})
 
-	// Left (rotated -90): Relative number of electrons
+	// Left (rotated -90): y-axis label
 	const yLabelX = leftMargin - 15
 	const yLabelY = chartTop + chartHeight / 2
 	canvas.drawText({
 		x: yLabelX,
 		y: yLabelY,
-		text: "Relative number of electrons",
+		text: yAxisLabel,
 		anchor: "middle",
 		fontPx: 12,
 		fontWeight: "700",
