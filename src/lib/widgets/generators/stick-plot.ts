@@ -58,14 +58,9 @@ export const StickPlotPropsSchema = z
 				showGridLines: z.boolean().describe("Whether to display horizontal grid lines.")
 			})
 			.strict(),
-		sticks: z
-			.array(StickSchema)
-			.describe("Sticks to render. xLabel must exist in xAxis.categories; yValue is mapped to height."),
-		stickWidthPx: z.number().positive().default(2).describe("Visual stroke width for sticks in pixels."),
-		references: z
-			.array(ReferenceLineSchema)
-			.default([])
-			.describe("Optional vertical reference lines at given categories, with labels.")
+		sticks: z.array(StickSchema),
+		stickWidthPx: z.number().positive(),
+		references: z.array(ReferenceLineSchema)
 	})
 	.strict()
 	.describe(
