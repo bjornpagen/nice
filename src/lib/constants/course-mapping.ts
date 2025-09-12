@@ -11,13 +11,11 @@ export const HARDCODED_COURSE_MAPPING = {
 	x7c7044d7: ["8"], // 8th grade math (Common Core)
 
 	// Science Courses
-	// x0c5bb03129646fd6: ["8"], // ms-biology
-	// x1baed5db7c1bb50b: ["6", "7", "8"], // ms-physics
-	// x87d03b443efbea0a: ["7"], // middle-school-earth-and-space-science
-	// x230b3ff252126bb6: ["9"], // hs-bio
-	// xc370bc422b7f75fc: ["6"], // ms-chemistry
-
-	// New Science Courses
+	x0c5bb03129646fd6: ["8"], // ms-biology
+	x1baed5db7c1bb50b: ["6", "7", "8"], // ms-physics
+	x87d03b443efbea0a: ["7"], // middle-school-earth-and-space-science
+	x230b3ff252126bb6: ["9"], // hs-bio
+	xc370bc422b7f75fc: ["6"], // ms-chemistry
 	xf557a762645cccc5: ["11", "12"], // AP College Physics 1
 	x0e2f5a2c: ["11", "12"], // AP College Physics 2
 	x2613d8165d88df5e: ["10"], // High School Chemistry
@@ -43,11 +41,11 @@ export const ALL_HARDCODED_COURSE_IDS: CourseId[] = [
 	"x0267d782", // 6th grade math (Common Core)
 	"x6b17ba59", // 7th grade math (Common Core)
 	"x7c7044d7", // 8th grade math (Common Core)
-	// "x0c5bb03129646fd6", // ms-biology
-	// "x1baed5db7c1bb50b", // ms-physics
-	// "x87d03b443efbea0a", // middle-school-earth-and-space-science
-	// "x230b3ff252126bb6", // hs-bio
-	// "xc370bc422b7f75fc", // ms-chemistry
+	"x0c5bb03129646fd6", // ms-biology
+	"x1baed5db7c1bb50b", // ms-physics
+	"x87d03b443efbea0a", // middle-school-earth-and-space-science
+	"x230b3ff252126bb6", // hs-bio
+	"xc370bc422b7f75fc", // ms-chemistry
 	"xf557a762645cccc5", // AP College Physics 1
 	"x0e2f5a2c", // AP College Physics 2
 	"x2613d8165d88df5e", // High School Chemistry
@@ -97,12 +95,12 @@ export const HARDCODED_SCIENCE_COURSE_IDS = [
 ] as const
 
 export const HARDCODED_HISTORY_COURSE_IDS = [
-	// "x71a94f19", // us-history
-	// "xb87a304a", // ap-us-history
-	// "x66f79d8a", // world-history
-	// "xb41992e0ff5e0f09", // ap-world-history
-	// "x231f0f4241b58f49", // us-government-and-civics
-	// "x3e2fc37246974751", // ap-college-us-government-and-politics
+	"x71a94f19", // us-history
+	"xb87a304a", // ap-us-history
+	"x66f79d8a", // world-history
+	"xb41992e0ff5e0f09", // ap-world-history
+	"x231f0f4241b58f49", // us-government-and-civics
+	"x3e2fc37246974751", // ap-college-us-government-and-politics
 	"x7a03a96a83aa80ff" // Constitution 101
 ] as const
 
