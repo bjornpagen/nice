@@ -92,7 +92,21 @@ export const generateFunctionPlotGraph: WidgetGenerator<typeof FunctionPlotGraph
 	)
 
 	// Render polylines (renderPolylines manages clipping internally)
-	renderPolylines(polylines, baseInfo.toSvgX, baseInfo.toSvgY, canvas)
+	// Extend endpoints that lie exactly on the bottom axis slightly below it
+	const EPS = 0.05
+	const TOL = 1e-6
+	const extendedPolylines = polylines.map((pl) => {
+		const pts = pl.points.map((p, idx, arr) => {
+			const isEndpoint = idx === 0 || idx === arr.length - 1
+			if (isEndpoint && Math.abs(p.y - yAxis.min) <= TOL) {
+				return { x: p.x, y: yAxis.min - EPS }
+			}
+			return p
+		})
+		return { ...pl, points: pts }
+	})
+
+	renderPolylines(extendedPolylines, baseInfo.toSvgX, baseInfo.toSvgY, canvas)
 
 	// Render unclipped points on the main canvas
 	renderPoints(points, baseInfo.toSvgX, baseInfo.toSvgY, canvas)

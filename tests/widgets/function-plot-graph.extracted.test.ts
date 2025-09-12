@@ -17,10 +17,9 @@
 
 import { expect, test } from "bun:test"
 import type { z } from "zod"
-import { generateFunctionPlotGraph, FunctionPlotGraphPropsSchema } from "@/lib/widgets/generators"
+import { FunctionPlotGraphPropsSchema, generateFunctionPlotGraph } from "@/lib/widgets/generators"
 
 type FunctionPlotGraphInput = z.input<typeof FunctionPlotGraphPropsSchema>
-
 
 // Extracted from question: x2ece34720d52423c
 // Course: 8th grade math
@@ -28,119 +27,119 @@ type FunctionPlotGraphInput = z.input<typeof FunctionPlotGraphPropsSchema>
 // Widget key: image_1
 test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
-	"width": 345,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 345,
-	"points": [],
-	"polylines": [
-		{
-			"id": "graph1",
-			"color": "#11accd",
-			"style": "solid",
-			"points": [
-				{
-					"x": -10,
-					"y": 4
-				},
-				{
-					"x": -9,
-					"y": 4
-				},
-				{
-					"x": -8,
-					"y": 4
-				},
-				{
-					"x": -7,
-					"y": 4
-				},
-				{
-					"x": -6,
-					"y": 4
-				},
-				{
-					"x": -5,
-					"y": 4
-				},
-				{
-					"x": -4,
-					"y": 6
-				},
-				{
-					"x": -3,
-					"y": 2
-				},
-				{
-					"x": -2,
-					"y": 2
-				},
-				{
-					"x": -1,
-					"y": 2
-				},
-				{
-					"x": 0,
-					"y": 2
-				},
-				{
-					"x": 1,
-					"y": 2
-				},
-				{
-					"x": 2,
-					"y": 0
-				},
-				{
-					"x": 3,
-					"y": -2
-				},
-				{
-					"x": 4,
-					"y": 1
-				},
-				{
-					"x": 5,
-					"y": 4
-				},
-				{
-					"x": 6,
-					"y": 3
-				},
-				{
-					"x": 7,
-					"y": 2
-				},
-				{
-					"x": 8,
-					"y": 2
-				},
-				{
-					"x": 9,
-					"y": 2
-				},
-				{
-					"x": 10,
-					"y": 2
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 345,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 345,
+		points: [],
+		polylines: [
+			{
+				id: "graph1",
+				color: "#11accd",
+				style: "solid",
+				points: [
+					{
+						x: -10,
+						y: 4
+					},
+					{
+						x: -9,
+						y: 4
+					},
+					{
+						x: -8,
+						y: 4
+					},
+					{
+						x: -7,
+						y: 4
+					},
+					{
+						x: -6,
+						y: 4
+					},
+					{
+						x: -5,
+						y: 4
+					},
+					{
+						x: -4,
+						y: 6
+					},
+					{
+						x: -3,
+						y: 2
+					},
+					{
+						x: -2,
+						y: 2
+					},
+					{
+						x: -1,
+						y: 2
+					},
+					{
+						x: 0,
+						y: 2
+					},
+					{
+						x: 1,
+						y: 2
+					},
+					{
+						x: 2,
+						y: 0
+					},
+					{
+						x: 3,
+						y: -2
+					},
+					{
+						x: 4,
+						y: 1
+					},
+					{
+						x: 5,
+						y: 4
+					},
+					{
+						x: 6,
+						y: 3
+					},
+					{
+						x: 7,
+						y: 2
+					},
+					{
+						x: 8,
+						y: 2
+					},
+					{
+						x: 9,
+						y: 2
+					},
+					{
+						x: 10,
+						y: 2
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -154,6 +153,135 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 	expect(svg).toMatchSnapshot()
 })
 
+// Scooters vs Ice Cream: quarter-ellipse from (0,8) to (9,0)
+test("function-plot-graph - Scooters vs Ice Cream (quarter-ellipse)", async () => {
+	// Generate a smooth concave curve: y = 8 * sqrt(1 - (x/9)^2), x in [0,9]
+	const points = Array.from({ length: 91 }, (_, i) => {
+		const x = i * 0.1
+		const y = 8 * Math.sqrt(Math.max(0, 1 - (x / 9) ** 2))
+		return { x, y }
+	})
+
+	const input = {
+		width: 500,
+		xAxis: {
+			max: 9,
+			min: 0,
+			label: "Scooters",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 9,
+			min: 0,
+			label: "Ice Cream (Gallons)",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 500,
+		points: [],
+		polylines: [
+			{
+				id: "ice-cream-vs-scooters",
+				color: "#11accd",
+				style: "solid",
+				points
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
+
+	// Validate the input
+	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
+	if (!parseResult.success) {
+		console.error("Schema validation failed for extracted functionPlotGraph:", parseResult.error)
+		return
+	}
+
+	// Generate the widget
+	const svg = await generateFunctionPlotGraph(parseResult.data)
+	expect(svg).toMatchSnapshot()
+})
+
+// Demand shift with labels (D1, D2) and rightward arrow
+test("function-plot-graph - Demand shift with labels and arrow", async () => {
+	const arrowY = 7
+
+	const input = {
+		width: 520,
+		height: 520,
+		xAxis: { min: 0, max: 12, tickInterval: 1, showGridLines: true, label: "Q" },
+		yAxis: { min: 0, max: 12, tickInterval: 1, showGridLines: true, label: "P" },
+		showQuadrantLabels: false,
+		polylines: [
+			// D1: y = -x + 9, extend slightly past bottom axis to ensure contact after clipping
+			{
+				id: "D1_line",
+				color: "#e4572e",
+				style: "solid",
+				points: [
+					{ x: 0, y: 9 },
+					{ x: 9.05, y: -0.05 }
+				]
+			},
+			// D2: parallel shift right, y = -(x-3) + 9 = -x + 12, extend slightly past bottom
+			{
+				id: "D2_line",
+				color: "#e4572e",
+				style: "solid",
+				points: [
+					{ x: 0, y: 12 },
+					{ x: 12.05, y: -0.05 }
+				]
+			},
+			// Arrow shaft (red)
+			{
+				id: "shift_arrow",
+				color: "#d62728",
+				style: "solid",
+				points: [
+					{ x: 2, y: arrowY },
+					{ x: 4, y: arrowY }
+				]
+			},
+			// Arrow head (two short segments)
+			{
+				id: "shift_arrow_head_up",
+				color: "#d62728",
+				style: "solid",
+				points: [
+					{ x: 4, y: arrowY },
+					{ x: 3.7, y: arrowY + 0.2 }
+				]
+			},
+			{
+				id: "shift_arrow_head_down",
+				color: "#d62728",
+				style: "solid",
+				points: [
+					{ x: 4, y: arrowY },
+					{ x: 3.7, y: arrowY - 0.2 }
+				]
+			}
+		],
+		// Use transparent-stroked open points to place pure text labels without visible markers
+		points: [
+			{ id: "label_d1", x: 8.7, y: 1.3, label: "D1", color: "#00000000", style: "open" },
+			{ id: "label_d2", x: 11.7, y: 1.3, label: "D2", color: "#00000000", style: "open" }
+		],
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
+
+	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
+	if (!parseResult.success) {
+		console.error("Schema validation failed for extracted functionPlotGraph:", parseResult.error)
+		return
+	}
+
+	const svg = await generateFunctionPlotGraph(parseResult.data)
+	expect(svg).toMatchSnapshot()
+})
 
 // Extracted from question: x962ff292125ddbf0
 // Course: 8th grade math
@@ -161,119 +289,119 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 // Widget key: image_1
 test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
-	"width": 345,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 10,
-		"min": 0,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 345,
-	"points": [],
-	"polylines": [
-		{
-			"id": "graph_polyline_1",
-			"color": "#11accd",
-			"style": "solid",
-			"points": [
-				{
-					"x": -10,
-					"y": 0
-				},
-				{
-					"x": -9,
-					"y": 1
-				},
-				{
-					"x": -8,
-					"y": 3
-				},
-				{
-					"x": -7,
-					"y": 5
-				},
-				{
-					"x": -6,
-					"y": 6
-				},
-				{
-					"x": -5,
-					"y": 7
-				},
-				{
-					"x": -4,
-					"y": 8
-				},
-				{
-					"x": -3,
-					"y": 7
-				},
-				{
-					"x": -2,
-					"y": 8
-				},
-				{
-					"x": -1,
-					"y": 7
-				},
-				{
-					"x": 0,
-					"y": 5
-				},
-				{
-					"x": 1,
-					"y": 6
-				},
-				{
-					"x": 2,
-					"y": 5
-				},
-				{
-					"x": 3,
-					"y": 6
-				},
-				{
-					"x": 4,
-					"y": 6
-				},
-				{
-					"x": 5,
-					"y": 5
-				},
-				{
-					"x": 6,
-					"y": 6
-				},
-				{
-					"x": 7,
-					"y": 5
-				},
-				{
-					"x": 8,
-					"y": 6
-				},
-				{
-					"x": 9,
-					"y": 8
-				},
-				{
-					"x": 10,
-					"y": 6
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 345,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 10,
+			min: 0,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 345,
+		points: [],
+		polylines: [
+			{
+				id: "graph_polyline_1",
+				color: "#11accd",
+				style: "solid",
+				points: [
+					{
+						x: -10,
+						y: 0
+					},
+					{
+						x: -9,
+						y: 1
+					},
+					{
+						x: -8,
+						y: 3
+					},
+					{
+						x: -7,
+						y: 5
+					},
+					{
+						x: -6,
+						y: 6
+					},
+					{
+						x: -5,
+						y: 7
+					},
+					{
+						x: -4,
+						y: 8
+					},
+					{
+						x: -3,
+						y: 7
+					},
+					{
+						x: -2,
+						y: 8
+					},
+					{
+						x: -1,
+						y: 7
+					},
+					{
+						x: 0,
+						y: 5
+					},
+					{
+						x: 1,
+						y: 6
+					},
+					{
+						x: 2,
+						y: 5
+					},
+					{
+						x: 3,
+						y: 6
+					},
+					{
+						x: 4,
+						y: 6
+					},
+					{
+						x: 5,
+						y: 5
+					},
+					{
+						x: 6,
+						y: 6
+					},
+					{
+						x: 7,
+						y: 5
+					},
+					{
+						x: 8,
+						y: 6
+					},
+					{
+						x: 9,
+						y: 8
+					},
+					{
+						x: 10,
+						y: 6
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -286,7 +414,6 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x97abcd9e95e99550
 // Course: 8th grade math
@@ -294,119 +421,119 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 // Widget key: image_1
 test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
-	"width": 345,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 345,
-	"points": [],
-	"polylines": [
-		{
-			"id": "graph1",
-			"color": "#11accd",
-			"style": "solid",
-			"points": [
-				{
-					"x": -10,
-					"y": -6
-				},
-				{
-					"x": -9,
-					"y": -5
-				},
-				{
-					"x": -8,
-					"y": -4
-				},
-				{
-					"x": -7,
-					"y": -6
-				},
-				{
-					"x": -6,
-					"y": -5
-				},
-				{
-					"x": -5,
-					"y": -4
-				},
-				{
-					"x": -4,
-					"y": -3
-				},
-				{
-					"x": -3,
-					"y": -2
-				},
-				{
-					"x": -2,
-					"y": -4
-				},
-				{
-					"x": -1,
-					"y": -3
-				},
-				{
-					"x": 0,
-					"y": -2
-				},
-				{
-					"x": 1,
-					"y": 0
-				},
-				{
-					"x": 2,
-					"y": 2
-				},
-				{
-					"x": 3,
-					"y": 3
-				},
-				{
-					"x": 4,
-					"y": 4
-				},
-				{
-					"x": 5,
-					"y": 3
-				},
-				{
-					"x": 6,
-					"y": 2
-				},
-				{
-					"x": 7,
-					"y": 1
-				},
-				{
-					"x": 8,
-					"y": 0
-				},
-				{
-					"x": 9,
-					"y": -1
-				},
-				{
-					"x": 10,
-					"y": -1
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 345,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 345,
+		points: [],
+		polylines: [
+			{
+				id: "graph1",
+				color: "#11accd",
+				style: "solid",
+				points: [
+					{
+						x: -10,
+						y: -6
+					},
+					{
+						x: -9,
+						y: -5
+					},
+					{
+						x: -8,
+						y: -4
+					},
+					{
+						x: -7,
+						y: -6
+					},
+					{
+						x: -6,
+						y: -5
+					},
+					{
+						x: -5,
+						y: -4
+					},
+					{
+						x: -4,
+						y: -3
+					},
+					{
+						x: -3,
+						y: -2
+					},
+					{
+						x: -2,
+						y: -4
+					},
+					{
+						x: -1,
+						y: -3
+					},
+					{
+						x: 0,
+						y: -2
+					},
+					{
+						x: 1,
+						y: 0
+					},
+					{
+						x: 2,
+						y: 2
+					},
+					{
+						x: 3,
+						y: 3
+					},
+					{
+						x: 4,
+						y: 4
+					},
+					{
+						x: 5,
+						y: 3
+					},
+					{
+						x: 6,
+						y: 2
+					},
+					{
+						x: 7,
+						y: 1
+					},
+					{
+						x: 8,
+						y: 0
+					},
+					{
+						x: 9,
+						y: -1
+					},
+					{
+						x: 10,
+						y: -1
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -419,7 +546,6 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x942e18e5a4b86101
 // Course: 8th grade math
@@ -427,91 +553,91 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 // Widget key: image_1
 test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
-	"width": 345,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 345,
-	"points": [],
-	"polylines": [
-		{
-			"id": "polyline_main",
-			"color": "#11accd",
-			"style": "solid",
-			"points": [
-				{
-					"x": -10,
-					"y": -5
-				},
-				{
-					"x": -9,
-					"y": -5
-				},
-				{
-					"x": -8,
-					"y": -5
-				},
-				{
-					"x": -7,
-					"y": -5
-				},
-				{
-					"x": -6,
-					"y": -5
-				},
-				{
-					"x": -5,
-					"y": -2
-				},
-				{
-					"x": 1,
-					"y": -1
-				},
-				{
-					"x": 2,
-					"y": 0
-				},
-				{
-					"x": 3,
-					"y": 1
-				},
-				{
-					"x": 5,
-					"y": 2
-				},
-				{
-					"x": 7,
-					"y": 3
-				},
-				{
-					"x": 8,
-					"y": 0
-				},
-				{
-					"x": 9,
-					"y": -2
-				},
-				{
-					"x": 10,
-					"y": -5
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 345,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 345,
+		points: [],
+		polylines: [
+			{
+				id: "polyline_main",
+				color: "#11accd",
+				style: "solid",
+				points: [
+					{
+						x: -10,
+						y: -5
+					},
+					{
+						x: -9,
+						y: -5
+					},
+					{
+						x: -8,
+						y: -5
+					},
+					{
+						x: -7,
+						y: -5
+					},
+					{
+						x: -6,
+						y: -5
+					},
+					{
+						x: -5,
+						y: -2
+					},
+					{
+						x: 1,
+						y: -1
+					},
+					{
+						x: 2,
+						y: 0
+					},
+					{
+						x: 3,
+						y: 1
+					},
+					{
+						x: 5,
+						y: 2
+					},
+					{
+						x: 7,
+						y: 3
+					},
+					{
+						x: 8,
+						y: 0
+					},
+					{
+						x: 9,
+						y: -2
+					},
+					{
+						x: 10,
+						y: -5
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -524,7 +650,6 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x48b2be540a8c2411
 // Course: 8th grade math
@@ -532,119 +657,119 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 // Widget key: image_1
 test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
-	"width": 345,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 3,
-		"min": -4,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 345,
-	"points": [],
-	"polylines": [
-		{
-			"id": "polyline_1",
-			"color": "#11accd",
-			"style": "solid",
-			"points": [
-				{
-					"x": -10,
-					"y": 1
-				},
-				{
-					"x": -9,
-					"y": 0
-				},
-				{
-					"x": -8,
-					"y": 1
-				},
-				{
-					"x": -7,
-					"y": 2
-				},
-				{
-					"x": -6,
-					"y": 1
-				},
-				{
-					"x": -5,
-					"y": 2
-				},
-				{
-					"x": -4,
-					"y": 1
-				},
-				{
-					"x": -3,
-					"y": 0
-				},
-				{
-					"x": -2,
-					"y": -1
-				},
-				{
-					"x": -1,
-					"y": 0
-				},
-				{
-					"x": 0,
-					"y": -1
-				},
-				{
-					"x": 1,
-					"y": -2
-				},
-				{
-					"x": 2,
-					"y": -1
-				},
-				{
-					"x": 3,
-					"y": -1
-				},
-				{
-					"x": 4,
-					"y": -2
-				},
-				{
-					"x": 5,
-					"y": -3
-				},
-				{
-					"x": 6,
-					"y": -2
-				},
-				{
-					"x": 7,
-					"y": 0
-				},
-				{
-					"x": 8,
-					"y": 1
-				},
-				{
-					"x": 9,
-					"y": 0
-				},
-				{
-					"x": 10,
-					"y": -1
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 345,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 3,
+			min: -4,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 345,
+		points: [],
+		polylines: [
+			{
+				id: "polyline_1",
+				color: "#11accd",
+				style: "solid",
+				points: [
+					{
+						x: -10,
+						y: 1
+					},
+					{
+						x: -9,
+						y: 0
+					},
+					{
+						x: -8,
+						y: 1
+					},
+					{
+						x: -7,
+						y: 2
+					},
+					{
+						x: -6,
+						y: 1
+					},
+					{
+						x: -5,
+						y: 2
+					},
+					{
+						x: -4,
+						y: 1
+					},
+					{
+						x: -3,
+						y: 0
+					},
+					{
+						x: -2,
+						y: -1
+					},
+					{
+						x: -1,
+						y: 0
+					},
+					{
+						x: 0,
+						y: -1
+					},
+					{
+						x: 1,
+						y: -2
+					},
+					{
+						x: 2,
+						y: -1
+					},
+					{
+						x: 3,
+						y: -1
+					},
+					{
+						x: 4,
+						y: -2
+					},
+					{
+						x: 5,
+						y: -3
+					},
+					{
+						x: 6,
+						y: -2
+					},
+					{
+						x: 7,
+						y: 0
+					},
+					{
+						x: 8,
+						y: 1
+					},
+					{
+						x: 9,
+						y: 0
+					},
+					{
+						x: 10,
+						y: -1
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -657,7 +782,6 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x8df33c0f4fcfe2f5
 // Course: 8th grade math
@@ -665,119 +789,119 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 // Widget key: image_1
 test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
-	"width": 345,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 345,
-	"points": [],
-	"polylines": [
-		{
-			"id": "graph_polyline_1",
-			"color": "#11accd",
-			"style": "solid",
-			"points": [
-				{
-					"x": -10,
-					"y": -3
-				},
-				{
-					"x": -9,
-					"y": -2
-				},
-				{
-					"x": -8,
-					"y": -1
-				},
-				{
-					"x": -7,
-					"y": 0
-				},
-				{
-					"x": -6,
-					"y": 1
-				},
-				{
-					"x": -5,
-					"y": 2
-				},
-				{
-					"x": -4,
-					"y": 0
-				},
-				{
-					"x": -3,
-					"y": 0
-				},
-				{
-					"x": -2,
-					"y": 1
-				},
-				{
-					"x": -1,
-					"y": 2
-				},
-				{
-					"x": 0,
-					"y": 3
-				},
-				{
-					"x": 1,
-					"y": 4
-				},
-				{
-					"x": 2,
-					"y": 5
-				},
-				{
-					"x": 3,
-					"y": 6
-				},
-				{
-					"x": 4,
-					"y": 7
-				},
-				{
-					"x": 5,
-					"y": 8
-				},
-				{
-					"x": 6,
-					"y": 8
-				},
-				{
-					"x": 7,
-					"y": 7
-				},
-				{
-					"x": 8,
-					"y": 8
-				},
-				{
-					"x": 9,
-					"y": 8
-				},
-				{
-					"x": 10,
-					"y": 8
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 345,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 345,
+		points: [],
+		polylines: [
+			{
+				id: "graph_polyline_1",
+				color: "#11accd",
+				style: "solid",
+				points: [
+					{
+						x: -10,
+						y: -3
+					},
+					{
+						x: -9,
+						y: -2
+					},
+					{
+						x: -8,
+						y: -1
+					},
+					{
+						x: -7,
+						y: 0
+					},
+					{
+						x: -6,
+						y: 1
+					},
+					{
+						x: -5,
+						y: 2
+					},
+					{
+						x: -4,
+						y: 0
+					},
+					{
+						x: -3,
+						y: 0
+					},
+					{
+						x: -2,
+						y: 1
+					},
+					{
+						x: -1,
+						y: 2
+					},
+					{
+						x: 0,
+						y: 3
+					},
+					{
+						x: 1,
+						y: 4
+					},
+					{
+						x: 2,
+						y: 5
+					},
+					{
+						x: 3,
+						y: 6
+					},
+					{
+						x: 4,
+						y: 7
+					},
+					{
+						x: 5,
+						y: 8
+					},
+					{
+						x: 6,
+						y: 8
+					},
+					{
+						x: 7,
+						y: 7
+					},
+					{
+						x: 8,
+						y: 8
+					},
+					{
+						x: 9,
+						y: 8
+					},
+					{
+						x: 10,
+						y: 8
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -790,7 +914,6 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x1e7b56e6d23627f2
 // Course: 8th grade math
@@ -798,119 +921,119 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 // Widget key: image_1
 test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
-	"width": 345,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 6,
-		"min": -3,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 345,
-	"points": [],
-	"polylines": [
-		{
-			"id": "polyline_1",
-			"color": "#11accd",
-			"style": "solid",
-			"points": [
-				{
-					"x": -10,
-					"y": 0
-				},
-				{
-					"x": -9,
-					"y": 1
-				},
-				{
-					"x": -8,
-					"y": 0
-				},
-				{
-					"x": -7,
-					"y": 1
-				},
-				{
-					"x": -6,
-					"y": 1
-				},
-				{
-					"x": -5,
-					"y": 0
-				},
-				{
-					"x": -4,
-					"y": 1
-				},
-				{
-					"x": -3,
-					"y": 0
-				},
-				{
-					"x": -2,
-					"y": 0
-				},
-				{
-					"x": -1,
-					"y": -1
-				},
-				{
-					"x": 0,
-					"y": -2
-				},
-				{
-					"x": 1,
-					"y": -1
-				},
-				{
-					"x": 2,
-					"y": 0
-				},
-				{
-					"x": 3,
-					"y": 1
-				},
-				{
-					"x": 4,
-					"y": 2
-				},
-				{
-					"x": 5,
-					"y": 3
-				},
-				{
-					"x": 6,
-					"y": 4
-				},
-				{
-					"x": 7,
-					"y": 3
-				},
-				{
-					"x": 8,
-					"y": 4
-				},
-				{
-					"x": 9,
-					"y": 5
-				},
-				{
-					"x": 10,
-					"y": 3
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 345,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 6,
+			min: -3,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 345,
+		points: [],
+		polylines: [
+			{
+				id: "polyline_1",
+				color: "#11accd",
+				style: "solid",
+				points: [
+					{
+						x: -10,
+						y: 0
+					},
+					{
+						x: -9,
+						y: 1
+					},
+					{
+						x: -8,
+						y: 0
+					},
+					{
+						x: -7,
+						y: 1
+					},
+					{
+						x: -6,
+						y: 1
+					},
+					{
+						x: -5,
+						y: 0
+					},
+					{
+						x: -4,
+						y: 1
+					},
+					{
+						x: -3,
+						y: 0
+					},
+					{
+						x: -2,
+						y: 0
+					},
+					{
+						x: -1,
+						y: -1
+					},
+					{
+						x: 0,
+						y: -2
+					},
+					{
+						x: 1,
+						y: -1
+					},
+					{
+						x: 2,
+						y: 0
+					},
+					{
+						x: 3,
+						y: 1
+					},
+					{
+						x: 4,
+						y: 2
+					},
+					{
+						x: 5,
+						y: 3
+					},
+					{
+						x: 6,
+						y: 4
+					},
+					{
+						x: 7,
+						y: 3
+					},
+					{
+						x: 8,
+						y: 4
+					},
+					{
+						x: 9,
+						y: 5
+					},
+					{
+						x: 10,
+						y: 3
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -923,7 +1046,6 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xf74fcc4f02db29fc
 // Course: 8th grade math
@@ -931,119 +1053,119 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 // Widget key: image_1
 test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
-	"width": 345,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 10,
-		"min": 0,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 345,
-	"points": [],
-	"polylines": [
-		{
-			"id": "f1",
-			"color": "#11accd",
-			"style": "solid",
-			"points": [
-				{
-					"x": -10,
-					"y": 5
-				},
-				{
-					"x": -9,
-					"y": 6
-				},
-				{
-					"x": -8,
-					"y": 7
-				},
-				{
-					"x": -7,
-					"y": 6
-				},
-				{
-					"x": -6,
-					"y": 5
-				},
-				{
-					"x": -5,
-					"y": 6
-				},
-				{
-					"x": -4,
-					"y": 8
-				},
-				{
-					"x": -3,
-					"y": 8
-				},
-				{
-					"x": -2,
-					"y": 7
-				},
-				{
-					"x": -1,
-					"y": 8
-				},
-				{
-					"x": 0,
-					"y": 7
-				},
-				{
-					"x": 1,
-					"y": 5
-				},
-				{
-					"x": 2,
-					"y": 4
-				},
-				{
-					"x": 3,
-					"y": 5
-				},
-				{
-					"x": 4,
-					"y": 6
-				},
-				{
-					"x": 5,
-					"y": 7
-				},
-				{
-					"x": 6,
-					"y": 6
-				},
-				{
-					"x": 7,
-					"y": 4
-				},
-				{
-					"x": 8,
-					"y": 4
-				},
-				{
-					"x": 9,
-					"y": 3
-				},
-				{
-					"x": 10,
-					"y": 4
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 345,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 10,
+			min: 0,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 345,
+		points: [],
+		polylines: [
+			{
+				id: "f1",
+				color: "#11accd",
+				style: "solid",
+				points: [
+					{
+						x: -10,
+						y: 5
+					},
+					{
+						x: -9,
+						y: 6
+					},
+					{
+						x: -8,
+						y: 7
+					},
+					{
+						x: -7,
+						y: 6
+					},
+					{
+						x: -6,
+						y: 5
+					},
+					{
+						x: -5,
+						y: 6
+					},
+					{
+						x: -4,
+						y: 8
+					},
+					{
+						x: -3,
+						y: 8
+					},
+					{
+						x: -2,
+						y: 7
+					},
+					{
+						x: -1,
+						y: 8
+					},
+					{
+						x: 0,
+						y: 7
+					},
+					{
+						x: 1,
+						y: 5
+					},
+					{
+						x: 2,
+						y: 4
+					},
+					{
+						x: 3,
+						y: 5
+					},
+					{
+						x: 4,
+						y: 6
+					},
+					{
+						x: 5,
+						y: 7
+					},
+					{
+						x: 6,
+						y: 6
+					},
+					{
+						x: 7,
+						y: 4
+					},
+					{
+						x: 8,
+						y: 4
+					},
+					{
+						x: 9,
+						y: 3
+					},
+					{
+						x: 10,
+						y: 4
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -1056,7 +1178,6 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x8a3fd8eb0882a079
 // Course: 8th grade math
@@ -1064,119 +1185,119 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 // Widget key: image_1
 test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
-	"width": 345,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 6,
-		"min": -2,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 345,
-	"points": [],
-	"polylines": [
-		{
-			"id": "poly1",
-			"color": "#11accd",
-			"style": "solid",
-			"points": [
-				{
-					"x": -10,
-					"y": -2
-				},
-				{
-					"x": -9,
-					"y": 0
-				},
-				{
-					"x": -8,
-					"y": 1
-				},
-				{
-					"x": -7,
-					"y": 2
-				},
-				{
-					"x": -6,
-					"y": 2
-				},
-				{
-					"x": -5,
-					"y": 4
-				},
-				{
-					"x": -4,
-					"y": 3
-				},
-				{
-					"x": -3,
-					"y": 2
-				},
-				{
-					"x": -2,
-					"y": 1
-				},
-				{
-					"x": -1,
-					"y": 3
-				},
-				{
-					"x": 0,
-					"y": 2
-				},
-				{
-					"x": 1,
-					"y": 1
-				},
-				{
-					"x": 2,
-					"y": 2
-				},
-				{
-					"x": 3,
-					"y": 3
-				},
-				{
-					"x": 4,
-					"y": 4
-				},
-				{
-					"x": 5,
-					"y": 5
-				},
-				{
-					"x": 6,
-					"y": 4
-				},
-				{
-					"x": 7,
-					"y": 5
-				},
-				{
-					"x": 8,
-					"y": 6
-				},
-				{
-					"x": 9,
-					"y": 6
-				},
-				{
-					"x": 10,
-					"y": 5
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 345,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 6,
+			min: -2,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 345,
+		points: [],
+		polylines: [
+			{
+				id: "poly1",
+				color: "#11accd",
+				style: "solid",
+				points: [
+					{
+						x: -10,
+						y: -2
+					},
+					{
+						x: -9,
+						y: 0
+					},
+					{
+						x: -8,
+						y: 1
+					},
+					{
+						x: -7,
+						y: 2
+					},
+					{
+						x: -6,
+						y: 2
+					},
+					{
+						x: -5,
+						y: 4
+					},
+					{
+						x: -4,
+						y: 3
+					},
+					{
+						x: -3,
+						y: 2
+					},
+					{
+						x: -2,
+						y: 1
+					},
+					{
+						x: -1,
+						y: 3
+					},
+					{
+						x: 0,
+						y: 2
+					},
+					{
+						x: 1,
+						y: 1
+					},
+					{
+						x: 2,
+						y: 2
+					},
+					{
+						x: 3,
+						y: 3
+					},
+					{
+						x: 4,
+						y: 4
+					},
+					{
+						x: 5,
+						y: 5
+					},
+					{
+						x: 6,
+						y: 4
+					},
+					{
+						x: 7,
+						y: 5
+					},
+					{
+						x: 8,
+						y: 6
+					},
+					{
+						x: 9,
+						y: 6
+					},
+					{
+						x: 10,
+						y: 5
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -1189,7 +1310,6 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xd8efff80c076d466
 // Course: 8th grade math
@@ -1197,119 +1317,119 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 // Widget key: image_1
 test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const input = {
-	"width": 345,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 345,
-	"points": [],
-	"polylines": [
-		{
-			"id": "graph",
-			"color": "#11accd",
-			"style": "solid",
-			"points": [
-				{
-					"x": -10,
-					"y": 4
-				},
-				{
-					"x": -9,
-					"y": 5
-				},
-				{
-					"x": -8,
-					"y": 4
-				},
-				{
-					"x": -7,
-					"y": 5
-				},
-				{
-					"x": -6,
-					"y": 6
-				},
-				{
-					"x": -5,
-					"y": 7
-				},
-				{
-					"x": -4,
-					"y": 8
-				},
-				{
-					"x": -3,
-					"y": 7
-				},
-				{
-					"x": -2,
-					"y": 6
-				},
-				{
-					"x": -1,
-					"y": 5
-				},
-				{
-					"x": 0,
-					"y": 4
-				},
-				{
-					"x": 1,
-					"y": 2
-				},
-				{
-					"x": 2,
-					"y": 1
-				},
-				{
-					"x": 3,
-					"y": 0
-				},
-				{
-					"x": 4,
-					"y": 2
-				},
-				{
-					"x": 5,
-					"y": 1
-				},
-				{
-					"x": 6,
-					"y": 0
-				},
-				{
-					"x": 7,
-					"y": -1
-				},
-				{
-					"x": 8,
-					"y": 0
-				},
-				{
-					"x": 9,
-					"y": -2
-				},
-				{
-					"x": 10,
-					"y": -1
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 345,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 345,
+		points: [],
+		polylines: [
+			{
+				id: "graph",
+				color: "#11accd",
+				style: "solid",
+				points: [
+					{
+						x: -10,
+						y: 4
+					},
+					{
+						x: -9,
+						y: 5
+					},
+					{
+						x: -8,
+						y: 4
+					},
+					{
+						x: -7,
+						y: 5
+					},
+					{
+						x: -6,
+						y: 6
+					},
+					{
+						x: -5,
+						y: 7
+					},
+					{
+						x: -4,
+						y: 8
+					},
+					{
+						x: -3,
+						y: 7
+					},
+					{
+						x: -2,
+						y: 6
+					},
+					{
+						x: -1,
+						y: 5
+					},
+					{
+						x: 0,
+						y: 4
+					},
+					{
+						x: 1,
+						y: 2
+					},
+					{
+						x: 2,
+						y: 1
+					},
+					{
+						x: 3,
+						y: 0
+					},
+					{
+						x: 4,
+						y: 2
+					},
+					{
+						x: 5,
+						y: 1
+					},
+					{
+						x: 6,
+						y: 0
+					},
+					{
+						x: 7,
+						y: -1
+					},
+					{
+						x: 8,
+						y: 0
+					},
+					{
+						x: 9,
+						y: -2
+					},
+					{
+						x: 10,
+						y: -1
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -1322,7 +1442,6 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x8e37b453
 // Course: 8th grade math
@@ -1330,103 +1449,103 @@ test("function-plot-graph - Evaluate functions from their graph", async () => {
 // Widget key: image_1
 test("function-plot-graph - Recognize functions from graphs", async () => {
 	const input = {
-	"width": 345,
-	"xAxis": {
-		"max": 8,
-		"min": -8,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 8,
-		"min": -8,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 345,
-	"points": [],
-	"polylines": [
-		{
-			"id": "parabola_segment",
-			"color": "#11accd",
-			"style": "solid",
-			"points": [
-				{
-					"x": -4,
-					"y": -8
-				},
-				{
-					"x": -3.75,
-					"y": -4.484375
-				},
-				{
-					"x": -3.5,
-					"y": -1.4375
-				},
-				{
-					"x": -3.25,
-					"y": 1.140625
-				},
-				{
-					"x": -3,
-					"y": 3.25
-				},
-				{
-					"x": -2.75,
-					"y": 4.890625
-				},
-				{
-					"x": -2.5,
-					"y": 6.0625
-				},
-				{
-					"x": -2.25,
-					"y": 6.765625
-				},
-				{
-					"x": -2,
-					"y": 7
-				},
-				{
-					"x": -1.75,
-					"y": 6.765625
-				},
-				{
-					"x": -1.5,
-					"y": 6.0625
-				},
-				{
-					"x": -1.25,
-					"y": 4.890625
-				},
-				{
-					"x": -1,
-					"y": 3.25
-				},
-				{
-					"x": -0.75,
-					"y": 1.140625
-				},
-				{
-					"x": -0.5,
-					"y": -1.4375
-				},
-				{
-					"x": -0.25,
-					"y": -4.484375
-				},
-				{
-					"x": 0,
-					"y": -8
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 345,
+		xAxis: {
+			max: 8,
+			min: -8,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 8,
+			min: -8,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 345,
+		points: [],
+		polylines: [
+			{
+				id: "parabola_segment",
+				color: "#11accd",
+				style: "solid",
+				points: [
+					{
+						x: -4,
+						y: -8
+					},
+					{
+						x: -3.75,
+						y: -4.484375
+					},
+					{
+						x: -3.5,
+						y: -1.4375
+					},
+					{
+						x: -3.25,
+						y: 1.140625
+					},
+					{
+						x: -3,
+						y: 3.25
+					},
+					{
+						x: -2.75,
+						y: 4.890625
+					},
+					{
+						x: -2.5,
+						y: 6.0625
+					},
+					{
+						x: -2.25,
+						y: 6.765625
+					},
+					{
+						x: -2,
+						y: 7
+					},
+					{
+						x: -1.75,
+						y: 6.765625
+					},
+					{
+						x: -1.5,
+						y: 6.0625
+					},
+					{
+						x: -1.25,
+						y: 4.890625
+					},
+					{
+						x: -1,
+						y: 3.25
+					},
+					{
+						x: -0.75,
+						y: 1.140625
+					},
+					{
+						x: -0.5,
+						y: -1.4375
+					},
+					{
+						x: -0.25,
+						y: -4.484375
+					},
+					{
+						x: 0,
+						y: -8
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -1439,7 +1558,6 @@ test("function-plot-graph - Recognize functions from graphs", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xd4bb9c5d
 // Course: 8th grade math
@@ -1447,79 +1565,79 @@ test("function-plot-graph - Recognize functions from graphs", async () => {
 // Widget key: image_1
 test("function-plot-graph - Recognize functions from graphs", async () => {
 	const input = {
-	"width": 345,
-	"xAxis": {
-		"max": 8,
-		"min": -8,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 8,
-		"min": -8,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 345,
-	"points": [],
-	"polylines": [
-		{
-			"id": "u_curve",
-			"color": "#11accd",
-			"style": "solid",
-			"points": [
-				{
-					"x": 1.5,
-					"y": 8
-				},
-				{
-					"x": 1.7,
-					"y": 4.5
-				},
-				{
-					"x": 1.9,
-					"y": -1.5
-				},
-				{
-					"x": 2,
-					"y": -4
-				},
-				{
-					"x": 2.2,
-					"y": -2
-				},
-				{
-					"x": 2.5,
-					"y": 0.8
-				},
-				{
-					"x": 3,
-					"y": 3.5
-				},
-				{
-					"x": 3.5,
-					"y": 5
-				},
-				{
-					"x": 4.2,
-					"y": 6.5
-				},
-				{
-					"x": 5,
-					"y": 7.5
-				},
-				{
-					"x": 5.5,
-					"y": 8
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 345,
+		xAxis: {
+			max: 8,
+			min: -8,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 8,
+			min: -8,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 345,
+		points: [],
+		polylines: [
+			{
+				id: "u_curve",
+				color: "#11accd",
+				style: "solid",
+				points: [
+					{
+						x: 1.5,
+						y: 8
+					},
+					{
+						x: 1.7,
+						y: 4.5
+					},
+					{
+						x: 1.9,
+						y: -1.5
+					},
+					{
+						x: 2,
+						y: -4
+					},
+					{
+						x: 2.2,
+						y: -2
+					},
+					{
+						x: 2.5,
+						y: 0.8
+					},
+					{
+						x: 3,
+						y: 3.5
+					},
+					{
+						x: 3.5,
+						y: 5
+					},
+					{
+						x: 4.2,
+						y: 6.5
+					},
+					{
+						x: 5,
+						y: 7.5
+					},
+					{
+						x: 5.5,
+						y: 8
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -1532,7 +1650,6 @@ test("function-plot-graph - Recognize functions from graphs", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xe35f88fdc0b3dd32
 // Course: 8th grade math
@@ -1540,74 +1657,74 @@ test("function-plot-graph - Recognize functions from graphs", async () => {
 // Widget key: image_1
 test("function-plot-graph - Linear nonlinear functions", async () => {
 	const input = {
-	"width": 400,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 400,
-	"points": [],
-	"polylines": [
-		{
-			"id": "left_segment",
-			"color": "#000000",
-			"style": "solid",
-			"points": [
-				{
-					"x": -3,
-					"y": 10
-				},
-				{
-					"x": -2,
-					"y": 8
-				},
-				{
-					"x": 0,
-					"y": 4
-				},
-				{
-					"x": 2,
-					"y": 0
-				}
-			]
+		width: 400,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
 		},
-		{
-			"id": "right_segment",
-			"color": "#000000",
-			"style": "solid",
-			"points": [
-				{
-					"x": 2,
-					"y": 0
-				},
-				{
-					"x": 4,
-					"y": 4
-				},
-				{
-					"x": 6,
-					"y": 8
-				},
-				{
-					"x": 7,
-					"y": 10
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		yAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 400,
+		points: [],
+		polylines: [
+			{
+				id: "left_segment",
+				color: "#000000",
+				style: "solid",
+				points: [
+					{
+						x: -3,
+						y: 10
+					},
+					{
+						x: -2,
+						y: 8
+					},
+					{
+						x: 0,
+						y: 4
+					},
+					{
+						x: 2,
+						y: 0
+					}
+				]
+			},
+			{
+				id: "right_segment",
+				color: "#000000",
+				style: "solid",
+				points: [
+					{
+						x: 2,
+						y: 0
+					},
+					{
+						x: 4,
+						y: 4
+					},
+					{
+						x: 6,
+						y: 8
+					},
+					{
+						x: 7,
+						y: 10
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -1620,7 +1737,6 @@ test("function-plot-graph - Linear nonlinear functions", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xb551b3d0d7c96383
 // Course: 8th grade math
@@ -1628,55 +1744,55 @@ test("function-plot-graph - Linear nonlinear functions", async () => {
 // Widget key: image_1
 test("function-plot-graph - Linear nonlinear functions", async () => {
 	const input = {
-	"width": 425,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "x",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "y",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 425,
-	"points": [],
-	"polylines": [
-		{
-			"id": "curve",
-			"color": "#0b82d0",
-			"style": "solid",
-			"points": [
-				{
-					"x": -9,
-					"y": -4
-				},
-				{
-					"x": -6,
-					"y": 0
-				},
-				{
-					"x": -1,
-					"y": 4
-				},
-				{
-					"x": 4,
-					"y": 7
-				},
-				{
-					"x": 6,
-					"y": 8
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 425,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "x",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 10,
+			min: -10,
+			label: "y",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 425,
+		points: [],
+		polylines: [
+			{
+				id: "curve",
+				color: "#0b82d0",
+				style: "solid",
+				points: [
+					{
+						x: -9,
+						y: -4
+					},
+					{
+						x: -6,
+						y: 0
+					},
+					{
+						x: -1,
+						y: 4
+					},
+					{
+						x: 4,
+						y: 7
+					},
+					{
+						x: 6,
+						y: 8
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -1689,7 +1805,6 @@ test("function-plot-graph - Linear nonlinear functions", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xc0306a31012896cf
 // Course: 8th grade math
@@ -1697,59 +1812,59 @@ test("function-plot-graph - Linear nonlinear functions", async () => {
 // Widget key: image_1
 test("function-plot-graph - Linear nonlinear functions", async () => {
 	const input = {
-	"width": 425,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 425,
-	"points": [],
-	"polylines": [
-		{
-			"id": "curve_1",
-			"color": "#1f77b4",
-			"style": "solid",
-			"points": [
-				{
-					"x": -2,
-					"y": 6
-				},
-				{
-					"x": 0,
-					"y": 0
-				},
-				{
-					"x": 2,
-					"y": -4
-				},
-				{
-					"x": 4,
-					"y": -6
-				},
-				{
-					"x": 6,
-					"y": -6
-				},
-				{
-					"x": 8,
-					"y": -4
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 425,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 425,
+		points: [],
+		polylines: [
+			{
+				id: "curve_1",
+				color: "#1f77b4",
+				style: "solid",
+				points: [
+					{
+						x: -2,
+						y: 6
+					},
+					{
+						x: 0,
+						y: 0
+					},
+					{
+						x: 2,
+						y: -4
+					},
+					{
+						x: 4,
+						y: -6
+					},
+					{
+						x: 6,
+						y: -6
+					},
+					{
+						x: 8,
+						y: -4
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -1762,7 +1877,6 @@ test("function-plot-graph - Linear nonlinear functions", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x965572453c98814d
 // Course: 8th grade math
@@ -1770,144 +1884,144 @@ test("function-plot-graph - Linear nonlinear functions", async () => {
 // Widget key: image_1
 test("function-plot-graph - Linear nonlinear functions", async () => {
 	const input = {
-	"width": 425,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 425,
-	"points": [
-		{
-			"x": -5,
-			"y": -1,
-			"id": "p_neg5_neg1",
-			"color": "#1f77b4",
-			"label": "",
-			"style": "closed"
+		width: 425,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
 		},
-		{
-			"x": 3,
-			"y": -2,
-			"id": "p_3_neg2",
-			"color": "#1f77b4",
-			"label": "",
-			"style": "closed"
+		yAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
 		},
-		{
-			"x": 8,
-			"y": -7,
-			"id": "p_8_neg7",
-			"color": "#1f77b4",
-			"label": "",
-			"style": "closed"
-		}
-	],
-	"polylines": [
-		{
-			"id": "curve",
-			"color": "#1f77b4",
-			"style": "solid",
-			"points": [
-				{
-					"x": -10,
-					"y": 0
-				},
-				{
-					"x": -9,
-					"y": -0.3
-				},
-				{
-					"x": -8,
-					"y": -0.6
-				},
-				{
-					"x": -7,
-					"y": -0.8
-				},
-				{
-					"x": -6,
-					"y": -0.95
-				},
-				{
-					"x": -5,
-					"y": -1
-				},
-				{
-					"x": -4,
-					"y": -1.1
-				},
-				{
-					"x": -3,
-					"y": -1.2
-				},
-				{
-					"x": -2,
-					"y": -1.35
-				},
-				{
-					"x": -1,
-					"y": -1.5
-				},
-				{
-					"x": 0,
-					"y": -1.7
-				},
-				{
-					"x": 1,
-					"y": -1.85
-				},
-				{
-					"x": 2,
-					"y": -1.95
-				},
-				{
-					"x": 3,
-					"y": -2
-				},
-				{
-					"x": 4,
-					"y": -2.4
-				},
-				{
-					"x": 5,
-					"y": -3
-				},
-				{
-					"x": 6,
-					"y": -4
-				},
-				{
-					"x": 7,
-					"y": -5.5
-				},
-				{
-					"x": 8,
-					"y": -7
-				},
-				{
-					"x": 9,
-					"y": -8.5
-				},
-				{
-					"x": 10,
-					"y": -10
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		height: 425,
+		points: [
+			{
+				x: -5,
+				y: -1,
+				id: "p_neg5_neg1",
+				color: "#1f77b4",
+				label: "",
+				style: "closed"
+			},
+			{
+				x: 3,
+				y: -2,
+				id: "p_3_neg2",
+				color: "#1f77b4",
+				label: "",
+				style: "closed"
+			},
+			{
+				x: 8,
+				y: -7,
+				id: "p_8_neg7",
+				color: "#1f77b4",
+				label: "",
+				style: "closed"
+			}
+		],
+		polylines: [
+			{
+				id: "curve",
+				color: "#1f77b4",
+				style: "solid",
+				points: [
+					{
+						x: -10,
+						y: 0
+					},
+					{
+						x: -9,
+						y: -0.3
+					},
+					{
+						x: -8,
+						y: -0.6
+					},
+					{
+						x: -7,
+						y: -0.8
+					},
+					{
+						x: -6,
+						y: -0.95
+					},
+					{
+						x: -5,
+						y: -1
+					},
+					{
+						x: -4,
+						y: -1.1
+					},
+					{
+						x: -3,
+						y: -1.2
+					},
+					{
+						x: -2,
+						y: -1.35
+					},
+					{
+						x: -1,
+						y: -1.5
+					},
+					{
+						x: 0,
+						y: -1.7
+					},
+					{
+						x: 1,
+						y: -1.85
+					},
+					{
+						x: 2,
+						y: -1.95
+					},
+					{
+						x: 3,
+						y: -2
+					},
+					{
+						x: 4,
+						y: -2.4
+					},
+					{
+						x: 5,
+						y: -3
+					},
+					{
+						x: 6,
+						y: -4
+					},
+					{
+						x: 7,
+						y: -5.5
+					},
+					{
+						x: 8,
+						y: -7
+					},
+					{
+						x: 9,
+						y: -8.5
+					},
+					{
+						x: 10,
+						y: -10
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -1920,7 +2034,6 @@ test("function-plot-graph - Linear nonlinear functions", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x9cb5db3c6eb53987
 // Course: 8th grade math
@@ -1928,71 +2041,71 @@ test("function-plot-graph - Linear nonlinear functions", async () => {
 // Widget key: image_1
 test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
-	"width": 425,
-	"xAxis": {
-		"max": 6.283185307179586,
-		"min": -6.283185307179586,
-		"label": "",
-		"tickInterval": 1.5707963267948966,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 3,
-		"min": -3,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 425,
-	"points": [],
-	"polylines": [
-		{
-			"id": "function_curve",
-			"color": "#1f77b4",
-			"style": "solid",
-			"points": [
-				{
-					"x": -4.71238898038469,
-					"y": 0
-				},
-				{
-					"x": -3.9269908169872414,
-					"y": -2
-				},
-				{
-					"x": -3.141592653589793,
-					"y": 2
-				},
-				{
-					"x": -2.356194490192345,
-					"y": 2
-				},
-				{
-					"x": -1.5707963267948966,
-					"y": 0
-				},
-				{
-					"x": 0,
-					"y": 0
-				},
-				{
-					"x": 1.5707963267948966,
-					"y": 0
-				},
-				{
-					"x": 3.141592653589793,
-					"y": 0
-				},
-				{
-					"x": 4.71238898038469,
-					"y": 0
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 425,
+		xAxis: {
+			max: 6.283185307179586,
+			min: -6.283185307179586,
+			label: "",
+			tickInterval: 1.5707963267948966,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 3,
+			min: -3,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 425,
+		points: [],
+		polylines: [
+			{
+				id: "function_curve",
+				color: "#1f77b4",
+				style: "solid",
+				points: [
+					{
+						x: -4.71238898038469,
+						y: 0
+					},
+					{
+						x: -3.9269908169872414,
+						y: -2
+					},
+					{
+						x: -3.141592653589793,
+						y: 2
+					},
+					{
+						x: -2.356194490192345,
+						y: 2
+					},
+					{
+						x: -1.5707963267948966,
+						y: 0
+					},
+					{
+						x: 0,
+						y: 0
+					},
+					{
+						x: 1.5707963267948966,
+						y: 0
+					},
+					{
+						x: 3.141592653589793,
+						y: 0
+					},
+					{
+						x: 4.71238898038469,
+						y: 0
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -2005,7 +2118,6 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xccd47986
 // Course: 8th grade math
@@ -2013,67 +2125,67 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 // Widget key: image_1
 test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
-	"width": 450,
-	"xAxis": {
-		"max": 25,
-		"min": 0,
-		"label": "Time (hours)",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 25,
-		"min": 0,
-		"label": "Distance (kilometers)",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 450,
-	"points": [],
-	"polylines": [
-		{
-			"id": "sean_position",
-			"color": "#000000",
-			"style": "solid",
-			"points": [
-				{
-					"x": 0,
-					"y": 0
-				},
-				{
-					"x": 8,
-					"y": 0
-				},
-				{
-					"x": 9,
-					"y": 20
-				},
-				{
-					"x": 17,
-					"y": 20
-				},
-				{
-					"x": 19,
-					"y": 10
-				},
-				{
-					"x": 21,
-					"y": 10
-				},
-				{
-					"x": 21.5,
-					"y": 0
-				},
-				{
-					"x": 24,
-					"y": 0
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 450,
+		xAxis: {
+			max: 25,
+			min: 0,
+			label: "Time (hours)",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 25,
+			min: 0,
+			label: "Distance (kilometers)",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 450,
+		points: [],
+		polylines: [
+			{
+				id: "sean_position",
+				color: "#000000",
+				style: "solid",
+				points: [
+					{
+						x: 0,
+						y: 0
+					},
+					{
+						x: 8,
+						y: 0
+					},
+					{
+						x: 9,
+						y: 20
+					},
+					{
+						x: 17,
+						y: 20
+					},
+					{
+						x: 19,
+						y: 10
+					},
+					{
+						x: 21,
+						y: 10
+					},
+					{
+						x: 21.5,
+						y: 0
+					},
+					{
+						x: 24,
+						y: 0
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -2086,7 +2198,6 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x150506e4
 // Course: 8th grade math
@@ -2094,86 +2205,86 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 // Widget key: image_1
 test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
-	"width": 445,
-	"xAxis": {
-		"max": 8.5,
-		"min": 0,
-		"label": "Time (hours)",
-		"tickInterval": 0.5,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 55,
-		"min": 0,
-		"label": "Distance (kilometers)",
-		"tickInterval": 5,
-		"showGridLines": true
-	},
-	"height": 445,
-	"points": [],
-	"polylines": [
-		{
-			"id": "alberto",
-			"color": "#00a656",
-			"style": "solid",
-			"points": [
-				{
-					"x": 0,
-					"y": 0
-				},
-				{
-					"x": 1,
-					"y": 20
-				},
-				{
-					"x": 2,
-					"y": 20
-				},
-				{
-					"x": 3,
-					"y": 20
-				},
-				{
-					"x": 4,
-					"y": 20
-				},
-				{
-					"x": 5,
-					"y": 30
-				},
-				{
-					"x": 6,
-					"y": 40
-				},
-				{
-					"x": 7,
-					"y": 50
-				}
-			]
+		width: 445,
+		xAxis: {
+			max: 8.5,
+			min: 0,
+			label: "Time (hours)",
+			tickInterval: 0.5,
+			showGridLines: true
 		},
-		{
-			"id": "bianca",
-			"color": "#1c7ed6",
-			"style": "solid",
-			"points": [
-				{
-					"x": 0,
-					"y": 0
-				},
-				{
-					"x": 5,
-					"y": 35
-				},
-				{
-					"x": 6,
-					"y": 50
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		yAxis: {
+			max: 55,
+			min: 0,
+			label: "Distance (kilometers)",
+			tickInterval: 5,
+			showGridLines: true
+		},
+		height: 445,
+		points: [],
+		polylines: [
+			{
+				id: "alberto",
+				color: "#00a656",
+				style: "solid",
+				points: [
+					{
+						x: 0,
+						y: 0
+					},
+					{
+						x: 1,
+						y: 20
+					},
+					{
+						x: 2,
+						y: 20
+					},
+					{
+						x: 3,
+						y: 20
+					},
+					{
+						x: 4,
+						y: 20
+					},
+					{
+						x: 5,
+						y: 30
+					},
+					{
+						x: 6,
+						y: 40
+					},
+					{
+						x: 7,
+						y: 50
+					}
+				]
+			},
+			{
+				id: "bianca",
+				color: "#1c7ed6",
+				style: "solid",
+				points: [
+					{
+						x: 0,
+						y: 0
+					},
+					{
+						x: 5,
+						y: 35
+					},
+					{
+						x: 6,
+						y: 50
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -2186,7 +2297,6 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xb754f5a4
 // Course: 8th grade math
@@ -2194,47 +2304,47 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 // Widget key: image_1
 test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
-	"width": 425,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "x",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "y",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 425,
-	"points": [],
-	"polylines": [
-		{
-			"id": "function_curve",
-			"color": "#222222",
-			"style": "solid",
-			"points": [
-				{
-					"x": 0,
-					"y": 8
-				},
-				{
-					"x": 1,
-					"y": 5
-				},
-				{
-					"x": 3,
-					"y": 2
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 425,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "x",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 10,
+			min: -10,
+			label: "y",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 425,
+		points: [],
+		polylines: [
+			{
+				id: "function_curve",
+				color: "#222222",
+				style: "solid",
+				points: [
+					{
+						x: 0,
+						y: 8
+					},
+					{
+						x: 1,
+						y: 5
+					},
+					{
+						x: 3,
+						y: 2
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -2247,7 +2357,6 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x572138ad
 // Course: 8th grade math
@@ -2255,67 +2364,67 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 // Widget key: image_1
 test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
-	"width": 425,
-	"xAxis": {
-		"max": 10,
-		"min": -1,
-		"label": "x",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 7,
-		"min": -4,
-		"label": "y",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 425,
-	"points": [],
-	"polylines": [
-		{
-			"id": "function_segment",
-			"color": "#000000",
-			"style": "solid",
-			"points": [
-				{
-					"x": 0,
-					"y": 0
-				},
-				{
-					"x": 3,
-					"y": 0
-				},
-				{
-					"x": 4,
-					"y": 2
-				},
-				{
-					"x": 5,
-					"y": 4
-				},
-				{
-					"x": 6,
-					"y": 3
-				},
-				{
-					"x": 7,
-					"y": 2
-				},
-				{
-					"x": 8,
-					"y": 1
-				},
-				{
-					"x": 9,
-					"y": 0
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 425,
+		xAxis: {
+			max: 10,
+			min: -1,
+			label: "x",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 7,
+			min: -4,
+			label: "y",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 425,
+		points: [],
+		polylines: [
+			{
+				id: "function_segment",
+				color: "#000000",
+				style: "solid",
+				points: [
+					{
+						x: 0,
+						y: 0
+					},
+					{
+						x: 3,
+						y: 0
+					},
+					{
+						x: 4,
+						y: 2
+					},
+					{
+						x: 5,
+						y: 4
+					},
+					{
+						x: 6,
+						y: 3
+					},
+					{
+						x: 7,
+						y: 2
+					},
+					{
+						x: 8,
+						y: 1
+					},
+					{
+						x: 9,
+						y: 0
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -2328,7 +2437,6 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x59b75739
 // Course: 8th grade math
@@ -2336,71 +2444,71 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 // Widget key: image_1
 test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
-	"width": 425,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 425,
-	"points": [],
-	"polylines": [
-		{
-			"id": "curve",
-			"color": "#0b84a5",
-			"style": "solid",
-			"points": [
-				{
-					"x": -1,
-					"y": -7
-				},
-				{
-					"x": 0,
-					"y": 0
-				},
-				{
-					"x": 1,
-					"y": 5
-				},
-				{
-					"x": 2,
-					"y": 8
-				},
-				{
-					"x": 3,
-					"y": 9
-				},
-				{
-					"x": 4,
-					"y": 8
-				},
-				{
-					"x": 5,
-					"y": 5
-				},
-				{
-					"x": 6,
-					"y": 0
-				},
-				{
-					"x": 7,
-					"y": -7
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 425,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 425,
+		points: [],
+		polylines: [
+			{
+				id: "curve",
+				color: "#0b84a5",
+				style: "solid",
+				points: [
+					{
+						x: -1,
+						y: -7
+					},
+					{
+						x: 0,
+						y: 0
+					},
+					{
+						x: 1,
+						y: 5
+					},
+					{
+						x: 2,
+						y: 8
+					},
+					{
+						x: 3,
+						y: 9
+					},
+					{
+						x: 4,
+						y: 8
+					},
+					{
+						x: 5,
+						y: 5
+					},
+					{
+						x: 6,
+						y: 0
+					},
+					{
+						x: 7,
+						y: -7
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -2413,7 +2521,6 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x93a49507
 // Course: 8th grade math
@@ -2421,71 +2528,71 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 // Widget key: image_1
 test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
-	"width": 425,
-	"xAxis": {
-		"max": 25,
-		"min": 0,
-		"label": "Time, in hours",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 33,
-		"min": -4,
-		"label": "Price, in dollars",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 425,
-	"points": [],
-	"polylines": [
-		{
-			"id": "rental_price",
-			"color": "#000000",
-			"style": "solid",
-			"points": [
-				{
-					"x": 0,
-					"y": 8
-				},
-				{
-					"x": 2,
-					"y": 16
-				},
-				{
-					"x": 3,
-					"y": 20
-				},
-				{
-					"x": 6,
-					"y": 24
-				},
-				{
-					"x": 8,
-					"y": 28
-				},
-				{
-					"x": 10,
-					"y": 30
-				},
-				{
-					"x": 14,
-					"y": 30
-				},
-				{
-					"x": 16,
-					"y": 30
-				},
-				{
-					"x": 24,
-					"y": 30
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 425,
+		xAxis: {
+			max: 25,
+			min: 0,
+			label: "Time, in hours",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 33,
+			min: -4,
+			label: "Price, in dollars",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 425,
+		points: [],
+		polylines: [
+			{
+				id: "rental_price",
+				color: "#000000",
+				style: "solid",
+				points: [
+					{
+						x: 0,
+						y: 8
+					},
+					{
+						x: 2,
+						y: 16
+					},
+					{
+						x: 3,
+						y: 20
+					},
+					{
+						x: 6,
+						y: 24
+					},
+					{
+						x: 8,
+						y: 28
+					},
+					{
+						x: 10,
+						y: 30
+					},
+					{
+						x: 14,
+						y: 30
+					},
+					{
+						x: 16,
+						y: 30
+					},
+					{
+						x: 24,
+						y: 30
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -2498,7 +2605,6 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: xc78ba6a5
 // Course: 8th grade math
@@ -2506,47 +2612,47 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 // Widget key: image_1
 test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
-	"width": 425,
-	"xAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 10,
-		"min": -10,
-		"label": "",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 425,
-	"points": [],
-	"polylines": [
-		{
-			"id": "function_curve",
-			"color": "#333333",
-			"style": "solid",
-			"points": [
-				{
-					"x": 0,
-					"y": 1
-				},
-				{
-					"x": 2,
-					"y": 2
-				},
-				{
-					"x": 6,
-					"y": 7
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 425,
+		xAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 10,
+			min: -10,
+			label: "",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 425,
+		points: [],
+		polylines: [
+			{
+				id: "function_curve",
+				color: "#333333",
+				style: "solid",
+				points: [
+					{
+						x: 0,
+						y: 1
+					},
+					{
+						x: 2,
+						y: 2
+					},
+					{
+						x: 6,
+						y: 7
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -2559,7 +2665,6 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x337386a259aea1b2
 // Course: 8th grade math
@@ -2567,103 +2672,103 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 // Widget key: image_1
 test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
-	"width": 425,
-	"xAxis": {
-		"max": 6.283185307179586,
-		"min": -6.283185307179586,
-		"label": "x",
-		"tickInterval": 1.5707963267948966,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 3,
-		"min": -3,
-		"label": "y",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 425,
-	"points": [],
-	"polylines": [
-		{
-			"id": "sinc_curve",
-			"color": "#11accd",
-			"style": "solid",
-			"points": [
-				{
-					"x": -6.283185307179586,
-					"y": 0
-				},
-				{
-					"x": -5.497787143782138,
-					"y": -0.1287
-				},
-				{
-					"x": -4.71238898038469,
-					"y": -0.2122065908
-				},
-				{
-					"x": -3.926990716492706,
-					"y": -0.1800632632
-				},
-				{
-					"x": -3.141592653589793,
-					"y": 0
-				},
-				{
-					"x": -2.356194490192345,
-					"y": 0.3001054387
-				},
-				{
-					"x": -1.5707963267948966,
-					"y": 0.6366197724
-				},
-				{
-					"x": -0.7853981633974483,
-					"y": 0.9003163162
-				},
-				{
-					"x": 0,
-					"y": 1
-				},
-				{
-					"x": 0.7853981633974483,
-					"y": 0.9003163162
-				},
-				{
-					"x": 1.5707963267948966,
-					"y": 0.6366197724
-				},
-				{
-					"x": 2.356194490192345,
-					"y": 0.3001054387
-				},
-				{
-					"x": 3.141592653589793,
-					"y": 0
-				},
-				{
-					"x": 3.926990716492706,
-					"y": -0.1800632632
-				},
-				{
-					"x": 4.71238898038469,
-					"y": -0.2122065908
-				},
-				{
-					"x": 5.497787143782138,
-					"y": -0.1287
-				},
-				{
-					"x": 6.283185307179586,
-					"y": 0
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 425,
+		xAxis: {
+			max: 6.283185307179586,
+			min: -6.283185307179586,
+			label: "x",
+			tickInterval: 1.5707963267948966,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 3,
+			min: -3,
+			label: "y",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 425,
+		points: [],
+		polylines: [
+			{
+				id: "sinc_curve",
+				color: "#11accd",
+				style: "solid",
+				points: [
+					{
+						x: -6.283185307179586,
+						y: 0
+					},
+					{
+						x: -5.497787143782138,
+						y: -0.1287
+					},
+					{
+						x: -4.71238898038469,
+						y: -0.2122065908
+					},
+					{
+						x: -3.926990716492706,
+						y: -0.1800632632
+					},
+					{
+						x: -3.141592653589793,
+						y: 0
+					},
+					{
+						x: -2.356194490192345,
+						y: 0.3001054387
+					},
+					{
+						x: -1.5707963267948966,
+						y: 0.6366197724
+					},
+					{
+						x: -0.7853981633974483,
+						y: 0.9003163162
+					},
+					{
+						x: 0,
+						y: 1
+					},
+					{
+						x: 0.7853981633974483,
+						y: 0.9003163162
+					},
+					{
+						x: 1.5707963267948966,
+						y: 0.6366197724
+					},
+					{
+						x: 2.356194490192345,
+						y: 0.3001054387
+					},
+					{
+						x: 3.141592653589793,
+						y: 0
+					},
+					{
+						x: 3.926990716492706,
+						y: -0.1800632632
+					},
+					{
+						x: 4.71238898038469,
+						y: -0.2122065908
+					},
+					{
+						x: 5.497787143782138,
+						y: -0.1287
+					},
+					{
+						x: 6.283185307179586,
+						y: 0
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -2676,7 +2781,6 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x85e40c41
 // Course: 8th grade math
@@ -2684,77 +2788,77 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 // Widget key: image_1
 test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
-	"width": 425,
-	"xAxis": {
-		"max": 10,
-		"min": -1,
-		"label": "x",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 7,
-		"min": -4,
-		"label": "y",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 425,
-	"points": [],
-	"polylines": [
-		{
-			"id": "seg1",
-			"color": "#333333",
-			"style": "solid",
-			"points": [
-				{
-					"x": 0,
-					"y": 0
-				},
-				{
-					"x": 3,
-					"y": -3
-				}
-			]
+		width: 425,
+		xAxis: {
+			max: 10,
+			min: -1,
+			label: "x",
+			tickInterval: 1,
+			showGridLines: true
 		},
-		{
-			"id": "seg2",
-			"color": "#333333",
-			"style": "solid",
-			"points": [
-				{
-					"x": 3,
-					"y": -3
-				},
-				{
-					"x": 4,
-					"y": 0
-				},
-				{
-					"x": 5,
-					"y": 3
-				}
-			]
+		yAxis: {
+			max: 7,
+			min: -4,
+			label: "y",
+			tickInterval: 1,
+			showGridLines: true
 		},
-		{
-			"id": "seg3",
-			"color": "#333333",
-			"style": "solid",
-			"points": [
-				{
-					"x": 5,
-					"y": 3
-				},
-				{
-					"x": 8,
-					"y": 0
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		height: 425,
+		points: [],
+		polylines: [
+			{
+				id: "seg1",
+				color: "#333333",
+				style: "solid",
+				points: [
+					{
+						x: 0,
+						y: 0
+					},
+					{
+						x: 3,
+						y: -3
+					}
+				]
+			},
+			{
+				id: "seg2",
+				color: "#333333",
+				style: "solid",
+				points: [
+					{
+						x: 3,
+						y: -3
+					},
+					{
+						x: 4,
+						y: 0
+					},
+					{
+						x: 5,
+						y: 3
+					}
+				]
+			},
+			{
+				id: "seg3",
+				color: "#333333",
+				style: "solid",
+				points: [
+					{
+						x: 5,
+						y: 3
+					},
+					{
+						x: 8,
+						y: 0
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -2767,7 +2871,6 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x7810d006ad2d5403
 // Course: 8th grade math
@@ -2775,59 +2878,59 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 // Widget key: image_1
 test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
-	"width": 425,
-	"xAxis": {
-		"max": 2,
-		"min": 0,
-		"label": "Time (seconds)",
-		"tickInterval": 0.1,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 1.5,
-		"min": -0.5,
-		"label": "Height (meters)",
-		"tickInterval": 0.1,
-		"showGridLines": true
-	},
-	"height": 425,
-	"points": [],
-	"polylines": [
-		{
-			"id": "jump-height-curve",
-			"color": "#333333",
-			"style": "solid",
-			"points": [
-				{
-					"x": 0,
-					"y": 0
-				},
-				{
-					"x": 0.2,
-					"y": 0.7
-				},
-				{
-					"x": 0.3,
-					"y": 0.9
-				},
-				{
-					"x": 0.6,
-					"y": 0.9
-				},
-				{
-					"x": 0.7,
-					"y": 0.7
-				},
-				{
-					"x": 0.9,
-					"y": 0
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 425,
+		xAxis: {
+			max: 2,
+			min: 0,
+			label: "Time (seconds)",
+			tickInterval: 0.1,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 1.5,
+			min: -0.5,
+			label: "Height (meters)",
+			tickInterval: 0.1,
+			showGridLines: true
+		},
+		height: 425,
+		points: [],
+		polylines: [
+			{
+				id: "jump-height-curve",
+				color: "#333333",
+				style: "solid",
+				points: [
+					{
+						x: 0,
+						y: 0
+					},
+					{
+						x: 0.2,
+						y: 0.7
+					},
+					{
+						x: 0.3,
+						y: 0.9
+					},
+					{
+						x: 0.6,
+						y: 0.9
+					},
+					{
+						x: 0.7,
+						y: 0.7
+					},
+					{
+						x: 0.9,
+						y: 0
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -2840,7 +2943,6 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
 
 // Extracted from question: x0e30a39ed41cfa4b
 // Course: 8th grade math
@@ -2848,55 +2950,55 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 // Widget key: image_1
 test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const input = {
-	"width": 450,
-	"xAxis": {
-		"max": 4,
-		"min": 0,
-		"label": "Time (seconds)",
-		"tickInterval": 0.5,
-		"showGridLines": true
-	},
-	"yAxis": {
-		"max": 12,
-		"min": 0,
-		"label": "Height (meters)",
-		"tickInterval": 1,
-		"showGridLines": true
-	},
-	"height": 450,
-	"points": [],
-	"polylines": [
-		{
-			"id": "football_height_curve",
-			"color": "#11accd",
-			"style": "solid",
-			"points": [
-				{
-					"x": 0,
-					"y": 0
-				},
-				{
-					"x": 0.5,
-					"y": 6
-				},
-				{
-					"x": 1.5,
-					"y": 11
-				},
-				{
-					"x": 2.5,
-					"y": 6
-				},
-				{
-					"x": 3,
-					"y": 0
-				}
-			]
-		}
-	],
-	"showQuadrantLabels": false,
-	"type": "functionPlotGraph"
-} satisfies FunctionPlotGraphInput
+		width: 450,
+		xAxis: {
+			max: 4,
+			min: 0,
+			label: "Time (seconds)",
+			tickInterval: 0.5,
+			showGridLines: true
+		},
+		yAxis: {
+			max: 12,
+			min: 0,
+			label: "Height (meters)",
+			tickInterval: 1,
+			showGridLines: true
+		},
+		height: 450,
+		points: [],
+		polylines: [
+			{
+				id: "football_height_curve",
+				color: "#11accd",
+				style: "solid",
+				points: [
+					{
+						x: 0,
+						y: 0
+					},
+					{
+						x: 0.5,
+						y: 6
+					},
+					{
+						x: 1.5,
+						y: 11
+					},
+					{
+						x: 2.5,
+						y: 6
+					},
+					{
+						x: 3,
+						y: 0
+					}
+				]
+			}
+		],
+		showQuadrantLabels: false,
+		type: "functionPlotGraph"
+	} satisfies FunctionPlotGraphInput
 
 	// Validate the input
 	const parseResult = FunctionPlotGraphPropsSchema.safeParse(input)
@@ -2909,4 +3011,3 @@ test("function-plot-graph - Interpreting graphs of functions", async () => {
 	const svg = await generateFunctionPlotGraph(parseResult.data)
 	expect(svg).toMatchSnapshot()
 })
-
