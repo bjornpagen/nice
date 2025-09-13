@@ -66,13 +66,13 @@ function ProfileLayoutContent({ children }: { children: React.ReactNode }) {
 			{/* Main Content Area now scrolls internally */}
 			<div className="flex-1 overflow-y-auto">
 				<div className="mx-auto max-w-7xl px-4 py-6">
-					<div className="grid grid-cols-12 gap-6">
-						<div className="col-span-3">
+					<div className="grid grid-cols-1 sm:grid-cols-12 gap-6">
+						<div className="sm:col-span-3">
 							<Sidebar />
 						</div>
 
 						{/* Main Content Area */}
-						<div className="col-span-9">{children}</div>
+						<div className="sm:col-span-9">{children}</div>
 					</div>
 				</div>
 				<Footer />
