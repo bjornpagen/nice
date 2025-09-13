@@ -65,10 +65,10 @@ export function Sidebar() {
 	}
 	const isSuperbuilders = Boolean(primaryEmail?.endsWith("@superbuilders.school"))
 
-	// Build My Stuff list conditionally
-	const stuff: SidebarItem[] = isSuperbuilders
-		? [...baseStuff, { name: "Metrics", href: "me/metrics", disabled: false, external: false }]
-		: baseStuff
+	// Build Development list conditionally
+	const development: SidebarItem[] = isSuperbuilders
+		? [{ name: "Metrics", href: "me/metrics", disabled: false, external: false }]
+		: []
 
 	return (
 		<div className="bg-white rounded-lg border border-gray-200 p-4">
@@ -76,7 +76,7 @@ export function Sidebar() {
 				<div>
 					<h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">MY STUFF</h3>
 					<ul className="space-y-1">
-						{stuff.map((item) => (
+						{baseStuff.map((item) => (
 							<li key={item.name}>
 								{item.disabled ? (
 									<Button
@@ -129,6 +129,36 @@ export function Sidebar() {
 						))}
 					</ul>
 				</div>
+				{development.length > 0 && (
+					<div>
+						<h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">DEVELOPMENT</h3>
+						<ul className="space-y-1">
+							{development.map((item) => (
+								<li key={item.name}>
+									{item.disabled ? (
+										<Button
+											variant="ghost"
+											className={cn(highlight(pathname, item.href), "opacity-50 cursor-not-allowed")}
+											disabled
+										>
+											{item.name}
+										</Button>
+									) : (
+										<Button asChild variant="ghost" className={highlight(pathname, item.href)}>
+											{item.external ? (
+												<a href={item.href} target="_blank" rel="noopener noreferrer">
+													{item.name}
+												</a>
+											) : (
+												<Link href={`/profile/${item.href}`}>{item.name}</Link>
+											)}
+										</Button>
+									)}
+								</li>
+							))}
+						</ul>
+					</div>
+				)}
 			</div>
 		</div>
 	)
