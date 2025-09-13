@@ -63,6 +63,13 @@ function createBlockContentItemSchema() {
 				.describe("A paragraph block containing inline content"),
 			z
 				.object({
+					type: z.literal("codeBlock").describe("Identifies this as a preformatted code block"),
+					code: z.string().describe("Raw code or pseudocode text. Preserve newlines exactly.")
+				})
+				.strict()
+				.describe("A preformatted code block that must be rendered with <pre><code>"),
+			z
+				.object({
 					type: z.literal("blockSlot").describe("Identifies this as a block-level placeholder"),
 					slotId: z.string().describe("Unique identifier that matches a widget or interaction key")
 				})

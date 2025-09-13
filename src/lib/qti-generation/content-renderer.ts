@@ -47,6 +47,8 @@ export function renderBlockContent(blockItems: BlockContent | null | undefined, 
 			switch (item.type) {
 				case "paragraph":
 					return `<p>${renderInlineContent(item.content, slots)}</p>`
+				case "codeBlock":
+					return `<pre><code>${escapeXmlText(item.code)}</code></pre>`
 				case "blockSlot": {
 					const content = slots.get(item.slotId)
 					if (content === undefined) {

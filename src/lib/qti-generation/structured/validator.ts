@@ -44,6 +44,14 @@ function processBlockContent(items: BlockContent | null, logger: logger.Logger):
 	for (const item of items) {
 		if (item.type === "paragraph") {
 			processInlineContent(item.content, logger)
+		} else if (item.type === "codeBlock") {
+			if (typeof item.code === "string") {
+				let sanitized = sanitizeHtmlEntities(item.code)
+				checkNoPerseusArtifacts(sanitized, logger)
+				item.code = sanitized
+			} else {
+				logger.warn("sanitizer skipping codeBlock with invalid 'code' field")
+			}
 		}
 	}
 }
