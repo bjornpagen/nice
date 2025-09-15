@@ -57,6 +57,7 @@
 		"@salusoft89/planegcs": "^1.1.7",
 		"@superbuilders/errors": "2.0.1",
 		"@superbuilders/oneroster": "^0.7.0",
+		"@superbuilders/qti-assessment-item-generator": "^1.0.1",
 		"@superbuilders/slog": "4.0.0",
 		"@t3-oss/env-nextjs": "^0.13.8",
 		"@vercel/blob": "^1.1.1",
