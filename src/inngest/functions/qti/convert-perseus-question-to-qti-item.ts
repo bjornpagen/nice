@@ -38,8 +38,7 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 		}
 		
 		// 2. Destructure validated data. widgetCollection is now guaranteed to exist.
-		const { question, widgetCollection } = validationResult.data
-		const questionId = question.id
+		const { questionId, widgetCollection } = validationResult.data
 
 		logger.info("starting perseus to qti conversion", { questionId, widgetCollection })
 

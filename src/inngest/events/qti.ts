@@ -10,10 +10,7 @@ export type WidgetCollectionName = z.infer<typeof WidgetCollectionNameSchema>
 // Schema for the 'qti/item.migrate' event.data payload.
 // The widgetCollection is NOT optional and has NO default.
 export const MigrateQtiItemEventDataSchema = z.object({
-	question: z.object({
-		id: z.string(),
-		parsedData: z.unknown()
-	}),
+	questionId: z.string().min(1),
 	widgetCollection: WidgetCollectionNameSchema
 })
 
