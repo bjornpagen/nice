@@ -1,7 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { promises as fs } from "node:fs"
-import { resolveRelativeLinksToCanonicalDomain } from "@/lib/qti-generation/link-resolver"
+import { resolveRelativeLinksToCanonicalDomain } from "@/lib/qti-stimulus/utils/link-resolver"
 
 async function main(): Promise<void> {
   const file = `${process.cwd()}/examples/qti-generation/assessment-stimulus/negative/relative-path-instead-of-link.qti.xml`

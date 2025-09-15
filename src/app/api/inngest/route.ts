@@ -46,12 +46,6 @@ import { orchestrateCourseVisualQAReview } from "@/inngest/functions/qa/orchestr
 // Import Visual QA workers
 import { orchestrateVisualQAReview } from "@/inngest/functions/qa/orchestrate-visual-qa-review"
 import { orchestrateWidgetReverseEngineering } from "@/inngest/functions/qa/orchestrate-widget-reverse-engineering"
-import { reverseEngineerSvgToWidget } from "@/inngest/functions/qa/reverse-engineer-svg-to-widget"
-import {
-	reverseEngineerBatchFromDatabase,
-	reverseEngineerWidgetFromSvg
-} from "@/inngest/functions/qa/reverse-engineer-widget-from-svg"
-import { reviewQuestionRendering } from "@/inngest/functions/qa/review-question-rendering"
 import { testPerseusTextarea } from "@/inngest/functions/qa/test-perseus-textarea"
 // ✅ ADD: Import the new batch differentiation and assembly functions
 import { assembleDifferentiatedItemsAndCreateTests } from "@/inngest/functions/qti/assemble-differentiated-items-and-create-tests"
@@ -65,8 +59,6 @@ import { ingestAssessmentItemOne } from "@/inngest/functions/qti/ingest-assessme
 import { ingestAssessmentStimulusOne } from "@/inngest/functions/qti/ingest-assessment-stimulus-one"
 import { ingestAssessmentTestOne } from "@/inngest/functions/qti/ingest-assessment-test-one"
 // Removed generic undifferentiated and differentiated ingest orchestrators
-// ✅ ADD: Import the new paraphrase function
-import { paraphraseStimulus } from "@/inngest/functions/qti/paraphrase-stimulus"
 import { requestAllItemMigrationsForCourse } from "@/inngest/functions/qti/request-all-item-migrations-for-course"
 import { requestAllStimulusMigrationsForCourse } from "@/inngest/functions/qti/request-all-stimulus-migrations-for-course"
 import { requestItemMigrationsForExercise } from "@/inngest/functions/qti/request-item-migrations-for-exercise"
@@ -132,8 +124,6 @@ export const { GET, POST, PUT } = serve({
 		ingestAssessmentItemOne,
 		ingestAssessmentStimulusOne,
 		ingestAssessmentTestOne,
-		// ✅ ADD: Register the new paraphrase function
-		paraphraseStimulus,
 		// Removed: undifferentiated ingest
 		// ✅ ADD: Register the new atomic differentiation and assembly functions
 		differentiateAndSaveQuestion, // ✅ ADD: Register the new atomic differentiation function
@@ -141,11 +131,7 @@ export const { GET, POST, PUT } = serve({
 		// Visual QA Functions
 		orchestrateVisualQAReview,
 		orchestrateCourseVisualQAReview,
-		reviewQuestionRendering,
-		reverseEngineerWidgetFromSvg,
-		reverseEngineerBatchFromDatabase,
 		orchestrateWidgetReverseEngineering,
-		reverseEngineerSvgToWidget,
 		extractAndProcessQtiSvgs,
 		testPerseusTextarea
 	]

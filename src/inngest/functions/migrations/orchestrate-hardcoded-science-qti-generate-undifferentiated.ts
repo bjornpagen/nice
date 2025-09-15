@@ -9,7 +9,7 @@ import { inngest } from "@/inngest/client"
 import { HARDCODED_SCIENCE_COURSE_IDS } from "@/lib/constants/course-mapping"
 import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
 // ADD: Import the question blacklist utility.
-import { isQuestionIdBlacklisted } from "@/lib/qti-generation/question-blacklist"
+import { isQuestionIdBlacklisted } from "@/lib/qti-item/question-blacklist"
 import { ghettoValidateItem } from "@/lib/qti-validation/ghetto"
 import { buildDeterministicKBuckets } from "@/lib/utils/k-bucketing"
 import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"

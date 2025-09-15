@@ -4,15 +4,15 @@ import OpenAI from "openai"
 import { zodResponseFormat } from "openai/helpers/zod"
 import { z } from "zod"
 import { env } from "@/env"
-import { loadConversionExamples } from "@/lib/qti-generation/examples-loader"
+import { loadConversionExamples } from "@/lib/qti-stimulus/utils/examples-loader"
 import {
 	convertHtmlEntities,
 	fixInequalityOperators,
 	fixKhanGraphieUrls,
 	fixMathMLOperators,
 	stripXmlComments
-} from "@/lib/qti-generation/xml-fixes"
-import { resolveRelativeLinksToCanonicalDomain } from "@/lib/qti-generation/link-resolver"
+} from "@/lib/qti-stimulus/utils/xml-fixes"
+import { resolveRelativeLinksToCanonicalDomain } from "@/lib/qti-stimulus/utils/link-resolver"
 
 const OPENAI_MODEL = "gpt-5"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })

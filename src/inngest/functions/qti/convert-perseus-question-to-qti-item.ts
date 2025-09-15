@@ -4,15 +4,14 @@ import { NonRetriableError } from "inngest"
 import { db } from "@/db"
 import { niceExercises, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { compile } from "@/lib/qti-generation/compiler"
-import { ErrQuestionBlacklisted, isQuestionIdBlacklisted } from "@/lib/qti-generation/question-blacklist"
-// MODIFIED: Import the new ErrWidgetNotFound error.
-import {
-	ErrUnsupportedInteraction,
-	ErrWidgetNotFound,
-	generateStructuredQtiItem
-} from "@/lib/qti-generation/structured/client"
-import { validateAndSanitizeHtmlFields } from "@/lib/qti-generation/structured/validator"
+import { generateFromEnvelope, ErrUnsupportedInteraction, ErrWidgetNotFound } from "@superbuilders/qti-assessment-item-generator/structured"
+import { compile } from "@superbuilders/qti-assessment-item-generator/compiler"
+import { buildPerseusEnvelope } from "@superbuilders/qti-assessment-item-generator/structured/ai-context-builder";
+// @ts-ignore - using 's OpenAI version for compatibility
+import OpenAI from "@superbuilders/qti-assessment-item-generator/node_modules/openai"
+import { env } from "@/env"
+import { MigrateQtiItemEventDataSchema } from "@/inngest/events/qti"
+import { isQuestionIdBlacklisted } from "@/lib/qti-item/question-blacklist"
 
 // A global key to ensure all OpenAI functions share the same concurrency limit.
 const OPENAI_CONCURRENCY_KEY = "openai-api-global-concurrency"
@@ -30,16 +29,27 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 			key: OPENAI_CONCURRENCY_KEY
 		}
 	},
-	async ({ event, logger }) => {
-		// MODIFIED: Destructure widgetCollection as a required field.
-		const { questionId, widgetCollection } = event.data
-		// ✅ Enhanced logging at every step, using the provided logger.
+	async ({ event, step, logger }) => {
+		// 1. Strict event.data validation with Zod. No fallbacks.
+		const validationResult = MigrateQtiItemEventDataSchema.safeParse(event.data)
+		if (!validationResult.success) {
+			logger.error("invalid event.data payload", { error: validationResult.error })
+			throw new NonRetriableError("Invalid event payload")
+		}
+		
+		// 2. Destructure validated data. widgetCollection is now guaranteed to exist.
+		const { question, widgetCollection } = validationResult.data
+		const questionId = question.id
+
 		logger.info("starting perseus to qti conversion", { questionId, widgetCollection })
 
-		// Blacklist check: immediately and permanently fail for blacklisted question IDs
+		const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
+		// Use centralized OpenAI client (validated at startup)
+
+		// 3. Enforce blacklist with NonRetriableError.
 		if (isQuestionIdBlacklisted(questionId)) {
-			logger.error("question id is blacklisted for migration", { questionId })
-			throw new NonRetriableError(ErrQuestionBlacklisted.message, { cause: ErrQuestionBlacklisted })
+			logger.warn("question is blacklisted, job will not retry", { questionId })
+			throw new NonRetriableError("Question is blacklisted")
 		}
 
 		// Step 1: Fetch Perseus data.
@@ -60,102 +70,65 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 			logger.error("db query for question failed", { questionId, error: questionResult.error })
 			throw errors.wrap(questionResult.error, "db query for question")
 		}
-		const question = questionResult.data[0]
-		if (!question?.parsedData) {
+		const questionData = questionResult.data[0]
+		if (!questionData?.parsedData) {
 			logger.warn("skipping conversion: no perseus data", { questionId })
 			return { status: "skipped", reason: "no_perseus_data" }
 		}
-		logger.debug("db fetch successful", { questionId, exerciseTitle: question.exerciseTitle })
+		logger.debug("db fetch successful", { questionId, exerciseTitle: questionData.exerciseTitle })
 
-		// Step 2: Generate structured JSON from Perseus data.
-		logger.debug("invoking structured item generation pipeline", { questionId })
-		// MODIFIED: Pass widgetCollection directly - it's already typed from the event data
-		const structuredItemResult = await errors.try(
-			generateStructuredQtiItem(logger, question.parsedData, { widgetCollectionName: widgetCollection })
-		)
-		if (structuredItemResult.error) {
-			logger.error("structured item generation failed", {
-				questionId,
-				error: structuredItemResult.error
-			})
-
-			// Check for the specific unsupported interaction error
-			if (errors.is(structuredItemResult.error, ErrUnsupportedInteraction)) {
-				// This item is fundamentally un-convertible. Fail the job permanently,
-				// chaining the original error for full context in observability tools.
-				logger.error("item is fundamentally un-convertible", { error: structuredItemResult.error, questionId })
-				throw new NonRetriableError(structuredItemResult.error.message, {
-					cause: structuredItemResult.error
-				})
+		// Step 2: Build Perseus envelope using the new library function.
+		const envelopeResult = await step.run("build-perseus-envelope", async () => {
+			const result = await errors.try(buildPerseusEnvelope(questionData.parsedData))
+			if (result.error) {
+				logger.error("failed to build perseus envelope", { error: result.error })
+				throw result.error
 			}
-
-			// ADDED: Check for the new WIDGET_NOT_FOUND bail condition.
-			// This is a specific, non-retriable failure case.
-			if (errors.is(structuredItemResult.error, ErrWidgetNotFound)) {
-				logger.error("widget not found - non-retriable failure", { error: structuredItemResult.error, questionId })
-				throw new NonRetriableError(structuredItemResult.error.message, {
-					cause: structuredItemResult.error
-				})
-			}
-
-			// For all other errors, maintain the existing retryable behavior.
-			logger.error("structured item generation failed", { error: structuredItemResult.error, questionId })
-			throw errors.wrap(structuredItemResult.error, "structured item generation")
-		}
-		const assessmentItemInput = structuredItemResult.data
-		logger.debug("structured item generation successful", {
-			questionId,
-			identifier: assessmentItemInput.identifier
+			return result.data
 		})
 
-		// NEW Step 2.5: Validate and Sanitize all HTML content before compiling.
-		// This is the "fail-fast" step.
-		logger.debug("validating and sanitizing all html fields", { questionId })
-		const sanitizedItemResult = errors.trySync(() => validateAndSanitizeHtmlFields(assessmentItemInput, logger))
-		if (sanitizedItemResult.error) {
-			logger.error("structured item content validation failed", {
-				questionId,
-				error: sanitizedItemResult.error
-			})
-			// Throw the error to fail the Inngest job, which will trigger a retry.
-			throw sanitizedItemResult.error
-		}
-		const sanitizedAssessmentItem = sanitizedItemResult.data
-		logger.debug("html content validation and sanitization successful", { questionId })
-
-		// Step 3: Compile structured JSON to QTI XML.
-		logger.debug("compiling structured item to xml", { questionId })
-		// Pass the sanitized object to the compiler.
-		const compileResult = await errors.try(compile(sanitizedAssessmentItem))
-		if (compileResult.error) {
-			logger.error("qti compilation failed", {
-				questionId,
-				error: compileResult.error
-			})
-
-			// Check if compilation failed due to unsupported interaction
-			if (errors.is(compileResult.error, ErrUnsupportedInteraction)) {
-				// This item contains unsupported interactions. Fail permanently.
-				logger.error("compilation failed due to unsupported interaction", { error: compileResult.error, questionId })
-				throw new NonRetriableError(compileResult.error.message, {
-					cause: compileResult.error
-				})
+		// Step 3: Generate the structured QTI item from the envelope.
+		const structuredItemResult = await step.run("generate-structured-item-from-envelope", async () => {
+			const result = await errors.try(
+				generateFromEnvelope(openai, logger, envelopeResult, widgetCollection)
+			)
+			if (result.error) {
+				logger.error("failed to generate structured item from envelope", { error: result.error })
+				
+				// Check for specific non-retriable errors from the library
+				if (errors.is(result.error, ErrUnsupportedInteraction)) {
+					logger.error("item contains unsupported interaction", { error: result.error, questionId })
+					throw new NonRetriableError(result.error.message, { cause: result.error })
+				}
+				
+				if (errors.is(result.error, ErrWidgetNotFound)) {
+					logger.error("widget not found - non-retriable failure", { error: result.error, questionId })
+					throw new NonRetriableError(result.error.message, { cause: result.error })
+				}
+				
+				throw result.error
 			}
+			return result.data
+		})
 
-			logger.error("qti compilation failed - general error", { error: compileResult.error, questionId })
-			throw errors.wrap(compileResult.error, "qti compilation")
-		}
-		const xml = compileResult.data
-		logger.debug("compilation successful", { questionId, xmlLength: xml.length })
+		// Step 4: Compile the structured item into QTI XML using the library.
+		const compiledXmlResult = await step.run("compile-qti-xml", async () => {
+			const result = await errors.try(compile(structuredItemResult))
+			if (result.error) {
+				logger.error("failed to compile structured item to xml", { error: result.error })
+				throw result.error
+			}
+			return result.data
+		})
 
-		// Step 4: Update database with BOTH structured JSON and compiled XML.
+		// Step 5: Update database with BOTH structured JSON and compiled XML.
 		logger.debug("updating database with generated structured json and xml", { questionId })
 		const updateResult = await errors.try(
 			db
 				.update(niceQuestions)
 				.set({
-					xml,
-					structuredJson: sanitizedAssessmentItem
+					xml: compiledXmlResult,
+					structuredJson: structuredItemResult
 				})
 				.where(eq(niceQuestions.id, questionId))
 		)
@@ -165,6 +138,6 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 		}
 
 		logger.info("conversion successful", { questionId })
-		return { status: "success", questionId: question.id }
+		return { status: "success", questionId: questionData.id }
 	}
 )

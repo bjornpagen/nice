@@ -1,7 +1,7 @@
 import * as logger from "@superbuilders/slog"
 import { EventSchemas, type GetEvents, Inngest } from "inngest"
 import { z } from "zod"
-import { WidgetCollectionNameSchema } from "@/lib/widget-collections" // MODIFIED: Import the central Zod enum schema
+import { WidgetCollectionNameSchema } from "@/inngest/events/qti" // MODIFIED: Import from new location
 
 // Helper schema for the XML-based item input
 const CreateItemInputSchema = z.object({
@@ -55,13 +55,6 @@ const events = {
 	"qti/course.migrate-all-stimuli": {
 		data: z.object({
 			courseId: z.string().min(1)
-		})
-	},
-
-	// ✅ ADD: New event for paraphrasing a single stimulus
-	"qti/stimulus.paraphrase": {
-		data: z.object({
-			articleId: z.string().min(1)
 		})
 	},
 	// ADD: New event for generating 'n' differentiated versions of a single assessment item.

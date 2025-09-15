@@ -3,7 +3,7 @@ import { and, eq, inArray, isNull, or } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { type Events, inngest } from "@/inngest/client"
-import type { WidgetCollectionName } from "@/lib/widget-collections" // NEW: Import WidgetCollectionName
+import type { WidgetCollectionName } from "@/inngest/events/qti" // NEW: Import WidgetCollectionName
 
 type Logger = {
 	debug: (message: string, attributes?: Record<string, unknown>) => void

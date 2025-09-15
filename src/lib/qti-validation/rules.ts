@@ -2,7 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { qti } from "@/lib/clients"
 import { ErrQtiNotFound } from "@/lib/qti"
-import { QTI_INTERACTION_TAGS } from "@/lib/qti-generation/valid-tags"
+import { QTI_INTERACTION_TAGS } from "@/lib/qti-stimulus/utils/valid-tags"
 import { escapeXmlAttribute, extractQtiStimulusBodyContent } from "@/lib/xml-utils"
 import { ghettoValidateItem, ghettoValidateTest } from "@/lib/qti-validation/ghetto"
 

@@ -2,7 +2,7 @@ import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
-import { generateDifferentiatedItems } from "@/inngest/functions/qti/convert-perseus-question-to-differentiated-qti-items"
+import { convertPerseusQuestionToDifferentiatedQtiItems } from "@/inngest/functions/qti/convert-perseus-question-to-differentiated-qti-items"
 
 export const differentiateAndSaveQuestion = inngest.createFunction(
 	{
@@ -10,11 +10,14 @@ export const differentiateAndSaveQuestion = inngest.createFunction(
 		name: "Differentiate a Single Question and Save to Disk"
 	},
 	{ event: "qti/question.differentiate-and-save" },
-	async ({ event, logger }) => {
+	async ({ event, step, logger }) => {
 		const { questionId, n, courseSlug } = event.data
 
 		// 1. Differentiate the single question.
-		const generatedItems = await generateDifferentiatedItems(questionId, n, logger).catch((e) => {
+		const generatedItems = await step.invoke("differentiate-items", {
+		function: convertPerseusQuestionToDifferentiatedQtiItems,
+		data: { questionId, n }
+	}).catch((e: Error) => {
 			logger.error("AI differentiation failed for question", { questionId, error: e })
 			// Throw the error to let Inngest handle the retry for this specific job.
 			throw errors.wrap(e, `AI differentiation failed for question ${questionId}`)

@@ -1,202 +1,147 @@
 import * as errors from "@superbuilders/errors"
 import { eq } from "drizzle-orm"
-// removed NonRetriableError: no special non-retriable handling needed
+import { NonRetriableError } from "inngest"
 import { db } from "@/db"
 import { niceExercises, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { compile } from "@/lib/qti-generation/compiler"
-import type { AssessmentItemInput } from "@/lib/qti-generation/schemas"
-// No longer generating from Perseus in this pipeline
-import { differentiateAssessmentItem } from "@/lib/qti-generation/structured/differentiator"
-import { validateAndSanitizeHtmlFields } from "@/lib/qti-generation/structured/validator"
+import { differentiateAssessmentItem } from "@superbuilders/qti-assessment-item-generator/structured/differentiator"
+import { compile } from "@superbuilders/qti-assessment-item-generator/compiler"
+import type { AssessmentItemInput } from "@superbuilders/qti-assessment-item-generator/compiler/schemas"
+// @ts-ignore - using library's OpenAI version for compatibility
+import OpenAI from "@superbuilders/qti-assessment-item-generator/node_modules/openai"
+import { env } from "@/env"
+import { DifferentiateQtiItemEventDataSchema } from "@/inngest/events/qti"
+import { isQuestionIdBlacklisted } from "@/lib/qti-item/question-blacklist"
 
-// validation pipeline removed from this function per PRD
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-	return typeof value === "object" && value !== null
-}
-
-function isAssessmentItemInput(value: unknown): value is AssessmentItemInput {
-	if (!isRecord(value)) return false
-	if (typeof value.identifier !== "string") return false
-	if (typeof value.title !== "string") return false
-	if (!Array.isArray(value.responseDeclarations)) return false
-	if (!isRecord(value.feedback)) return false
-	if (!Array.isArray(value.feedback.correct)) return false
-	if (!Array.isArray(value.feedback.incorrect)) return false
-	// body and widgets can be null, interactions can be null or a record – not strictly required for basic shape check
-	return true
-}
-
-// ✅ ADD: New exportable helper function containing the original file's core logic.
-export async function generateDifferentiatedItems(
-	questionId: string,
-	n: number,
-	logger: {
-		info: (message: string, attributes?: Record<string, unknown>) => void
-		debug: (message: string, attributes?: Record<string, unknown>) => void
-		warn: (message: string, attributes?: Record<string, unknown>) => void
-		error: (message: string, attributes?: Record<string, unknown>) => void
-	}
-): Promise<
-	Array<{
-		xml: string
-		metadata: {
-			khanId: string
-			khanExerciseId: string
-			khanExerciseSlug: string
-			khanExerciseTitle: string
-		}
-	}>
-> {
-	// This is the exact logic from the original Inngest function, now extracted.
-	logger.info("starting perseus to differentiated qti items conversion", { questionId, variations: n })
-
-	// Step 1: Fetch Perseus data and exercise metadata from the database.
-	logger.debug("fetching pre-generated structured json and exercise metadata from db", { questionId })
-	const questionResult = await errors.try(
-		db
-			.select({
-				exerciseId: niceQuestions.exerciseId,
-				structuredJson: niceQuestions.structuredJson,
-				exerciseTitle: niceExercises.title,
-				exerciseSlug: niceExercises.slug
-			})
-			.from(niceQuestions)
-			.innerJoin(niceExercises, eq(niceQuestions.exerciseId, niceExercises.id))
-			.where(eq(niceQuestions.id, questionId))
-			.limit(1)
-	)
-	if (questionResult.error) {
-		logger.error("db query for question and exercise failed", { questionId, error: questionResult.error })
-		throw errors.wrap(questionResult.error, "db query for question and exercise")
-	}
-	const question = questionResult.data[0]
-	if (!question?.structuredJson) {
-		logger.error("cannot proceed: no pre-generated structured json found for question", { questionId })
-		throw errors.new(`pre-requisite failed: structuredJson is missing for questionId ${questionId}`)
-	}
-
-	if (!isAssessmentItemInput(question.structuredJson)) {
-		logger.error("invalid structured json shape in database for question", { questionId })
-		throw errors.new("invalid structured json shape")
-	}
-
-	// Step 2: Use the pre-generated structured JSON from the database.
-	const structuredItem = question.structuredJson
-
-	// Step 3: Fan out to the new differentiation function to generate 'n' variations.
-	logger.debug("differentiating structured item", { questionId, variations: n })
-	const differentiatedItemsResult = await errors.try(differentiateAssessmentItem(logger, structuredItem, n))
-	if (differentiatedItemsResult.error) {
-		logger.error("item differentiation failed", { questionId, error: differentiatedItemsResult.error })
-		throw errors.wrap(differentiatedItemsResult.error, "item differentiation")
-	}
-	const differentiatedItems = differentiatedItemsResult.data
-
-	// Step 4: Compile each differentiated item to QTI XML with proper identifiers and metadata.
-	logger.debug("compiling differentiated items to qti xml", { questionId, count: differentiatedItems.length })
-	const compiledItems: Array<{
-		xml: string
-		metadata: {
-			khanId: string
-			khanExerciseId: string
-			khanExerciseSlug: string
-			khanExerciseTitle: string
-		}
-	}> = []
-
-	for (let i = 0; i < differentiatedItems.length; i++) {
-		const item = differentiatedItems[i]
-		if (!item) {
-			logger.error("missing differentiated item at index", { index: i, questionId })
-			throw errors.new(`missing differentiated item at index ${i}`)
-		}
-
-		// Generate a proper QTI identifier: nice_{khanId}_{5-digit-random}
-		const randomSuffix = Math.floor(10000 + Math.random() * 90000) // 5-digit random number
-		const qtiIdentifier = `nice_${questionId}_${randomSuffix}`
-
-		// Update the item identifier before compilation
-		const itemWithNewIdentifier = {
-			...item,
-			identifier: qtiIdentifier
-		}
-
-		// Step 4.1: JSON-level validation and sanitization
-		logger.debug("sanitizing differentiated json", { questionId, itemIndex: i + 1, identifier: qtiIdentifier })
-		const sanitizedItemResult = errors.trySync(() => validateAndSanitizeHtmlFields(itemWithNewIdentifier, logger))
-		if (sanitizedItemResult.error) {
-			logger.warn("failed to sanitize/validate differentiated item json, skipping this variation", {
-				questionId,
-				itemIndex: i + 1,
-				identifier: qtiIdentifier,
-				error: sanitizedItemResult.error
-			})
-			continue
-		}
-		const sanitizedItem = sanitizedItemResult.data
-
-		logger.debug("compiling item to xml", {
-			questionId,
-			itemIndex: i + 1,
-			originalIdentifier: item.identifier,
-			newIdentifier: qtiIdentifier
-		})
-
-		const compileResult = await errors.try(compile(sanitizedItem))
-		if (compileResult.error) {
-			// Make resilient: log and continue to next variation instead of throwing
-			logger.error("failed to compile a single differentiated item to xml, skipping this variation", {
-				questionId,
-				itemIndex: i + 1,
-				identifier: qtiIdentifier,
-				error: compileResult.error
-			})
-			continue
-		}
-		const compiledXml = compileResult.data
-
-		// Create the output item in the same format as assessmentItems.json, using compiled XML directly
-		const outputItem = {
-			xml: compiledXml,
-			metadata: {
-				khanId: questionId,
-				khanExerciseId: question.exerciseId,
-				khanExerciseSlug: question.exerciseSlug,
-				khanExerciseTitle: question.exerciseTitle
-			}
-		}
-
-		compiledItems.push(outputItem)
-
-		logger.debug("successfully compiled item to xml", {
-			questionId,
-			itemIndex: i + 1,
-			identifier: qtiIdentifier,
-			xmlLength: compiledXml.length
-		})
-	}
-
-	// Step 5: Return just the array of compiled items (no wrapper object).
-	logger.info("successfully completed generation and compilation of differentiated qti items", {
-		questionId,
-		attemptedCount: differentiatedItems.length,
-		generatedCount: compiledItems.length,
-		totalXmlLength: compiledItems.reduce((sum, item) => sum + item.xml.length, 0)
-	})
-
-	return compiledItems
-}
-
-// ✅ MODIFIED: The Inngest function is now a thin wrapper around the new helper.
 export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunction(
 	{
 		id: "convert-perseus-question-to-differentiated-qti-items",
 		name: "Convert Perseus Question to Differentiated QTI Items"
 	},
 	{ event: "qti/item.differentiate" },
-	async ({ event, logger }) => {
-		return generateDifferentiatedItems(event.data.questionId, event.data.n, logger)
+	async ({ event, step, logger }) => {
+		// 1. Strict event.data validation with Zod. No fallbacks.
+		const validationResult = DifferentiateQtiItemEventDataSchema.safeParse(event.data)
+		if (!validationResult.success) {
+			logger.error("invalid event.data payload", { error: validationResult.error })
+			throw new NonRetriableError("Invalid event payload")
+		}
+
+		const { questionId, n } = validationResult.data
+
+		logger.info("starting differentiation flow", { questionId, variations: n })
+
+		// Create OpenAI client using library's version for compatibility
+		if (!env.OPENAI_API_KEY) {
+			logger.error("missing required environment variable", { key: "OPENAI_API_KEY" })
+			throw new NonRetriableError("Missing OpenAI API Key")
+		}
+		const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
+
+		// 2. Enforce blacklist with NonRetriableError.
+		if (isQuestionIdBlacklisted(questionId)) {
+			logger.warn("question is blacklisted, job will not retry", { questionId })
+			throw new NonRetriableError("Question is blacklisted")
+		}
+
+		// Step 1: Fetch base structured item and exercise metadata from database.
+		logger.debug("fetching exercise metadata from db", { questionId })
+		const exerciseResult = await errors.try(
+			db
+				.select({
+					exerciseId: niceQuestions.exerciseId,
+					exerciseTitle: niceExercises.title,
+					exerciseSlug: niceExercises.slug,
+					structuredJson: niceQuestions.structuredJson
+				})
+				.from(niceQuestions)
+				.innerJoin(niceExercises, eq(niceQuestions.exerciseId, niceExercises.id))
+				.where(eq(niceQuestions.id, questionId))
+				.limit(1)
+		)
+		if (exerciseResult.error) {
+			logger.error("db query for exercise metadata failed", { questionId, error: exerciseResult.error })
+			throw errors.wrap(exerciseResult.error, "db query for exercise metadata")
+		}
+		const exerciseData = exerciseResult.data[0]
+		if (!exerciseData) {
+			logger.error("exercise metadata not found", { questionId })
+			throw errors.new("exercise metadata not found")
+		}
+		if (!exerciseData.structuredJson) {
+			logger.error("missing structured json for question", { questionId })
+			throw new NonRetriableError("Missing structured item for differentiation")
+		}
+
+		// Step 2: Load the base structured item directly from DB.
+		const baseItem = exerciseData.structuredJson as AssessmentItemInput
+
+		// Step 3: Differentiate the base item using the library's differentiator.
+		const differentiatedItems = await step.run("differentiate-items", async () => {
+			const result = await errors.try(differentiateAssessmentItem(openai, logger, baseItem, n))
+			if (result.error) {
+				logger.error("failed to differentiate items", { error: result.error })
+				throw result.error
+			}
+			// NO FALLBACK: If differentiation returns no items, it is a critical failure.
+			if (result.data.length === 0) {
+				logger.error("differentiation returned zero items", { n })
+				throw errors.new("differentiation returned zero items")
+			}
+			return result.data
+		})
+
+		// Step 4: Compile each differentiated item to QTI XML with proper identifiers.
+		const compiledItems: Array<{
+			xml: string
+			metadata: {
+				khanId: string
+				khanExerciseId: string
+				khanExerciseSlug: string
+				khanExerciseTitle: string
+			}
+		}> = []
+
+		for (let i = 0; i < differentiatedItems.length; i++) {
+			const item = differentiatedItems[i]
+			if (!item) {
+				logger.error("missing differentiated item at index", { index: i, questionId })
+				throw errors.new(`missing differentiated item at index ${i}`)
+			}
+
+			// Generate a proper QTI identifier: nice_{khanId}_{5-digit-random}
+			const randomSuffix = Math.floor(10000 + Math.random() * 90000)
+			const qtiIdentifier = `nice_${questionId}_${randomSuffix}`
+
+			// Update the item identifier before compilation
+			const itemWithNewIdentifier: AssessmentItemInput = {
+				...item,
+				identifier: qtiIdentifier
+			}
+
+			const compileResult = await errors.try(compile(itemWithNewIdentifier))
+			if (compileResult.error) {
+				logger.error("failed to compile differentiated item to xml, skipping", {
+					questionId,
+					itemIndex: i + 1,
+					identifier: qtiIdentifier,
+					error: compileResult.error
+				})
+				continue
+			}
+
+			compiledItems.push({
+				xml: compileResult.data,
+				metadata: {
+					khanId: questionId,
+					khanExerciseId: exerciseData.exerciseId,
+					khanExerciseSlug: exerciseData.exerciseSlug,
+					khanExerciseTitle: exerciseData.exerciseTitle
+				}
+			})
+		}
+
+		logger.info("differentiation completed", { questionId, generatedCount: compiledItems.length })
+		return compiledItems
 	}
 )
