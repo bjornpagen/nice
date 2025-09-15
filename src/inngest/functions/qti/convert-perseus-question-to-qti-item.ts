@@ -1,15 +1,18 @@
 import * as errors from "@superbuilders/errors"
+import { compile } from "@superbuilders/qti-assessment-item-generator/compiler"
+import {
+	ErrUnsupportedInteraction,
+	ErrWidgetNotFound,
+	generateFromEnvelope
+} from "@superbuilders/qti-assessment-item-generator/structured"
+import { buildPerseusEnvelope } from "@superbuilders/qti-assessment-item-generator/structured/ai-context-builder"
 import { eq } from "drizzle-orm"
 import { NonRetriableError } from "inngest"
+import OpenAI from "openai"
 import { db } from "@/db"
 import { niceExercises, niceQuestions } from "@/db/schemas"
-import { inngest } from "@/inngest/client"
-import { generateFromEnvelope, ErrUnsupportedInteraction, ErrWidgetNotFound } from "@superbuilders/qti-assessment-item-generator/structured"
-import { compile } from "@superbuilders/qti-assessment-item-generator/compiler"
-import { buildPerseusEnvelope } from "@superbuilders/qti-assessment-item-generator/structured/ai-context-builder";
-// @ts-ignore - using 's OpenAI version for compatibility
-import OpenAI from "@superbuilders/qti-assessment-item-generator/node_modules/openai"
 import { env } from "@/env"
+import { inngest } from "@/inngest/client"
 import { MigrateQtiItemEventDataSchema } from "@/inngest/events/qti"
 import { isQuestionIdBlacklisted } from "@/lib/qti-item/question-blacklist"
 
@@ -36,7 +39,7 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 			logger.error("invalid event.data payload", { error: validationResult.error })
 			throw new NonRetriableError("Invalid event payload")
 		}
-		
+
 		// 2. Destructure validated data. widgetCollection is now guaranteed to exist.
 		const { questionId, widgetCollection } = validationResult.data
 
@@ -88,23 +91,21 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 
 		// Step 3: Generate the structured QTI item from the envelope.
 		const structuredItemResult = await step.run("generate-structured-item-from-envelope", async () => {
-			const result = await errors.try(
-				generateFromEnvelope(openai, logger, envelopeResult, widgetCollection)
-			)
+			const result = await errors.try(generateFromEnvelope(openai, logger, envelopeResult, widgetCollection))
 			if (result.error) {
 				logger.error("failed to generate structured item from envelope", { error: result.error })
-				
+
 				// Check for specific non-retriable errors from the library
 				if (errors.is(result.error, ErrUnsupportedInteraction)) {
 					logger.error("item contains unsupported interaction", { error: result.error, questionId })
 					throw new NonRetriableError(result.error.message, { cause: result.error })
 				}
-				
+
 				if (errors.is(result.error, ErrWidgetNotFound)) {
 					logger.error("widget not found - non-retriable failure", { error: result.error, questionId })
 					throw new NonRetriableError(result.error.message, { cause: result.error })
 				}
-				
+
 				throw result.error
 			}
 			return result.data
