@@ -3,10 +3,9 @@ import { niceQuestions, niceCourses, niceExercises, niceLessonContents, niceLess
 import { sql, and, eq, inArray, isNotNull } from "drizzle-orm"
 import * as logger from "@superbuilders/slog"
 import * as errors from "@superbuilders/errors"
-import { writeFileSync, existsSync, mkdirSync, readFileSync } from "fs"
+import { writeFileSync, existsSync, mkdirSync } from "fs"
 import { join } from "path"
 import { Command } from "commander"
-import { WidgetCollectionNameSchema, type WidgetCollectionName } from "@/inngest/events/qti"
 
 interface WidgetTestCase {
 	questionId: string
@@ -29,66 +28,11 @@ interface ExtractedWidget {
 
 interface CLIOptions {
 	widgets: string[]
-	collections: WidgetCollectionName[]
 	courses: string[]
 	overwrite: boolean
 }
 
-function parseWidgetCollections(): Record<WidgetCollectionName, string[]> {
-	const widgetsPath = join(process.cwd(), "widgets.md")
-	
-	if (!existsSync(widgetsPath)) {
-		logger.error("widgets.md file not found", { path: widgetsPath })
-		throw errors.new("widgets.md file not found - required for widget collection definitions")
-	}
-	
-	const widgetsContent = readFileSync(widgetsPath, "utf-8")
-	const collections: Record<WidgetCollectionName, string[]> = {
-		"fourth-grade-math": [],
-		"math-core": [],
-		"science": [],
-		"simple-visual": []
-	}
-	
-	// Parse each collection definition from widgets.md
-	for (const collectionName of Object.keys(collections) as WidgetCollectionName[]) {
-		const collectionRegex = new RegExp(
-			`export const ${collectionName.replace(/-/g, "")}Collection = \\{[\\s\\S]*?schemas: \\{([\\s\\S]*?)\\}`,
-			"i"
-		)
-		
-		const match = widgetsContent.match(collectionRegex)
-		if (match && match[1]) {
-			const schemasSection = match[1]
-			// Extract widget names (keys before colons)
-			const widgetMatches = schemasSection.match(/(\w+):/g)
-			if (widgetMatches) {
-				const widgets = widgetMatches.map(w => w.replace(":", ""))
-				collections[collectionName] = widgets
-				logger.debug("parsed widget collection", { 
-					collection: collectionName, 
-					widgets: widgets.length 
-				})
-			}
-		} else {
-			logger.warn("could not parse widget collection from widgets.md", { 
-				collection: collectionName 
-			})
-		}
-	}
-	
-	// Handle science collection special case (includes simple-visual widgets)
-	const simpleVisualWidgets = collections["simple-visual"]
-	if (simpleVisualWidgets.length > 0) {
-		// Science collection includes all simple-visual widgets plus its own
-		const scienceOnlyWidgets = collections["science"].filter(w => !simpleVisualWidgets.includes(w))
-		collections["science"] = [...simpleVisualWidgets, ...scienceOnlyWidgets]
-	}
-	
-	return collections
-}
-
-function resolveWidgetTypes(options: CLIOptions, widgetCollections: Record<WidgetCollectionName, string[]>): string[] {
+function resolveWidgetTypes(options: CLIOptions): string[] {
 	const widgetTypes = new Set<string>()
 	
 	// Add widgets from --widgets flag
@@ -96,16 +40,6 @@ function resolveWidgetTypes(options: CLIOptions, widgetCollections: Record<Widge
 		// Convert kebab-case to camelCase
 		const camelCase = widgetType.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
 		widgetTypes.add(camelCase)
-	}
-	
-	// Add widgets from --collections flag (widget collections)
-	for (const collectionName of options.collections) {
-		const collectionWidgets = widgetCollections[collectionName]
-		if (collectionWidgets) {
-			for (const widgetType of collectionWidgets) {
-				widgetTypes.add(widgetType)
-			}
-		}
 	}
 	
 	return Array.from(widgetTypes)
@@ -118,47 +52,20 @@ async function main() {
 		.name("extract-widget-tests")
 		.description("Extract widget test cases from database structured JSON")
 		.option("-w, --widgets <widgets...>", "only extract specific widget types (kebab-case)", [])
-		.option("-c, --collections <collections...>", "extract widgets from specific collections", [])
-		.option("--courses <courseIds...>", "only extract from specific course IDs", [])
-		.option("--overwrite", "overwrite existing test files", false)
+		.option("-c, --courses <courseIds...>", "only extract from specific course IDs", [])
+		.option("-o, --overwrite", "overwrite existing test files", false)
 		.parse()
 
 	const options = program.opts<CLIOptions>()
 	
-	// Validate widget collection names
-	for (const collectionName of options.collections) {
-		const result = WidgetCollectionNameSchema.safeParse(collectionName)
-		if (!result.success) {
-			logger.error("invalid widget collection name", { 
-				collectionName, 
-				validOptions: WidgetCollectionNameSchema.options 
-			})
-			throw errors.new(`invalid widget collection: ${collectionName}`)
-		}
-	}
-	
 	logger.info("starting widget test extraction", {
 		widgets: options.widgets,
-		collections: options.collections,
 		courseFilter: options.courses,
 		overwrite: options.overwrite
 	})
 
-	// Parse widget collections from widgets.md
-	logger.info("parsing widget collections from widgets.md")
-	const widgetCollections = parseWidgetCollections()
-	
-	// Log parsed collections for debugging
-	for (const [collectionName, widgets] of Object.entries(widgetCollections)) {
-		logger.debug("parsed collection", {
-			collection: collectionName,
-			widgetCount: widgets.length,
-			widgets: widgets.slice(0, 5) // Show first 5 widgets
-		})
-	}
-
 	// Resolve which widget types to extract
-	const targetWidgetTypes = resolveWidgetTypes(options, widgetCollections)
+	const targetWidgetTypes = resolveWidgetTypes(options)
 	if (targetWidgetTypes.length > 0) {
 		logger.info("filtering to specific widget types", { 
 			widgetTypes: targetWidgetTypes,
@@ -377,8 +284,9 @@ function generateTestFile(widgetType: string, testCases: WidgetTestCase[]): stri
 \t\t
 \t\tconst svg = result.data
 \t\texpect(svg).toMatchSnapshot()
-\t})`
-	}).join("\n\n")
+\t})
+`
+	}).join("\n")
 
 	const header = `// ============================================================================
 // EXTRACTED TEST FILE - AUTO-GENERATED
@@ -402,13 +310,15 @@ function generateTestFile(widgetType: string, testCases: WidgetTestCase[]): stri
 
 	return `${header}
 
-import { expect, test } from "bun:test"
+import { describe, test, expect } from "bun:test"
 import { generateWidget } from "@superbuilders/qti-assessment-item-generator/widgets/widget-generator"
 import type { Widget, WidgetInput } from "@superbuilders/qti-assessment-item-generator/widgets/registry"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
+describe("${widgetType} widget tests", () => {
 ${testCaseCode}
+})
 `
 }
 
