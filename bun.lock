@@ -39,7 +39,7 @@
         "@salusoft89/planegcs": "^1.1.7",
         "@superbuilders/errors": "2.0.1",
         "@superbuilders/oneroster": "^0.7.0",
-        "@superbuilders/qti-assessment-item-generator": "^1.0.4",
+        "@superbuilders/qti-assessment-item-generator": "^2.0.0",
         "@superbuilders/slog": "4.0.0",
         "@t3-oss/env-nextjs": "^0.13.8",
         "@vercel/blob": "^1.1.1",
@@ -632,7 +632,7 @@
 
     "@superbuilders/oneroster": ["@superbuilders/oneroster@0.7.0", "", { "peerDependencies": { "@modelcontextprotocol/sdk": ">=1.5.0 <1.10.0", "zod": ">= 3" }, "optionalPeers": ["@modelcontextprotocol/sdk"], "bin": { "mcp": "bin/mcp-server.js" } }, "sha512-AWykMovQJuN1jZ6pEpvU7+WU9LCtsVDFYVINdqq6Mopla0Te9GPYjmo2XmbhND56FNzYjGXHrOXzko9g8aRYew=="],
 
-    "@superbuilders/qti-assessment-item-generator": ["@superbuilders/qti-assessment-item-generator@1.0.4", "", { "dependencies": { "@biomejs/biome": "^2.0.0-beta.6", "@superbuilders/errors": "2.0.1", "@superbuilders/slog": "4.0.0", "@types/he": "1.2.3", "fast-xml-parser": "5.2.5", "glob": "^11.0.3", "he": "1.2.0", "z3-solver": "4.15.3", "zod": "^3" }, "peerDependencies": { "openai": ">=5 <6", "typescript": "^5.9.2" } }, "sha512-GRXKZPSMSwU33w92NWDU5/35rtMWrQnxjUuRvERSxVNQxsEttbwF6AYinht/boG0ZRBDqsz5cCWcEriFfWQ7dg=="],
+    "@superbuilders/qti-assessment-item-generator": ["@superbuilders/qti-assessment-item-generator@2.0.0", "", { "dependencies": { "@biomejs/biome": "^2.0.0-beta.6", "@superbuilders/errors": "2.0.1", "@superbuilders/slog": "4.0.0", "@types/he": "1.2.3", "fast-xml-parser": "5.2.5", "glob": "^11.0.3", "he": "1.2.0", "z3-solver": "4.15.3", "zod": "^3" }, "peerDependencies": { "openai": ">=5 <6", "typescript": "^5.9.2" } }, "sha512-5LBbUnTmdpIFaM7JmbKjsH9OcSrNye169++cgGNcO3nOyrJHfeSjxd3BYCW4DPsSfDsjodZ1T0F6XixSia4HAQ=="],
 
     "@superbuilders/slog": ["@superbuilders/slog@4.0.0", "", { "dependencies": { "@biomejs/biome": "^2.0.0-beta.5" }, "peerDependencies": { "typescript": "^5.8.3" } }, "sha512-ZZxfp07mjEiOPI7RoB+d1St+KxrHaQ1qi2x8ltjwezNsURf1hLf+0L0Zu05r87NI1Oid9LkhHNZ6GFUGcAWM1Q=="],
 
