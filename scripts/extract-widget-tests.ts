@@ -1,10 +1,12 @@
 import { db } from "@/db"
-import { niceQuestions } from "@/db/schemas/nice"
-import { sql } from "drizzle-orm"
+import { niceQuestions, niceCourses, niceExercises, niceLessonContents, niceLessons, niceUnits } from "@/db/schemas/nice"
+import { sql, and, eq, inArray, isNotNull } from "drizzle-orm"
 import * as logger from "@superbuilders/slog"
 import * as errors from "@superbuilders/errors"
-import { writeFileSync, existsSync, mkdirSync } from "fs"
+import { writeFileSync, existsSync, mkdirSync, readFileSync } from "fs"
 import { join } from "path"
+import { Command } from "commander"
+import { WidgetCollectionNameSchema, type WidgetCollectionName } from "@/inngest/events/qti"
 
 interface WidgetTestCase {
 	questionId: string
@@ -25,19 +27,175 @@ interface ExtractedWidget {
 	}>
 }
 
-async function main() {
-	logger.info("starting widget test extraction")
+interface CLIOptions {
+	widgets: string[]
+	collections: WidgetCollectionName[]
+	courses: string[]
+	overwrite: boolean
+}
 
-	// get all questions with widgets in their structured json
-	const result = await errors.try(
-		db
+function parseWidgetCollections(): Record<WidgetCollectionName, string[]> {
+	const widgetsPath = join(process.cwd(), "widgets.md")
+	
+	if (!existsSync(widgetsPath)) {
+		logger.error("widgets.md file not found", { path: widgetsPath })
+		throw errors.new("widgets.md file not found - required for widget collection definitions")
+	}
+	
+	const widgetsContent = readFileSync(widgetsPath, "utf-8")
+	const collections: Record<WidgetCollectionName, string[]> = {
+		"fourth-grade-math": [],
+		"math-core": [],
+		"science": [],
+		"simple-visual": []
+	}
+	
+	// Parse each collection definition from widgets.md
+	for (const collectionName of Object.keys(collections) as WidgetCollectionName[]) {
+		const collectionRegex = new RegExp(
+			`export const ${collectionName.replace(/-/g, "")}Collection = \\{[\\s\\S]*?schemas: \\{([\\s\\S]*?)\\}`,
+			"i"
+		)
+		
+		const match = widgetsContent.match(collectionRegex)
+		if (match && match[1]) {
+			const schemasSection = match[1]
+			// Extract widget names (keys before colons)
+			const widgetMatches = schemasSection.match(/(\w+):/g)
+			if (widgetMatches) {
+				const widgets = widgetMatches.map(w => w.replace(":", ""))
+				collections[collectionName] = widgets
+				logger.debug("parsed widget collection", { 
+					collection: collectionName, 
+					widgets: widgets.length 
+				})
+			}
+		} else {
+			logger.warn("could not parse widget collection from widgets.md", { 
+				collection: collectionName 
+			})
+		}
+	}
+	
+	// Handle science collection special case (includes simple-visual widgets)
+	const simpleVisualWidgets = collections["simple-visual"]
+	if (simpleVisualWidgets.length > 0) {
+		// Science collection includes all simple-visual widgets plus its own
+		const scienceOnlyWidgets = collections["science"].filter(w => !simpleVisualWidgets.includes(w))
+		collections["science"] = [...simpleVisualWidgets, ...scienceOnlyWidgets]
+	}
+	
+	return collections
+}
+
+function resolveWidgetTypes(options: CLIOptions, widgetCollections: Record<WidgetCollectionName, string[]>): string[] {
+	const widgetTypes = new Set<string>()
+	
+	// Add widgets from --widgets flag
+	for (const widgetType of options.widgets) {
+		// Convert kebab-case to camelCase
+		const camelCase = widgetType.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
+		widgetTypes.add(camelCase)
+	}
+	
+	// Add widgets from --collections flag (widget collections)
+	for (const collectionName of options.collections) {
+		const collectionWidgets = widgetCollections[collectionName]
+		if (collectionWidgets) {
+			for (const widgetType of collectionWidgets) {
+				widgetTypes.add(widgetType)
+			}
+		}
+	}
+	
+	return Array.from(widgetTypes)
+}
+
+async function main() {
+	// Setup CLI
+	const program = new Command()
+	program
+		.name("extract-widget-tests")
+		.description("Extract widget test cases from database structured JSON")
+		.option("-w, --widgets <widgets...>", "only extract specific widget types (kebab-case)", [])
+		.option("-c, --collections <collections...>", "extract widgets from specific collections", [])
+		.option("--courses <courseIds...>", "only extract from specific course IDs", [])
+		.option("--overwrite", "overwrite existing test files", false)
+		.parse()
+
+	const options = program.opts<CLIOptions>()
+	
+	// Validate widget collection names
+	for (const collectionName of options.collections) {
+		const result = WidgetCollectionNameSchema.safeParse(collectionName)
+		if (!result.success) {
+			logger.error("invalid widget collection name", { 
+				collectionName, 
+				validOptions: WidgetCollectionNameSchema.options 
+			})
+			throw errors.new(`invalid widget collection: ${collectionName}`)
+		}
+	}
+	
+	logger.info("starting widget test extraction", {
+		widgets: options.widgets,
+		collections: options.collections,
+		courseFilter: options.courses,
+		overwrite: options.overwrite
+	})
+
+	// Parse widget collections from widgets.md
+	logger.info("parsing widget collections from widgets.md")
+	const widgetCollections = parseWidgetCollections()
+	
+	// Log parsed collections for debugging
+	for (const [collectionName, widgets] of Object.entries(widgetCollections)) {
+		logger.debug("parsed collection", {
+			collection: collectionName,
+			widgetCount: widgets.length,
+			widgets: widgets.slice(0, 5) // Show first 5 widgets
+		})
+	}
+
+	// Resolve which widget types to extract
+	const targetWidgetTypes = resolveWidgetTypes(options, widgetCollections)
+	if (targetWidgetTypes.length > 0) {
+		logger.info("filtering to specific widget types", { 
+			widgetTypes: targetWidgetTypes,
+			count: targetWidgetTypes.length 
+		})
+	}
+
+	// Build database query with optional course filtering
+	let query = db
+		.select({
+			id: niceQuestions.id,
+			structuredJson: niceQuestions.structuredJson
+		})
+		.from(niceQuestions)
+		.where(sql`structured_json IS NOT NULL AND jsonb_typeof(structured_json->'widgets') = 'object' AND structured_json->'widgets' != '{}'::jsonb`)
+
+	// Add course filtering if specified
+	if (options.courses.length > 0) {
+		query = db
 			.select({
 				id: niceQuestions.id,
 				structuredJson: niceQuestions.structuredJson
 			})
 			.from(niceQuestions)
-			.where(sql`structured_json IS NOT NULL AND jsonb_typeof(structured_json->'widgets') = 'object' AND structured_json->'widgets' != '{}'::jsonb`)
-	)
+			.innerJoin(niceExercises, eq(niceQuestions.exerciseId, niceExercises.id))
+			.innerJoin(niceLessonContents, eq(niceExercises.id, niceLessonContents.contentId))
+			.innerJoin(niceLessons, eq(niceLessonContents.lessonId, niceLessons.id))
+			.innerJoin(niceUnits, eq(niceLessons.unitId, niceUnits.id))
+			.innerJoin(niceCourses, eq(niceUnits.courseId, niceCourses.id))
+			.where(and(
+				inArray(niceCourses.id, options.courses),
+				isNotNull(niceQuestions.structuredJson),
+				sql`jsonb_typeof(structured_json->'widgets') = 'object' AND structured_json->'widgets' != '{}'::jsonb`
+			))
+	}
+
+	const result = await errors.try(query)
 	if (result.error) {
 		logger.error("failed to fetch questions with widgets", { error: result.error })
 		throw errors.wrap(result.error, "database query")
@@ -89,19 +247,24 @@ async function main() {
 			})
 		}
 
-		if (questionWidgets.length > 0) {
+		// Filter widgets based on CLI options
+		const filteredWidgets = targetWidgetTypes.length > 0 
+			? questionWidgets.filter(w => targetWidgetTypes.includes(w.type))
+			: questionWidgets
+
+		if (filteredWidgets.length > 0) {
 			extractedWidgets.push({
 				questionId: question.id,
 				questionTitle,
-				widgets: questionWidgets
+				widgets: filteredWidgets
 			})
 
-			// create test cases for each widget
-			for (let i = 0; i < questionWidgets.length; i++) {
-				const widget = questionWidgets[i]
+			// create test cases for each filtered widget
+			for (let i = 0; i < filteredWidgets.length; i++) {
+				const widget = filteredWidgets[i]
 				if (!widget) continue
 				
-				const widgetNumber = questionWidgets.filter(w => w.type === widget.type).length > 1 ? i + 1 : undefined
+				const widgetNumber = filteredWidgets.filter(w => w.type === widget.type).length > 1 ? i + 1 : undefined
 
 				widgetTestCases.push({
 					questionId: question.id,
@@ -142,19 +305,35 @@ async function main() {
 	}
 
 	// generate test files for each widget type
+	let filesGenerated = 0
+	let filesSkipped = 0
+	
 	for (const [widgetType, testCases] of testCasesByType) {
 		const kebabCaseType = widgetType.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()
 		const testFileName = `${kebabCaseType}.extracted.test.ts`
 		const testFilePath = join(testsDir, testFileName)
 
+		// Check if file exists and overwrite flag
+		if (!options.overwrite && existsSync(testFilePath)) {
+			logger.debug("skipping existing test file", {
+				widgetType,
+				fileName: testFileName,
+				testCaseCount: testCases.length
+			})
+			filesSkipped++
+			continue
+		}
+
 		logger.info("generating test file", {
 			widgetType,
 			fileName: testFileName,
-			testCaseCount: testCases.length
+			testCaseCount: testCases.length,
+			overwriting: existsSync(testFilePath)
 		})
 
 		const testFileContent = generateTestFile(widgetType, testCases)
 		writeFileSync(testFilePath, testFileContent, "utf-8")
+		filesGenerated++
 
 		logger.debug("wrote test file", {
 			filePath: testFilePath,
@@ -163,7 +342,9 @@ async function main() {
 	}
 
 	logger.info("widget test extraction completed", {
-		testFilesGenerated: testCasesByType.size
+		testFilesGenerated: filesGenerated,
+		testFilesSkipped: filesSkipped,
+		totalWidgetTypes: testCasesByType.size
 	})
 }
 
@@ -236,3 +417,5 @@ if (result.error) {
 	logger.error("script failed", { error: result.error })
 	process.exit(1)
 }
+
+process.exit(0)
