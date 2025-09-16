@@ -184,15 +184,18 @@ function generateTestFile(widgetType: string, testCases: WidgetTestCase[]): stri
 \t\tconst input = ${JSON.stringify(testCase.widgetData, null, 2).replace(/\n/g, '\n\t\t')} as unknown as WidgetInput
 
 \t\t// Generate the widget (includes runtime validation)
-\t\ttry {
-\t\t\tconst svg = await generateWidget(input as unknown as Widget)
-\t\t\texpect(svg).toMatchSnapshot()
-\t\t} catch (error) {
+\t\tconst result = await errors.try(generateWidget(input as unknown as Widget))
+\t\tif (result.error) {
 \t\t\t// If widget generation fails, it likely means the database data doesn't match current schema
-\t\t\tconsole.error("Widget generation failed for ${widgetType}:", error)
-\t\t\tconsole.error("Input data:", JSON.stringify(input, null, 2))
-\t\t\tthrow error
+\t\t\tlogger.error("widget generation failed for ${widgetType}", { 
+\t\t\t\terror: result.error,
+\t\t\t\tinputData: input
+\t\t\t})
+\t\t\tthrow errors.wrap(result.error, "widget generation")
 \t\t}
+\t\t
+\t\tconst svg = result.data
+\t\texpect(svg).toMatchSnapshot()
 \t})`
 	}).join("\n\n")
 
@@ -221,6 +224,8 @@ function generateTestFile(widgetType: string, testCases: WidgetTestCase[]): stri
 import { expect, test } from "bun:test"
 import { generateWidget } from "@superbuilders/qti-assessment-item-generator/widgets/widget-generator"
 import type { Widget, WidgetInput } from "@superbuilders/qti-assessment-item-generator/widgets/registry"
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 
 ${testCaseCode}
 `
