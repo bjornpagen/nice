@@ -59,8 +59,9 @@ async function main(): Promise<void> {
 	let overallTotal = 0
 	let overallMissing = 0
 	for (const r of rows) {
-		overallTotal += r.totalQuestions
-		overallMissing += r.missingXml
+		// Ensure numeric aggregation even if the driver returns strings for count()
+		overallTotal += Number(r.totalQuestions)
+		overallMissing += Number(r.missingXml)
 	}
 	const overallPct = overallTotal > 0 ? Math.round((overallMissing / overallTotal) * 1000) / 10 : 0
 

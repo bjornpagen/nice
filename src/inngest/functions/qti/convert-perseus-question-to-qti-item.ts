@@ -61,7 +61,9 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 				.select({
 					id: niceQuestions.id,
 					parsedData: niceQuestions.parsedData,
-					exerciseTitle: niceExercises.title
+					exerciseTitle: niceExercises.title,
+					xml: niceQuestions.xml,
+					structuredJson: niceQuestions.structuredJson
 				})
 				.from(niceQuestions)
 				.innerJoin(niceExercises, eq(niceQuestions.exerciseId, niceExercises.id))
@@ -76,6 +78,14 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 		if (!questionData?.parsedData) {
 			logger.warn("skipping conversion: no perseus data", { questionId })
 			return { status: "skipped", reason: "no_perseus_data" }
+		}
+
+		// Idempotency guard: skip if both XML and structured JSON already exist
+		const hasXml = typeof questionData.xml === "string" && questionData.xml !== ""
+		const hasStructuredJson = questionData.structuredJson !== undefined && questionData.structuredJson !== null
+		if (hasXml && hasStructuredJson) {
+			logger.info("skipping conversion: xml and structured json already exist", { questionId })
+			return { status: "skipped", reason: "already_converted" }
 		}
 		logger.debug("db fetch successful", { questionId, exerciseTitle: questionData.exerciseTitle })
 
@@ -106,6 +116,7 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 					throw new NonRetriableError(result.error.message, { cause: result.error })
 				}
 
+				logger.error("structured item generation retryable error", { error: result.error, questionId })
 				throw result.error
 			}
 			return result.data
