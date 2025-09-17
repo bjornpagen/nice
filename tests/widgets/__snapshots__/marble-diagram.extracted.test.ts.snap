@@ -1,0 +1,11 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`marbleDiagram widget tests marble-diagram - [x1486ced9f741eace] Best prediction for drawing a blue marble 1`] = `
+"<svg width="290" height="290" viewBox="0 0 290 290" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+	<circle cx="121.93523111915177" cy="127.77760167218845" r="24" fill="#D0021B" stroke="#000000" stroke-width="2" />
+  <circle cx="237.88663421202216" cy="153.62133086071736" r="24" fill="#D0021B" stroke="#000000" stroke-width="2" />
+  <circle cx="79.89495995048014" cy="206.5210282456679" r="24" fill="#5B8DEF" stroke="#000000" stroke-width="2" />
+  <circle cx="59.97026210108554" cy="87.53860584724987" r="24" fill="#5B8DEF" stroke="#000000" stroke-width="2" />
+  <circle cx="192.84224074982487" cy="109.30690048201734" r="24" fill="#D0021B" stroke="#000000" stroke-width="2" />
+</svg>"
+`;
