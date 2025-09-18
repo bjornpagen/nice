@@ -356,6 +356,99 @@ ${perseusJsonString}
 Your output will be fed directly into an automated XML parser. If the XML is not well-formed, the entire system will crash. Pay extreme attention to the rules below.
 
 ---
+### CRITICAL RULE 1: Worked Problem and Answer Formatting ###
+
+**ABSOLUTE RULE: ALL WORKED SOLUTIONS AND ANSWERS MUST BE HIDDEN BY DEFAULT**
+
+To preserve the educational value of the content, it is imperative that students are not immediately shown the answer to a problem. When you identify a question, worked problem, or any challenge followed by its solution, you MUST use the HTML \`<details>\` and \`<summary>\` elements.
+
+1.  **The Question/Problem:** The question or prompt text MUST be visible. It can be a standalone \`<p>\` tag or placed inside the \`<summary>\` element.
+2.  **The Answer/Solution:** The entire worked-out solution, final answer, or explanation MUST be placed inside the \`<details>\` tag, immediately following the question or summary. The summary text should be "Solution" or "View Answer".
+
+**EXAMPLE OF A FAILURE CASE (BANNED):**
+This is an example of what you MUST NOT produce. The solution is visible immediately, which destroys the educational purpose.
+\`\`\`xml
+<!-- ❌ BANNED: The answer is immediately visible. -->
+<h4>Problem 1.1</h4>
+<p><strong>Evaluate.</strong></p>
+<p>
+  <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><msup><mn>3</mn><mn>4</mn></msup></math>
+</p>
+<div>
+  <h5>Solution</h5>
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mtable columnalign="left center left">
+      <mtr>
+        <mtd><mrow><mo>-</mo><msup><mn>3</mn><mn>4</mn></msup></mrow></mtd>
+        <mtd><mo>=</mo></mtd>
+        <mtd><mrow><mo>-</mo><mo>(</mo><mn>3</mn><mo>⋅</mo><mn>3</mn><mo>⋅</mo><mn>3</mn><mo>⋅</mo><mn>3</mo><mo>)</mo></mrow></mtd>
+        <mtd><mtext>Evaluate the power.</mtext></mtd>
+      </mtr>
+      <mtr>
+        <mtd><mrow><mo>-</mo><mn>81</mn></mrow></mtd>
+        <mtd></mtd>
+        <mtd></mtd>
+        <mtd><mtext>Take the opposite.</mtext></mtd>
+      </mtr>
+    </mtable>
+  </math>
+</div>
+\`\`\`
+
+**EXAMPLE OF THE CORRECT IMPLEMENTATION (REQUIRED):**
+This is the required format. The solution is hidden within a \`<details>\` tag, forcing the student to engage with the problem first.
+\`\`\`xml
+<!-- ✅ CORRECT: The solution is hidden and only revealed on user interaction. -->
+<h4>Problem 1.1</h4>
+<p><strong>Evaluate.</strong></p>
+<p>
+  <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><msup><mn>3</mn><mn>4</mn></msup></math>
+</p>
+<details>
+  <summary>Solution</summary>
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mtable columnalign="left center left">
+      <mtr>
+        <mtd><mrow><mo>-</mo><msup><mn>3</mn><mn>4</mn></msup></mrow></mtd>
+        <mtd><mo>=</mo></mtd>
+        <mtd><mrow><mo>-</mo><mo>(</mo><mn>3</mn><mo>⋅</mo><mn>3</mn><mo>⋅</mo><mn>3</mn><mo>⋅</mo><mn>3</mn><mo>)</mo></mrow></mtd>
+        <mtd><mtext>Evaluate the power.</mtext></mtd>
+      </mtr>
+      <mtr>
+        <mtd><mrow><mo>-</mo><mn>81</mn></mrow></mtd>
+        <mtd></mtd>
+        <mtd></mtd>
+        <mtd><mtext>Take the opposite.</mtext></mtd>
+      </mtr>
+    </mtable>
+  </math>
+</details>
+\`\`\`
+Apply this rule to ANY content that presents a problem and its corresponding solution. This is a non-negotiable requirement.
+
+---
+### CRITICAL RULE 2: Minimal Paraphrasing and Editorial Pass ###
+
+In addition to converting the format, you are required to perform a light editorial pass on the text content. The goal is to create a version that is not an exact copy of the source while preserving the original educational intent and meaning.
+
+**Your editorial tasks are:**
+1.  **Correct Grammar and Spelling:** Fix any grammatical errors, spelling mistakes, or awkward phrasing in the original Perseus content.
+2.  **Improve Clarity:** If a sentence is unclear or convoluted, rewrite it to be more direct and understandable for the target grade level.
+3.  **Perform Minimal Paraphrasing:** Make subtle changes to the text. This includes:
+    *   Swapping proper nouns where appropriate (e.g., change "Maria" to "James", "a bakery in Paris" to "a shop in London"). Do not change names or places if they are central to the problem's context (e.g., historical figures).
+    *   Slightly reordering sentence clauses.
+    *   Replacing some words with synonyms where it does not change the meaning.
+4.  **Preserve Core Meaning:** You MUST NOT change the core facts, numbers, mathematical operations, or educational concepts of the problem. The paraphrasing is stylistic, not substantive.
+
+**EXAMPLE OF MINIMAL PARAPHRASING:**
+
+**Original Perseus Text:** "When there are lots of operations in an expression, we need to agree on which to evaluate first. That way, we will all agree that the expression has the same value."
+
+**Acceptable Paraphrased QTI Output:** "When an expression contains multiple operations, it is essential to have a standard order for evaluating them. This ensures that everyone arrives at the same value for the expression."
+
+This is a critical step. The final XML content should be clear, grammatically correct, and distinct from the source Perseus JSON.
+
+---
 ### CRITICAL: STIMULUS BODY RULES ###
 
 **ABSOLUTE RULE: <qti-stimulus-body> MUST CONTAIN ONLY HTML**
