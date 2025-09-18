@@ -99,37 +99,29 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 			return result.data
 		})
 
-		// Step 3: Generate the structured QTI item from the envelope.
-		const structuredItemResult = await step.run("generate-structured-item-from-envelope", async () => {
-			const result = await errors.try(generateFromEnvelope(openai, logger, envelopeResult, widgetCollection))
-			if (result.error) {
-				logger.error("failed to generate structured item from envelope", { error: result.error })
-
-				// Check for specific non-retriable errors from the library
-				if (errors.is(result.error, ErrUnsupportedInteraction)) {
-					logger.error("item contains unsupported interaction", { error: result.error, questionId })
-					throw new NonRetriableError(result.error.message, { cause: result.error })
+		// Steps 3 & 4 combined: generate structured item and compile to QTI XML in a single step.
+		const generationAndCompile = await step.run("generate-and-compile-qti-item", async () => {
+			const genResult = await errors.try(generateFromEnvelope(openai, logger, envelopeResult, widgetCollection))
+			if (genResult.error) {
+				logger.error("failed to generate structured item from envelope", { error: genResult.error, questionId })
+				if (errors.is(genResult.error, ErrUnsupportedInteraction)) {
+					logger.error("item contains unsupported interaction", { error: genResult.error, questionId })
+					throw new NonRetriableError(genResult.error.message, { cause: genResult.error })
 				}
-
-				if (errors.is(result.error, ErrWidgetNotFound)) {
-					logger.error("widget not found - non-retriable failure", { error: result.error, questionId })
-					throw new NonRetriableError(result.error.message, { cause: result.error })
+				if (errors.is(genResult.error, ErrWidgetNotFound)) {
+					logger.error("widget not found - non-retriable failure", { error: genResult.error, questionId })
+					throw new NonRetriableError(genResult.error.message, { cause: genResult.error })
 				}
-
-				logger.error("structured item generation retryable error", { error: result.error, questionId })
-				throw result.error
+				logger.error("structured item generation retryable error", { error: genResult.error, questionId })
+				throw genResult.error
 			}
-			return result.data
-		})
-
-		// Step 4: Compile the structured item into QTI XML using the library.
-		const compiledXmlResult = await step.run("compile-qti-xml", async () => {
-			const result = await errors.try(compile(structuredItemResult))
-			if (result.error) {
-				logger.error("failed to compile structured item to xml", { error: result.error })
-				throw result.error
+			const structuredItem = genResult.data
+			const compileResult = await errors.try(compile(structuredItem))
+			if (compileResult.error) {
+				logger.error("failed to compile structured item to xml", { error: compileResult.error, questionId })
+				throw compileResult.error
 			}
-			return result.data
+			return { structuredItem, compiledXml: compileResult.data }
 		})
 
 		// Step 5: Update database with BOTH structured JSON and compiled XML.
@@ -138,8 +130,8 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 			db
 				.update(niceQuestions)
 				.set({
-					xml: compiledXmlResult,
-					structuredJson: structuredItemResult
+					xml: generationAndCompile.compiledXml,
+					structuredJson: generationAndCompile.structuredItem
 				})
 				.where(eq(niceQuestions.id, questionId))
 		)
