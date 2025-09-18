@@ -51,7 +51,8 @@ export const QuestionIdBlacklist: ReadonlySet<string> = new Set<string>([
 	"x70d9c330f46bf76a",
 	"xe86350346e41f09a",
 	"x7f17eea1a006dfed",
-	"x16eeda84615738f2"
+	"x16eeda84615738f2",
+	"xd9d03a194cdc8ae4"
 ])
 
 export function isQuestionIdBlacklisted(questionId: string): boolean {
