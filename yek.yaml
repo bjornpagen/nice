@@ -23,6 +23,7 @@ ignore_patterns:
   - "src/inngest/**"
   - "tests/**"
   - "prompt/**"
+  - "src/app/**"
 priority_rules:
   - score: 99
     pattern: "^rules/"
