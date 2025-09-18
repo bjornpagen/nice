@@ -4,21 +4,24 @@ import * as errors from "@superbuilders/errors"
 import { eq, inArray } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
-import { inngest } from "@/inngest/client"
+import { type Events, inngest } from "@/inngest/client"
 // ✅ ADD: Import the new atomic function for AI generation.
-import { differentiateAndSaveQuestion } from "@/inngest/functions/qti/differentiate-and-save-question"
+// import { differentiateAndSaveQuestion } from "@/inngest/functions/qti/differentiate-and-save-question"
 import { HARDCODED_MATH_COURSE_IDS } from "@/lib/constants/course-mapping"
 
-const DIFFERENTIATION_COUNT = 3
-// ❌ REMOVED: The batch size is no longer needed for AI generation.
+const DIFFERENTIATION_COUNT = 1
+const DISPATCH_BATCH_SIZE = 500
 
 export const orchestrateHardcodedMathDifferentiatedItemGeneration = inngest.createFunction(
 	{
 		id: "orchestrate-hardcoded-math-differentiated-item-generation",
-		name: "Orchestrate Hardcoded Math Course Differentiated QTI Item Generation"
+		name: "Orchestrate Hardcoded Math Course Differentiated QTI Item Generation",
+		timeouts: {
+			start: "30m"
+		}
 	},
 	{ event: "migration/hardcoded.math.differentiated-items.generate" },
-	async ({ step, logger }) => {
+	async ({ logger }) => {
 		logger.info("starting hardcoded qti generation: DISPATCH PHASE", {
 			courseCount: HARDCODED_MATH_COURSE_IDS.length,
 			variationsPerItem: DIFFERENTIATION_COUNT
@@ -36,8 +39,6 @@ export const orchestrateHardcodedMathDifferentiatedItemGeneration = inngest.crea
 			throw errors.wrap(coursesResult.error, "db query for courses")
 		}
 		const courses = coursesResult.data
-
-		const allInvocationPromises = []
 
 		for (const course of courses) {
 			const courseId = course.id
@@ -120,42 +121,45 @@ export const orchestrateHardcodedMathDifferentiatedItemGeneration = inngest.crea
 				continue // Proceed to the next course.
 			}
 
-			// ✅ MODIFIED: Use the `missingQuestionIds` array to create atomic invocation promises for the AI step.
-			const courseInvocationPromises = missingQuestionIds.map((questionId) =>
-				step.invoke(`differentiate-${course.slug}-${questionId}`, {
-					function: differentiateAndSaveQuestion,
-					data: {
-						questionId: questionId,
-						n: DIFFERENTIATION_COUNT,
-						courseSlug: course.slug
-					}
+			// ✅ MODIFIED: Build events and dispatch in batches (mirrors migration dispatch robustness)
+			const events: Events["qti/question.differentiate-and-save"][] = missingQuestionIds.map((questionId) => ({
+				name: "qti/question.differentiate-and-save",
+				data: { questionId, n: DIFFERENTIATION_COUNT, courseSlug: course.slug }
+			}))
+
+			let dispatched = 0
+			for (let i = 0; i < events.length; i += DISPATCH_BATCH_SIZE) {
+				const batch = events.slice(i, i + DISPATCH_BATCH_SIZE)
+				logger.info("sending differentiation event batch", {
+					courseId,
+					courseSlug: course.slug,
+					batchStart: i,
+					batchSize: batch.length
 				})
-			)
-
-			allInvocationPromises.push(...courseInvocationPromises)
-		}
-
-		// ✅ MODIFIED: Await all AI generation promises from all courses concurrently after the loop.
-		if (allInvocationPromises.length > 0) {
-			logger.info("dispatching all AI generation jobs for all courses in parallel", {
-				totalJobs: allInvocationPromises.length
-			})
-			await Promise.all(allInvocationPromises)
-		}
-
-		// Trigger the assembly step after all differentiation is complete.
-		// Since we used step.invoke, we know all batches have completed at this point.
-		await step.run("trigger-assembly-for-all-courses", async () => {
-			await inngest.send({
-				name: "qti/assembly.items.ready",
-				data: {
-					courseSlugs: courses.map((c) => c.slug)
+				const sendResult = await errors.try(inngest.send(batch))
+				if (sendResult.error) {
+					logger.error("failed to send differentiation event batch", { courseId, error: sendResult.error })
+					throw errors.wrap(sendResult.error, "inngest batch send")
 				}
+				dispatched += batch.length
+				logger.debug("sent differentiation event batch", { courseId, batchStart: i, batchSize: batch.length })
+			}
+			logger.info("dispatched differentiation events for course", { courseId, dispatched })
+		}
+
+		// Kick off the assembly phase for all processed courses.
+		const assemblySendResult = await errors.try(
+			inngest.send({
+				name: "qti/assembly.items.ready",
+				data: { courseSlugs: courses.map((c) => c.slug) }
 			})
-		})
+		)
+		if (assemblySendResult.error) {
+			logger.error("failed to send assembly trigger event", { error: assemblySendResult.error })
+			throw errors.wrap(assemblySendResult.error, "assembly trigger send")
+		}
+		logger.info("assembly trigger event sent", { courseCount: courses.length })
 
-		// ... (final trigger-assembly step remains the same) ...
-
-		return { status: "DISPATCH_AND_WAIT_COMPLETE", dispatchedCourseCount: courses.length }
+		return { status: "DISPATCH_COMPLETE", dispatchedCourseCount: courses.length }
 	}
 )
