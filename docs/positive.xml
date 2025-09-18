@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-stimulus xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd" identifier="order-of-operations-rational-numbers" title="Order of Operations with Rational Numbers" xml:lang="en-US">
+  <qti-stimulus-body>
+    <h2>Order of operations review</h2>
+    <p>When there are lots of operations in an expression, we need to agree on which to evaluate first. That way, we will all agree that the expression has the same value. We could just use parentheses to always show what to do first, but we like to write things shorter when we can.</p>
+    <p>So instead, we agree to evaluate more powerful operations sooner. Multiplication is repeated addition, so we multiply before we add. Powers are repeated multiplication, so we take powers before we multiply.</p>
+    <ul>
+      <li><strong>Grouping symbols</strong>: We evaluate what is inside of grouping symbols first. There are lots of grouping symbols. Some common ones are parentheses, fraction bars, and absolute value symbols.</li>
+      <li><strong>Exponents</strong>: Next we evaluate powers. There are a couple of operations that undo exponents (it takes <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math> operations because powers are <strong>not</strong> commutative). They happen in this step, too.</li>
+      <li><strong>Multiplication</strong>: Then we multiply. Division undoes multiplication, so it happens in the same step.</li>
+      <li><strong>Addition</strong>: Last of all, we add. Subtraction undoes addition, so it happens in the same step.</li>
+    </ul>
+    <p>Fun fact: There are operations that grow a number faster than exponents. One of them shows up a lot in probability.</p>
+    <p>Can you think of any operations that change a number more slowly than addition? Tell us about it in the comments.</p>
+
+    <h2>Exponents with negatives</h2>
+    <p>How do negative signs fit in with order of operations? In the expression <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><msup><mn>4</mn><mn>2</mn></msup></math>, do we apply the negative sign or the exponent first? A negative sign means we take the opposite of a number. That is the same as multiplying the number by <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math>. So we take the opposite in the multiplication and division step.</p>
+    <p>Let’s evaluate <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mrow><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></mrow><mn>2</mn></msup></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><msup><mn>4</mn><mn>2</mn></msup></math>.</p>
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtable columnalign="left center left">
+          <mtr>
+            <mtd><msup><mrow><mo>(</mo><mo>-</mo><mn>4</mo><mo>)</mo></mrow><mn>2</mn></msup></mtd>
+            <mtd><mo>=</mo></mtd>
+            <mtd>
+              <mrow><mo>-</mo><mn>4</mn></mrow>
+              <mo>⋅</mo>
+              <mrow><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></mrow>
+            </mtd>
+            <mtd><mtext>Evaluate groups.</mtext></mtd>
+          </mtr>
+          <mtr>
+            <mtd><mn>16</mn></mtd>
+            <mtd/>
+            <mtd/>
+            <mtd><mtext>Multiply.</mtext></mtd>
+          </mtr>
+        </mtable>
+      </math>
+    </div>
+    <p>With <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mrow><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></mrow><mn>2</mn></msup></math>, we took the opposite of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> first, because the negative sign was inside the grouping symbols.</p>
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtable columnalign="left center left">
+          <mtr>
+            <mtd><mrow><mo>-</mo><msup><mn>4</mn><mn>2</mn></msup></mrow></mtd>
+            <mtd><mo>=</mo></mtd>
+            <mtd><mrow><mo>-</mo><mo>(</mo><mn>4</mn><mo>⋅</mo><mn>4</mn><mo>)</mo></mrow></mtd>
+            <mtd><mtext>Evaluate the power.</mtext></mtd>
+          </mtr>
+          <mtr>
+            <mtd><mrow><mo>-</mo><mn>16</mn></mrow></mtd>
+            <mtd/>
+            <mtd/>
+            <mtd><mtext>Take the opposite.</mtext></mtd>
+          </mtr>
+        </mtable>
+      </math>
+    </div>
+    <p>With <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><msup><mn>4</mn><mn>2</mn></msup></math>, we squared <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> first, because exponents come earlier in the order of operations than multiplying by <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math> does.</p>
+
+    <h3>Practice: Exponents with negatives</h3>
+    <div class="problem-set">
+      <h4>Problem 1.1</h4>
+      <p><strong>Evaluate.</strong></p>
+      <p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><msup><mn>3</mn><mn>4</mn></msup></math>
+      </p>
+      <details>
+        <summary>Solution</summary>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <mtable columnalign="left center left">
+            <mtr>
+              <mtd>
+                <mrow>
+                  <mo>-</mo>
+                  <msup>
+                    <mn>3</mn>
+                    <mn>4</mn>
+                  </msup>
+                </mrow>
+              </mtd>
+              <mtd>
+                <mo>=</mo>
+              </mtd>
+              <mtd>
+                <mrow>
+                  <mo>-</mo>
+                  <mo>(</mo>
+                  <mn>3</mn>
+                  <mo>⋅</mo>
+                  <mn>3</mn>
+                  <mo>⋅</mo>
+                  <mn>3</mn>
+                  <mo>⋅</mo>
+                  <mn>3</mn>
+                  <mo>)</mo>
+                </mrow>
+              </mtd>
+              <mtd>
+                <mtext>Evaluate the power.</mtext>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd>
+                <mrow>
+                  <mo>-</mo>
+                  <mn>81</mn>
+                </mrow>
+              </mtd>
+              <mtd/>
+              <mtd/>
+              <mtd>
+                <mtext>Take the opposite.</mtext>
+              </mtd>
+            </mtr>
+          </mtable>
+        </math>
+      </details>
+
+      <h4>Problem 1.2</h4>
+      <p><strong>Evaluate.</strong></p>
+      <p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mrow><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow><mn>2</mn></msup></math>
+      </p>
+      <details>
+        <summary>Solution</summary>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <mtable columnalign="left center left">
+            <mtr>
+              <mtd>
+                <msup>
+                  <mrow>
+                    <mo>(</mo>
+                    <mo>-</mo>
+                    <mn>6</mn>
+                    <mo>)</mo>
+                  </mrow>
+                  <mn>2</mn>
+                </msup>
+              </mtd>
+              <mtd>
+                <mo>=</mo>
+              </mtd>
+              <mtd>
+                <mrow>
+                  <mo>-</mo>
+                  <mn>6</mn>
+                </mrow>
+                <mo>⋅</mo>
+                <mrow>
+                  <mo>(</mo>
+                  <mo>-</mo>
+                  <mn>6</mn>
+                  <mo>)</mo>
+                </mrow>
+              </mtd>
+              <mtd>
+                <mtext>Evaluate groups.</mtext>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd>
+                <mn>36</mn>
+              </mtd>
+              <mtd/>
+              <mtd/>
+              <mtd>
+                <mtext>Multiply.</mtext>
+              </mtd>
+            </mtr>
+          </mtable>
+        </math>
+      </details>
+    </div>
+
+    <h2>Exponents with fractions</h2>
+    <p>Recall that fractions have three grouping symbols built in: the numerator, the denominator, and the entire fraction. If there are no parentheses or other grouping symbols visible, then the exponent is inside the numerator or denominator.</p>
+    <p>For example, in the expression <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mrow><mo>(</mo><mfrac><mn>3</mn><mn>2</mn></mfrac><mo>)</mo></mrow><mn>4</mn></msup></math>, the entire fraction is inside a grouping symbol, the parentheses. The exponent <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> is outside the parentheses. So we are raising the entire fraction to the power of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math>.</p>
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtable columnalign="left center left">
+          <mtr>
+            <mtd><msup><mrow><mo>(</mo><mfrac><mn>3</mn><mn>2</mn></mfrac><mo>)</mo></mrow><mn>4</mn></msup></mtd>
+            <mtd><mo>=</mo></mtd>
+            <mtd>
+              <mfrac><mn>3</mn><mn>2</mn></mfrac>
+              <mo>⋅</mo>
+              <mfrac><mn>3</mn><mn>2</mn></mfrac>
+              <mo>⋅</mo>
+              <mfrac><mn>3</mn><mn>2</mn></mfrac>
+              <mo>⋅</mo>
+              <mfrac><mn>3</mn><mn>2</mn></mfrac>
+            </mtd>
+          </mtr>
+          <mtr>
+            <mtd/>
+            <mtd><mo>=</mo></mtd>
+            <mtd><mfrac><mn>81</mn><mn>16</mn></mfrac></mtd>
+          </mtr>
+        </mtable>
+      </math>
+    </div>
+    <p>On the other hand, in the expression <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mn>3</mn><mn>4</mn></msup><mn>2</mn></mfrac></math>, the only grouping symbol is the fraction bar. The exponent <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> is in the numerator. So we only raise the <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> to the power of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math>.</p>
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtable columnalign="left center left">
+          <mtr>
+            <mtd><mfrac><msup><mn>3</mn><mn>4</mn></msup><mn>2</mn></mfrac></mtd>
+            <mtd><mo>=</mo></mtd>
+            <mtd><mfrac><mrow><mn>3</mn><mo>⋅</mo><mn>3</mn><mo>⋅</mo><mn>3</mn><mo>⋅</mo><mn>3</mn></mrow><mn>2</mn></mfrac></mtd>
+          </mtr>
+          <mtr>
+            <mtd/>
+            <mtd><mo>=</mo></mtd>
+            <mtd><mfrac><mn>81</mn><mn>2</mn></mfrac></mtd>
+          </mtr>
+        </mtable>
+      </math>
+    </div>
+
+    <h3>Practice: Exponents with fractions</h3>
+    <div class="problem-set">
+      <h4>Problem 2.1</h4>
+      <p><strong>Evaluate.</strong></p>
+      <p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>2</mn><msup><mn>7</mn><mn>2</mn></msup></mfrac></math>
+      </p>
+      <details>
+        <summary>Solution</summary>
+        <p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><mn>2</mn><msup><mn>7</mn><mn>2</mn></msup></mfrac><mo>=</mo><mfrac><mn>2</mn><mrow><mn>7</mn><mo>⋅</mo><mn>7</mn></mrow></mfrac><mo>=</mo><mfrac><mn>2</mn><mn>49</mn></mfrac></mrow></math></p>
+      </details>
+
+      <h4>Problem 2.2</h4>
+      <p><strong>Evaluate.</strong></p>
+      <p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mrow><mo>(</mo><mfrac><mn>4</mn><mn>3</mn></mfrac><mo>)</mo></mrow><mn>3</mn></msup></math>
+      </p>
+      <details>
+        <summary>Solution</summary>
+        <p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mrow><mo>(</mo><mfrac><mn>4</mn><mn>3</mn></mfrac><mo>)</mo></mrow><mn>3</mn></msup><mo>=</mo><mfrac><mn>64</mn><mn>27</mn></mfrac></mrow></math></p>
+      </details>
+
+      <h4>Problem 2.3</h4>
+      <p><strong>Evaluate.</strong></p>
+      <p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>-</mo><mfrac><msup><mn>5</mn><mn>2</mn></msup><mn>6</mn></mfrac></mrow></math>
+      </p>
+      <details>
+        <summary>Solution</summary>
+        <p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>-</mo><mfrac><msup><mn>5</mn><mn>2</mn></msup><mn>6</mn></mfrac><mo>=</mo><mo>-</mo><mfrac><mn>25</mn><mn>6</mn></mfrac></mrow></math></p>
+      </details>
+    </div>
+
+    <h2>Absolute value</h2>
+    <p>Suppose we have the expression <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>4</mn><mo>-</mo><mn>12</mn><mo>⋅</mo><mrow><mo>|</mo><mrow><mo>-</mo><mn>7</mn><mo>⋅</mo><mo>-</mo><mn>11</mn><mo>-</mo><mn>100</mn></mrow><mo>|</mo></mrow></mrow></math>. We know we evaluate the multiplication before the subtraction, but when do we take the absolute value?</p>
+    <p>First of all, the absolute value symbols are a grouping symbol. So stuff inside the symbols happens at the same step as other grouping symbols. So first, we multiply <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>-</mo><mn>7</mn><mo>⋅</mo><mo>-</mo><mn>11</mn></mrow></math> to get <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>77</mn></math>, then subtract <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>100</mn></math> to get <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>-</mo><mn>23</mn></mrow></math> inside of the absolute value symbols.</p>
+    <p>Then we take the absolute value during the same step as we apply exponents.</p>
+    <div>
+      <h3>Why?</h3>
+      <p>Absolute value happens in the powers step because we use powers to define it.</p>
+      <p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mrow><mo>|</mo><mi>x</mi><mo>|</mo></mrow><mo>=</mo><msqrt><msup><mi>x</mi><mn>2</mn></msup></msqrt></mrow></math>
+      </p>
+      <p>With even exponents, the result is always nonnegative.</p>
+      <p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mn>7</mn><mn>2</mn></msup><mo>=</mo><mn>49</mn></mrow></math>
+        ,
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mrow><mo>(</mo><mo>-</mo><mn>7</mn><mo>)</mo></mrow><mn>2</mn></msup><mo>=</mo><mn>49</mn></mrow></math>
+      </p>
+      <p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msqrt><msup><mn>7</mn><mn>2</mn></msup></msqrt><mo>=</mo><msqrt><msup><mrow><mo>(</mo><mo>-</mo><mn>7</mn><mo>)</mo></mrow><mn>2</mn></msup></msqrt><mo>=</mo><msqrt><mn>49</mn></msqrt><mo>=</mo><mn>7</mn></mrow></math>
+      </p>
+      <p>That’s why <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mrow><mo>|</mo><mn>7</mn><mo>|</mo></mrow><mo>=</mo><mrow><mo>|</mo><mrow><mo>-</mo><mn>7</mn></mrow><mo>|</mo></mrow><mo>=</mo><mn>7</mn></mrow></math>.</p>
+    </div>
+    <div>
+      <h4>Example evaluation</h4>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtable columnalign="left center left">
+          <mtr>
+            <mtd><mrow><mn>4</mn><mo>-</mo><mn>12</mn><mo>⋅</mo><mrow><mo>|</mo><mrow><mo>-</mo><mn>7</mn><mo>⋅</mo><mo>-</mo><mn>11</mn><mo>-</mo><mn>100</mn></mrow><mo>|</mo></mrow></mrow></mtd>
+            <mtd/>
+            <mtd/>
+          </mtr>
+          <mtr>
+            <mtd><mrow><mn>4</mn><mo>-</mo><mn>12</mn><mo>⋅</mo><mrow><mo>|</mo><mrow><mn>77</mn><mo>-</mo><mn>100</mn></mrow><mo>|</mo></mrow></mrow></mtd>
+            <mtd/>
+            <mtd><mtext>Multiply in the group.</mtext></mtd>
+          </mtr>
+          <mtr>
+            <mtd><mrow><mn>4</mn><mo>-</mo><mn>12</mn><mo>⋅</mo><mrow><mo>|</mo><mrow><mo>-</mo><mn>23</mn></mrow><mo>|</mo></mrow></mrow></mtd>
+            <mtd/>
+            <mtd><mtext>Subtract in the group.</mtext></mtd>
+          </mtr>
+          <mtr>
+            <mtd><mrow><mn>4</mn><mo>-</mo><mn>12</mn><mo>⋅</mo><mn>23</mn></mrow></mtd>
+            <mtd/>
+            <mtd><mtext>Take absolute value.</mtext></mtd>
+          </mtr>
+          <mtr>
+            <mtd><mrow><mn>4</mn><mo>-</mo><mn>276</mn></mrow></mtd>
+            <mtd/>
+            <mtd><mtext>Multiply.</mtext></mtd>
+          </mtr>
+          <mtr>
+            <mtd><mrow><mo>-</mo><mn>272</mn></mrow></mtd>
+            <mtd/>
+            <mtd><mtext>Subtract.</mtext></mtd>
+          </mtr>
+        </mtable>
+      </math>
+    </div>
+
+    <h2>Add and subtract left to right?</h2>
+    <p>Maybe you learned that you should evaluate addition and subtraction from left to right. That is because subtraction does not commute or associate. Luckily, we can rewrite subtraction as addition of the opposite.</p>
+    <p>Let’s rewrite the expression <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>-</mo><mn>4</mn><mo>+</mo><mn>6</mn><mo>-</mo><mn>3</mn><mo>+</mo><mn>1</mn></mrow></math> as a sum of terms and then regroup:</p>
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtable columnalign="left center left">
+          <mtr>
+            <mtd><mrow><mo>-</mo><mn>4</mn><mo>+</mo><mn>6</mn><mo>-</mo><mn>3</mn><mo>+</mo><mn>1</mn></mrow></mtd>
+            <mtd><mo>=</mo></mtd>
+            <mtd><mrow><mn>6</mn><mo>+</mo><mn>1</mn><mo>+</mo><mo>(</mo><mo>-</mo><mn>3</mn><mo>)</mo><mo>+</mo><mo>(</mo><mo>-</mo><mn>4</mo><mo>)</mo></mrow></mtd>
+          </mtr>
+          <mtr>
+            <mtd/>
+            <mtd><mo>=</mo></mtd>
+            <mtd><mrow><mo>(</mo><mn>6</mn><mo>+</mo><mn>1</mn><mo>)</mo><mo>+</mo><mo>(</mo><mo>-</mo><mn>3</mn><mo>+</mo><mo>-</mo><mn>4</mn><mo>)</mo></mrow></mtd>
+          </mtr>
+          <mtr>
+            <mtd/>
+            <mtd><mo>=</mo></mtd>
+            <mtd><mrow><mn>7</mn><mo>+</mo><mo>(</mo><mo>-</mo><mn>7</mn><mo>)</mo></mrow></mtd>
+          </mtr>
+        </mtable>
+      </math>
+    </div>
+    <div class="problem-set">
+      <h4>Problem 4.1</h4>
+      <p><strong>Which two of the following expressions are equivalent to</strong> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>-</mo><mn>0.25</mn><mo>+</mo><mo>(</mo><mo>-</mo><mn>8</mn><mo>)</mo><mo>-</mo><mn>13</mn><mo>+</mo><mn>0.7</mn></mrow></math>?</p>
+      <ul>
+        <li>
+          <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>(</mo><mo>-</mo><mn>13</mn><mo>-</mo><mn>8</mn><mo>)</mo><mo>+</mo><mo>(</mo><mn>0.7</mn><mo>-</mo><mn>0.25</mn><mo>)</mo></mrow></math>
+        </li>
+        <li>
+          <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>13</mn><mo>-</mo><mn>8</mn><mo>-</mo><mn>0.25</mn><mo>+</mo><mn>0.7</mn></mrow></math>
+        </li>
+        <li>
+          <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>0.7</mn><mo>+</mo><mo>(</mo><mo>-</mo><mn>8</mn><mo>-</mo><mn>13</mn><mo>-</mo><mn>0.25</mn><mo>)</mo></mrow></math>
+        </li>
+      </ul>
+      <p><em>Hint: Rewrite subtraction as addition of the opposite, then commute and associate terms.</em></p>
+    </div>
+
+    <h2>Multiply and divide left to right?</h2>
+    <p>The <strong>reciprocal</strong> of a number tells us how many groups of it we can make from <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn></math>. The great thing about reciprocals is that we can rewrite dividing by a number as multiplying by its reciprocal.</p>
+    <div>
+      <h3>Why?</h3>
+      <p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mtext>number</mtext><mo>⋅</mo><mfrac><mn>1</mn><mtext>number</mtext></mfrac><mo>=</mo><mn>1</mn></mrow></math>
+      </p>
+      <p>We can rewrite that relationship as an equivalent division equation and generalize:</p>
+      <p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>1</mn><mo>÷</mo><mi>n</mi><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac></mrow></math>
+      </p>
+      <p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>m</mi><mo>÷</mo><mi>n</mi><mo>=</mo><mi>m</mi><mo>⋅</mo><mfrac><mn>1</mn><mi>n</mi></mfrac></mrow></math>
+      </p>
+      <p>So for any nonzero number, dividing by the number is the same as multiplying by its reciprocal.</p>
+    </div>
+    <p>Here are a few examples.</p>
+    <ul>
+      <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn><mo>÷</mo><mn>6</mn><mo>=</mo><mn>8</mn><mo>⋅</mo><mfrac><mn>1</mn><mn>6</mn></mfrac></math></li>
+      <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>7</mn></mfrac><mo>÷</mo><mfrac><mn>6</mn><mn>11</mn></mfrac><mo>=</mo><mfrac><mn>3</mn><mn>7</mn></mfrac><mo>⋅</mo><mfrac><mn>11</mn><mn>6</mn></mfrac></math></li>
+      <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>11</mn><mo>÷</mo><mn>0.25</mn><mo>=</mo><mn>11</mn><mo>÷</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>=</mo><mn>11</mn><mo>⋅</mo><mn>4</mn></mrow></math></li>
+    </ul>
+    <p>Let’s rewrite <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>3</mn><mo>÷</mo><mn>8</mn><mo>⋅</mo><mo>-</mo><mn>24</mn></mrow></math>.</p>
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtable columnalign="left center left">
+          <mtr>
+            <mtd><mrow><mn>3</mn><mo>÷</mo><mn>8</mn><mo>⋅</mo><mo>-</mo><mn>24</mn></mrow></mtd>
+            <mtd><mo>=</mo></mtd>
+            <mtd><mrow><mn>3</mn><mo>⋅</mo><mfrac><mn>1</mn><mn>8</mn></mfrac><mo>⋅</mo><mo>-</mo><mn>24</mn></mrow></mtd>
+          </mtr>
+          <mtr>
+            <mtd/>
+            <mtd><mo>=</mo></mtd>
+            <mtd><mrow><mn>3</mn><mo>⋅</mo><mo>-</mo><mn>24</mn><mo>⋅</mo><mfrac><mn>1</mn><mn>8</mn></mfrac></mrow></mtd>
+          </mtr>
+          <mtr>
+            <mtd/>
+            <mtd><mo>=</mo></mtd>
+            <mtd><mrow><mn>3</mn><mo>⋅</mo><mo>(</mo><mo>-</mo><mn>24</mn><mo>⋅</mo><mfrac><mn>1</mn><mn>8</mn></mfrac><mo>)</mo></mrow></mtd>
+          </mtr>
+          <mtr>
+            <mtd/>
+            <mtd><mo>=</mo></mtd>
+            <mtd><mrow><mn>3</mn><mo>⋅</mo><mo>(</mo><mo>-</mo><mn>24</mn><mo>÷</mo><mn>8</mn><mo>)</mo></mrow></mtd>
+          </mtr>
+        </mtable>
+      </math>
+    </div>
+    <p>Like with adding and subtracting, sometimes we take shortcuts and move the division symbol with the implied factor: <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>3</mn><mo>÷</mo><mn>8</mn><mo>⋅</mo><mo>-</mo><mn>24</mn><mo>=</mo><mn>3</mn><mo>⋅</mo><mo>-</mo><mn>24</mn><mo>÷</mo><mn>8</mn></mrow></math>.</p>
+    <p>We cannot start an expression with a ÷ symbol. So if we move the division to the start of an expression or grouping symbol, then we must write it as a factor of the reciprocal: <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><mn>1</mn><mn>8</mn></mfrac><mo>⋅</mo><mn>3</mn><mo>⋅</mo><mo>-</mo><mn>24</mn></mrow></math>.</p>
+    <p>Note, we <strong>cannot</strong> commute a factor into a different term. Whenever we see a + or − symbol that is not inside a grouping symbol, that is the start of a new term. For example, the expression <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>10</mn><mo>⋅</mo><mn>2</mn><mo>-</mo><mn>5</mn></mrow></math> has two terms: <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>10</mn><mo>⋅</mo><mn>2</mn></mrow></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>-</mo><mn>5</mn></mrow></math>.</p>
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtable columnalign="left center left">
+          <mtr>
+            <mtd><mrow><mn>10</mn><mo>⋅</mo><mn>2</mn><mo>-</mo><mn>5</mn></mrow></mtd>
+            <mtd><mo>≠</mo></mtd>
+            <mtd><mrow><mn>10</mn><mo>-</mo><mn>5</mn><mo>⋅</mo><mn>2</mn></mrow></mtd>
+          </mtr>
+          <mtr>
+            <mtd><mrow><mn>20</mn><mo>-</mo><mn>5</mn></mrow></mtd>
+            <mtd><mo>≠</mo></mtd>
+            <mtd><mrow><mn>10</mn><mo>-</mo><mn>10</mn></mrow></mtd>
+          </mtr>
+          <mtr>
+            <mtd><mn>15</mn></mtd>
+            <mtd><mo>≠</mo></mtd>
+            <mtd><mn>0</mn></mtd>
+          </mtr>
+        </mtable>
+      </math>
+    </div>
+
+    <div class="problem-set">
+      <h4>Problem 5.1</h4>
+      <p><strong>Which two of the following expressions are equivalent to</strong> <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><mn>3</mn><mn>4</mn></mfrac><mo>÷</mo><mfrac><mn>8</mn><mn>5</mn></mfrac><mo>÷</mo><mn>6</mn></mrow></math>?</p>
+      <ul>
+        <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><mn>3</mn><mn>4</mn></mfrac><mo>÷</mo><mn>6</mn><mo>÷</mo><mfrac><mn>8</mn><mn>5</mn></mfrac></mrow></math></li>
+        <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><mn>8</mn><mn>5</mn></mfrac><mo>÷</mo><mfrac><mn>3</mn><mn>4</mn></mfrac><mo>÷</mo><mn>6</mn></mrow></math></li>
+        <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>(</mo><mfrac><mn>5</mn><mn>8</mn></mfrac><mo>⋅</mo><mfrac><mn>3</mn><mn>4</mn></mfrac><mo>)</mo><mo>÷</mo><mn>6</mn></mrow></math></li>
+      </ul>
+      <p><em>Hint: Rewrite division as multiplication by the reciprocal, then commute and associate factors.</em></p>
+
+      <h4>Problem 5.2</h4>
+      <p>Xochitl and Zoe were evaluating <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>-</mo><mn>14</mn><mo>÷</mo><mn>2</mn><mo>-</mo><mn>9</mn><mo>⋅</mo><mn>4</mn><mo>÷</mo><mn>3</mn></mrow></math>, but they got different values.</p>
+      <p>Here is Xochitl’s work.</p>
+      <div>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <mtable columnalign="left center left">
+            <mtr>
+              <mtd><mrow><mo>-</mo><mn>14</mn><mo>÷</mo><mn>2</mn><mo>-</mo><mn>9</mn><mo>⋅</mo><mn>4</mn><mo>÷</mo><mn>3</mn></mrow></mtd>
+              <mtd><mo>=</mo></mtd>
+              <mtd><mrow><mo>-</mo><mn>14</mn><mo>÷</mo><mn>2</mn><mo>-</mo><mn>9</mn><mo>÷</mo><mn>3</mn><mo>⋅</mo><mn>4</mn></mrow></mtd>
+            </mtr>
+            <mtr>
+              <mtd/>
+              <mtd><mo>=</mo></mtd>
+              <mtd><mrow><mo>-</mo><mn>7</mn><mo>-</mo><mn>3</mn><mo>⋅</mo><mn>4</mn></mrow></mtd>
+            </mtr>
+            <mtr>
+              <mtd/>
+              <mtd><mo>=</mo></mtd>
+              <mtd><mrow><mo>-</mo><mn>7</mn><mo>-</mo><mn>12</mn></mrow></mtd>
+            </mtr>
+            <mtr>
+              <mtd/>
+              <mtd><mo>=</mo></mtd>
+              <mtd><mrow><mo>-</mo><mn>19</mn></mrow></mtd>
+            </mtr>
+          </mtable>
+        </math>
+      </div>
+      <p>Here is Zoe’s work.</p>
+      <div>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <mtable columnalign="left center left">
+            <mtr>
+              <mtd><mrow><mo>-</mo><mn>14</mn><mo>÷</mo><mn>2</mn><mo>-</ outlandish><mn>9</mn><mo>⋅</mo><mn>4</mn><mo>÷</mo><mn>3</mn></mrow></mtd>
+              <mtd><mo>=</mo></mtd>
+              <mtd><mrow><mo>-</mo><mn>14</mn><mo>-</ outlandish><mn>9</mn><mo>⋅</mo><mn>4</mn><mo>÷</mo><mn>2</mn><mo>÷</mo><mn>3</mn></mrow></mtd>
+            </mtr>
+            <mtr>
+              <mtd/>
+              <mtd><mo>=</mo></mtd>
+              <mtd><mrow><mo>-</mo><mn>14</mn><mo>-</ outlandish><mn>9</mn><mo>⋅</mo><mn>2</mn><mo>÷</mo><mn>3</mn></mrow></mtd>
+            </mtr>
+            <mtr>
+              <mtd/>
+              <mtd><mo>=</mo></mtd>
+              <mtd><mrow><mo>-</mo><mn>14</mn><mo>-</ outlandish><mn>18</mn><mo>÷</mo><mn>3</mn></mrow></mtd>
+            </mtr>
+            <mtr>
+              <mtd/>
+              <mtd><mo>=</mo></mtd>
+              <mtd><mrow><mo>-</mo><mn>14</mn><mo>-</ outlandish><mn>6</mn></mrow></mtd>
+            </mtr>
+            <mtr>
+              <mtd/>
+              <mtd><mo>=</mo></mtd>
+              <mtd><mrow><mo>-</mo><mn>20</mn></mrow></mtd>
+            </mtr>
+          </mtable>
+        </math>
+      </div>
+      <p><strong>Whose work is correct?</strong></p>
+      <details>
+        <summary>Solution</summary>
+        <p>Xochitl’s work is correct. She commuted the <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>÷</mo><mn>3</mn></math> (the implied factor of <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>3</mn></mfrac></math>) within its term. That does not change the value of the expression, so the expressions are equivalent. Zoe tried to move a factor across a plus/minus boundary into a different term, which is not valid.</p>
+      </details>
+    </div>
+
+    <h2>Grouping symbols or distributing first</h2>
+    <p>Recall that the distributive property allows us to write equivalent expressions involving parentheses and multiplication. So we get the same value whether we distribute first or evaluate what is inside the parentheses first.</p>
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtable columnalign="left center left">
+          <mtr>
+            <mtd><mrow><mn>12</mn><mo>+</mo><mo>(</mo><mo>-</mo><mn>7</mn><mo>)</mo><mo>-</mo><mo>(</mo><mo>-</mo><mn>20</mn><mo>+</mo><mn>5</mn><mo>)</mo></mrow></mtd>
+            <mtd/>
+            <mtd/>
+          </mtr>
+          <mtr>
+            <mtd><mrow><mn>12</mn><mo>+</mo><mo>(</mo><mo>-</mo><mn>7</mn><mo>)</ outlandish><mo>-</mo><mo>(</mo><mo>-</mo><mn>15</mn><mo>)</mo></mrow></mtd>
+            <mtd/>
+            <mtd><mtext>Evaluate the group.</mtext></mtd>
+          </mtr>
+          <mtr>
+            <mtd><mrow><mn>12</mn><mo>+</mo><mo>(</mo><mo>-</mo><mn>7</mn><mo>)</ outlandish><mo>+</mo><mn>15</mn></mrow></mtd>
+            <mtd/>
+            <mtd><mtext>Multiply </mtext><mo>-</mo><mn>1</mn><mtext> and </mtext><mo>-</mo><mn>15</mn><mtext>.</mtext></mtd>
+          </mtr>
+          <mtr>
+            <mtd><mn>20</mn></mtd>
+            <mtd/>
+            <mtd><mtext>Add.</mtext></mtd>
+          </mtr>
+        </mtable>
+      </math>
+    </div>
+    <p>Now we’ll distribute first.</p>
+    <div>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mtable columnalign="left center left">
+          <mtr>
+            <mtd><mrow><mn>12</mn><mo>+</mo><mo>(</mo><mo>-</mo><mn>7</mn><mo>)</ outlandish><mo>-</mo><mo>(</mo><mo>-</mo><mn>20</mn><mo>+</mo><mn>5</mn><mo>)</mo></mrow></mtd>
+            <mtd/>
+            <mtd/>
+          </mtr>
+          <mtr>
+            <mtd><mrow><mn>12</mn><mo>+</mo><mo>(</mo><mo>-</mo><mn>7</mn><mo>)</ outlandish><mo>+</mo><mn>20</mn><mo>-</mo><mn>5</mn></mrow></mtd>
+            <mtd/>
+            <mtd><mtext>Distribute </mtext><mo>-</mo><mn>1</mn><mtext>.</mtext></mtd>
+          </mtr>
+          <mtr>
+            <mtd><mn>20</mn></mtd>
+            <mtd/>
+            <mtd><mtext>Add.</mtext></mtd>
+          </mtr>
+        </mtable>
+      </math>
+    </div>
+    <p>We get the same value both ways.</p>
+    <p>Note, the distributive property does <strong>not</strong> apply to all grouping symbols, just to parentheses.</p>
+    <div>
+      <p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>-</mo><mn>7</mn><mrow><mo>|</mo><mrow><mn>3</mn><mo>-</mo><mn>4</mn></mrow><mo>|</mo></mrow><mo>≠</mo><mrow><mo>|</mo><mrow><mo>-</mo><mn>7</mn><mo>⋅</mo><mn>3</mn><mo>+</mo><mo>(</mo><mo>-</mo><mn>7</mn><mo>)</ outlandish><mo>⋅</mo><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</ outlandish></mrow><mo>|</mo></mrow></mrow></math>
+      </p>
+      <p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>-</mo><mn>7</mn><mo>≠</mo><mn>7</mn></mrow></math>
+      </p>
+    </div>
+  </qti-stimulus-body>
+</qti-assessment-stimulus>
